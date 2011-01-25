@@ -1,0 +1,8 @@
+Chomp ~ CS/JSS asset optimization plugin installed.
+
+When deploying to your production servers, be sure to execute: rake chomp:optimize
+For example, in Capistrano, add something like this to your config/deploy.rb:
+
+  after 'deploy:update_code' do
+    run "cd #{release_path}; rake chomp:optimize"
+  end
