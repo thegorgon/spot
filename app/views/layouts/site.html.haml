@@ -2,5 +2,8 @@
 %html{ html_attrs.merge({ 'xmlns:fb' => 'http://www.facebook.com/2008/fbml' }) }
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
+    %title= page_title
+    =stylesheet_link_tag 'site'
+    =yield :head
   %body{:class => "#{controller_name} #{page_namespace}"}
-    Spot
+    =yield
