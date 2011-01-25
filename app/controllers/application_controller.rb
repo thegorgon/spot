@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper :application, :resource
+  helper :application
   
   # Return the rendered page namespace, derived from the Controller name and rendered template. This identifier
   # can be used as a CSS class/id name and JavaScript variable name.  

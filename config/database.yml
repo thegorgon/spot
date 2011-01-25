@@ -19,6 +19,8 @@ test:
 
 production:
   adapter: mysql
+  host: masterdb.ec2
+  port: 3306
   database: spot_production
   user: spot
   password: p1rat3pantz
