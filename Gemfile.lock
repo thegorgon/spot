@@ -37,6 +37,7 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.0.0)
+    closure-compiler (1.0.0)
     columnize (0.3.2)
     daemons (1.0.10)
     erubis (2.6.6)
@@ -45,6 +46,9 @@ GEM
     haml (3.0.25)
     highline (1.6.1)
     i18n (0.5.0)
+    jammit (0.6.0)
+      closure-compiler (>= 0.1.0)
+      yui-compressor (>= 0.9.1)
     linecache19 (0.5.11)
       ruby_core_source (>= 0.1.4)
     mail (2.2.14)
@@ -98,6 +102,7 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.24)
+    yui-compressor (0.9.3)
 
 PLATFORMS
   ruby
@@ -105,6 +110,7 @@ PLATFORMS
 DEPENDENCIES
   capistrano
   haml
+  jammit
   mongrel (= 1.2.0.pre2)
   mysql
   rails (= 3.0.3)

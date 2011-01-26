@@ -1,0 +1,11 @@
+package_assets: on
+embed_assets: off
+javascript_compressor: closure
+
+javascripts:
+  vendor:
+    - public/javascripts/vendor/jquery-1.4.4.min.js
+    
+stylesheets:
+  site:
+    - public/stylesheets/site.css

@@ -5,6 +5,7 @@ gem 'capistrano'
 gem 'ruby-debug19'
 gem 'haml'
 gem 'mongrel', '1.2.0.pre2'
+gem 'jammit'
 gem 'mysql'
 
 group :development, :test do

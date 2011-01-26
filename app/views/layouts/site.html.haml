@@ -3,7 +3,9 @@
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
     %title= page_title
-    =stylesheet_link_tag 'site'
+    =include_stylesheets :site, :media => 'all'
     =yield :head
   %body{:class => "#{controller_name} #{page_namespace}"}
     =yield
+    =include_javascripts :vendor
+    
