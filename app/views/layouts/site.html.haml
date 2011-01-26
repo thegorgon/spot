@@ -5,7 +5,9 @@
     %title= page_title
     =include_stylesheets :site, :media => 'all'
     =yield :head
+    %noscript
+      body { display: block; }
   %body{:class => "#{controller_name} #{page_namespace}"}
     =yield
     =include_javascripts :vendor
-    
+    =include_javascripts :site
