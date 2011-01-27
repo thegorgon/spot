@@ -16,7 +16,7 @@ module TagHelper
   end
   
   def fb_share_url(url)
-    share = content_tag(:a, "", :name => "fb_share", :share_url => url)
+    share = content_tag(:a, "", :name => "fb_share", :share_url => url, :type => "button")
     share << external_js_include("http://static.ak.fbcdn.net/connect.php/js/FB.Share")  
     share.html_safe
   end
@@ -30,7 +30,7 @@ module TagHelper
   def open_graph_tags
     meta_tag("og:title", "Spot App")
     meta_tag("og:url", "#{request.url}")
-    meta_tag("og:image", "http://www.spot-app.com/images/logos/gradient_script_340x270.png")
+    meta_tag("og:image", "http://www.spot-app.com/images/logos/og_image.png")
     meta_tag("og:site_name", "Spot App")
     meta_tag("og:description", "Spot App, Coming Soon")
   end
