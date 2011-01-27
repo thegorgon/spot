@@ -1,0 +1,11 @@
+#share
+  %h1 Do the right thing.
+  #kitten=image_tag "joke/kitten_gets_it.jpg", :size => "240x180"
+  %h1 Share Spot with your friends
+  .share_links
+    .social_links.clearfix
+      .fb=fb_share_url(root_url(:rid => @preview.rid))
+      .twitter=twitter_share_url(root_url(:rid => @preview.rid), "I just joined @spotteam, you should too")
+    .direct="Share : #{root_url(:rid => @preview.rid)}"
+    %em
+      \* No kittens were harmed in the making of this website

@@ -1,1 +1,5 @@
-$(document).ready(function(e) { $('body').show(); });
+$(document).ready(function(e) {
+  $('html').removeClass('no-js');
+  Spot.behave();
+  Spot.Views.run();
+});

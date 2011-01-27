@@ -1,13 +1,24 @@
-!!! 1.0
-%html{ html_attrs.merge({ 'xmlns:fb' => 'http://www.facebook.com/2008/fbml' }) }
-  %head
-    %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
-    %title= page_title
-    =include_stylesheets :site, :media => 'all'
-    =yield :head
-    %noscript
-      body { display: block; }
-  %body{:class => "#{controller_name} #{page_namespace}"}
+!!! 5
+/[if lt IE 7 ]<html lang="en" class="no-js ie6">
+/[if IE 7 ]<html lang="en" class="no-js ie7">
+/[if IE 8 ]<html lang="en" class="no-js ie8">
+/[if IE 9 ]<html lang="en" class="no-js ie9">
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
+%head
+  %meta{'charset' => 'utf-8'}
+  %title= page_title
+  %meta{'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
+  %meta{'http-equiv' => "X-UA-Compatible", :content => "IE=edge,chrome=1"}
+  %meta{'name' => "viewport", 'content' => "width=device-width; initial-scale=1.0; maximum-scale=1.0;"}
+  %link{'rel' => "shortcut icon", 'href' => "/favicon.ico"}
+  = open_graph_tags
+  = include_stylesheets :site, :media => 'all'
+  = csrf_meta_tag 
+  =yield :head
+%body{:id => page_namespace, :class => controller_name}
+  #page
     =yield
-    =include_javascripts :vendor
-    =include_javascripts :site
+  =include_javascripts :vendor
+  =include_javascripts :site
+  :javascript
+    Spot.init(#{js_vars});

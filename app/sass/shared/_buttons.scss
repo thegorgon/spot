@@ -1,0 +1,49 @@
+button {
+    display: block;
+    float: left;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px 0px 6px 0px; /* Links */
+    width: auto;
+    overflow: visible;
+}
+button[type]{
+    padding: 5px 0px 5px 0px; /* Firefox */
+    line-height: 17px; /* Safari */
+}
+button.black_sheen80x30 {
+  font-size: 16px;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #666;
+  color: #999;
+  width: 80px;
+  background: #333;
+  @include gradient_top_down(#333, #000, 100%);
+  @include right_border_radius(6px);
+  text-shadow: #000 0px -1px 0px;
+  .btntxt {
+    text-align: center;
+    line-height: 15px;
+    height: 30px;   
+  }
+  &:hover {
+    color: #BBB;
+    @include gradient_top_down(#333, #000, 50%);
+  }
+}
+.ie7 {
+  button.black_sheen80x30 {
+    .btntxt {
+      padding: 1px 0px 0px 0px; /* Firefox */
+    }
+  }  
+}
+.ie8 {
+  button.black_sheen80x30 {
+    .btntxt {
+      padding: 2px 0px 0px 0px; /* Firefox */
+    }
+  }
+}

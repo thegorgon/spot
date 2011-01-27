@@ -1,0 +1,15 @@
+.content
+  #logo
+    =image_tag "logos/gradient_script_340x270.png", :size => "340x270", :alt => "spot"
+  #message
+    %h1 Never Forget a Place
+    %p.title Spot for iPhone, Coming Soon
+    =form_for :preview, :url => preview_url, :html => {:id => "preview_form"} do |f|
+      =f.hidden_field :rid, :value => params[:rid]
+      %p.title=f.label :email, "Sign up for updates :"
+      =f.text_field :email, "placeholder" => "Enter your email address", "spellcheck" => "false", :type => "email", :class => "faded"
+      =button_tag(:class => "black_sheen80x30") do
+        Submit
+.links
+  =link_to "blog", "http://spotteam.tumblr.com/"
+  =link_to "twitter", "http://www.twitter.com/spotteam"
