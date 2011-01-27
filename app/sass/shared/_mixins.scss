@@ -90,7 +90,7 @@
 
 @mixin gradient_top_down($from, $to, $point: 100%) {
   background: -webkit-gradient(linear, left 0%, left $point, from($from), to($to));
-  background: -moz-linear-gradient($point 100% 90deg, $to, $from);
+  background: -moz-linear-gradient(top, $from, $to $point);
 }
 
 @mixin opacity($opacity) {

@@ -16,6 +16,11 @@
       color: #999;
       @include gradient_top_down(#333333, #444444, 20%);
     }
+    &::-webkit-input-placeholder {
+      text-shadow: #333 1px 1px 3px;
+      color: #999;
+      @include gradient_top_down(#333333, #444444, 20%);
+    }
   }
   .links {
     position: fixed;

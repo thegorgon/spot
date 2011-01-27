@@ -32,6 +32,10 @@ button.black_sheen80x30 {
     color: #BBB;
     @include gradient_top_down(#333, #000, 50%);
   }
+  &:active {
+    @include gradient_top_down(#000, #333, 100%);
+    color: #999;
+  }
 }
 .ie7 {
   button.black_sheen80x30 {
