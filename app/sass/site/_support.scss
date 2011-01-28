@@ -1,0 +1,24 @@
+.site_support {
+  #about {
+    margin: 0 auto;
+    padding: 30px 50px;
+    background: #000;
+    @include opacity(0.9);
+    width: 500px;
+    font-size: 15px;
+    text-align: center;
+    text-shadow: #444 1px 1px 0px;
+    p {
+      margin: 1em auto;
+    }
+    .divider {
+      border-top : 1px solid #333;
+      height: 0;
+      border-bottom : 1px solid #222;
+      margin: 1.5em 5em 0em;
+    }
+    .signature {
+      width: 300px;
+    }
+  }
+}
