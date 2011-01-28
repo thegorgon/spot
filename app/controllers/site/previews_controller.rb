@@ -1,5 +1,9 @@
 class Site::PreviewsController < Site::BaseController
   def index
+    respond_to do |format|
+      format.html 
+      format.js { default_page_render }
+    end
   end
   
   def create
@@ -9,7 +13,7 @@ class Site::PreviewsController < Site::BaseController
       wants.html
       wants.js do 
         if success
-          render :json => { :html => render_to_string(:partial => "share") }
+          default_page_render
         else
           render :json => { :errors => @preview.errors.full_messages }
         end

@@ -10,14 +10,22 @@
   %meta{'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
   %meta{'http-equiv' => "X-UA-Compatible", :content => "IE=edge,chrome=1"}
   %meta{'name' => "viewport", 'content' => "width=device-width; initial-scale=1.0; maximum-scale=1.0;"}
+  = auto_discovery_link_tag(:rss, "http://spotteam.tumblr.com/rss")
   = favicon_link_tag("/favicon.ico")
   = open_graph_tags
   = include_stylesheets :site, :media => 'all'
   = csrf_meta_tag 
   =yield :head
 %body{:id => page_namespace, :class => controller_name}
+  #bg
   #page
-    =yield
+    #hd= yield :hd
+    #bd= yield
+    #ft
+      #nav
+        =link_to "signup", root_path, :class => "page"      
+        =link_to "twitter", "http://www.twitter.com/spotteam", :target => "_new"      
+        =link_to "blog", blog_index_path, :class => "page"
   =include_javascripts :vendor
   =include_javascripts :site
   :javascript

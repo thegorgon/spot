@@ -24,5 +24,6 @@ Spot::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
   
   ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Geo'  
+  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Tumblr'  
 end
 

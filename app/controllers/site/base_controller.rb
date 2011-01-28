@@ -1,4 +1,4 @@
 class Site::BaseController < ApplicationController
   layout 'site'
-  helper 'site'
+  helper 'site'  
 end

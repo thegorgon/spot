@@ -1,0 +1,52 @@
+.site_blog {
+  #blog {
+    padding: 10px 0;
+    width: 800px;
+    margin: 0 auto;
+  }
+  #pagination {
+    font-size: 1.2em;
+    padding: 10px 0;
+    .last {
+      float: left;
+    }
+    .next {
+      float: right;
+    }
+    a {
+      color: #999;
+    }
+  }
+  .post {
+    margin: 0px auto 30px;
+    background: #fff;
+    color: #666;
+    padding: 40px;
+    font-size: 1.2em;
+    @include border_radius(20px);
+    .byline {
+      font-size: 0.8em;
+      color: #999;
+    }
+    &.last {
+      margin: 0 auto;
+    }
+    a {
+      color: #FF8419;
+    }
+  }
+  .photo {
+    text-align: center;
+    .caption {
+      margin: 1em 0 0.5em;
+    }
+  }
+  .regular {
+    h1 {
+      text-align: left;
+    }
+    p {
+      margin: 0.5em 0;
+    }
+  }
+}

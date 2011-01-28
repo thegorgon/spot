@@ -14,11 +14,23 @@
         $this.unbind('submit.ajaxForm');
         $this.bind('submit.ajaxForm', function(e) {
           e.preventDefault();
-          if ($.isFunction(options.save)) { options.save.apply(this); }
+          if ($.isFunction(options.start)) { options.start.apply(this); }
           $this.ajaxSubmit(options);
         });	    
       });
     },
+    ajaxLink: function(options) {
+      options = options || {};
+      this.filter('a').each(function() {
+        var $this = $(this);
+        $this.unbind('click.ajaxLink');
+        $this.bind('click.ajaxLink', function(e) {
+          e.preventDefault();
+          if ($.isFunction(options.start)) { options.start.apply(this); }
+          $this.ajaxClick(options);
+        });
+      });
+    },  
     ajaxClick: function(options) {
       var $this = $(this), success, method, httpMethod, data;
       options = options || {};

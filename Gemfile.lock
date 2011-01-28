@@ -69,6 +69,7 @@ GEM
     net-ssh (2.1.0)
     net-ssh-gateway (1.0.1)
       net-ssh (>= 1.99.1)
+    nokogiri (1.4.4)
     paperclip (2.3.8)
       activerecord
       activesupport
@@ -118,6 +119,7 @@ DEPENDENCIES
   jammit
   mongrel (= 1.2.0.pre2)
   mysql
+  nokogiri
   paperclip (~> 2.3)
   rails (= 3.0.3)
   ruby-debug19

@@ -1,0 +1,13 @@
+#blog
+  #logo
+    =image_tag "logos/gradient_script_340x270.png", :size => "170x135", :alt => "spot"
+  #posts
+    -@posts.each_with_index do |post, i|
+      =render :partial => "post", :object => post, :locals => {:first_or_last => first_or_last(@posts, i)}
+    #pagination
+      -if @posts.previous_page
+        .last
+          =link_to "< Older Items", blog_index_path(:page => @posts.previous_page, :per_page => params[:per_page])
+      -if @posts.next_page
+        .next
+          =link_to "Newer Items >", blog_index_path(:page => @posts.next_page, :per_page => params[:per_page])

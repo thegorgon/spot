@@ -1,0 +1,9 @@
+.post{:id => "post_#{post.id}", :class => "#{post.dom_class} #{first_or_last}"}
+  -if post.kind_of?(Tumblr::Regular)
+    %h1=post.title.html_safe
+    .byline=byline(post)
+    .body=post.body.html_safe
+  -elsif post.kind_of?(Tumblr::Photo)
+    .image=image_tag post.max_size.url, :width => [post.max_size.max_width, 700].min
+    .caption=post.caption.html_safe
+    .byline="Uploaded #{byline(post)}"

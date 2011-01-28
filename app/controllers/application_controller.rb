@@ -15,4 +15,13 @@ class ApplicationController < ActionController::Base
   end
   helper_method :controller_name
   
+  def page_render(options)
+    (options[:json] ||= {}).merge!(:page => {:namespace => page_namespace, :controller => controller_name})
+    render options
+  end
+  
+  def default_page_render
+    page_render :json => {:html => render_to_string(:action => params[:action], :layout => false)}
+  end
+  
 end
