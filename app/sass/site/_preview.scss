@@ -85,8 +85,9 @@
     @include opacity(0.9);
     text-align: center;
     color: #fff;
-    #kitten {
+    #joke {
       margin: 1em 0 2em;
+      cursor: pointer;
     }
     em {
       font-size: 10px;

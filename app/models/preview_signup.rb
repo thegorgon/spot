@@ -1,8 +1,9 @@
 class PreviewSignup < ActiveRecord::Base
   SEED_RID = 4372
-  CURRENT_TEST = 1
+  CURRENT_TESTS = [*2..4]
+  FORMATS = {2 => "gif"}
   validates :email, :presence => true, :format => { :with => EMAIL_REGEX }, :uniqueness => true
-  before_validation :set_test
+  before_validation :set_test, :on => :create
   after_create :credit_referrer
   
   def self.credit!(id)
@@ -18,6 +19,10 @@ class PreviewSignup < ActiveRecord::Base
     end
   end
   
+  def image_format
+    FORMATS[test] || "jpg"
+  end
+  
   def rid=(value)
     if value.to_i > SEED_RID
       self.referrer_id = value.to_i - SEED_RID
@@ -31,7 +36,7 @@ class PreviewSignup < ActiveRecord::Base
   private
   
   def set_test
-    self.test = CURRENT_TEST
+    self.test = CURRENT_TESTS[rand(CURRENT_TESTS.length)]
   end
   
   def credit_referrer

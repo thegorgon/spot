@@ -35,6 +35,9 @@
       $.extend(_vars, vars);
       $.logger.level(_vars.env == 'production' ? 'ERROR' : 'DEBUG');
     },
+    getVar: function(name) {
+      return _vars[name];
+    },
     behave: function() {
       $('[placeholder]').placeholder();
       $('[data-mode=select]').selectOnly();

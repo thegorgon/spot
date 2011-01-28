@@ -61,11 +61,6 @@
         return $.ajax(options);        
       }
     },
-    runValidations: function() {
-      $(this).filter('form').each(function() {
-        var form = $(this), valid = true;
-      });
-    },
     popup: function() {
       var wrapper = $("<div id=\"popup_wrapper\"></div>");
       wrapper.append(this).appendTo("body").css('top', $(document).height() * 0.5 - $(this).outerHeight() * 0.5 + $(document).scrollTop());

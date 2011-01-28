@@ -13,7 +13,20 @@
       }
     },
     site_previews: function() {
-      $('#preview_form').ajaxForm({
+      $('#joke img').live('click', function(e) {
+        e.preventDefault();
+        var id = parseInt($(this).attr('src').replace(/^.+joke_(\d)+\..+$/, "$1"), 10),
+          newId = (id + 1) > go.getVar('max_joke_id') ? 1 : id + 1,
+          format = "jpg",
+          newFormat = "jpg";
+        if (id == 2) {
+          format = "gif";
+        } else if (newId == 2) {
+          newFormat = "gif";
+        }
+        $(this).attr('src', $(this).attr('src').replace(id + "." + format, newId + "." + newFormat));
+      });
+      $('#preview_form').ajaxForm({ 
         save: function() {
           $(this).find('input,button').blur();
           $('#page .content').hide();
