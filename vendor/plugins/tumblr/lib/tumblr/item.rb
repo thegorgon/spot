@@ -45,7 +45,7 @@ module Tumblr
     end
     
     def author
-      @author ||= tags.first { |t| Tumblr.authors.include?(t.downcase) }
+      @author ||= tags.find { |t| Tumblr.authors.include?(t.downcase) }
     end
     
     def dom_class
