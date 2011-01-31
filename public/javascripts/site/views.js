@@ -15,28 +15,8 @@
       }
     },
     layout: function() {
-      options = {
-        start: function() {
-          var bd = $('#bd');
-          bd.fadeOut(function() {
-            bd.trigger('faded');
-          })
-        }, success: function(data) {
-          var html = $(data.html), bd = $("#bd"), body = $('body');
-          bd.bind("faded", function() {
-            bd.html(html).unbind("faded");
-            body.attr("id", data.page.namespace);
-            body.attr('class', data.page.controller);
-            go.Views.run();
-            bd.fadeIn();
-          });
-          if (!bd.is(":animated")) {
-            bd.trigger("faded");            
-          }
-        }
-      }
-      $("a.page").ajaxLink(options);
-      $("form").ajaxForm(options);
+      go.Navigator.link($("a.page"));
+      go.Navigator.form($("form.page"));
     },
     site_blog: function() {
       $('#pagination a').ajaxLink({

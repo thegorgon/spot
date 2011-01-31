@@ -19,6 +19,12 @@ class PreviewSignup < ActiveRecord::Base
     end
   end
   
+  def self.find_by_rid(rid)
+    if rid.to_i > SEED_RID
+      find_by_id(rid.to_i - SEED_RID)
+    end
+  end
+  
   def image_format
     FORMATS[test] || "jpg"
   end

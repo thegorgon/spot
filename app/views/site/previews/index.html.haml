@@ -5,7 +5,7 @@
     #message
       %h1 Never Forget a Place
       %p.title Spot for iPhone, Coming Soon
-      =form_for :preview, :url => preview_path, :html => {:id => "preview_form"} do |f|
+      =form_for :preview, :url => previews_path, :html => {:class => "page"} do |f|
         =f.hidden_field :rid, :value => params[:rid]
         %p.title=f.label :email, "Sign up for updates :"
         =f.text_field :email, "placeholder" => "Enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"

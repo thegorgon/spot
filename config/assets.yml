@@ -10,6 +10,7 @@ javascripts:
     - public/javascripts/shared/extensions.js
     - public/javascripts/shared/spot.js
     - public/javascripts/shared/behaviours.js
+    - public/javascripts/shared/navigator.js
     - public/javascripts/site/shared.js
     - public/javascripts/site/views.js
 stylesheets:

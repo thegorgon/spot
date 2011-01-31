@@ -34,6 +34,7 @@
     init: function(vars) {
       $.extend(_vars, vars);
       $.logger.level(_vars.env == 'production' ? 'ERROR' : 'DEBUG');
+      go.Navigator.init();
     },
     getVar: function(name) {
       return _vars[name];
