@@ -14,7 +14,7 @@
     @include gradient_top_down(#999999, #dddddd, 20%);
     &.placeholder {
       text-shadow: #333 1px 1px 3px;
-      color: #999;
+      color: #ccc;
       @include gradient_top_down(#333333, #444444, 20%);
     }
   }
@@ -40,7 +40,7 @@
     margin: 24px 0 0;
     font-size: 16px;
     padding: 0 0 5px 0;
-    text-shadow: #444 1px 1px 0px;
+    text-shadow: #000 0px 1px 0px;
     p {
       margin: 8px 0;
     }
@@ -94,7 +94,7 @@
 .ie7, .ie8 {
   .site_previews {
     input.faded {
-      color: #999;
+      color: #ccc;
     }
   }
 }

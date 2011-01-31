@@ -9,7 +9,9 @@
   %title= page_title
   %meta{'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
   %meta{'http-equiv' => "X-UA-Compatible", :content => "IE=edge,chrome=1"}
-  %meta{'name' => "viewport", 'content' => "width=device-width; initial-scale=1.0; maximum-scale=1.0;"}
+  = meta_tag("viewport", "width=device-width; initial-scale=1.0; maximum-scale=1.0;")
+  = meta_tag("keywords", "spot, iphone, app, application, place, wishlist")
+  = meta_tag("description", "Spot for iPhone lets you save and quickly recall friends' recommendations of places, like restaurants, bars, cafes, spas and other local shops.")
   = auto_discovery_link_tag(:rss, "http://spotteam.tumblr.com/rss")
   = favicon_link_tag("/favicon.ico")
   = open_graph_tags

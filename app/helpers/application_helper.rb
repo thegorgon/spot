@@ -1,6 +1,6 @@
 module ApplicationHelper
   def page_title
-    @page_title || "Spot App"
+    @page_title || "Spot App - Never Forget a Place"
   end
   
   def first_or_last(items, i)

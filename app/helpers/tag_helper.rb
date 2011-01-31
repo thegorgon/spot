@@ -28,14 +28,14 @@ module TagHelper
   end
   
   def open_graph_tags
-    tags = ""
+    tags = []
     tags << meta_tag("og:title", "Spot App")
     tags << meta_tag("og:url", "#{request.url}")
     tags << meta_tag("og:image", "http://www.spot-app.com/images/logos/og_image.png")
     tags << meta_tag("og:site_name", "Spot App")
     tags << meta_tag("og:description", "Spot App, Coming Soon")
     tags << meta_tag("fb:admins", "100000043724571")
-    tags.html_safe
+    tags.join("\n").html_safe
   end
   
   def meta_tag(property, content)
