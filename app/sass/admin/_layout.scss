@@ -22,7 +22,7 @@ body, html, input, textarea, button {
   z-index: 10;
   margin: 0 auto;
   background: #ddd;
-  @include gradient_top_down(#ddd, #fff, 300px);
+  @include gradient_top_down(#ddd, #fff, 80%);
   @include box_shadow("5px -1px 3px #999, -5px -1px 3px #999");
   a {
     color: #333;
