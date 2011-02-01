@@ -13,6 +13,15 @@ javascripts:
     - public/javascripts/shared/navigator.js
     - public/javascripts/site/shared.js
     - public/javascripts/site/views.js
+  admin:
+    - public/javascripts/shared/extensions.js
+    - public/javascripts/shared/spot.js
+    - public/javascripts/shared/behaviours.js
+    - public/javascripts/shared/navigator.js
+    - public/javascripts/admin/shared.js
+    - public/javascripts/admin/views.js
 stylesheets:
   site:
     - public/stylesheets/site.css
+  admin:
+    - public/stylesheets/admin.css

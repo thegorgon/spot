@@ -93,6 +93,12 @@
   background: -moz-linear-gradient(top, $from, $to $point);
 }
 
+@mixin box_shadow($shadow) {
+  -moz-box-shadow: $shadow;
+  -webkit-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
+
 @mixin opacity($opacity) {
   opacity: $opacity;
   filter: unquote("alpha(opacity=") $opacity * 100 unquote(")");
@@ -103,5 +109,15 @@
 // Don't allow wrapping.
 @mixin nowrap {
   white-space: nowrap; 
+}
 
+// Clearfix for containers with all floated elements.
+@mixin clearfix {
+  overflow: hidden;
+  // This makes ie6 get layout
+  display: inline-block;
+  // and this puts it back to block
+  & {
+    display: block;    
+  }
 }

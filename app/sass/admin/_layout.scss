@@ -1,0 +1,69 @@
+body, html {
+  height: 100%;
+  width: 100%;
+  font-size: 12px;
+}
+body, html, input, textarea, button {
+  font-family: 'Helvetica Neue', 'Helvetica', 'Lucida Grande', 'Arial', sans-serif;
+}
+#bg {
+  z-index: 1;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: #ffffff url(/images/backgrounds/paisley_light_transparent.jpg) no-repeat fixed center center;
+}
+#page {
+  min-height: 100%;
+  width: 1000px;
+  position: relative;
+  z-index: 10;
+  margin: 0 auto;
+  background: #ddd;
+  @include gradient_top_down(#ddd, #fff, 300px);
+  @include box_shadow("5px -1px 3px #999, -5px -1px 3px #999");
+  a {
+    color: #333;
+    font-weight: bold;
+    &:hover {
+      color: #ff8419;
+    };
+  }
+  #hd {
+    margin: 0;
+    height: 100px;
+    padding: 15px;
+    background: #000000 url(/images/backgrounds/paisley_dark_centerfade.jpg) no-repeat fixed center center;
+    #logo {
+      float: left;
+    }
+    #nav {
+      float: right;
+      padding: 80px 0 0 0;
+      text-align: right;
+      font-size: 1.5em;
+      a {
+        color: #ddd;
+        font-weight: bold;
+        &:hover {
+         color: #ff8419;
+        }
+      }
+    }
+  }
+  #bd {
+    padding: 5px 10px 10px;
+  }
+}
+h1.title {
+  font-size: 2em;
+  margin: 10px auto;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}

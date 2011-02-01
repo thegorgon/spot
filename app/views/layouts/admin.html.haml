@@ -1,0 +1,29 @@
+!!! 5
+/[if lt IE 7 ]<html lang="en" class="no-js ie6">
+/[if IE 7 ]<html lang="en" class="no-js ie7">
+/[if IE 8 ]<html lang="en" class="no-js ie8">
+/[if IE 9 ]<html lang="en" class="no-js ie9">
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
+%head
+  %meta{'charset' => 'utf-8'}
+  %title= page_title
+  %meta{'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
+  %meta{'http-equiv' => "X-UA-Compatible", :content => "IE=edge,chrome=1"}
+  = meta_tag("viewport", "width=device-width; initial-scale=1.0; maximum-scale=1.0;")
+  = favicon_link_tag("/favicon.ico")
+  = include_stylesheets :admin, :media => 'all'
+  = csrf_meta_tag 
+  = yield :head
+%body{:id => page_namespace, :class => controller_name}
+  #bg
+  #page
+    #hd
+      #logo
+        =image_tag "logos/gradient_script_340x270.png", :height => "100", :alt => "spot"
+      #nav
+        =link_to "Places", admin_places_url
+    #bd.clearfix= yield
+  =include_javascripts :vendor
+  =include_javascripts :admin
+  :javascript
+    Spot.init(#{js_vars});

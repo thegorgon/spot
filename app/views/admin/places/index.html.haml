@@ -1,0 +1,33 @@
+.manager
+  .top.clearfix
+    .pagination
+      -if @places.next_page
+        .next=link_to "Next &rarr;".html_safe, admin_places_path(:page => @places.next_page), :class => "page"
+      -if @places.previous_page
+        .previous=link_to "&larr; Previous".html_safe, admin_places_path(:page => @places.previous_page), :class => "page"
+    %h1.title Places
+    / .new
+    /   =link_to "New", new_admin_place_path, :class => "page"
+  %table.data
+    %thead
+      %tr
+        %th Image
+        %th Id
+        %th Name
+        %th Address
+        %th Document
+        %th Lat, Lng
+    %tbody
+      -@places.each do |p|
+        %tr.center
+          %td= image_tag p.image.url(:i117x84), :height => 42
+          %td= p.id
+          %td= p.full_name
+          %td= p.full_address
+          %td= p.document
+          %td= p.to_lat_lng
+  .pagination.bottom
+    -if @places.next_page
+      .next=link_to "Next &rarr;".html_safe, admin_places_path(:page => @places.next_page), :class => "page"
+    -if @places.previous_page
+      .previous=link_to "&larr; Previous".html_safe, admin_places_path(:page => @places.previous_page), :class => "page"

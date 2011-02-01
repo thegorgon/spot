@@ -1,0 +1,17 @@
+%ul.form_wrapper
+  -form_for [:admin, @place] do |f|
+    %li
+      =f.label :full_name, "Name : "
+      =f.text_field :full_name
+    %li
+      =f.label :full_address, "Address : "
+      =f.text_field :full_address
+    %li
+      =f.label :lat, "Lat : "
+      =f.text_field :lat
+    %li
+      =f.label :lng, "Lng : "
+      =f.text_field :lng
+    %li.buttons
+      =button_tag :class => "rndblk_80x30" do
+        Save

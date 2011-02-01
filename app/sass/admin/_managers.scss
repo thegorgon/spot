@@ -1,0 +1,85 @@
+.manager {
+  .breadcrumb {
+    font-size: 1.5em;
+    margin: 10px 1em;
+    font-weight: bold;
+  }
+  .top {
+    .title {
+      float: left;
+      margin: 0.5em 0.5em 0.5em 0;
+    }
+    .new, .pagination {
+      margin: 1.5em 0 0 0;
+      padding: 5px 0;
+    }
+  }
+  .pagination {
+    padding: 5px 0;
+    width: 125px;
+    float: right;
+    clear: both;
+    .next {
+      float: right;
+    } 
+    .previous {
+      float: right;
+    }
+  }
+  .new {
+    float: left;
+  }
+  table.data {
+    width: 100%;
+    tbody {
+      tr {
+        border-bottom: 1px solid #bbb;
+        &:hover {
+        }
+      }
+    }
+    th {
+      padding: 5px 3px;
+      background: #333;
+      color: #ddd;
+      text-align: center;
+      text-shadow: 0px 1px 0px #000;
+    }
+    td {
+      padding: 10px 5px;
+    }
+    .center {
+      text-align: center;
+    }
+  }
+  .form_wrapper {
+    list-style: none;      
+    margin: 1em;
+    width: 297px;
+    li {
+      @include clearfix;
+      padding: 5px;
+      &.buttons {
+        text-align: right;
+        button {
+          float: right;
+        }
+      }
+    }
+    input {
+      border: 1px solid #999;
+      padding: 5px;
+      background: #fff;
+      width: 195px;
+      @include border_radius(5px);
+      @include gradient_top_down(#ccc, #fff, 10%);
+    }
+    label {
+      font-weight: bold;
+      line-height: 25px;
+      display: block;
+      float: left;
+      width: 80px;
+    }
+  }
+}

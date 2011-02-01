@@ -12,7 +12,32 @@ button[type]{
     padding: 5px 0px 5px 0px; /* Firefox */
     line-height: 17px; /* Safari */
 }
-button.black_sheen80x30 {
+button.rndblk_80x30 {
+  font-size: 16px;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #666;
+  color: #ccc;
+  width: 80px;
+  background: #333;
+  @include gradient_top_down(#333, #000, 100%);
+  @include border_radius(6px);
+  text-shadow: #000 0px -1px 0px;
+  .btntxt {
+    text-align: center;
+    line-height: 15px;
+    height: 30px;   
+  }
+  &:hover {
+    color: #BBB;
+    @include gradient_top_down(#333, #000, 50%);
+  }
+  &:active {
+    @include gradient_top_down(#000, #333, 100%);
+    color: #999;
+  }
+}
+button.hlfrndblk_80x30 {
   font-size: 16px;
   height: 30px;
   line-height: 30px;

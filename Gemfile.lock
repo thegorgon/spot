@@ -30,6 +30,10 @@ GEM
     activesupport (3.0.3)
     archive-tar-minitar (0.5.2)
     arel (2.0.7)
+    aws-s3 (0.6.2)
+      builder
+      mime-types
+      xml-simple
     builder (2.1.2)
     capistrano (2.5.19)
       highline
@@ -107,12 +111,15 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.24)
+    will_paginate (3.0.pre2)
+    xml-simple (1.0.14)
     yui-compressor (0.9.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-s3
   capistrano
   curb
   haml
@@ -123,3 +130,4 @@ DEPENDENCIES
   paperclip (~> 2.3)
   rails (= 3.0.3)
   ruby-debug19
+  will_paginate (~> 3.0.pre2)

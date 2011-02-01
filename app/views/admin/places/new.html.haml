@@ -1,0 +1,6 @@
+.manager
+  .breadcrumb
+    =link_to "Places", admin_places_path
+    &rarr;
+    New Place
+  =render :partial => "form", :object => @place, :as => :place
