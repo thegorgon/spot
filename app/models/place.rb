@@ -21,6 +21,7 @@ class Place < ActiveRecord::Base
     places = google.collect do |gp|
       gp.bind_to_place!
     end
+    places.compact!
     places
   end
 
@@ -46,6 +47,8 @@ class Place < ActiveRecord::Base
       :_class => self.class.to_s,
       :name => full_name,
       :address => full_address,
+      :lat => lat,
+      :lng => lng,
       :id => id,
       :thumbnail_data => image_thumbnail,
       :image_url_640x400 => image.file?? image.url(:i640x400) : nil,

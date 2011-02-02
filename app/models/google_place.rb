@@ -63,7 +63,9 @@ class GooglePlace < ActiveRecord::Base
       new_place.save
       self.place = new_place
     end
-    save! if changed?
+    if place_id && changed?
+      save!
+    end
     place
   end
   
