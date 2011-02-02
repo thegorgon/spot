@@ -11,7 +11,12 @@ class Place < ActiveRecord::Base
     :s3_credentials => "#{Rails.root}/config/s3.yml",
     :bucket         => S3_BUCKET
   
+  # Accepts any normalizeable LatLng params (e.g. lat and lng, ll, origin)
+  # Place.search(:q => "query", :r => accuracy, :lat => Lat, :lng => Lng, :page => 2)
   def self.search(params)
+    params[:query] = (params[:q] || params[:query]).to_s
+    params[:radius] = (params[:r] || params[:radius]).to_f
+    params[:page] = [1, params[:page].to_i].max
     google = GooglePlace.search(params)
     places = google.collect do |gp|
       gp.bind_to_place!

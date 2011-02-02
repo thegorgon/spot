@@ -1,6 +1,8 @@
 class GooglePlace < ActiveRecord::Base
   belongs_to :place
   
+  # Accepts any normalizeable LatLng params (e.g. lat and lng, ll, origin)
+  # GooglePlace.search(:query => "query", :radius => accuracy, :lat => Lat, :lng => Lng, :page => 2, :exclude => "Daves")
   def self.search(*args)
     origin = Geo::LatLng.normalize(*args)
     options = args.extract_options!
