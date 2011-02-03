@@ -27,8 +27,10 @@ module Tumblr
     end
     
     def self.raw(params={})
-      Rails.logger.info "tumblr : Fetching url #{url(params)}"
-      curl = Curl::Easy.perform(url(params))
+      fetch_url = url
+      fetch_body = params.merge!(:email => Tumblr.email, :password => Tumblr.password).to_query
+      Rails.logger.info "tumblr : Fetching url #{fetch_url} with body #{fetch_body}"
+      curl = Curl::Easy.http_post(fetch_url, fetch_body)
       curl.body_str
     end
 
@@ -54,7 +56,7 @@ module Tumblr
 
     private
 
-    def self.url(params)
+    def self.url(params={})
       url = "http://#{Tumblr.account}.tumblr.com/api/read"
       url += "?#{params.to_query}" if params.keys.length > 0
       url
