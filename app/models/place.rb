@@ -46,7 +46,7 @@ class Place < ActiveRecord::Base
     hash = {
       :_class => self.class.to_s,
       :name => full_name,
-      :address => full_address,
+      :address => full_address.to_s.split("\n"),
       :lat => lat,
       :lng => lng,
       :id => id,
