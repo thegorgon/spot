@@ -57,7 +57,7 @@ module Tumblr
     private
 
     def self.url(params={})
-      url = "http://#{Tumblr.account}.tumblr.com/api/read"
+      url = "https://#{Tumblr.account}.tumblr.com/api/read"
       url += "?#{params.to_query}" if params.keys.length > 0
       url
     end
