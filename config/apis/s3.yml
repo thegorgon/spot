@@ -1,0 +1,16 @@
+common: &common
+  access_key_id: AKIAIXXXNHQHYJ5LPH6A
+  secret_access_key: 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
+  host: http://s3.amazonaws.com
+
+development:
+  <<: *common
+  bucket: spot-development
+    
+test:
+  <<: *common
+  bucket: spot-test
+
+production:
+  <<: *common
+  bucket: spot-production

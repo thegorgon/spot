@@ -8,8 +8,8 @@ class CreatePlaces < ActiveRecord::Migration
       t.string    :phone_number
       t.string    :source
       t.integer   :status, :limit => 4, :null => false, :default => 0
-      t.decimal   :lat, :precision => 11, :scale => 7
-      t.decimal   :lng, :precision => 11, :scale => 7
+      t.decimal   :lat, :precision => 11, :scale => 9
+      t.decimal   :lng, :precision => 12, :scale => 9
       t.text      :image_thumbnail
       t.string    :image_file_name
       t.datetime  :image_updated_at
@@ -28,8 +28,8 @@ class CreatePlaces < ActiveRecord::Migration
       t.string    :country
       t.text      :address
       t.string    :phone_number
-      t.decimal   :lat, :precision => 11, :scale => 7, :null => false
-      t.decimal   :lng, :precision => 11, :scale => 7, :null => false
+      t.decimal   :lat, :precision => 11, :scale => 9, :null => false
+      t.decimal   :lng, :precision => 12, :scale => 9, :null => false
       t.timestamps
     end
     add_index :google_places, :cid, :unique => true

@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(:version => 20110131201616) do
     t.string   "country"
     t.text     "address"
     t.string   "phone_number"
-    t.decimal  "lat",            :precision => 11, :scale => 7, :null => false
-    t.decimal  "lng",            :precision => 11, :scale => 7, :null => false
+    t.decimal  "lat",            :precision => 11, :scale => 9, :null => false
+    t.decimal  "lng",            :precision => 12, :scale => 9, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(:version => 20110131201616) do
     t.string   "phone_number"
     t.string   "source"
     t.integer  "status",                                          :default => 0, :null => false
-    t.decimal  "lat",              :precision => 11, :scale => 7
-    t.decimal  "lng",              :precision => 11, :scale => 7
+    t.decimal  "lat",              :precision => 11, :scale => 9
+    t.decimal  "lng",              :precision => 12, :scale => 9
     t.text     "image_thumbnail"
     t.string   "image_file_name"
     t.datetime "image_updated_at"
