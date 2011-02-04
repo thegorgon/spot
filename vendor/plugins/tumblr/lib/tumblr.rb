@@ -1,21 +1,35 @@
 module Tumblr
-  def self.authors
-    ["julia", "jesse", "niels", "kent", "jim"]
-  end
+  class << self
+    def options
+      @options ||= {}
+    end
+    
+    def options=(value)
+      @options = value
+    end
+  
+    def config
+      @config ||= YAML.load_file(@options[:config_file] || File.join(Rails.root, 'config', 'tumblr.yml'))["tumblr"].symbolize_keys!
+    end
+  
+    def authors
+      config[:authors] || []
+    end
 
-  def self.account
-    "spotteam"
-  end
+    def account
+      config[:account]
+    end
   
-  def self.email
-    "tumblr@placepopinc.com"
-  end
+    def email
+      config[:email]
+    end
   
-  def self.password
-    "happy00ga"
-  end
+    def password
+      config[:password]
+    end
   
-  def self.page_size
-    20
+    def page_size
+      @page_size ||= @options[:page_size] ? @options[:page_size].to_i : 20
+    end
   end
 end
