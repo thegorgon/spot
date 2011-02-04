@@ -39,10 +39,13 @@ module Geo
     "inc",
     "corp",
     "llc",
+    "dds",
+    "esq",
+    "md",
+    "dr",
     "st",
     "of",
     "the",
-    "a",
     "an",
     "le",
     "la",
@@ -63,6 +66,7 @@ module Geo
     "store",
     "shop",
     "cafe",
+    "salon",
     "gelateria"
   ]
   

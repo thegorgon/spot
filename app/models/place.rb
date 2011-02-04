@@ -41,6 +41,11 @@ class Place < ActiveRecord::Base
     end
   end
   
+  def reclean!
+    clean
+    save!
+  end
+  
   def as_json(*args)
     options = args.extract_options!
     hash = {
