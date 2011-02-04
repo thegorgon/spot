@@ -11,6 +11,7 @@ class GooglePlace < ActiveRecord::Base
     json = JSON.parse(request.body_str)
     results = json["responseData"]["results"]
     results.map! { |r| parse(r) }
+    results.compact!
     results = results.hash_by { |gp| gp.cid }
     saved = where(:cid => results.keys).includes(:place).all.hash_by { |gp| gp.cid }
     results.keys.each do |cid|
@@ -37,10 +38,8 @@ class GooglePlace < ActiveRecord::Base
     
   def self.parse(result)
     place = new
-    if result && result.kind_of?(Hash)
-      if result['url'].present? && (cid = result['url'].gsub(/.*cid=(.*)$/, '\1')) && cid.to_i > 0
-        place.cid = cid.to_i.to_s
-      end
+    if result && result.kind_of?(Hash) && result['url'].present? && (cid = result['url'].gsub(/.*cid=(.*)$/, '\1')) && cid.to_i > 0
+      place.cid = cid.to_i.to_s
       place.name = result['titleNoFormatting']
       place.street_address = result['streetAddress'] 
       place.listing_type = result['listingType']
@@ -51,8 +50,10 @@ class GooglePlace < ActiveRecord::Base
       place.phone_number = result['phoneNumbers'] && result['phoneNumbers'].first.kind_of?(Hash) ? result['phoneNumbers'].first['number'] : nil
       place.lat = result['lat'].to_f
       place.lng = result['lng'].to_f
+      place
+    else
+      nil
     end
-    place
   end
     
   def bind_to_place!

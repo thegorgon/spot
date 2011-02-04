@@ -16,6 +16,7 @@ class CreatePlaces < ActiveRecord::Migration
       t.integer   :wishlist_count, :null => false, :default => 0
       t.timestamps
     end
+    add_index :places, [:lat, :lng]
         
     create_table :google_places do |t|
       t.string    :cid, :null => false
@@ -34,6 +35,7 @@ class CreatePlaces < ActiveRecord::Migration
     end
     add_index :google_places, :cid, :unique => true
     add_index :google_places, :place_id
+    add_index :google_places, [:lat, :lng]
   end
 
   def self.down
