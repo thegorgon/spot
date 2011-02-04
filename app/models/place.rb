@@ -8,7 +8,7 @@ class Place < ActiveRecord::Base
     :styles => { :i640x400 => "640x400#", :i234x168 => "234x168#", :i117x84 => "117x84#" }, 
     :default_url => "/images/defaults/places/:style.png",
     :storage        => :s3,
-    :s3_credentials => "#{Rails.root}/config/s3.yml",
+    :s3_credentials => "#{Rails.root}/config/apis/s3.yml",
     :bucket         => S3_BUCKET
   
   # Accepts any normalizeable LatLng params (e.g. lat and lng, ll, origin)
@@ -47,8 +47,8 @@ class Place < ActiveRecord::Base
       :_class => self.class.to_s,
       :name => full_name,
       :address => full_address.to_s.split("\n"),
-      :lat => lat,
-      :lng => lng,
+      :lat => lat.to_f,
+      :lng => lng.to_f,
       :id => id,
       :thumbnail_data => image_thumbnail,
       :image_url_640x400 => image.file?? image.url(:i640x400) : nil,
