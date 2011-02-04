@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20110131201616) do
   end
 
   add_index "google_places", ["cid"], :name => "index_google_places_on_cid", :unique => true
+  add_index "google_places", ["lat", "lng"], :name => "index_google_places_on_lat_and_lng"
   add_index "google_places", ["place_id"], :name => "index_google_places_on_place_id"
 
   create_table "places", :force => true do |t|
@@ -49,6 +50,8 @@ ActiveRecord::Schema.define(:version => 20110131201616) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "places", ["lat", "lng"], :name => "index_places_on_lat_and_lng"
 
   create_table "preview_signups", :force => true do |t|
     t.string  "email",                         :null => false

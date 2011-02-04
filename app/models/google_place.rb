@@ -8,16 +8,20 @@ class GooglePlace < ActiveRecord::Base
     options = args.extract_options!
     raise ArgumentError, "Invalid GooglePlace search: Please provide a normalizeable LatLng in your arguments" unless origin
     request = Curl::Easy.perform(search_url(origin, options))
-    json = JSON.parse(request.body_str)
-    results = json["responseData"]["results"]
-    results.map! { |r| parse(r) }
-    results.compact!
-    results = results.hash_by { |gp| gp.cid }
-    saved = where(:cid => results.keys).includes(:place).all.hash_by { |gp| gp.cid }
-    results.keys.each do |cid|
-      results[cid] = saved[cid] if saved[cid]
+    json = JSON.parse(request.body_str) rescue nil
+    if false && (json && json["responseData"] && json["responseData"]["results"])
+      results = json["responseData"]["results"]
+      results.map! { |r| parse(r) }
+      results.compact!
+      results = results.hash_by { |gp| gp.cid }
+      saved = where(:cid => results.keys).includes(:place).all.hash_by { |gp| gp.cid }
+      results.keys.each do |cid|
+        results[cid] = saved[cid] if saved[cid]
+      end
+      results.values
+    else
+      raise ExternalServiceException, "Invalid results from google place search"
     end
-    results.values
   end
   
   def self.search_url(*args)
