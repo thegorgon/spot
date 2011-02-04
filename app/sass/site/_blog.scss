@@ -46,7 +46,9 @@
       text-align: left;
     }
     p {
-      margin: 0.5em 0;
+      padding: 0.5em 0;
+      display: block;
+      clear: both;
     }
   }
 }
