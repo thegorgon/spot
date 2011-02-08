@@ -13,6 +13,7 @@ class CreatePlaces < ActiveRecord::Migration
       t.text      :image_thumbnail
       t.string    :image_file_name
       t.datetime  :image_updated_at
+      t.string    :image_attribution
       t.integer   :wishlist_count, :null => false, :default => 0
       t.timestamps
     end

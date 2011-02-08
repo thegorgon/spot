@@ -4,6 +4,7 @@ development:
   adapter: mysql
   database: spot_development
   username: root
+  encoding: utf8
   pool: 5
   timeout: 5000
 
@@ -14,12 +15,14 @@ test:
   adapter: mysql
   database: spot_test
   username: root
+  encoding: utf8
   pool: 5
   timeout: 5000
 
 production:
   adapter: mysql
   host: masterdb.ec2
+  encoding: utf8
   port: 3306
   database: spot_production
   username: spot
