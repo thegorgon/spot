@@ -5,6 +5,9 @@ class CreatePlaces < ActiveRecord::Migration
       t.string    :full_address
       t.string    :clean_name, :null => false
       t.string    :clean_address
+      t.string    :city
+      t.string    :region
+      t.string    :country
       t.string    :phone_number
       t.string    :source
       t.integer   :status, :limit => 4, :null => false, :default => 0

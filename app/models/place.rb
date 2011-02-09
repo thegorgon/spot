@@ -57,7 +57,8 @@ class Place < ActiveRecord::Base
       :id => id,
       :thumbnail_data => image_thumbnail,
       :image_url_640x400 => image.file?? image.url(:i640x400) : nil,
-      :image_url_234x168 => image.file?? image.url(:i234x168) : nil
+      :image_url_234x168 => image.file?? image.url(:i234x168) : nil,
+      :image_url => image.file?? image.url() : nil
     }
   end
 

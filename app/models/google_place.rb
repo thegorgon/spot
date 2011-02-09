@@ -76,7 +76,7 @@ class GooglePlace < ActiveRecord::Base
   
   def to_place
     p = Place.new
-    [:lat, :lng, :phone_number].each do |k|
+    [:lat, :lng, :city, :region, :country, :phone_number].each do |k|
       p.send("#{k}=", send(k))
     end
     p.full_address = address
