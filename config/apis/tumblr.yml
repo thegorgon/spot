@@ -2,7 +2,7 @@ tumblr:
   email: "tumblr@placepopinc.com"
   password: "happy00ga"
   account: "spotteam"
-  page_size: 5
+  page_size: 20
   authors:
     - julia
     - jesse
