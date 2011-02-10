@@ -1,0 +1,7 @@
+google:
+  api_keys:
+    www.spot-app.com: "ABQIAAAAzgjbevMRcpm5BXIEj488HBQS9UNXW4jdSbNphjdDSUzPGxyVMBRB0uMnraCMzhLISEpNSiV1tGzk6g"
+    m.spot-app.com: "ABQIAAAAzgjbevMRcpm5BXIEj488HBRkm-kHKQBGnA4v8xccheAipMDKvxTxo50GgGN4xYuF_cZj-K0-7UXYlw"
+    www.rails.local:3000: "ABQIAAAAzgjbevMRcpm5BXIEj488HBTeGK9jxe-wcMjHONDpAmUmUiJhqxTUIhljm2AxLeEtBrr29GSr5Vr8vQ"
+    m.rails.local:3000: "ABQIAAAAzgjbevMRcpm5BXIEj488HBTs7iQ7QxVm48tT9NOxjuILOpYD5RSQDt7de5B9Q_3hXqywoMl6o2dlKQ"
+    localhost:3000: "ABQIAAAAzgjbevMRcpm5BXIEj488HBTJQa0g3IQ9GZqIMmInSLzwtGDKaBTpCFtzaqcncVOljUfBNkGxk5xEEQ"

@@ -34,19 +34,23 @@ ActiveRecord::Schema.define(:version => 20110131201616) do
   add_index "google_places", ["place_id"], :name => "index_google_places_on_place_id"
 
   create_table "places", :force => true do |t|
-    t.string   "full_name",                                                      :null => false
+    t.string   "full_name",                                                       :null => false
     t.string   "full_address"
-    t.string   "clean_name",                                                     :null => false
+    t.string   "clean_name",                                                      :null => false
     t.string   "clean_address"
+    t.string   "city"
+    t.string   "region"
+    t.string   "country"
     t.string   "phone_number"
     t.string   "source"
-    t.integer  "status",                                          :default => 0, :null => false
-    t.decimal  "lat",              :precision => 11, :scale => 9
-    t.decimal  "lng",              :precision => 12, :scale => 9
+    t.integer  "status",                                           :default => 0, :null => false
+    t.decimal  "lat",               :precision => 11, :scale => 9
+    t.decimal  "lng",               :precision => 12, :scale => 9
     t.text     "image_thumbnail"
     t.string   "image_file_name"
     t.datetime "image_updated_at"
-    t.integer  "wishlist_count",                                  :default => 0, :null => false
+    t.string   "image_attribution"
+    t.integer  "wishlist_count",                                   :default => 0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

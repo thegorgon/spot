@@ -34,7 +34,8 @@
     tbody {
       tr {
         border-bottom: 1px solid #bbb;
-        &:hover {
+        &.loading {
+          @include opacity(0.5);
         }
       }
     }

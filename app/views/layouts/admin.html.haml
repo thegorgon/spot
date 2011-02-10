@@ -23,6 +23,7 @@
       #nav
         =link_to "Places", admin_places_url
     #bd.clearfix= yield
+  =google_js_api_include(:load => {:search => "1"})
   =include_javascripts :vendor
   =include_javascripts :admin
   :javascript

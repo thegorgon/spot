@@ -16,4 +16,26 @@ class Admin::PlacesController < Admin::BaseController
     @place.save
     respond_with(@place)
   end
+  
+  def edit
+    @place = Place.find_by_id(params[:id])
+  end
+  
+  def update
+    @place = Place.find_by_id(params[:id])
+    @place.attributes = params[:place]
+    success = @place.save
+    respond_to do |format|
+      format.js { render :json => { :html => {:row => render_to_string(:partial => "place_row", :object => @place, :as => :place) } } }
+    end
+  end
+  
+  def images
+    @place = Place.find_by_id(params[:id])
+    @search = ImageSearch.new(@place, request)
+    @images = @search.results
+    respond_to do |format|
+      format.js { render :json => { :html => render_to_string(:partial => "images") } }
+    end
+  end
 end

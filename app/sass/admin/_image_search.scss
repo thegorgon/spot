@@ -1,0 +1,27 @@
+.image_search_results {
+  height: 500px;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  .section {
+    clear: both;
+    padding: 0.5em 0;
+  }
+  h1 {
+    padding: 0.5em 0;
+  }
+  .image_potential {
+    display: block;
+    float: left;
+    margin: 0.25em;
+    border: 1px solid #333;
+    height: 90px;
+    width: 90px;
+    @include border_radius(3px);
+    background: #ddd no-repeat center center;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid #ff8419;
+    }
+  }
+}

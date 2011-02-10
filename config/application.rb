@@ -38,9 +38,9 @@ module Spot
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-    
+    # Set the Console Logger to STDOUT
     config.logger = Logger.new(STDOUT) if defined? Rails::Console
-        
+    # Set the app secret
     config.secret = "6f0b012c7d37f3357d137b30968bc67cf61a4bc4956ddbbf1896e9ff9dba5f7ef258705a6e894c9f39998360fe857dfba18e409b8b6f5ba2164f361fe948ca9d"
   end
 end

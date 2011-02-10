@@ -22,8 +22,9 @@ Spot::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
-  
+    
+  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Flickr'  
   ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Geo'  
-  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Tumblr'  
+  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Google'  
 end
 

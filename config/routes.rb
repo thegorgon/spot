@@ -19,7 +19,8 @@ Spot::Application.routes.draw do
   
   namespace "admin" do
     resources :places do
-      collection do 
+      member do
+        get "images" 
       end
     end
     root :to => "home#index"

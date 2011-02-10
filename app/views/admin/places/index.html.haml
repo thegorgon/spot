@@ -17,15 +17,10 @@
         %th Address
         %th Document
         %th Lat, Lng
+        %th Actions
     %tbody
       -@places.each do |p|
-        %tr.center
-          %td= image_tag p.image.url(:i117x84), :height => 42
-          %td= p.id
-          %td= p.full_name
-          %td= p.full_address
-          %td= p.document
-          %td= p.to_lat_lng
+        =render :partial => "place_row", :object => p, :as => :place
   .pagination.bottom
     -if @places.next_page
       .next=link_to "Next &rarr;".html_safe, admin_places_path(:page => @places.next_page), :class => "page"

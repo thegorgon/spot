@@ -1,8 +1,11 @@
 class Place < ActiveRecord::Base
   validates :full_name, :presence => true
   before_validation :clean, :on => :create
+  after_validation :download_external_image
   cattr_accessor :per_page
   @@per_page = 15
+  attr_writer :external_image_url
+  serialize :image_attribution, Hash
   acts_as_mappable
   has_attached_file :image, 
     :styles => { :i640x400 => "640x400#", :i234x168 => "234x168#", :i117x84 => "117x84#" }, 
@@ -35,23 +38,35 @@ class Place < ActiveRecord::Base
     "#{clean_name} : #{clean_address}"
   end
   
+  def name
+    full_name
+  end
+  
+  def address_lines
+    full_address.to_s.split("\n")
+  end
+  
+  def address
+    full_address
+  end
+  
   def source_place
     if source
       source.classify.constantize.where(:place_id => id).order("id ASC").first
     end
   end
-  
+    
   def reclean!
     clean
     save!
   end
-  
+    
   def as_json(*args)
     options = args.extract_options!
     hash = {
       :_class => self.class.to_s,
       :name => full_name,
-      :address => full_address.to_s.split("\n"),
+      :address => address_lines,
       :lat => lat.to_f,
       :lng => lng.to_f,
       :id => id,
@@ -67,6 +82,12 @@ class Place < ActiveRecord::Base
   def clean
     self.clean_name = Geo::Cleaner.clean(:name => full_name)
     self.clean_address = Geo::Cleaner.clean(:address => full_address)
+  end
+  
+  def download_external_image
+    if @external_image_url.present?
+      self.image = open(@external_image_url)
+    end
   end
   
 end
