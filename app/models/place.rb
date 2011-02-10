@@ -8,10 +8,11 @@ class Place < ActiveRecord::Base
   serialize :image_attribution, Hash
   acts_as_mappable
   has_attached_file :image, 
-    :styles => { :i640x400 => "640x400#", :i234x168 => "234x168#", :i117x84 => "117x84#" }, 
-    :default_url => "/images/defaults/places/:style.png",
+    :styles         => { :i640x400 => "640x400#", :i234x168 => "234x168#", :i117x84 => "117x84#" }, 
+    :default_url    => "/images/defaults/places/:style.png",
     :storage        => :s3,
     :s3_credentials => "#{Rails.root}/config/apis/s3.yml",
+    :path           => "/places/images/:id/:style/:basename.:extension",
     :bucket         => S3_BUCKET
   
   # Accepts any normalizeable LatLng params (e.g. lat and lng, ll, origin)
@@ -86,7 +87,13 @@ class Place < ActiveRecord::Base
   
   def download_external_image
     if @external_image_url.present?
-      self.image = open(@external_image_url)
+      begin
+        io = open(URI.parse(@external_image_url))
+        def io.original_filename; base_uri.path.split('/').last; end
+        self.image = io.original_filename.blank?? nil : io
+      rescue
+        Rails.logger.error "Error Downloading Place File"
+      end
     end
   end
   
