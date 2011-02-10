@@ -2,7 +2,8 @@ class Admin::PlacesController < Admin::BaseController
   respond_to :html
   
   def index
-    @places = Place.paginate(:page => params[:page], :per_page => params[:per_page])
+    @finder = Place.order('id DESC')
+    @places = @finder.paginate(:page => params[:page], :per_page => params[:per_page])
     respond_with(@places)
   end
   
