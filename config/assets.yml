@@ -20,6 +20,7 @@ javascripts:
     - public/javascripts/shared/behaviours.js
     - public/javascripts/shared/navigator.js
     - public/javascripts/shared/lightbox.js
+    - public/javascripts/admin/image_selector.js
     - public/javascripts/admin/shared.js
     - public/javascripts/admin/views.js
 stylesheets:

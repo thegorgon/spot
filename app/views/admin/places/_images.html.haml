@@ -3,7 +3,7 @@
     .section
       %h1=title
       -images.each do |image|
-        =form_for [:admin, @place] do |f|
+        =form_for [:admin, @place], :html => {"data-place-id" => @place.id} do |f|
           =f.hidden_field :external_image_url, :value => image.url
           =f.fields_for :image_attribution do |ia|
             =ia.hidden_field :source, :value => image.source
