@@ -1,11 +1,14 @@
 (function(go) {
   var ajaxes = [], oncomplete,
+    killConnections = function() {
+      $.each(ajaxes, function(i) { this.abort(); });
+    },
     bindPotentials = function(container) {
       $('.image_potential', container).unbind('click.imageSelector').bind('click.imageSelector', function() {
         var form = $(this).parents('form'),
           place = $('#place_' + form.attr('data-place-id'));
         $.lightbox.close();
-        $.each(ajaxes, function(i) { this.abort(); });
+        killConnections();
         place.addClass('loading');              
         form.ajaxSubmit({
           success: function(data) {
@@ -20,6 +23,9 @@
       $(selector).bind('click', function(e) {
         place = $(this).parents('.place');
         $.lightbox.loading();
+        $(window).bind('closeLightbox', function(e) {
+          killConnections();
+        });
         $.each(['goc', 'gon', 'flrc', 'flrn', 'flrli', 'flrld'], function(i) {
           ajaxes.push($.ajax({
             url: place.attr('data-url') + '/images?source=' + this,

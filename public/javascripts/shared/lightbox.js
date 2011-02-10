@@ -31,10 +31,12 @@
       $('#lightbox_screen').bind('click.lightbox', function(e) {
         $.lightbox.close();
       });
+      $(window).trigger('showLightbox');
     },
     close: function() {
       $('#lightbox_screen').unbind('.lightboxHide');
       $('#lightbox_screen, #lightbox_container').remove();
+      $(window).trigger('closeLightbox');
     }
   };
   $.fn.lightbox = function() {
