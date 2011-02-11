@@ -56,6 +56,7 @@ GEM
     jammit (0.6.0)
       closure-compiler (>= 0.1.0)
       yui-compressor (>= 0.9.1)
+    json (1.5.1)
     linecache19 (0.5.11)
       ruby_core_source (>= 0.1.4)
     mail (2.2.14)
@@ -131,6 +132,7 @@ DEPENDENCIES
   curb
   haml
   jammit
+  json
   mongrel (= 1.2.0.pre2)
   mysql
   nokogiri

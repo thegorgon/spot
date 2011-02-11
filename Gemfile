@@ -15,6 +15,6 @@ gem 'aws-s3', :require => "aws/s3"
 gem 'redis'
 gem 'redis-store', '1.0.0.beta4'
 gem 'authlogic'
-
+gem 'json'
 group :development, :test do
 end
