@@ -32,6 +32,12 @@ namespace :deploy do
   end
 end
 
+namespace :assets do
+  task :optimize, :roles => :web do
+    send(:run, "cd #{release_path} && /usr/bin/jammit config/assets.yml")
+  end
+end
+
 # Tag Deploys
 after 'deploy' do
   system("git tag release-`date +%Y_%m_%d-%H%M`")
