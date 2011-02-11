@@ -44,7 +44,7 @@ class Place < ActiveRecord::Base
   end
   
   def address_lines
-    full_address.to_s.split("\n").map { |l| l.force_encoding('UTF-8') }
+    full_address.to_s.split("\n")
   end
   
   def address
@@ -66,7 +66,7 @@ class Place < ActiveRecord::Base
     options = args.extract_options!
     hash = {
       :_class => self.class.to_s,
-      :name => full_name.force_encoding('UTF-8'),
+      :name => full_name,
       :address => address_lines,
       :lat => lat.to_f,
       :lng => lng.to_f,

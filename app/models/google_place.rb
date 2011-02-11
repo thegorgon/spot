@@ -8,7 +8,7 @@ class GooglePlace < ActiveRecord::Base
     options = args.extract_options!
     raise ArgumentError, "Invalid GooglePlace search: Please provide a normalizeable LatLng in your arguments" unless origin
     request = Curl::Easy.perform(search_url(origin, options))
-    json = JSON.parse(request.body_str.force_encoding("UTF-8")) rescue nil
+    json = JSON.parse(request.body_str) rescue nil
     if json && json["responseData"] && json["responseData"]["results"]
       results = json["responseData"]["results"]
       results.map! { |r| parse(r) }
