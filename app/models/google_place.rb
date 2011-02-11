@@ -1,5 +1,7 @@
 class GooglePlace < ActiveRecord::Base
   belongs_to :place
+  validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
+  validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
   
   # Accepts any normalizeable LatLng params (e.g. lat and lng, ll, origin)
   # GooglePlace.search(:query => "query", :radius => accuracy, :lat => Lat, :lng => Lng, :page => 2, :exclude => "Daves")
@@ -83,15 +85,5 @@ class GooglePlace < ActiveRecord::Base
     p.full_name = name
     p.source = "GooglePlace"
     p
-  end
-  
-  def to_loc
-    Geo::Loc.new( :lat => lat, 
-                  :lng => lng, 
-                  :street_address => street_address, 
-                  :city => city, 
-                  :region => region, 
-                  :country => country, 
-                  :full_address => address )
-  end
+  end  
 end

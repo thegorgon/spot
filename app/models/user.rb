@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
     c.validate_login_field = false
   end
   before_validation :reset_persistence_token, :on => :create
+  has_many :devices, :dependent => :destroy
+  has_many :wishlist_items, :dependent => :destroy
+  
   
   def as_json(*args)
     options = args.extract_options!

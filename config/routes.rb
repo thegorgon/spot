@@ -9,13 +9,16 @@ Spot::Application.routes.draw do
     end
   end
   
-  scope :module => "api", :constraints => {:subdomain => /api\d*/} do
+  scope :module => "api", :constraints => {:subdomain => /api\d*/}, :as => "api" do
     resources :places, :only => [:index] do
       collection do 
         get "search"
       end
     end
     resource :sessions, :only => [:new, :create, :destroy]
+    resource :wishlist, :only => [:show] do
+      resources :items, :only => [:create, :destroy], :controller => :wishlist_items
+    end
   end
   
   namespace "admin" do

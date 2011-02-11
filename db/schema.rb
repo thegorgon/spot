@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110210003905) do
+ActiveRecord::Schema.define(:version => 20110211075715) do
 
   create_table "devices", :force => true do |t|
     t.string   "udid",          :null => false
@@ -91,5 +91,17 @@ ActiveRecord::Schema.define(:version => 20110210003905) do
   end
 
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
+
+  create_table "wishlist_items", :force => true do |t|
+    t.integer  "user_id",                                   :null => false
+    t.integer  "item_id",                                   :null => false
+    t.string   "item_type",                                 :null => false
+    t.decimal  "lat",        :precision => 11, :scale => 9
+    t.decimal  "lng",        :precision => 12, :scale => 9
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "wishlist_items", ["user_id", "item_type", "item_id"], :name => "index_wishlist_items_on_user_id_and_item_type_and_item_id", :unique => true
 
 end

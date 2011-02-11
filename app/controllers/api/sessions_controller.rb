@@ -1,5 +1,5 @@
 class Api::SessionsController < Api::BaseController
-  before_filter :require_user, :only => :destroy
+  skip_before_filter :require_user, :except => :destroy
   
   def new
     render :json => { :nonce => UserSession.generate_nonce }
