@@ -9,7 +9,7 @@ gem 'jammit'
 gem "paperclip", "~> 2.3"
 gem "curb"
 gem "nokogiri"
-gem 'mysql'
+gem 'mysql2'
 gem 'will_paginate', "~> 3.0.pre2"
 gem 'aws-s3', :require => "aws/s3"
 gem 'redis'
