@@ -1,5 +1,5 @@
-class ServiceException < IOError
-end
+class ServiceError < IOError; end
 
-class ExternalServiceException < ServiceException
-end
+class ExternalServiceError < ServiceError; end
+
+class UnauthorizedAccessError < IOError; end

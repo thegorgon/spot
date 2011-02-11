@@ -20,7 +20,7 @@ class GooglePlace < ActiveRecord::Base
       end
       results.values
     else
-      raise ExternalServiceException, "Invalid results from google place search"
+      raise ExternalServiceError, "Invalid results from google place search"
     end
   end
   

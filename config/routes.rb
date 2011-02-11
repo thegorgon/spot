@@ -15,6 +15,7 @@ Spot::Application.routes.draw do
         get "search"
       end
     end
+    resource :sessions, :only => [:new, :create, :destroy]
   end
   
   namespace "admin" do

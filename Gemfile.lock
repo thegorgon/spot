@@ -30,6 +30,8 @@ GEM
     activesupport (3.0.3)
     archive-tar-minitar (0.5.2)
     arel (2.0.7)
+    authlogic (2.1.6)
+      activesupport
     aws-s3 (0.6.2)
       builder
       mime-types
@@ -123,6 +125,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  authlogic
   aws-s3
   capistrano
   curb
