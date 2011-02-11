@@ -2,12 +2,14 @@ class Api::WishlistItemsController < Api::BaseController
   def create
     @item = current_user.wishlist_items.new(params[:item])
     @item.save!
-    render :json => {:wishlist => current_user.wishlist_items}
+    @wishlist = current_user.wishlist_items.all(:include => :item)
+    render :json => {:wishlist => @wishlist}
   end
   
   def destroy
     @item = current_user.wishlist_items.find(params[:id])
     @item.destroy
-    render :json => {:wishlist => current_user.wishlist_items.reload}
+    @wishlist = current_user.wishlist_items.all(:include => :item)
+    render :json => {:wishlist => @wishlist}
   end
 end

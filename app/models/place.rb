@@ -2,6 +2,7 @@ class Place < ActiveRecord::Base
   validates :full_name, :presence => true
   validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
+  
   before_validation :clean, :on => :create
   after_validation :download_external_image
   cattr_accessor :per_page

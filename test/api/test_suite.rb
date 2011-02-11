@@ -129,6 +129,7 @@ module Api
       curb.post_body = test_params.to_json
       curb.http_post
       json = JSON.parse(curb.body_str)
+      log "Response : #{json}"
       log "Wishlist length : #{json['wishlist'].length}", 1
       test_delete_id = json["wishlist"].first["id"]
       log "Attempting duplicate addition of #{test_item.full_name} to wishlist"
@@ -140,6 +141,7 @@ module Api
       curb = request(api_wishlist_item_url(test_delete_id))
       curb.http_delete
       json = JSON.parse(curb.body_str)
+      log "Response : #{json}"
       log "Wishlist length : #{json["wishlist"].length}", 1      
     end
     
