@@ -3,7 +3,7 @@
     =link_to "Places", admin_places_path
     &rarr;
     = @place.name
-  .place.detail
+  .place.detail{"data-url" => admin_place_path(@place), :id => "place_#{@place.id}"}
     .meta
       .map=image_tag(google_static_map_url(@place))
       .latlng="@#{@place.to_lat_lng}"
@@ -14,7 +14,7 @@
     .phone
       .content
         .top_bar=@place.name
-        .image=image_tag(@place.image.url(:i640x400), :size => "320x200")
+        .image=image_tag(@place.image.url(:i640x400), :size => "320x200", :class => "place_image clickable")
         .info
           .name=@place.name
           .address=@place.address_lines.join(' ')

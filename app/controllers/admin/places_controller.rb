@@ -27,7 +27,7 @@ class Admin::PlacesController < Admin::BaseController
     @place.attributes = params[:place]
     success = @place.save
     respond_to do |format|
-      format.js { render :json => { :html => {:row => render_to_string(:partial => "place_row", :object => @place, :as => :place) } } }
+      format.js { render :json => @place }
     end
   end
   

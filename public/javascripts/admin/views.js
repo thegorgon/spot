@@ -18,11 +18,23 @@
       go.Navigator.link($("a.page"));
       go.Navigator.form($("form.page"));
     },
-    admin_places: function() {
+    admin_places_index: function() {
       go.ImageSelector.init('.place_image', {
         complete: function(data) {
-          if (data && data.html && data.html.row) {
-            $(this).replaceWith(data.html.row);
+          if (data) {
+            $(this).find('.place_image').attr('src', data.image_url);
+          } else {
+            $(this).removeClass('loading');
+            alert("There was an error with that image. Please try again.");
+          }
+        }
+      });
+    },
+    admin_places_edit: function() {
+      go.ImageSelector.init('.place_image', {
+        complete: function(data) {
+          if (data) {
+            $(this).find('.place_image').attr('src', data.image_url);
           } else {
             $(this).removeClass('loading');
             alert("There was an error with that image. Please try again.");
