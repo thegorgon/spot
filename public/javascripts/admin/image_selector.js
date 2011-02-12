@@ -26,7 +26,7 @@
         $(window).bind('closeLightbox', function(e) {
           killConnections();
         });
-        $.each(['goc', 'gon', 'flrc', 'flrn', 'flrli', 'flrld'], function(i) {
+        $.each(['goc', 'gon', 'flrc', 'flrn', 'flrld'], function(i) {
           ajaxes.push($.ajax({
             url: place.attr('data-url') + '/images?source=' + this,
             dataType: 'json',

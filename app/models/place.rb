@@ -2,7 +2,6 @@ class Place < ActiveRecord::Base
   validates :full_name, :presence => true
   validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
-  
   before_validation :clean, :on => :create
   after_validation :download_external_image
   cattr_accessor :per_page
@@ -11,13 +10,15 @@ class Place < ActiveRecord::Base
   serialize :image_attribution, Hash
   acts_as_mappable
   has_attached_file :image, 
-    :styles         => { :i640x400 => "640x400#", :i234x168 => "234x168#", :i117x84 => "117x84#" }, 
-    :default_url    => "/images/defaults/places/:style.png",
-    :storage        => :s3,
-    :s3_credentials => "#{Rails.root}/config/apis/s3.yml",
-    :path           => "/places/images/:id/:style/:basename.:extension",
-    :bucket         => S3_BUCKET
-  
+    :styles           => { :i640x400 => { :geometry => "640x400#", :format => "jp2" }, 
+                           :i234x168 => { :geometry => "234x168#", :format => "jp2" },
+                           :i117x84 => { :geometry => "117x84#", :format => "jp2" } },
+    :default_url      => "/images/defaults/places/:style.png",
+    :storage          => :s3,
+    :s3_credentials   => "#{Rails.root}/config/apis/s3.yml",
+    :path             => "/places/:id/:attachment_:style.:extension",
+    :bucket           => S3_BUCKET
+    
   # Accepts any normalizeable LatLng params (e.g. lat and lng, ll, origin)
   # Place.search(:q => "query", :r => accuracy, :lat => Lat, :lng => Lng, :page => 2)
   def self.search(params)
@@ -58,7 +59,7 @@ class Place < ActiveRecord::Base
     clean
     save!
   end
-    
+  
   def as_json(*args)
     options = args.extract_options!
     hash = {
@@ -71,25 +72,35 @@ class Place < ActiveRecord::Base
       :thumbnail_data => image_thumbnail,
       :image_url_640x400 => image.file?? image.url(:i640x400) : nil,
       :image_url_234x168 => image.file?? image.url(:i234x168) : nil,
-      :image_url => image.file?? image.url() : nil
+      :image_url => image.file?? image.url : nil
     }
   end
 
+  def image=(file)
+    attachment_for(:image).assign(file)
+    if file.nil?
+      self.image_attribution = self.image_thumbnail = nil
+    else
+      lq_thumb = Paperclip.processor(:thumbnail).make(file, {:geometry => "117x84#", :convert_options => '-quality 10 -strip -colorspace RGB -resample 72', :format => 'jp2'}, self)
+      self.image_thumbnail = ActiveSupport::Base64.encode64(lq_thumb.to_a.join)
+    end
+  end
+
   private
-  
+    
   def clean
     self.clean_name = Geo::Cleaner.clean(:name => full_name)
     self.clean_address = Geo::Cleaner.clean(:address => full_address)
   end
-  
+    
   def download_external_image
     if @external_image_url.present?
       begin
         io = open(URI.parse(@external_image_url))
         def io.original_filename; base_uri.path.split('/').last; end
         self.image = io.original_filename.blank?? nil : io
-      rescue
-        Rails.logger.error "Error Downloading Place File"
+      rescue => e
+        Rails.logger.error "Error Downloading Place File : #{e.message}"
       end
     end
   end

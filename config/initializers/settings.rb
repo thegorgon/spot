@@ -6,3 +6,5 @@ ActiveRecord::Base.include_root_in_json = false
 Tumblr.options[:config_file] = File.join(Rails.root, 'config', 'apis', 'tumblr.yml')
 Flickr.options[:config_file] = File.join(Rails.root, 'config', 'apis', 'flickr.yml')
 Google.options[:config_file] = File.join(Rails.root, 'config', 'apis', 'google.yml')
+
+Paperclip::Attachment.default_options[:convert_options] = { :all => '-quality 100 -strip -colorspace RGB -resample 72'}

@@ -29,9 +29,11 @@ namespace :deploy do
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+    # run "curl -s http://www.spot-app.com $2 > /dev/null"
   end
 end
 
+# Not working...TODO
 namespace :assets do
   task :optimize, :roles => :web do
     send(:run, "cd #{release_path} && /usr/bin/jammit config/assets.yml")
