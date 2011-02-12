@@ -69,7 +69,7 @@ class Place < ActiveRecord::Base
       :lat => lat.to_f,
       :lng => lng.to_f,
       :id => id,
-      :thumbnail_data => image_thumbnail,
+      :thumbnail_data => nil, #image_thumbnail,
       :image_url_640x400 => image.file?? image.url(:i640x400) : nil,
       :image_url_234x168 => image.file?? image.url(:i234x168) : nil,
       :image_url => image.file?? image.url : nil
