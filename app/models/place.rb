@@ -10,9 +10,9 @@ class Place < ActiveRecord::Base
   serialize :image_attribution, Hash
   acts_as_mappable
   has_attached_file :image, 
-    :styles           => { :i640x400 => { :geometry => "640x400#", :format => "jp2" }, 
-                           :i234x168 => { :geometry => "234x168#", :format => "jp2" },
-                           :i117x84 => { :geometry => "117x84#", :format => "jp2" } },
+    :styles           => { :i640x400 => { :geometry => "640x400#", :format => "jpg" }, 
+                           :i234x168 => { :geometry => "234x168#", :format => "jpg" },
+                           :i117x84 => { :geometry => "117x84#", :format => "jpg" } },
     :default_url      => "/images/defaults/places/:style.png",
     :storage          => :s3,
     :s3_credentials   => "#{Rails.root}/config/apis/s3.yml",
