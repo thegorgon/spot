@@ -3,7 +3,7 @@ class Admin::PlacesController < Admin::BaseController
   respond_to :html
   
   def index
-    @finder = Place.order('id DESC')
+    @finder = Place.filter(params)
     @places = @finder.paginate(:page => params[:page], :per_page => params[:per_page])
     respond_with(@places)
   end

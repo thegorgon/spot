@@ -29,6 +29,13 @@
         }
       });
     },
+    admin_places_index: function() {
+      $('.search_link').toggle(function(e) {
+        $('#search_form').hide().removeClass('hidden').slideDown();
+      }, function() {
+        $('#search_form').slideUp();        
+      });
+    },
     admin_places_edit: function() {
       go.PlaceForm.init({mapDiv: $('.map')});
     },

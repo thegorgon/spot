@@ -9,7 +9,7 @@
       float: left;
       margin: 0.5em 0.5em 0.5em 0;
     }
-    .new, .pagination {
+    .links, .pagination {
       margin: 1.5em 0 0 0;
       padding: 5px 0;
     }
@@ -27,8 +27,11 @@
       float: right;
     }
   }
-  .new {
+  .links {
     float: left;
+    a {
+      padding: 0 1em 0 0;
+    }
   }
   table.data {
     width: 100%;

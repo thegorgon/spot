@@ -12,6 +12,31 @@ button[type]{
     padding: 5px 0px 5px 0px; /* Firefox */
     line-height: 17px; /* Safari */
 }
+button.rndblk_80x26 {
+  font-size: 12px;
+  height: 26px;
+  line-height: 26px;
+  border: 1px solid #666;
+  color: #ccc;
+  width: 80px;
+  background: #333;
+  @include gradient_top_down(#333, #000, 100%);
+  @include border_radius(3px);
+  text-shadow: #000 0px -1px 0px;
+  .btntxt {
+    text-align: center;
+    line-height: 12px;
+    height: 14px;   
+  }
+  &:hover {
+    color: #BBB;
+    @include gradient_top_down(#333, #000, 50%);
+  }
+  &:active {
+    @include gradient_top_down(#000, #333, 100%);
+    color: #999;
+  }
+}
 button.rndblk_80x30 {
   font-size: 16px;
   height: 30px;

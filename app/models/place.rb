@@ -32,6 +32,15 @@ class Place < ActiveRecord::Base
     places.compact!
     places
   end
+  
+  def self.filter(params)
+    finder = self
+    finder = finder.where("image_file_name IS NULL") if params[:filter] == "imageless"
+    finder = finder.where("wishlist_count > 0") if params[:filter] == "wishlisted"
+    finder = finder.where("full_name LIKE ?", "%#{params[:query]}%") if params[:query]
+    finder = finder.order("id DESC")
+    finder
+  end
 
   def document
     "#{clean_name} : #{clean_address}"

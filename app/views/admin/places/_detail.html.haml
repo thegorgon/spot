@@ -1,6 +1,6 @@
 .place.detail{:id => dom_id(@place)}
   .sidebar
-    .map=image_tag(google_static_map_url(@place))
+    .map=image_tag(google_static_map_url(@place, :size => "320x250"))
     .latlng="@#{@place.to_lat_lng}"
     -if @place.image_attribution.present?
       .attribution
@@ -13,7 +13,7 @@
   .phone
     .content
       .top_bar=@place.name
-      .image=image_tag(@place.image.url(:i640x400), :size => "320x200", :class => "place_image clickable", :alt => @place.name, :title => "Click To Change", "data-ll" => place.to_lat_lng, "data-query" => "#{place.name} #{place.city}")
+      .image=image_tag(@place.image.url(:i640x400), :size => "320x200", :class => "place_image clickable", :alt => @place.name, :title => "Click To Change")
       .info
         .name=@place.name
         .address=@place.address_lines.join(' ')

@@ -6,8 +6,19 @@
       -if @places.previous_page
         .previous=link_to "&larr; Previous".html_safe, admin_places_path(:page => @places.previous_page), :class => "page"
     %h1.title Places
-    .new
+    .links
+      =link_to "Imageless", admin_places_path(:filter => "imageless"), :class => "page"
+      =link_to "Wishlisted", admin_places_path(:filter => "wishlisted"), :class => "page"
+      =link_to "Search", 'javascript:;', :class => "search_link"
+      =link_to "All", admin_places_path, :class => "page"
       =link_to "New", new_admin_place_path
+    %ul#search_form_wrapper.form_wrapper
+      =form_tag admin_places_path, :method => :get, :id => "search_form", :class => "hidden page" do
+        %li
+          =label_tag :query, "Search For : "
+          =text_field_tag :query
+          =button_tag :class => "rndblk_80x26" do
+            Search    
   %table.data
     %thead
       %tr

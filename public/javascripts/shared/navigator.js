@@ -1,5 +1,5 @@
 (function(go) {
-  var lastHash,
+  var lastHash, initialUrl,
     onStart = function() {
       var bd = $('#bd');      
       if (bd.is(":visible") && !bd.is(":animated")) {
@@ -8,14 +8,14 @@
         });        
       }
     },
-    onSuccess = function(data, url) {
+    onSuccess = function(data, url, force) {
       var html, bd = $("#bd"), body = $('body');
       if (data.redirect_to) {
         return  go.Navigator.get(data.redirect_to);
       } else if (data.html) {
         html = $(data.html);
-        bd.bind("faded", function() {
-          bd.html(html).unbind("faded");
+        bd.bind("faded.navComplete", function() {
+          bd.html(html).unbind("faded.navComplete");
           body.attr("id", data.page.namespace);
           body.attr('class', data.page.controller);
           go.Views.run();
@@ -27,7 +27,7 @@
       } else {
         // Unhandled
       }
-      setHash(url);
+      setHash(url, force);
     },
     getHash = function(hash) {
       hash = hash || window.location.hash.toString();
@@ -43,14 +43,15 @@
     getLastHash = function() {
       return $(window).data('onhashchange.lastHash');
     },
-    setHash = function(url) {
+    setHash = function(url, force) {
       var host = window.location.protocol.toString() + "//" + window.location.host.toString();
       url = url.replace(host, "");
-      if (url == "/") {
-        setLastHash("");
-        if (window.location.hash.toString().length > 0) {
-          window.location.href = "#/";
-        }
+      if (force === undefined || force === null) { force = true; }
+      if (url == initialUrl) {
+        setLastHash(url);
+        if (force && window.location.hash.toString().length > 0) {
+          window.location.href = "#" + initialUrl;
+        }        
       } else {
         setLastHash(url);
         window.location.href = "#" + url;        
@@ -58,6 +59,7 @@
     },
     onHashChange = function() {
       var lastHash = getLastHash(), e;
+      $.logger.debug("Last Hash : ", lastHash, "newHash : ", getHash());
       if (getHash() != lastHash) {
         onStart();
         e = jQuery.Event("navigator");
@@ -81,11 +83,12 @@
       if (lastHash && lastHash.length > 0) {
         this.get(lastHash);
       }
+      initialUrl = window.location.pathname;
       bindOnHashChange();
       $(window).bind('navigator', function(e) {
         var url = e.newHash;
-        url = url.length > 0 ? url : "/";
-        that.get(url);
+        url = url.length > 0 ? url : initialUrl;
+        that.get(url, {force: false});
       })
     },
     get: function(url, options) {
@@ -94,7 +97,7 @@
         type: "GET",
         url: url,
         dataType: 'json',
-        success: function(data) { onSuccess(data, url); }
+        success: function(data) { onSuccess(data, url, options.force); }
       }, options);
       $.ajax(options);
     },
@@ -105,13 +108,13 @@
         url: url,
         type: 'POST',
         data: data,
-        success: function(data) { onSuccess(data, url); }
+        success: function(data) { onSuccess(data, url, options.force); }
       }, options);
       return $.ajax(options);
     },
     submit: function(form, options) {
       var method = form.attr('method').toUpperCase(),
-        data = form.serialize(),
+        data = form.find('[name!=utf8]').serialize(),
         url = form.attr('action');
       if (method == "GET") { url = url.indexOf('?') > 0 ? url + '&' + data : url + '?' + data; }
       onStart();
