@@ -52,7 +52,7 @@ class GooglePlace < ActiveRecord::Base
       place.city = result['city']
       place.region = result['region']
       place.country = result['country']
-      place.address_lines = result['addressLines']
+      place.address = result['addressLines'] && result['addressLines'].join("\n")
       place.phone_number = result['phoneNumbers'] && result['phoneNumbers'].first.kind_of?(Hash) ? result['phoneNumbers'].first['number'] : nil
       place.lat = result['lat'].to_f
       place.lng = result['lng'].to_f
