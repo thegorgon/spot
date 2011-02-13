@@ -48,6 +48,10 @@ class UserSession < Authlogic::Session::Base
     !!@require_credential_key
   end
   
+  def expected_credential_key
+    self.class.digest_nonce
+  end
+  
   private
   
   def device=(value)
@@ -60,7 +64,7 @@ class UserSession < Authlogic::Session::Base
   end
   
   def validate_credential_key
-    unless credentials[:key] == self.class.digest_nonce
+    unless credentials[:key] == expected_credential_key
       errors.add(:credential_key, I18n.t("error_messages.credential_key", :default => "is invalid"))
     end
   end

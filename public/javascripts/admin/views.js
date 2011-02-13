@@ -18,29 +18,22 @@
       go.Navigator.link($("a.page"));
       go.Navigator.form($("form.page"));
     },
-    admin_places_index: function() {
+    admin_places: function() {
       go.ImageSelector.init('.place_image', {
         complete: function(data) {
           if (data) {
-            $(this).find('.place_image').attr('src', data.image_url);
+            $(this).attr('src', data.image_url);
           } else {
-            $(this).removeClass('loading');
             alert("There was an error with that image. Please try again.");
           }
         }
       });
     },
     admin_places_edit: function() {
-      go.ImageSelector.init('.place_image', {
-        complete: function(data) {
-          if (data) {
-            $(this).find('.place_image').attr('src', data.image_url);
-          } else {
-            $(this).removeClass('loading');
-            alert("There was an error with that image. Please try again.");
-          }
-        }
-      });
+      go.PlaceForm.init({mapDiv: $('.map')});
+    },
+    admin_places_new: function() {
+      go.PlaceForm.init({mapDiv: $('.map')});
     }
   });
 }(Spot));

@@ -1,13 +1,26 @@
+.place {
+  .place_image.loading {
+    @include opacity(0.1)
+  }
+}
 .place.detail {
   padding: 0 1em;
-  .meta {
-    float: left;
+  width: 725px;
+  margin: 0 auto;
+  .sidebar {
+    padding: 0 0 0 0;
+    float: right;
     text-align: center;
+    .map {
+      width: 250px;
+      height: 250px;
+      margin: 0 auto;
+    }
   }
   .phone {
     height: 713px;
     width: 365px;
-    margin: 0 auto;
+    float: left;
     background: transparent url(/images/assets/devices/iphoneframe365x713.png) no-repeat center center;
     padding: 1px 1px 1px 4px;
     .content {

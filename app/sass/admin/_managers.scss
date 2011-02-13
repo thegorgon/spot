@@ -35,9 +35,6 @@
     tbody {
       tr {
         border-bottom: 1px solid #bbb;
-        &.loading {
-          @include opacity(0.5);
-        }
       }
     }
     th {
@@ -61,14 +58,31 @@
     li {
       @include clearfix;
       padding: 5px;
+      &.actions {
+        text-align: left;
+        .action {
+          padding: 0 20px 0 0;
+          &.loading {
+            color: #ff8419;
+            background: url('/images/assets/loading/orange-3block-16x11.gif') no-repeat right center;
+          }
+        }
+      }
       &.buttons {
         text-align: right;
         button {
           float: right;
         }
       }
+      &.error {
+        label, input {
+          color: #FF3333; 
+          border-color: #FF3333;
+        }
+      }
     }
-    input {
+    input, .file_field {
+      height: 15px;
       border: 1px solid #999;
       padding: 5px;
       background: #fff;
@@ -76,11 +90,36 @@
       @include border_radius(5px);
       @include gradient_top_down(#ccc, #fff, 10%);
     }
+    .file_field {
+      padding: 0;
+      width: 205px;
+      height: 25px;
+      float: right;
+      input {
+        width: 100%;
+        height: 100%;
+      }
+      .browse_button {
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        height: 23px;
+        line-height: 23px;
+        border: 1px solid #666;
+        color: #ccc;
+        width: 80px;
+        background: #333;
+        @include gradient_top_down(#333, #000, 100%);
+        @include right_border_radius(3px);
+        text-shadow: #000 0px -1px 0px;
+      }
+    }
     label {
       font-weight: bold;
       line-height: 25px;
       display: block;
       float: left;
+      text-align: left;
       width: 80px;
     }
   }

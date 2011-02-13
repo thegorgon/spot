@@ -24,6 +24,34 @@
       $(this).live('click', function(e) {
         $(this).focus().select();
       });
+    },
+    actionLink: function() {
+      $(this).live('click', function(e) {
+        e.preventDefault();
+        var link = $(this),
+          url = link.attr('href'),
+          method = (link.attr('data-method') || 'GET').toUpperCase(),
+          confirm = link.attr('data-confirm'),
+          httpMethod = method == 'GET' ? method  : 'POST',
+          authParam = $('meta[name=csrf-param]').attr('content'),
+          authValue = $('meta[name=csrf-token]').attr('content'),
+          form = $('<form action="' + url + '" method="' + httpMethod + '"></form>');
+        if (window.confirm(confirm)) {
+          form.append('<input type="hidden" name="' + authParam + '" value="' + authValue + '"/>');
+          if (httpMethod != method) { form.append('<input type="hidden" name="_method" value="' + method + '" />')}
+          form.hide().appendTo('body').submit();                    
+        }
+      })
+    },
+    fileField: function() {
+      var $this = $(this),
+        setFilename = function() {
+          $this.siblings('.filename').html($this.val());
+        };
+      setFilename();
+      $this.live('mouseout change', function(e) {
+        setFilename()
+      })
     }
   });
 }(jQuery));
@@ -42,6 +70,8 @@
     behave: function() {
       $('[placeholder]').placeholder();
       $('[data-mode=select]').selectOnly();
+      $('.file_field input').fileField();
+      $('a[data-confirm][data-method]').actionLink()
     }
   });
 }(Spot));

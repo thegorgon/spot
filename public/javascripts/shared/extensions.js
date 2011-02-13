@@ -4,6 +4,22 @@
       object[name] = object[name] || {};
       $.extend(object[name], features);
       return object;
+    },
+    geolocate: function(options) {
+      var geo = null;
+      options.success = $.isFunction(options.success) ? options.success : function() {};
+      options.error = $.isFunction(options.error) ? options.error : function() {};
+
+      if (navigator.geolocation){
+        geo = navigator.geolocation;
+      } else if (google.gears) {
+        geo = google.gears.factory.create('beta.geolocation');
+      }
+      if (geo) {
+        geo.getCurrentPosition(options.success, options.error);        
+      } else {
+        options.error.call(window, -1, "Geolocation is not supported in this browser");
+      }
     }
   });
   $.extend($.fn, {

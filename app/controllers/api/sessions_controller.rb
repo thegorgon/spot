@@ -7,7 +7,8 @@ class Api::SessionsController < Api::BaseController
   
   def create
     @session = UserSession.new(params[:credentials])
-    @session.require_credential_key = @session.remember_me = true # API Point Has Memory and Requires Nonce Key
+    # API Point Has Memory and Requires Nonce Key
+    @session.require_credential_key = @session.remember_me = true 
     @session.save!
     render :json => { :user => @session.user }
   end

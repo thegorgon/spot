@@ -2,9 +2,9 @@ test:
   servers: "redis://localhost:6379/0"
   key_prefix: "sstest:"
   
-development:
-  servers: "redis://localhost:6379/0"
-  key_prefix: "ssdev:"
+# development:
+#   servers: "redis://localhost:6379/0"
+#   key_prefix: "ssdev:"
 
 production:
   servers: "redis://:p0p3y3z!@masterredis.ec2:2811/0"

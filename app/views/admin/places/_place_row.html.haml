@@ -1,9 +1,0 @@
-%tr.center.place{:id => "place_#{place.id}", "data-url" => admin_place_path(place)}
-  %td= image_tag place.image.url(:i117x84), :height => 42, :class => "place_image clickable", :alt => "", :title => place.name
-  %td= place.id
-  %td= place.full_name
-  %td= place.full_address
-  %td= place.document
-  %td= place.to_lat_lng
-  %td
-    =link_to "Edit", edit_admin_place_path(place)

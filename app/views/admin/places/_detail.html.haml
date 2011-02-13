@@ -1,0 +1,19 @@
+.place.detail{:id => dom_id(@place)}
+  .sidebar
+    .map=image_tag(google_static_map_url(@place))
+    .latlng="@#{@place.to_lat_lng}"
+    -if @place.image_attribution.present?
+      .attribution
+        %p="Image Courtesy Of #{@place.image_attribution["source"].titlecase}"
+        %p=link_to "Original Owner", @place.image_attribution["owner_url"], :target => "_new"
+    .form
+      =render :partial => "form", :object => @place, :as => :place
+    -unless @place.new_record?
+      =link_to "Delete", admin_place_path(@place), "data-confirm" => "Are you sure you want to delete #{@place.name}?", "data-method" => "delete"
+  .phone
+    .content
+      .top_bar=@place.name
+      .image=image_tag(@place.image.url(:i640x400), :size => "320x200", :class => "place_image clickable", :alt => @place.name, :title => "Click To Change", "data-ll" => place.to_lat_lng, "data-query" => "#{place.name} #{place.city}")
+      .info
+        .name=@place.name
+        .address=@place.address_lines.join(' ')

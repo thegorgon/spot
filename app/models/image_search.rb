@@ -35,19 +35,19 @@ class ImageSearch
   end
   
   def google_name_results
-    Google::Image.search(google_options.merge(:q => "#{@place.full_name}"))
+    Google::Image.search(google_options.merge(:q => "#{@place.name}"))
   end
 
   def google_name_and_city_results
-    Google::Image.search(google_options.merge(:q => "#{@place.full_name}, #{@place.city}"))
+    Google::Image.search(google_options.merge(:q => "#{@place.name}, #{@place.city}"))
   end
   
   def flickr_name_results
-    Flickr::Photo.search(flickr_options.merge(:text => "#{@place.full_name}"))
+    Flickr::Photo.search(flickr_options.merge(:text => "#{@place.name}"))
   end
 
   def flickr_name_and_city_results
-    Flickr::Photo.search(flickr_options.merge(:text => "#{@place.full_name} #{@place.city}"))
+    Flickr::Photo.search(flickr_options.merge(:text => "#{@place.name} #{@place.city}"))
   end
   
   def flickr_lat_lng_by_interestingness

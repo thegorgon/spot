@@ -6,8 +6,8 @@
       -if @places.previous_page
         .previous=link_to "&larr; Previous".html_safe, admin_places_path(:page => @places.previous_page), :class => "page"
     %h1.title Places
-    / .new
-    /   =link_to "New", new_admin_place_path, :class => "page"
+    .new
+      =link_to "New", new_admin_place_path
   %table.data
     %thead
       %tr
@@ -19,8 +19,16 @@
         %th Lat, Lng
         %th Actions
     %tbody
-      -@places.each do |p|
-        =render :partial => "place_row", :object => p, :as => :place
+      -@places.each do |place|
+        %tr.center.place{:id => dom_id(place)}
+          %td= image_tag place.image.url(:i117x84), :size => "58x42", :class => "place_image clickable", :alt => "", :title => "Click to Change"
+          %td= place.id
+          %td= place.full_name
+          %td= place.full_address
+          %td= place.document
+          %td= place.to_lat_lng
+          %td
+            =link_to "Edit", edit_admin_place_path(place)
   .pagination.bottom
     -if @places.next_page
       .next=link_to "Next &rarr;".html_safe, admin_places_path(:page => @places.next_page), :class => "page"

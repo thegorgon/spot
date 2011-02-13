@@ -1,17 +1,43 @@
 %ul.form_wrapper
-  -form_for [:admin, @place] do |f|
+  =form_for [:admin, @place], :html => {:multipart => true, :autocomplete => "off"} do |f|
     %li
       =f.label :full_name, "Name : "
       =f.text_field :full_name
     %li
-      =f.label :full_address, "Address : "
-      =f.text_field :full_address
+      =f.label "address_lines[0]", "Address 1: "
+      =f.text_field "address_lines[0]", :value => @place.address_lines[0], :id => "place_address_lines_0", :class => "address_field"
+    %li
+      =f.label "address_lines[1]", "Address 2: "
+      =f.text_field "address_lines[1]", :value => @place.address_lines[1], :id => "place_address_lines_1", :class => "address_field"
+    %li
+      =f.label :city, "City : "
+      =f.text_field :city
+    %li
+      =f.label :region, "Region : "
+      =f.text_field :region
+    %li
+      =f.label :country, "Country : "
+      =f.text_field :country
+    %li.actions
+      =link_to "Geocode", "javascript:;", :class => "geocode action"
+      =link_to "Locate", "javascript:;", :class => "locate action"
+      =link_to "Map Position", "javascript:;", :class => "mapdisplay action"
     %li
       =f.label :lat, "Lat : "
-      =f.text_field :lat
+      =f.text_field :lat, :type => "number", :max => 90, :min => -90
     %li
       =f.label :lng, "Lng : "
-      =f.text_field :lng
+      =f.text_field :lng, :type => "number", :max => 180, :min => -180
+    %li
+      =f.label :image, "Image : "
+      .file_field
+        =f.file_field :image, :value => ""
+        .filename
+        .browse_button.hlfrndblk_80x30
+          Choose File
+    %li
+      =f.label :lng, "Image URL : "
+      =f.text_field :external_image_url, :value => ""
     %li.buttons
       =button_tag :class => "rndblk_80x30" do
         Save

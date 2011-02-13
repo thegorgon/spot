@@ -45,6 +45,10 @@ class Place < ActiveRecord::Base
     full_address.to_s.split("\n")
   end
   
+  def address_lines=(value)
+    self.full_address = "#{value["0"]}\n#{value["1"]}"
+  end
+  
   def address
     full_address
   end
@@ -81,6 +85,7 @@ class Place < ActiveRecord::Base
     if file.nil?
       self.image_attribution = self.image_thumbnail = nil
     else
+      file = attachment_for(:image).to_tempfile(file)
       lq_thumb = Paperclip.processor(:thumbnail).make(file, {:geometry => "117x84#", :convert_options => '-quality 10 -strip -colorspace RGB -resample 72', :format => 'jp2'}, self)
       self.image_thumbnail = ActiveSupport::Base64.encode64(lq_thumb.to_a.join)
     end
