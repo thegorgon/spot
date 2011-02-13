@@ -15,7 +15,7 @@ body, html, input, textarea, button {
   bottom: 0px;
   background: #ffffff url(/images/backgrounds/paisley_light_transparent.jpg) no-repeat fixed center center;
 }
-a {
+a, a:visited {
   color: #333;
   font-weight: bold;
   &:hover {

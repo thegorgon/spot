@@ -3,6 +3,19 @@
     killConnections = function() {
       $.each(ajaxes, function(i) { this.abort(); });
     },
+    bindCustomForm = function(container) {
+      container.find('.custom_form').ajaxForm({
+        start: function() {
+          $(this).addClass('loading');
+        },
+        success: function(data) {
+          var results = $(data.html).find('.section');
+          $(this).removeClass('loading');
+          container.find('.section:first').before(results);
+          bindPotentials(results);
+        }
+      })
+    },
     bindPotentials = function(container) {
       $('.image_potential', container).unbind('click.imageSelector').bind('click.imageSelector', function() {
         var form = $(this).parents('form'),
@@ -36,12 +49,15 @@
             success: function(data) {
               var html = $(data.html),
                 results = $('.image_search_results'),
+                section,
                 scrollTop;
               if (results.length > 0) {
+                section = html.find('.section');
                 scrollTop = results.scrollTop();
-                results.append(html.html()).scrollTop(scrollTop);
+                results.append(section).scrollTop(scrollTop);
               } else {
                 $.lightbox.show(html);
+                bindCustomForm(html);
               }
               bindPotentials(results);
             }

@@ -63,16 +63,16 @@ button.hlfrndblk_80x30 {
   }
 }
 .ie7 {
-  button.black_sheen80x30 {
+  button {
     .btntxt {
-      padding: 1px 0px 0px 0px; /* Firefox */
+      padding: 1px 0px 0px 0px;
     }
   }  
 }
 .ie8 {
-  button.black_sheen80x30 {
+  button {
     .btntxt {
-      padding: 2px 0px 0px 0px; /* Firefox */
+      padding: 2px 0px 0px 0px;
     }
   }
 }

@@ -22,7 +22,7 @@
       go.ImageSelector.init('.place_image', {
         complete: function(data) {
           if (data) {
-            $(this).attr('src', data.image_url);
+            $(this).attr('src', data.image_url_640x400);
           } else {
             alert("There was an error with that image. Please try again.");
           }

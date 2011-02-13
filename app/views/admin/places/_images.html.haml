@@ -1,4 +1,11 @@
 .image_search_results
+  %ul.form_wrapper
+    =form_tag images_admin_place_path(@place), :method => :get, :class => "custom_form" do
+      %li
+        =label_tag :query, "Search For : "
+        =text_field_tag :query
+        =button_tag do
+          Search
   -@images.each do |title, images|
     .section
       %h1=title

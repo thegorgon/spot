@@ -2,7 +2,8 @@ class ImageSearch
   def initialize(place, request)
     @place = place
     @request = request
-    @source = request.params[:source]
+    @source = request.params[:source].to_s
+    @query = request.params[:query]
   end
   
   def results
@@ -21,6 +22,7 @@ class ImageSearch
     when :flrli
       @results["Flickr : @#{@place.lat} #{@place.lng} by interestingness"] ||= flickr_lat_lng_by_interestingness.to_a
     end
+    @results["Custom Query : #{@query}"] = custom_query.to_a if @query
     @results
   end
   
@@ -32,6 +34,12 @@ class ImageSearch
   
   def google_options
     {:imgtype => "photo", :safe => "active", :userip => @request.remote_ip, :rsz => 8, :imgsiz => "medium|large|xlarge|xxlarge|huge"}
+  end
+  
+  def custom_query
+    google = Google::Image.search(google_options.merge(:q => "#{@query}")).to_a
+    flickr = Flickr::Photo.search(flickr_options.merge(:text => "#{@query}")).to_a
+    google + flickr
   end
   
   def google_name_results
