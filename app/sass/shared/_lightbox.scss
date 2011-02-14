@@ -25,10 +25,9 @@
     @include border_radius(5px);
     @include box_shadow("0px 0px 12px rgba(0, 0, 0, 0.7)");
     background: #fff;
-  }
-  #lightbox_loading {
-    height: 50px;
-    width: 100%;
-    background: url(/images/assets/loading/orange-chasing-arrows16x16.gif) no-repeat center center;
+    &.loading {
+      background: #fff url(/images/assets/loading/orange-chasing-arrows16x16.gif) no-repeat center center;
+      height: 50px;      
+    }
   }
 }

@@ -62,9 +62,13 @@ class Place < ActiveRecord::Base
     full_address
   end
   
+  def google_place
+    @google_place ||= GooglePlace.find_by_place_id(id)
+  end
+  
   def source_place
     if source
-      source.classify.constantize.where(:place_id => id).order("id ASC").first
+      @source_place ||= source.classify.constantize.where(:place_id => id).order("id ASC").first
     end
   end
     

@@ -1,0 +1,25 @@
+.admin_search {
+  .form_wrapper {
+    clear: both;
+    margin: 0;
+    width: auto;
+    form.loading {
+      padding: 0 0 16px 0;
+      background: url('/images/assets/loading/orange-chasing-arrows16x16.gif') no-repeat bottom center;
+    }
+  }
+  .table {
+    margin: 1em 0;
+  }
+  .actions {
+    line-height: 26px;
+  }
+  .field {
+    label {
+      width: auto;
+      margin: 0 1em 0 0;
+    }
+    margin: 0 1em 0 0;
+    float: left;
+  }
+}

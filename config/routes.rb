@@ -27,6 +27,7 @@ Spot::Application.routes.draw do
         get "images" 
       end
     end
+    resource :search, :only => [:new, :show], :controller => "search"
     root :to => "home#index"
   end
   

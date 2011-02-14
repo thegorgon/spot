@@ -21,7 +21,8 @@
       #logo
         =image_tag "logos/gradient_script_340x270.png", :height => "100", :alt => "spot"
       #nav
-        =link_to "Places", admin_places_url
+        =link_to "Search", new_admin_search_path
+        =link_to "Places", admin_places_path
     #bd.clearfix= yield
   =google_maps_api_include
   =include_javascripts :vendor

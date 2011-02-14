@@ -1,0 +1,14 @@
+%ul.form_wrapper
+  =form_for :search, :url => admin_search_path, :html => {:method => :get, :id => "search_form"} do |f|
+    %li.field
+      =f.label :q, "Query : "
+      =f.text_field :q
+    %li.field
+      =f.label :ll, "Location : "
+      =f.text_field :ll
+    %li.field
+      =button_tag :class => "rndblk_80x26" do
+        Search
+    %li.actions
+      =link_to "Current Location", "javascript:;", :class => "geolocate action"
+      =link_to "PlacePop HQ", "javascript:;", :class => "location action", "data-ll" => "37.75516,-122.41855"

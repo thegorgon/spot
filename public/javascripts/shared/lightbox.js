@@ -1,16 +1,15 @@
 (function($) {
-  var boxHtml = $("<div id='lightbox_screen'></div><div id='lightbox_container'><div id='lightbox_content'></div></div>"),
-    loadingContent = "<div id='lightbox_loading></div>";
+  var boxHtml = $("<div id='lightbox_screen'></div><div id='lightbox_container'><div id='lightbox_content'></div></div>");
   $.lightbox = {
     loading: function() {
-      $.lightbox.show(loadingContent);
+      $.lightbox.show('&nbsp;');
+      $('#lightbox_content').addClass('loading');
     },
     show: function(content) {
       var scrollTop = $(document).scrollTop(),
         windowHeight = $(window).height(),
         contentHeight, container, oldLeft, lbTop;
-      content = $(content);
-      $('#lightbox_loading').remove();
+      $('#lightbox_content').removeClass('loading');
       if ($('#lightbox_container').length == 0) {
         boxHtml.hide().prependTo('body');
       }

@@ -4,8 +4,11 @@
     .latlng="@#{@place.to_lat_lng}"
     -if @place.image_attribution.present?
       .attribution
-        %p="Image Courtesy Of #{@place.image_attribution["source"].titlecase}"
-        %p=link_to "Original Owner", @place.image_attribution["owner_url"], :target => "_new"
+        ="Image Courtesy Of "
+        =link_to "#{@place.image_attribution["source"].titlecase} API", @place.image_attribution["owner_url"], :target => "_new"       
+    -if @place.google_place
+      .attribution
+        %p=link_to "Google Place Page", google_place_page_url(@place.google_place), :target => "_new"
     .form
       =render :partial => "form", :object => @place, :as => :place
     -unless @place.new_record?
@@ -13,7 +16,7 @@
   .phone
     .content
       .top_bar=@place.name
-      .image=image_tag(@place.image.url(:i640x400), :size => "320x200", :class => "place_image clickable", :alt => @place.name, :title => "Click To Change")
+      .image=image_tag(@place.image.url(:i640x400), :size => "321x200", :class => "place_image clickable", :alt => @place.name, :title => "Click To Change")
       .info
         .name=@place.name
         .address=@place.address_lines.join(' ')

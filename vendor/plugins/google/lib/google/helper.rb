@@ -23,6 +23,10 @@ module Google
       end
       tags
     end
+    
+    def google_place_page_url(place)
+      "http://maps.google.com/maps/place?cid=#{place.cid}"
+    end
 
     def google_load(library, version)
       @_google_loaders[library] = version
