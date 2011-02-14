@@ -60,6 +60,9 @@
             var ll = position.coords.latitude + "," + position.coords.longitude;
             $('#search_ll').val(ll);
             lnk.removeClass('loading');
+          }, error: function() {
+            lnk.removeClass('loading');
+            alert("Sorry, we couldn't get your location.");
           }
         });
       });
