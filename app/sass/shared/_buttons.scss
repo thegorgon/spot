@@ -1,12 +1,15 @@
-button {
+button, .button {
     display: block;
-    float: left;
     text-decoration: none;
     font-weight: bold;
     cursor: pointer;
     padding: 5px 0px 6px 0px; /* Links */
     width: auto;
     overflow: visible;
+    @extend .no_select;
+}
+.button {
+  padding: 0;
 }
 button[type]{
     padding: 5px 0px 5px 0px; /* Firefox */
@@ -43,14 +46,12 @@ button[type]{
   line-height: 37px;
   text-align: center;
   color: #666;
-  font-weight: bold;
   font-size: 14px;
   text-shadow: 0px 1px #fff;
   background: url("/images/buttons/phone_whitegray_288x37.png");
   @include gradient_top_down(#F3F3F4, #E7E8E9, 100%);
   border: 1px solid #d5d5d6;
   @include border_radius(7px);
-  cursor: pointer;
   &:hover {
     @include gradient_top_down(#F3F3F4, #E7E8E9, 50%);
     text-shadow: 0px 1px #fff;

@@ -28,6 +28,7 @@
     }
   }
   .phone {
+    @extend .no_select;
     height: 713px;
     width: 365px;
     float: left;
