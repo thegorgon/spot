@@ -41,15 +41,21 @@
       .top_bar {
         position: relative;
         z-index: 10;
-        @include box_shadow("1px 0px 10px #333");
-        background: #333 url(/images/backgrounds/paisley_dark_centerfade.jpg) no-repeat center center;
+        @include box_shadow("1px 0px 20px #333");
+        background: #333 url(/images/backgrounds/phone_headerbg320x44.png) repeat-x center center;
         color: #fff;
         font-weight: bold;
         font-size: 1.5em;
         text-align: center;
-        line-height: 40px;
+        line-height: 44px;
         width: 321px;
-        height: 40px;
+        height: 44px;
+        .name {
+          width: 270px;
+          height: 44px;
+          margin: 0 auto;
+          @extend .ellipsis;
+        }
       }
     }
   }
@@ -63,11 +69,12 @@
     padding: 5px 10px;
     .name {
       font-weight: bold;
-      font-size: 1.5em;
+      font-size: 20px;
     }
     .address {
-      color: #999;
-      font-size: 0.9em;
+      margin: 5px 0 0 0;
+      color: #777;
+      font-size: 12px;
     }
   }
   .latlng {

@@ -11,6 +11,12 @@
     vertical-align: middle;
   }
 }
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+}
 .clickable {
   cursor: pointer;
 }

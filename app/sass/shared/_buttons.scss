@@ -12,7 +12,7 @@ button[type]{
     padding: 5px 0px 5px 0px; /* Firefox */
     line-height: 17px; /* Safari */
 }
-button.rndblk_80x26 {
+.rndblk_80x26 {
   font-size: 12px;
   height: 26px;
   line-height: 26px;
@@ -37,7 +37,31 @@ button.rndblk_80x26 {
     color: #999;
   }
 }
-button.rndblk_80x30 {
+.phone_whitegray_288x37 {
+  width: 288px;
+  height: 37px;
+  line-height: 37px;
+  text-align: center;
+  color: #666;
+  font-weight: bold;
+  font-size: 14px;
+  text-shadow: 0px 1px #fff;
+  background: url("/images/buttons/phone_whitegray_288x37.png");
+  @include gradient_top_down(#F3F3F4, #E7E8E9, 100%);
+  border: 1px solid #d5d5d6;
+  margin: 30px auto 0;
+  @include border_radius(7px);
+  cursor: pointer;
+  &:hover {
+    @include gradient_top_down(#F3F3F4, #E7E8E9, 50%);
+    text-shadow: 0px 1px #fff;
+  }
+  &:active {
+    @include gradient_top_down(#E7E8E9, #f0f0f0, 100%);
+    text-shadow: 0px -1px #fff;
+  }
+}
+.rndblk_80x30 {
   font-size: 16px;
   height: 30px;
   line-height: 30px;
@@ -62,7 +86,7 @@ button.rndblk_80x30 {
     color: #999;
   }
 }
-button.hlfrndblk_80x30 {
+.hlfrndblk_80x30 {
   font-size: 16px;
   height: 30px;
   line-height: 30px;
