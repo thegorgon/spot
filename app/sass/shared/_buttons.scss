@@ -49,7 +49,6 @@ button[type]{
   background: url("/images/buttons/phone_whitegray_288x37.png");
   @include gradient_top_down(#F3F3F4, #E7E8E9, 100%);
   border: 1px solid #d5d5d6;
-  margin: 30px auto 0;
   @include border_radius(7px);
   cursor: pointer;
   &:hover {
