@@ -23,7 +23,13 @@
       #nav
         =link_to "Search", new_admin_search_path
         =link_to "Places", admin_places_path
-    #bd.clearfix= yield
+    #bd.clearfix
+      = yield
+      -if flash[:error] || flash[:notice]
+        #flash.hidden
+          -[:error, :notice].each do |key|
+            -if flash[key].present?
+              %div{:class => key}= flash[key]
   =google_maps_api_include
   =include_javascripts :vendor
   =include_javascripts :admin

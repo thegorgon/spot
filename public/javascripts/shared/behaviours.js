@@ -71,7 +71,10 @@
       $('[placeholder]').placeholder();
       $('[data-mode=select]').selectOnly();
       $('.file_field input').fileField();
-      $('a[data-confirm][data-method]').actionLink()
+      $('a[data-confirm][data-method]').actionLink();
+      $('#flash').hide().removeClass('hidden').slideDown(500, function() {
+        setTimeout(function() { $('#flash').slideUp(500) }, 3000);
+      })
     }
   });
 }(Spot));

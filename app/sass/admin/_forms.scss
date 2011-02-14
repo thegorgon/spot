@@ -19,7 +19,7 @@
         float: right;
       }
     }
-    &.error {
+    &.error, .field_with_errors {
       label, input {
         color: #FF3333; 
         border-color: #FF3333;
