@@ -35,7 +35,7 @@
           $(this).addClass('loading');
         }, success: function(data) {
           $(this).removeClass('loading');
-          $('.table').html(data.html);
+          $('.results').html(data.html);
           go.ImageSelector.init('.place_image', {
             complete: function(data) {
               if (data) {

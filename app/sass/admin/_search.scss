@@ -8,8 +8,11 @@
       background: url('/images/assets/loading/orange-chasing-arrows16x16.gif') no-repeat bottom center;
     }
   }
-  .table {
-    margin: 1em 0;
+  .results {
+    margin: 0.5em 0;
+    .measurements {
+      padding: 0.5em 0;
+    }
   }
   .actions {
     line-height: 26px;

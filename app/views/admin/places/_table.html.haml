@@ -9,7 +9,7 @@
       %th Lat, Lng
       %th Actions
   %tbody
-    -@places.each do |place|
+    -@places.to_a.each do |place|
       %tr.center.place{:id => dom_id(place)}
         %td= image_tag place.image.url(:i117x84), :size => "58x42", :class => "place_image clickable", :alt => "", :title => "Click to Change"
         %td= place.id
