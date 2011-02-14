@@ -20,8 +20,7 @@
       =f.text_field :country
     %li.actions
       =link_to "Geocode", "javascript:;", :class => "geocode action"
-      =link_to "Locate", "javascript:;", :class => "locate action"
-      =link_to "Map Position", "javascript:;", :class => "mapdisplay action"
+      =link_to "Remap", "javascript:;", :class => "updatemap action"
     %li
       =f.label :lat, "Lat : "
       =f.text_field :lat, :type => "number", :max => 90, :min => -90

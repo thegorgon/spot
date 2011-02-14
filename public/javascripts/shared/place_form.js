@@ -93,19 +93,7 @@
         detail.find('.address').html(getAddress());
       },
       bindActions = function() {
-        $('.locate').bind('click', function(e) {
-          var lnk = $(this);
-          e.preventDefault();
-          lnk.addClass('loading');
-          $.geolocate({
-            success: function(position) {
-              var ll = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-              setFormPosition(ll);
-              lnk.removeClass('loading');
-            }
-          });
-        });
-        $('.mapdisplay').bind('click', function(e) {
+        $('.updatemap').bind('click', function(e) {
           setFormPosition(getFormPosition());
         });
         $('.geocode').bind('click', function(e) {
