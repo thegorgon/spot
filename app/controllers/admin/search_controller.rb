@@ -3,7 +3,7 @@ class Admin::SearchController < Admin::BaseController
   end
   
   def show
-    @benchmark = Benchmark.measure { @places = Place.search(params[:search]) }
+    @benchmark = Benchmark.measure { @places = PlaceSearch.perform(params) } 
     respond_to do |format|
       format.html
       format.js { render :json => {:html => render_to_string(:partial => "results") }}

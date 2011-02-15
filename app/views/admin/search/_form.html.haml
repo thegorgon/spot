@@ -1,11 +1,11 @@
 %ul.form_wrapper
-  =form_for :search, :url => admin_search_path, :html => {:method => :get, :id => "search_form"} do |f|
+  =form_tag admin_search_path, :method => :get, :id => "search_form" do
     %li.field
-      =f.label :q, "Query : "
-      =f.text_field :q
+      =label_tag :q, "Query : "
+      =text_field_tag :q, nil, :id => "search_q"
     %li.field
-      =f.label :ll, "Location : "
-      =f.text_field :ll
+      =label_tag :ll, "Location : "
+      =text_field_tag :ll, nil, :id => "search_ll"
     %li.field
       =button_tag :class => "rndblk_80x26" do
         Search
