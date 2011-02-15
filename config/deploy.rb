@@ -36,6 +36,10 @@ namespace :deploy do
     # run "curl -s http://www.spot-app.com $2 > /dev/null"
   end
   namespace :sphinx do
+    desc "Symlink db from shared"
+    task :symlink, :roles => :bg do
+      run "rm -fr #{release_path}/db/sphinx && ln -nfs #{shared_path}/db/sphinx #{release_path}/db/sphinx"
+    end
     desc "Stop sphinx"
     task :stop, :roles => :bg do
       run "cd #{current_path} && sudo rake thinking_sphinx:stop RAILS_ENV=#{rails_env}"
@@ -64,4 +68,6 @@ after 'deploy' do
   system("git tag release-`date +%Y_%m_%d-%H%M`")
   system("git push origin master --tags")
 end
-after 'deploy', 'deploy:sphinx:restart'
+before 'deploy:update_code', 'deploy:sphinx:stop'
+after 'deploy:update_code', 'deploy:sphinx:symlink'
+after 'deploy:update_code', 'deploy:sphinx:start'
