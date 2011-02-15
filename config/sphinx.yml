@@ -17,6 +17,8 @@ production:
   remote_sphinx: true
   address: "sphinx1.ec2"
   bin_path: "/usr/local/sphinx/bin"
+  version: "1.10"
+  
 test:
   <<: *common
   port: 9313
