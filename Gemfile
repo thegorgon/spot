@@ -16,5 +16,7 @@ gem 'redis'
 gem 'redis-store', '1.0.0.beta4'
 gem 'authlogic'
 gem 'json'
+gem 'thinking-sphinx', '2.0.0', :require => 'thinking_sphinx'
+
 group :development, :test do
 end

@@ -9,6 +9,17 @@ class Place < ActiveRecord::Base
   attr_writer :external_image_url
   serialize :image_attribution, Hash
   acts_as_mappable
+  
+  define_index do
+    indexes :clean_name, :sortable => true
+    indexes :clean_address
+    indexes :city
+    indexes :region
+    has "RADIANS(lat)", :as => :latitude, :type => :float
+    has "RADIANS(lng)", :as => :longitude, :type => :float  
+    has :wishlist_count
+  end
+  
   has_attached_file :image, 
     :styles           => { :i640x400 => { :geometry => "640x400#", :format => "jpg" }, 
                            :i234x168 => { :geometry => "234x168#", :format => "jpg" },
@@ -18,21 +29,7 @@ class Place < ActiveRecord::Base
     :s3_credentials   => "#{Rails.root}/config/apis/s3.yml",
     :path             => "/places/:id/:attachment_:style.:extension",
     :bucket           => S3_BUCKET
-    
-  # Accepts any normalizeable LatLng params (e.g. lat and lng, ll, origin)
-  # Place.search(:q => "query", :r => accuracy, :lat => Lat, :lng => Lng, :page => 2)
-  def self.search(params)
-    params[:query] = (params[:q] || params[:query]).to_s
-    params[:radius] = (params[:r] || params[:radius]).to_f
-    params[:page] = [1, params[:page].to_i].max
-    google = GooglePlace.search(params)
-    places = google.collect do |gp|
-      gp.bind_to_place!
-    end
-    places.compact!
-    places
-  end
-  
+      
   def self.filter(params)
     finder = self
     finder = finder.where("image_file_name IS NULL") if params[:filter] == "imageless"

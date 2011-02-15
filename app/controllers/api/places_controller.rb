@@ -8,7 +8,6 @@ class Api::PlacesController < Api::BaseController
   end
   
   def search
-    @places = Place.search(params)
-    render :json => @places
+    render :json => PlaceSearch.perform(params)
   end
 end

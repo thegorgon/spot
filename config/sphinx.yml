@@ -1,0 +1,22 @@
+common: &common
+  morphology: stem_en
+  enable_star: true
+  min_infix_len: 5
+  
+development:
+  <<: *common
+  port: 9313
+  
+production:
+  <<: *common
+  port: 1182
+  config_file: "/etc/searchd/searchd.conf"
+  searchd_log_file: "/var/log/searchd/logs/searchd.log"
+  query_log_file: "/var/log/searchd/logs/query.log"
+  pid_file: "/var/run/searchd.pid"
+  remote_sphinx: true
+  address: "sphinx1.ec2"
+
+test:
+  <<: *common
+  port: 9313

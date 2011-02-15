@@ -19,7 +19,7 @@ module Geo
       def clean_name(name)
         prepare(name)
         remove_punctuation(name)
-        remove_extraneous_words(name)
+        # remove_extraneous_words(name)
         cleanup(name)
         name
       end

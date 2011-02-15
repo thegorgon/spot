@@ -72,7 +72,7 @@ module Geo
     # Returns all important fields as key-value pairs
     def to_hash
       {}.tap do |hash|
-        [:lat, :lng, :ll].inject do |s| 
+        [:lat, :lng, :ll].each do |s| 
           hash[s] = self.send(s)
         end
       end
