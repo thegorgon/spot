@@ -20,7 +20,7 @@ class PlaceSearch
   
   def load
     unless @loaded
-      # load_local_places
+      load_local_places
       load_google_places
       @results = @results.to_a
       @loaded = true
