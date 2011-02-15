@@ -1,15 +1,11 @@
 test:
-  host: localhost
-  port: 6379
+  servers: "redis://localhost:6379"
   key_prefix: "sstest:"
   
 development:
-  host: localhost
-  port: 6379
+  servers: "redis://localhost:6379"
   key_prefix: "ssdev:"
 
 production:
-  port: 2811
-  host: masterredis.ec2
-  password: p0p3y3z!
+  servers: "redis://:p0p3y3z!@masterredis.ec2:2811"
   key_prefix: "ss:"

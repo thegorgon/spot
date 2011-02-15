@@ -47,5 +47,6 @@ Spot::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.cache_store = :redis_store, YAML.load_file(File.join(Rails.root, "config", "redis.yml"))[Rails.env]
+  redis = YAML.load_file(File.join(Rails.root, "config", "redis.yml"))[Rails.env]
+  config.cache_store = :redis_store, redis["servers"]
 end

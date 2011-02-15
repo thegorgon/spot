@@ -22,7 +22,9 @@ Spot::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
-  config.cache_store = :redis_store, YAML.load_file(File.join(Rails.root, "config", "redis.yml"))[Rails.env]
+  
+  redis = YAML.load_file(File.join(Rails.root, "config", "redis.yml"))[Rails.env]
+  config.cache_store = :redis_store, redis["servers"]
     
   ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Flickr'  
   ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Geo'  
