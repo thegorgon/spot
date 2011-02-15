@@ -45,5 +45,7 @@ Spot::Application.configure do
   config.i18n.fallbacks = true
 
   # Send deprecation notices to registered listeners
-  config.active_support.deprecation = :notify  
+  config.active_support.deprecation = :notify
+
+  config.cache_store = :redis_store, YAML.load_file(File.join(Rails.root, "config", "redis.yml"))[Rails.env]
 end
