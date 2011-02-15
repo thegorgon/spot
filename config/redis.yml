@@ -3,9 +3,15 @@ test:
   key_prefix: "sstest:"
   
 development:
-  servers: "redis://localhost:6379"
+  servers: "redis://:p0p3y3z!@localhost:2811"
+  port: 2811
+  password: p0p3y3z!
+  host: localhost
   key_prefix: "ssdev:"
 
 production:
   servers: "redis://:p0p3y3z!@masterredis.ec2:2811"
+  port: 2811
+  host: masterredis.ec2
+  password: p0p3y3z!
   key_prefix: "ss:"
