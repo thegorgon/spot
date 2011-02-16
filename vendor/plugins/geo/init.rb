@@ -6,7 +6,6 @@ require 'geo/mappable'
 require 'geo/lat_lng'
 require 'geo/cleaner'
 require 'geo/acts_as_mappable'
-require 'geo/rack/geo_headers'
 
 # Automatically mix in distance finder support into ActiveRecord classes.
 ActiveRecord::Base.send :include, Geo::ActsAsMappable
