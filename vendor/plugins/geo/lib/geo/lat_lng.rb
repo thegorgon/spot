@@ -40,7 +40,7 @@ module Geo
       elsif thing.respond_to?(:to_lat_lng)
         normalize(thing.to_lat_lng)
       else
-        throw ArgumentError.new("#{thing.inspect} <#{thing.class}> cannot be normalized to a LatLng.")        
+        throw ArgumentError.new("#{thing.inspect} <#{thing.class}> cannot be normalized to a LatLng.") unless options[:quiet]
       end
     end
 

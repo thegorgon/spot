@@ -1,5 +1,27 @@
 .measurements
-  -if @places && @benchmark
-    ="#{pluralize(@places.length, "Place")}, #{(@benchmark.real * 1000).round}ms"
+  -if @search
+    ="#{pluralize(@search.result_count, "Place")}"
 .table
-  =render :partial => "/admin/places/table", :object => @places, :as => :places
+  %table.data
+    %thead
+      %tr
+        %th Image
+        %th Id
+        %th Name
+        %th Address
+        %th Wishlists
+        %th Distance
+        %th Relevance
+        %th Actions
+    %tbody
+      -@search.results.each do |result|
+        %tr.center.place{:id => dom_id(result.place)}
+          %td= image_tag result.image.url(:i117x84), :size => "58x42", :class => "place_image clickable", :alt => "", :title => "Click to Change"
+          %td= result.place_id
+          %td= result.name
+          %td= result.full_address
+          %td= result.wishlist_count.to_i
+          %td= "#{(result.distance * 100).round/100.0} miles" if result.distance 
+          %td= result.relevance
+          %td
+            =link_to "Edit", edit_admin_place_path(result.place)

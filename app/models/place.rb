@@ -88,6 +88,7 @@ class Place < ActiveRecord::Base
       :image_url_234x168 => image.file?? image.url(:i234x168) : nil,
       :image_url => image.file?? image.url : nil
     }
+    hash
   end
 
   def image=(file)

@@ -122,7 +122,7 @@ module Api
       curb = request(api_wishlist_url)
       curb.http_get
       json = JSON.parse(curb.body_str)
-      log "Wishlist length : #{json['wishlist'].length}", 1
+      log "Wishlist length : #{json.length}", 1
       test_item = Place.first
       test_params = {:item => {:item_type => test_item.class.to_s, :item_id => test_item.id, :lat => 37.768186, :lng => -122.429124}}
       log "Adding #{test_item.full_name} to wishlist"
@@ -131,19 +131,19 @@ module Api
       curb.http_post
       json = JSON.parse(curb.body_str)
       log "Response : #{json.inspect}"
-      log "Wishlist length : #{json['wishlist'].length}", 1
-      test_delete_id = json["wishlist"].first["id"]
+      log "Added ID : #{json["id"]}", 1
+      test_delete_id = json["id"]
       log "Attempting duplicate addition of #{test_item.full_name} to wishlist"
       curb = request(api_wishlist_items_url)
       curb.post_body = test_params.to_json
       curb.http_post
+      json = JSON.parse(curb.body_str)
       log "Response code : #{curb.response_code}", 1
+      log "Response : #{json}", 1
       log "Deleting #{test_item.full_name} from wishlist"
       curb = request(api_wishlist_item_url(test_delete_id))
       curb.http_delete
-      json = JSON.parse(curb.body_str)
-      log "Response : #{json.inspect}"
-      log "Wishlist length : #{json["wishlist"].length}", 1      
+      log "Response code : #{curb.response_code}"
     end
     
     def logout

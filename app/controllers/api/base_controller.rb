@@ -1,6 +1,7 @@
 class Api::BaseController < ApplicationController
   before_filter :require_user
   
+  rescue_from ActiveRecord::RecordNotUnique, :with => :duplicate_record_error
   rescue_from ActiveRecord::RecordInvalid, :with => :invalid_record_error
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found_error
   rescue_from ServiceError, :with => :service_exception
@@ -28,6 +29,10 @@ class Api::BaseController < ApplicationController
   
   def invalid_record_error(exception=nil)
     basic_exception(403, exception)
+  end
+  
+  def duplicate_record_error(exception=nil)
+    basic_exception(409, exception)
   end
   
   def require_user
