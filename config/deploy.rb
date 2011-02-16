@@ -38,7 +38,7 @@ namespace :deploy do
   namespace :sphinx do
     desc "Symlink db from shared"
     task :symlink, :roles => :bg do
-      run "rm -fr #{release_path}/db/sphinx && ln -nfs #{shared_path}/db/sphinx #{release_path}/db/sphinx"
+      run "rm -fr #{release_path}/db/sphinx && ln -nfs #{shared_path}/sphinx #{release_path}/db/sphinx"
     end
     desc "Stop sphinx"
     task :stop, :roles => :bg do
@@ -46,7 +46,16 @@ namespace :deploy do
     end
     desc "Start sphinx"
     task :start, :roles => :bg do
-      run "cd #{current_path} && sudo rake thinking_sphinx:configure RAILS_ENV=#{rails_env} && sudo rake thinking_sphinx:start RAILS_ENV=#{rails_env}"
+      run "cd #{current_path} && sudo rake thinking_sphinx:start RAILS_ENV=#{rails_env}"
+    end
+    desc "Rebuild sphinx configuration"
+    task :configure, :roles => :bg do
+      run "cd #{current_path} && sudo rake thinking_sphinx:configure RAILS_ENV=#{rails_env}"
+    end
+    task :activate, :roles => :bg do
+      symlink
+      configure
+      start
     end
     desc "Restart sphinx"
     task :restart, :roles => :bg do
@@ -69,5 +78,4 @@ after 'deploy' do
   system("git push origin master --tags")
 end
 before 'deploy:update_code', 'deploy:sphinx:stop'
-after 'deploy:update_code', 'deploy:sphinx:symlink'
-after 'deploy:update_code', 'deploy:sphinx:start'
+after 'deploy:update_code', 'deploy:sphinx:activate'
