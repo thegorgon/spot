@@ -12,8 +12,8 @@ class PlaceSearch
     
     def initialize(params={})
       @place = params[:place]
-      @origin = params[:origin]
-      @distance = @place.distance_to(@origin) if @origin
+      @position = params[:position]
+      @distance = @place.distance_to(@position) if @position
       @relevance = params[:relevance]
     end
     
@@ -29,7 +29,7 @@ class PlaceSearch
     end
   end
   
-  # Accepts any normalizeable LatLng params (e.g. lat and lng, ll, origin)
+  # Accepts any normalizeable LatLng params (e.g. lat and lng, ll, position)
   # PlaceSearch.new(:q => "query", :r => accuracy, :lat => Lat, :lng => Lng, :page => 2)
   def initialize(params={})
     @params = {}
@@ -37,7 +37,7 @@ class PlaceSearch
     @params[:radius] = (params[:r] || params[:radius]).to_f
     @params[:page] = [1, params[:page].to_i].max
     @params[:per_page] = params[:per_page].to_i > 0 ? params[:per_page].to_i : DEFAULT_PAGE_SIZE
-    @params[:origin] = @origin = Geo::LatLng.normalize(params.merge(:quiet => true))
+    @position = Geo::Position.normalize(params)
   end
   
   def load
@@ -45,7 +45,7 @@ class PlaceSearch
       @benchmarks = {}
       @results = {}
       load_local_places
-      load_google_places if @origin
+      load_google_places if @position
       @results = @results.values
       @loaded = true
     end
@@ -61,15 +61,15 @@ class PlaceSearch
       options = @params.slice(:page, :per_page)
       options[:field_weights] = { :name => 100, :city => 5, :clean_address => 1 }
       options[:order] = "@relevance DESC"
-      if @origin
-        options[:geo] = @origin.to_a
+      if @position
+        options[:geo] = @position.to_a
         options[:order] << ", @geodist ASC"
       end
       options.merge!(:star => true, :match_mode => :any)
       local = Place.search( @params[:query], options )
     end
     local.each_with_match do |lp, match|
-      @results[lp.id] ||= Result.new(:place => lp, :relevance => match[:weight], :origin => @origin)
+      @results[lp.id] ||= Result.new(:place => lp, :relevance => match[:weight], :position => @position)
     end
     Rails.logger.info "place-search : Found #{local.length} local places, #{@results.length} total (#{(benchmarks[:local].real * 1000).round}ms)"
   end
@@ -82,12 +82,12 @@ class PlaceSearch
   def load_google_places
     google = []
     @benchmarks[:google_load] = Benchmark.measure do 
-      google = GooglePlace.search(@params)
+      google = GooglePlace.search(@params.merge(:origin => @position))
     end
     @benchmarks[:google_bind] = Benchmark.measure do
       google.each do |gp| 
         gp.bind_to_place!
-        @results[gp.place.id] ||= Result.new(:place => gp.place, :origin => @origin)
+        @results[gp.place.id] ||= Result.new(:place => gp.place, :position => @position)
       end
     end
     Rails.logger.info "place-search : Found #{google.length} google places, #{@results.length} total (#{(benchmarks[:google_load].real * 1000).round}ms)"

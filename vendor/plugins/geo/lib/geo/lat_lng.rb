@@ -6,7 +6,13 @@ module Geo
 
     # Accepts latitude and longitude or instantiates an empty instance
     # if lat and lng are not provided. Converted to floats if provided
-    def initialize(lat=nil, lng=nil)
+    def initialize(lat_or_params=nil, lng=nil)
+      if lat_or_params.kind_of?(Hash)
+        lat = lat_or_params[:lat] || lat_or_params[:latitude]
+        lng = lat_or_params[:lng] || lat_or_params[:longitude]
+      else
+        lat = lat_or_params
+      end
       lat = lat.to_f if lat && !lat.is_a?(Numeric)
       lng = lng.to_f if lng && !lng.is_a?(Numeric)
       @lat = lat
@@ -18,15 +24,14 @@ module Geo
     # and want to deal with it as a LatLng if at all possible. Can take:
     #  1) two arguments (lat,lng)
     #  2) a string in the format "37.1234,-129.1234" or "37.1234 -129.1234"
-    #  3) a string which can be geocoded on the fly
-    #  4) an array in the format [37.1234,-129.1234]
-    #  5) a LatLng or GeoLoc (which is just passed through as-is)
-    #  6) anything which responds to *to_lat_lng* -- the return value will be normalized and returned
+    #  3) an array in the format [37.1234,-129.1234]
+    #  4) a LatLng or GeoLoc (which is just passed through as-is)
+    #  5) anything which responds to *to_lat_lng* -- the return value will be normalized and returned
     def self.normalize(*args)
       # Handle any possible input type
       options = args.extract_options!
       options.symbolize_keys! if options.respond_to?(:symbolize_keys!)
-      thing = (options[:origin] || options[:ll])
+      thing = (options[:geo_position] || options[:origin] || options[:ll])
       thing ||= [options[:lat], options[:lng]] if options[:lat] && options[:lng]
       thing ||= args.first if args.first.is_a?(String) || (args.first.is_a?(Array) && args.first.size == 2) || args.first.is_a?(LatLng) || args.first.respond_to?(:to_lat_lng)
       thing ||= args
@@ -40,8 +45,14 @@ module Geo
       elsif thing.respond_to?(:to_lat_lng)
         normalize(thing.to_lat_lng)
       else
-        throw ArgumentError.new("#{thing.inspect} <#{thing.class}> cannot be normalized to a LatLng.") unless options[:quiet]
+        nil
       end
+    end
+    
+    def self.normalize!(*args)
+      value = normalize(*args)
+      raise ArgumentError.new("#{thing.inspect} <#{thing.class}> cannot be normalized to a LatLng.") unless value
+      value
     end
 
     # Latitude attribute setter; stored as a float.
@@ -51,7 +62,7 @@ module Geo
 
     # Longitude attribute setter; stored as a float;
     def lng=(lng)
-      @lng=lng.to_f if lng
+      @lng = lng.to_f if lng
     end
 
     # Returns the lat and lng attributes as a comma-separated string.
@@ -66,7 +77,7 @@ module Geo
 
     #returns a two-element array
     def to_a
-      [lat,lng]
+      [lat, lng]
     end
     
     # Returns all important fields as key-value pairs

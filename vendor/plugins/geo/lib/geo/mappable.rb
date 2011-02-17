@@ -11,8 +11,8 @@ module Geo
       # :units - valid values are :miles or :kms (Geo.default_units is the default)
       # :formula - valid values are :flat or :sphere (Geo.default_formula is the default)
       def distance_between(from, to, options={})
-        from = Geo::LatLng.normalize(from)
-        to = Geo::LatLng.normalize(to)
+        from = Geo::LatLng.normalize!(from)
+        to = Geo::LatLng.normalize!(to)
         if from == to # fixes a "zero-distance" bug
           0.0
         else
@@ -35,8 +35,8 @@ module Geo
       # from the first point to the second point. Typicaly, the instance methods will be used 
       # instead of this method.
       def heading_between(from, to)
-        from = Geo::LatLng.normalize(from)
-        to = Geo::LatLng.normalize(to)
+        from = Geo::LatLng.normalize!(from)
+        to = Geo::LatLng.normalize!(to)
 
         d_lng = deg2rad(to.lng - from.lng)
         from_lat = deg2rad(from.lat)
@@ -52,7 +52,7 @@ module Geo
       def endpoint(start, heading, distance, options={})
         units = options[:units] || Geo::default_units
         radius = units == :miles ? Geo::EARTH_RADIUS_IN_MILES : Geo::EARTH_RADIUS_IN_KMS
-        start = Geo::LatLng.normalize(start)        
+        start = Geo::LatLng.normalize!(start)        
         lat = deg2rad(start.lat)
         lng = deg2rad(start.lng)
         heading = deg2rad(heading)
@@ -72,7 +72,7 @@ module Geo
       # Valid option:
       #   :units - valid values are :miles or :kms (:miles is the default)
       def midpoint_between(from, to, options={})
-        from=Geo::LatLng.normalize(from)
+        from = Geo::LatLng.normalize!(from)
 
         units = options[:units] || Geo::default_units
 

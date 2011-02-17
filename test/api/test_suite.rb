@@ -1,6 +1,6 @@
 #!rails runner
-SEARCHES = [{:lat => 37.768186, :lng => -122.429124, :page => 1, :q => "Altena"},
-            {:lat => 37.768186, :lng => -122.429124, :page => 1, :q => "Zero Zero"}]
+SEARCHES = [{:position => Geo::Position.new(:lat => 37.768186, :lng => -122.429124), :page => 1, :q => "Altena"},
+            {:position => Geo::Position.new(:lat => 37.768186, :lng => -122.429124), :page => 1, :q => "Zero Zero"}]
 module Api
   class TestSuite
     include Rails.application.routes.url_helpers
@@ -107,9 +107,11 @@ module Api
     
     def perform_search_test
       SEARCHES.each do |search|
+        search = search.clone
         start = Time.now.to_f
-        log "Testing search : #{search.to_query}"
-        curb = request(search_api_places_url(search))
+        position = search.delete(:position)
+        log "Testing search : #{search.to_query} @#{position}"
+        curb = request(search_api_places_url(search), position)
         curb.http_get
         json = JSON.parse(curb.body_str)
         log "Response : #{json.inspect}"
@@ -153,11 +155,12 @@ module Api
       log "Logged Out"      
     end
     
-    def request(url)
+    def request(url, position=nil)
       Curl::Easy.new(url) do |curb|
         curb.headers["Content-Type"] = Mime::JSON.to_s
         curb.headers["Accept"] = Mime::JSON.to_s
         curb.headers["Cookie"] = @cookie if @cookie
+        curb.headers["Geo-Position"] = position.to_http_header if position
         curb.enable_cookies = true
         curb.on_progress { |dl_total, dl_now, ul_total, ul_now| print "."; true }
           

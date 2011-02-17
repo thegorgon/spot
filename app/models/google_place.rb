@@ -7,8 +7,8 @@ class GooglePlace < ActiveRecord::Base
   # GooglePlace.search(:query => "query", :radius => accuracy, :lat => Lat, :lng => Lng, :page => 2, :exclude => "Daves")
   def self.search(*args)
     origin = Geo::LatLng.normalize(*args)
-    options = args.extract_options!
     raise ArgumentError, "Invalid GooglePlace search: Please provide a normalizeable LatLng in your arguments" unless origin
+    options = args.extract_options!
     request = Curl::Easy.perform(search_url(origin, options))
     json = JSON.parse(request.body_str) rescue nil
     if json && json["responseData"] && json["responseData"]["results"]
@@ -28,6 +28,7 @@ class GooglePlace < ActiveRecord::Base
   
   def self.search_url(*args)
     origin = Geo::LatLng.normalize(*args)
+    raise ArgumentError, "Invalid GooglePlace search: Please provide a normalizeable LatLng in your arguments" unless origin
     options = args.extract_options!
     page =  options[:page].blank? ? 1 : options[:page] * 8
     if !options[:query].blank?

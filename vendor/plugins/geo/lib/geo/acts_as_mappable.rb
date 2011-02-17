@@ -1,25 +1,7 @@
 module Geo
   # Contains the class method acts_as_mappable targeted to be mixed into ActiveRecord.
   # When mixed in, augments find services such that they provide distance calculation
-  # query services.  The find method accepts additional options:
-  #
-  # * :origin - can be 
-  #   1. a two-element array of latititude/longitude -- :origin=>[37.792,-122.393]
-  #   2. a geocodeable string -- :origin=>'100 Spear st, San Francisco, CA'
-  #   3. an object which responds to lat and lng methods, or latitude and longitude methods,
-  #      or whatever methods you have specified for lng_column_name and lat_column_name
-  #
-  # Other finder methods are provided for specific queries.  These are:
-  #
-  # * find_within (alias: find_inside)
-  # * find_beyond (alias: find_outside)
-  # * find_closest (alias: find_nearest)
-  # * find_farthest
-  #
-  # Counter methods are available and work similarly to finders.  
-  #
-  # If raw SQL is desired, the distance_sql method can be used to obtain SQL appropriate
-  # to use in a find_by_sql call.
+  # query services.
   module ActsAsMappable 
     # Mix below class methods into ActiveRecord.
     def self.included(base) # :nodoc:
