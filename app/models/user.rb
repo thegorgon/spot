@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   def as_json(*args)
     options = args.extract_options!
     hash = {
-      :_class => self.class.to_s,
+      :_type => self.class.to_s,
       :id => id
     }
   end  
