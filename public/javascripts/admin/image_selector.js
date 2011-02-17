@@ -17,7 +17,7 @@
       })
     },
     bindPotentials = function(container) {
-      $('.image_potential', container).unbind('click.imageSelector').bind('click.imageSelector', function() {
+      $('.image_potential', container).unbind('.imageSelector').bind('click.imageSelector', function() {
         var form = $(this).parents('form'),
           place = $('#place_' + form.attr('data-place-id')),
           image = place.find('.place_image');
@@ -30,7 +30,14 @@
             oncomplete.call(image, data);
           }
         });
-      });
+      }).bind('mouseenter.imageSelector', function(e) {
+        var img = new Image();
+        img.src = $(this).attr('data-url');
+        img.height = 150;
+        $('.image_search_results .preview').html(img);
+      }).bind('mouseleave.imageSelector', function(e) {
+        $('.image_search_results .example').html('');
+      })
     };
   $.provide(go, 'ImageSelector', {
     init: function(selector, options) {
@@ -48,7 +55,7 @@
             dataType: 'json',
             success: function(data) {
               var html = $(data.html),
-                results = $('.image_search_results'),
+                results = $('.image_search_results .sections'),
                 section,
                 scrollTop;
               if (results.length > 0) {

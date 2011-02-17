@@ -1,4 +1,5 @@
 .image_search_results
+  .preview
   %ul.form_wrapper
     =form_tag images_admin_place_path(@place), :method => :get, :class => "custom_form" do
       %li
@@ -6,13 +7,14 @@
         =text_field_tag :query
         =button_tag :class => "rndblk_80x26" do
           Search
-  -@images.each do |title, images|
-    .section
-      %h1=title
-      -images.each do |image|
-        =form_for [:admin, @place], :html => {"data-place-id" => @place.id} do |f|
-          =f.hidden_field :external_image_url, :value => image.url
-          =f.fields_for :image_attribution do |ia|
-            =ia.hidden_field :source, :value => image.source
-            =ia.hidden_field :owner_url, :value => image.owner_url
-          .image_potential{:class => image.source, :style => "background-image: url(#{image.url(:size => 'm')});"}
+  .sections
+    -@images.each do |title, images|
+      .section
+        %h1=title
+        -images.each do |image|
+          =form_for [:admin, @place], :html => {"data-place-id" => @place.id} do |f|
+            =f.hidden_field :external_image_url, :value => image.url
+            =f.fields_for :image_attribution do |ia|
+              =ia.hidden_field :source, :value => image.source
+              =ia.hidden_field :owner_url, :value => image.owner_url
+            .image_potential{:class => image.source, :style => "background-image: url(#{image.url(:size => 'm')});", 'data-url' => image.url(:size => "l")}
