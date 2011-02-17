@@ -19,12 +19,14 @@ class UserSession < Authlogic::Session::Base
   
   def credentials=(value)
     values = value.is_a?(Array) ? value : [value]
-    @credentials = values.first
     if values.first.is_a?(Hash)
+      @credentials = values.first
       values.first.with_indifferent_access.slice(:device).each do |field, value|
         next if value.blank?
         send("#{field}=", value)
       end
+    else 
+      @credentails = {}
     end
   end
   
