@@ -12,8 +12,8 @@
       =link_to "Search", 'javascript:;', :class => "search_link"
       =link_to "All", admin_places_path, :class => "page"
       =link_to "New", new_admin_place_path
-    %ul#search_form_wrapper.form_wrapper
-      =form_tag admin_places_path, :method => :get, :id => "search_form", :class => "hidden page" do
+    %ul#search_form_wrapper.form_wrapper.hidden
+      =form_tag admin_places_path, :method => :get, :id => "search_form", :class => "page" do
         %li
           =label_tag :query, "Search For : "
           =text_field_tag :query

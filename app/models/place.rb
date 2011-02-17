@@ -32,10 +32,14 @@ class Place < ActiveRecord::Base
       
   def self.filter(params)
     finder = self
-    finder = finder.where("image_file_name IS NULL") if params[:filter] == "imageless"
-    finder = finder.where("wishlist_count > 0") if params[:filter] == "wishlisted"
-    finder = finder.where("full_name LIKE ?", "%#{params[:query]}%") if params[:query]
-    finder = finder.order("id DESC")
+    if params[:query]
+      finder = finder.search(params[:query], :star => true, :match_mode => :any, :page => params[:page], :per_page => params[:per_page])
+    else
+      finder = finder.where("image_file_name IS NULL") if params[:filter] == "imageless"
+      finder = finder.where("wishlist_count > 0") if params[:filter] == "wishlisted"
+      finder = finder.order("id DESC")
+      finder = finder.paginate(:page => params[:page], :per_page => params[:per_page])
+    end
     finder
   end
 
