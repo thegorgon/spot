@@ -81,12 +81,11 @@ module Geo
     end
     
     # Returns all important fields as key-value pairs
-    def to_hash
-      {}.tap do |hash|
-        [:lat, :lng, :ll].each do |s| 
-          hash[s] = self.send(s)
-        end
-      end
+    def attributes
+      {
+        :lat => lat,
+        :lng => lng
+      }
     end
     
     # Returns true if the candidate object is logically equal.  Logical equivalence
@@ -99,7 +98,7 @@ module Geo
     def inspect
       string = "#<#{self.class} "
       attrs = []
-      to_hash.each do |key, value|
+      attributes.each do |key, value|
         attrs << "#{key}: #{value.inspect}"
       end
       string << attrs.join(", ") 

@@ -57,14 +57,14 @@ module Geo
     end
 
     def attributes
-      {
+      super.merge(
         :lat => lat,
         :lng => lng,
         :altitude => altitude,
         :uncertainty => uncertainty,
         :heading => heading,
-        :speed => speed,
-      }
+        :speed => speed
+      )
     end
 
     def to_http_header
