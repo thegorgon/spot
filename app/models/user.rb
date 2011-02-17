@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
     options = args.extract_options!
     hash = {
       :_type => self.class.to_s,
+      :_class => self.class.to_s,
       :id => id
     }
   end  

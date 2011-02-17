@@ -82,6 +82,7 @@ class Place < ActiveRecord::Base
     options = args.extract_options!
     hash = {
       :_type => self.class.to_s,
+      :_class => self.class.to_s,
       :name => full_name,
       :address => address_lines,
       :lat => lat.to_f,
