@@ -28,13 +28,16 @@ class Admin::PlacesController < Admin::BaseController
   def update
     @place.attributes = params[:place]
     success = @place.save
-    if success
-      flash[:notice] = "#{@place.name} Updated!"
-    else
-      flash.now[:error] =  "There were errors with your submission"
-    end
     respond_to do |format|
-      format.html { success ? redirect_to(edit_admin_place_path(@place)) : render(:action => "edit") }
+      format.html do 
+        if success
+          flash[:notice] = "#{@place.name} Updated!"
+          redirect_to(edit_admin_place_path(@place))
+        else
+          flash.now[:error] =  "There were errors with your submission"
+          render(:action => "edit")
+        end
+      end
       format.js { render :json => @place }
     end
   end
