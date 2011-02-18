@@ -7,12 +7,14 @@ module Geo
     MATCH_HDN = /\shdn=([0-9\.]+)(?:\s|\z)/i.freeze
     MATCH_SPD = /\sspd=([0-9\.]+)(?:\s|\z)/i.freeze
 
-    def initialize(params={})
-      super(params)
-      self.altitude    = params[:altitude]
-      self.uncertainty = params[:uncertainty]
-      self.heading     = params[:heading]
-      self.speed       = params[:speed]
+    def initialize(params={}, lng=nil)
+      super(params, lng)
+      if params.is_a?(Hash)
+        self.altitude    = params[:altitude]
+        self.uncertainty = params[:uncertainty]
+        self.heading     = params[:heading]
+        self.speed       = params[:speed]
+      end
     end
     
     # Parse Geo-Position header:
