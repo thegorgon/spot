@@ -5,7 +5,7 @@ require 'resque/server'
 
 run Spot::Application
 
-# run Rack::URLMap.new(
-#   "/" => Spot::Application,
-#   "/resque" => Resque::Server.new
-# )
+run Rack::URLMap.new(
+  "/" => Spot::Application,
+  "/resque" => Resque::Server.new
+)
