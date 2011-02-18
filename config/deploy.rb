@@ -27,7 +27,7 @@ role :db, app_servers.first, :primary => true
 bg_servers = (1..bg_server_n).reject { |i| i == -1 }.collect { |num| "spotbg#{num}.ec2" }
 bg_servers.each { |server| role :bg, server }
 
-# Passenger Deploy Settings
+# Unicorn Deploy Settings
 namespace :deploy do
   task :start do
     run "sudo bluepill start unicorn"
@@ -39,6 +39,7 @@ namespace :deploy do
     run "sudo bluepill restart unicorn"
   end
   
+  # Sphinx deploy settings
   namespace :sphinx do
     desc "Rebuild sphinx configuration"
     task :default, :roles => :bg do
@@ -65,12 +66,6 @@ namespace :deploy do
     desc "Rebuild sphinx configuration"
     task :configure, :roles => :bg do
       run "cd #{current_path} && sudo rake thinking_sphinx:configure RAILS_ENV=#{rails_env}"
-    end
-    desc "Activate a new deploy of sphinx"
-    task :activate, :roles => :bg do
-      symlink
-      configure
-      start
     end
     desc "Restart sphinx"
     task :restart, :roles => :bg do
@@ -99,6 +94,7 @@ after 'deploy' do
   system("git push origin master --tags")
 end
 
+# Callbacks
 after 'deploy:update_code', 'assets:optimize'
 before 'deploy:symlink', 'deploy:sphinx:symlink'
 after 'deploy:restart', 'workers:restart'
