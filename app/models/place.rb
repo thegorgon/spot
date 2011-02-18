@@ -26,6 +26,7 @@ class Place < ActiveRecord::Base
                            :i234x168 => { :geometry => "234x168#", :format => "jpg" },
                            :i117x84 => { :geometry => "117x84#", :format => "jpg" } },
     :default_url      => "/images/defaults/places/:style.png",
+    :processing_url   => "/images/defaults/places/:style_processing.png",
     :storage          => :s3,
     :s3_credentials   => "#{Rails.root}/config/apis/s3.yml",
     :path             => "/places/:id/:attachment_:style.:extension",
@@ -53,7 +54,10 @@ class Place < ActiveRecord::Base
   
   def image=(file)
     attachment_for(:image).assign(file)
-    self.image_attribution = self.image_thumbnail = nil if file.nil?
+    if file.nil?
+      self.image_attribution = self.image_thumbnail = nil
+      self.image_processing = false
+    end
   end
     
   def name
@@ -82,7 +86,7 @@ class Place < ActiveRecord::Base
       @source_place ||= source.classify.constantize.where(:place_id => id).order("id ASC").first
     end
   end
-    
+      
   def reclean!
     clean
     save!
@@ -118,6 +122,7 @@ class Place < ActiveRecord::Base
   
   def process_external_image
     if @external_image_url.present?
+      self.image_processing = true
       Resque.enqueue(Jobs::PlaceImageProcessor, self.class.name, id, :image, @external_image_url)    
     end
   end

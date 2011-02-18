@@ -16,6 +16,15 @@
         }
       })
     },
+    defaultComplete = function(data) {
+      var height = 2 * this[0].height,
+        newSrc = height == 84 ? data.image_url_234x168 : data.image_url_640x400;
+      if (data) {
+        $(this).attr('src', newSrc);
+      } else {
+        alert("There was an error with that image. Please try again.");
+      }
+    }
     bindPotentials = function(container) {
       $('.image_potential', container).unbind('.imageSelector').bind('click.imageSelector', function() {
         var form = $(this).parents('form'),
@@ -41,7 +50,8 @@
     };
   $.provide(go, 'ImageSelector', {
     init: function(selector, options) {
-      oncomplete = $.isFunction(options.complete) ? options.complete : function() {};
+      options = options || {};
+      oncomplete = $.isFunction(options.complete) ? options.complete : defaultComplete;
       $(selector).bind('click', function(e) {
         place = $(this).parents('.place'),
           id = place.attr('id').split('_').pop();

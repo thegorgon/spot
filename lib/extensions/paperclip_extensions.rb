@@ -74,7 +74,11 @@ ActiveRecord::Base.send(:include, Delayed::Paperclip)
 
 module Paperclip
   class Attachment
-    attr_accessor :job_is_processing
+    def initialize_with_processing(name, instance, options={})
+      initialize_without_processing(name, instance, options)
+      @processing_url = options[:processing_url] || @default_url
+    end
+    alias_method_chain :initialize, :processing
 
     def url_with_processed(style = default_style, include_updated_timestamp = true)
       return url_without_processed(style, include_updated_timestamp) unless @instance.class.process_attachment_in_background?(@name)
@@ -83,7 +87,7 @@ module Paperclip
           if @instance.send(:"#{@name}_changed?")
             url_without_processed style, include_updated_timestamp
           else
-            interpolate(@default_url, style)
+            interpolate(@processing_url, style)
           end
         else
           url_without_processed style, include_updated_timestamp

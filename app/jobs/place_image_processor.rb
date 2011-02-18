@@ -25,6 +25,7 @@ module Jobs
       file ||= download_external_file(instance.attachment_for(attachment_name).url)
       lq_thumb = Paperclip.processor(:thumbnail).make(file, {:geometry => "117x84#", :convert_options => '-quality 10 -strip -colorspace RGB -resample 72', :format => 'jp2'}, instance)
       instance.image_thumbnail = ActiveSupport::Base64.encode64(lq_thumb.to_a.join)      
+      instance.image_processing = false
       instance.save!
     end
     

@@ -16,7 +16,7 @@
     %tbody
       -@search.results.each do |result|
         %tr.center.place{:id => dom_id(result.place)}
-          %td= image_tag result.image.url(:i117x84), :size => "58x42", :class => "place_image clickable", :alt => "", :title => "Click to Change"
+          %td= image_tag result.image.url(:i234x168), :size => "58x42", :class => "place_image clickable", :alt => "", :title => "Click to Change"
           %td= result.place_id
           %td= result.name
           %td= result.full_address
