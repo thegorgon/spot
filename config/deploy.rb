@@ -33,7 +33,6 @@ namespace :deploy do
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-    # run "curl -s http://www.spot-app.com $2 > /dev/null"
   end
   namespace :sphinx do
     desc "Symlink db from shared"

@@ -15,8 +15,10 @@ gem 'aws-s3', :require => "aws/s3"
 gem 'redis'
 gem 'redis-store', '1.0.0.beta4'
 gem 'authlogic'
-gem 'json'
+gem 'yajl-ruby'
 gem 'thinking-sphinx', '2.0.0', :require => 'thinking_sphinx'
+gem 'ts-resque-delta', '0.0.4', :require => 'thinking_sphinx/deltas/resque_delta'
+gem 'resque'
 
 group :development, :test do
 end

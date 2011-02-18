@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110211075715) do
+ActiveRecord::Schema.define(:version => 20110217231718) do
 
   create_table "devices", :force => true do |t|
     t.string   "udid",          :null => false
@@ -48,25 +48,26 @@ ActiveRecord::Schema.define(:version => 20110211075715) do
   add_index "google_places", ["place_id"], :name => "index_google_places_on_place_id"
 
   create_table "places", :force => true do |t|
-    t.string   "full_name",                                                       :null => false
+    t.string   "full_name",                                                           :null => false
     t.string   "full_address"
-    t.string   "clean_name",                                                      :null => false
+    t.string   "clean_name",                                                          :null => false
     t.string   "clean_address"
     t.string   "city"
     t.string   "region"
     t.string   "country"
     t.string   "phone_number"
     t.string   "source"
-    t.integer  "status",                                           :default => 0, :null => false
     t.decimal  "lat",               :precision => 11, :scale => 9
     t.decimal  "lng",               :precision => 12, :scale => 9
     t.text     "image_thumbnail"
     t.string   "image_file_name"
     t.datetime "image_updated_at"
     t.string   "image_attribution"
-    t.integer  "wishlist_count",                                   :default => 0, :null => false
+    t.integer  "wishlist_count",                                   :default => 0,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "image_processing",                                 :default => false, :null => false
+    t.boolean  "delta",                                            :default => true,  :null => false
   end
 
   add_index "places", ["lat", "lng"], :name => "index_places_on_lat_and_lng"

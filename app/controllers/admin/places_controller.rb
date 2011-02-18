@@ -37,7 +37,7 @@ class Admin::PlacesController < Admin::BaseController
           render(:action => "edit")
         end
       end
-      format.js { render :json => @place }
+      format.js { render :json => @place.as_json(:default_images => true) }
     end
   end
   

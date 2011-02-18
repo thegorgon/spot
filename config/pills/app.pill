@@ -1,0 +1,35 @@
+app_dir = '/u/app/current'
+Bluepill.application('spot_app', :log_file => "#{app_dir}/log/bluepill.log") do |app|
+  app.process('unicorn') do |process|
+    process.pid_file = "/u/app/shared/pids/unicorn.pid"
+    process.working_dir = app_dir
+
+    process.start_command = "/usr/bin/env unicorn_rails -Dc #{app_dir}/config/unicorn.rb -E production"
+    process.stop_command = "kill -QUIT {{PID}}"
+    process.restart_command = "kill -USR2 {{PID}}"
+
+    process.start_grace_time = 8.seconds
+    process.stop_grace_time = 5.seconds
+    process.restart_grace_time = 13.seconds
+
+
+    process.monitor_children do |child_process|
+      child_process.stop_command = "kill -QUIT {{PID}}"
+
+      child_process.checks :mem_usage, :every => 10.seconds, :below => 150.megabytes, :times => [3,5]
+      child_process.checks :cpu_usage, :every => 10.seconds, :below => 50, :times => [3,5]
+    end
+  end
+
+  app.process('nginx') do |process|
+    process.pid_file = '/var/run/nginx.pid'
+
+    process.start_command = '/usr/sbin/nginx -c /etc/nginx/nginx.conf'
+    process.stop_command = 'kill -QUIT {{PID}}'
+    process.restart_command = 'kill -HUP {{PID}}'
+    process.restart_command = 'kill -HUP {{PID}}'
+
+    process.start_grace_time = 2.seconds
+  end
+  
+end
