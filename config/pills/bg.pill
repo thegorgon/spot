@@ -1,46 +1,28 @@
 app_dir = '/u/app/current'
 rails_env = 'production'
 num_workers = 3
-Bluepill.application('spot_bg', :log_file => "#{app_dir}/log/bluepill.log") do |app|  
+rake_cmd = "/usr/local/bin/ruby /usr/local/bin/rake RAILS_ENV=#{rails_env}"
+Bluepill.application('spot_bg', :log_file => "/var/log/bluepill.log") do |app|  
   (1..num_workers).each do |idx|
     app.process("resque_worker_#{idx}") do |process|
+      process.group = 'resque'
       process.working_dir = app_dir
       process.pid_file = "/var/run/resque/worker_#{idx}.pid"
-      process.start_command = "sudo rake RAILS_ENV=#{rails_env} resque:work"
-      process.stop_command = <<-EOF
-      kill -QUIT {{PID}}
-      sleep_count=0
-      while [ -e /proc/{{PID}} ]; do
-        sleep 1
-        let "sleep_count+=1"
-        if [ $sleep_count -eq 60 ]; then
-          kill -TERM {{PID}}
-        fi
-        if [ $sleep_count -ge 70 ]; then
-          kill -KILL {{PID}}
-        fi
-      done
-      EOF
-      process.start_grace_time = 5.seconds
-      process.stop_grace_time = 75.seconds
-      process.restart_grace_time = 80.seconds
+      process.start_command = "#{rake_cmd} resque:work"
+      process.restart_command = "kill -USR1 {{PID}}"      
+      process.stop_command = "kill -QUIT {{PID}}"
+      process.stdout = process.stderr = "#{app_dir}/log/resque.log"      
       process.daemonize = true
 
-      process.checks :mem_usage, :below => 100.megabytes, :every => 1.minute, :times => 3
+      process.checks :mem_usage, :below => 150.megabytes, :every => 1.minute, :times => 3
     end
   end
   
   app.process("sphinx") do |process|
     process.pid_file = "/var/run/searchd.pid"
     process.working_dir = app_dir
-    process.start_command = "rake RAILS_ENV=#{rails_env} ts:config && rake RAILS_ENV=#{rails_env} ts:start"
-    process.stop_command = "rake RAILS_ENV=#{rails_env} ts:stop"
-    
-    process.start_grace_time    = 20.seconds 
-    process.stop_grace_time     = 20.seconds 
-    process.restart_grace_time  = 20.seconds 
-    
-    process.checks :mem_usage, :below => 100.megabytes, :every => 1.minute, :times => 3
-    process.checks :cpu_usage, :every => 10.seconds, :below => 5, :times => 3
+    process.start_command = "/usr/local/sphinx/bin/searchd --pidfile --config /etc/searchd/searchd.conf"
+    process.stop_command = "/usr/local/sphinx/bin/searchd --pidfile --config /etc/searchd/searchd.conf --stopwait"
+    process.stdout = process.stderr = "/var/log/searchd/logs/searchd.log"
   end
 end
