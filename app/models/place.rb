@@ -3,10 +3,10 @@ class Place < ActiveRecord::Base
   validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
   before_validation :clean
-  after_validation :download_external_image
+  after_validation :process_external_image
   cattr_accessor :per_page
+
   @@per_page = 15
-  attr_writer :external_image_url
   serialize :image_attribution, Hash
   acts_as_mappable
   
@@ -18,6 +18,7 @@ class Place < ActiveRecord::Base
     has "RADIANS(lat)", :as => :latitude, :type => :float
     has "RADIANS(lng)", :as => :longitude, :type => :float  
     has :wishlist_count
+    set_property :delta => ThinkingSphinx::Deltas::ResqueDelta
   end
   
   has_attached_file :image, 
@@ -29,7 +30,7 @@ class Place < ActiveRecord::Base
     :s3_credentials   => "#{Rails.root}/config/apis/s3.yml",
     :path             => "/places/:id/:attachment_:style.:extension",
     :bucket           => S3_BUCKET
-      
+  process_attachment_in_background :image, :job => Jobs::PlaceImageProcessor
   def self.filter(params)
     finder = self
     if params[:query]
@@ -42,11 +43,19 @@ class Place < ActiveRecord::Base
     end
     finder
   end
-
-  def document
-    "#{clean_name} : #{clean_address}"
+  
+  def external_image_url=(value)
+    if value.present?
+      self.image = nil
+      @external_image_url = value
+    end
   end
   
+  def image=(file)
+    attachment_for(:image).assign(file)
+    self.image_attribution = self.image_thumbnail = nil if file.nil?
+  end
+    
   def name
     full_name
   end
@@ -56,11 +65,12 @@ class Place < ActiveRecord::Base
   end
   
   def address_lines=(value)
-    self.full_address = "#{value["0"]}\n#{value["1"]}"
+    value = [value["0"], value["1"]] if value.kind_of?(Hash)
+    self.full_address = value.join("\n")
   end
   
   def address
-    full_address
+    address_lines.join(', ')
   end
   
   def google_place
@@ -89,22 +99,14 @@ class Place < ActiveRecord::Base
       :lng => lng.to_f,
       :id => id,
       :thumbnail_data => image_thumbnail,
-      :image_url_640x400 => image.file?? image.url(:i640x400) : nil,
-      :image_url_234x168 => image.file?? image.url(:i234x168) : nil,
-      :image_url => image.file?? image.url : nil
+      :image_url_640x400 => image.url(:i640x400),
+      :image_url_234x168 => image.url(:i234x168),
+      :image_url => image.url
     }
-    hash
-  end
-
-  def image=(file)
-    attachment_for(:image).assign(file)
-    if file.nil?
-      self.image_attribution = self.image_thumbnail = nil
-    else
-      file = attachment_for(:image).to_tempfile(file)
-      lq_thumb = Paperclip.processor(:thumbnail).make(file, {:geometry => "117x84#", :convert_options => '-quality 10 -strip -colorspace RGB -resample 72', :format => 'jp2'}, self)
-      self.image_thumbnail = ActiveSupport::Base64.encode64(lq_thumb.to_a.join)
+    unless image.file? || options[:default_images]
+      hash.merge!(:image_url_640x400 => nil, :image_url_234x168 => nil, :image_url => nil)
     end
+    hash
   end
 
   private
@@ -113,17 +115,11 @@ class Place < ActiveRecord::Base
     self.clean_name = Geo::Cleaner.clean(:name => full_name)
     self.clean_address = Geo::Cleaner.clean(:address => full_address)
   end
-    
-  def download_external_image
+  
+  def process_external_image
     if @external_image_url.present?
-      begin
-        io = open(URI.parse(@external_image_url))
-        def io.original_filename; base_uri.path.split('/').last; end
-        self.image = io.original_filename.blank?? nil : io
-      rescue => e
-        Rails.logger.error "Error Downloading Place File : #{e.message}"
-      end
+      Resque.enqueue(Jobs::PlaceImageProcessor, self.class.name, id, :image, @external_image_url)    
     end
   end
-  
+    
 end

@@ -4,11 +4,12 @@ module Geo
   class Cleaner        
     class << self
       def clean(params)
+        options = params.slice(:extraneous)
         if (name = params[:name])
-          result = clean_name(name.clone)
+          result = clean_name(name.clone, options)
           result.length > 0 ? result : name
         elsif address = params[:address] 
-          clean_address(address.clone)
+          clean_address(address.clone, options)
         else
           nil
         end
@@ -16,15 +17,15 @@ module Geo
     
       private
     
-      def clean_name(name)
+      def clean_name(name, options={})
         prepare(name)
         remove_punctuation(name)
-        # remove_extraneous_words(name)
+        remove_extraneous_words(name) if options[:extraneous]
         cleanup(name)
         name
       end
     
-      def clean_address(address)
+      def clean_address(address, options={})
         prepare(address)
         remove_punctuation(address)
         expand_abbreviations(address)

@@ -58,20 +58,21 @@ class PlaceSearch
   def load_local_places
     local = []
     @benchmarks[:local] = Benchmark.measure do 
+      @query = Geo::Cleaner.clean(:name => @params[:query], :extraneous => true)
       options = @params.slice(:page, :per_page)
-      options[:field_weights] = { :name => 100, :city => 5, :clean_address => 1 }
+      options[:field_weights] = { :name => 100, :city => 5, :clean_address => 0 }
       options[:order] = "@relevance DESC"
       if @position
         options[:geo] = @position.to_a
         options[:order] << ", @geodist ASC"
       end
       options.merge!(:star => true, :match_mode => :any)
-      local = Place.search( @params[:query], options )
+      local = Place.search(@query, options )
     end
     local.each_with_match do |lp, match|
       @results[lp.id] ||= Result.new(:place => lp, :relevance => match[:weight], :position => @position)
     end
-    Rails.logger.info "place-search : Found #{local.length} local places, #{@results.length} total (#{(benchmarks[:local].real * 1000).round}ms)"
+    Rails.logger.info "place-search : Querying #{@query}, found #{local.length} local places, #{@results.length} total (#{(benchmarks[:local].real * 1000).round}ms)"
   end
   
   def results

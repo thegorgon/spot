@@ -1,5 +1,5 @@
 # MANUALLY START UNICORN:
-# unicorn_rails -c /u/app/current/config/unicorn.rb -E production -D
+# unicorn -Dc /u/app/current/config/unicorn.rb -E production
 
 shared_dir = '/u/app/shared'
 pid_dir    = "#{shared_dir}/pids"
@@ -10,6 +10,9 @@ rungroup = 'pop'
 
 # Workers and 1 master
 worker_processes 6
+
+# Set working directory
+working_directory "/u/app/current/"
 
 # Preload app for blazin' spawn times
 preload_app true
