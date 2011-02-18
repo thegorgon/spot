@@ -29,28 +29,44 @@ bg_servers.each { |server| role :bg, server }
 
 # Passenger Deploy Settings
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+  task :start do
+    run "sudo bluepill start unicorn"
   end
+  task :stop do
+    run "sudo bluepill stop unicorn"
+  end
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    run "sudo bluepill restart unicorn"
+  end
+  
   namespace :sphinx do
+    desc "Rebuild sphinx configuration"
+    task :default, :roles => :bg do
+      deploy.sphinx.stop
+      deploy.update_code
+      deploy.migrate
+      deploy.sphinx.configure
+      deploy.sphinx.start
+      deploy.symlink
+      deploy.restart
+    end
     desc "Symlink db from shared"
     task :symlink, :roles => :bg do
       run "rm -fr #{release_path}/db/sphinx && ln -nfs #{shared_path}/sphinx #{release_path}/db/sphinx"
     end
     desc "Stop sphinx"
     task :stop, :roles => :bg do
-      run "cd #{current_path} && sudo rake thinking_sphinx:stop RAILS_ENV=#{rails_env}"
+      run "sudo bluepill stop sphinx"
     end
     desc "Start sphinx"
     task :start, :roles => :bg do
-      run "cd #{current_path} && sudo rake thinking_sphinx:start RAILS_ENV=#{rails_env}"
+      run "sudo bluepill start sphinx"
     end
     desc "Rebuild sphinx configuration"
     task :configure, :roles => :bg do
       run "cd #{current_path} && sudo rake thinking_sphinx:configure RAILS_ENV=#{rails_env}"
     end
+    desc "Activate a new deploy of sphinx"
     task :activate, :roles => :bg do
       symlink
       configure
@@ -58,16 +74,22 @@ namespace :deploy do
     end
     desc "Restart sphinx"
     task :restart, :roles => :bg do
-      stop
-      start
+      run "sudo bluepill restart sphinx"
     end
   end
 end
 
-# Not working...TODO
+# Restart resque workers, simplistic version
+namespace :workers do
+  task :restart, :roles => :bg do
+    "sudo bluepill restart resque"
+  end
+end
+
+# JAMMIT Assets
 namespace :assets do
   task :optimize, :roles => :web do
-    send(:run, "cd #{release_path} && /usr/bin/jammit config/assets.yml")
+    send(:run, "cd #{release_path} && /usr/local/bin/jammit")
   end
 end
 
@@ -76,5 +98,7 @@ after 'deploy' do
   system("git tag release-`date +%Y_%m_%d-%H%M`")
   system("git push origin master --tags")
 end
-before 'deploy:update_code', 'deploy:sphinx:stop'
-after 'deploy:update_code', 'deploy:sphinx:activate'
+
+after 'deploy:update_code', 'assets:optimize'
+before 'deploy:symlink', 'deploy:sphinx:symlink'
+after 'deploy:restart', 'workers:restart'
