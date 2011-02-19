@@ -1,11 +1,12 @@
 module Geo
   class Position < Geo::LatLng
-    attr_accessor :altitude, :uncertainty, :heading, :speed
+    attr_accessor :altitude, :uncertainty, :heading, :speed, :timestamp
 
     MATCH_LLA = /\A([+-]?[0-9\.]+);([+-]?[0-9\.]+)(?:;([+-]?[0-9\.]+))?/.freeze
     MATCH_EPU = /\sepu=([0-9\.]+)(?:\s|\z)/i.freeze
     MATCH_HDN = /\shdn=([0-9\.]+)(?:\s|\z)/i.freeze
     MATCH_SPD = /\sspd=([0-9\.]+)(?:\s|\z)/i.freeze
+    MATCH_TS  = /\sts=([^\s]+)(?:\s|\z)/i.freeze
 
     def initialize(params={}, lng=nil)
       super(params, lng)
@@ -14,6 +15,7 @@ module Geo
         self.uncertainty = params[:uncertainty]
         self.heading     = params[:heading]
         self.speed       = params[:speed]
+        self.timestamp   = params[:timestamp]
       end
     end
     
@@ -32,13 +34,17 @@ module Geo
       if epu = MATCH_EPU.match(value)
         position.uncertainty = epu[1].to_f
       end
-
+      
       if hdn = MATCH_HDN.match(value)
         position.heading = hdn[1].to_f
       end
 
       if spd = MATCH_SPD.match(value)
         position.speed = spd[1].to_f
+      end
+      
+      if ts = MATCH_TS.match(value)
+        position.timestamp = JSON.parse(ts[1]).to_datetime
       end
 
       position.valid?? position : nil
@@ -55,7 +61,8 @@ module Geo
       (altitude.nil? || altitude.respond_to?(:to_f)) &&
       (uncertainty.nil? || uncertainty.respond_to?(:to_f) && uncertainty.to_f >= 0) &&
       (heading.nil? || heading.respond_to?(:to_f) && (0..360).include?(heading.to_f)) &&
-      (speed.nil? || speed.respond_to?(:to_f) && speed.to_f >= 0)
+      (speed.nil? || speed.respond_to?(:to_f) && speed.to_f >= 0) &&
+      (timestamp.nil? || timestamp.kind_of?(DateTime))
     end
 
     def attributes
@@ -65,7 +72,8 @@ module Geo
         :altitude => altitude,
         :uncertainty => uncertainty,
         :heading => heading,
-        :speed => speed
+        :speed => speed,
+        :timestamp => timestamp
       )
     end
 
@@ -75,6 +83,7 @@ module Geo
       value += " epu=%f" % uncertainty.to_f if uncertainty
       value += " hdn=%f" % heading.to_f if heading
       value += " spd=%f" % speed.to_f if speed
+      value += " ts=%s" % timestamp.to_json if timestamp
       value
     end
 

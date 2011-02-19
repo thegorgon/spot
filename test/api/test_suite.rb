@@ -1,6 +1,6 @@
 #!rails runner
-SEARCHES = [{:position => Geo::Position.new(:lat => 37.768186, :lng => -122.429124), :page => 1, :q => "Altena"},
-            {:position => Geo::Position.new(:lat => 37.768186, :lng => -122.429124), :page => 1, :q => "Zero Zero"}]
+SEARCHES = [{:position => Geo::Position.new(:lat => 37.768186, :lng => -122.429124, :timestamp => Time.now), :page => 1, :q => "Altena"},
+            {:position => Geo::Position.new(:lat => 37.768186, :lng => -122.429124, :timestamp => Time.now), :page => 1, :q => "Zero Zero"}]
 module Api
   class TestSuite
     include Rails.application.routes.url_helpers
