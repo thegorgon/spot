@@ -47,7 +47,7 @@ before_fork do |server, worker|
   old_pid = "#{pid_dir}/unicorn.pid.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin
-      STDOUT.puts "Quitting PID : #{old_pid} from server #{server.pid}"
+      server.logger.info "Quitting PID : #{old_pid} from server #{server.pid}"
       Process.kill("QUIT", File.read(old_pid).to_i)
     rescue Errno::ENOENT, Errno::ESRCH
       # someone else did our job for us
