@@ -19,6 +19,7 @@ gem 'yajl-ruby'
 gem 'thinking-sphinx', '2.0.0', :require => 'thinking_sphinx'
 gem 'ts-resque-delta', '0.0.4', :require => 'thinking_sphinx/deltas/resque_delta'
 gem 'resque'
+gem 'unicorn'
 
 group :development, :test do
 end
