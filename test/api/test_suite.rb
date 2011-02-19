@@ -126,7 +126,7 @@ module Api
       json = JSON.parse(curb.body_str)
       log "Wishlist length : #{json.length}", 1
       test_item = Place.first
-      test_params = {:item => {:item_type => test_item.class.to_s, :item_id => test_item.id, :lat => 37.768186, :lng => -122.429124}}
+      test_params = {:item => {:item_type => test_item.class.to_s, :item_id => test_item.id, :location => "37.768186;-122.429124;120 epu=50 hdn=45 spd=15"}}
       log "Adding #{test_item.full_name} to wishlist"
       curb = request(api_wishlist_items_url)
       curb.post_body = test_params.to_json

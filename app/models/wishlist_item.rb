@@ -6,8 +6,8 @@ class WishlistItem < ActiveRecord::Base
   validates :item_type, :presence => true, :inclusion => ITEM_TYPES
   validates :item_id, :presence => true, :numericality => true
   
-  validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
-  validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
+  validates :lat, :numericality => {:greater_than => -90, :less_than => 90}, :if => :lat?
+  validates :lng, :numericality => {:greater_than => -180, :less_than => 180}, :if => :lng
   
   def as_json(*args)
     {
@@ -17,5 +17,12 @@ class WishlistItem < ActiveRecord::Base
       :item => item.as_json(args),
       :created_at => created_at
     }
+  end
+  
+  def location=(value)
+    if value = Geo::Position.from_http_header(value)
+      self.lat = value.lat
+      self.lng = value.lng
+    end
   end
 end

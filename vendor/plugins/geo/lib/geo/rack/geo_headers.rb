@@ -7,6 +7,7 @@ module Geo
 
       def call(env)
         request = ::Rack::Request.new(env)
+        
         if position = ::Geo::Position.from_http_header(env['HTTP_GEO_POSITION'] || env['HTTP_X_GEO_POSITION'])
           request.params[:geo_position] = position
         end
