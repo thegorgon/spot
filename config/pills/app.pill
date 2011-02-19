@@ -4,14 +4,14 @@ Bluepill.application('spot_app', :log_file => "/var/log/bluepill.log") do |app|
     process.pid_file = "/u/app/shared/pids/unicorn.pid"
     process.working_dir = app_dir
 
-    process.start_command = "/usr/local/bin/unicorn -Dc #{app_dir}/config/unicorn.rb -E production"
+    process.start_command = "/usr/local/bin/bundle exec unicorn -D -c #{app_dir}/config/unicorn.rb -E production"
     process.stop_command = "kill -QUIT {{PID}}"
     process.restart_command = "kill -USR2 {{PID}}"
 
-    process.start_grace_time = 8.seconds
+    process.start_grace_time = 40.seconds
     process.stop_grace_time = 5.seconds
-    process.restart_grace_time = 13.seconds
-    
+    process.restart_grace_time = 45.seconds
+
     process.stdout = process.stderr = "#{app_dir}/log/unicorn.log"
 
     process.monitor_children do |child_process|
@@ -23,7 +23,7 @@ Bluepill.application('spot_app', :log_file => "/var/log/bluepill.log") do |app|
   end
 
   app.process('nginx') do |process|
-    process.pid_file = '/var/run/nginx.pid'
+    process.pid_file = '/usr/local/nginx/logs/nginx.pid'
   
     process.start_command = '/usr/sbin/nginx -c /etc/nginx/nginx.conf'
     process.stop_command = 'kill -QUIT {{PID}}'
@@ -32,5 +32,4 @@ Bluepill.application('spot_app', :log_file => "/var/log/bluepill.log") do |app|
   
     process.start_grace_time = 2.seconds
   end
-  
 end

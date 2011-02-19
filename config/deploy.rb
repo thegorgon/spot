@@ -30,14 +30,13 @@ bg_servers.each { |server| role :bg, server }
 # Unicorn Deploy Settings
 namespace :deploy do
   task :start do
-    # run "sudo bluepill start unicorn"
+    run "sudo bluepill start unicorn"
   end
   task :stop do
-    # run "sudo bluepill stop unicorn"
+    run "sudo bluepill stop unicorn"
   end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    # run "sudo bluepill restart unicorn"
-    run "sudo touch #{current_path}/tmp/restart.txt"
+    run "sudo bluepill restart unicorn"
   end
   
   # Sphinx deploy settings
