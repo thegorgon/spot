@@ -53,6 +53,24 @@ module Geo
       
       # Class singleton methods to mix into ActiveRecord.
       module SingletonMethods # :nodoc:
+        def within(distance, options={})
+          origin = Geo::LatLng.normalize(options[:origin])
+          units = options[:units] || mappable_options[:default_units]
+          sql =  distance_sql(origin, units)
+          select("#{table_name}.*, #{sql} AS distance").where("#{sql} <= #{distance}")
+        end
+        
+        def beyond(distance, options={})
+          origin = Geo::LatLng.normalize(options[:origin])
+          units = options[:units] || mappable_options[:default_units]
+          sql =  distance_sql(origin, units)
+          select("#{table_name}.*, #{sql} AS distance").where("#{sql} >= #{distance}")
+        end
+        
+        def in_range(range, options={})
+          beyond(range.min, options).within(range.max, options)
+        end
+                
         def qualified_lat_column_name
           "#{table_name}.#{mappable_options[:lat_column_name]}"
         end
@@ -66,7 +84,9 @@ module Geo
         # ================
         
         # Returns the distance SQL using the proper units and formula
-        def distance_sql(origin, units=default_units, formula=default_formula)
+        def distance_sql(origin, units=nil, formula=nil)
+          units ||= mappable_options[:default_units]
+          formula ||= mappable_options[:default_formula]
           case formula
           when :sphere
             sql = sphere_distance_sql(origin, units)
@@ -83,7 +103,7 @@ module Geo
           lng = deg2rad(origin.lng)
           multiplier = units_sphere_multiplier(units)
           case connection.adapter_name.downcase
-          when "mysql"
+          when "mysql", "mysql2"
             sql=<<-SQL_END 
                   (ACOS(least(1,COS(#{lat})*COS(#{lng})*COS(RADIANS(#{qualified_lat_column_name}))*COS(RADIANS(#{qualified_lng_column_name}))+
                   COS(#{lat})*SIN(#{lng})*COS(RADIANS(#{qualified_lat_column_name}))*SIN(RADIANS(#{qualified_lng_column_name}))+

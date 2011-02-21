@@ -35,6 +35,7 @@ module Api
       end
       perform_search_test
       perform_wishlist_test
+      perform_activity_test
       logout
       puts "\nComplete"
     end
@@ -146,6 +147,21 @@ module Api
       curb = request(api_wishlist_item_url(test_delete_id))
       curb.http_delete
       log "Response code : #{curb.response_code}"
+    end
+    
+    def perform_activity_test
+      log "Requesting activity"
+      position = Geo::Position.new(:lat => 37.768186, :lng => -122.429124, :timestamp => Time.now)
+      curb = request(activity_api_wishlist_url, position)
+      curb.http_get
+      json = JSON.parse(curb.body_str)
+      log "Response : #{json}", 1
+      log "Response Length : #{json.length}", 1
+      curb = request(activity_api_wishlist_url(:page => 2), position)
+      curb.http_get
+      json = JSON.parse(curb.body_str)
+      log "Response (page 2): #{json}", 1
+      log "Response Length (page 2): #{json.length}", 1
     end
     
     def logout

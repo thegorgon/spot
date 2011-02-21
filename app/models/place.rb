@@ -5,8 +5,8 @@ class Place < ActiveRecord::Base
   before_validation :clean
   after_validation :process_external_image
   cattr_accessor :per_page
-
   @@per_page = 15
+  
   serialize :image_attribution, Hash
   acts_as_mappable
   
