@@ -2,9 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.3'
 gem 'capistrano'
-gem 'ruby-debug19'
 gem 'haml'
-gem 'mongrel', '1.2.0.pre2'
 gem 'jammit'
 gem "paperclip", "~> 2.3"
 gem "curb"
@@ -19,7 +17,13 @@ gem 'yajl-ruby'
 gem 'thinking-sphinx', '2.0.0', :require => 'thinking_sphinx'
 gem 'ts-resque-delta', '0.0.4', :require => 'thinking_sphinx/deltas/resque_delta'
 gem 'resque'
-gem 'unicorn'
+
+group :production do
+  gem 'unicorn'
+end
 
 group :development, :test do
+  gem 'ruby-debug19'
+  gem 'mongrel', '1.2.0.pre2'
+  gem "rspec-rails", "~> 2.4"
 end
