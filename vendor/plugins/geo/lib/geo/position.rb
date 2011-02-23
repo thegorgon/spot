@@ -44,7 +44,7 @@ module Geo
       end
       
       if ts = MATCH_TS.match(value)
-        position.timestamp = JSON.parse(ts[1]).to_datetime
+        position.timestamp = ts[1].to_datetime
       end
 
       position.valid?? position : nil
