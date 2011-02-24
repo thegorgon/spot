@@ -1,5 +1,6 @@
 module Jobs
   class PlaceImageProcessor
+    extend IOStream
     @queue = :images
     
     def self.perform(instance_klass, instance_id, attachment_name, uri=nil)
@@ -33,9 +34,9 @@ module Jobs
       file = nil
       begin
         io = open(uri) rescue nil
-        def io.original_filename; base_uri.path.split('/').last; end
-        file = io if io.original_filename.present?
-      rescue
+        file = to_tempfile(io) if io
+      rescue => e
+        puts "Rescued error : #{e.message}"
         file = nil
       end
       file
