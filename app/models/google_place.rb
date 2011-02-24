@@ -1,15 +1,13 @@
 class GooglePlace < ActiveRecord::Base
   belongs_to :place
-  validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
-  validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
+  validates :lat, :numericality => {:greater_than => -90, :less_than => 90}, :presence => true
+  validates :lng, :numericality => {:greater_than => -180, :less_than => 180}, :presence => true
+  validates :cid, :presence => true
   
   # Accepts any normalizeable LatLng params (e.g. lat and lng, ll, origin)
   # GooglePlace.search(:query => "query", :radius => accuracy, :lat => Lat, :lng => Lng, :page => 2, :exclude => "Daves")
   def self.search(*args)
-    origin = Geo::LatLng.normalize(*args)
-    raise ArgumentError, "Invalid GooglePlace search: Please provide a normalizeable LatLng in your arguments" unless origin
-    options = args.extract_options!
-    request = Curl::Easy.perform(search_url(origin, options))
+    request = Curl::Easy.perform(search_url(*args))
     json = JSON.parse(request.body_str) rescue nil
     if json && json["responseData"] && json["responseData"]["results"]
       results = json["responseData"]["results"]
@@ -62,10 +60,14 @@ class GooglePlace < ActiveRecord::Base
       nil
     end
   end
+  
+  def place
+    @place ||= Place.canonical.find(place_id) if place_id
+  end
     
   def bind_to_place!
     if place_id && place
-      place
+      place.canonical
     else
       new_place = to_place
       new_place.save

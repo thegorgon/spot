@@ -28,6 +28,7 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
+    amatch (0.2.5)
     archive-tar-minitar (0.5.2)
     arel (2.0.8)
     authlogic (2.1.6)
@@ -50,6 +51,10 @@ GEM
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    factory_girl (1.3.3)
+    factory_girl_rails (1.0.1)
+      factory_girl (~> 1.3)
+      railties (>= 3.0.0)
     gem_plugin (0.2.3)
     haml (3.0.25)
     highline (1.6.1)
@@ -168,10 +173,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  amatch
   authlogic
   aws-s3
   capistrano
   curb
+  factory_girl_rails
   haml
   jammit
   mongrel (= 1.2.0.pre2)

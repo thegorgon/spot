@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110217231718) do
+ActiveRecord::Schema.define(:version => 20110223160719) do
 
   create_table "devices", :force => true do |t|
     t.string   "udid",          :null => false
@@ -25,6 +25,21 @@ ActiveRecord::Schema.define(:version => 20110217231718) do
   end
 
   add_index "devices", ["udid"], :name => "index_devices_on_udid", :unique => true
+
+  create_table "duplicate_places", :force => true do |t|
+    t.integer  "place_1_id"
+    t.integer  "place_2_id"
+    t.decimal  "name_distance",    :precision => 9, :scale => 2
+    t.decimal  "address_distance", :precision => 9, :scale => 2
+    t.decimal  "geo_distance",     :precision => 9, :scale => 2
+    t.decimal  "total_distance",   :precision => 9, :scale => 2
+    t.integer  "status",                                         :default => 0, :null => false
+    t.integer  "canonical_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "duplicate_places", ["place_1_id", "place_2_id"], :name => "index_duplicate_places_on_place_1_id_and_place_2_id", :unique => true
 
   create_table "google_places", :force => true do |t|
     t.string   "cid",                                           :null => false
@@ -68,8 +83,10 @@ ActiveRecord::Schema.define(:version => 20110217231718) do
     t.datetime "updated_at"
     t.boolean  "image_processing",                                 :default => false, :null => false
     t.boolean  "delta",                                            :default => true,  :null => false
+    t.integer  "canonical_id",                                     :default => 0,     :null => false
   end
 
+  add_index "places", ["canonical_id"], :name => "index_places_on_canonical_id"
   add_index "places", ["lat", "lng"], :name => "index_places_on_lat_and_lng"
 
   create_table "preview_signups", :force => true do |t|

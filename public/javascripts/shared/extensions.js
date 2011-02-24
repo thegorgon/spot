@@ -33,7 +33,6 @@
         $this.unbind('submit.ajaxForm');
         $this.bind('submit.ajaxForm', function(e) {
           e.preventDefault();
-          if ($.isFunction(options.start)) { options.start.apply(this); }
           $this.ajaxSubmit(options);
         });	    
       });
@@ -45,51 +44,62 @@
         $this.unbind('click.ajaxLink');
         $this.bind('click.ajaxLink', function(e) {
           e.preventDefault();
-          if ($.isFunction(options.start)) { options.start.apply(this); }
           $this.ajaxClick(options);
         });
       });
     },  
     ajaxClick: function(options) {
-      var $this = $(this), success, method, httpMethod, data;
+      var $this = $(this), success, method, httpMethod, data, confirmMsg;
       options = options || {};
       if (!$this.data('sending')) {
-        $this.data('sending', true);
-        success = ($.isFunction(options.success) ? options.success: function() {});
-        options.success = function() {
-          $this.data('sending', false);
-          success.apply($this, arguments);
-        };
-        method = ($this.attr('data-method') || 'GET').toUpperCase();
-        httpMethod = method == "GET" ? method : "POST";
-        data = {};
-        if (httpMethod != method) { data._method = method; }
-        options = $.extend({
-          type: httpMethod,
-          url: $this.attr('href'),
-          data: data,
-          dataType: 'json'
-        }, options);
-        return $.ajax(options);        
+        confirmMsg = $this.attr('data-confirm') || '';
+        if (confirmMsg.length == 0 || window.confirm(confirmMsg)) {
+          if ($.isFunction(options.start)) { options.start.apply(this); }
+          $this.data('sending', true);
+          success = ($.isFunction(options.success) ? options.success: function() {});
+          options.success = function() {
+            $this.data('sending', false);
+            success.apply($this, arguments);
+          };
+          method = ($this.attr('data-method') || 'GET').toUpperCase();
+          httpMethod = method == "GET" ? method : "POST";
+          data = {};
+          if (httpMethod != method) { data._method = method; }
+          options = $.extend({
+            type: httpMethod,
+            url: $this.attr('href'),
+            data: data,
+            dataType: 'json'
+          }, options);
+          return $.ajax(options);
+        } else {
+          return false;
+        }
       }
     },
     ajaxSubmit: function(options) {
-      var $this = $(this), success;
+      var $this = $(this), success, confirmMsg;
       options = options || {};
       if (!$this.data('sending')) {
-        $this.data('sending', true);
-        success = ($.isFunction(options.success) ? options.success: function() {});
-        options.success = function() {
-          $this.data('sending', false);
-          success.apply($this, arguments);
-        };
-        options = $.extend({
-          dataType: 'json',
-          url: $this.attr('action'),
-          type: $this.attr('method').toUpperCase(),
-          data: $this.serialize()
-        }, options);
-        return $.ajax(options);        
+        confirmMsg = $this.attr('data-confirm') || '';
+        if (confirmMsg.length == 0 || window.confirm(confirmMsg)) {
+          if ($.isFunction(options.start)) { options.start.apply(this); }
+          $this.data('sending', true);
+          success = ($.isFunction(options.success) ? options.success: function() {});
+          options.success = function() {
+            $this.data('sending', false);
+            success.apply($this, arguments);
+          };
+          options = $.extend({
+            dataType: 'json',
+            url: $this.attr('action'),
+            type: $this.attr('method').toUpperCase(),
+            data: $this.serialize()
+          }, options);
+          return $.ajax(options);
+        } else {
+          return false;
+        }
       }
     },
     popup: function() {

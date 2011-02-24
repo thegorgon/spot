@@ -80,6 +80,10 @@ module Geo
       [lat, lng]
     end
     
+    def ts_geo
+      [self.class.deg2rad(lat), self.class.deg2rad(lng)]
+    end
+    
     # Returns all important fields as key-value pairs
     def attributes
       {

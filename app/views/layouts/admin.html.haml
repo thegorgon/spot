@@ -23,6 +23,8 @@
       #nav
         =link_to "Search", new_admin_search_path
         =link_to "Places", admin_places_path
+        =link_to "Duplicates", admin_duplicates_path
+        =link_to "Resque", '/admin/resque'
     #bd.clearfix
       = yield
       -if flash[:error] || flash[:notice]

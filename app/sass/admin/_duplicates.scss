@@ -1,0 +1,52 @@
+#admin_duplicates_index {
+  .top {
+    border-bottom: 1px solid #ddd;
+  }
+}
+.duplicate {
+  padding: 20px 10px;
+  border-bottom: 1px solid #ddd;
+  .metadata {
+    clear: both;
+    padding: 10px 0 5px;
+    font-weight: bold;
+  }
+  .place {
+    text-align: left;
+    float: left;
+    width: 469px;
+    padding: 10px 0;
+    .canonical {
+      font-size: 12px;
+      height: 26px;
+      line-height: 26px;
+      border: 1px solid #393;
+      color: #ededed;
+      width: 80px;
+      background: #333;
+      @include gradient_top_down(#393, #282, 100%);
+      @include border_radius(3px);
+      font-weight: bold;
+      text-align: center;
+    }
+    .image {
+      float: left;
+      margin-right: 15px;
+    }
+    .info {
+      width: 250px;
+      position: relative;
+      float: left;
+      line-height: 1.5em;
+      .name {
+        font-weight: bold;
+      }
+    }
+    form {
+      margin: 5px 0 0 0;
+      button {
+        width: 100px;
+      }
+    }
+  }
+}

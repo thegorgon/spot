@@ -69,7 +69,7 @@ module Geo
     "salon",
     "gelateria"
   ]
-  
+    
   CARDINAL_DIRECTIONS = {
     'w'   => 'west',
     'wst' => 'west',

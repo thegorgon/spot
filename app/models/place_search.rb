@@ -63,14 +63,14 @@ class PlaceSearch
       options[:field_weights] = { :name => 100, :city => 5, :clean_address => 0 }
       options[:order] = "@relevance DESC"
       if @position
-        options[:geo] = @position.to_a
+        options[:geo] = @position.ts_geo
         options[:order] << ", @geodist ASC"
       end
       options.merge!(:star => true, :match_mode => :any)
-      local = Place.search(@query, options )
+      local = Place.search(@query, options)
     end
     local.each_with_match do |lp, match|
-      @results[lp.id] ||= Result.new(:place => lp, :relevance => match[:weight], :position => @position)
+      @results[lp.canonical_id] ||= Result.new(:place => lp, :relevance => match[:weight], :position => @position)
     end
     Rails.logger.info "place-search : Querying #{@query}, found #{local.length} local places, #{@results.length} total (#{(benchmarks[:local].real * 1000).round}ms)"
   end
@@ -88,7 +88,7 @@ class PlaceSearch
     @benchmarks[:google_bind] = Benchmark.measure do
       google.each do |gp| 
         gp.bind_to_place!
-        @results[gp.place.id] ||= Result.new(:place => gp.place, :position => @position)
+        @results[gp.place.canonical_id] ||= Result.new(:place => gp.place, :position => @position)
       end
     end
     Rails.logger.info "place-search : Found #{google.length} google places, #{@results.length} total (#{(benchmarks[:google_load].real * 1000).round}ms)"

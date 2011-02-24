@@ -51,6 +51,26 @@
         });
       });
     },
+    admin_duplicates: function() {
+      $('.ignore a.ajax').ajaxLink({
+        start: function() {
+          $(this).parents('.duplicate').slideUp();
+        }, success: function(data) {
+          // var html = $(data.html);
+          // $(this).parents('.duplicate').replaceWith(html.hide())
+          // html.slideDown();
+        }
+      });
+      $('.resolve').ajaxForm({
+        start: function() {
+          $(this).parents('.duplicate').slideUp();
+        }, success: function(data) {
+          // var html = $(data.html);
+          // $(this).parents('.duplicate').replaceWith(html.hide())
+          // html.slideDown();
+        }
+      })
+    },
     admin_places_index: function() {
       $('.search_link').toggle(function(e) {
         $('#search_form_wrapper').hide().removeClass('hidden').slideDown();

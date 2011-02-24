@@ -3,10 +3,14 @@ class Place < ActiveRecord::Base
   validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
   before_validation :clean
+  after_create :update_canonical_id
   after_validation :process_external_image
+  after_validation :process_deduping
+
   cattr_accessor :per_page
   @@per_page = 15
   
+  has_many :wishlist_items, :as => :item
   serialize :image_attribution, Hash
   acts_as_mappable
   
@@ -18,6 +22,7 @@ class Place < ActiveRecord::Base
     has "RADIANS(lat)", :as => :latitude, :type => :float
     has "RADIANS(lng)", :as => :longitude, :type => :float  
     has :wishlist_count
+    set_sphinx_primary_key :canonical_id
     set_property :delta => ThinkingSphinx::Deltas::ResqueDelta
   end
   
@@ -32,6 +37,9 @@ class Place < ActiveRecord::Base
     :path             => "/places/:id/:attachment_:style.:extension",
     :bucket           => S3_BUCKET
   process_attachment_in_background :image, :job => Jobs::PlaceImageProcessor
+  
+  scope :canonical, joins("INNER JOIN places canonical ON canonical.id = places.canonical_id").select("canonical.*")
+  
   def self.filter(params)
     finder = self
     if params[:query]
@@ -43,6 +51,22 @@ class Place < ActiveRecord::Base
       finder = finder.paginate(:page => params[:page], :per_page => params[:per_page])
     end
     finder
+  end
+  
+  def self.dedupe!
+    all.each { |p| DuplicatePlace.dedupe(p) }
+  end
+  
+  def self.reclean!
+    all.each { |p| p.reclean! }
+  end
+  
+  def canonical?
+    canonical_id == id
+  end
+  
+  def canonical
+    canonical?? self : self.class.find(canonical_id)
   end
   
   def external_image_url=(value)
@@ -86,7 +110,7 @@ class Place < ActiveRecord::Base
       @source_place ||= source.classify.constantize.where(:place_id => id).order("id ASC").first
     end
   end
-      
+        
   def reclean!
     clean
     save!
@@ -117,13 +141,25 @@ class Place < ActiveRecord::Base
     
   def clean
     self.clean_name = Geo::Cleaner.clean(:name => full_name)
-    self.clean_address = Geo::Cleaner.clean(:address => full_address)
+    self.clean_address = Geo::Cleaner.clean(:address => address)
+    self.canonical_id = id if id.to_i > 0 && canonical_id.to_i <= 0
+  end
+  
+  def update_canonical_id
+    update_attribute(:canonical_id, id) unless canonical_id.to_i > 0
+    save
   end
   
   def process_external_image
     if @external_image_url.present?
       self.image_processing = true
       Resque.enqueue(Jobs::PlaceImageProcessor, self.class.name, id, :image, @external_image_url)    
+    end
+  end
+  
+  def process_deduping
+    if false && clean_address_changed? || clean_name_changed? || new_record?
+      Resque.enqueue(Jobs::PlaceDeduper, id)
     end
   end
     

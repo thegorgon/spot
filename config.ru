@@ -3,7 +3,11 @@
 require ::File.expand_path('../config/environment',  __FILE__)
 require 'resque/server'
 
+resque = Rack::Auth::Basic.new(Resque::Server.new) do |username, password|
+  username == 'pp' && password == 'pilates!'
+end
+
 run Rack::URLMap.new(
   "/" => Spot::Application,
-  "/resque" => Resque::Server.new
+  "/admin/resque" => resque
 )

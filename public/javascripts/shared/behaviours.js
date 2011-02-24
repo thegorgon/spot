@@ -26,17 +26,17 @@
       });
     },
     actionLink: function() {
-      $(this).live('click', function(e) {
+      $(this).die('click').live('click', function(e) {
         e.preventDefault();
         var link = $(this),
           url = link.attr('href'),
           method = (link.attr('data-method') || 'GET').toUpperCase(),
-          confirm = link.attr('data-confirm'),
+          confirmMsg = link.attr('data-confirm'),
           httpMethod = method == 'GET' ? method  : 'POST',
           authParam = $('meta[name=csrf-param]').attr('content'),
           authValue = $('meta[name=csrf-token]').attr('content'),
           form = $('<form action="' + url + '" method="' + httpMethod + '"></form>');
-        if (window.confirm(confirm)) {
+        if (window.confirm(confirmMsg)) {
           form.append('<input type="hidden" name="' + authParam + '" value="' + authValue + '"/>');
           if (httpMethod != method) { form.append('<input type="hidden" name="_method" value="' + method + '" />')}
           form.hide().appendTo('body').submit();                    
@@ -71,7 +71,7 @@
       $('[placeholder]').placeholder();
       $('[data-mode=select]').selectOnly();
       $('.file_field input').fileField();
-      $('a[data-confirm][data-method]').actionLink();
+      $('a[data-confirm][data-method]:not(.ajax)').actionLink();
       $('#flash').hide().removeClass('hidden').slideDown(500, function() {
         setTimeout(function() { $('#flash').slideUp(500) }, 3000);
       })

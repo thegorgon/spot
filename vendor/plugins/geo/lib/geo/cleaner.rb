@@ -14,22 +14,27 @@ module Geo
           nil
         end
       end
+      
+      def remove_extraneous_words(string)
+        string.gsub!(/\b(#{Geo::EXTRANEOUS_WORDS.join("|")})\b/, " ")
+        string
+      end
     
       private
     
       def clean_name(name, options={})
-        prepare(name)
-        remove_punctuation(name)
-        remove_extraneous_words(name) if options[:extraneous]
-        cleanup(name)
+        name = prepare(name)
+        name = remove_punctuation(name)
+        name = remove_extraneous_words(name) if options[:extraneous]
+        name = cleanup(name)
         name
       end
     
       def clean_address(address, options={})
-        prepare(address)
-        remove_punctuation(address)
-        expand_abbreviations(address)
-        cleanup(address)
+        address = prepare(address)
+        address = remove_punctuation(address)
+        address = expand_abbreviations(address)
+        address = cleanup(address)
         address
       end    
     
@@ -38,26 +43,26 @@ module Geo
           string.gsub!(/\b#{short}\.?\b/i, " #{long} ")
         end
         string.gsub!(/\#\s*([\w\d])/, '#\1')
+        string
       end
       
       def prepare(string)
         string.strip!
         string.downcase!
+        string
       end
       
       def cleanup(string)
         string.strip!
         string.gsub!(/\s+/, " ")
+        string
       end
     
       def remove_punctuation(string)
         string.gsub!(/\b&\b/, ' and ')
-        string.gsub!(/-/, ' ')
-        string.gsub!(/[^(\w\d\s\#)]/, '')
-      end
-      
-      def remove_extraneous_words(string)
-        string.gsub!(/\b(#{Geo::EXTRANEOUS_WORDS.join("|")})\b/, " ")
+        string.gsub!(/\-/, ' ')
+        string = string.mb_chars.normalize(:kd).gsub(/[^\p{L}\s\p{N}]/ui, '').to_s
+        string
       end
     end
   end

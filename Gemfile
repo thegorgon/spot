@@ -17,6 +17,7 @@ gem 'yajl-ruby'
 gem 'thinking-sphinx', '2.0.0', :require => 'thinking_sphinx'
 gem 'ts-resque-delta', '0.0.4', :require => 'thinking_sphinx/deltas/resque_delta'
 gem 'resque'
+gem 'amatch'
 
 group :production do
   gem 'unicorn'
@@ -26,4 +27,5 @@ group :development, :test do
   gem 'ruby-debug19'
   gem 'mongrel', '1.2.0.pre2'
   gem "rspec-rails", "~> 2.4"
+  gem 'factory_girl_rails'
 end

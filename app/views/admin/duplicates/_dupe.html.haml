@@ -1,0 +1,26 @@
+.duplicate.clearfix{:id => dom_id(dupe)}
+  -[dupe.place_1, dupe.place_2].each_with_index do |place, i|
+    .place.clearfix{:class => "place_#{i + 1}"}
+      .image= image_tag place.image.url(:i234x168), :size => "58x42", :alt => "", :title => "#{place.name}"
+      .info
+        .name=link_to place.name, edit_admin_place_path(place)
+        .address= place.address
+        .meta="#{place.class} #{place.id}"
+        .wishlist_count= "#{place.wishlist_count.to_i} Wishlists"
+        -if place.id != dupe.canonical_id
+          =form_tag resolve_admin_duplicate_path(dupe), :method => :put, "data-confirm" => "Merge #{dupe.place_1.name} and #{dupe.place_2.name} into #{place.name}?", :class => "resolve" do
+            =hidden_field_tag :canonical_id, place.id
+            =button_tag(:class => 'rndblk_80x26') do
+              =dupe.canonical_id ? "Switch Here" : "Use This Place" 
+        -else
+          .canonical Selected
+  .metadata
+    ="Total Distance : #{'%.2f' % dupe.total_distance},"
+    ="Geo Distance : #{'%.2f' % dupe.geo_distance}m,"
+    ="Name Distance : #{'%.1f' % dupe.name_distance} deltas,"
+    ="Address Distance : #{'%.1f' % dupe.name_distance} deltas"
+  .ignore
+    -if dupe.ignored?
+      %em Not a Duplicate
+    -else
+      =link_to "Not a Duplicate?", ignore_admin_duplicate_path(dupe), "data-method" => "put", :class => "ajax"
