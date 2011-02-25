@@ -7,4 +7,4 @@ Tumblr.options[:config_file] = File.join(Rails.root, 'config', 'apis', 'tumblr.y
 Flickr.options[:config_file] = File.join(Rails.root, 'config', 'apis', 'flickr.yml')
 Google.options[:config_file] = File.join(Rails.root, 'config', 'apis', 'google.yml')
 
-Paperclip::Attachment.default_options[:convert_options] = { :all => '-quality 100 -strip -colorspace RGB -resample 72'}
+Paperclip::Attachment.default_options[:convert_options] = { :all => '-quality 100 -strip -colorspace RGB'}
