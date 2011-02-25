@@ -7,6 +7,7 @@ class Api::BaseController < ApplicationController
   rescue_from ServiceError, :with => :service_exception
   rescue_from Authlogic::Session::Existence::SessionInvalidError, :with => :unauthorized_access_error
   rescue_from UnauthorizedAccessError, :with => :unauthorized_access_error
+  rescue_from Exception, :with => :unknown_error
   
   private
   
@@ -33,6 +34,10 @@ class Api::BaseController < ApplicationController
   
   def duplicate_record_error(exception=nil)
     basic_exception(409, exception)
+  end
+  
+  def unknown_error(exception=nil)
+    basic_exception(500, exception)
   end
   
   def require_user
