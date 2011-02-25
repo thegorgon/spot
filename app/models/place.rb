@@ -48,6 +48,7 @@ class Place < ActiveRecord::Base
       finder = finder.where("image_file_name IS NULL") if params[:filter] == "imageless"
       finder = finder.where("wishlist_count > 0") if params[:filter] == "wishlisted"
       finder = finder.order("id DESC")
+      finder = finder.where("canonical_id = id")
       finder = finder.paginate(:page => params[:page], :per_page => params[:per_page])
     end
     finder
