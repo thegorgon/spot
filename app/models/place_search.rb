@@ -45,7 +45,7 @@ class PlaceSearch
       @benchmarks = {}
       @results = {}
       load_local_places
-      # load_google_places if @position
+      load_google_places if @position
       @results = @results.values
       @loaded = true
     end
