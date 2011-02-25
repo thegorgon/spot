@@ -129,7 +129,8 @@ class Place < ActiveRecord::Base
       :thumbnail_data => image_thumbnail,
       :image_url_640x400 => image.url(:i640x400),
       :image_url_234x168 => image.url(:i234x168),
-      :image_url => image.url
+      :image_url => image.url,
+      :updated_at => updated_at
     }
     unless image.file? || options[:default_images]
       hash.merge!(:image_url_640x400 => nil, :image_url_234x168 => nil, :image_url => nil)
