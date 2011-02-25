@@ -77,6 +77,9 @@ class DuplicatePlace < ActiveRecord::Base
     potentials
   end
   
+  # When auto resolving, we want to know which one is preferred so we can pick that one.
+  # Auto resolving only happens with identical names, addresses and locations, so we'll look
+  # at other fields.
   def preferred_canonical
     if place_1.image.file? && !place_2.image.file? #If one has an image, that's better
       place_1
@@ -93,12 +96,14 @@ class DuplicatePlace < ActiveRecord::Base
     end
   end
   
+  # Resolve this dupe. Update 
+  # THIS IS WHERE THE UPDATES HAPPEN. WHEN NEW ASSOCIATIONS ARE ADDED TO PLACE
+  # THEY MUST BE EXPLICITLY ADDED HERE. DYNAMIC PROGRAMMING BE DAMNED! THIS IS DELICATE!
   def resolve!(canonical, options={})
     duplicate = place_1_id == canonical.id ? place_2 : place_1
     duplicate.update_attribute(:canonical_id, canonical.id)
-    # THIS IS WHERE THE UPDATES HAPPEN. WHEN NEW ASSOCIATIONS ARE ADDED TO PLACE
-    # THEY MUST BE EXPLICITLY ADDED HERE. DYNAMIC PROGRAMMING BE DAMNED! THIS IS DELICATE!
     duplicate.wishlist_items.update_all(:item_type => canonical.class.to_s, :item_id => canonical.id)
+    GooglePlace.where(:place_id => duplicate.id).update_all(:place_id => canonical.id)
     update_attributes!(:status => options[:status] || RESOLVED, :canonical_id => canonical.id)
   end
   

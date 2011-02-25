@@ -60,11 +60,7 @@ class GooglePlace < ActiveRecord::Base
       nil
     end
   end
-  
-  def place
-    @place ||= Place.canonical.find(place_id) if place_id
-  end
-    
+      
   def bind_to_place!
     if place_id && place
       place.canonical
