@@ -159,7 +159,7 @@ class Place < ActiveRecord::Base
   end
   
   def process_deduping
-    if false && clean_address_changed? || clean_name_changed? || new_record?
+    if clean_address_changed? || clean_name_changed? || new_record?
       Resque.enqueue(Jobs::PlaceDeduper, id)
     end
   end
