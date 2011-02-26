@@ -1,22 +1,33 @@
 class Api::BaseController < ApplicationController
   before_filter :require_user
   
-  rescue_from Exception, :with => :unknown_error
-  rescue_from ActiveRecord::RecordNotUnique, :with => :duplicate_record_error
-  rescue_from ActiveRecord::RecordInvalid, :with => :invalid_record_error
-  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found_error
-  rescue_from ServiceError, :with => :service_exception
-  rescue_from Authlogic::Session::Existence::SessionInvalidError, :with => :unauthorized_access_error
-  rescue_from UnauthorizedAccessError, :with => :unauthorized_access_error
+  rescue_from Exception, :with => :exception_handler
   
   private
+  
+  def exception_handler(exception=nil)
+    case exception
+    when ActiveRecord::RecordNotUnique
+      duplicate_record_error(exception)
+    when ActiveRecord::RecordInvalid
+      invalid_record_error(exception)
+    when ActiveRecord::RecordNotFound
+      record_not_found_error(exception)
+    when ServiceError
+      service_error(exception)
+    when Authlogic::Session::Existence::SessionInvalidError
+      unauthorized_access_error(exception)
+    else
+      unknown_error(exception)
+    end
+  end
   
   def basic_exception(status, exception=nil, headers={})
     headers = {:exception_body => exception.try(:message), :exception_type => exception.class.to_s}.merge!(headers)
     head(status, headers)
   end
   
-  def service_exception(exception=nil)
+  def service_error(exception=nil)
     basic_exception(503, exception, :retry_after => 0)
   end
 
