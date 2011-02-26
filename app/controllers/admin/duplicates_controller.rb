@@ -1,8 +1,10 @@
 class Admin::DuplicatesController < Admin::BaseController
   def index
-    status = params[:status] || DuplicatePlace::UNRESOLVED
+    status = (params[:status] || DuplicatePlace::UNRESOLVED).to_i
     params[:per_page] = params[:per_page].to_i > 0 ? params[:per_page] : DuplicatePlace.per_page
-    @duplicates = DuplicatePlace.where(:status => status).includes(:place_1, :place_2).order('total_distance ASC').paginate(:page => [1, params[:page].to_i].max, :per_page => params[:per_page])
+    order = status == DuplicatePlace::UNRESOLVED ? 'total_distance ASC' : 'id DESC'
+    @duplicates = DuplicatePlace.where(:status => status).includes(:place_1, :place_2).order(order)
+    @duplicates = @duplicates.paginate(:page => [1, params[:page].to_i].max, :per_page => params[:per_page])
   end
   
   def ignore
