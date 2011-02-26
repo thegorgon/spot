@@ -7,7 +7,7 @@ class Api::BaseController < ApplicationController
   rescue_from ServiceError, :with => :service_exception
   rescue_from Authlogic::Session::Existence::SessionInvalidError, :with => :unauthorized_access_error
   rescue_from UnauthorizedAccessError, :with => :unauthorized_access_error
-  rescue_from Exception, :with => :unknown_error
+  #rescue_from Exception, :with => :unknown_error
   
   private
   
