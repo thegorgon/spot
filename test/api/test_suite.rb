@@ -136,6 +136,12 @@ module Api
       log "Response : #{json.inspect}"
       log "Added ID : #{json["id"]}", 1
       test_delete_id = json["id"]
+      log "Fetching new wishlist"
+      curb = request(api_wishlist_url)
+      curb.http_get
+      json = JSON.parse(curb.body_str)
+      log "Wishlist length : #{json.length}", 1
+      log "Wishlist : #{json.inspect}", 1      
       log "Attempting duplicate addition of #{test_item.full_name} to wishlist"
       curb = request(api_wishlist_items_url)
       curb.post_body = test_params.to_json
