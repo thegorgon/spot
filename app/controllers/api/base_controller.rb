@@ -1,13 +1,13 @@
 class Api::BaseController < ApplicationController
   before_filter :require_user
   
+  rescue_from Exception, :with => :unknown_error
   rescue_from ActiveRecord::RecordNotUnique, :with => :duplicate_record_error
   rescue_from ActiveRecord::RecordInvalid, :with => :invalid_record_error
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found_error
   rescue_from ServiceError, :with => :service_exception
   rescue_from Authlogic::Session::Existence::SessionInvalidError, :with => :unauthorized_access_error
   rescue_from UnauthorizedAccessError, :with => :unauthorized_access_error
-  #rescue_from Exception, :with => :unknown_error
   
   private
   
