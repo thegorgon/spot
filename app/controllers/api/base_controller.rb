@@ -26,7 +26,7 @@ class Api::BaseController < ApplicationController
   
   def basic_exception(status, exception=nil, headers={})
     headers = {:exception_body => exception.try(:message), :exception_type => exception.class.to_s}.merge!(headers)
-    Rails.logger.info("Rendering error : #{status}, #{headers.collect { |k, v| "#{k}=#{v}" }.join}")
+    Rails.logger.info("Rendering error : #{status}, #{headers.inspect}")
     head(status, headers)
   end
   
