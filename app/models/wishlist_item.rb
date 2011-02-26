@@ -16,7 +16,6 @@ class WishlistItem < ActiveRecord::Base
   def as_json(*args)
     {
       :_type => self.class.to_s,
-      :_class => self.class.to_s,
       :id => id,
       :item => item.as_json(args),
       :created_at => created_at
