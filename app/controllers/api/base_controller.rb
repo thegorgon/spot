@@ -6,7 +6,7 @@ class Api::BaseController < ApplicationController
   private
   
   def exception_handler(exception=nil)
-    Rails.logger.info("Handling exception of type : #{exception.class}")
+    Rails.logger.info("spot-app: handling exception of type : #{exception.class}")
     
     case exception
     when ActiveRecord::RecordNotUnique
@@ -26,7 +26,7 @@ class Api::BaseController < ApplicationController
   
   def basic_exception(status, exception=nil, headers={})
     headers = {:exception_body => exception.try(:message), :exception_type => exception.class.to_s}.merge!(headers)
-    Rails.logger.info("Rendering error : #{status}, #{headers.inspect}")
+    Rails.logger.info("spot-app: rendering error : #{status}, #{headers.inspect}")
     head(status, headers)
   end
   
@@ -55,7 +55,7 @@ class Api::BaseController < ApplicationController
   end
   
   def require_user
-    Rails.logger.info("Requiring user, current user ID : #{current_user.try(:id)}")
+    Rails.logger.info("spot-app: requiring user, current user id : #{current_user.try(:id)}")
     raise UnauthorizedAccessError, "An active user session is required to access this resource." unless current_user
   end
 
