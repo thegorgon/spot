@@ -5,7 +5,7 @@ class Place < ActiveRecord::Base
   before_validation :clean
   after_create :update_canonical_id
   after_validation :process_external_image
-  after_validation :process_deduping
+  after_save :process_deduping
 
   cattr_accessor :per_page
   @@per_page = 15
@@ -169,7 +169,7 @@ class Place < ActiveRecord::Base
   end
   
   def process_deduping
-    if clean_address_changed? || clean_name_changed? || new_record?
+    if clean_address_changed? || clean_name_changed?
       Resque.enqueue(Jobs::PlaceDeduper, id)
     end
   end
