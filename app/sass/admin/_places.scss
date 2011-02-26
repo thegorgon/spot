@@ -28,6 +28,13 @@
       margin: 0 auto;
     }
   }
+  .duplication {
+    clear: both;
+    font-size: 0.9em;
+    p {
+      padding: 5px 0;      
+    }
+  }
   .phone {
     @extend .no_select;
     height: 713px;

@@ -30,7 +30,7 @@ GEM
     activesupport (3.0.3)
     amatch (0.2.5)
     archive-tar-minitar (0.5.2)
-    arel (2.0.8)
+    arel (2.0.9)
     authlogic (2.1.6)
       activesupport
     aws-s3 (0.6.2)
@@ -46,7 +46,7 @@ GEM
       net-ssh-gateway (>= 1.0.0)
     closure-compiler (1.0.0)
     columnize (0.3.2)
-    curb (0.7.10)
+    curb (0.7.12)
     daemons (1.0.10)
     diff-lcs (1.1.2)
     erubis (2.6.6)

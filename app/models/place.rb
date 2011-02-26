@@ -38,7 +38,8 @@ class Place < ActiveRecord::Base
     :bucket           => S3_BUCKET
   process_attachment_in_background :image, :job => Jobs::PlaceImageProcessor
   
-  scope :canonical, joins("INNER JOIN places canonical ON canonical.id = places.canonical_id").select("canonical.*")
+  scope :canonical, where("canonical_id = id")
+  scope :with_canonical, joins("INNER JOIN places canonical ON canonical.id = places.canonical_id").select("canonical.*")
   
   def self.filter(params)
     finder = self
@@ -48,7 +49,7 @@ class Place < ActiveRecord::Base
       finder = finder.where("image_file_name IS NULL") if params[:filter] == "imageless"
       finder = finder.where("wishlist_count > 0") if params[:filter] == "wishlisted"
       finder = finder.order("id DESC")
-      finder = finder.where("canonical_id = id")
+      finder = finder.canonical
       finder = finder.paginate(:page => params[:page], :per_page => params[:per_page])
     end
     finder
@@ -66,8 +67,16 @@ class Place < ActiveRecord::Base
     canonical_id == id
   end
   
+  def duplicate?
+    !canonical?
+  end
+  
   def canonical
     canonical?? self : self.class.find(canonical_id)
+  end
+  
+  def duplicates
+    canonical?? self.class.where("canonical_id = #{id} AND id <> #{id}").all : []
   end
   
   def external_image_url=(value)

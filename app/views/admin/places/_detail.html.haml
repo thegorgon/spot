@@ -23,3 +23,17 @@
         .address=@place.address_lines.join(' ')
       .button.phone_whitegray_288x37
         Add To Wishlist
+  .duplication
+    -if @place.duplicate?
+      %h2 Duplicate of...
+      %p.canonical
+        =link_to(@place.canonical.id, admin_place_path(@place.canonical)) + '.'
+        ="#{@place.canonical.name} #{@place.canonical.address}"
+      
+    -elsif @place.duplicates.present?
+      %h2 Also Known As...
+      -@place.duplicates.each do |dupe|
+        %p.duplicate
+          =link_to(dupe.id, admin_place_path(dupe)) + '.'
+          ="#{dupe.name} #{dupe.address}"
+          

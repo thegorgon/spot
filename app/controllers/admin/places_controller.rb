@@ -21,6 +21,10 @@ class Admin::PlacesController < Admin::BaseController
     end
   end
   
+  def show
+    redirect_to edit_admin_place_path(params[:id])
+  end
+  
   def edit
   end
   
