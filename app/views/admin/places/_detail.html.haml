@@ -17,7 +17,7 @@
     .content
       .top_bar
         .name=@place.name
-      .image=image_tag(@place.image.url(:i640x400), :size => "321x200", :class => "place_image clickable", :alt => @place.name, :title => "Click To Change")
+      .image=image_tag(@place.image.url(:i640x400), :size => "321x200", :class => "place_image clickable", :alt => @place.name, :title => "Click To Change", 'data-img-src' => place.image.processed_url(:i640x400))
       .info
         .name=@place.name
         .address=@place.address_lines.join(' ')

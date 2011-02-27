@@ -18,9 +18,11 @@
     },
     defaultComplete = function(data) {
       var height = 2 * this[0].height,
-        newSrc = height == 84 ? data.image_url_234x168 : data.image_url_640x400;
+        newSrc = height == 84 ? data.image_url_234x168 : data.image_url_640x400,
+        newProcessed = height == 84 ? data.processed_image_url_234x168 : data.processed_image_url_640x400;
       if (data) {
         $(this).attr('src', newSrc);
+        $(this).attr('data-img-src', newProcessed);
       } else {
         alert("There was an error with that image. Please try again.");
       }
@@ -46,12 +48,28 @@
         $('.image_search_results .preview').html(img);
       }).bind('mouseleave.imageSelector', function(e) {
         $('.image_search_results .example').html('');
-      })
+      });
+    },
+    setUpdateInterval = function() {
+      var interval = $(window).data('imageUpdateInterval');
+      $(window).data('imageUpdateInterval', setInterval(function() {
+        $('.place_image').each(function(i) {
+          var $this = $(this), img, newSrc = $this.attr('data-img-src'), src = $this.attr('src');
+          if (src != newSrc) {
+            img = new Image();
+            img.src = newSrc;
+            img.onload = function() {
+              $this.attr('src', img.src);
+            } 
+          }
+        });
+      }, 1000));
     };
   $.provide(go, 'ImageSelector', {
     init: function(selector, options) {
       options = options || {};
       oncomplete = $.isFunction(options.complete) ? options.complete : defaultComplete;
+      setUpdateInterval();
       $(selector).bind('click', function(e) {
         place = $(this).parents('.place'),
           id = place.attr('id').split('_').pop();

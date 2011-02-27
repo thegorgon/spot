@@ -144,6 +144,9 @@ class Place < ActiveRecord::Base
     unless image.file? || options[:default_images]
       hash.merge!(:image_url_640x400 => nil, :image_url_234x168 => nil, :image_url => nil)
     end
+    if image_processing? && options[:processed_images]
+      hash.merge!(:processed_image_url_640x400 => image.processed_url(:i640x400), :processed_image_url_234x168 => image.processed_url(:i234x168))
+    end
     hash
   end
 

@@ -74,12 +74,18 @@ ActiveRecord::Base.send(:include, Delayed::Paperclip)
 
 module Paperclip
   class Attachment
+    
+    def updated_at
+      time = instance_read(:updated_at) || @instance.updated_at
+      time && time.to_f.to_i
+    end
+
     def initialize_with_processing(name, instance, options={})
       initialize_without_processing(name, instance, options)
       @processing_url = options[:processing_url] || @default_url
     end
     alias_method_chain :initialize, :processing
-
+    
     def url_with_processed(style = default_style, include_updated_timestamp = true)
       return url_without_processed(style, include_updated_timestamp) unless @instance.class.process_attachment_in_background?(@name)
       if @instance.column_exists?(:"#{@name}_processing")
@@ -97,5 +103,17 @@ module Paperclip
       end
     end    
     alias_method_chain :url, :processed
+
+    def processed_url(style_name = default_style, use_timestamp = @use_timestamp)
+      if file? || (@instance.column_exists?(:"#{@name}_processing") && @instance.send(:"#{@name}_processing?"))
+        original = @instance.image_file_name
+        @instance.image_file_name = original || "file.jpg"
+        url = interpolate(@url, style_name)
+        @instance.image_file_name = original
+      else
+        url = interpolate(@default_url, style_name)
+      end
+      use_timestamp && updated_at ? [url, updated_at].compact.join(url.include?("?") ? "&" : "?") : url
+    end
   end
 end
