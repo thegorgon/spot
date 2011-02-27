@@ -64,7 +64,7 @@ class Place < ActiveRecord::Base
   end
   
   def canonical?
-    canonical_id == id
+    !new_record? && canonical_id == id
   end
   
   def duplicate?
