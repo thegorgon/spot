@@ -64,7 +64,7 @@ class Place < ActiveRecord::Base
   end
   
   def canonical?
-    !new_record? && canonical_id == id
+    new_record? || canonical_id == id
   end
   
   def duplicate?
@@ -76,7 +76,7 @@ class Place < ActiveRecord::Base
   end
   
   def duplicates
-    canonical?? self.class.where("canonical_id = #{id} AND id <> #{id}").all : []
+    canonical? && !new_record?? self.class.where("canonical_id = #{id} AND id <> #{id}").all : []
   end
   
   def external_image_url=(value)
