@@ -51,6 +51,14 @@ class PlaceSearch
     end
   end
   
+  def query
+    @params[:query].to_s
+  end
+
+  def ll
+    @position.to_s
+  end
+  
   def result_count
     results.count
   end

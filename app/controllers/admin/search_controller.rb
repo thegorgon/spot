@@ -1,6 +1,6 @@
 class Admin::SearchController < Admin::BaseController
   def new
-    @search = PlaceSearch.new
+    @search = PlaceSearch.new(params)
   end
   
   def show
