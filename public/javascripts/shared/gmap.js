@@ -24,7 +24,7 @@
           clearGeocodeMarkers = function() {
             _map.setZoom(mapOpts().zoom);
             _map.panTo(_marker.getPosition());
-            $.each(_geocodeMarkers, function(i) { this.setMap(null) });        
+            $.each(_geocodeMarkers, function(i) { this.setMap(null); });        
             _geocodeMarkers = [];
           },
           addMarker = function(options) {
@@ -48,7 +48,7 @@
           },
           geocode = function(address) {
             _geocoder.geocode({ 'address': address }, function(results, status) {
-              if (status == google.maps.GeocoderStatus.OK) {
+              if (status === google.maps.GeocoderStatus.OK) {
                 clearGeocodeMarkers();
                 $.each(results, function(i) {
                   addGeocodeMarker(this);
@@ -76,7 +76,7 @@
           bind: function(name, fn) {
             var parts = name.split('.'),
               tgt = _map;
-            if (parts[0] == 'marker' && parts.length > 1) { 
+            if (parts[0] === 'marker' && parts.length > 1) { 
               tgt = _marker; 
               name = parts[1];
             }

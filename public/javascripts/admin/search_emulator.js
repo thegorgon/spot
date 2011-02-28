@@ -3,8 +3,8 @@
     setLatLng = function(ll) {
       var lat, lng;
       if (typeof(ll) === 'string') {
-        ll = ll.split(','),
-        lat = parseFloat(ll[0]),
+        ll = ll.split(',');
+        lat = parseFloat(ll[0]);
         lng = parseFloat(ll[1]);
       } else if (ll.lat && ll.lng) {
         lat = ll.lat();
@@ -13,11 +13,11 @@
       lat = (!lat || lat > 90 || lat < -90 ? 0 : lat);
       lng = (!lng || lng > 180 || lng < -180 ? 0 : lng);
       $('#search_ll').val(lat + ',' + lng);
-      map.setPosition(lat, lng)
+      map.setPosition(lat, lng);
     },
     initMap = function() {
       map = go.GMap.init({mapDiv: $('.map'), center: new google.maps.LatLng(0, 0), name: 'Search Location' });
-      setLatLng($('#search_ll').val())
+      setLatLng($('#search_ll').val());
       map.bind('marker.drag', function(e) { setLatLng(e.latLng); });
       $('.results .place').each(function(i) {
         var $this = $(this);
@@ -30,7 +30,7 @@
             $this.addClass('hover'); 
           }
         });
-      })
+      });
     },
     bindActions = function() {
       $('#search_form').ajaxForm({
@@ -45,12 +45,12 @@
       });
       $('.location').click(function(e) {
         e.preventDefault();
-        setLatLng($(this).attr('data-ll'))
-      })
+        setLatLng($(this).attr('data-ll'));
+      });
       $('.geocode').click(function(e) {
         map.geocode($('#search_ll').val(), { 
           success: function() {  setLatLng(this);  }
-        })
+        });
       });
       $('.geolocate').click(function(e) {
         var lnk = $(this);
@@ -59,7 +59,7 @@
         $.geolocate({
           success: function(position) {
             var ll = position.coords.latitude + "," + position.coords.longitude;
-            setLatLng(ll)
+            setLatLng(ll);
             lnk.removeClass('loading');
           }, error: function() {
             lnk.removeClass('loading');
@@ -73,5 +73,5 @@
       initMap();
       bindActions();
     }
-  })
-}(Spot))
+  });
+}(Spot));
