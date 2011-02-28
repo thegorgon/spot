@@ -1,6 +1,14 @@
-.measurements
+.measurements.clearfix
   -if @search
-    ="#{pluralize(@search.result_count, "Place")}"
+    .map
+      =image_tag(google_static_map_url(@search.position, :size => "500x200", :zoom => 13))
+    %h2="#{pluralize(@search.result_count, "Place")}"
+    -if @search.benchmarks.present?
+      %dl.benchmarks.clearfix
+        %h2 Benchmarks
+        -@search.benchmarks.each do |name, value|
+          %dt=name
+          %dd="#{(value.real.to_f * 1000).round} ms"
 .table
   %table.data
     %thead
@@ -15,8 +23,8 @@
         %th Actions
     %tbody
       -@search.results.each do |result|
-        %tr.center.place{:id => dom_id(result.place)}
-          %td= image_tag result.image.url(:i234x168), :size => "58x42", :class => "place_image clickable", :alt => "", :title => "Click to Change"
+        %tr.center.place{:id => dom_id(result.place), 'data-ll' => result.place.to_lat_lng.to_s, 'data-name' => result.name}
+          %td= image_tag result.image.url(:i234x168), :size => "58x42", :class => "place_image clickable", :alt => "", :title => "Click to Change", 'data-img-src' => result.image.processed_url(:i234x168)
           %td= result.place_id
           %td= result.name
           %td= result.full_address

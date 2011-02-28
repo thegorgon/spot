@@ -5,6 +5,7 @@ javascript_compressor: closure
 javascripts:
   vendor:
     - public/javascripts/vendor/jquery-1.4.4.min.js
+    - public/javascripts/vendor/jquery-ui-1.8.10.custom.min.js
     - public/javascripts/vendor/logger.js
   site:
     - public/javascripts/shared/extensions.js
@@ -19,7 +20,9 @@ javascripts:
     - public/javascripts/shared/behaviours.js
     - public/javascripts/shared/navigator.js
     - public/javascripts/shared/lightbox.js
+    - public/javascripts/shared/gmap.js
     - public/javascripts/shared/place_form.js
+    - public/javascripts/admin/search_emulator.js
     - public/javascripts/admin/image_selector.js
     - public/javascripts/admin/shared.js
     - public/javascripts/admin/views.js

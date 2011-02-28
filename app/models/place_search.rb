@@ -43,11 +43,13 @@ class PlaceSearch
   def load
     if !@loaded && @params[:query].present?
       @benchmarks = {}
-      @results = {}
-      load_local_places
-      load_google_places if @position
-      @results = @results.values
-      @loaded = true
+      @benchmarks[:total] = Benchmark.measure do 
+        @results = {}
+        load_local_places
+        load_google_places if @position
+        @results = @results.values
+        @loaded = true
+      end
     end
   end
   
@@ -59,6 +61,10 @@ class PlaceSearch
     @position.to_s
   end
   
+  def position
+    @position || Geo::Position.new(0, 0)
+  end
+  
   def result_count
     results.count
   end
@@ -68,7 +74,7 @@ class PlaceSearch
     @benchmarks[:local] = Benchmark.measure do 
       @query = Geo::Cleaner.clean(:name => @params[:query], :extraneous => true)
       options = @params.slice(:page, :per_page)
-      options[:field_weights] = { :name => 100, :city => 5, :clean_address => 0 }
+      options[:field_weights] = { :name => 100, :city => 5 }
       options[:order] = "@relevance DESC"
       if @position
         options[:geo] = @position.ts_geo
@@ -96,6 +102,7 @@ class PlaceSearch
     @benchmarks[:google_bind] = Benchmark.measure do
       google.each do |gp| 
         gp.bind_to_place!
+        Rails.logger.info "place-search : Found google place : #{gp.name}"
         @results[gp.place.canonical_id] ||= Result.new(:place => gp.place, :position => @position)
       end
     end

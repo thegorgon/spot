@@ -88,6 +88,13 @@
   border-bottom: $h dotted transparent; 
 }
 
+@mixin transition($rule) {
+  -webkit-transition: $rule; 
+  -moz-transition: $rule; 
+  -o-transition: $rule; 
+  transition: $rule;
+}
+
 @mixin gradient_top_down($from, $to, $point: 100%) {
   background: -webkit-gradient(linear, left 0, left $point, from($from), to($to));
   background: -moz-linear-gradient(top, $from, $to $point);

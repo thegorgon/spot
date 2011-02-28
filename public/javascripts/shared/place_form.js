@@ -1,17 +1,6 @@
 (function(go) {
   var _options,
-      _geocoder,
-      _geocodeMarkers = [],
       _map,
-      mapOpts = function(options) {
-        return $.extend({ center: _options.position, 
-                   zoom: 15, 
-                   mapTypeId: google.maps.MapTypeId.ROADMAP }, options);
-      },
-      newMarker = function(options) {
-        options = $.extend({map: _map}, options);
-        return new google.maps.Marker(options);
-      },
       getFormPosition = function() {
         return new google.maps.LatLng($('#place_lat').val(), $('#place_lng').val());
       },
@@ -19,8 +8,7 @@
         $('#place_lat').val(newLL.lat());
         $('#place_lng').val(newLL.lng());
         $('.latlng').html("@" + newLL.lat() + ',' + newLL.lng());
-        _marker.setPosition(newLL);
-        _map.panTo(newLL);
+        _map.setPosition(newLL.lat(), newLL.lng());
         return newLL;
       },
       getAddress = function() {
@@ -31,37 +19,6 @@
       },
       getCity = function() {
         return $('#place_city').val();
-      },
-      clearGeocodeMarkers = function() {
-        _map.setZoom(mapOpts().zoom);
-        _map.panTo(_marker.getPosition());
-        $.each(_geocodeMarkers, function(i) { this.setMap(null) });        
-        _geocodeMarkers = [];
-      },
-      addGeocodeMarker = function(result) {
-        var marker = newMarker({clickable: true, position: result.geometry.location}),
-          bounds = _map.getBounds();
-        bounds.extend(marker.getPosition());
-        _map.fitBounds(bounds);
-        _geocodeMarkers.push(marker);     
-        google.maps.event.addListener(marker, 'click', function(e) {
-          setFormPosition(this.getPosition());
-          $.logger.debug(this);
-          clearGeocodeMarkers();
-        });         
-        marker.setMap(_map);
-      },
-      geocode = function(address) {
-        _geocoder.geocode({ 'address': address }, function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-            clearGeocodeMarkers();
-            $.each(results, function(i) {
-              addGeocodeMarker(this);
-            });
-          } else {
-            alert("Geocode was not successful for the following reason: " + status);
-          }
-        });
       },
       validateNumber = function(fields) {
         fields.each(function(i) {
@@ -98,7 +55,11 @@
         });
         $('.geocode').bind('click', function(e) {
           e.preventDefault();
-          geocode(getAddress());
+          _map.geocode(getAddress(), {
+            success: function() {
+              setFormPosition(this);
+            }
+          });
         });
         $('#place_lat, #place_lng').bind('keyup', function(e) {
           validateNumber($(this));
@@ -110,12 +71,8 @@
       };
   $.provide(go, "PlaceForm", {
     init: function(options) {
-      options.mapDiv = $(options.mapDiv || options.mapId || '#map')[0];
-      _options = options;
-      _geocoder = new google.maps.Geocoder();
-      _map = new google.maps.Map(_options.mapDiv, mapOpts({center: getFormPosition()}));
-      _marker = newMarker({draggable: true, position: getFormPosition(), title: getName()});
-      google.maps.event.addListener(_marker, 'drag', function(e) { setFormPosition(e.latLng); });      
+      _map = Spot.GMap.init({ mapDiv : options.mapDiv, center: getFormPosition(), name: getName() });
+      _map.bind('marker.drag', function(e) { setFormPosition(e.latLng); })
       bindActions();
       updateDetail();
       validateImage($('#place_external_image_url'));

@@ -26,6 +26,12 @@
     }
   });
   $.extend($.fn, {
+    glow: function(color) {
+      var $this = $(this), oldColor = $this.css("background-color");
+      $this.animate({backgroundColor: color}, function() {
+        $this.animate({backgroundColor: oldColor});
+      });
+    },
     ajaxForm: function(options) {
       options = options || {};
       this.filter('form').each(function() {

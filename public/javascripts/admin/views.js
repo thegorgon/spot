@@ -22,34 +22,7 @@
       go.ImageSelector.init('.place_image');
     },
     admin_search: function() {
-      $('#search_form').ajaxForm({
-        start: function() {
-          $(this).addClass('loading');
-        }, success: function(data) {
-          $(this).removeClass('loading');
-          $('.results').html(data.html);
-          go.ImageSelector.init('.place_image');
-        }
-      });
-      $('.location').click(function(e) {
-        e.preventDefault();
-        $('#search_ll').val($(this).attr('data-ll'));
-      })
-      $('.geolocate').click(function(e) {
-        var lnk = $(this);
-        e.preventDefault();
-        lnk.addClass('loading');
-        $.geolocate({
-          success: function(position) {
-            var ll = position.coords.latitude + "," + position.coords.longitude;
-            $('#search_ll').val(ll);
-            lnk.removeClass('loading');
-          }, error: function() {
-            lnk.removeClass('loading');
-            alert("Sorry, we couldn't get your location.");
-          }
-        });
-      });
+      go.SearchEmulator.init();
     },
     admin_duplicates: function() {
       $('.ignore a.ajax').ajaxLink({

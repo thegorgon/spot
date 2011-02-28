@@ -54,7 +54,7 @@ class DuplicatePlace < ActiveRecord::Base
   
   def self.potential_duplicates_for(place)
     options = {}
-    options[:field_weights] = { :name => 1, :city => 0, :clean_address => 0 }
+    options[:field_weights] = { :name => 1, :city => 0 }
     options[:order] = "@relevance DESC, @geodist ASC"
     options[:geo] = place.to_lat_lng.ts_geo
     options[:with] = {"@geodist" => 0.0..SEARCH_RADIUS}

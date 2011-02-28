@@ -10,12 +10,40 @@
   }
   .results {
     margin: 0.5em 0;
+    .place {
+      @include transition(background-color 0.5s ease-in);
+      background-color: #fff;
+      &.hover {
+        @include transition(background-color 0.5s ease-in);
+        background-color: #ff8419;
+      }      
+    }
     .measurements {
       padding: 0.5em 0;
+      font-size: 15px;
+    }
+    .benchmarks {
+      margin: 10px 0;
+      dt {
+        padding: 3px 0;
+        width: 100px;
+        float: left;
+        clear: left;
+      }
+      dd {
+        padding: 3px 0;
+        width: 100px;
+        float: left;
+      }
     }
   }
   .actions {
     line-height: 26px;
+  }
+  .map {
+    float: right;
+    height: 200px;
+    width: 500px;
   }
   .field {
     label {
