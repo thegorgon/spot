@@ -74,7 +74,6 @@ class PlaceSearch
     @benchmarks[:local] = Benchmark.measure do 
       @query = Geo::Cleaner.clean(:name => @params[:query], :extraneous => true)
       options = @params.slice(:page, :per_page)
-      options[:field_weights] = { :name => 100, :city => 5 }
       options[:order] = "@relevance DESC"
       if @position
         options[:geo] = @position.ts_geo
