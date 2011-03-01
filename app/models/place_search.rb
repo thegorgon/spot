@@ -1,4 +1,5 @@
 class PlaceSearch < ActiveRecord::Base
+  attr_writer :utf8, :action, :controller
   attr_reader :benchmarks, :cleanq, :shortq
   DEFAULT_PAGE_SIZE = 10
   validates :query, :presence => true, :length => {:minimum => 0}
@@ -29,10 +30,6 @@ class PlaceSearch < ActiveRecord::Base
     def place_id
       @place.try(:id)
     end
-  end
-  
-  def initialize(params={})
-    super(params.except(:action, :controller, :utf))
   end
   
   def page=(value)
