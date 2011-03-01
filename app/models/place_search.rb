@@ -39,6 +39,7 @@ class PlaceSearch
     @params[:page] = [1, params[:page].to_i].max
     @params[:per_page] = params[:per_page].to_i > 0 ? params[:per_page].to_i : DEFAULT_PAGE_SIZE
     @query = Geo::Cleaner.clean(:name => @params[:query], :extraneous => true)
+    @matcher = Amatch::Sellers.new(@query)
     @position = Geo::Position.normalize(params)
   end
   
@@ -49,7 +50,7 @@ class PlaceSearch
         @results = {}
         load_local_places
         load_google_places if @position
-        @results = @results.values
+        @results = @results.values.sort { |r1, r2| r2.relevance == r1.relevance ? r1.distance <=> r2.distance : r1.relevance <=> r2.relevance }
         @loaded = true
       end
     end
@@ -74,7 +75,6 @@ class PlaceSearch
   def load_local_places
     local = []
     @benchmarks[:local] = Benchmark.measure do 
-      @query = Geo::Cleaner.clean(:name => @params[:query], :extraneous => true)
       options = @params.slice(:page, :per_page)
       options[:order] = "@relevance DESC"
       if @position
@@ -85,7 +85,8 @@ class PlaceSearch
       local = Place.search(@query, options)
     end
     local.each_with_match do |lp, match|
-      @results[lp.canonical_id] ||= Result.new(:place => lp, :relevance => match[:weight], :position => @position, :source => "local")
+      cleaned = Geo::Cleaner.clean(:name => lp.clean_name, :extraneous => true)
+      @results[lp.canonical_id] ||= Result.new(:place => lp, :relevance => @matcher.match(cleaned), :position => @position, :source => "local")
     end
     Rails.logger.info "place-search : Querying #{@query}, found #{local.length} local places, #{@results.length} total (#{(benchmarks[:local].real * 1000).round}ms)"
   end
@@ -101,10 +102,11 @@ class PlaceSearch
       google = GooglePlace.search(@params.merge(:origin => @position))
     end
     @benchmarks[:google_bind] = Benchmark.measure do
-      google.each do |gp| 
-        gp.bind_to_place!
+      google.each do |gp|
         Rails.logger.info "place-search : Found google place : #{gp.name}"
-        @results[gp.place.canonical_id] ||= Result.new(:place => gp.place, :position => @position, :source => "google")
+        gp.bind_to_place!
+        cleaned = Geo::Cleaner.clean(:name => gp.place.clean_name, :extraneous => true)
+        @results[gp.place.canonical_id] ||= Result.new(:place => gp.place, :relevance => @matcher.match(cleaned), :position => @position, :source => "google")
       end
     end
     Rails.logger.info "place-search : Found #{google.length} google places, #{@results.length} total (#{(benchmarks[:google_load].real * 1000).round}ms)"
