@@ -108,7 +108,7 @@ module Api
     
     def perform_search_test
       SEARCHES.each do |search|
-        search = search.clone
+        search = search.clone.merge(:format => :json)
         start = Time.now.to_f
         position = search.delete(:position)
         log "Testing search : #{search.to_query} @#{position}"
@@ -122,14 +122,14 @@ module Api
     
     def perform_wishlist_test
       log "Fetching initial wishlist"
-      curb = request(api_wishlist_url)
+      curb = request(api_wishlist_url(:format => :json))
       curb.http_get
       json = JSON.parse(curb.body_str)
       log "Wishlist length : #{json.length}", 1
       test_item = Place.first
       test_params = {:item => {:item_type => test_item.class.to_s, :item_id => test_item.id, :location => "37.768186;-122.429124;120 epu=50 hdn=45 spd=15"}}
       log "Adding #{test_item.full_name} to wishlist"
-      curb = request(api_wishlist_items_url)
+      curb = request(api_wishlist_items_url(:format => :json))
       curb.post_body = test_params.to_json
       curb.http_post
       json = JSON.parse(curb.body_str)
@@ -137,20 +137,20 @@ module Api
       log "Added ID : #{json["id"]}", 1
       test_delete_id = json["id"]
       log "Fetching new wishlist"
-      curb = request(api_wishlist_url)
+      curb = request(api_wishlist_url(:format => :json))
       curb.http_get
       json = JSON.parse(curb.body_str)
       log "Wishlist length : #{json.length}", 1
       log "Wishlist : #{json.inspect}", 1      
       log "Attempting duplicate addition of #{test_item.full_name} to wishlist"
-      curb = request(api_wishlist_items_url)
+      curb = request(api_wishlist_items_url(:format => :json))
       curb.post_body = test_params.to_json
       curb.http_post
       json = JSON.parse(curb.body_str)
       log "Response code : #{curb.response_code}", 1
       log "Response : #{json}", 1
       log "Deleting #{test_item.full_name} from wishlist"
-      curb = request(api_wishlist_item_url(test_delete_id))
+      curb = request(api_wishlist_item_url(test_delete_id, :format => :json))
       curb.http_delete
       log "Response code : #{curb.response_code}"
     end
@@ -158,12 +158,12 @@ module Api
     def perform_activity_test
       log "Requesting activity"
       position = Geo::Position.new(:lat => 37.768186, :lng => -122.429124, :timestamp => Time.now)
-      curb = request(activity_api_wishlist_url, position)
+      curb = request(activity_api_wishlist_url(:format => :json), position)
       curb.http_get
       json = JSON.parse(curb.body_str)
       log "Response : #{json}", 1
       log "Response Length : #{json.length}", 1
-      curb = request(activity_api_wishlist_url(:page => 2), position)
+      curb = request(activity_api_wishlist_url(:page => 2, :format => :json), position)
       curb.http_get
       json = JSON.parse(curb.body_str)
       log "Response (page 2): #{json}", 1
@@ -172,7 +172,7 @@ module Api
     
     def logout
       log "Logging Out"
-      curb = request(api_sessions_url)
+      curb = request(api_sessions_url(:format => :json))
       curb.http_delete
       log "Logged Out"      
     end

@@ -16,7 +16,7 @@ class Admin::PlacesController < Admin::BaseController
     @place = Place.new(params[:place])
     success = @place.save
     respond_to do |format|
-      format.html { redirect_to admin_places_path(@place) }
+      format.html { redirect_to admin_place_path(@place) }
       format.js { render :json => @place }
     end
   end
