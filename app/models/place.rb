@@ -81,7 +81,8 @@ class Place < ActiveRecord::Base
     query = query.split(' ').sort.join(' ')
     relevance_document = Geo::Cleaner.clean(:name => name + ' ' + city).split(' ').sort.join(' ')
     matcher = (Thread.current[:relevance_matchers] ||= {})[query] ||= Amatch::Sellers.new(Geo::Cleaner.clean(:name => query))
-    character_relevance = 100 - (100 * matcher.match(relevance_document)/relevance_document.length.to_f).round
+    character_relevance = 100 - (100 * matcher.match(relevance_document)/query.length.to_f).round
+    Rails.logger.info("relevance : relevance between #{query} and #{relevance_document} is #{character_relevance}")
     character_relevance
   end
   

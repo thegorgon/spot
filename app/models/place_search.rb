@@ -1,6 +1,6 @@
 class PlaceSearch
   attr_reader :benchmarks
-  DEFAULT_PAGE_SIZE = 20
+  DEFAULT_PAGE_SIZE = 10
   
   def self.perform(params)
     new(params).results
