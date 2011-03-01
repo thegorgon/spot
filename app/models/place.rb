@@ -17,7 +17,6 @@ class Place < ActiveRecord::Base
   define_index do
     indexes :clean_name, :sortable => true
     indexes :city
-    indexes :region
     has "RADIANS(lat)", :as => :latitude, :type => :float
     has "RADIANS(lng)", :as => :longitude, :type => :float  
     has :wishlist_count

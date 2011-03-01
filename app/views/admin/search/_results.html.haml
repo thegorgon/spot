@@ -20,6 +20,7 @@
         %th Wishlists
         %th Distance
         %th Relevance
+        %th Source
         %th Actions
     %tbody
       -@search.results.each do |result|
@@ -31,5 +32,6 @@
           %td= result.wishlist_count.to_i
           %td= "#{(result.distance * 100).round/100.0} miles" if result.distance 
           %td= result.relevance
+          %td= result.source
           %td
             =link_to "Edit", edit_admin_place_path(result.place)

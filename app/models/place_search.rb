@@ -7,7 +7,7 @@ class PlaceSearch
   end
   
   class Result
-    attr_reader :place, :distance, :relevance
+    attr_reader :place, :distance, :relevance, :source
     delegate :image, :lat, :lng, :address_lines, :full_address, :wishlist_count, :name, :image_thumbnail, :to_lat_lng, :to => :place
     
     def initialize(params={})
@@ -15,6 +15,7 @@ class PlaceSearch
       @position = params[:position]
       @distance = @place.distance_to(@position) if @position
       @relevance = params[:relevance]
+      @source = params[:source]
     end
     
     def as_json(*args)
@@ -37,6 +38,7 @@ class PlaceSearch
     @params[:radius] = (params[:r] || params[:radius]).to_f
     @params[:page] = [1, params[:page].to_i].max
     @params[:per_page] = params[:per_page].to_i > 0 ? params[:per_page].to_i : DEFAULT_PAGE_SIZE
+    @query = Geo::Cleaner.clean(:name => @params[:query], :extraneous => true)
     @position = Geo::Position.normalize(params)
   end
   
@@ -83,7 +85,7 @@ class PlaceSearch
       local = Place.search(@query, options)
     end
     local.each_with_match do |lp, match|
-      @results[lp.canonical_id] ||= Result.new(:place => lp, :relevance => match[:weight], :position => @position)
+      @results[lp.canonical_id] ||= Result.new(:place => lp, :relevance => match[:weight], :position => @position, :source => "local")
     end
     Rails.logger.info "place-search : Querying #{@query}, found #{local.length} local places, #{@results.length} total (#{(benchmarks[:local].real * 1000).round}ms)"
   end
@@ -102,7 +104,7 @@ class PlaceSearch
       google.each do |gp| 
         gp.bind_to_place!
         Rails.logger.info "place-search : Found google place : #{gp.name}"
-        @results[gp.place.canonical_id] ||= Result.new(:place => gp.place, :position => @position)
+        @results[gp.place.canonical_id] ||= Result.new(:place => gp.place, :position => @position, :source => "google")
       end
     end
     Rails.logger.info "place-search : Found #{google.length} google places, #{@results.length} total (#{(benchmarks[:google_load].real * 1000).round}ms)"
