@@ -79,7 +79,7 @@ class PlaceSearch
         options[:geo] = @position.ts_geo
         options[:order] << ", @geodist ASC"
       end
-      options.merge!(:star => true, :match_mode => :any)
+      options.merge!(:match_mode => :any)
       local = Place.search(@query, options)
     end
     local.each_with_match do |lp, match|
