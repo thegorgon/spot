@@ -1,6 +1,6 @@
 class PlaceSearch < ActiveRecord::Base
   attr_writer :utf8, :action, :controller, :format
-  attr_reader :benchmarks, :cleanq, :shortq
+  attr_reader :benchmarks, :cleanq
   DEFAULT_PAGE_SIZE = 10
   validates :query, :presence => true, :length => {:minimum => 0}
   validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
@@ -67,7 +67,6 @@ class PlaceSearch < ActiveRecord::Base
   def query=(value)
     @query = self[:query] = value
     @cleanq = Geo::Cleaner.clean(:name => value)
-    @shortq = Geo::Cleaner.clean(:name => value, :extraneous => true)
   end
   alias_method :q=, :query=
   
@@ -106,12 +105,12 @@ class PlaceSearch < ActiveRecord::Base
         options[:order] << ", @geodist ASC"
       end
       options.merge!(:match_mode => :any)
-      local = Place.search(@shortq, options)
+      local = Place.search(@cleanq, options)
     end
     local.each_with_match do |lp, match|
       @results[lp.canonical_id] ||= Result.new(:place => lp, :position => @position, :query => @cleanq, :source => "local")
     end
-    Rails.logger.info "place-search : Querying #{@shortq}, found #{local.length} local places, #{@results.length} total (#{(benchmarks[:local].real * 1000).round}ms)"
+    Rails.logger.info "place-search : Querying #{@cleanq}, found #{local.length} local places, #{@results.length} total (#{(benchmarks[:local].real * 1000).round}ms)"
   end
   
   def results
