@@ -1,5 +1,5 @@
 class PlaceSearch < ActiveRecord::Base
-  attr_writer :utf8, :action, :controller
+  attr_writer :utf8, :action, :controller, :format
   attr_reader :benchmarks, :cleanq, :shortq
   DEFAULT_PAGE_SIZE = 10
   validates :query, :presence => true, :length => {:minimum => 0}
