@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110223160719) do
+ActiveRecord::Schema.define(:version => 20110301195748) do
 
   create_table "devices", :force => true do |t|
     t.string   "udid",          :null => false
@@ -62,6 +62,14 @@ ActiveRecord::Schema.define(:version => 20110223160719) do
   add_index "google_places", ["lat", "lng"], :name => "index_google_places_on_lat_and_lng"
   add_index "google_places", ["place_id"], :name => "index_google_places_on_place_id"
 
+  create_table "place_searches", :force => true do |t|
+    t.string  "query",                                    :null => false
+    t.string  "position"
+    t.decimal "lat",       :precision => 11, :scale => 9
+    t.decimal "lng",       :precision => 12, :scale => 9
+    t.integer "result_id"
+  end
+
   create_table "places", :force => true do |t|
     t.string   "full_name",                                                           :null => false
     t.string   "full_address"
@@ -90,10 +98,11 @@ ActiveRecord::Schema.define(:version => 20110223160719) do
   add_index "places", ["lat", "lng"], :name => "index_places_on_lat_and_lng"
 
   create_table "preview_signups", :force => true do |t|
-    t.string  "email",                         :null => false
-    t.integer "referral_count", :default => 0, :null => false
-    t.integer "test",           :default => 0, :null => false
-    t.integer "referrer_id"
+    t.string   "email",                         :null => false
+    t.integer  "referral_count", :default => 0, :null => false
+    t.integer  "test",           :default => 0, :null => false
+    t.integer  "referrer_id"
+    t.datetime "created_at"
   end
 
   add_index "preview_signups", ["email"], :name => "index_preview_signups_on_email", :unique => true

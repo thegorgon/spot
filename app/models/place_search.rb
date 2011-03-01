@@ -1,11 +1,11 @@
-class PlaceSearch
-  attr_reader :benchmarks
+class PlaceSearch < ActiveRecord::Base
+  attr_reader :benchmarks, :cleanq, :shortq
   DEFAULT_PAGE_SIZE = 10
-  
-  def self.perform(params)
-    new(params).results
-  end
-  
+  validates :query, :presence => true, :length => {:minimum => 0}
+  validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
+  validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
+  belongs_to :result, :class_name => "Place"
+      
   class Result
     attr_reader :place, :distance, :relevance, :source
     delegate :image, :lat, :lng, :address_lines, :full_address, :wishlist_count, :name, :image_thumbnail, :to_lat_lng, :to => :place
@@ -31,19 +31,48 @@ class PlaceSearch
     end
   end
   
-  # Accepts any normalizeable LatLng params (e.g. lat and lng, ll, position)
-  # PlaceSearch.new(:q => "query", :r => accuracy, :lat => Lat, :lng => Lng, :page => 2)
   def initialize(params={})
-    @params = {}
-    @params[:query] = (params[:q] || params[:query]).to_s
-    @params[:radius] = (params[:r] || params[:radius]).to_f
-    @params[:page] = [1, params[:page].to_i].max
-    @params[:per_page] = params[:per_page].to_i > 0 ? params[:per_page].to_i : DEFAULT_PAGE_SIZE
-    @query = @params[:query]
-    @cleanq = Geo::Cleaner.clean(:name => @query)
-    @shortq = Geo::Cleaner.clean(:name => @query, :extraneous => true)
-    @position = Geo::Position.normalize(params)
+    super(params.except(:action, :controller, :utf))
   end
+  
+  def page=(value)
+    @page = value.to_i
+  end
+  
+  def page
+    [1, @page.to_i].max
+  end
+  
+  def per_page=(value)
+    @per_page = value.to_i
+  end
+  
+  def per_page
+    @per_page.to_i > 0 ? @per_page.to_i : DEFAULT_PAGE_SIZE
+  end
+  
+  def ll=(value)
+    self.position = Geo::Position.normalize(:ll => value)
+  end
+  
+  def position=(value)
+    @position = value.kind_of?(Geo::Position) ? value : Geo::Position.from_http_header(value)
+    self.lat = @position.lat
+    self.lng = @position.lng
+    self[:position] = @position.try(:to_http_header)
+  end
+  alias_method :geo_position=, :position=
+  
+  def position
+    @position ||= Geo::Position.from_http_header(value)
+  end
+  
+  def query=(value)
+    @query = self[:query] = value
+    @cleanq = Geo::Cleaner.clean(:name => value)
+    @shortq = Geo::Cleaner.clean(:name => value, :extraneous => true)
+  end
+  alias_method :q=, :query=
   
   def load
     if !@loaded && @query.present?
@@ -58,10 +87,6 @@ class PlaceSearch
     end
   end
   
-  def query
-    @query.to_s
-  end
-
   def ll
     @position.to_s
   end
@@ -77,7 +102,7 @@ class PlaceSearch
   def load_local_places
     local = []
     @benchmarks[:local] = Benchmark.measure do 
-      options = @params.slice(:page, :per_page)
+      options = {:page => page, :per_page => per_page}
       options[:order] = "@relevance DESC"
       if @position
         options[:geo] = @position.ts_geo
@@ -100,7 +125,7 @@ class PlaceSearch
   def load_google_places
     google = []
     @benchmarks[:google_load] = Benchmark.measure do 
-      google = GooglePlace.search(@params.merge(:origin => @position))
+      google = GooglePlace.search(:query => query, :page => page, :per_page => per_page, :geo_position => position)
     end
     @benchmarks[:google_bind] = Benchmark.measure do
       google.each do |gp|
@@ -113,6 +138,6 @@ class PlaceSearch
   end
   
   def to_json(*args)
-    results.collect { |p| p.to_json(*args) }
+    results.to_json(*args)
   end
 end

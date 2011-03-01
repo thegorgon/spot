@@ -80,9 +80,8 @@ class Place < ActiveRecord::Base
   def relevance_against(query, position)
     query = query.split(' ').sort.join(' ')
     relevance_document = Geo::Cleaner.clean(:name => name + ' ' + city).split(' ').sort.join(' ')
-    matcher = (Thread.current[:relevance_matchers] ||= {})[query] ||= Amatch::Sellers.new(query)
-    character_relevance = 100 - (100 * matcher.match(relevance_document)/relevance_document.length.to_f).round
-    Rails.logger.info("relevance : relevance between #{query} and #{relevance_document} is #{character_relevance}")
+    matcher = (Thread.current[:relevance_matchers] ||= {})[query] ||= Amatch::LongestSubsequence.new(query)
+    character_relevance = (100 * matcher.match(relevance_document)/query.length.to_f).round
     character_relevance
   end
   

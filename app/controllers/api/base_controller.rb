@@ -51,7 +51,11 @@ class Api::BaseController < ApplicationController
   end
   
   def unknown_error(exception=nil)
-    basic_exception(500, exception)
+    if Rails.env.production?
+      basic_exception(500, exception)
+    else
+      raise exception
+    end
   end
   
   def require_user

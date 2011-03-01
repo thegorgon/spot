@@ -10,6 +10,8 @@ class WishlistItem < ActiveRecord::Base
   validates :lat, :numericality => {:greater_than => -90, :less_than => 90}, :if => :lat?
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}, :if => :lng
   
+  after_create :attribute_result_to_search
+  attr_writer :search_id
   cattr_accessor :per_page
   @@per_page = 20
   
@@ -38,5 +40,9 @@ class WishlistItem < ActiveRecord::Base
       self.lat = value.lat
       self.lng = value.lng
     end
+  end
+  
+  def attribute_result_to_search
+    PlaceSearch.where(:id => @search_id).update_all(:result_id => item_id) if @search_id.to_i > 0
   end
 end

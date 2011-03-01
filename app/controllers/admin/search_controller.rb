@@ -9,5 +9,5 @@ class Admin::SearchController < Admin::BaseController
       format.html
       format.js { render :json => {:html => render_to_string(:partial => "results") }}
     end
-  end
+  end  
 end
