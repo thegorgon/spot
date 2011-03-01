@@ -41,7 +41,6 @@ class PlaceSearch
     @params[:per_page] = params[:per_page].to_i > 0 ? params[:per_page].to_i : DEFAULT_PAGE_SIZE
     @query = Geo::Cleaner.clean(:name => @params[:query], :extraneous => true)
     @matcher = Amatch::Sellers.new(@query)
-    @matcher.deletion = 0
     @position = Geo::Position.normalize(params)
   end
   
@@ -96,7 +95,7 @@ class PlaceSearch
     load
     @results.to_a
   end
-  
+
   def load_google_places
     google = []
     @benchmarks[:google_load] = Benchmark.measure do 
