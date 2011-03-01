@@ -13,9 +13,9 @@ class PlaceSearch
     def initialize(params={})
       @place = params[:place]
       @position = params[:position]
+      @query = params[:query]
       @distance = @place.distance_to(@position) if @position
-      relevance_document = Geo::Cleaner.clean(:name => @place.name + ' ' + @place.city, :extraneous => true)
-      @relevance = 100 - (100 * params[:match].match(relevance_document)/relevance_document.length.to_f).round
+      @relevance = @place.relevance_against(@query, @position)
       @source = params[:source]
     end
     
@@ -39,13 +39,14 @@ class PlaceSearch
     @params[:radius] = (params[:r] || params[:radius]).to_f
     @params[:page] = [1, params[:page].to_i].max
     @params[:per_page] = params[:per_page].to_i > 0 ? params[:per_page].to_i : DEFAULT_PAGE_SIZE
-    @query = Geo::Cleaner.clean(:name => @params[:query], :extraneous => true)
-    @matcher = Amatch::Sellers.new(@query)
+    @query = @params[:query]
+    @cleanq = Geo::Cleaner.clean(:name => @query)
+    @shortq = Geo::Cleaner.clean(:name => @query, :extraneous => true)
     @position = Geo::Position.normalize(params)
   end
   
   def load
-    if !@loaded && @params[:query].present?
+    if !@loaded && @query.present?
       @benchmarks = {}
       @benchmarks[:total] = Benchmark.measure do 
         @results = {}
@@ -58,7 +59,7 @@ class PlaceSearch
   end
   
   def query
-    @params[:query].to_s
+    @query.to_s
   end
 
   def ll
@@ -83,12 +84,12 @@ class PlaceSearch
         options[:order] << ", @geodist ASC"
       end
       options.merge!(:match_mode => :any)
-      local = Place.search(@query, options)
+      local = Place.search(@shortq, options)
     end
     local.each_with_match do |lp, match|
-      @results[lp.canonical_id] ||= Result.new(:place => lp, :position => @position, :match => @matcher, :source => "local")
+      @results[lp.canonical_id] ||= Result.new(:place => lp, :position => @position, :query => @cleanq, :source => "local")
     end
-    Rails.logger.info "place-search : Querying #{@query}, found #{local.length} local places, #{@results.length} total (#{(benchmarks[:local].real * 1000).round}ms)"
+    Rails.logger.info "place-search : Querying #{@shortq}, found #{local.length} local places, #{@results.length} total (#{(benchmarks[:local].real * 1000).round}ms)"
   end
   
   def results
@@ -105,7 +106,7 @@ class PlaceSearch
       google.each do |gp|
         Rails.logger.info "place-search : Found google place : #{gp.name}"
         gp.bind_to_place!
-        @results[gp.place.canonical_id] ||= Result.new(:place => gp.place, :position => @position, :match => @matcher, :source => "google")
+        @results[gp.place.canonical_id] ||= Result.new(:place => gp.place, :position => @position, :query => @cleanq, :source => "google")
       end
     end
     Rails.logger.info "place-search : Found #{google.length} google places, #{@results.length} total (#{(benchmarks[:google_load].real * 1000).round}ms)"

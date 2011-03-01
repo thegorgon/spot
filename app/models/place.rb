@@ -77,6 +77,14 @@ class Place < ActiveRecord::Base
     canonical? && !new_record?? self.class.where("canonical_id = #{id} AND id <> #{id}").all : []
   end
   
+  def relevance_against(query, position)
+    query = query.split(' ').sort.join(' ')
+    relevance_document = Geo::Cleaner.clean(:name => name + ' ' + city).split(' ').sort.join(' ')
+    matcher = (Thread.current[:relevance_matchers] ||= {})[query] ||= Amatch::Sellers.new(Geo::Cleaner.clean(:name => query))
+    character_relevance = 100 - (100 * matcher.match(relevance_document)/relevance_document.length.to_f).round
+    character_relevance
+  end
+  
   def external_image_url=(value)
     if value.present?
       self.image = nil
