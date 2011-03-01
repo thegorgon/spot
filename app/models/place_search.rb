@@ -85,7 +85,7 @@ class PlaceSearch
       local = Place.search(@query, options)
     end
     local.each_with_match do |lp, match|
-      cleaned = Geo::Cleaner.clean(:name => lp.clean_name, :extraneous => true)
+      cleaned = Geo::Cleaner.clean(:name => lp.full_name + " " + lp.city, :extraneous => true)
       @results[lp.canonical_id] ||= Result.new(:place => lp, :relevance => @matcher.match(cleaned), :position => @position, :source => "local")
     end
     Rails.logger.info "place-search : Querying #{@query}, found #{local.length} local places, #{@results.length} total (#{(benchmarks[:local].real * 1000).round}ms)"
@@ -105,7 +105,7 @@ class PlaceSearch
       google.each do |gp|
         Rails.logger.info "place-search : Found google place : #{gp.name}"
         gp.bind_to_place!
-        cleaned = Geo::Cleaner.clean(:name => gp.place.clean_name, :extraneous => true)
+        cleaned = Geo::Cleaner.clean(:name => gp.place.full_name + " " + gp.place.city, :extraneous => true)
         @results[gp.place.canonical_id] ||= Result.new(:place => gp.place, :relevance => @matcher.match(cleaned), :position => @position, :source => "google")
       end
     end
