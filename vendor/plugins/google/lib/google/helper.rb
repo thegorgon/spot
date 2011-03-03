@@ -24,6 +24,22 @@ module Google
       tags
     end
     
+    def google_analytics_tag(options={})
+      account_id = options[:account_id]
+      content_tag(:script, :type => Mime::JS) do
+        "var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '#{account_id}']);
+        _gaq.push(['_setDomainName', '.spot-app.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();"
+      end.html_safe
+    end
+    
     def google_place_page_url(place)
       "http://maps.google.com/maps/place?cid=#{place.cid}"
     end

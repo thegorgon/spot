@@ -40,8 +40,5 @@ module TagHelper
   
   def meta_tag(property, content)
     tag(:meta, :property => property, :content => content)
-  end
-  
-  def google_analytics_tag
-  end
+  end  
 end

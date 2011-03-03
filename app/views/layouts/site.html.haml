@@ -17,7 +17,9 @@
   = open_graph_tags
   = include_stylesheets :site, :media => 'all'
   = csrf_meta_tag 
-  =yield :head
+  = yield :head
+  -if Rails.env.production?
+    = google_analytics_tag(:account_id => 'UA-21193799-1')
 %body{:id => page_namespace, :class => controller_name}
   #bg
   #page
