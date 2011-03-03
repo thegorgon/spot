@@ -12,6 +12,7 @@ javascripts:
     - public/javascripts/shared/spot.js
     - public/javascripts/shared/behaviours.js
     - public/javascripts/shared/navigator.js
+    - public/javascripts/shared/app_preview.js
     - public/javascripts/site/shared.js
     - public/javascripts/site/views.js
   admin:

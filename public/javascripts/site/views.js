@@ -38,18 +38,21 @@
             posts.trigger("faded");            
           }
         }
-      })
+      });
     },
-    site_previews: function() {
-      $('#joke img').live('click', function(e) {
+    site_previews_index: function() {
+      go.AppPreview.init();
+    },
+    site_previews_show: function() {
+      $('#joke img').bind('click', function(e) {
         e.preventDefault();
         var id = parseInt($(this).attr('src').replace(/^.+joke_(\d)+\..+$/, "$1"), 10),
           newId = (id + 1) > go.getVar('max_joke_id') ? 1 : id + 1,
           format = "jpg",
           newFormat = "jpg";
-        if (id == 2) {
+        if (id === 2) {
           format = "gif";
-        } else if (newId == 2) {
+        } else if (newId === 2) {
           newFormat = "gif";
         }
         $(this).attr('src', $(this).attr('src').replace(id + "." + format, newId + "." + newFormat));

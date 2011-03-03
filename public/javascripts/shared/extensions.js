@@ -3,6 +3,15 @@
     'beforeSend': function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name=csrf-token]').attr('content')); }
   });
   $.extend($, {
+    preload: function(images, cb) {
+      var img;
+      cb = $.isFunction(cb) ? cb : function() {};
+      $.each(images, function(i) {
+        img = new Image();
+        img.src = this;
+        img.onLoad = cb;
+      });
+    },
     provide : function(object, name, features) {
       object[name] = object[name] || {};
       $.extend(object[name], features);
@@ -26,12 +35,6 @@
     }
   });
   $.extend($.fn, {
-    glow: function(color) {
-      var $this = $(this), oldColor = $this.css("background-color");
-      $this.animate({backgroundColor: color}, function() {
-        $this.animate({backgroundColor: oldColor});
-      });
-    },
     ajaxForm: function(options) {
       options = options || {};
       this.filter('form').each(function() {
@@ -59,7 +62,7 @@
       options = options || {};
       if (!$this.data('sending')) {
         confirmMsg = $this.attr('data-confirm') || '';
-        if (confirmMsg.length == 0 || window.confirm(confirmMsg)) {
+        if (confirmMsg.length === 0 || window.confirm(confirmMsg)) {
           if ($.isFunction(options.start)) { options.start.apply(this); }
           $this.data('sending', true);
           success = ($.isFunction(options.success) ? options.success: function() {});
@@ -68,9 +71,9 @@
             success.apply($this, arguments);
           };
           method = ($this.attr('data-method') || 'GET').toUpperCase();
-          httpMethod = method == "GET" ? method : "POST";
+          httpMethod = method === "GET" ? method : "POST";
           data = {};
-          if (httpMethod != method) { data._method = method; }
+          if (httpMethod !== method) { data._method = method; }
           options = $.extend({
             type: httpMethod,
             url: $this.attr('href'),
@@ -88,7 +91,7 @@
       options = options || {};
       if (!$this.data('sending')) {
         confirmMsg = $this.attr('data-confirm') || '';
-        if (confirmMsg.length == 0 || window.confirm(confirmMsg)) {
+        if (confirmMsg.length === 0 || window.confirm(confirmMsg)) {
           if ($.isFunction(options.start)) { options.start.apply(this); }
           $this.data('sending', true);
           success = ($.isFunction(options.success) ? options.success: function() {});

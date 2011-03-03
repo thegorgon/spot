@@ -1,4 +1,43 @@
 .site_previews {
+  #preview {
+    width: 720px;
+    margin: 0 auto;
+    @include border_radius(10px);
+    @extend .black_radial_gradient;
+  }
+  .iphone {
+    float: left;
+    .badge {
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      z-index: 100;
+      height: 100px;
+      width: 100px;
+      background: url('/images/assets/previews/coming_soon.png') no-repeat center center;
+    }
+    .content {
+      position: relative;
+      background: #333;
+      overflow: hidden;
+    }
+    .preview {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: none;
+      &.active {
+        z-index: 5;
+        display: block;
+      }
+      &.pending {
+        display: block;
+        z-index: 1;
+      }
+    }
+  }
   input.faded {
     font-size: 16px;
     height: 20px;
@@ -19,39 +58,47 @@
       @include gradient_top_down(#333333, #444444, 20%);
     }
   }
-  .title {
-    font-weight: normal;
-    font-size: 15px;
-    margin: 5px 0 0;
-  }
-  form {
-    margin: 32px auto 0;
-    position: relative;
-    width: 319px;
-    button {
-      position: absolute;
-      top: 26.5px;
-      right: 0px;
-    }
-  }
   #logo, #message {
     text-align: center;    
   }
   #message {
     margin: 24px 0 0;
-    font-size: 16px;
-    padding: 0 0 5px 0;
+    font-size: 14px;
+    float: right;
+    width: 320px;
+    padding: 5px 10px;
     text-shadow: #000 0px 1px 0px;
+    h1 {
+      margin: 25px 0 15px 0;
+    }
     p {
-      margin: 8px 0;
+      text-align: center;
+      margin: 12px 0;
+    }
+    .title {
+      font-weight: bold;
+    }
+    form {
+      margin: 50px auto 0;
+      position: relative;
+      width: 339px;
+      p.title {
+        font-size: 14px;
+      }
+      p {
+        text-align: center;
+      }
+      button {
+        position: absolute;
+        top: 58.5px;
+        right: 11px;
+      }
     }
   }
   #share {
     width: 400px;
     margin: 0 auto;
-    padding: 30px 50px;
-    background: #000;
-    @include opacity(0.9);
+    @extend .black_radial_gradient;
     text-align: center;
     color: #fff;
     #joke {
@@ -96,8 +143,17 @@
   .site_previews {
     #page form button {
       position: absolute;
-      top: 35px;
-      right: 0px;
+      top: 71px;
+    }
+  }
+}
+.ie7, .ie8 {
+  .site_previews {
+    #share {
+      padding: 50px;
+    }
+    #preview {
+      padding: 50px;
     }
   }
 }

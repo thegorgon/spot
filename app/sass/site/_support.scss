@@ -1,9 +1,7 @@
 .site_support {
   #about {
     margin: 0 auto;
-    padding: 30px 50px;
-    background: #000;
-    @include opacity(0.9);
+    @extend .black_radial_gradient;
     width: 500px;
     font-size: 15px;
     text-align: center;
@@ -19,6 +17,13 @@
     }
     .signature {
       width: 300px;
+    }
+  }
+}
+.ie7, .ie8 {
+  .site_support {
+    #about {
+      padding: 50px 30px;
     }
   }
 }

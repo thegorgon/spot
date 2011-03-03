@@ -6,6 +6,7 @@ class CreatePlaceSearchTracking < ActiveRecord::Migration
       t.decimal   :lat, :precision => 11, :scale => 9
       t.decimal   :lng, :precision => 12, :scale => 9
       t.integer   :result_id
+      t.timestamps
     end
   end
 

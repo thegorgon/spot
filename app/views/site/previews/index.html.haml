@@ -1,13 +1,46 @@
 .vcc
   .vc
-    #logo
-      =image_tag "logos/gradient_script_340x270.png", :size => "340x270", :alt => "spot"
-    #message
-      %h1 Never Forget a Place
-      %p.title Spot for iPhone, Coming Soon
-      =form_for :preview, :url => previews_path, :html => {:class => "page"} do |f|
-        =f.hidden_field :rid, :value => params[:rid]
-        %p.title=f.label :email, "Sign up for updates :"
-        =f.text_field :email, "placeholder" => "Enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"
-        =button_tag(:class => "hlfrndblk_80x30") do
-          Submit
+    #preview.clearfix
+      #phone.iphone.size274x535
+        .badge
+        .glare
+        .content
+          .status
+            =Time.now.strftime("%l:%M %p")
+          .preview#slide_0
+            =image_tag "assets/previews/empty.png", :size => "241x360"
+          .preview#slide_1
+            =image_tag "assets/previews/search_0.png", :size => "241x360"
+          .preview#slide_2
+            =image_tag "assets/previews/search_1.png", :size => "241x360"
+          .preview#slide_3
+            =image_tag "assets/previews/search_2.png", :size => "241x360"
+          .preview#slide_4
+            =image_tag "assets/previews/search_3.png", :size => "241x360"
+          .preview#slide_5
+            =image_tag "assets/previews/search_4.png", :size => "241x360"
+          .preview#slide_6
+            =image_tag "assets/previews/search_5.png", :size => "241x360"
+          .preview#slide_7
+            =image_tag "assets/previews/search.png", :size => "241x360"
+          .preview#slide_8
+            =image_tag "assets/previews/place.png", :size => "241x360"
+          .preview#slide_9
+            =image_tag "assets/previews/wishlist.png", :size => "241x360"
+      #message
+        #logo
+          =image_tag "logos/gradient_script_340x270.png", :size => "170x135"
+        %h1 Never Forget a Place
+        %p 
+          Spot makes recommendations more useful by helping you to remember them. 
+        %p
+          When you want to remember a place to eat, drink or shop, store it in your Spot wishlist. You'll never forget a place again!
+        =form_for :preview, :url => previews_path, :html => {:class => "page"} do |f|
+          =f.hidden_field :rid, :value => params[:rid]
+          %p.title
+            Can’t wait to start Wishlisting places?
+          %p
+            Enter your email and we’ll make sure you get in first:
+          =f.text_field :email, "placeholder" => "Enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"
+          =button_tag(:class => "hlfrndblk_80x30") do
+            Submit

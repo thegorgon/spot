@@ -63,11 +63,13 @@ ActiveRecord::Schema.define(:version => 20110301195748) do
   add_index "google_places", ["place_id"], :name => "index_google_places_on_place_id"
 
   create_table "place_searches", :force => true do |t|
-    t.string  "query",                                    :null => false
-    t.string  "position"
-    t.decimal "lat",       :precision => 11, :scale => 9
-    t.decimal "lng",       :precision => 12, :scale => 9
-    t.integer "result_id"
+    t.string   "query",                                     :null => false
+    t.string   "position"
+    t.decimal  "lat",        :precision => 11, :scale => 9
+    t.decimal  "lng",        :precision => 12, :scale => 9
+    t.integer  "result_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "places", :force => true do |t|

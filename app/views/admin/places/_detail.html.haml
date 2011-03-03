@@ -13,27 +13,17 @@
       =render :partial => "form", :object => @place, :as => :place
     -unless @place.new_record?
       =link_to "Delete", admin_place_path(@place), "data-confirm" => "Are you sure you want to delete #{@place.name}?", "data-method" => "delete"
-  .phone
-    .content
-      .top_bar
-        .name=@place.name
-      .image=image_tag(@place.image.url(:i640x400), :size => "321x200", :class => "place_image clickable", :alt => @place.name, :title => "Click To Change", 'data-img-src' => place.image.processed_url(:i640x400))
-      .info
-        .name=@place.name
-        .address=@place.address_lines.join(' ')
-      .button.phone_whitegray_288x37
-        Add To Wishlist
+  =render :partial => "shared/places/iphone", :object => @place, :as => :place
   .duplication
     -if @place.duplicate?
       %h2 Duplicate of...
       %p.canonical
         =link_to(@place.canonical.id, admin_place_path(@place.canonical)) + '.'
         ="#{@place.canonical.name} #{@place.canonical.address}"
-      
+
     -elsif @place.duplicates.present?
       %h2 Also Known As...
       -@place.duplicates.each do |dupe|
         %p.duplicate
           =link_to(dupe.id, admin_place_path(dupe)) + '.'
           ="#{dupe.name} #{dupe.address}"
-          
