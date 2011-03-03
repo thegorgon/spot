@@ -43,7 +43,7 @@
     site_previews_index: function() {
       go.AppPreview.init();
     },
-    site_previews_show: function() {
+    site_previews_share: function() {
       $('#joke img').bind('click', function(e) {
         e.preventDefault();
         var id = parseInt($(this).attr('src').replace(/^.+joke_(\d)+\..+$/, "$1"), 10),
