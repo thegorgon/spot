@@ -3,7 +3,7 @@
     width: 720px;
     margin: 0 auto;
     @include border_radius(10px);
-    @extend .black_radial_gradient;
+    @include black_radial_gradient(500);
   }
   .iphone {
     float: left;
@@ -98,7 +98,7 @@
   #share {
     width: 400px;
     margin: 0 auto;
-    @extend .black_radial_gradient;
+    @include black_radial_gradient(300);
     text-align: center;
     color: #fff;
     #joke {
