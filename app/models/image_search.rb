@@ -38,7 +38,7 @@ class ImageSearch
   
   def custom_query
     google = Google::Image.search(google_options.merge(:q => "#{@query}")).to_a
-    flickr = Flickr::Photo.search(flickr_options.merge(:text => "#{@query}")).to_a
+    flickr = Wrapr::Flickr::Photo.search(flickr_options.merge(:text => "#{@query}")).to_a
     google + flickr
   end
   
@@ -51,18 +51,18 @@ class ImageSearch
   end
   
   def flickr_name_results
-    Flickr::Photo.search(flickr_options.merge(:text => "#{@place.name}"))
+    Wrapr::Flickr::Photo.search(flickr_options.merge(:text => "#{@place.name}"))
   end
 
   def flickr_name_and_city_results
-    Flickr::Photo.search(flickr_options.merge(:text => "#{@place.name} #{@place.city}"))
+    Wrapr::Flickr::Photo.search(flickr_options.merge(:text => "#{@place.name} #{@place.city}"))
   end
   
   def flickr_lat_lng_by_interestingness
-    Flickr::Photo.search(flickr_options.merge(:lat => @place.lat, :lon => @place.lng))
+    Wrapr::Flickr::Photo.search(flickr_options.merge(:lat => @place.lat, :lon => @place.lng))
   end
   
   def flickr_lat_lng_by_distance
-    Flickr::Photo.search(flickr_options.merge(:lat => @place.lat, :lon => @place.lng).except(:sort))
+    Wrapr::Flickr::Photo.search(flickr_options.merge(:lat => @place.lat, :lon => @place.lng).except(:sort))
   end  
 end

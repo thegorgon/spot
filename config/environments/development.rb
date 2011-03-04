@@ -29,5 +29,6 @@ Spot::Application.configure do
   ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Flickr'  
   ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Geo'  
   ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Google'  
+  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Wrapr'  
 end
 

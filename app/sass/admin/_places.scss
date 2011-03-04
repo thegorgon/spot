@@ -17,6 +17,9 @@
 .place.detail {
   .iphone {
     float: left;
+    .content {
+      background: #fff;
+    }
   }
   padding: 0 1em;
   width: 725px;

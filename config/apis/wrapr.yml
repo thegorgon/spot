@@ -1,0 +1,24 @@
+wrapr:
+  foursquare:
+    client_id: TOCKXBSTM33KOK20MRTPEHGOJKQ0VKLKTTEOJJQC0JNEDSPZ
+    client_secret: YQTCD0RUPXGERXQNA2MRAVIKHOQETGZB5NSG5YZKDYC5TR4E
+  flickr: 
+    api_key: 2964c543386d6fa7ecb750744b20b236 
+    api_secret: 8d5b8cd2c954c1de
+  tumblr:
+    email: "tumblr@placepopinc.com"
+    password: "happy00ga"
+    account: "spotteam"
+    page_size: 20
+    authors:
+      - julia
+      - jesse
+      - niels
+      - kent
+      - jim
+  yelp:
+    ywsid: e0LHa1Mbeo1jH34mU7wNug
+    consumer_key: VqupBjbVhaMVITpHUm9Z4g
+    consumer_secret: IYghP7tJz0YZUsc0qeGuE32Z8Ak
+    oauth_token: mLKaxYyTsJSucqw0YXvh65Z6QNtv07KX
+    oauth_token_secret: sHwZrwUQIgXcG6_7Lb5Qkmv8eoI
