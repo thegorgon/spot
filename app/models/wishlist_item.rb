@@ -11,6 +11,7 @@ class WishlistItem < ActiveRecord::Base
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}, :if => :lng
   
   after_create :attribute_result_to_search
+  after_create :enque_tweeting
   attr_writer :search_id
   cattr_accessor :per_page
   @@per_page = 20
@@ -40,6 +41,29 @@ class WishlistItem < ActiveRecord::Base
       self.lat = value.lat
       self.lng = value.lng
     end
+  end
+  
+  def create_tweets!
+    global_account = TWITTER_SETTINGS['accounts']['wishlistitems']
+    Twitter.oauth_token = global_account['oauth_token']
+    Twitter.oauth_token_secret = global_account['oauth_token_secret']
+    tweet = "Hot on Spot: #{item.name} was just wishlisted"
+    tweet << " in" if item.city || item.region
+    tweet << " ##{item.city.gsub(' ', '').downcase}" if item.city
+    tweet << " ##{item.region_abbr.gsub(' ', '').downcase}" if item.region
+    tweet << " via @SpotTeam"
+    begin
+      Twitter.update tweet if tweet.length <= 140
+      true
+    rescue Twitter::Forbidden => e
+      false
+    end
+  end
+
+  private
+
+  def enque_tweeting
+    Resque.enqueue(Jobs::WishlistTweeter, id)
   end
   
   def attribute_result_to_search

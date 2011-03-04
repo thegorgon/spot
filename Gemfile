@@ -18,6 +18,10 @@ gem 'thinking-sphinx', '2.0.0', :require => 'thinking_sphinx'
 gem 'ts-resque-delta', '0.0.4', :require => 'thinking_sphinx/deltas/resque_delta'
 gem 'resque'
 gem 'amatch'
+gem 'twitter'
+gem 'typhoeus'
+gem 'oauth'
+gem 'faraday'
 
 group :production do
   gem 'unicorn'

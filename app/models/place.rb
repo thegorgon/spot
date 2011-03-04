@@ -4,8 +4,8 @@ class Place < ActiveRecord::Base
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
   before_validation :clean
   after_create :update_canonical_id
-  after_validation :process_external_image
-  after_save :process_deduping
+  after_validation :enqueue_image_processing
+  after_save :enqueue_deduping
 
   cattr_accessor :per_page
   @@per_page = 15
@@ -121,6 +121,11 @@ class Place < ActiveRecord::Base
     @google_place ||= GooglePlace.find_by_place_id(id)
   end
   
+  def region_abbr
+    inverted = Geo::STATES.invert
+    inverted[region.downcase] || region
+  end
+  
   def source_place
     if source
       @source_place ||= source.classify.constantize.where(:place_id => id).order("id ASC").first
@@ -169,17 +174,15 @@ class Place < ActiveRecord::Base
     save
   end
   
-  def process_external_image
+  def enqueue_image_processing
     if @external_image_url.present?
       self.image_processing = true
       Resque.enqueue(Jobs::PlaceImageProcessor, self.class.name, id, :image, @external_image_url)    
     end
   end
   
-  def process_deduping
-    if clean_address_changed? || clean_name_changed?
-      Resque.enqueue(Jobs::PlaceDeduper, id)
-    end
+  def enqueue_deduping
+    Resque.enqueue(Jobs::PlaceDeduper, id) if clean_address_changed? || clean_name_changed?
   end
     
 end

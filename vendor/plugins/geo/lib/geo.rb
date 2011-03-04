@@ -22,6 +22,7 @@ module Geo
   def self.all_abbreviations
     @abbreviations ||= Geo::STATES.merge(Geo::ABBREVIATIONS).merge(Geo::ORDINALS).merge(Geo::CARDINAL_DIRECTIONS)
   end
+  
   # =============
   # = Constants =
   # =============
