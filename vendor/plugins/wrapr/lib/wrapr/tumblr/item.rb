@@ -9,17 +9,17 @@ module Wrapr
         params[:start] = ([params[:page].to_i, 1].max - 1) * params[:num]
         params.delete(:limit)
         params.delete(:page)
-        response = Request.post("/api/read", params, :cache => true)
+        response = Tumblr::Request.post("/api/read", params, :cache => Rails.env.production?)
         response.page_size = params[:num].to_i unless response.frozen?
         response
       end
     
       def self.all(params={})
-        Request.post("/api/read", {}, :cache => true)
+        Tumblr::Request.post("/api/read", {}, :cache => true)
       end
         
       def self.find(id)
-        Request.post("/api/read", { :id => id.to_i }, :cache => true).first
+        Tumblr::Request.post("/api/read", { :id => id.to_i }, :cache => true).first
       end
     
       def to_param

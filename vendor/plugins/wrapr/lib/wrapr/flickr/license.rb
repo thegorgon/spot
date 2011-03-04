@@ -4,7 +4,7 @@ module Wrapr
       acts_as_model :id, :name, :url
     
       def self.all
-        Request.get("photos.licenses.getInfo")
+        Flickr::Request.get("photos.licenses.getInfo")
       end
     end
   end

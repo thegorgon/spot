@@ -12,7 +12,7 @@ module Wrapr
         search[:query] = params[:q] || params[:query] if params[:q] || params[:query]
         search[:limit] = params[:limit] || 10
         search[:intent] = params[:intent] || :checkin
-        response = Request.get('/venues/search', search)
+        response = Foursquare::Request.get('/venues/search', search)
         results = []
         if response.success?
           response.body["groups"].each do |group|

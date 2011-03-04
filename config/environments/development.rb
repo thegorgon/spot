@@ -26,9 +26,8 @@ Spot::Application.configure do
   redis = YAML.load_file(File.join(Rails.root, "config", "redis.yml"))[Rails.env]
   config.cache_store = :redis_store, redis["servers"]
     
-  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Flickr'  
   ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Geo'  
   ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Google'  
-  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Wrapr'  
+  # ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Wrapr'  
 end
 

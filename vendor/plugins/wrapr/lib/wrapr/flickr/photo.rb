@@ -5,7 +5,7 @@ module Wrapr
             
       def self.search(params={})
         params[:license] = params[:license].join(',') if params[:license].respond_to?(:join)
-        Request.get("photos.search", params)
+        Flickr::Request.get("photos.search", params)
       end
     
       def url(options={})
