@@ -1,4 +1,4 @@
-.post{:id => "post_#{post.id}", :class => "#{post.dom_class} #{first_or_last}"}
+.post.flips{:id => "post_#{post.id}", :class => "#{post.dom_class} #{first_or_last}"}
   -if post.kind_of?(Wrapr::Tumblr::Regular)
     %h1=post.title.html_safe
     .byline=byline(post)

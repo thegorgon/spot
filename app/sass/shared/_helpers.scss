@@ -24,6 +24,21 @@
   -o-user-select: none;
   user-select: none;
 }
+.flips {
+  -o-transition: -o-transform 1s;
+  -webkit-transition: -webkit-transform 1s;
+  -moz-transition: -moz-transform 1s;
+  &.upside_down {
+    -o-transform: rotate(1260deg);
+    -o-transition: -o-transform 1s;
+    -webkit-transform: rotate(1260deg);
+    -webkit-transition: -webkit-transform 1s;
+    -moz-transform: rotate(1260deg);
+    -moz-transition: -moz-transform 1s;
+    transform: rotate(1260);
+    transition: transform 1s;
+  }
+}
 .clickable {
   cursor: pointer;
 }
