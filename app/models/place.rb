@@ -44,8 +44,8 @@ class Place < ActiveRecord::Base
     if params[:query]
       finder = finder.search(params[:query], :star => true, :match_mode => :any, :page => params[:page], :per_page => params[:per_page])
     else
-      finder = finder.where("image_file_name IS NULL") if params[:filter] == "imageless"
-      finder = finder.where("wishlist_count > 0").order("wishlist_count DESC") if params[:filter] == "wishlisted"
+      finder = finder.where("image_file_name IS NULL") if params[:filter].to_i & 2 > 0 
+      finder = finder.where("wishlist_count > 0").order("wishlist_count DESC") if params[:filter].to_i & 1 > 0
       finder = finder.order("id DESC")
       finder = finder.canonical
       finder = finder.paginate(:page => params[:page], :per_page => params[:per_page])
