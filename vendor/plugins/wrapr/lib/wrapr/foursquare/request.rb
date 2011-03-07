@@ -1,19 +1,13 @@
 module Wrapr
   module Foursquare
     class Request < Wrapr::Request
+      param :client_id, lambda { Foursquare.config.client_id }
+      param :client_secret, lambda { Foursquare.config.client_secret }
+      
       def self.base_url(ssl=true)
         "#{ssl ? 'https' : 'http'}://api.foursquare.com/v2"
       end      
       
-      def self.response_class
-        Wrapr::Tumblr::Response
-      end
-      
-      def sanitize(params)
-        super(params).merge( :client_id => Foursquare.config.client_id, 
-                             :client_secret => Foursquare.config.client_secret )
-      end
-
     end
   end
 end

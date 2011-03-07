@@ -2,6 +2,9 @@ wrapr:
   foursquare:
     client_id: TOCKXBSTM33KOK20MRTPEHGOJKQ0VKLKTTEOJJQC0JNEDSPZ
     client_secret: YQTCD0RUPXGERXQNA2MRAVIKHOQETGZB5NSG5YZKDYC5TR4E
+  gowalla:
+    api_key: 9a909f0e73a54520a37c45a0021fa345
+    secret_key: a8123f0b28a64f5da58699cbd2f2f6fd
   flickr: 
     api_key: 2964c543386d6fa7ecb750744b20b236 
     api_secret: 8d5b8cd2c954c1de

@@ -1,10 +1,11 @@
 module Wrapr
   module Foursquare
     class Venue < Wrapr::Model
-      acts_as_model :id, :name, :phone, :twitter, :location,
-                      :categories, :primary_category,
-                      :postal_code, :country
-    
+      property :id, :name
+      property :categories, :model => Category, :list => true
+      property :location, :model => Location
+      property :phone, :twitter, :in => :contact
+      
       def self.search(params={})
         ll = Geo::Position.normalize(params)
         search = {}
@@ -15,7 +16,7 @@ module Wrapr
         response = Foursquare::Request.get('/venues/search', search)
         results = []
         if response.success?
-          response.body["groups"].each do |group|
+          response.payload["groups"].each do |group|
             group["items"].each do |json|
               results << parse(json)
             end
@@ -23,27 +24,16 @@ module Wrapr
         end
         results
       end
-    
-      def location=(value)
-        @location = Location.parse(value)
+      
+      def self.find(id)
+        response = Wrapr::Foursquare::Request.get("/venues/#{id}")
+        parse(response.payload["venue"])
       end
-    
-      def categories=(value)
-        @categories = []
-        value.to_a.each do |c|
-          parsed_c = Category.parse(c)
-          @categories << parsed_c
-          @primary_category = parsed_c if parsed_c.primary?
-        end
+      
+      def primary_category
+        @primary_category ||= categories.find { |c| c.primary? }
       end
-    
-      def contact=(value)
-        if value
-          self.phone = value['phone']
-          self.twitter = value['twitter']
-        end
-      end
-
+      
     end
   end
 end

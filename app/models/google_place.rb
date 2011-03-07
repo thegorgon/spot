@@ -28,7 +28,8 @@ class GooglePlace < ActiveRecord::Base
     origin = Geo::LatLng.normalize(*args)
     raise ArgumentError, "Invalid GooglePlace search: Please provide a normalizeable LatLng in your arguments" unless origin
     options = args.extract_options!
-    page =  options[:page].blank? ? 1 : options[:page] * 8
+    page =  options[:page].blank?? 1 : options[:page]
+    start = 8 * (page - 1)
     if !options[:query].blank?
       query = options[:query]
     elsif options[:exclude] && options[:query]
@@ -36,7 +37,7 @@ class GooglePlace < ActiveRecord::Base
     else
       query = "*"
     end
-    url = "http://ajax.googleapis.com/ajax/services/search/local?v=1.0&q=#{CGI.escape(query)}&rsz=large&start=#{page}&sll=#{origin.ll}"
+    url = "http://ajax.googleapis.com/ajax/services/search/local?v=1.0&q=#{CGI.escape(query)}&rsz=large&start=#{start}&sll=#{origin.ll}"
     Rails.logger.info("google-search: #{url}")
     url
   end

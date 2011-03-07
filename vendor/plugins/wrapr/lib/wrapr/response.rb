@@ -1,9 +1,19 @@
 module Wrapr
   class Response
-    attr_accessor :status, :raw, :parsed, :error_message
-
+    attr_accessor :status, :raw, :parsed, :error_message, :payload
+    
+    def self.content_type(value)
+      @_content_type = value
+    end
+    
+    def self.jsonp_fn(value)
+      @_jsonp_fn = value
+    end
+    
     def body=(value)
       self.raw = preparse(value)
+      jsonp_fn = self.class.instance_variable_get('@_jsonp_fn')
+      self.raw.gsub!(/^#{jsonp_fn}\((.+)\)\;?$/, '\1') if jsonp_fn.present?
       case content_type
       when Mime::JSON
         self.parsed = JSON.parse(raw) rescue nil
@@ -23,6 +33,7 @@ module Wrapr
     end
     
     def content_type
+      @content_type ||= self.class.instance_variable_get('@_content_type')
       @content_type ||= Mime::Type.lookup(headers['Content-Type'].split(';')[0])
     end
     

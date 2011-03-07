@@ -4,7 +4,7 @@ module Wrapr
       
       def parse_response(parsed)
         self.status = parsed['meta']['code']
-        self.body = parsed['response']
+        self.payload = parsed['response']
       end
 
     end

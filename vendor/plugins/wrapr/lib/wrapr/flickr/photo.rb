@@ -1,7 +1,7 @@
 module Wrapr
   module Flickr
     class Photo < Wrapr::Model
-      acts_as_model :id, :owner, :secret, :server, :farm, :title, :ispublic, :isfriend, :isfamily
+      property :id, :owner, :secret, :server, :farm, :title, :ispublic, :isfriend, :isfamily
             
       def self.search(params={})
         params[:license] = params[:license].join(',') if params[:license].respond_to?(:join)

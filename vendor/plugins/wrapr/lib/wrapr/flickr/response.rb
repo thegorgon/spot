@@ -2,15 +2,13 @@ module Wrapr
   module Flickr
     class Response < Wrapr::Response
       include Enumerable
+
+      content_type Mime::JSON
+      jsonp_fn 'jsonFlickrApi'
+
       attr_accessor :code, :key, :page, :per_page, :pages, :total
       attr_reader :type, :raw_records, :records
-    
-      def preparse(body)
-        body.gsub!(/^jsonFlickrApi\((.+)\)\;?$/, '\1')
-        self.headers['Content-Type'] = Mime::JSON.to_s
-        body
-      end
-    
+      
       def parse_response(parsed)
         self.status = parsed["stat"].to_sym rescue nil
         if status && success?
