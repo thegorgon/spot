@@ -1,15 +1,16 @@
+-filters = params.slice('filter')
 .manager
   .top.clearfix
     .pagination
       -if @places.next_page
-        .next=link_to "Next &rarr;".html_safe, admin_places_path(params.slice('filter').merge(:page => @places.next_page)), :class => "page"
+        .next=link_to "Next &rarr;".html_safe, admin_places_path(filters.merge(:page => @places.next_page)), :class => "page"
       -if @places.previous_page
-        .previous=link_to "&larr; Previous".html_safe, admin_places_path(params.slice('filter').merge(:page => @places.previous_page)), :class => "page"
+        .previous=link_to "&larr; Previous".html_safe, admin_places_path(filters.merge(:page => @places.previous_page)), :class => "page"
     %h1.title="#{@places.total_entries} Places"
     .links
-      =link_to "Image Queue", admin_places_path(:filter => 3)
-      =link_to "Imageless", admin_places_path(:filter => 2)
-      =link_to "Wishlisted", admin_places_path(:filter => 1)
+      =link_to "Image Queue", admin_places_path(filters.merge(:filter => 3))
+      =link_to "Imageless", admin_places_path(filters.merge(:filter => 2))
+      =link_to "Wishlisted", admin_places_path(filters.merge(:filter => 1))
       =link_to "Search", 'javascript:;', :class => "search_link"
       =link_to "All", admin_places_path
       =link_to "New", new_admin_place_path
