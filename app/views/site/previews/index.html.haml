@@ -37,7 +37,7 @@
         =form_for :preview, :url => previews_path, :html => {:class => "page"} do |f|
           =f.hidden_field :rid, :value => params[:rid]
           %p.title
-            Give us your email &mdash; Be the first to get Spot
+            Need it now?
           =f.text_field :email, "placeholder" => "enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"
           =button_tag(:class => "hlfrndblk_80x30") do
             submit
