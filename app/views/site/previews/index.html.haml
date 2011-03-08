@@ -3,7 +3,7 @@
     #preview.clearfix
       #phone.iphone.size274x535
         .badge
-          =image_tag('assets/previews/coming_soon.png', :size => "100x100")
+          =image_tag('assets/previews/coming_soon.png', :size => "80x80")
         .glare
         .content
           .status
@@ -30,18 +30,14 @@
             =image_tag "assets/previews/wishlist.png", :size => "241x360"
       #message
         #logo.flips
-          =image_tag "logos/gradient_script_340x270.png", :size => "170x135"
-        %h1 Never Forget a Place
+          =image_tag "logos/script_with_tagline_364x180.png", :size => "364x180"
         %p 
-          Spot makes recommendations more useful by helping you to remember them. 
-        %p
-          When you want to remember a place to eat, drink or shop, store it in your Spot wishlist. You'll never forget a place again!
+          Keep restaurants, bars, cafés and shops in your Spot wishlist as you discover them. 
+          Remember them the next time you need a place to go.
         =form_for :preview, :url => previews_path, :html => {:class => "page"} do |f|
           =f.hidden_field :rid, :value => params[:rid]
           %p.title
-            Can’t wait to start Wishlisting places?
-          %p
-            Enter your email and we’ll make sure you get in first:
-          =f.text_field :email, "placeholder" => "Enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"
+            Give us your email &mdash; Be the first to get Spot
+          =f.text_field :email, "placeholder" => "enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"
           =button_tag(:class => "hlfrndblk_80x30") do
-            Submit
+            submit
