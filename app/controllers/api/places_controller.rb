@@ -8,8 +8,8 @@ class Api::PlacesController < Api::BaseController
   end
   
   def search
-    @search = PlaceSearch.create!(params.except())
-    session[:last_search_id] = response.headers["X-Search-ID"] = @search.id.to_s
+    @search = PlaceSearch.create!(params)
+    response.headers["X-Search-ID"] = @search.id.to_s
     render :json => @search
   end
 end
