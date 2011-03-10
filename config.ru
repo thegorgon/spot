@@ -9,5 +9,5 @@ end
 
 run Rack::URLMap.new(
   "/" => Spot::Application,
-  "/admin/resque" => resque
+  "/admin/resque" => Resque::Server.new
 )
