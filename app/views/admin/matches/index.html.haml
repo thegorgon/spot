@@ -15,13 +15,13 @@
     %tbody
       -@matches.each do |match|
         -distance = PlaceMatch.distance_between(@place, match)
-        %tr
+        %tr.center
           %td=match.name
           %td=match.full_address
           %td="#{distance.geo_distance.round} m"
           %td="#{(distance.name_distance * 100).round}%"
           %td="#{(distance.address_distance * 100).round}%"
-          %td="#{distance.close?? 'yes' : 'no'}"
+          %td="#{distance.close?? 'Yes' : 'No'}"
           %td
             =link_to "Page", external_place_url(match)
             =form_for :match, :url => admin_place_matches_path(@place), :html => { :class => "inline" } do |t|

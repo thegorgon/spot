@@ -1,4 +1,5 @@
 class PlaceMatch
+  MAX_GEO_DISTANCE = 50 # 50 Meters is about a third of a block
   MIN_NAME_MATCH = 0.80
   MIN_ADDRESS_MATCH = 0.70
   
@@ -8,7 +9,7 @@ class PlaceMatch
   
   class Distance < Struct.new(:name_distance, :address_distance, :geo_distance)
     def close?
-      name_distance > MIN_NAME_MATCH && address_distance > MIN_ADDRESS_MATCH
+      name_distance >= MIN_NAME_MATCH && address_distance >= MIN_ADDRESS_MATCH && geo_distance <= MAX_GEO_DISTANCE
     end
     
     def to_i
