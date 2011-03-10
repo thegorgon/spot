@@ -39,8 +39,16 @@
     transition: transform 1s;
   }
 }
+.clear {
+  clear: both;
+}
 .clickable {
   cursor: pointer;
+}
+form.inline {
+  display: inline;
+  margin: 0;
+  padding: 0;
 }
 div.file_field {
   position: relative;

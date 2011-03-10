@@ -10,15 +10,21 @@ module Wrapr
       @_jsonp_fn = value
     end
     
+    def parse_response(json)
+      self.payload = json
+    end
+    
     def body=(value)
       self.raw = preparse(value)
       jsonp_fn = self.class.instance_variable_get('@_jsonp_fn')
       self.raw.gsub!(/^#{jsonp_fn}\((.+)\)\;?$/, '\1') if jsonp_fn.present?
       case content_type
-      when Mime::JSON
+      when Mime::JSON, Mime::JS
         self.parsed = JSON.parse(raw) rescue nil
       when Mime::XML
         self.parsed = Nokogiri::XML(raw) rescue nil
+      when Mime::URL_ENCODED_FORM
+        self.parsed = Rack::Utils.parse_query(raw) rescue nil
       end
       if parsed
         parse_response parsed
@@ -35,6 +41,10 @@ module Wrapr
     def content_type
       @content_type ||= self.class.instance_variable_get('@_content_type')
       @content_type ||= Mime::Type.lookup(headers['Content-Type'].split(';')[0])
+    end
+    
+    def content_type=(value)
+      @content_type = Mime::Type.lookup(value)
     end
     
     def success?

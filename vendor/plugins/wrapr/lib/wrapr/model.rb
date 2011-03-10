@@ -17,10 +17,20 @@ module Wrapr
         define_method "#{arg}" do
           instance_variable_get "@#{arg}"
         end
-        if options[:in]
-          define_method "#{options[:in]}=" do value
-            args.each do |key|
-              send("#{key}=", value[key.to_s])
+      end
+      if options[:in]
+        (@_nested_attrs ||= {})[options[:in]] ||= [] 
+        if options[:as].present?
+          @_nested_attrs[options[:in]] << options[:as].to_sym 
+        else
+          @_nested_attrs[options[:in]] += args
+        end
+        define_method "#{options[:in]}=" do |value|
+          args.each do |key|
+            attr_map = self.class.instance_variable_get("@_attr_map")
+            self.class.instance_variable_get("@_nested_attrs")[options[:in]].each do |arg|
+              key = attr_map[arg] || arg
+              send("#{key}=", value[arg.to_s])
             end
           end
         end

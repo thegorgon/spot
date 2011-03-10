@@ -1,0 +1,31 @@
+.manager
+  .top.clearfix
+    %h1.title="#{@source.to_s.titlecase}s For :"
+    %h2.clear.title="#{@place.name} #{@place.full_address}"
+  %table.data
+    %thead
+      %tr
+        %th Name
+        %th Address
+        %th Geo-Dist
+        %th Name Match
+        %th Addr Match
+        %th Close?
+        %th Actions
+    %tbody
+      -@matches.each do |match|
+        -distance = PlaceMatch.distance_between(@place, match)
+        %tr
+          %td=match.name
+          %td=match.full_address
+          %td="#{distance.geo_distance.round} m"
+          %td="#{(distance.name_distance * 100).round}%"
+          %td="#{(distance.address_distance * 100).round}%"
+          %td="#{distance.close?? 'yes' : 'no'}"
+          %td
+            =link_to "Page", external_place_url(match)
+            =form_for :match, :url => admin_place_matches_path(@place), :html => { :class => "inline" } do |t|
+              =t.hidden_field :source, :value => @source.to_sym
+              =t.hidden_field :id, :value => match.source_id
+              =button_tag :class => "link" do
+                Match!

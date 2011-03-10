@@ -1,13 +1,10 @@
 module Wrapr
   module Tumblr
     class Request < Wrapr::Request
+      endpoint_url lambda { "http://#{Tumblr.config.account}.tumblr.com" }
+      
       param :email, lambda { Tumblr.config.email }
-      param :password, lambda { Tumblr.config.password }
-      
-      def self.base_url(ssl=true)
-        "#{ssl ? 'https' : 'http'}://#{Tumblr.config.account}.tumblr.com"
-      end
-      
+      param :password, lambda { Tumblr.config.password }      
     end
   end
 end

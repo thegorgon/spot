@@ -20,7 +20,8 @@ class DuplicatePlace < ActiveRecord::Base
   validates :name_distance, :address_distance, :geo_distance, :presence => true, :numericality => true
   validates :status, :inclusion => STATUSES  
   before_validation :update_total_distance
-      
+  
+  
   def self.dedupe(place)
     if dupe = duplicate_for(place)
       dupe = DuplicatePlace.ensure(dupe)
@@ -103,7 +104,9 @@ class DuplicatePlace < ActiveRecord::Base
     duplicate = place_1_id == canonical.id ? place_2 : place_1
     duplicate.update_attribute(:canonical_id, canonical.id)
     duplicate.wishlist_items.update_all(:item_type => canonical.class.to_s, :item_id => canonical.id)
-    GooglePlace.where(:place_id => duplicate.id).update_all(:place_id => canonical.id)
+    [GooglePlace, GowallaPlace, FoursquarePlace, FacebookPlace, YelpPlace].each do |source|
+      source.where(:place_id => duplicate.id).update_all(:place_id => canonical.id)
+    end
     update_attributes!(:status => options[:status] || RESOLVED, :canonical_id => canonical.id)
   end
   

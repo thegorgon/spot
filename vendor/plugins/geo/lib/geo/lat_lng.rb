@@ -33,15 +33,15 @@ module Geo
       options.symbolize_keys! if options.respond_to?(:symbolize_keys!)
       thing = (options[:geo_position] || options[:origin] || options[:ll])
       thing ||= [options[:lat], options[:lng]] if options[:lat] && options[:lng]
-      thing ||= args.first if args.first.is_a?(String) || (args.first.is_a?(Array) && args.first.size == 2) || args.first.is_a?(LatLng) || args.first.respond_to?(:to_lat_lng)
+      thing ||= args.first if args.first.is_a?(String) || (args.first.is_a?(Array) && args.first.size == 2) || (args.first.respond_to?(:lat) && args.first.respond_to?(:lng)) || args.first.respond_to?(:to_lat_lng)
       thing ||= args
       # Parse the damn thing
       if thing.is_a?(String) && match = thing.match(/\s*(\-?\d+\.?\d*)[, ] ?(\-?\d+\.?\d*)\s*$/)
         new(match[1], match[2])
       elsif thing.is_a?(Array) && thing.size == 2
         new(thing[0], thing[1])
-      elsif thing.is_a?(LatLng)
-        thing
+      elsif thing.respond_to?(:lat) && thing.respond_to?(:lng)
+        new(thing.lat, thing.lng)
       elsif thing.respond_to?(:to_lat_lng)
         normalize(thing.to_lat_lng)
       else
@@ -51,7 +51,7 @@ module Geo
     
     def self.normalize!(*args)
       value = normalize(*args)
-      raise ArgumentError.new("#{thing.inspect} <#{thing.class}> cannot be normalized to a LatLng.") unless value
+      raise ArgumentError.new("#{args.inspect} <#{args.class}> cannot be normalized to a LatLng.") unless value
       value
     end
 

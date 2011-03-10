@@ -19,6 +19,10 @@ wrapr:
       - niels
       - kent
       - jim
+  fb_graph:
+    client_id: 146911415372759
+    client_secret: 1853a8a3fec8971ecedc41eaa75f5e91
+    oauth_token: 146911415372759|uNNvv7XcknlF8PHj-vEwmt56HlA
   yelp:
     ywsid: e0LHa1Mbeo1jH34mU7wNug
     consumer_key: VqupBjbVhaMVITpHUm9Z4g

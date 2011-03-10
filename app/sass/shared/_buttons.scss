@@ -40,6 +40,16 @@ button[type]{
     color: #999;
   }
 }
+button.link {
+  display: inline;
+  border: 0;
+  background: transparent;
+  text-decoration: underline;
+  color: #333;
+  &:hover {
+   color: #ff8419; 
+  }  
+}
 .phone_whitegray_288x37 {
   width: 288px;
   height: 37px;

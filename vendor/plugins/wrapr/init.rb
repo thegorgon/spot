@@ -26,7 +26,6 @@ require 'wrapr/tumblr/video'
 require 'wrapr/flickr'
 require 'wrapr/flickr/photo'
 
-require 'google'
-require 'google/helper'
+require 'oauth/request_proxy/curl'
 
 ActionView::Base.send(:include, Google::Helper)

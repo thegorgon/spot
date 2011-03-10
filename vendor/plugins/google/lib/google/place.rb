@@ -2,10 +2,10 @@ module Google
   class Place
     ENDPOINT = "http://ajax.googleapis.com/ajax/services/search/local"
     REFERRER = Rails.env.production?? "www.spot-app.com" : "www.rails.local:3000"
-    attr_accessor :cit, :name, :street_address, :listing_type, :city, :region, :country, :address, :phone_number, :lat, :lng
+    attr_accessor :cit, :name, :street_address, :listing_type, :city, :region, :country, :address_lines, :phone_number, :lat, :lng
     attr_accessor :cid
     
-    def self.search(params={})
+    def self.search(params={}, options={})
       json = json(params)
       status = json["responseStatus"].to_i rescue -1
       parsed = []
@@ -13,8 +13,8 @@ module Google
         results = json["responseData"]["results"]
         parsed = results.map { |r| parse(r) }
         parsed.compact!
-        parsed
       end
+      parsed
     end
     
     def self.parse(json)
@@ -27,7 +27,7 @@ module Google
         object.city = json['city']
         object.region = json['region']
         object.country = json['country']
-        object.address = json['addressLines'] && json['addressLines'].join("\n")
+        object.address_lines = json['addressLines']
         object.phone_number = json['phoneNumbers'] && json['phoneNumbers'].first.kind_of?(Hash) ? json['phoneNumbers'].first['number'] : nil
         object.lat = json['lat'].to_f
         object.lng = json['lng'].to_f

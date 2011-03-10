@@ -104,6 +104,10 @@ class Place < ActiveRecord::Base
     full_name
   end
   
+  def name=(value)
+    self.full_name = value
+  end
+  
   def address_lines
     full_address.to_s.split("\n")
   end
@@ -117,10 +121,6 @@ class Place < ActiveRecord::Base
     address_lines.join(', ')
   end
   
-  def google_place
-    @google_place ||= GooglePlace.find_by_place_id(id)
-  end
-  
   def region_abbr
     inverted = Geo::STATES.invert
     inverted[region.downcase] || region
@@ -128,8 +128,18 @@ class Place < ActiveRecord::Base
   
   def source_place
     if source
-      @source_place ||= source.classify.constantize.where(:place_id => id).order("id ASC").first
+      src = source.gsub("Place", "")
+      external_place(src)
     end
+  end
+  
+  def external_place(source)
+    source = ExternalPlace.lookup(source) unless source.kind_of?(Class)
+    (@external_places ||= {})[source.to_sym] ||= source.where(:place_id => id).order("id ASC").first
+  end
+  
+  def external_places
+    ExternalPlace.sources.collect { |src| external_place(src) }
   end
         
   def reclean!
