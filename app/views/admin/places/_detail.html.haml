@@ -9,9 +9,9 @@
     .external_places
       -ExternalPlace.sources.each do |src|
         -if ep = place.external_place(src)
-          %p=link_to "#{src.to_s.titlecase} Page", external_place_url(ep), :target => "_new"
+          =link_to "#{src.to_sym}", external_place_url(ep), :target => "_new", :class => "matched"
         -else
-          %p=link_to "Potential #{src.to_s.titlecase}s", admin_place_matches_path(@place, :src => src.to_sym)
+          =link_to "#{src.to_sym}", admin_place_matches_path(@place, :src => src.to_sym), :class => "potential"
     .form
       =render :partial => "form", :object => @place, :as => :place
     -unless @place.new_record?

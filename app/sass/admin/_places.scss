@@ -34,6 +34,16 @@
       margin: 0 auto;
     }
   }
+  .external_places {
+    width: 320px;
+    a.potential {
+      padding: 5px;
+      color: #999;
+      &:hover {
+        color: #ff8419;
+      }
+    }
+  }
   .duplication {
     clear: both;
     font-size: 0.9em;

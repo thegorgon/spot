@@ -4,7 +4,7 @@ module ExternalPlace
   end
   
   def self.sources
-    [FacebookPlace, FoursquarePlace, GooglePlace, GowallaPlace, YelpPlace]
+    [GooglePlace, YelpPlace, FoursquarePlace, GowallaPlace, FacebookPlace]
   end
   
   def self.lookup(symbol)
