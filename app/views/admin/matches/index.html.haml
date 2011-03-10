@@ -14,18 +14,17 @@
         %th Actions
     %tbody
       -@matches.each do |match|
-        -distance = PlaceMatch.distance_between(@place, match)
         %tr.center
-          %td=match.name
-          %td=match.full_address
-          %td="#{distance.geo_distance.round} m"
-          %td="#{(distance.name_distance * 100).round}%"
-          %td="#{(distance.address_distance * 100).round}%"
-          %td="#{distance.close?? 'Yes' : 'No'}"
+          %td=match.candidate.name
+          %td=match.candidate.full_address
+          %td="#{match.proximity.geo_distance.round} m"
+          %td="#{(match.proximity.name_match * 100).round}%"
+          %td="#{(match.proximity.address_match * 100).round}%"
+          %td="#{match.proximity.close?? 'Yes' : 'No'}"
           %td
-            =link_to "Page", external_place_url(match)
+            =link_to "Page", external_place_url(match.candidate)
             =form_for :match, :url => admin_place_matches_path(@place), :html => { :class => "inline" } do |t|
               =t.hidden_field :source, :value => @source.to_sym
-              =t.hidden_field :id, :value => match.source_id
+              =t.hidden_field :id, :value => match.candidate.source_id
               =button_tag :class => "link" do
                 Match!

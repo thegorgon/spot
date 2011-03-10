@@ -2,7 +2,7 @@ class Admin::MatchesController < Admin::BaseController
   def index
     @source = ExternalPlace.lookup(params[:src])
     @place = Place.find(params[:place_id])
-    @matches = PlaceMatch.new(@place, @source).potentials[@source.to_sym]
+    @matches = PlaceMatch.new(@place, @source).matches[@source.to_sym]
   end
   
   def create
