@@ -22,6 +22,7 @@ gem 'twitter'
 gem 'typhoeus'
 gem 'oauth'
 gem 'faraday'
+gem 'sinatra', '1.1.3'
 
 group :production do
   gem 'unicorn'
