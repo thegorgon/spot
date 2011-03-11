@@ -1,6 +1,6 @@
 module Wrapr
   class Response
-    attr_accessor :status, :raw, :parsed, :error_message, :payload
+    attr_accessor :status, :raw, :parsed, :error_message, :error_type, :payload
     
     def self.content_type(value)
       @_content_type = value
@@ -27,8 +27,8 @@ module Wrapr
         self.parsed = Rack::Utils.parse_query(raw) rescue nil
       end
       if parsed
-        parse_response parsed
         self.status = 200
+        parse_response parsed
       else
         self.status = 500
       end
@@ -49,6 +49,10 @@ module Wrapr
     
     def success?
       (status/100.0).floor == 2
+    end
+    
+    def error?
+      !success?
     end
 
     def headers
