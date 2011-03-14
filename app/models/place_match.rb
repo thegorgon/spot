@@ -1,11 +1,11 @@
 class PlaceMatch
   MAX_GEO_DISTANCE = 50 # 50 Meters is about a third of a block
   MIN_NAME_MATCH = 0.80
-  MIN_ADDRESS_MATCH = 0.70
+  MIN_ADDRESS_MATCH = 0.40
   
-  def self.run(place, sources=nil)
-    new(place, sources).run
-  end
+  # ===================
+  # = SUPPORT STRUCTS =
+  # ===================
   
   class Match < Struct.new(:candidate, :proximity); end;
 
@@ -19,6 +19,13 @@ class PlaceMatch
     end
   end
 
+  # ======================
+  # = METHOD DEFINITIONS =
+  # ======================
+
+  def self.run(place, sources=nil)
+    new(place, sources).run
+  end
 
   def self.proximity(place1, place2)
     clean_name1 = Geo::Cleaner.clean(:name => place1.name, :extraneous => true)
