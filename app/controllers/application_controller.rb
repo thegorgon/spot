@@ -12,8 +12,12 @@ class ApplicationController < ActionController::Base
   helper_method :page_namespace
   
   def controller_name
-    name = params[:controller].tr('/','_')
-    return name
+    if request.env['goalie.error_params']
+      name = "errors"
+    else
+      name = params[:controller].to_s.tr('/','_')
+    end
+    name
   end
   helper_method :controller_name
     
