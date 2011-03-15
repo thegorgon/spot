@@ -1,5 +1,5 @@
 %ul.form_wrapper
-  =form_for [:admin, @place], :html => {:multipart => true, :autocomplete => "off"} do |f|
+  =form_for [:admin, @place], :html => {:multipart => true, :autocomplete => "off", :novalidate => "novalidate"} do |f|
     %li
       =f.label :full_name, "Name : "
       =f.text_field :full_name
