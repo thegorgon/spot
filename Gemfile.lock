@@ -63,9 +63,6 @@ GEM
     faraday_middleware (0.3.2)
       faraday (~> 0.5.4)
     gem_plugin (0.2.3)
-    goalie (0.0.4)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
     haml (3.0.25)
     hashie (1.0.0)
     highline (1.6.1)
@@ -103,7 +100,7 @@ GEM
       activerecord
       activesupport
     polyglot (0.3.1)
-    rack (1.2.2)
+    rack (1.2.1)
     rack-mount (0.6.13)
       rack (>= 1.0.0)
     rack-test (0.5.7)
@@ -184,7 +181,7 @@ GEM
     typhoeus (0.2.4)
       mime-types
       mime-types
-    tzinfo (0.3.25)
+    tzinfo (0.3.24)
     unicorn (3.4.0)
       kgio (~> 2.2)
       rack
@@ -206,7 +203,6 @@ DEPENDENCIES
   curb
   factory_girl_rails
   faraday
-  goalie
   haml
   jammit
   mongrel (= 1.2.0.pre2)

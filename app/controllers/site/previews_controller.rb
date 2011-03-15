@@ -4,11 +4,8 @@ class Site::PreviewsController < Site::BaseController
   
   def create
     @preview = PreviewSignup.signup(params[:preview])
-    if @preview.save
-      redirect_to preview_share_url(@preview.rid)
-    else
-      redirect_to previews_url
-    end
+    success = @preview.save
+    redirect_to preview_share_url(@preview.rid)
   end
   
   def share
