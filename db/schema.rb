@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110314224313) do
+ActiveRecord::Schema.define(:version => 20110315200834) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -212,13 +212,15 @@ ActiveRecord::Schema.define(:version => 20110314224313) do
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
 
   create_table "wishlist_items", :force => true do |t|
-    t.integer  "user_id",                                   :null => false
-    t.integer  "item_id",                                   :null => false
-    t.string   "item_type",                                 :null => false
-    t.decimal  "lat",        :precision => 11, :scale => 9
-    t.decimal  "lng",        :precision => 12, :scale => 9
+    t.integer  "user_id",                                    :null => false
+    t.integer  "item_id",                                    :null => false
+    t.string   "item_type",                                  :null => false
+    t.decimal  "lat",         :precision => 11, :scale => 9
+    t.decimal  "lng",         :precision => 12, :scale => 9
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "source_type"
+    t.integer  "source_id"
   end
 
   add_index "wishlist_items", ["user_id", "item_type", "item_id"], :name => "index_wishlist_items_on_user_id_and_item_type_and_item_id", :unique => true

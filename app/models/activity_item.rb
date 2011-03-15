@@ -34,11 +34,17 @@ class ActivityItem < ActiveRecord::Base
     
   def as_json(*args)
     {
-      :_type => activity_type,
-      :id => activity_id,
+      :_type => self.class.to_s,
+      :id => id,
+      :activity => { 
+        :_type => activity.class.to_s, 
+        :id => activity.id,
+        :source_type => activity.source_type,
+        :source_id => activity.source_id
+      },
       :item => item.as_json(args),
+      :user => actor.as_json(args),
       :created_at => created_at,
-      :user => actor.as_json(args)
     }
   end
   

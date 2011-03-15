@@ -3,6 +3,8 @@ class WishlistItem < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :item, :polymorphic => true, :counter_cache => :wishlist_count
+  belongs_to :source, :polymorphic => true
+  
   has_one :user_action, :as => :action
   has_one :activity_item, :as => :activity
   
@@ -12,12 +14,10 @@ class WishlistItem < ActiveRecord::Base
   validates :lat, :numericality => {:greater_than => -90, :less_than => 90}, :if => :lat?
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}, :if => :lng
   
-  after_create :attribute_result_to_search
   after_create :enque_tweeting
   after_create :enque_propagation
   after_destroy :mark_removal
   
-  attr_writer :search_id
   cattr_accessor :per_page
   @@per_page = 20
     
@@ -59,8 +59,9 @@ class WishlistItem < ActiveRecord::Base
   def propagate!
     ActivityItem.create!(:actor => user, :activity => self, :item => item, :lat => item.lat, :lng => item.lng) unless activity_item
     UserAction.create!(:user => user, :action => self) unless user_action
+    source.update_attribute(:result_id => item_id) if source.kind_of?(PlaceSearch)
   end
-  
+    
   def as_json(*args)
     {
       :_type => self.class.to_s,
@@ -83,9 +84,5 @@ class WishlistItem < ActiveRecord::Base
 
   def enque_tweeting
     Resque.enqueue(Jobs::WishlistTweeter, id)
-  end
-  
-  def attribute_result_to_search
-    PlaceSearch.where(:id => @search_id).update_all(:result_id => item_id) if @search_id.to_i > 0
-  end
+  end  
 end

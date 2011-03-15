@@ -1,7 +1,6 @@
 class Api::WishlistItemsController < Api::BaseController
   def create
     @item = current_user.wishlist_items.new(params[:item])
-    @item.search_id = request.headers["X-Search-ID"]
     status = 200
     begin
       @item.save!
