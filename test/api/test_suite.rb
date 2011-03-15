@@ -158,12 +158,12 @@ module Api
     def perform_activity_test
       log "Requesting activity"
       position = Geo::Position.new(:lat => 37.768186, :lng => -122.429124, :timestamp => Time.now)
-      curb = request(activity_api_wishlist_url(:format => :json), position)
+      curb = request(api_activity_url(:format => :json), position)
       curb.http_get
       json = JSON.parse(curb.body_str)
       log "Response : #{json}", 1
       log "Response Length : #{json.length}", 1
-      curb = request(activity_api_wishlist_url(:page => 2, :format => :json), position)
+      curb = request(api_activity_url(:page => 2, :format => :json), position)
       curb.http_get
       json = JSON.parse(curb.body_str)
       log "Response (page 2): #{json}", 1

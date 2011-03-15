@@ -10,7 +10,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110308040540) do
+ActiveRecord::Schema.define(:version => 20110314224313) do
+
+  create_table "activity_items", :force => true do |t|
+    t.integer  "actor_id"
+    t.integer  "activity_id"
+    t.string   "activity_type"
+    t.integer  "item_id"
+    t.string   "item_type"
+    t.decimal  "lat",           :precision => 11, :scale => 9, :null => false
+    t.decimal  "lng",           :precision => 12, :scale => 9, :null => false
+    t.datetime "created_at"
+  end
+
+  add_index "activity_items", ["actor_id", "activity_type"], :name => "index_activity_items_on_actor_id_and_activity_type"
 
   create_table "devices", :force => true do |t|
     t.string   "udid",          :null => false
@@ -174,6 +187,16 @@ ActiveRecord::Schema.define(:version => 20110308040540) do
 
   add_index "preview_signups", ["email"], :name => "index_preview_signups_on_email", :unique => true
 
+  create_table "user_actions", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "action_type"
+    t.integer  "action_id"
+    t.datetime "created_at"
+    t.datetime "removed_at"
+  end
+
+  add_index "user_actions", ["user_id", "action_type", "action_id"], :name => "index_user_actions_on_user_id_and_action_type_and_action_id", :unique => true
+
   create_table "users", :force => true do |t|
     t.datetime "current_login_at"
     t.integer  "login_count",         :default => 0, :null => false
@@ -182,6 +205,8 @@ ActiveRecord::Schema.define(:version => 20110308040540) do
     t.string   "perishable_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "full_name"
+    t.string   "email"
   end
 
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"

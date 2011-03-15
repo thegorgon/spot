@@ -16,6 +16,7 @@ Spot::Application.routes.draw do
       end
     end
     resource :sessions, :only => [:new, :create, :destroy]
+    resource :activity, :only => [:show], :controller => "activity"
     resource :wishlist, :only => [:show] do
       collection do
         get "activity"

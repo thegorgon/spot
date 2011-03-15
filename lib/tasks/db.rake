@@ -1,14 +1,15 @@
 namespace :db do
   task(:sync => :environment) do
     # Constants
-    HOSTS       = {"production" => "masterdb.ec2"}
-    TUNNELS     = {"production" => "spot1.ec2"}
-    PRESETS     = {"places"     => "places"}
+    HOSTS       = { "production" => "masterdb.ec2" }
+    TUNNELS     = { "production" => "spot1.ec2" }
+    PRESETS     = { "places"     => "places google_places gowalla_places facebook_places foursquare_places yelp_places",
+                    "wishlists"  => "places wishlist_items users devices"}
     # Configuration Variables
     @port       = "7768"
     @remote_env ||= (ENV['REMOTE'] || "production")
     @tables     = PRESETS[ENV['PRESET']] if ENV['PRESET']
-    @tables     ||= (ENV['TABLES'] || "places")
+    @tables     ||= (ENV['TABLES'] || PRESETS.values.join(' ').split(' ').uniq.join(' '))
     # Helper Variables
     db_config  = YAML.load_file("#{Rails.root}/config/database.yml")
     remote_db   = db_config[@remote_env]
