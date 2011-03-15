@@ -1,5 +1,5 @@
 class PlaceMatch
-  MAX_GEO_DISTANCE = 50 # 50 Meters is about a third of a block
+  MAX_GEO_DISTANCE = 150 # 50 Meters is about a third of a block
   MIN_NAME_MATCH = 0.80
   MIN_ADDRESS_MATCH = 0.50
   
@@ -73,7 +73,7 @@ class PlaceMatch
   def run
     matches.each do |source, matches|
       best = matches.first
-      best.candidate.bind_to!(@place) if best.proximity.close?
+      best.candidate.bind_to!(@place) if best && best.proximity.close?
     end
     true
   end

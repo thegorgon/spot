@@ -18,7 +18,7 @@ class YelpPlace < ActiveRecord::Base
     object.display_address = wrapr.location.address_lines.join("\n")
     object.neighborhoods = wrapr.location.neighborhoods
     object.geo_accuracy = wrapr.location.geo_accuracy
-    object.categories = wrapr.categories.collect { |c| c.name }
+    object.categories = wrapr.categories.to_a.collect { |c| c.name }
     object.lat = wrapr.location.latitude.to_f
     object.lng = wrapr.location.longitude.to_f
     object.yelp_id = wrapr.id

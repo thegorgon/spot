@@ -15,7 +15,7 @@ class GowallaPlace < ActiveRecord::Base
     object.lng = wrapr.lng.to_f
     object.radius_meters = wrapr.radius_meters.to_i
     object.phone_number = wrapr.phone_number
-    object.categories = wrapr.categories.collect { |c| c.name }
+    object.categories = wrapr.categories.to_a.collect { |c| c.name }
     object.gowalla_id = wrapr.id
     object.foursquare_id = wrapr.foursquare_id
     object

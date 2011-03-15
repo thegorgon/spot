@@ -5,7 +5,7 @@ class FoursquarePlace < ActiveRecord::Base
   def self.from_wrapr(wrapr)
     object = new
     object.name = wrapr.name
-    object.categories = wrapr.categories.collect { |c| c.name }
+    object.categories = wrapr.categories.to_a.collect { |c| c.name }
     object.address = wrapr.location.address
     object.cross_street = wrapr.location.cross_street
     object.city = wrapr.location.city
