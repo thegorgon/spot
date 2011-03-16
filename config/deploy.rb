@@ -10,7 +10,7 @@ set :branch,        "master"
 set :deploy_via,    :remote_cache
 set :deploy_to,     '/u/app'
 set :keep_releases, 10
-set :app_server_n,  1
+set :app_server_n,  2
 set :bg_server_n,   1
 set :rails_env,     'production'
 
