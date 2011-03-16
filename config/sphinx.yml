@@ -10,9 +10,9 @@ production:
   <<: *common
   port: 1182
   config_file: "/etc/searchd/searchd.conf"
-  searchd_log_file: "/var/log/searchd/logs/searchd.log"
-  query_log_file: "/var/log/searchd/logs/query.log"
-  pid_file: "/var/run/searchd.pid"
+  searchd_log_file: "/u/app/current/log/searchd.log"
+  query_log_file: "/u/app/current/log/query.log"
+  pid_file: "/u/app/shared/pids/searchd.pid"
   remote_sphinx: true
   address: "sphinx1.ec2"
   bin_path: "/usr/local/sphinx/bin"
