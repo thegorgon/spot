@@ -4,9 +4,7 @@ class WishlistItem < ActiveRecord::Base
   belongs_to :user
   belongs_to :item, :polymorphic => true
   belongs_to :source, :polymorphic => true
-  
-  has_one :activity_item, :as => :activity
-  
+    
   validates :user_id, :presence => true, :numericality => true
   validates :item_type, :presence => true, :inclusion => ITEM_TYPES
   validates :item_id, :presence => true, :numericality => true  
