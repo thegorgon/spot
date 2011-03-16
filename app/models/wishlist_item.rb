@@ -2,10 +2,9 @@ class WishlistItem < ActiveRecord::Base
   ITEM_TYPES = ["Place"]
   
   belongs_to :user
-  belongs_to :item, :polymorphic => true, :counter_cache => :wishlist_count
+  belongs_to :item, :polymorphic => true
   belongs_to :source, :polymorphic => true
   
-  has_one :user_action, :as => :action
   has_one :activity_item, :as => :activity
   
   validates :user_id, :presence => true, :numericality => true
@@ -16,7 +15,6 @@ class WishlistItem < ActiveRecord::Base
   
   after_create :enque_tweeting
   after_create :enque_propagation
-  after_destroy :mark_removal
   
   cattr_accessor :per_page
   @@per_page = 20
@@ -57,9 +55,9 @@ class WishlistItem < ActiveRecord::Base
   end
   
   def propagate!
-    ActivityItem.create!(:actor => user, :activity => self, :item => item, :lat => item.lat, :lng => item.lng) unless activity_item
-    UserAction.create!(:user => user, :action => self) unless user_action
-    source.update_attribute(:result_id => item_id) if source.kind_of?(PlaceSearch)
+    item_type.constantize.increment_counter(:wishlist_count, item_id)
+    generate_activity! :action => "CREATE", :source => source, :public => true
+    source.update_attribute(:result_id, item_id) if source.kind_of?(PlaceSearch)
   end
     
   def as_json(*args)
@@ -72,10 +70,18 @@ class WishlistItem < ActiveRecord::Base
     }
   end
   
+  def destroy
+    touch :deleted_at
+    item_type.constantize.decrement_counter(:wishlist_count, item_id)
+    generate_activity! :action => "DELETE", :public => false
+  end
+  
   private
 
-  def mark_removal
-    user_action.try(:removed!)
+  def generate_activity!(extra={})
+    params = {:actor => user, :activity => self, :item => item, :lat => item.lat, :lng => item.lng}
+    params.merge! extra
+    ActivityItem.create! params
   end
 
   def enque_propagation

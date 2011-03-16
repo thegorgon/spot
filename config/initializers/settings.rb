@@ -23,3 +23,5 @@ Twitter.oauth = OAuth::Consumer.new(
     :http_method        => :post,
     :site               => 'https://api.twitter.com' 
 })
+
+ActionMailer::Base.add_delivery_method :ses, AWS::SES::Base, S3_CONFIG[Rails.env].symbolize_keys

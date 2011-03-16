@@ -38,6 +38,14 @@ GEM
       builder
       mime-types
       xml-simple
+    aws-ses (0.3.2)
+      builder
+      builder
+      mail (~> 2.2.5)
+      mime-types
+      mime-types
+      xml-simple
+      xml-simple
     builder (2.1.2)
     capistrano (2.5.19)
       highline
@@ -71,7 +79,7 @@ GEM
       closure-compiler (>= 0.1.0)
       yui-compressor (>= 0.9.1)
     json (1.4.6)
-    kgio (2.3.2)
+    kgio (2.3.3)
     linecache19 (0.5.11)
       ruby_core_source (>= 0.1.4)
     mail (2.2.15)
@@ -100,7 +108,7 @@ GEM
       activerecord
       activesupport
     polyglot (0.3.1)
-    rack (1.2.1)
+    rack (1.2.2)
     rack-mount (0.6.13)
       rack (>= 1.0.0)
     rack-test (0.5.7)
@@ -181,9 +189,9 @@ GEM
     typhoeus (0.2.4)
       mime-types
       mime-types
-    tzinfo (0.3.24)
-    unicorn (3.4.0)
-      kgio (~> 2.2)
+    tzinfo (0.3.25)
+    unicorn (3.5.0)
+      kgio (~> 2.3)
       rack
     vegas (0.1.8)
       rack (>= 1.0.0)
@@ -199,6 +207,7 @@ DEPENDENCIES
   amatch
   authlogic
   aws-s3
+  aws-ses (~> 0.3.2)
   capistrano
   curb
   factory_girl_rails

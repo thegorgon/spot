@@ -10,7 +10,7 @@ class Place < ActiveRecord::Base
   cattr_accessor :per_page
   @@per_page = 15
   
-  has_many :wishlist_items, :as => :item
+  has_many :wishlist_items, :as => :item, :conditions => { :deleted_at => nil }
   serialize :image_attribution, Hash
   acts_as_mappable
   

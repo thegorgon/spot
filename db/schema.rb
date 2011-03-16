@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110315200834) do
+ActiveRecord::Schema.define(:version => 20110314224313) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -18,8 +18,12 @@ ActiveRecord::Schema.define(:version => 20110315200834) do
     t.string   "activity_type"
     t.integer  "item_id"
     t.string   "item_type"
-    t.decimal  "lat",           :precision => 11, :scale => 9, :null => false
-    t.decimal  "lng",           :precision => 12, :scale => 9, :null => false
+    t.integer  "source_id"
+    t.string   "source_type"
+    t.string   "action",                                                          :null => false
+    t.boolean  "public",                                       :default => false, :null => false
+    t.decimal  "lat",           :precision => 11, :scale => 9,                    :null => false
+    t.decimal  "lng",           :precision => 12, :scale => 9,                    :null => false
     t.datetime "created_at"
   end
 
@@ -187,16 +191,6 @@ ActiveRecord::Schema.define(:version => 20110315200834) do
 
   add_index "preview_signups", ["email"], :name => "index_preview_signups_on_email", :unique => true
 
-  create_table "user_actions", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "action_type"
-    t.integer  "action_id"
-    t.datetime "created_at"
-    t.datetime "removed_at"
-  end
-
-  add_index "user_actions", ["user_id", "action_type", "action_id"], :name => "index_user_actions_on_user_id_and_action_type_and_action_id", :unique => true
-
   create_table "users", :force => true do |t|
     t.datetime "current_login_at"
     t.integer  "login_count",         :default => 0, :null => false
@@ -221,6 +215,7 @@ ActiveRecord::Schema.define(:version => 20110315200834) do
     t.datetime "updated_at"
     t.string   "source_type"
     t.integer  "source_id"
+    t.datetime "deleted_at"
   end
 
   add_index "wishlist_items", ["user_id", "item_type", "item_id"], :name => "index_wishlist_items_on_user_id_and_item_type_and_item_id", :unique => true
