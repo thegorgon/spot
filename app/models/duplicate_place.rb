@@ -60,7 +60,7 @@ class DuplicatePlace < ActiveRecord::Base
     options[:geo] = place.to_lat_lng.ts_geo
     options[:with] = {"@geodist" => 0.0..SEARCH_RADIUS}
     options[:without] = {"sphinx_internal_id" => place.id}
-    options.merge!(:star => true, :match_mode => :any)
+    options.merge!(:match_mode => :any)
     match_name = Geo::Cleaner.remove_extraneous_words(place.clean_name)
     name_matcher = Amatch::Sellers.new(match_name)
     addr_matcher = Amatch::Sellers.new(place.clean_address)
