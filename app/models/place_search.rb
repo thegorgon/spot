@@ -121,7 +121,7 @@ class PlaceSearch < ActiveRecord::Base
   def load_google_places
     google = []
     @benchmarks[:google_load] = Benchmark.measure do 
-      google = GooglePlace.search(:query => query, :page => page, :per_page => per_page, :geo_position => position)
+      google = ExternalPlace::GooglePlace.search(:query => query, :page => page, :per_page => per_page, :geo_position => position)
     end
     @benchmarks[:google_bind] = Benchmark.measure do
       google.each do |gp|

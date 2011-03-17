@@ -32,8 +32,6 @@ GEM
     amatch (0.2.5)
     archive-tar-minitar (0.5.2)
     arel (2.0.9)
-    authlogic (2.1.6)
-      activesupport
     aws-s3 (0.6.2)
       builder
       mime-types
@@ -47,11 +45,16 @@ GEM
       xml-simple
       xml-simple
     builder (2.1.2)
-    capistrano (2.5.19)
+    capistrano (2.5.20)
+      highline
       highline
       net-scp (>= 1.0.0)
+      net-scp
+      net-sftp
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
+      net-ssh
+      net-ssh-gateway
       net-ssh-gateway (>= 1.0.0)
     closure-compiler (1.0.0)
     columnize (0.3.2)
@@ -121,6 +124,8 @@ GEM
       activesupport (= 3.0.3)
       bundler (~> 1.0)
       railties (= 3.0.3)
+    rails_warden (0.5.2)
+      warden
     railties (3.0.3)
       actionpack (= 3.0.3)
       activesupport (= 3.0.3)
@@ -195,6 +200,8 @@ GEM
       rack
     vegas (0.1.8)
       rack (>= 1.0.0)
+    warden (1.0.3)
+      rack (>= 1.0.0)
     will_paginate (3.0.pre2)
     xml-simple (1.0.14)
     yajl-ruby (0.8.1)
@@ -205,7 +212,6 @@ PLATFORMS
 
 DEPENDENCIES
   amatch
-  authlogic
   aws-s3
   aws-ses (~> 0.3.2)
   capistrano
@@ -220,6 +226,7 @@ DEPENDENCIES
   oauth
   paperclip (~> 2.3)
   rails (= 3.0.3)
+  rails_warden
   redis
   redis-store (= 1.0.0.beta4)
   resque
@@ -231,5 +238,6 @@ DEPENDENCIES
   twitter
   typhoeus
   unicorn
+  warden
   will_paginate (~> 3.0.pre2)
   yajl-ruby

@@ -17,7 +17,7 @@ class Api::BaseController < ApplicationController
       record_not_found_error(exception)
     when ServiceError
       service_error(exception)
-    when Authlogic::Session::Existence::SessionInvalidError, UnauthorizedAccessError
+    when UnauthorizedAccessError
       unauthorized_access_error(exception)
     else
       unknown_error(exception)
@@ -59,8 +59,9 @@ class Api::BaseController < ApplicationController
   end
   
   def require_user
+    authenticate(:device)
     Rails.logger.info("spot-app: requiring user, current user id : #{current_user.try(:id)}")
-    raise UnauthorizedAccessError, "An active user session is required to access this resource." unless current_user
+    raise UnauthorizedAccessError, "An active user session is required to access this resource." unless logged_in?
   end
 
 end

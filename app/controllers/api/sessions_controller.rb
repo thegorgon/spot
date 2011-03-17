@@ -2,19 +2,17 @@ class Api::SessionsController < Api::BaseController
   skip_before_filter :require_user, :except => :destroy
   
   def new
-    render :json => { :nonce => UserSession.generate_nonce }
+    @nonce = Nonce.new(:session => session)
+    render :json => { :nonce => @nonce.token }
   end
   
   def create
-    @session = UserSession.new(params[:credentials])
-    # API Point Has Memory and Requires Nonce Key
-    @session.require_credential_key = @session.remember_me = true 
-    @session.save!
-    render :json => { :user => @session.user }
+    require_user
+    render :json => { :user => current_user }
   end
   
   def destroy
-    current_user_session.destroy
+    logout
     head :ok
   end
 end

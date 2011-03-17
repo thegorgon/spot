@@ -21,18 +21,6 @@ class ApplicationController < ActionController::Base
     render :json => {:redirect_to => url_for(*args)}
   end
   
-  def current_user_session
-    return @current_user_session if defined?(@current_user_session)
-    @current_user_session = UserSession.find
-  end
-  helper_method :current_user_session
-  
-  def current_user
-    return @current_user if defined?(@current_user)
-    @current_user = current_user_session && current_user_session.user
-  end
-  helper_method :current_user
-  
   def store_location
     session[:return_to] = request.request_uri
   end

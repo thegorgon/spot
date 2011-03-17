@@ -63,7 +63,7 @@ module Api
       json = JSON.parse(curb.body_str)
       nonce = json["nonce"]      
       log "Received nonce token : #{nonce}"
-      @signed_nonce = UserSession.digest_nonce(nonce)
+      @signed_nonce = Nonce.new(:token => nonce).digested
       log "Signed : #{@signed_nonce}"
       log "Logging in as : "
       print_hash login_credentials[:credentials]
@@ -187,6 +187,7 @@ module Api
         curb.on_progress { |dl_total, dl_now, ul_total, ul_now| print "."; true }
           
         curb.on_header do |header_data|
+          log "Header Data : #{header_data}"
           key, value = header_data.split(':')
           key.strip!
           self.cookie = value.strip if key == "Set-Cookie"

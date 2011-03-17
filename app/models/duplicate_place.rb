@@ -104,7 +104,7 @@ class DuplicatePlace < ActiveRecord::Base
     duplicate = place_1_id == canonical.id ? place_2 : place_1
     duplicate.update_attribute(:canonical_id, canonical.id)
     duplicate.wishlist_items.update_all(:item_type => canonical.class.to_s, :item_id => canonical.id)
-    [GooglePlace, GowallaPlace, FoursquarePlace, FacebookPlace, YelpPlace].each do |source|
+    ExternalPlace.sources.each do |source|
       source.where(:place_id => duplicate.id).update_all(:place_id => canonical.id)
     end
     update_attributes!(:status => options[:status] || RESOLVED, :canonical_id => canonical.id)
