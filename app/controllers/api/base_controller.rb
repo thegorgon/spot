@@ -35,6 +35,7 @@ class Api::BaseController < ApplicationController
   end
 
   def unauthorized_access_error(exception=nil)
+    warden.custom_failure!
     basic_exception(401, exception, :www_authenticate => "Api")
   end
   
@@ -58,8 +59,8 @@ class Api::BaseController < ApplicationController
     end
   end
   
-  def require_user
-    authenticate(:device)
+  def require_user    
+    authenticate
     Rails.logger.info("spot-app: requiring user, current user id : #{current_user.try(:id)}")
     raise UnauthorizedAccessError, "An active user session is required to access this resource." unless logged_in?
   end

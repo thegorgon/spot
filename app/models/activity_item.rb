@@ -1,4 +1,5 @@
 class ActivityItem < ActiveRecord::Base
+  ACTIONS = ["CREATE", "DELETE"]
   belongs_to :actor, :class_name => "User"
   belongs_to :activity, :polymorphic => true
   belongs_to :item, :polymorphic => true
@@ -6,6 +7,10 @@ class ActivityItem < ActiveRecord::Base
   
   validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
+  validates :action, :inclusion => ACTIONS, :presence => true
+
+  scope :public, where("public = 1")
+  scope :since, lambda { |date| where(["created_at > ?", date]) }
 
   acts_as_mappable
   
@@ -14,25 +19,22 @@ class ActivityItem < ActiveRecord::Base
     origin = Geo::LatLng.normalize(params)
     radius = params[:radius] || 50
     params[:page] = [1, params[:page].to_i].max
-    finder = includes(:actor)
+    finder = self
     finder = finder.within(radius, :origin => origin) if origin
-    finder = finder.order("created_at DESC")
-    records = finder.paginate(:page => params[:page], :per_page => params[:per_page])
-    activity_associations, item_associations = {}, {}
-    records.each do |record|
-      (activity_associations[record.activity_type.constantize] ||= []) << record.activity_id
-      (item_associations[record.item_type.constantize] ||= []) << record.item_id
-    end
-    activities, items = {}, {}
-    activity_associations.each { |klass, id| activities.merge! klass.where(:id => id).hash_by { |i| "#{i.class} #{i.id}" } }
-    item_associations.each { |klass, id| items.merge! klass.where(:id => id).hash_by { |i| "#{i.class} #{i.id}" } }
-    records.each do |record| 
-      record.item = items["#{record.item_type} #{record.item_id}"]
-      record.activity = activities["#{record.activity_type} #{record.activity_id}"]
-    end
+    finder = finder.since(params[:since]) if params[:since]
+    finder = finder.order("activity_items.created_at DESC")
+    records = finder.paginate(:page => params[:page], :per_page => params[:per_page], :include => [:actor, :activity, :item])
     records
   end  
     
+  def action=(value)
+    if value.respond_to?(:upcase)
+      self[:action] = value.upcase 
+    else
+      self[:action] = value
+    end
+  end
+  
   def as_json(*args)
     {
       :_type => self.class.to_s,

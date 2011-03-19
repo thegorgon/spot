@@ -8,7 +8,7 @@ class Api::PlacesController < Api::BaseController
   end
   
   def search
-    @search = PlaceSearch.create!(params)
+    @search = PlaceSearch.from_params!(params)
     response.headers["X-Search-ID"] = @search.id.to_s
     render :json => @search
   end

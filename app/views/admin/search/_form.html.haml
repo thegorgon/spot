@@ -5,7 +5,7 @@
       =text_field_tag :q, nil, :id => "search_q", :value => @search.query
     %li.field
       =label_tag :ll, "Location : "
-      =text_field_tag :ll, nil, :id => "search_ll", :value => @search.ll
+      =text_field_tag :ll, nil, :id => "search_ll", :value => @search.position.to_s
     %li.field
       =button_tag :class => "rndblk_80x26" do
         Search

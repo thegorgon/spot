@@ -1,4 +1,4 @@
-Factory.define :google_place do |gp|
+Factory.define :google_place, :class => ExternalPlace::GooglePlace do |gp|
   gp.cid { Factory.next(:google_cid) }
   gp.name           'Place Name'
   gp.listing_type   'local business'
@@ -10,7 +10,7 @@ Factory.define :google_place do |gp|
   gp.phone_number   '555-555-5555'
   gp.lat { rand * 180 - 90 }
   gp.lng { rand * 360 - 180 }
-  gp.place { |place| place.association(:place) }
+  gp.association :place
 end
 
 Factory.sequence :google_cid do |n|

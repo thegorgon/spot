@@ -1,5 +1,7 @@
 test:
-  servers: "redis://localhost:6379"
+  servers: "redis://localhost:2811"
+  port: 2811
+  host: localhost
   key_prefix: "sstest:"
   
 development:

@@ -16,8 +16,8 @@ module Geo
         if from == to # fixes a "zero-distance" bug
           0.0
         else
-          units = options[:units] || Geo::default_units
-          formula = options[:formula] || Geo::default_formula
+          units = options[:units] || Geo.default_units
+          formula = options[:formula] || Geo.default_formula
           case formula
           when :sphere          
             units_sphere_multiplier(units) * 
@@ -94,17 +94,20 @@ module Geo
       end
 
       # Returns the multiplier used to obtain the correct distance units.
-      def units_sphere_multiplier(units)
+      def units_sphere_multiplier(units=nil)
+        units ||= Geo.default_units
         units == :miles ? Geo::EARTH_RADIUS_IN_MILES : Geo::EARTH_RADIUS_IN_KMS
       end
 
       # Returns the number of units per latitude degree.
-      def units_per_latitude_degree(units)
+      def units_per_latitude_degree(units=nil)
+        units ||= Geo.default_units
         units == :miles ? Geo::MILES_PER_LATITUDE_DEGREE : Geo::KMS_PER_LATITUDE_DEGREE
       end
 
       # Returns the number units per longitude degree.
-      def units_per_longitude_degree(lat, units)
+      def units_per_longitude_degree(lat, units=nil)
+        units ||= Geo.default_units
         miles_per_longitude_degree = (Geo::LATITUDE_DEGREES * Math.cos(lat * Geo::PI_DIV_RAD)).abs
         units == :miles ? miles_per_longitude_degree : miles_per_longitude_degree * Geo::KMS_PER_MILE
       end  

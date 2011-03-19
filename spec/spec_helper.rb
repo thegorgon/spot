@@ -1,4 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
+require 'simplecov'
+SimpleCov.start 'rails'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
@@ -11,7 +13,9 @@ Dir[File.expand_path(File.join(File.dirname(__FILE__),'factories','**','*.rb'))]
 
 RSpec.configure do |config|
   config.mock_with :rspec
-
+  config.include Spot::Spec
+  config.include Warden::Test::Helpers, :type => :controller
+  config.after(:each, :type => :controller) { Warden.test_reset! }
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

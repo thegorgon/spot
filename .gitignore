@@ -7,3 +7,4 @@ tmp/**/*
 *.rdb
 db/sphinx*
 config/*.sphinx.conf
+coverage

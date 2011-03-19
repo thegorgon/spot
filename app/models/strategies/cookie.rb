@@ -12,11 +12,11 @@ class Strategies::Cookie < Warden::Strategies::Base
   end
 
   def valid?
-    request.cookies[self.class.cookie_key]
+    request.cookie_jar.signed[self.class.cookie_key]
   end
 
   def authenticate!
-    persistence_token, record_id = request.cookies[self.class.cookie_key].split("::")
+    persistence_token, record_id = request.cookie_jar.signed[self.class.cookie_key].split("::")
     user = User.find_by_id(record_id)
     user && user.persistence_token == persistence_token ? success!(user) : fail!("Invalid cookie")
   end

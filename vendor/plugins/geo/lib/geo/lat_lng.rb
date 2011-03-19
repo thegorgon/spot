@@ -19,6 +19,19 @@ module Geo
       @lng = lng
     end
     
+    def self.random(options={})
+      if options[:within] && options[:of]
+        maxradians = options[:within]/units_sphere_multiplier(options[:units])
+        minradians = options[:outside] ? options[:outside]/units_sphere_multiplier(options[:units]) : 0
+        raddist = rand * Math.acos(rand*(Math.cos(maxradians - minradians) - 1) + 1) + minradians
+        heading = rand * 2 * Math::PI
+        origin = Geo::LatLng.normalize!(options[:of])
+        endpoint(origin, rad2deg(heading), raddist * units_sphere_multiplier(options[:units]), options.slice(:units))
+      else
+        raise NotImplementedException
+      end
+    end
+    
     # A *class* method to take anything which can be inferred as a point and generate
     # a LatLng from it. You should use this anything you're not sure what the input is,
     # and want to deal with it as a LatLng if at all possible. Can take:

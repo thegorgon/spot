@@ -16,6 +16,8 @@ class WishlistItem < ActiveRecord::Base
   
   cattr_accessor :per_page
   @@per_page = 20
+  
+  scope :active, where(:deleted_at => nil).includes(:item)
     
   def self.activity(params={})
     params = params.symbolize_keys
@@ -39,17 +41,23 @@ class WishlistItem < ActiveRecord::Base
     global_account = TWITTER_SETTINGS['accounts']['wishlistitems']
     Twitter.oauth_token = global_account['oauth_token']
     Twitter.oauth_token_secret = global_account['oauth_token_secret']
-    tweet = "Hot on Spot: #{item.name} was just wishlisted"
-    tweet << " in" if item.city || item.region
-    tweet << " ##{item.city.gsub(' ', '').downcase}" if item.city
-    tweet << " ##{item.region_abbr.gsub(' ', '').downcase}" if item.region
-    tweet << " via @SpotTeam"
     begin
-      Twitter.update tweet if tweet.length <= 140
+      Twitter.update tweet if tweet
       true
     rescue Twitter::Forbidden => e
       false
     end
+  end
+  
+  def tweet(options={})
+    if @tweet.blank? || options[:reload]
+      @tweet = "Hot on Spot: #{item.name} was just wishlisted"
+      @tweet << " in" if item.city || item.region
+      @tweet << " ##{item.city.gsub(' ', '').downcase}" if item.city
+      @tweet << " ##{item.region_abbr.gsub(' ', '').downcase}" if item.region
+      @tweet << " via @SpotTeam"
+    end
+    @tweet.length <= 140 ? @tweet : nil
   end
   
   def propagate!
@@ -68,10 +76,16 @@ class WishlistItem < ActiveRecord::Base
     }
   end
   
+  def deleted?
+    deleted_at.present?
+  end
+  
   def destroy
-    touch :deleted_at
-    item_type.constantize.decrement_counter(:wishlist_count, item_id)
-    generate_activity! :action => "DELETE", :public => false
+    unless deleted?
+      touch :deleted_at
+      item_type.constantize.decrement_counter(:wishlist_count, item_id)
+      generate_activity! :action => "DELETE", :public => false
+    end
   end
   
   private

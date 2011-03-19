@@ -33,6 +33,8 @@ end
 group :development, :test do
   gem 'ruby-debug19'
   gem 'mongrel', '1.2.0.pre2'
+  gem 'resque_spec'
   gem "rspec-rails", "~> 2.4"
   gem 'factory_girl_rails'
+  gem 'simplecov'
 end

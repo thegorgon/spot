@@ -1,6 +1,6 @@
 class UserSession #<  Authlogic::Session::Base  
  #  IPHONE_SECRET = "6d61b823758987744f121d4e9686a25d21909dd0c940c4df4cfe2ea37675ec6537b7f15cc0fafa928d6ac08564b332199692d8275c9f262acbb12c1bf9109103"
- #  API_NONCE_KEY = :api_nonce
+ #  SESSION_KEY = :api_nonce
  #  attr_writer :require_credential_key
  #  attr_reader :authentication_method, :device
  #  validate :validate_by_device, :if => :device?
@@ -8,13 +8,13 @@ class UserSession #<  Authlogic::Session::Base
  #  after_validation :clear_nonce
  #  
  #  def self.digest_nonce(nonce=nil)
- #    nonce ||= controller.session[API_NONCE_KEY]
+ #    nonce ||= controller.session[SESSION_KEY]
  #    Digest::SHA2.hexdigest([IPHONE_SECRET, nonce].join("--"))
  #  end
  #  
  #  def self.generate_nonce
- #    controller.session[API_NONCE_KEY] = Authlogic::Random.friendly_token
- #    controller.session[API_NONCE_KEY]
+ #    controller.session[SESSION_KEY] = Authlogic::Random.friendly_token
+ #    controller.session[SESSION_KEY]
  #  end
  #  
  #  def credentials=(value)
@@ -81,6 +81,6 @@ class UserSession #<  Authlogic::Session::Base
  #  end
  #  
  #  def clear_nonce
- #    controller.session[API_NONCE_KEY] = nil
+ #    controller.session[SESSION_KEY] = nil
  #  end
 end

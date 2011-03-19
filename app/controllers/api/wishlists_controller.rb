@@ -5,7 +5,7 @@ class Api::WishlistsController < Api::BaseController
   end
   
   def show
-    @wishlist = current_user.wishlist_items.all(:include => :item)
+    @wishlist = current_user.wishlist_items.active
     render :json => @wishlist
   end
 end

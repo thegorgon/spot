@@ -12,9 +12,9 @@ end
 
 Warden::Manager.after_set_user do |user, warden, options|
   domain = warden.request.session_options[:domain]
-  warden.request.cookie_jar[Strategies::Cookie.cookie_key] = Strategies::Cookie.cookie_value(user, :domain => domain)
+  warden.request.cookie_jar.signed[Strategies::Cookie.cookie_key] = Strategies::Cookie.cookie_value(user, :domain => domain)
 end
 
 Warden::Manager.before_logout do |user, warden, options|
-  warden.request.cookie_jar[Strategies::Cookie.cookie_key] = nil
+  warden.request.cookie_jar.signed[Strategies::Cookie.cookie_key] = nil
 end

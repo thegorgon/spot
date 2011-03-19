@@ -5,7 +5,7 @@ class Api::WishlistItemsController < Api::BaseController
     begin
       @item.save!
     rescue ActiveRecord::RecordNotUnique => e
-      @item = current_user.wishlist_items.where(params[:item].slice(:item_type, :item_id))
+      @item = current_user.wishlist_items.where(params[:item].slice(:item_type, :item_id)).first
       status = 409
     end
     render :json => @item, :status => status
@@ -14,7 +14,6 @@ class Api::WishlistItemsController < Api::BaseController
   def destroy
     @item = current_user.wishlist_items.find(params[:id])
     @item.destroy
-    @wishlist = current_user.wishlist_items.all(:include => :item)
     head :ok
   end
 end
