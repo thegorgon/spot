@@ -2,7 +2,7 @@ class Admin::BaseController < ApplicationController
   layout 'admin'
   USERS = {"pp" => "pilates!"}
 
-  before_filter :digest_authenticate
+  before_filter :authenticate
   
   def default_render(*args)
     respond_to do |format|
@@ -24,9 +24,10 @@ class Admin::BaseController < ApplicationController
     end
   end
   
-  def digest_authenticate
+  def authenticate
     authenticate_or_request_with_http_basic do |username, password|
       username == "pp" && password == USERS["pp"]
     end
+    warden.custom_failure! if performed?
   end  
 end
