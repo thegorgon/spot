@@ -9,7 +9,6 @@ class ActivityItem < ActiveRecord::Base
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
   validates :action, :inclusion => ACTIONS, :presence => true
 
-  scope :public, where("public = 1")
   scope :since, lambda { |date| where(["created_at > ?", date]) }
 
   acts_as_mappable
