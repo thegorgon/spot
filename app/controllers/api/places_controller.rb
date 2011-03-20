@@ -3,7 +3,8 @@ class Api::PlacesController < Api::BaseController
   
   def index
     ids = params[:ids].split(',')
-    @places = Place.where(:id => ids).all
+    @places = Place.where(:id => ids).all.hash_by { |p| p.id.to_s }
+    @places = ids.collect { |id| @places[id.to_s] }
     render :json => @places
   end
   

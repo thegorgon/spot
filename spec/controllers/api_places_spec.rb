@@ -5,11 +5,31 @@ describe Api::PlacesController do
 
   describe "#index" do
     before { @places = (1..10).collect { |p| Factory.create(:place) } }
-    it "accepts a comma separated list of place ids and responds with them" do
+   
+    it "accepts a comma separated list of place ids and responds with the places" do
       get :index, :ids => @places.map(&:id).join(',')
       json = response.body
       array = JSON.parse(json)
       array.should have(@places.length).items
+      array.collect { |a| a["_type"] }.uniq.should == ["Place"]
+    end
+    
+    it "responds with nil for place ids that don't exist" do
+      get :index, :ids => [-1].join(',')
+      json = response.body
+      array = JSON.parse(json)
+      array.should == [nil]
+    end
+    
+    it "responds with places in the order of the ids provided" do
+      ids = @places.map(&:id)
+      get :index, :ids => ids.join(',')
+      json = response.body
+      array = JSON.parse(json)
+      ids.each_with_index do |id, i|
+        array[i].should_not be_nil
+        array[i]["id"].should == id
+      end
     end
   end
   
@@ -20,6 +40,7 @@ describe Api::PlacesController do
       @place = Factory.create(:place)
       Place.should_receive(:search).any_number_of_times.and_return([@place])
     end
+    
     it "passes the params onto a PlaceSearch" do
       PlaceSearch.should_receive(:from_params!).with(hash_including(@params)).and_return(@search)
       get :search, @params
