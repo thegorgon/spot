@@ -91,8 +91,9 @@ describe ActivityItem do
     end
 
     it "returns results sorted by creation date desc" do
-      feed = ActivityItem.feed(:origin => @origin) 
-      feed.first.created_at.should > feed.last.created_at
+      feed = ActivityItem.feed(:origin => @origin)
+      sorted = feed.sort { |i1, i2| i2.created_at <=> i1.created_at }
+      feed.map(&:created_at).should == sorted.map(&:created_at)
     end
   end
   

@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
-  before_validation :reset_persistence_token, :on => :create
+  before_validation :reset_persistence_token, :if => :reset_persistence_token?
+  before_validation :reset_single_access_token, :if => :reset_single_access_token?
+  before_save :reset_perishable_token
   has_many :devices, :dependent => :destroy
   has_many :wishlist_items, :dependent => :destroy
-  validates_uniqueness_of :perishable_token, :if => :perishable_token_changed?
   
   def merge_with!(new_user)
     new_items = new_user.wishlist_items.hash_by { |item| "#{item.item_type} #{item.item_id}" }
@@ -47,5 +48,8 @@ class User < ActiveRecord::Base
   def reset_single_access_token?
     single_access_token.blank?
   end
-
+  
+  def reset_persistence_token?
+    persistence_token.blank?
+  end
 end

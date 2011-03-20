@@ -147,7 +147,11 @@ describe PlaceSearch do
   end
   
   describe "#results" do
-    before { @search = Factory.build(:place_search) }
+    before do
+      @search = Factory.build(:place_search)
+      @place = Factory.create(:place)
+      Place.should_receive(:search).any_number_of_times.and_return([@place])
+    end
     
     it "autoloads results" do
       @search.should_receive(:load)
@@ -157,6 +161,10 @@ describe PlaceSearch do
     it "returns an array of Result objects" do
       @search.results.should be_kind_of(Array)
       @search.results.each { |result| result.should be_kind_of(PlaceSearch::Result) }
+    end
+    
+    it "contains place search results" do
+      @search.results.map(&:place_id).should include @place.id
     end
   end
   
@@ -184,7 +192,7 @@ describe PlaceSearch do
     end
 
     it "sets it's relevane to the relevance between the place and the query" do
-      @result.relevance.should == @place.relevance_against(@query, @position)
+      @result.relevance.should == @place.relevance_against(@query)
     end
   end
 end

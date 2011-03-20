@@ -16,7 +16,7 @@ class PlaceSearch < ActiveRecord::Base
       @position = params[:position]
       @query = params[:query]
       @distance = @place.distance_to(@position) if @position
-      @relevance = @place.relevance_against(@query, @position)
+      @relevance = @place.relevance_against(@query)
       @source = params[:source]
     end
     
@@ -79,7 +79,7 @@ class PlaceSearch < ActiveRecord::Base
   private
   
   def load
-    if !@loaded && @query.present?
+    if !@loaded && query.present?
       @benchmarks = {}
       @benchmarks[:total] = Benchmark.measure do 
         @results = {}
@@ -103,7 +103,7 @@ class PlaceSearch < ActiveRecord::Base
       options.merge!(:match_mode => :any)
       local = Place.search(@cleanq, options)
     end
-    local.each_with_match do |lp, match|
+    local.each do |lp|
       @results[lp.canonical_id] ||= Result.new(:place => lp, :position => @position, :query => @cleanq, :source => "local")
     end
     Rails.logger.info "place-search : Querying #{@cleanq}, found #{local.length} local places, #{@results.length} total (#{(benchmarks[:local].real * 1000).round}ms)"

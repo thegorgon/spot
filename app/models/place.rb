@@ -39,7 +39,7 @@ class Place < ActiveRecord::Base
   scope :canonical, where("canonical_id = id")
   scope :with_canonical, joins("INNER JOIN places canonical ON canonical.id = places.canonical_id").select("canonical.*")
   
-  def self.filter(params)
+  def self.filter(params={})
     finder = self
     if params[:query]
       finder = finder.search(params[:query], :star => true, :match_mode => :any, :page => params[:page], :per_page => params[:per_page])
@@ -77,7 +77,7 @@ class Place < ActiveRecord::Base
     canonical? && !new_record?? self.class.where("canonical_id = #{id} AND id <> #{id}").all : []
   end
   
-  def relevance_against(query, position)
+  def relevance_against(query)
     query = query.split(' ').sort.join(' ')
     relevance_document = Geo::Cleaner.clean(:name => name + ' ' + city).split(' ').sort.join(' ')
     matcher = (Thread.current[:relevance_matchers] ||= {})[query] ||= Amatch::LongestSubsequence.new(query)
@@ -125,14 +125,7 @@ class Place < ActiveRecord::Base
     inverted = Geo::STATES.invert
     inverted[region.downcase] || region
   end
-  
-  def source_place
-    if source
-      src = source.gsub("Place", "")
-      external_place(src)
-    end
-  end
-  
+    
   def external_place(source)
     source = ExternalPlace.lookup(source) unless source.kind_of?(Class)
     (@external_places ||= {})[source.to_sym] ||= source.where(:place_id => id).order("id ASC").first
@@ -177,6 +170,7 @@ class Place < ActiveRecord::Base
     self.clean_name = Geo::Cleaner.clean(:name => full_name)
     self.clean_address = Geo::Cleaner.clean(:address => address)
     self.canonical_id = id if id.to_i > 0 && canonical_id.to_i <= 0
+    self.canonical_id = 0 if canonical_id.nil?
   end
   
   def update_canonical_id

@@ -11,7 +11,7 @@ module ExternalPlace
     if symbol.kind_of?(Class)
       symbol
     else
-      "#{symbol.to_s.classify}Place".constantize
+      "ExternalPlace::#{symbol.to_s.classify}Place".constantize
     end
   end
   

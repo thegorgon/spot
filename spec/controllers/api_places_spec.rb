@@ -17,6 +17,8 @@ describe Api::PlacesController do
     before :each do
       @params = {"query" => "Altena", "position" => Geo::Position.new(:lat => 30, :lng => -30), "ignore" => "thisparam"}
       @search = PlaceSearch.from_params!(@params)
+      @place = Factory.create(:place)
+      Place.should_receive(:search).any_number_of_times.and_return([@place])
     end
     it "passes the params onto a PlaceSearch" do
       PlaceSearch.should_receive(:from_params!).with(hash_including(@params)).and_return(@search)
@@ -27,6 +29,14 @@ describe Api::PlacesController do
       PlaceSearch.should_receive(:from_params!).and_return(@search)
       get :search, @params
       response.headers["X-Search-ID"].should == @search.id.to_s
+    end
+    
+    it "responds with an array of place json" do
+      get :search, @params
+      json = response.body
+      array = JSON.parse(json)
+      array.should have(1).items
+      array.first["id"].should == @place.id
     end
   end
 end

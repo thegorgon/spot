@@ -207,6 +207,11 @@ describe WishlistItem do
       @wi.create_tweets!
     end
     
+    it "handles a twitter forbidden error" do
+      Twitter.should_receive(:update).and_raise(Twitter::Forbidden)
+      expect { @wi.create_tweets! }.to_not raise_error
+    end
+    
     it "caches the tweet string unless a reload parameter is passed in" do
       original = @wi.tweet
       @wi.item.name = "A different name"
