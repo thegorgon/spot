@@ -57,6 +57,7 @@ describe ActivityItem do
     
   describe "#feed" do
     before(:all) do
+      ActivityItem.delete_all
       @origin = Geo::LatLng.new(33, -120)
       # Generate 10 items per 10 mile wide concentric ring outside the first ring and within 5 rings
       # This allows easy testing of the radial filtering

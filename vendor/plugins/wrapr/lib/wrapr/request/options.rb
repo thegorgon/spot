@@ -66,7 +66,7 @@ module Wrapr
           end
           path_param_key = self.class.instance_variable_get("@_path_param_key")
           path_param_value = self.class.instance_variable_get("@_path_param_value")
-          path_param_value = path_param_value.call(@path) if path_param_value.kind_of?(Proc)
+          path_param_value = path_param_value.call(self) if path_param_value.kind_of?(Proc)
           if path_param_key.present?
             @path = ''
             params[path_param_key] ||= path_param_value

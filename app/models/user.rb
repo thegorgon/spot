@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
     WishlistItem.where(:id => intersecting_keys.collect { |key| new_items[key].id }).delete_all if intersecting_keys.length > 0
     Device.where(:user_id => new_user.id).update_all(:user_id => id)
     PasswordAccount.where(:user_id => new_user.id).update_all(:user_id => id)
+    FacebookAccount.where(:user_id => new_user.id).update_all(:user_id => id)
     new_user.destroy
     self
   end

@@ -96,6 +96,13 @@ describe User do
       @account.reload
       @account.user.should == @user
     end
+
+    it "moves facebook accounts from the new user to the old user" do
+      @account = Factory.create(:facebook_account, :user => @new_user)
+      @user.merge_with!(@new_user)
+      @account.reload
+      @account.user.should == @user
+    end
   end
   
 end

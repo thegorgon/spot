@@ -62,6 +62,19 @@ describe Strategies::Facebook do
       strategy.result.should == :success
     end
 
+    it "binds the device to the user if given device parameters" do
+      stub_nonce!(@nonce, true)
+      Wrapr::FbGraph::User.should_receive(:find).and_return(@mock_user)      
+      @device = Factory.create(:device)
+      @params[:credentials][:device] = {:id => @device.udid, :os_id => @device.os_id, :app_version => @device.app_version}
+      env = rack_env("/", @params, @session)
+      strategy = Strategies::Facebook.new(env)
+      strategy.authenticate!
+      @device.reload
+      @account.reload
+      @device.user_id.should == @account.user_id
+    end
+
     it "fails if the params do not include valid facebook params" do
       stub_nonce!(@nonce, true)
       @params[:credentials][:facebook] = nil

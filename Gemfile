@@ -33,8 +33,13 @@ end
 group :development, :test do
   gem 'ruby-debug19'
   gem 'mongrel', '1.2.0.pre2'
+end
+
+group :test do
   gem 'resque_spec'
   gem "rspec-rails", "~> 2.4"
   gem 'factory_girl_rails'
   gem 'simplecov'
+  gem 'autotest'
+  gem 'autotest-fsevent'
 end

@@ -181,6 +181,7 @@ class Place < ActiveRecord::Base
   def enqueue_image_processing
     if @external_image_url.present?
       self.image_processing = true
+      Rails.logger.debug("resque : enqueueing image processing job")
       Resque.enqueue(Jobs::PlaceImageProcessor, self.class.name, id, :image, @external_image_url)    
     end
   end

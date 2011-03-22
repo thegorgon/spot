@@ -26,6 +26,7 @@ class Device < ActiveRecord::Base
   end
 
   def bind_to!(new_user)
+    old_user_id = user_id
     if user && new_user && user != new_user
       self.user = user.merge_with!(new_user)
     elsif user.nil?

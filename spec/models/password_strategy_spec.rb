@@ -61,6 +61,7 @@ describe Strategies::Password do
       env = rack_env("/", @params, @session)
       strategy = Strategies::Password.new(env)
       strategy.authenticate!
+      strategy.result.should == :success
       @device.reload
       @account.reload
       @device.user_id.should == @account.user_id
