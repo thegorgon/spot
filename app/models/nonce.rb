@@ -19,6 +19,13 @@ class Nonce
     digest
   end
   
+  def self.valid?(params, session)
+    nonce = Nonce.new(:session => session)
+    result = params && params[:credentials] && params[:credentials][:key] == nonce.digested
+    nonce.clear
+    !!result
+  end
+  
   def initialize(params={})
     @session = params[:session]
     @token = params[:token]

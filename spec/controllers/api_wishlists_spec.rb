@@ -26,5 +26,15 @@ describe Api::WishlistsController do
       json = response.body
       json.should == @user.wishlist_items.active.to_json
     end
+    
+    it "does not include deleted wishlist items" do
+      @user.wishlist_items.map(&:destroy)
+      @user.wishlist_items.active.should be_empty
+      login @user
+      get :show
+      json = response.body
+      array = JSON.parse(response.body)
+      array.should be_empty
+    end
   end
 end

@@ -5,7 +5,9 @@ module Wrapr
 
       param :client_id, lambda { FbGraph.config.client_id }
       param :client_secret, lambda { FbGraph.config.client_secret }
-      param :access_token, lambda { FbGraph.config.oauth_token }
+      param :access_token, lambda { |req| 
+        req.input_params[:access_token] || req.options[:access_token] || FbGraph.config.oauth_token
+      }
     end
   end
 end

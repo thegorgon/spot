@@ -7,7 +7,7 @@ module Wrapr
       param :format, 'json'
       param :api_key, lambda { Flickr.config.api_key }
 
-      path_param :method, lambda { |path| "flickr.#{path.gsub(/^flickr\./, '')}" }
+      path_param :method, lambda { |req| "flickr.#{req.path.gsub(/^flickr\./, '')}" }
     end
   end
 end

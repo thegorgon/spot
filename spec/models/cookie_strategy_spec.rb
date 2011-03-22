@@ -5,7 +5,7 @@ describe Strategies::Cookie do
   
   before :each do 
     @user = Factory.create(:user)
-    @env = env_with_params("/", {})
+    @env = rack_env("/", {})
     @env["action_dispatch.secret_token"] = SECRET_TOKEN
     @verifier = ActiveSupport::MessageVerifier.new(SECRET_TOKEN)
     @cookie_value = Strategies::Cookie.cookie_value(@user)[:value]

@@ -83,4 +83,38 @@ describe Nonce do
       @nonce.digested.should == Nonce.digest(@nonce.token)
     end
   end
+  
+  describe "#valid?" do
+    before :each do 
+      @nonce = Nonce.new
+      @params = {:credentials => {:key => @nonce.digested}}
+      @session = {Nonce::SESSION_KEY => @nonce.token}
+    end
+    
+    it "returns true if the nonce in the params is equal to the digested token in session" do
+      Nonce.valid?(@params, @session).should be_true
+    end
+    
+    it "returns false if the nonce in the params is not equal to the digested token in session" do
+      @params[:credentials][:key] = "invalidtoken"
+      Nonce.valid?(@params, @session).should be_false
+    end
+
+    it "returns false if there is no nonce in the params" do
+      @params[:credentials][:key] = nil
+      Nonce.valid?(@params, @session).should be_false
+      @params[:credentials] = nil
+      Nonce.valid?(@params, @session).should be_false
+    end
+
+    it "returns false if there is no nonce in session" do
+      @session[Nonce::SESSION_KEY] = nil
+      Nonce.valid?(@params, @session).should be_false
+    end
+
+    it "clears the nonce from session" do
+      Nonce.valid?(@params, @session)
+      @session[Nonce::SESSION_KEY].should be_nil
+    end
+  end
 end

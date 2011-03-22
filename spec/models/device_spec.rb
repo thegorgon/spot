@@ -4,6 +4,11 @@ describe Device do
   before :each do 
     @device = Factory.build(:device)
   end
+  
+  it "belongs to a user" do
+    Device.reflect_on_association(:user).macro.should == :belongs_to
+    Device.reflect_on_association(:user).class_name.should == User.to_s
+  end
 
   it "must have a universal device identifier" do
     @device.udid = nil

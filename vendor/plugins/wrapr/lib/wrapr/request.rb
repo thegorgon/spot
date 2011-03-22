@@ -4,8 +4,10 @@ module Wrapr
     include Oauth
     include Cacheing
     include RequestMethods
+    attr_reader :options, :input_params, :path
     
     def initialize(options={})
+      @options = options
       @cache = options[:cache]
       @cache_expiry = options[:cache_expiry] || 1.day
     end
@@ -14,6 +16,7 @@ module Wrapr
       @path = path
       @method = method.to_sym
       @headers = populate_headers(headers)
+      @input_params = params 
       @params = populate_params(params)
       @curb = init_curb
       before_send

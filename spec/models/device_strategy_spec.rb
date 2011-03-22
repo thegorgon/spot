@@ -1,10 +1,10 @@
 describe Strategies::Device do
   before :each do 
-    @device = Factory.create(:device)
+    @nonce = Nonce.new
     @session = {}
-    @nonce = Nonce.new(:session => @session)
+    @device = Factory.create(:device)
     @params = { :credentials => { :device => { :id => @device.udid, :os_id => @device.os_id, :platform => @device.platform }, :key => @nonce.digested } }
-    @env = env_with_params("/", @params)
+    @env = rack_env("/", @params, @session)
   end
   
   it "should setup the spec correctly" do
@@ -12,58 +12,65 @@ describe Strategies::Device do
     req.params["credentials"]["device"]["id"].should == @device.udid
     req.params["credentials"]["device"]["os_id"].should == @device.os_id
     req.params["credentials"]["device"]["platform"].should == @device.platform
+    req.params["credentials"]["key"].should == @nonce.digested
   end
   
   describe "#valid" do
-    it "returns true if the params include the device id and a credential key" do
-      @env["rack.session"] = @session
+    before { stub_nonce!(@nonce, true) }
+    it "returns true if the params include the device params" do
       Strategies::Device.new(@env).should be_valid
     end
 
-    it "returns false if the params do not include the device id and a credential key" do
-      env = env_with_params("/", {})
+    it "returns true if the params include the device id" do
+      @params[:credentials][:device][:os_id] = nil
+      @params[:credentials][:device][:platform] = nil
+      env = rack_env("/", @params, @session)
+      Strategies::Device.new(env).should be_valid
+    end
+
+    it "returns false if the params do not include a device id" do
+      @params[:credentials][:device][:id] = nil
+      env = rack_env("/", @params, @session)
       Strategies::Device.new(env).should_not be_valid
-      env = env_with_params("/", {:credentials => { :device => nil }, :key => @nonce.token})
-      Strategies::Device.new(env).should_not be_valid
-      env = env_with_params("/", {:credentials => nil, :key => @nonce.token})
-      Strategies::Device.new(env).should_not be_valid
-      env = env_with_params("/", {:credentials => { :device => {} }, :key => @nonce.token})
-      Strategies::Device.new(env).should_not be_valid
-    end    
+    end
+
+    it "returns false if the params are improperly formatted" do
+      @params[:credentials][:device] = {}
+      env = rack_env("/", @params, @session)
+      Strategies::Password.new(env).should_not be_valid
+      @params[:credentials][:device] = nil
+      env = rack_env("/", @params, @session)
+      Strategies::Password.new(env).should_not be_valid
+      @params[:credentials] = nil
+      env = rack_env("/", @params, @session)
+      Strategies::Password.new(env).should_not be_valid
+    end
   end
   
   describe "#authenticate" do
-    it "succeeds if the params include a valid nonce token and valid device params" do
-      env = env_with_params("/", @params)
-      env["rack.session"] = @session
+    it "succeeds if the params include a valid nonce and valid device params" do
+      stub_nonce!(@nonce, true)
+      env = rack_env("/", @params, @session)
       strategy = Strategies::Device.new(env)
       strategy.authenticate!
       strategy.result.should == :success
     end
 
     it "fails if the params do not include valid device params" do
-      env = env_with_params("/", { :credentials => @params[:credentials].except(:device) })
-      env["rack.session"] = @session
+      stub_nonce!(@nonce, true)
+      @params[:credentials][:device] = nil
+      env = rack_env("/", @params, @session)
       strategy = Strategies::Device.new(env)
       strategy.authenticate!
       strategy.result.should == :failure
     end
     
-    it "fails if the params do not include a valid nonce token" do
-      env = env_with_params("/", { :credentials => @params[:credentials].except(:key) })
-      env["rack.session"] = @session
+    it "fails without a valid nonce token" do
+      stub_nonce!(@nonce, false)
+      env = rack_env("/", @params, @session)
       strategy = Strategies::Device.new(env)
       strategy.authenticate!
       strategy.result.should == :failure
-    end
-
-    it "fails if the session does not include the nonce" do
-      env = env_with_params("/", @params)
-      env["rack.session"] = {}
-      strategy = Strategies::Device.new(env)
-      strategy.authenticate!
-      strategy.result.should == :failure
-    end
-    
+    end    
   end
 end

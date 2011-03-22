@@ -32,6 +32,7 @@
           -[:error, :notice].each do |key|
             -if flash[key].present?
               %div{:class => key}= flash[key]
+  #fb-root
   =google_maps_api_include
   =include_javascripts :vendor
   =include_javascripts :admin

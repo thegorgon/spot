@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110314224313) do
+ActiveRecord::Schema.define(:version => 20110320084739) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -57,6 +57,22 @@ ActiveRecord::Schema.define(:version => 20110314224313) do
   end
 
   add_index "duplicate_places", ["place_1_id", "place_2_id"], :name => "index_duplicate_places_on_place_1_id_and_place_2_id", :unique => true
+
+  create_table "facebook_accounts", :force => true do |t|
+    t.integer  "facebook_id",  :limit => 8, :null => false
+    t.string   "access_token",              :null => false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "name"
+    t.string   "gender"
+    t.string   "email"
+    t.string   "locale"
+    t.integer  "user_id",                   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "facebook_accounts", ["facebook_id"], :name => "index_facebook_accounts_on_facebook_id", :unique => true
 
   create_table "facebook_places", :force => true do |t|
     t.string   "name"
@@ -144,6 +160,17 @@ ActiveRecord::Schema.define(:version => 20110314224313) do
   add_index "gowalla_places", ["lat", "lng"], :name => "index_gowalla_places_on_lat_and_lng"
   add_index "gowalla_places", ["place_id"], :name => "index_gowalla_places_on_place_id"
 
+  create_table "password_accounts", :force => true do |t|
+    t.string   "login",            :null => false
+    t.string   "crypted_password", :null => false
+    t.string   "password_salt",    :null => false
+    t.integer  "user_id",          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "password_accounts", ["login"], :name => "index_password_accounts_on_login", :unique => true
+
   create_table "place_searches", :force => true do |t|
     t.string   "query",                                     :null => false
     t.string   "position"
@@ -192,6 +219,8 @@ ActiveRecord::Schema.define(:version => 20110314224313) do
   add_index "preview_signups", ["email"], :name => "index_preview_signups_on_email", :unique => true
 
   create_table "users", :force => true do |t|
+    t.string   "full_name"
+    t.string   "email"
     t.datetime "current_login_at"
     t.integer  "login_count",         :default => 0, :null => false
     t.string   "persistence_token"
@@ -199,8 +228,6 @@ ActiveRecord::Schema.define(:version => 20110314224313) do
     t.string   "perishable_token"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "full_name"
-    t.string   "email"
   end
 
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"

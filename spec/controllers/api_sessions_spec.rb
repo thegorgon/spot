@@ -42,7 +42,7 @@ describe Api::SessionsController do
       response.status.should == 401
     end
 
-    it "responds with a user with valid credentials and a valid token" do
+    it "responds with a user when presented with valid credentials and a valid token" do
       session[Nonce::SESSION_KEY] = @token
       post :create, {:credentials => {:key => Nonce.digest(@token), :device => {:id => @device.udid, :os_id => @device.os_id, :platform => @device.platform}}}
       response.should be_success

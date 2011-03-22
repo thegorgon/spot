@@ -167,6 +167,7 @@ describe Place do
     it "responds with wishlisted places if the filters first bit is 1" do
       @wishlisted = Factory.create(:place)
       # Incrementing happens offline, so gotta do it with resque
+      Twitter.should_receive(:update).and_return(true)
       with_resque { wi = Factory.create(:wishlist_item, :item => @wishlisted) }
       @unwishlisted = Factory.create(:place)
       Place.filter(:filter => 1).should include @wishlisted
@@ -270,6 +271,7 @@ describe Place do
   describe "#images" do
     it "resets the image if an external url is set" do
       @place = Factory.build(:place, :image_file_name => "/path/to/file.png")
+      @place.attachment_for(:image).should_receive(:exists?).any_number_of_times.and_return(true)      
       @place.external_image_url = "something/new.png"
       @place.image_file_name.should be_nil
       @place = Factory.build(:place, :image_file_name => "/path/to/file.png")

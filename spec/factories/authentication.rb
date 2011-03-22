@@ -7,5 +7,37 @@ Factory.define :device do |d|
   d.token
 end
 
+Factory.define :password_account do |a|
+  a.login         { Factory.next(:email) }
+  a.password      "password"
+  a.association   :user
+end
+
+Factory.define :facebook_account do |a|
+  a.access_token  { Factory.next(:access_token) }
+  a.first_name    "Facebook"
+  a.last_name     "User"
+  a.gender        "male"
+  a.name          "Facebook User"
+  a.email         { Factory.next(:email) }
+  a.locale        "en_US"
+  a.facebook_id   { Factory.next(:facebook_id) }
+  a.association   :user
+end
+
+Factory.sequence :email do |n|
+  "email#{n}@email#{n}.com"
+end
+
+Factory.sequence :access_token do |n|
+  digest = Time.now.to_i.to_s
+  20.times { |i| digest = Digest::SHA512.hexdigest(digest) }
+  digest[0..20]
+end
+
+Factory.sequence :facebook_id do |n|
+  10000000000 + n
+end
+
 Factory.define :user do |u|
 end

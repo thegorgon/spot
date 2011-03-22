@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
     WishlistItem.where(:id => new_keys.collect { |key| new_items[key].id }).update_all(:user_id => id) if new_keys.length > 0
     # Delete duplicates
     WishlistItem.where(:id => intersecting_keys.collect { |key| new_items[key].id }).delete_all if intersecting_keys.length > 0
+    Device.where(:user_id => new_user.id).update_all(:user_id => id)
+    PasswordAccount.where(:user_id => new_user.id).update_all(:user_id => id)
     new_user.destroy
     self
   end

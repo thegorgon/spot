@@ -83,7 +83,19 @@ describe User do
       end
     end
     
+    it "moves devices from the new user to the old user" do
+      @device = Factory.create(:device, :user => @new_user)
+      @user.merge_with!(@new_user)
+      @device.reload
+      @device.user.should == @user
+    end
+    
+    it "moves password accounts from the new user to the old user" do
+      @account = Factory.create(:password_account, :user => @new_user)
+      @user.merge_with!(@new_user)
+      @account.reload
+      @account.user.should == @user
+    end
   end
   
-
 end

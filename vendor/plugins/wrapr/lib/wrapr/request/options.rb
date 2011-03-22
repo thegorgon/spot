@@ -57,7 +57,11 @@ module Wrapr
           class_params = self.class.instance_variable_get("@_params") || {}
           params = input ? input.clone : {}
           class_params.each do |key, value|
-            value = value.call if value.kind_of?(Proc)
+            if value.kind_of?(Proc) && value.parameters.length == 1
+              value = value.call(self)
+            elsif value.kind_of?(Proc)
+              value = value.call
+            end
             params[key] ||= value
           end
           path_param_key = self.class.instance_variable_get("@_path_param_key")

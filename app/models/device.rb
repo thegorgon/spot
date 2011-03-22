@@ -9,9 +9,18 @@ class Device < ActiveRecord::Base
   def self.authenticate(credentials)
     device_credentials = credentials[:device] if credentials
     if device_credentials && device_credentials[:id]
-      device = ::Device.find_or_initialize_by_udid(device_credentials[:id])
+      device = Device.find_or_initialize_by_udid(device_credentials[:id])
       device.attributes = device_credentials.except(:id)
       device.save
+    end
+    device
+  end
+  
+  def self.user_associate(user, credentials)
+    device_credentials = credentials[:device] if credentials
+    if device_credentials && device_credentials[:id]
+      device = Device.find_or_initialize_by_udid(device_credentials[:id])
+      device.bind_to!(user) if device
     end
     device
   end
