@@ -64,7 +64,7 @@ module ExternalPlace
     end
     
     def to_sym
-      to_s.gsub("Place", '').downcase.to_sym
+      to_s.gsub("ExternalPlace::", '').gsub("Place").downcase.to_sym
     end
   end
   
