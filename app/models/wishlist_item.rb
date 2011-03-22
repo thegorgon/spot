@@ -17,7 +17,7 @@ class WishlistItem < ActiveRecord::Base
   cattr_accessor :per_page
   @@per_page = 20
   
-  scope :active, where(:deleted_at => nil).includes(:item)
+  scope :active, where(:deleted_at => nil)
     
   def self.activity(params={})
     params = params.symbolize_keys
