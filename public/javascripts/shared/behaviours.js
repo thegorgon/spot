@@ -121,6 +121,9 @@
       $.extend(_vars, vars);
       $.logger.level(_vars.env == 'production' ? 'ERROR' : 'DEBUG');
       go.Navigator.init();
+      var loader = new Image();
+      loader.src = '/images/assets/loading/orange-3block-16x11.gif';      
+      loader.src = '/images/assets/loading/orange-chasing-arrows16x16.gif';      
       if (! /MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
         $('#ft').preloadAll();
         $('#bg').preloadBackground();        

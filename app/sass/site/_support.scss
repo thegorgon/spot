@@ -32,10 +32,12 @@
       @include border_radius(20px);
       background: #fff;
       #logos {
-        .preview, .download {
+        .preview {
           float: left;
+          height: 122px;
         }
         .download {
+          float: left;
           padding: 50px 0 0 15px;
           font-size: 1.2em;
         }
