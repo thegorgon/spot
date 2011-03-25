@@ -21,7 +21,7 @@
   -if Rails.env.production?
     = google_analytics_tag(:account_id => 'UA-21193799-1')
 %body{:id => page_namespace, :class => controller_name}
-  #bg.preload_bg
+  #bg
   #page
     #hd= yield :hd
     #bd= yield
@@ -46,8 +46,10 @@
             submit
     #fb-root
   :javascript
-    document.getElementById('ft').style.display = 'none';
-    document.getElementById('bg').style.display = 'none';
+    if (! /MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
+      document.getElementById('ft').style.display = 'none';
+      document.getElementById('bg').style.display = 'none';
+    }
   =include_javascripts :vendor
   =include_javascripts :site
   :javascript

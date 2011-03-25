@@ -121,7 +121,10 @@
       $.extend(_vars, vars);
       $.logger.level(_vars.env == 'production' ? 'ERROR' : 'DEBUG');
       go.Navigator.init();
-      $('#ft').preloadAll();
+      if (! /MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
+        $('#ft').preloadAll();
+        $('#bg').preloadBackground();        
+      }
     },
     getVar: function(name) {
       return _vars[name];
@@ -135,8 +138,10 @@
       $('#flash').hide().removeClass('hidden').slideDown(500, function() {
         setTimeout(function() { $('#flash').slideUp(500) }, 3000);
       })
-      $('.preload', '#bd').imagePreload();
-      $('.preload_bg', '#bd').preloadBackground();
+      if (! /MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
+        $('.preload', '#bd').imagePreload();
+        $('.preload_bg', '#bd').preloadBackground();
+      }
     }
   });
 }(Spot));
