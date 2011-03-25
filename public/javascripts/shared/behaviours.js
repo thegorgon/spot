@@ -121,6 +121,7 @@
       $.extend(_vars, vars);
       $.logger.level(_vars.env == 'production' ? 'ERROR' : 'DEBUG');
       go.Navigator.init();
+      $('#ft').preloadAll();
     },
     getVar: function(name) {
       return _vars[name];
@@ -134,8 +135,8 @@
       $('#flash').hide().removeClass('hidden').slideDown(500, function() {
         setTimeout(function() { $('#flash').slideUp(500) }, 3000);
       })
-      $('.preload').imagePreload();
-      $('.preload_bg').preloadBackground();
+      $('.preload', '#bd').imagePreload();
+      $('.preload_bg', '#bd').preloadBackground();
     }
   });
 }(Spot));
