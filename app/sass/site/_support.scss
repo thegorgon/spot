@@ -46,6 +46,9 @@
           height: 225px;
           float: left;
           margin: 10px 13px 0 0;
+          &.loading {
+            background: transparent url('/images/assets/loading/orange-3block-16x11.gif') no-repeat center center;            
+          }
           &.last {
             margin-right: 0;
           }
@@ -55,7 +58,9 @@
         margin: 1em 0;
         #phone {
           float: left;
-          display: none;
+          &.loading {
+            display: none;
+          }
           .content {
             position: relative;
             background: #333;

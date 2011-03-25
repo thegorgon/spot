@@ -55,6 +55,9 @@ body {
   height: 125px;
   z-index: 100;
   background: #333 url(/images/backgrounds/noisy_grey.jpg) repeat center center;
+  &.loading {
+    display: none;
+  }
   #logo {
     float: left;
     margin: 10px 0 0 30px;

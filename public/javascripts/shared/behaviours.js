@@ -48,8 +48,9 @@
       });
     },
     imagePreload: function() {
-      $(this).find('img').hide().each(function(i) {
+      $(this).addClass('loading').find('img').hide().each(function(i) {
         var img = new Image(), $this = $(this);
+        $this.hide().removeClass('loading');
         img.onload = function() { $this.fadeIn(1000); };
         img.src = this.src;
       });
@@ -68,10 +69,10 @@
         loaded = function() {
           loadCount = loadCount + 1;
           if (loadCount >= imgCount) {
-            parent.fadeIn(1000, cb);
+            parent.hide().removeClass('loading').fadeIn(1000, cb);
           }
         };
-      parent.hide().find('*').add(parent).each(function(i) {
+      parent.addClass('loading').find('*').add(parent).each(function(i) {
         var img, child = $(this), src = child[0].src || child.css('background-image').replace(/url\(([^\)]+)\)/i, '$1'),
           ext = src.toString().split(".").pop();
         ext = ext.replace(/([^\?]+)?.+/i, '$1');
