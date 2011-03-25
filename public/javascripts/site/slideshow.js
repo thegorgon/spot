@@ -22,6 +22,7 @@
   $.fn.slideshow = function(opts) {
     var element = $(this),
       slidereel = element.find('#slidereel'),
+      viewport = element.find('#viewport'),
       settings = {
         slides: [],
         start: -1
@@ -31,15 +32,13 @@
       slidenav = element.find('#slidenav'),
       navList = $('<ul class="clearfix"></ul>').appendTo(slidenav),
       resize = function() {
-        element.each(function() {
-          var width = $(this).width(),
-            height = $(this).height();
-          slidereel.width(options.slides.length * width).height(height).css({left: -1 * currentSlide * width});
-          $('.slide', slidereel).width(width).height(height).each(function(i) {
-            var thisSlide = $(this),
-              left = i * width;
-            thisSlide.css({left: left}).find('img').sizeToFit(thisSlide, options.slides[i]);
-          });
+        var width = viewport.width(),
+          height = viewport.height();
+        slidereel.width(options.slides.length * width).height(height).css({left: -1 * currentSlide * width});
+        $('.slide', slidereel).width(width).height(height).each(function(i) {
+          var thisSlide = $(this),
+            left = i * width;
+          thisSlide.css({left: left}).find('img').sizeToFit(thisSlide, options.slides[i]);
         });
       },
       buildSlide = function(img, i) {
