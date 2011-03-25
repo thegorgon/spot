@@ -65,7 +65,7 @@
         currentSlide = i;
         $('.slidenav').removeClass('selected');
         $('#slidenav_' + currentSlide).addClass('selected');        
-        slidereel.animate({left: -1 * currentSlide * element.width()});
+        slidereel.animate({left: -1 * currentSlide * viewport.width()});
       };
     $('.slide img', slidereel).unbind("contextmenu.cancel").bind("contextmenu.cancel", function() { return false; });
     $('.slide img', slidereel).unbind("mousedown.cancel").bind("mousedown.cancel", function() { return false; });
