@@ -33,6 +33,7 @@
       hash = hash || window.location.hash.toString();
       hash = hash.replace(/^[^#]*#?(.*)$/, '$1');                
       hash = hash.replace(/^\s+|\s+$/g, "");
+      hash = hash || window.location.pathname + window.location.search;
       return hash;
     },
     setLastHash = function(hash) {
@@ -59,7 +60,7 @@
     },
     onHashChange = function() {
       var lastHash = getLastHash(), e;
-      if (getHash() && getHash() != lastHash) {
+      if (getHash() != lastHash) {
         onStart();
         e = jQuery.Event("navigator");
         e.lastHash = lastHash;
@@ -79,10 +80,10 @@
   $.provide(go, "Navigator", {
     init: function() {
       var lastHash = setLastHash(), that = this;
-      if (lastHash && lastHash.length > 0) {
+      initialUrl = window.location.pathname + window.location.search;
+      if (lastHash && lastHash.length > 0 && lastHash != initialUrl) {
         this.get(lastHash);
       }
-      initialUrl = window.location.pathname;
       bindOnHashChange();
       $(window).bind('navigator', function(e) {
         var url = e.newHash;
