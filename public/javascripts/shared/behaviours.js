@@ -50,8 +50,7 @@
     imagePreload: function() {
       $(this).addClass('loading').find('img').hide().each(function(i) {
         var img = new Image(), $this = $(this);
-        $this.hide().removeClass('loading');
-        img.onload = function() { $this.fadeIn(1000); };
+        img.onload = function() { $this.hide().removeClass('loading').fadeIn(1000); };
         img.src = this.src;
       });
     },
