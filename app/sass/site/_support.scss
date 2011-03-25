@@ -55,6 +55,7 @@
         margin: 1em 0;
         #phone {
           float: left;
+          display: none;
           .content {
             position: relative;
             background: #333;
@@ -78,8 +79,7 @@
           }          
         }
         .description {
-          float: left;
-          width: 360px;
+          margin-left: 274px;
           padding: 200px 0;
           text-align: center;
           font-size: 1.5em;
