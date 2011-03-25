@@ -65,7 +65,7 @@
       jumpTo = function(i) {
         currentSlide = i;
         $('.slidenav').removeClass('selected');
-        $('#slidenav_' + currentSlide).addClass('selected');
+        $('.slidenav').eq(i).addClass('selected');
         slidereel.animate({left : -1 * currentSlide * viewport.width()}, 1500);
       };
     $('.slide img', slidereel).unbind("contextmenu.cancel").bind("contextmenu.cancel", function() { return false; });

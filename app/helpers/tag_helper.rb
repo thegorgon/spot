@@ -27,6 +27,11 @@ module TagHelper
     share.html_safe
   end
   
+  def link_to_image(url, options={})
+    options[:target] = "_new"
+    link_to image_tag(url, options.slice(:size, :width, :height)), image_path(url), options.slice(:class, :target, :id)
+  end
+  
   def open_graph_tags
     tags = []
     tags << meta_tag("og:title", "Spot App")

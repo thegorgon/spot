@@ -46,16 +46,19 @@
     },
     site_previews_index: function() {
       var slideshow = $("#slideshow").slideshow({
-        slides: [{ src : '/images/assets/slideshow/slide_01.jpg', gravity: '0x0' },
-                 { src : '/images/assets/slideshow/slide_02.jpg', gravity: '0.75x0.75' },
-                 { src : '/images/assets/slideshow/slide_03.jpg', gravity: '0.5x1.0' }],
-        start: new Date().getSeconds() % 3,
+        slides: [{ src : '/images/assets/slideshow/slide_00.jpg', gravity: '0x0' },
+                 { src : '/images/assets/slideshow/slide_01.jpg', gravity: '0.75x0.75' },
+                 { src : '/images/assets/slideshow/slide_02.jpg', gravity: '0.5x1.0' }],
+        start: 0,
         version: 1
       });
       $('#nextslide').click(function(e) {  
         e.preventDefault();      
         slideshow.nextSlide();
       });
+    },
+    site_support_press: function() {
+      go.AppPreview.init();
     },
     site_previews_share: function() {
       $('#joke img').bind('click', function(e) {

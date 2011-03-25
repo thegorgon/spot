@@ -9,14 +9,87 @@
     p {
       margin: 1em auto;
     }
+    .signature {
+      width: 300px;
+    }
     .divider {
       border-top : 1px solid #333;
       height: 0;
       border-bottom : 1px solid #222;
       margin: 1.5em 5em 0em;
     }
-    .signature {
-      width: 300px;
+  }
+  #press {
+    color: #666;
+    width: 700px;
+    margin: 0 auto;
+    padding: 0 0 175px 0;
+    #content {
+      padding: 25px 30px;
+      @include border_radius(20px);
+      background: #fff;
+      #logos {
+        .preview, .download {
+          float: left;
+        }
+        .download {
+          padding: 50px 0 0 15px;
+          font-size: 1.2em;
+        }
+      }
+      #screenshots {
+        .screenshot {
+          float: left;
+          margin: 10px 13px 0 0;
+          &.last {
+            margin-right: 0;
+          }
+        }
+      }
+      #preview {
+        margin: 1em 0;
+        #phone {
+          float: left;
+          .content {
+            position: relative;
+            background: #333;
+            overflow: hidden;
+          }
+          .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: none;
+            &.active {
+              z-index: 5;
+              display: block;
+            }
+            &.pending {
+              z-index: 1;
+              display: block;            
+            }
+          }          
+        }
+        .description {
+          float: left;
+          width: 360px;
+          padding: 200px 0;
+          text-align: center;
+          font-size: 1.5em;
+        }
+      }
+      p {
+        font-size: 1.2em;
+        margin: 1em 0;
+      }
+      .divider {
+        border-top : 1px solid #ddd;
+        height: 0;
+        border-bottom : 1px solid #ededed;
+        margin: 1.5em 0em;
+      }
     }
   }
 }

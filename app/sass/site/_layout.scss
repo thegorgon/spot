@@ -50,7 +50,7 @@ h2 {
   left: 0;
   right: 0;
   height: 125px;
-  z-index: 2;
+  z-index: 100;
   background: #333 url(/images/backgrounds/noisy_grey.jpg) repeat center center;
   #logo {
     float: left;
@@ -104,7 +104,7 @@ h2 {
     float: right;
     padding: 0;
     margin: 55px 40px 0 0;
-    width: 210px;
+    width: 252px;
     a {
       display: block;
       float: right;

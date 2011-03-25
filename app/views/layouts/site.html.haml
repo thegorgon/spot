@@ -29,9 +29,10 @@
       #logo.flips
         =image_tag 'logos/white_shadowed_spot_with_tagline_318x160.png', :width => '200'
       #nav.flips
-        =link_to "about", about_path, :class => "page first"
-        =link_to "blog", blog_index_path, :class => "page"
+        =link_to "press", press_path, :class => "page"      
         =link_to "twitter", "http://www.twitter.com/spotteam", :target => "_new"      
+        =link_to "blog", blog_index_path, :class => "page"
+        =link_to "about", about_path, :class => "page first"
         =link_to "home", root_path, :class => "page"      
         -if logged_in?
           =link_to "logout", sessions_path, 'data-method' => "delete"

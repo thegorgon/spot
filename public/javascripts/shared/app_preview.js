@@ -1,16 +1,17 @@
 (function(go) {
-  var dT = 7000,
+  var dT = 3000,
     animationT = 750,
     easing = "easeOutSine",
     step = 0,
-    active, next, nextStep, previewCount,
+    active, next, nextStep, screenCount,
     cleanup = function() {
-      $('.preview').removeClass('active');
-      next.addClass('active').removeClass('pending');
       active.removeAttr("style");
+      active = $('.screen').removeClass('active').eq(nextStep).addClass('active').removeClass('pending');
+      step = nextStep;
       start();
     },
     run = function() {
+      $.logger.debug("RUN FROM ", step, " TO ", nextStep);
       dT = 5000;
       if (nextStep === 0) {
         dT = 7000;
@@ -33,13 +34,9 @@
       }
     },
     start = function() {
-      active = $('.preview.active').first();
-      if (active && active.attr('id')) {
-        step = parseInt(active.attr('id').split('_').pop(), 10);
-        nextStep = (step + 1) % previewCount;
-        next = $('.preview#slide_' + nextStep).first();
-        setTimeout(run, dT);        
-      }
+      nextStep = (step + 1) % screenCount;
+      next = $('.screen').eq(nextStep);
+      setTimeout(run, dT);        
     },
     startClock = function() {
       setInterval(function() {
@@ -53,14 +50,9 @@
     };
   $.provide(go, "AppPreview", {
     init: function() {
-      $('.preview').each(function() {
-        var $this = $(this), cb, 
-          img = $this.find('img');
-        $.preload( [img.attr('src')], cb );
-      });
-      previewCount = $('.preview').length;
-      $('.preview').removeClass('active');
-      $('#slide_0').addClass('active'); 
+      screenCount = $('.screen').length;
+      step = 0;
+      active = $('.screen').removeClass('active').eq(0).addClass('active'); 
       start();
       startClock();
     }

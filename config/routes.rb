@@ -6,6 +6,7 @@ Spot::Application.routes.draw do
     resources :blog, :controller => "blog", :only => [:index]
     controller "support" do
       get "about", :action => "about"
+      get "press", :action => "press"
     end
     resource :sessions, :only => [:new, :create, :destroy]
   end

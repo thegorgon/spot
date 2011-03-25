@@ -1,0 +1,58 @@
+#press
+  #logo.flips
+    =image_tag "logos/gradient_script_340x270.png", :size => "170x135", :alt => "spot"
+  #content
+    %h1 Press
+    .divider
+    %h2 Spot is Coming To A City Near You
+    %p 
+      Spot is a simple, elegant iPhone application that lets you capture local recommendations 
+      the moment you hear them and quickly recall and sort them anytime you like. 
+    %p
+      Spot is being handcrafted with care by the PlacePop team in San Francisco, CA.
+    %p
+      Press contact:
+      =mail_to "Julia Graham <julia@spot-app.com>".html_safe, "Julia Graham", :encode => "hex"
+    .divider
+    %h2 Logos
+    #logos.clearfix
+      .preview
+        =image_tag "logos/gradient_script_340x270.png", :width => "150"
+      .download
+        =link_to "Download our logo pack", "http://spot-production.s3.amazonaws.com/downloads/logo_pack.zip"
+    .divider
+    %h2 Screenshots
+    #screenshots.clearfix
+      .screenshot.first=link_to_image "assets/screenshots/wishlist.png", :width => 150
+      .screenshot=link_to_image "assets/screenshots/search.png", :width => 150
+      .screenshot=link_to_image "assets/screenshots/place.png", :width => 150
+      .screenshot.last=link_to_image "assets/screenshots/activity.png", :width => 150
+    .divider
+    %h2 Spot in Action
+    #preview.clearfix
+      #phone.iphone.size274x535
+        .glare
+        .content
+          .status=Time.now.strftime("%l:%M %p")
+          .screen
+            =image_tag "assets/previews/empty.png", :size => "241x360"
+          .screen
+            =image_tag "assets/previews/search_0.png", :size => "241x360"
+          .screen
+            =image_tag "assets/previews/search_1.png", :size => "241x360"
+          .screen
+            =image_tag "assets/previews/search_2.png", :size => "241x360"
+          .screen
+            =image_tag "assets/previews/search_3.png", :size => "241x360"
+          .screen
+            =image_tag "assets/previews/search_4.png", :size => "241x360"
+          .screen
+            =image_tag "assets/previews/search_5.png", :size => "241x360"
+          .screen
+            =image_tag "assets/previews/search.png", :size => "241x360"
+          .screen
+            =image_tag "assets/previews/place.png", :size => "241x360"
+          .screen
+            =image_tag "assets/previews/wishlist.png", :size => "241x360"
+      .description
+        See Spot Run :)
