@@ -26,14 +26,8 @@
     #hd= yield :hd
     #bd= yield
     #ft
-      #signup_form.flips
-        %p.title
-          Need it now? Sign up for early access :
-        =form_for :preview, :url => previews_path, :html => {:class => "page"} do |f|
-          =f.hidden_field :rid, :value => params[:rid]
-          =f.text_field :email, "placeholder" => "enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"
-          =button_tag(:class => "hlfrndblk_80x30") do
-            submit
+      #logo.flips
+        =image_tag 'logos/white_shadowed_spot_with_tagline_318x160.png', :width => '200'
       #nav.flips
         =link_to "about", about_path, :class => "page first"
         =link_to "blog", blog_index_path, :class => "page"
@@ -41,10 +35,14 @@
         =link_to "home", root_path, :class => "page"      
         -if logged_in?
           =link_to "logout", sessions_path, 'data-method' => "delete"
-      #availability.flips
-        .images
-          .left=image_tag("assets/general/coming_soon60x60.png", :size => "60x60")
-          .right=image_tag("assets/general/app_store.png", :size => "183x60")
+      #signup_form.flips
+        %p.title
+          Coming Soon! Sign up for early access :
+        =form_for :preview, :url => previews_path, :html => {:class => "page"} do |f|
+          =f.hidden_field :rid, :value => params[:rid]
+          =f.text_field :email, "placeholder" => "enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"
+          =button_tag(:class => "hlfrndblk_80x30") do
+            submit
     #fb-root
   =include_javascripts :vendor
   =include_javascripts :site

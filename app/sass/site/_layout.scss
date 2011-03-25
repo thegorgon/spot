@@ -52,6 +52,12 @@ h2 {
   height: 125px;
   z-index: 2;
   background: #333 url(/images/backgrounds/noisy_grey.jpg) repeat center center;
+  #logo {
+    float: left;
+    margin: 10px 0 0 30px;
+    width: 30%;
+    min-width: 310px;
+  }
   #availability {
     min-width: 243px;
     position: relative;
@@ -69,11 +75,10 @@ h2 {
     }
   }
   #signup_form {
-    margin: 35px 0 0 40px;
-    width: 30%;
-    min-width: 310px;
-    float: left;
+    margin: 35px auto 0 auto;
+    width: 310px;
     .title {
+      text-align: center;
       font-size: 1.4em;
     }
     form {
