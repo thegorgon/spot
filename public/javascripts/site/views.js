@@ -59,6 +59,11 @@
     },
     site_support_press: function() {
       go.AppPreview.init();
+      $('#screenshots img').each(function(i) {
+        var img = new Image(), $this = $(this);
+        img.onload = function() { $this.fadeIn(); };
+        img.src = this.src;
+      })
     },
     site_previews_share: function() {
       $('#joke img').bind('click', function(e) {

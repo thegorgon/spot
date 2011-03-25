@@ -39,10 +39,15 @@
       }
       #screenshots {
         .screenshot {
+          width: 150px;
+          height: 225px;
           float: left;
           margin: 10px 13px 0 0;
           &.last {
             margin-right: 0;
+          }
+          img {
+            display: none;
           }
         }
       }

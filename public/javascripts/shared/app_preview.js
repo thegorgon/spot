@@ -11,7 +11,6 @@
       start();
     },
     run = function() {
-      $.logger.debug("RUN FROM ", step, " TO ", nextStep);
       dT = 5000;
       if (nextStep === 0) {
         dT = 7000;
@@ -50,10 +49,22 @@
     };
   $.provide(go, "AppPreview", {
     init: function() {
-      screenCount = $('.screen').length;
+      var loadedImgs = 0; 
+        loaded = function() {
+          loadedImgs = loadedImgs + 1;
+          if (loadedImgs >= screenCount) {
+            active = $('.screen').removeClass('active').eq(0).addClass('active'); 
+            start();
+          }
+        };
+        
+      screenCount = $('.screen').length;      
+      $('.screen img').each(function(i) {
+        var img = new Image();
+        img.src = this.src;
+        img.onload = loaded;
+      });
       step = 0;
-      active = $('.screen').removeClass('active').eq(0).addClass('active'); 
-      start();
       startClock();
     }
   });
