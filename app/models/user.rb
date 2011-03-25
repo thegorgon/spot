@@ -5,6 +5,15 @@ class User < ActiveRecord::Base
   has_many :devices, :dependent => :destroy
   has_many :wishlist_items, :dependent => :destroy
   
+  def self.find_using_perishable_token(token, age=1.hour) 
+    if token.present?
+      finder = self
+      finder = finder.where(["updated_at > ?", age.to_i.seconds.ago]) if age.to_i > 0
+      finder = finder.where(:perishable_token => token)
+      finder.first
+    end
+  end
+  
   def merge_with!(new_user)
     new_items = new_user.wishlist_items.hash_by { |item| "#{item.item_type} #{item.item_id}" }
     current_items = wishlist_items.hash_by { |item| "#{item.item_type} #{item.item_id}" }
@@ -34,8 +43,13 @@ class User < ActiveRecord::Base
     }
   end
   
+  def reset_perishable_token!
+    reset_perishable_token
+    save!
+  end
+  
   private
-    
+  
   def reset_persistence_token
     self.persistence_token = Nonce.hex_token
   end

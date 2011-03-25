@@ -1,10 +1,18 @@
 Rails.configuration.middleware.use RailsWarden::Manager do |manager|
-  manager.default_strategies :cookie, :device
-  manager.failure_app = Site::BaseController
+  manager.failure_app = Site::SessionsController
+  manager.default_scope = :user
+  manager.scope_defaults(
+    :user,
+    :action     => :new,
+    :strategies => [:facebook, :password, :perishable_token, :device, :cookie]
+  )
 end
 
 Warden::Strategies.add(:cookie, Strategies::Cookie)
 Warden::Strategies.add(:device, Strategies::Device)
+Warden::Strategies.add(:facebook, Strategies::Facebook)
+Warden::Strategies.add(:password, Strategies::Password)
+Warden::Strategies.add(:perishable_token, Strategies::PerishableToken)
 
 Warden::Manager.after_authentication do |user, warden, options|
   user.login!

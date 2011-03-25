@@ -1,7 +1,7 @@
 (function(go) {
   var lastHash, initialUrl,
     onStart = function() {
-      var bd = $('#bd');      
+      var bd = $('#bd');  
       if (bd.is(":visible") && !bd.is(":animated")) {
         bd.fadeOut(function() {
           bd.trigger('faded');
@@ -14,7 +14,7 @@
         return  go.Navigator.get(data.redirect_to);
       } else if (data.html) {
         html = $(data.html);
-        bd.bind("faded.navComplete", function() {
+        bd.unbind('faded.navComplete').bind("faded.navComplete", function() {
           bd.html(html).unbind("faded.navComplete");
           body.attr("id", data.page.namespace);
           body.attr('class', data.page.controller);
@@ -33,6 +33,7 @@
       hash = hash || window.location.hash.toString();
       hash = hash.replace(/^[^#]*#?(.*)$/, '$1');                
       hash = hash.replace(/^\s+|\s+$/g, "");
+      if (!hash) { hash = window.location.pathname.toString(); }
       return hash;
     },
     setLastHash = function(hash) {
@@ -59,7 +60,6 @@
     },
     onHashChange = function() {
       var lastHash = getLastHash(), e;
-      $.logger.debug("Last Hash : ", lastHash, "newHash : ", getHash());
       if (getHash() != lastHash) {
         onStart();
         e = jQuery.Event("navigator");

@@ -1,43 +1,4 @@
-.vcc
-  .vc
-    #preview.clearfix
-      #phone.iphone.size274x535
-        .badge
-          =image_tag('assets/previews/coming_soon.png', :size => "80x80")
-        .glare
-        .content
-          .status
-            =Time.now.strftime("%l:%M %p")
-          .preview#slide_0
-            =image_tag "assets/previews/empty.png", :size => "241x360"
-          .preview#slide_1
-            =image_tag "assets/previews/search_0.png", :size => "241x360"
-          .preview#slide_2
-            =image_tag "assets/previews/search_1.png", :size => "241x360"
-          .preview#slide_3
-            =image_tag "assets/previews/search_2.png", :size => "241x360"
-          .preview#slide_4
-            =image_tag "assets/previews/search_3.png", :size => "241x360"
-          .preview#slide_5
-            =image_tag "assets/previews/search_4.png", :size => "241x360"
-          .preview#slide_6
-            =image_tag "assets/previews/search_5.png", :size => "241x360"
-          .preview#slide_7
-            =image_tag "assets/previews/search.png", :size => "241x360"
-          .preview#slide_8
-            =image_tag "assets/previews/place.png", :size => "241x360"
-          .preview#slide_9
-            =image_tag "assets/previews/wishlist.png", :size => "241x360"
-      #message
-        #logo.flips
-          =image_tag "logos/script_with_tagline_364x180.png", :size => "364x180"
-        %p 
-          Keep restaurants, bars, cafés and shops in your Spot wishlist as you discover them. 
-          Remember them the next time you need a place to go.
-        =form_for :preview, :url => previews_path, :html => {:class => "page"} do |f|
-          =f.hidden_field :rid, :value => params[:rid]
-          %p.title
-            Need it now? Sign up for early access :
-          =f.text_field :email, "placeholder" => "enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"
-          =button_tag(:class => "hlfrndblk_80x30") do
-            submit
+#slideshow
+  #slidereel.clearfix
+  #slidenav
+  #nextslide

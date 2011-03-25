@@ -1,7 +1,7 @@
 module Spot
   module Spec
     def rack_env(path = "/", params = {}, session = {})
-      method = params.fetch(:method, "GET")
+      method = params.delete(:method) || "GET"
       env = Rack::MockRequest.env_for(path, :params => params,
                                      'HTTP_VERSION' => '1.1',
                                      'REQUEST_METHOD' => "#{method}")

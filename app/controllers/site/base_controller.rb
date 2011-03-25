@@ -2,6 +2,8 @@ class Site::BaseController < ApplicationController
   layout 'site'
   helper 'site'
   
+  protected
+  
   def default_render(*args)
     respond_to do |format|
       format.html { render(*args) }
@@ -20,5 +22,11 @@ class Site::BaseController < ApplicationController
       format.html { super(*args) }
       format.js { js_redirect_to(*args)}
     end
-  end    
+  end
+  
+  def require_user
+    store_location
+    authenticate
+    redirect_to new_sessions_path unless logged_in?
+  end
 end

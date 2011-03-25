@@ -88,10 +88,11 @@ describe Device do
       @device.user.should == @user
     end
     
-    it "merges the new user into the old user if there is a user and the new user is different" do
+    it "merges the old user into the new user if there is a user and the new user is different" do
+      old_user = @device.user
       @device.bind_to!(@new_user)
-      @device.user.should == @user
-      @new_user.should be_destroyed
+      @device.user.should == @new_user
+      old_user.should be_destroyed
     end
     
     it "sets the user to the new user if it does not have a user" do

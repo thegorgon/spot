@@ -205,8 +205,8 @@ describe Place do
   
   describe "#dedupe!" do
     it "sends all the places to DuplicatePlace deduping" do
-      @place1 = Factory.create(:place)
-      @place2 = Factory.create(:place)
+      Place.delete_all
+      10.times { Factory.create(:place) }
       DuplicatePlace.should_receive(:dedupe).exactly(Place.count).times.with(an_instance_of(Place))
       Place.dedupe!
     end
@@ -214,6 +214,8 @@ describe Place do
 
   describe "#reclean!" do
     it "calls reclean on all the places when called on the class" do
+      Place.delete_all
+      10.times { Factory.create(:place) }
       expect { Place.reclean! }.to_not raise_error
     end
     

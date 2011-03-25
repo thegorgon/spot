@@ -105,4 +105,53 @@ describe User do
     end
   end
   
+  describe "#find_using_perishable_token" do
+    before { @user.save }
+    
+    it "returns a user with the given token if one exists and the token is younger than the age provided" do
+      token_age = Time.now - @user.updated_at
+      user = User.find_using_perishable_token(@user.perishable_token, token_age + 5.minutes)
+      user.should == @user
+    end
+
+    it "returns a user with the given token if one exists, no age is provided and the token is younger than 1 hour old" do
+      @user.updated_at = Time.now - 55.minutes
+      @user.save
+      user = User.find_using_perishable_token(@user.perishable_token)
+      user.should == @user
+    end
+    
+    it "returns nil if no user exists with the given token" do
+      user = User.find_using_perishable_token("invalidtoken")
+      user.should be_nil
+    end
+    
+    it "returns nil if the token is older than the age provided" do
+      @user.updated_at = Time.now - 30.minutes # Can't do the same token_age - x.minutes trick, because it'll probably be negative
+      @user.save
+      user = User.find_using_perishable_token(@user.perishable_token, 25.minutes)
+      user.should be_nil      
+    end
+
+    it "returns nil if the token is older than 1 hour old and no age is provided" do
+      @user.updated_at = Time.now - 65.minutes
+      @user.save
+      user = User.find_using_perishable_token(@user.perishable_token)
+      user.should be_nil
+    end
+    
+    it "returns nil if no token is provided" do
+      user = User.find_using_perishable_token("")
+      user.should be_nil
+      user = User.find_using_perishable_token(nil)
+      user.should be_nil
+    end
+
+    it "ignores the token age if the provided age is under 0" do
+      @user.updated_at = Time.now - 1.year
+      @user.save
+      user = User.find_using_perishable_token(@user.perishable_token, -1)
+      user.should == @user
+    end
+  end
 end

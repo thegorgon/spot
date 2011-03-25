@@ -43,20 +43,83 @@ h2 {
   bottom: 0px;
   z-index: 10;
 }
-#nav {
+#ft {
+  min-width: 1000px;
   position: fixed;
-  bottom: 15px;
-  right: 15px;
-  padding: 0;
-  z-index: 100;
-  a {
-    display: block;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 125px;
+  z-index: 2;
+  background: #333 url(/images/backgrounds/noisy_grey.jpg) repeat center center;
+  #availability {
+    min-width: 243px;
+    position: relative;
+    width: 243px;
+    height: 60px;
+    margin: 35px auto;
+    .images {
+      width: 243px;
+      margin: 0 auto;
+      .left {
+        float: left;
+      } .right {
+        float: right;
+      }
+    }
+  }
+  #signup_form {
+    margin: 35px 0 0 40px;
+    width: 30%;
+    min-width: 310px;
+    float: left;
+    .title {
+      font-size: 1.4em;
+    }
+    form {
+      width: 310px;
+      margin: 1em 0;
+      position: relative;
+      input.faded {
+        font-size: 18px;
+        height: 20px;
+        line-height: 20px;
+        padding: 4px 8px;
+        width: 250px;
+        margin: 0;
+      }
+      button {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+      }
+    }
+  }
+  #nav {
     float: right;
-    margin-left: 11px;
-    font-size: 16px;
-    color: #ccc;
-    &:hover {
-      color: #fff;
+    padding: 0;
+    margin: 55px 40px 0 0;
+    width: 210px;
+    a {
+      display: block;
+      float: right;
+      margin-left: 11px;
+      font-size: 16px;
+      color: #ccc;
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+}
+.ie7 {
+  #ft {
+    #signup_form {
+      form {
+        button {
+          top: 1px;
+        }
+      }
     }
   }
 }

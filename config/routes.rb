@@ -7,6 +7,7 @@ Spot::Application.routes.draw do
     controller "support" do
       get "about", :action => "about"
     end
+    resource :sessions, :only => [:new, :create, :destroy]
   end
   
   scope :module => "api", :constraints => {:subdomain => /api\d*/}, :as => "api" do

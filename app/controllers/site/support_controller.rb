@@ -1,4 +1,4 @@
-class Site::SupportController < Site::BaseController
+class Site::SupportController < Site::BaseController  
   def about
   end
 end

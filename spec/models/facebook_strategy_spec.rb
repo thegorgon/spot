@@ -6,7 +6,7 @@ describe Strategies::Facebook do
     @session = {}
     @account = Factory.create(:facebook_account)
     @params = { :credentials => { :facebook => { :facebook_id => @account.facebook_id.to_s, :access_token => @account.access_token, :else => 1 }, :key => @nonce.digested } }
-    @env = rack_env("/", @params, @session)
+    @env = rack_env("/", @params)
   end
   
   it "should setup the spec correctly" do
@@ -25,25 +25,25 @@ describe Strategies::Facebook do
 
     it "returns false without a facebook id" do
       @params[:credentials][:facebook][:facebook_id] = nil
-      env = rack_env("/", @params, @session)
+      env = rack_env("/", @params)
       Strategies::Facebook.new(env).should_not be_valid
     end
 
     it "returns false without an access token" do
       @params[:credentials][:facebook][:access_token] = nil
-      env = rack_env("/", @params, @session)
+      env = rack_env("/", @params)
       Strategies::Facebook.new(env).should_not be_valid
     end
 
     it "returns false if the params are improperly formatted" do
       @params[:credentials][:facebook] = {}
-      env = rack_env("/", @params, @session)
+      env = rack_env("/", @params)
       Strategies::Facebook.new(env).should_not be_valid
       @params[:credentials][:facebook] = nil
-      env = rack_env("/", @params, @session)
+      env = rack_env("/", @params)
       Strategies::Facebook.new(env).should_not be_valid
       @params[:credentials] = nil
-      env = rack_env("/", @params, @session)
+      env = rack_env("/", @params)
       Strategies::Facebook.new(env).should_not be_valid
     end
   end
@@ -67,7 +67,7 @@ describe Strategies::Facebook do
       Wrapr::FbGraph::User.should_receive(:find).and_return(@mock_user)      
       @device = Factory.create(:device)
       @params[:credentials][:device] = {:id => @device.udid, :os_id => @device.os_id, :app_version => @device.app_version}
-      env = rack_env("/", @params, @session)
+      env = rack_env("/", @params)
       strategy = Strategies::Facebook.new(env)
       strategy.authenticate!
       @device.reload
@@ -78,7 +78,7 @@ describe Strategies::Facebook do
     it "fails if the params do not include valid facebook params" do
       stub_nonce!(@nonce, true)
       @params[:credentials][:facebook] = nil
-      @env = rack_env("/", @params, @session)
+      @env = rack_env("/", @params)
       strategy = Strategies::Facebook.new(@env)
       strategy.authenticate!
       strategy.result.should == :failure

@@ -1,0 +1,14 @@
+.vcc
+  .vc
+    #login_form
+      =form_for :credentials, :url => sessions_path do |f|
+        =f.hidden_field :key, :value => @nonce.digested
+        %ul
+          =f.fields_for :password do |f|
+            %li
+              =f.text_field :login, :class => "faded text", :placeholder => "enter your login"
+            %li
+              =f.password_field :password, :class => "faded text", :placeholder => "enter your password"
+          %li.clearfix
+            =button_tag :class => "rndblk_80x30" do
+              Login

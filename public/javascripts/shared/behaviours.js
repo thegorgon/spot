@@ -1,22 +1,44 @@
 (function($) {
+  var passwordPlaceholder = function(input, text) {
+      var $input = $(input), placeholder,
+        text = text || $input.attr('placeholder');
+      $input.after('<input id="'+ input.id + '_placeholder" type="text" value="' + text + '" autocomplete="off" class="'+ $input.attr('class') + ' placeholder" />');
+      placeholder = $('#' + input.id + '_placeholder');
+      placeholder.show();
+      $input.hide();
+      $input.val('');
+      placeholder.bind('focus.placeholder', function(e) {
+        placeholder.hide();
+        $input.show();
+        $input.focus();
+      });
+      $input.bind('blur.placeholder', function(e) {
+        $input.hide();
+        placeholder.show();
+        placeholder.blur();
+      });
+    };
   $.extend($.fn, {
     placeholder: function(text) {
-      $(this).filter('input,textarea').each(function() {
-        var $this = $(this);
-        text = text || $this.attr('placeholder');
-        $this.unbind('.placeholder').removeClass('placeholder').val(text).addClass('placeholder');
-        $this.bind('focus.placeholder', function(e) {
-          var $this = $(this);
-          if ($this.val() == text) {
-            $this.val('').removeClass('placeholder');
-          }
-        });
-        $this.bind('blur.placeholder', function(e) {
-          var $this = $(this);
-          if ($this.val() === '') {
-            $this.val(text).addClass('placeholder');
-          }      
-        });
+      $(this).filter('input,textarea,password').each(function() {
+        if ($(this).attr('type') == 'password') {
+          passwordPlaceholder(this, text);
+        } else {
+          var $this = $(this), text = text || $this.attr('placeholder');
+          $this.unbind('.placeholder').removeClass('placeholder').val(text).addClass('placeholder');
+          $this.bind('focus.placeholder', function(e) {
+            var $this = $(this);
+            if ($this.val() == text) {
+              $this.val('').removeClass('placeholder');
+            }
+          });
+          $this.bind('blur.placeholder', function(e) {
+            var $this = $(this);
+            if ($this.val() === '') {
+              $this.val(text).addClass('placeholder');
+            }      
+          });          
+        }
       });
       return this;      
     },
@@ -36,7 +58,7 @@
           authParam = $('meta[name=csrf-param]').attr('content'),
           authValue = $('meta[name=csrf-token]').attr('content'),
           form = $('<form action="' + url + '" method="' + httpMethod + '"></form>');
-        if (window.confirm(confirmMsg)) {
+        if (confirmMsg === undefined || confirmMsg.length === 0 || window.confirm(confirmMsg)) {
           form.append('<input type="hidden" name="' + authParam + '" value="' + authValue + '"/>');
           if (httpMethod != method) { form.append('<input type="hidden" name="_method" value="' + method + '" />')}
           form.hide().appendTo('body').submit();                    
@@ -71,6 +93,7 @@
       $('[placeholder]').placeholder();
       $('[data-mode=select]').selectOnly();
       $('.file_field input').fileField();
+      $('a[data-method]:not(.ajax)').actionLink();
       $('a[data-confirm][data-method]:not(.ajax)').actionLink();
       $('#flash').hide().removeClass('hidden').slideDown(500, function() {
         setTimeout(function() { $('#flash').slideUp(500) }, 3000);
