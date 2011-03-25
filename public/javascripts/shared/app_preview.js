@@ -50,9 +50,9 @@
   $.provide(go, "AppPreview", {
     init: function() {
       $('#phone').preloadAll(function() {
-        active = $('.screen').removeClass('active').eq(0).addClass('active'); 
         start();
       });
+      active = $('.screen').removeClass('active').eq(0).addClass('active'); 
       screenCount = $('.screen').length;      
       step = 0;
       startClock();
