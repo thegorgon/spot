@@ -49,7 +49,8 @@
         slides: [{ src : '/images/assets/slideshow/slide_01.jpg', gravity: '0x0' },
                  { src : '/images/assets/slideshow/slide_02.jpg', gravity: '0.75x0.75' },
                  { src : '/images/assets/slideshow/slide_03.jpg', gravity: '0.5x1.0' }],
-        start: new Date().getSeconds() % 3
+        start: new Date().getSeconds() % 3,
+        version: 1
       });
       $('#nextslide').click(function(e) {  
         e.preventDefault();      

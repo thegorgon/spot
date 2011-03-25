@@ -28,7 +28,8 @@
       viewport = element.find('#viewport'),
       settings = {
         slides: [],
-        start: 0
+        start: 0,
+        version: 1
       }, loadCount = 0, i = 0, finalized = false,
       options = $.extend(settings, opts || {}),
       currentSlide = options.start,
@@ -78,7 +79,7 @@
     for (i = 0; i < options.slides.length; i++) {
       var img = new Image();
       img.onload = loaded;
-      img.src = options.slides[i].src;
+      img.src = options.slides[i].src + '?' + options.version;
       buildSlide(img, i).appendTo(slidereel);
     }
     return {
