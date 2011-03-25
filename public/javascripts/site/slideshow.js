@@ -25,7 +25,7 @@
       settings = {
         slides: [],
         start: -1
-      }, loadCount = 0, i = 0,
+      }, loadCount = 0, i = 0, finalized = false,
       options = $.extend(settings, opts || {}),
       currentSlide = options.start > 0 ? options.start : Math.round(Math.random() * (options.slides.length - 1)),
       slidenav = element.find('#slidenav'),
@@ -51,7 +51,8 @@
       },
       loaded = function() {
         loadCount = loadCount + 1;
-        if (loadCount >= options.slides.length) {
+        if (loadCount >= options.slides.length && !finalized) {
+          finalized = true;
           jumpTo(currentSlide);
           $('.slidenav', slidenav).unbind('click.slideshow').bind('click.slideshow', function(e) {
             e.preventDefault();
