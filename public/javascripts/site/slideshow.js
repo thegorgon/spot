@@ -5,23 +5,27 @@
       rH = resize.height(), rW = resize.width(),
       cW = container.width(), cH = container.height(),
       cRatio = (cH / cW).toFixed(2), rRatio = ( rH / rW).toFixed(2),
-      dims = {}, off = {};
+      dims = {}, off = {}, scale;
     if (cRatio > rRatio) {
       dims.h = cH;
       dims.w = cH/rRatio;
+      scale = dims.h/rH;
     } else {
       dims.w = cW;
       dims.h = cW * rRatio;
+      scale = dims.w/rW;
     }
     resize.width(dims.w);
     resize.height(dims.h);
     off.top = 0.5 * (cH - dims.h);
     off.left = 0.5 * (cW - dims.w);
     resize.css({top: off.top, left: top.left});
+    return scale;
   };
   $.fn.slideshow = function(opts) {
     var element = $(this),
       slidereel = element.find('#slidereel'),
+      logo = element.find('#logo').find('img');
       settings = {
         slides: [],
         start: -1
@@ -37,8 +41,19 @@
           slidereel.width(options.slides.length * width).height(height).css({left: -1 * currentSlide * width});
           $('.slide', slidereel).width(width).height(height).each(function(i) {
             var thisSlide = $(this),
-              left = i * width;
-            thisSlide.css({left: left}).find('img').sizeToFit(thisSlide, options.slides[i]);
+              left = i * width, newRatio,
+              scale = thisSlide.css({left: left}).find('img').sizeToFit(thisSlide, options.slides[i]);
+            //   logoW = logo.width() * scale,
+            //   logoH = logo.height() * scale;
+            // if (logoW >= 500) {
+            //   logoH = 500 * logoH/logoW;
+            //   logoW = 500;
+            // } else if (logoW <= 250) {
+            //   logoH = 250 * logoH/logoW;
+            //   logoW = 250;
+            // }
+            // logo.width(logoW);
+            // logo.height(logoH);
           });
         });
       },
