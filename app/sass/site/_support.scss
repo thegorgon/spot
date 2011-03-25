@@ -24,6 +24,9 @@
     width: 700px;
     margin: 0 auto;
     padding: 0 0 175px 0;
+    #logo {
+      height: 135px;
+    }
     #content {
       padding: 25px 30px;
       @include border_radius(20px);
