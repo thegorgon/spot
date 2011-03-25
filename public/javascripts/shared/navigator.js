@@ -33,7 +33,6 @@
       hash = hash || window.location.hash.toString();
       hash = hash.replace(/^[^#]*#?(.*)$/, '$1');                
       hash = hash.replace(/^\s+|\s+$/g, "");
-      if (!hash) { hash = window.location.pathname.toString(); }
       return hash;
     },
     setLastHash = function(hash) {
@@ -60,7 +59,7 @@
     },
     onHashChange = function() {
       var lastHash = getLastHash(), e;
-      if (getHash() != lastHash) {
+      if (getHash() && getHash() != lastHash) {
         onStart();
         e = jQuery.Event("navigator");
         e.lastHash = lastHash;

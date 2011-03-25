@@ -88,6 +88,17 @@ namespace :assets do
   end
 end
 
+#Log watch
+namespace :logs do
+  task :tail, :roles => :web do
+    run "tail -f #{shared_path}/log/production.log" do |channel, stream, data|
+     puts # for an extra line break before the host name
+     puts "#{channel[:host]}: #{data}"
+     break if stream == :err
+    end
+  end
+end
+
 # Tag Deploys
 after 'deploy' do
   system("git tag release-`date +%Y_%m_%d-%H%M`")
