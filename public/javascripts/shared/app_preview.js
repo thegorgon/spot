@@ -49,27 +49,11 @@
     };
   $.provide(go, "AppPreview", {
     init: function() {
-      var loadedImgs = 0,
-        bg = new Image(), glare = new Image(),
-        loaded = function() {
-          $('#phone').fadeIn();
-          loadedImgs = loadedImgs + 1;
-          if (loadedImgs >= screenCount + 2) {
-            active = $('.screen').removeClass('active').eq(0).addClass('active'); 
-            start();
-          }
-        };
-      bg.onload = loaded;
-      glare.onload = loaded;
-      bg.src = $('#phone').css('background-image').replace(/url\(([^\)]+)\)/i, '$1');
-      glare.src = $('#phone .glare').css('background-image').replace(/url\(([^\)]+)\)/i, '$1');
-      screenCount = $('.screen').length;      
-      $('.screen img').each(function(i) {
-        var img = new Image();
-        img.src = this.src;
-        img.onload = loaded;
+      $('#phone').preloadAll(function() {
+        active = $('.screen').removeClass('active').eq(0).addClass('active'); 
+        start();
       });
-      
+      screenCount = $('.screen').length;      
       step = 0;
       startClock();
     }

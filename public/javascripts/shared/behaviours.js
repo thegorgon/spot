@@ -47,6 +47,42 @@
         $(this).focus().select();
       });
     },
+    imagePreload: function() {
+      $(this).find('img').hide().each(function(i) {
+        var img = new Image(), $this = $(this);
+        img.onload = function() { $this.fadeIn(1000); };
+        img.src = this.src;
+      });
+    },
+    preloadBackground: function() {
+      $(this).hide().each(function(i) {
+        var img = new Image(), $this = $(this);
+        img.onload = function() { $this.fadeIn(1000); };
+        img.src = $this.css('background-image').replace(/url\(([^\)]+)\)/i, '$1');
+      });
+    },
+    preloadAll: function(cb) {
+      var parent = $(this),
+        imgCount = 0,
+        loadCount = 0,
+        loaded = function() {
+          loadCount = loadCount + 1;
+          if (loadCount >= imgCount) {
+            parent.fadeIn(1000, cb);
+          }
+        };
+      parent.hide().find('*').add(parent).each(function(i) {
+        var img, child = $(this), src = child[0].src || child.css('background-image').replace(/url\(([^\)]+)\)/i, '$1'),
+          ext = src.toString().split(".").pop();
+        ext = ext.replace(/([^\?]+)?.+/i, '$1');
+        if (ext === 'jpg' || ext === 'jpeg' || ext === 'png') {
+          img = new Image();
+          imgCount = imgCount + 1;
+          img.onload = loaded;
+          img.src = src;
+        }
+      });
+    },
     actionLink: function() {
       $(this).die('click').live('click', function(e) {
         e.preventDefault();
@@ -98,6 +134,8 @@
       $('#flash').hide().removeClass('hidden').slideDown(500, function() {
         setTimeout(function() { $('#flash').slideUp(500) }, 3000);
       })
+      $('.preload').imagePreload();
+      $('.preload_bg').preloadBackground();
     }
   });
 }(Spot));
