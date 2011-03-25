@@ -2,10 +2,13 @@
   $.fn.sizeToFit = function(container, options) {
     container = $(container);
     var resize = $(this),
+      gravities = (options.gravity || '0.5x0.5').split('x'),
       rH = resize.height(), rW = resize.width(),
       cW = container.width(), cH = container.height(),
       cRatio = (cH / cW).toFixed(2), rRatio = ( rH / rW).toFixed(2),
-      dims = {}, off = {};
+      dims = {}, off = {},
+      gravityTop = parseFloat(gravities[0], 10) || 0.5, 
+      gravityLeft = parseFloat(gravities[1], 10) || 0.5;
     if (cRatio > rRatio) {
       dims.h = cH;
       dims.w = cH/rRatio;
@@ -15,8 +18,8 @@
     }
     resize.width(dims.w);
     resize.height(dims.h);
-    off.top = 0.5 * (cH - dims.h);
-    off.left = 0.5 * (cW - dims.w);
+    off.top = gravityTop * (cH - dims.h);
+    off.left = gravityLeft * (cW - dims.w);
     resize.css({top: off.top, left: top.left});
   };
   $.fn.slideshow = function(opts) {
@@ -25,10 +28,10 @@
       viewport = element.find('#viewport'),
       settings = {
         slides: [],
-        start: -1
+        start: 0
       }, loadCount = 0, i = 0, finalized = false,
       options = $.extend(settings, opts || {}),
-      currentSlide = options.start > 0 ? options.start : Math.round(Math.random() * (options.slides.length - 1)),
+      currentSlide = options.start,
       slidenav = element.find('#slidenav'),
       navList = $('<ul class="clearfix"></ul>').appendTo(slidenav),
       resize = function() {
@@ -52,19 +55,19 @@
         loadCount = loadCount + 1;
         if (loadCount >= options.slides.length && !finalized) {
           finalized = true;
-          jumpTo(currentSlide);
           $('.slidenav', slidenav).unbind('click.slideshow').bind('click.slideshow', function(e) {
             e.preventDefault();
             jumpTo(this.id.split('_')[1]);
           });
           element.fadeIn(1000);
           setTimeout(resize, 1);
+          setTimeout(function() { jumpTo(currentSlide) }, 1);
         }
       },
       jumpTo = function(i) {
         currentSlide = i;
         $('.slidenav').removeClass('selected');
-        $('#slidenav_' + currentSlide).addClass('selected');        
+        $('#slidenav_' + currentSlide).addClass('selected');
         slidereel.animate({left: -1 * currentSlide * viewport.width()});
       };
     $('.slide img', slidereel).unbind("contextmenu.cancel").bind("contextmenu.cancel", function() { return false; });
