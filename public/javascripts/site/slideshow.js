@@ -26,6 +26,8 @@
     var element = $(this),
       slidereel = element.find('#slidereel'),
       viewport = element.find('#viewport'),
+      nextControl = element.find('#nextslide'),
+      lastControl = element.find('#lastslide'),
       settings = {
         slides: [],
         start: 0,
@@ -64,9 +66,29 @@
       },
       jumpTo = function(i) {
         currentSlide = i;
+        if (currentSlide == 0) {
+          lastControl.fadeOut(1000);
+          nextControl.fadeIn(1000);
+        } else if (currentSlide == options.slides.length - 1) {
+          lastControl.fadeIn(1000);
+          nextControl.fadeOut(1000);
+        } else {
+          lastControl.fadeIn(1000);
+          nextControl.fadeIn(1000);
+        }
         $('.slidenav').removeClass('selected');
         $('.slidenav').eq(i).addClass('selected');
         slidereel.animate({left : -1 * currentSlide * viewport.width()}, 1500);
+      }, 
+      nextSlide = function() {
+        if (currentSlide < options.slides.length) {
+          jumpTo(currentSlide + 1);          
+        }
+      },
+      lastSlide = function() {
+        if (currentSlide > 0) {
+          jumpTo(currentSlide - 1);
+        }
       };
     $('.slide img', slidereel).unbind("contextmenu.cancel").bind("contextmenu.cancel", function() { return false; });
     $('.slide img', slidereel).unbind("mousedown.cancel").bind("mousedown.cancel", function() { return false; });
@@ -78,13 +100,12 @@
       img.src = options.slides[i].src + '?' + options.version;
       buildSlide(img, i).appendTo(slidereel);
     }
+    nextControl.click(nextSlide);
+    lastControl.click(lastSlide);
     return {
-      nextSlide: function() {
-        jumpTo(currentSlide + 1 >= options.slides.length ? 0 : currentSlide + 1);
-      },
-      jumpTo: function(i) {
-        jumpTo(i);
-      }
+      nextSlide: nextSlide,
+      lastSlide: lastSlide,
+      jumpTo: jumpTo
     };
   };
 }(jQuery));

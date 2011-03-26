@@ -52,10 +52,6 @@
         start: 0,
         version: 2
       });
-      $('#nextslide').click(function(e) {  
-        e.preventDefault();      
-        slideshow.nextSlide();
-      });
     },
     site_support_press: function() {
       go.AppPreview.init();
