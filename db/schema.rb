@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110320084739) do
+ActiveRecord::Schema.define(:version => 20110326010147) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -28,6 +28,15 @@ ActiveRecord::Schema.define(:version => 20110320084739) do
   end
 
   add_index "activity_items", ["actor_id", "activity_type"], :name => "index_activity_items_on_actor_id_and_activity_type"
+
+  create_table "blocked_emails", :force => true do |t|
+    t.string   "address",                         :null => false
+    t.string   "source",     :default => "other", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "blocked_emails", ["address"], :name => "index_blocked_emails_on_address", :unique => true
 
   create_table "devices", :force => true do |t|
     t.string   "udid",          :null => false
@@ -209,11 +218,12 @@ ActiveRecord::Schema.define(:version => 20110320084739) do
   add_index "places", ["lat", "lng"], :name => "index_places_on_lat_and_lng"
 
   create_table "preview_signups", :force => true do |t|
-    t.string   "email",                         :null => false
-    t.integer  "referral_count", :default => 0, :null => false
-    t.integer  "test",           :default => 0, :null => false
+    t.string   "email",                             :null => false
+    t.integer  "referral_count", :default => 0,     :null => false
+    t.integer  "test",           :default => 0,     :null => false
     t.integer  "referrer_id"
     t.datetime "created_at"
+    t.boolean  "emailed",        :default => false, :null => false
   end
 
   add_index "preview_signups", ["email"], :name => "index_preview_signups_on_email", :unique => true

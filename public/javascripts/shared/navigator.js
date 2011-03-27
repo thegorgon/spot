@@ -116,6 +116,7 @@
       var method = form.attr('method').toUpperCase(),
         data = form.find('[name!=utf8]').serialize(),
         url = form.attr('action');
+      form.find('input, textarea').val('').blur();
       if (method == "GET") { url = url.indexOf('?') > 0 ? url + '&' + data : url + '?' + data; }
       onStart();
       return method == "GET" ? this.get(url, options) : this.post(url, data, options);

@@ -4,11 +4,15 @@ Spot::Application.routes.draw do
       get "share"
     end
     resources :blog, :controller => "blog", :only => [:index]
+    resource :sessions, :only => [:new, :create, :destroy]
+    resource :email, :only => [:show] do
+      delete "unsubscribe"
+      get "goodbye"
+    end
     controller "support" do
       get "about", :action => "about"
       get "press", :action => "press"
     end
-    resource :sessions, :only => [:new, :create, :destroy]
   end
   
   scope :module => "api", :constraints => {:subdomain => /api\d*/}, :as => "api" do

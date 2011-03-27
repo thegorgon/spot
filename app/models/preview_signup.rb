@@ -5,6 +5,7 @@ class PreviewSignup < ActiveRecord::Base
   validates :email, :presence => true, :format => { :with => EMAIL_REGEX }, :uniqueness => true
   before_validation :set_test, :on => :create
   after_create :credit_referrer
+  after_save :send_thank_you, :unless => :emailed?
   
   def self.credit!(id)
     update_counters(id, :referral_count => 1)
@@ -47,5 +48,12 @@ class PreviewSignup < ActiveRecord::Base
   
   def credit_referrer
     self.class.credit!(referrer_id)
+  end
+  
+  def send_thank_you
+    unless emailed? || BlockedEmail.blocked?(self.email)
+      TransactionMailer.preview_thanks(self).deliver! 
+      update_attribute(:emailed, true)
+    end
   end
 end

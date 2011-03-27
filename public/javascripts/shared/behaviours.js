@@ -58,7 +58,7 @@
       $(this).hide().each(function(i) {
         var img = new Image(), $this = $(this);
         img.onload = function() { $this.fadeIn(1000); };
-        img.src = $this.css('background-image').replace(/url\(([^\)]+)\)/i, '$1');
+        img.src = $this.css('background-image').replace(/url\([\"\']?([^\)]+)[\"\']?\)/i, '$1');
       });
     },
     preloadAll: function(cb) {
