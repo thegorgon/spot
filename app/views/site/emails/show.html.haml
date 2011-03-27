@@ -1,8 +1,9 @@
 .vcc
   .vc
-    #unsubscribe.preload
+    #unsubscribe
       %h1 Ruh Roh...
-      =image_tag "joke/sad_kitty200x200.png", :size => '200x200'
+      .image.preload
+        =image_tag "joke/sad_kitty200x200.png", :size => '200x200'
       %h2
         We're sorry to hear that you didn't like our emails. 
         Are you sure you want to stop hearing from us?
