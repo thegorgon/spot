@@ -25,6 +25,7 @@
         =link_to "Places", admin_places_path
         =link_to "Duplicates", admin_duplicates_path
         =link_to "Resque", '/admin/resque'
+        =link_to "Request", admin_info_path
     #bd.clearfix
       = yield
       -if flash[:error] || flash[:notice]

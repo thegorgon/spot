@@ -1,5 +1,7 @@
 .manager
-  .top
+  .top.clearfix
+    %h1.title="Spot App Version : #{Rails.env.production?? `cat REVISION` : Rails.env}"    
+  .top.clearfix
     %h1.title Your Location :
   %table.data
     -geo_country.to_hash.each do |key, value|
