@@ -79,6 +79,7 @@ GEM
     faraday_middleware (0.3.2)
       faraday (~> 0.5.4)
     gem_plugin (0.2.3)
+    geoip (1.0.0)
     haml (3.0.25)
     hashie (1.0.0)
     highline (1.6.1)
@@ -232,6 +233,7 @@ DEPENDENCIES
   curb
   factory_girl_rails
   faraday
+  geoip
   haml
   jammit
   mongrel (= 1.2.0.pre2)

@@ -25,6 +25,7 @@ gem 'typhoeus'
 gem 'oauth'
 gem 'faraday'
 gem 'sinatra', '1.1.3'
+gem 'geoip'
 
 group :production do
   gem 'unicorn'

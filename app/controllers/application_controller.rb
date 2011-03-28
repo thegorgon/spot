@@ -4,6 +4,20 @@ class ApplicationController < ActionController::Base
   
   private
   
+  def geo_ip
+    @geo_ip ||= GeoIP.new('db/GeoIP.dat')
+  end
+  
+  def geo_country
+    geo_ip.country(request.remote_ip)
+  end
+  helper_method :geo_country
+  
+  def country_code
+    geo_country.country_code3
+  end
+  helper_method :country_code
+    
   # Return the rendered page namespace, derived from the Controller name and rendered template. This identifier
   # can be used as a CSS class/id name and JavaScript variable name.  
   def page_namespace

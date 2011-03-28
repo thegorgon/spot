@@ -4,4 +4,7 @@ class Admin::HomeController < Admin::BaseController
   
   def version
   end
+  
+  def location
+  end
 end

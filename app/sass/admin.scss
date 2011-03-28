@@ -2,11 +2,12 @@
 @import "shared/_reset.scss";
 @import "shared/_buttons.scss";
 @import "shared/_helpers.scss";
+@import "shared/_devices.scss";
 @import "admin/_layout.scss";
+@import "admin/_shared.scss";
 @import "admin/_managers.scss";
 @import "admin/_forms.scss";
 @import "admin/_image_search.scss";
-@import "shared/_devices.scss";
 @import "admin/_places.scss";
 @import "admin/_search.scss";
 @import "admin/_duplicates.scss";

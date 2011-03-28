@@ -1,0 +1,16 @@
+.manager
+  .top
+    %h1.title Your Location :
+  %table.data
+    %tr
+      %td.left 
+        %strong IP :
+      %td= request.remote_ip
+    %tr
+      %td.left
+        %strong Country Code :
+      %td= country_code
+    %tr
+      %td.left
+        %strong Country :
+      %td= geo_country.country_name

@@ -47,6 +47,7 @@ Spot::Application.routes.draw do
     resource :search, :only => [:new, :show], :controller => "search"
     controller "home" do
       get "version"
+      get "location"
     end
     root :to => "home#index"
   end
