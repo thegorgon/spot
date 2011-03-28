@@ -157,14 +157,14 @@ describe Place do
       Place.filter(:filter => 1).should be_kind_of(Array)
     end
 
-    it "responds with imageless places if the filters second bit is 1" do
+    it "responds with imageless places if the filters 2nd bit is 1" do
       @imageless = Factory.create(:place, :image_file_name => nil)
       @imaged = Factory.create(:place, :image_file_name => "/files/path/to/image.png")
       Place.filter(:filter => 2).should include @imageless
       Place.filter(:filter => 2).should_not include @imaged
     end
 
-    it "responds with wishlisted places if the filters first bit is 1" do
+    it "responds with wishlisted places if the filters 1st bit is 1" do
       @wishlisted = Factory.create(:place)
       # Incrementing happens offline, so gotta do it with resque
       Twitter.should_receive(:update).and_return(true)
@@ -172,6 +172,12 @@ describe Place do
       @unwishlisted = Factory.create(:place)
       Place.filter(:filter => 1).should include @wishlisted
       Place.filter(:filter => 1).should_not include @unwishlisted
+    end
+
+    it "responds with processing places if the filters 3rd bit is 1" do
+      @processing = Factory.create(:place, :image_processing => true)
+      Place.filter(:filter => 4).should include @processing
+      Place.filter(:filter => 1).should_not include @processing
     end
 
     it "responds with only canonical places" do
