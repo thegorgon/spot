@@ -2,8 +2,8 @@
   .top
     %h1.title Your Location :
   %table.data
-    -geo_country.each do |key, value|
+    -geo_country.to_hash.each do |key, value|
       %tr
         %td.left 
           %strong=key
-        %td= value
+        %td=value
