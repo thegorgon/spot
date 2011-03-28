@@ -5,5 +5,5 @@
     -geo_country.to_hash.each do |key, value|
       %tr
         %td.left 
-          %strong=key
+          %strong=key.humanize.titlecase
         %td=value
