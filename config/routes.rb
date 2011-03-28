@@ -44,7 +44,6 @@ Spot::Application.routes.draw do
         put "ignore"
       end
     end
-    resource :session_test, :only => [:new, :show], :controller => "session_test"
     resource :search, :only => [:new, :show], :controller => "search"
     root :to => "home#index"
   end
