@@ -30,6 +30,11 @@ class User < ActiveRecord::Base
     self
   end
   
+  def wishlist(params)
+    item = wishlist_items.active.where(:item_type => params[:item_type], :item_id => params[:item_id]).first
+    item || wishlist_items.new(params)
+  end
+  
   def login!
     self.class.where(:id => id).update_all(["login_count = COALESCE(login_count, 0) + 1, current_login_at = ?, updated_at = ?", Time.now.utc, Time.now.utc])    
   end

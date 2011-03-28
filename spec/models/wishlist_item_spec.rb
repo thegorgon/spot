@@ -63,7 +63,7 @@ describe WishlistItem do
     end
 
     it "has a numerical user id" do
-      user = @wi.item
+      user = @wi.user
       @wi.should be_valid
       @wi.user_id = "notanumber"
       @wi.should_not be_valid
@@ -71,9 +71,9 @@ describe WishlistItem do
       @wi.should_not be_valid
       @wi.user_id = user.id
       @wi.should be_valid      
-    end
+    end    
   end
-  
+    
   describe "#scopes" do
     it "has an active scope which limits the scope to active records" do
       active = Factory.create(:wishlist_item, :deleted_at => nil)

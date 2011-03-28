@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110326010147) do
+ActiveRecord::Schema.define(:version => 20110328010407) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -229,8 +229,6 @@ ActiveRecord::Schema.define(:version => 20110326010147) do
   add_index "preview_signups", ["email"], :name => "index_preview_signups_on_email", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "full_name"
-    t.string   "email"
     t.datetime "current_login_at"
     t.integer  "login_count",         :default => 0, :null => false
     t.string   "persistence_token"
@@ -238,6 +236,8 @@ ActiveRecord::Schema.define(:version => 20110326010147) do
     t.string   "perishable_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "full_name"
+    t.string   "email"
   end
 
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(:version => 20110326010147) do
     t.datetime "deleted_at"
   end
 
-  add_index "wishlist_items", ["user_id", "item_type", "item_id"], :name => "index_wishlist_items_on_user_id_and_item_type_and_item_id", :unique => true
+  add_index "wishlist_items", ["user_id", "item_type", "item_id"], :name => "index_wishlist_items_on_user_id_and_item_type_and_item_id"
 
   create_table "yelp_places", :force => true do |t|
     t.string   "name"

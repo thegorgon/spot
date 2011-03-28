@@ -1,13 +1,10 @@
 class Site::EmailsController < Site::BaseController
   def show
-    if params[:email]
-    else
-      redirect_to root_path
-    end
+    redirect_to root_path unless params[:email]
   end
   
   def unsubscribe
-    BlockedEmail.block!(params[:email], params[:source])
+    BlockedEmail.block!(params[:email])
     redirect_to goodbye_email_path
   end
   
