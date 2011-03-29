@@ -50,7 +50,7 @@ body {
   z-index: 10;
 }
 #ft {
-  min-width: 1000px;
+  min-width: 920px;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -64,8 +64,7 @@ body {
   #logo {
     float: left;
     margin: 10px 0 0 30px;
-    width: 30%;
-    min-width: 310px;
+    width: 200px;
   }
   #availability {
     min-width: 243px;
@@ -89,6 +88,7 @@ body {
     .title {
       text-align: center;
       font-size: 1.4em;
+      width: 310px;
     }
     form {
       width: 310px;
