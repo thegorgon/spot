@@ -6,12 +6,13 @@
       .attribution
         ="Image Courtesy Of "
         =link_to "#{@place.image_attribution["source"].titlecase} API", @place.image_attribution["owner_url"], :target => "_new"       
-    .external_places
-      -ExternalPlace.sources.each do |src|
-        -if ep = place.external_place(src)
-          =link_to "#{src.to_sym}", external_place_url(ep), :target => "_new", :class => "matched"
-        -else
-          =link_to "#{src.to_sym}", admin_place_matches_path(@place, :src => src.to_sym), :class => "potential"
+    -unless @place.new_record?
+      .external_places
+        -ExternalPlace.sources.each do |src|
+          -if ep = place.external_place(src)
+            =link_to "#{src.to_sym}", external_place_url(ep), :target => "_new", :class => "matched"
+          -else
+            =link_to "#{src.to_sym}", admin_place_matches_path(@place, :src => src.to_sym), :class => "potential"
     .form
       =render :partial => "form", :object => @place, :as => :place
     -unless @place.new_record?
