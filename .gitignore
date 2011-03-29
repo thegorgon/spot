@@ -8,3 +8,4 @@ tmp/**/*
 db/sphinx*
 config/*.sphinx.conf
 coverage
+public/stylesheets/*.css
