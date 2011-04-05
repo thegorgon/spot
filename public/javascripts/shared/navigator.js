@@ -25,9 +25,9 @@
           bd.trigger("faded");            
         }
       } else {
-        // Unhandled
+        $.logger.debug("UNHANDLED : ", data);
       }
-      setHash(url, force);
+      return setHash(url, force);
     },
     getHash = function(hash) {
       hash = hash || window.location.hash.toString();
@@ -89,7 +89,7 @@
         var url = e.newHash;
         url = url.length > 0 ? url : initialUrl;
         that.get(url, {force: false});
-      })
+      });
     },
     get: function(url, options) {
       options = options || {};

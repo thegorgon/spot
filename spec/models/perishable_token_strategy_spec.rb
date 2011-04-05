@@ -13,14 +13,12 @@ describe Strategies::PerishableToken do
   
   it "should setup the spec correctly" do
     post_req = Rack::Request.new(@post_env)
-    post_req.params["credentials"]["token"].should == @user.perishable_token
-    post_req.params["credentials"]["key"].should == @nonce.digested
-    post_req.params["method"].should be_nil
-    post_req.should be_post
+    post_req.POST["credentials"]["token"].should == @user.perishable_token
+    post_req.POST["credentials"]["key"].should == @nonce.digested
+    post_req.POST["method"].should be_nil
     get_req = Rack::Request.new(@get_env)
-    get_req.params["token"].should == @user.perishable_token
-    get_req.should be_get
-    get_req.params["method"].should be_nil
+    get_req.GET["token"].should == @user.perishable_token
+    get_req.GET["method"].should be_nil
   end
 
   describe "#token" do
@@ -33,18 +31,7 @@ describe Strategies::PerishableToken do
       strategy = Strategies::PerishableToken.new(@get_env)
       strategy.token.should == @user.perishable_token
     end
-    
-    it "returns nil if the request is not a GET or POST request" do
-      @post_params[:method] = "PUT"
-      env = rack_env("/", @post_params)
-      strategy = Strategies::PerishableToken.new(env)
-      strategy.token.should be_nil
-      @post_params[:method] = "DELETE"
-      env = rack_env("/", @post_params)
-      strategy = Strategies::PerishableToken.new(env)
-      strategy.token.should be_nil
-    end
-    
+        
     it "returns nil on POST if the POST params do not include a token" do
       @post_params[:credentials][:token] = nil
       env = rack_env("/", @post_params)
@@ -76,7 +63,7 @@ describe Strategies::PerishableToken do
   end
 
   describe "#valid?" do
-    before { @strategy = Strategies::PerishableToken.new(rack_env("/", {}, {})) }
+    before { @strategy = Strategies::PerishableToken.new(rack_env("/", {})) }
 
     it "returns true if the token is present" do
       @strategy.should_receive(:token).and_return(@user.perishable_token)
@@ -94,8 +81,16 @@ describe Strategies::PerishableToken do
     end     
   end
   
+  describe "#store?" do
+    before { @strategy = Strategies::PerishableToken.new(rack_env("/", {})) }
+
+    it "should return false" do
+      @strategy.store?.should == false
+    end
+  end
+  
   describe "#authenticate!" do
-    before { @strategy = Strategies::PerishableToken.new(rack_env("/", {}, {})) }
+    before { @strategy = Strategies::PerishableToken.new(rack_env("/", {})) }
     
     it "succeeds if the token matches a valid user's token" do
       @strategy.should_receive(:token).and_return(@user.perishable_token)
@@ -110,19 +105,11 @@ describe Strategies::PerishableToken do
     end
     
     it "fails if the token is expired" do
-      @user.updated_at = Time.now - 1.hour - 1.minute
+      @user.updated_at = Time.now - 1.day - 1.minute
       @user.save
       @strategy.should_receive(:token).and_return(@user.perishable_token)
       @strategy.authenticate!
       @strategy.result.should == :failure      
-    end
-    
-    it "resets the perishable token on success" do
-      old_token = @user.perishable_token
-      @strategy.should_receive(:token).and_return(@user.perishable_token)
-      @strategy.authenticate!
-      @strategy.result.should == :success
-      @user.reload.perishable_token.should_not == old_token
     end
     
     it "binds the device to the user if given device parameters and a valid nonce" do

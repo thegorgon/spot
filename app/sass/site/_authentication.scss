@@ -1,0 +1,80 @@
+#authenticate {
+  margin: 0 auto;
+  button {
+    width: 90px;
+  }
+  ul.form {
+    margin: 15px 0 0 0;
+    width: 300px;
+  }
+  li.divider {
+    height: 0;
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #666;
+  }
+  li.header {
+    height: 82px;
+    h1 {
+      padding: 24px 5px 0 0;
+      float: left;
+    }
+    .image {
+      float: left;
+    }
+  }
+  li.section {
+    padding: 1.5em 0;
+    h3 {
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 30px;
+    }
+    &.fb {
+      h3 {
+        float: left;
+      }
+      .logo {
+        float: left;
+        margin: 4px 7px 0 0;
+      }
+    }
+    &.email {
+      height: 175px;
+    }
+  }
+  .form_container {
+    position: relative;
+    height: 180px;
+    font-size: 14px;
+    form {
+      position: absolute;
+      top: 0px;
+      display: none;
+      &.selected {
+        display: block;
+      }
+    }
+    .ie7 & #login_form {
+      margin: 1em 0;
+    }
+  }
+  .radio_fade {
+    margin: 7px 0 0px 0;
+    font-size: 14px;
+    float: right;
+    .label {
+      cursor: pointer;
+      color: #AAA;
+      float: left;
+    }
+    .choice {
+      float: left;
+      width: 65px;
+    }
+  }
+  ul {
+    li.connect {
+      margin: 1em 0;
+    }
+  }
+}

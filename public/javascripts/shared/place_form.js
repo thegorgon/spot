@@ -64,19 +64,19 @@
         $('#place_lat, #place_lng').bind('keyup', function(e) {
           validateNumber($(this));
         });
-        $('#place_full_name,.address_field').bind('keyup', updateDetail)
+        $('#place_full_name,.address_field').bind('keyup', updateDetail);
         $('#place_external_image_url').bind('blur', function(e) {
-          validateImage($(this))
+          validateImage($(this));
         });
       };
   $.provide(go, "PlaceForm", {
     init: function(options) {
       _map = Spot.GMap.init({ mapDiv : options.mapDiv, center: getFormPosition(), name: getName() });
-      _map.bind('marker.drag', function(e) { setFormPosition(e.latLng); })
+      _map.bind('marker.drag', function(e) { setFormPosition(e.latLng); });
       bindActions();
       updateDetail();
       validateImage($('#place_external_image_url'));
       validateNumber($('#place_lat, #place_lng'));
     }
-  })
+  });
 }(Spot));

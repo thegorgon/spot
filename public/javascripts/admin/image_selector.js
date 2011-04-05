@@ -14,7 +14,7 @@
           container.find('.section:first').before(results);
           bindPotentials(results);
         }
-      })
+      });
     },
     defaultComplete = function(data) {
       var height = 2 * this[0].height,
@@ -26,7 +26,7 @@
       } else {
         alert("There was an error with that image. Please try again.");
       }
-    }
+    },
     bindPotentials = function(container) {
       $('.image_potential', container).unbind('.imageSelector').bind('click.imageSelector', function() {
         var form = $(this).parents('form'),
@@ -60,7 +60,7 @@
             img.src = newSrc;
             img.onload = function() {
               $this.attr('src', img.src);
-            } 
+            }; 
           }
         });
       }, 1000));
@@ -71,7 +71,7 @@
       oncomplete = $.isFunction(options.complete) ? options.complete : defaultComplete;
       setUpdateInterval();
       $(selector).bind('click', function(e) {
-        place = $(this).parents('.place'),
+        var place = $(this).parents('.place'),
           id = place.attr('id').split('_').pop();
         $.lightbox.loading();
         $(window).bind('closeLightbox', function(e) {

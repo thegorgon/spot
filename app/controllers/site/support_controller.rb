@@ -3,5 +3,8 @@ class Site::SupportController < Site::BaseController
   end
   
   def press
-  end  
+  end 
+  
+  def secret
+    end 
 end

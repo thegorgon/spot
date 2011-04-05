@@ -50,7 +50,7 @@
       buildSlide = function(img, i) {
         var slide = $("<div class='slide'></div>"),
           navLink = $('<li class="slidenav"></li>');
-        navLink.bind("click", function() { jumpTo(i) });
+        navLink.bind("click", function() { jumpTo(i); });
         navList.append(navLink);
         navList.width(navList.width() + navLink.width());
         return slide.append(img);
@@ -61,15 +61,15 @@
           finalized = true;
           element.fadeIn(1000);
           setTimeout(resize, 1);
-          setTimeout(function() { jumpTo(currentSlide, false) }, 1);
+          setTimeout(function() { jumpTo(currentSlide, false); }, 1);
         }
       },
       jumpTo = function(i) {
         currentSlide = i;
-        if (currentSlide == 0) {
+        if (currentSlide === 0) {
           lastControl.fadeOut(1000);
           nextControl.fadeIn(1000);
-        } else if (currentSlide == options.slides.length - 1) {
+        } else if (currentSlide === options.slides.length - 1) {
           lastControl.fadeIn(1000);
           nextControl.fadeOut(1000);
         } else {

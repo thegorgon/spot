@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Api::ActivityController do
+  before(:all) { User.delete_all }
   before { init_rails_warden! }
 
   describe "#show" do

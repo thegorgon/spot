@@ -43,6 +43,12 @@ describe FacebookAccount do
       @dupe = Factory.build(:facebook_account, :access_token => @account.access_token) 
       @dupe.should_not be_valid
     end
+    
+    it "must have an email address" do
+      @account.should be_valid
+      @account.email = nil
+      @account.should_not be_valid
+    end
   end
   
   describe "#user" do
@@ -63,7 +69,55 @@ describe FacebookAccount do
       @account.save
       @account.user.should == @user
     end
-  end
+    
+    it "sets the users first name if the user does not have one" do
+      @account.user = Factory.build(:user, :first_name => nil)
+      @account.save
+      @account.user.first_name.should_not be_nil
+      @account.user.first_name.should == @account.first_name
+    end
+
+    it "sets the users first name if the user does not have one" do
+      @account.user = Factory.build(:user, :last_name => nil)
+      @account.save
+      @account.user.last_name.should_not be_nil
+      @account.user.last_name.should == @account.last_name
+    end
+
+    it "sets the users email if the user does not have one" do
+      @account.user = Factory.build(:user, :email => nil)
+      @account.save
+      @account.user.email.should_not be_nil
+      @account.user.email.should == @account.email
+    end
+
+    it "leaves the users first name if the user has one" do
+      @account.user = Factory.build(:user, :first_name => "Different")
+      @account.save
+      @account.user.first_name.should == "Different"
+    end
+
+    it "leaves the users last name if the user has one" do
+      @account.user = Factory.build(:user, :last_name => "Different")
+      @account.save
+      @account.user.last_name.should_not be_nil
+      @account.user.last_name.should == "Different"
+    end
+
+    it "leaves the users email if the user has one" do
+      @account.user = Factory.build(:user, :email => "adifferent@email.com")
+      @account.save
+      @account.user.email.should == "adifferent@email.com"
+    end
+    
+    it "uses a user with the same email if one exists and it is not associated with a user" do
+      @account.email = Factory.next(:email)
+      @account.user = nil
+      @user = Factory.create(:user, :email => @account.email)
+      @account.save
+      @account.user_id.should == @user.id
+    end
+   end
   
   describe "#authenticate" do
     before do 
@@ -101,6 +155,13 @@ describe FacebookAccount do
       auth.should be_nil
     end
     
+    it "returns nil if facebook does not respond with an email" do
+      @mock_user.email = nil
+      Wrapr::FbGraph::User.should_receive(:find).and_return(@mock_user)
+      auth = FacebookAccount.authenticate(:facebook_id => @account.facebook_id, :access_token => @account.access_token)
+      auth.should be_nil
+    end
+    
     it "returns nil if facebook does not respond with the account's facebook id" do
       @mock_user.id = @account.facebook_id + 1
       Wrapr::FbGraph::User.should_receive(:find).and_return(@mock_user)
@@ -112,6 +173,51 @@ describe FacebookAccount do
       Wrapr::FbGraph::User.should_receive(:find).and_return(nil)
       auth = FacebookAccount.authenticate(:facebook_id => @account.facebook_id, :access_token => @account.access_token)
       auth.should be_nil
+    end
+  end
+  
+  describe "#fb_user" do
+    it "returns a facebook user" do
+      Wrapr::FbGraph::User.should_receive(:find).with(@account.facebook_id, hash_including(:access_token => @account.access_token)).and_return(@mock_user)      
+      @account.fb_user.should be_kind_of Wrapr::FbGraph::User
+    end
+
+    it "returns a facebook user with the same facebook id as the account" do
+      Wrapr::FbGraph::User.should_receive(:find).with(@account.facebook_id, hash_including(:access_token => @account.access_token)).and_return(@mock_user)      
+      @account.fb_user.id.to_i.should == @account.facebook_id
+    end
+
+    it "returns a facebook user with an email address" do
+      Wrapr::FbGraph::User.should_receive(:find).with(@account.facebook_id, hash_including(:access_token => @account.access_token)).and_return(@mock_user)      
+      @account.fb_user.email.should be_present
+    end
+
+    it "returns a facebook user with a valid email address" do
+      Wrapr::FbGraph::User.should_receive(:find).with(@account.facebook_id, hash_including(:access_token => @account.access_token)).and_return(@mock_user)      
+      @account.fb_user.email.should =~ EMAIL_REGEX
+    end
+
+    it "returns nil if facebook responds with a different facebook account" do
+      @mock_user.id = @account.facebook_id + 1
+      Wrapr::FbGraph::User.should_receive(:find).with(@account.facebook_id, hash_including(:access_token => @account.access_token)).and_return(@mock_user)      
+      @account.fb_user.should be_nil
+    end
+
+    it "returns nil if facebook does not respond with an email address" do
+      @mock_user.email = nil
+      Wrapr::FbGraph::User.should_receive(:find).with(@account.facebook_id, hash_including(:access_token => @account.access_token)).and_return(@mock_user)      
+      @account.fb_user.should be_nil
+    end
+
+    it "returns nil if facebook responds with an invalid email address" do
+      @mock_user.email = "invalidaddress"
+      Wrapr::FbGraph::User.should_receive(:find).with(@account.facebook_id, hash_including(:access_token => @account.access_token)).and_return(@mock_user)      
+      @account.fb_user.should be_nil
+    end
+
+    it "returns nil if facebook responds with nil" do
+      Wrapr::FbGraph::User.should_receive(:find).with(@account.facebook_id, hash_including(:access_token => @account.access_token)).and_return(nil)      
+      @account.fb_user.should be_nil
     end
   end
   
@@ -156,5 +262,18 @@ describe FacebookAccount do
       Wrapr::FbGraph::User.should_receive(:find).with(@account.facebook_id, hash_including(:access_token => @account.access_token)).and_return(nil)
       @account.sync!.should == false
     end
+    
+    it "returns false if the response from facebook does not include an email" do
+      @mock_user.email = nil
+      Wrapr::FbGraph::User.should_receive(:find).with(@account.facebook_id, hash_including(:access_token => @account.access_token)).and_return(@mock_user)
+      @account.sync!.should == false
+    end
+
+    it "returns false if the response from facebook includes an invalid email" do
+      @mock_user.email = "invalid"
+      Wrapr::FbGraph::User.should_receive(:find).with(@account.facebook_id, hash_including(:access_token => @account.access_token)).and_return(@mock_user)
+      @account.sync!.should == false
+    end
   end
+
 end

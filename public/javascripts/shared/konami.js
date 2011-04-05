@@ -15,9 +15,9 @@
               elems.trigger( 'konami' );
               idx = 0;
             }
-            $(document).data('konami-idx', idx)
+            $(document).data('konami-idx', idx);
           } else {
-            $(document).data('konami-idx', 0)
+            $(document).data('konami-idx', 0);
           }
         });
       }
@@ -28,5 +28,5 @@
         $(document).unbind( 'keydown.konami' );
       }
     }
-  }
+  };
 }(jQuery));

@@ -10,7 +10,7 @@
         windowHeight = $(window).height(),
         contentHeight, container, oldLeft, lbTop;
       $('#lightbox_content').removeClass('loading');
-      if ($('#lightbox_container').length == 0) {
+      if ($('#lightbox_container').length === 0) {
         boxHtml.hide().prependTo('body');
       }
       $('#lightbox_content').html(content);
@@ -20,7 +20,7 @@
       container.css('left', -1000);
       contentHeight = $('#lightbox_content').outerHeight();
       container.hide();
-      container.css('left', oldLeft)
+      container.css('left', oldLeft);
       if (contentHeight > windowHeight) {
         $('#lightbox_content').css({ position: 'absolute', top: scrollTop });
       } else {
@@ -40,5 +40,5 @@
   };
   $.fn.lightbox = function() {
     $.lightbox.show(this);
-  }
+  };
 }(jQuery));

@@ -115,10 +115,10 @@
 }
 
 @mixin opacity($opacity) {
-  opacity: $opacity;
   filter: unquote("alpha(opacity=") $opacity * 100 unquote(")");
   -moz-opacity: $opacity;
   -khtml-opacity: $opacity; 
+  opacity: $opacity;
 }
 
 // Don't allow wrapping.

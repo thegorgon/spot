@@ -23,8 +23,11 @@
 %body{:id => page_namespace, :class => controller_name}
   #bg
   #page
-    #hd= yield :hd
-    #bd= yield
+    #hd
+      = yield :hd
+    #bd
+      = flashes
+      = yield
     #ft
       #logo.flips
         =image_tag 'logos/white_shadowed_spot_with_tagline_200x101.png', :width => '200'
@@ -35,11 +38,12 @@
         =link_to "about", about_path, :class => "page first"
         =link_to "home", root_path, :class => "page"      
         -if logged_in?
-          =link_to "logout", sessions_path, 'data-method' => "delete"
+          #account_nav
+            ="Logged in as #{current_user.nickname} #{link_to "logout", session_path, 'data-method' => "delete"}".html_safe
       #signup_form.flips
         %p.title
           Coming Soon! Sign up for early access :
-        =form_for :preview, :url => previews_path, :html => {:class => "page"} do |f|
+        =spot_form_for :preview, :url => previews_path, :html => {:class => "page"} do |f|
           =f.hidden_field :rid, :value => params[:rid]
           =f.text_field :email, "placeholder" => "enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"
           =button_tag(:class => "hlfrndblk_80x30") do

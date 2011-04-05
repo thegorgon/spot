@@ -43,4 +43,5 @@ group :test do
   gem 'simplecov'
   gem 'autotest'
   gem 'autotest-fsevent'
+  gem 'autotest-growl'
 end

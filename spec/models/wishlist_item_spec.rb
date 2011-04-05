@@ -167,10 +167,11 @@ describe WishlistItem do
     end
   end
   
-  describe "#tweeting" do    
+  describe "#tweeting" do
     before { @wi = Factory.build(:wishlist_item) }
     
     it "sends an update to twitter" do
+      Rails.should_receive(:env).and_return(ActiveSupport::StringInquirer.new("production"))
       Twitter.should_receive(:update).with(/Hot on Spot:(.+)/).and_return(true)
       @wi.create_tweets!
     end
@@ -208,6 +209,7 @@ describe WishlistItem do
     end
     
     it "handles a twitter forbidden error" do
+      Rails.should_receive(:env).and_return(ActiveSupport::StringInquirer.new("production"))
       Twitter.should_receive(:update).and_raise(Twitter::Forbidden)
       expect { @wi.create_tweets! }.to_not raise_error
     end
@@ -217,6 +219,12 @@ describe WishlistItem do
       @wi.item.name = "A different name"
       @wi.tweet.should == original
       @wi.tweet(:reload => true).should_not == original
+    end
+    
+    it "does not call twitter unless in production" do
+      Rails.should_receive(:env).and_return(ActiveSupport::StringInquirer.new("test"))
+      Twitter.should_not_receive(:update)
+      @wi.create_tweets!
     end
     
     it "is enqueued on creation" do

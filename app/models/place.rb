@@ -1,4 +1,5 @@
 class Place < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
   validates :full_name, :presence => true
   validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
@@ -141,6 +142,10 @@ class Place < ActiveRecord::Base
     save!
   end
   
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
+  
   def as_json(*args)
     options = args.extract_options!
     hash = {
@@ -154,11 +159,13 @@ class Place < ActiveRecord::Base
       :image_url_640x400 => image.url(:i640x400),
       :image_url_234x168 => image.url(:i234x168),
       :image_url => image.url,
-      :updated_at => updated_at
+      :updated_at => updated_at,
+      :path => place_path(self)
     }
     unless image.file? || options[:default_images]
       hash.merge!(:image_url_640x400 => nil, :image_url_234x168 => nil, :image_url => nil)
     end
+    hash[:phone_number] = phone_number if phone_number.present?
     if image_processing? && options[:processed_images]
       hash.merge!(:processed_image_url_640x400 => image.processed_url(:i640x400), :processed_image_url_234x168 => image.processed_url(:i234x168))
     end

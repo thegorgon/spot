@@ -9,8 +9,12 @@ module Wrapr
         define_method "#{arg}=" do |value|
           if options[:list] && options[:model] && value.kind_of?(Enumerable)
             value = value.collect { |value| options[:model].parse(value) }
+          elsif options[:list] && options[:method] && value.kind_of?(Enumerable)
+            value = value.collect { |value| value.try(options[:method]) }
           elsif options[:model]
             value = options[:model].parse(value) if options[:model]
+          elsif options[:method] && value.respond_to?(options[:method])
+            value = value.try(options[:method])
           end
           instance_variable_set "@#{arg}", value
         end

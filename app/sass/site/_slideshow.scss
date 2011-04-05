@@ -1,4 +1,5 @@
 .site_previews {
+  padding: 0;
   #slideshow {
     position: absolute;
     overflow: hidden;
@@ -35,11 +36,11 @@
     }
     #nextslide {
       right: 0px;
-      background-image: url('/images/assets/slideshow/nextslide.png');
+      background-image: url(/images/assets/slideshow/nextslide.png);
     }
     #lastslide {
       left: 0px;
-      background-image: url('/images/assets/slideshow/lastslide.png');
+      background-image: url(/images/assets/slideshow/lastslide.png);
     }
     #slidenav {
       position: absolute;
@@ -60,10 +61,10 @@
           height: 17px;
           width: 30px;
           display: block;
-          background: transparent url('/images/assets/slideshow/unselected_slide.png') no-repeat center center;
+          background: transparent url(/images/assets/slideshow/unselected_slide.png) no-repeat center center;
           cursor: pointer;
           &.selected {
-            background: transparent url('/images/assets/slideshow/selected_slide.png') no-repeat center center;
+            background: transparent url(/images/assets/slideshow/selected_slide.png) no-repeat center center;
           }
         }
       }

@@ -1,4 +1,6 @@
 describe ActivityItem do
+  before(:all) { User.delete_all; ActivityItem.delete_all }
+  
   describe "#associations" do
     it "belongs to a user, 'actor'" do
       ActivityItem.reflect_on_association(:actor).macro.should == :belongs_to

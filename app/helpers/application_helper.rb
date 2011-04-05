@@ -3,6 +3,10 @@ module ApplicationHelper
     @page_title || "Spot App - Never Forget a Place"
   end
   
+  def conditionally(value, condition)
+    condition ? value : nil
+  end
+  
   def first_or_last(items, i)
     if i == 0 && items.length == 1 
       "first last"

@@ -1,8 +1,10 @@
+require 'spec_helper'
+
 describe Strategies::Password do
   before :each do 
     @nonce = Nonce.new
     @session = {}
-    @password = "testpassword"
+    @password = "testpass"
     @account = Factory.create(:password_account, :login => "tester@test.com", :password => @password)
     @params = { :credentials => { :password => { :login => @account.login, :password => @password }, :key => @nonce.digested } }
     @env = rack_env("/", @params)

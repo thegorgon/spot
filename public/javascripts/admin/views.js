@@ -42,7 +42,7 @@
           // $(this).parents('.duplicate').replaceWith(html.hide())
           // html.slideDown();
         }
-      })
+      });
     },
     admin_places_index: function() {
       $('.search_link').toggle(function(e) {

@@ -52,6 +52,7 @@ describe Strategies::Facebook do
     before :each do
       @mock_user = Wrapr::FbGraph::User.new
       @mock_user.id = @account.facebook_id
+      @mock_user.email = @account.email
     end
     
     it "succeeds if the params include a valid nonce and valid facebook params" do

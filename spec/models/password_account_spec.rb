@@ -12,6 +12,16 @@ describe PasswordAccount do
       @account.should_not be_valid
     end
 
+    it "must have a password between 4 and 10 characters long" do
+      @account.should be_valid
+      @account.password = ""
+      @account.should_not be_valid
+      @account.password = "abcdefghijklmnopqrstuvwxyz"
+      @account.should_not be_valid
+      @account.password = "password"
+      @account.should be_valid
+    end
+
     it "must have a login" do
       @account.should be_valid
       @account.login = nil
@@ -29,6 +39,55 @@ describe PasswordAccount do
       @account.login = "notanemail"
       @account.should_not be_valid
     end
+    
+    it "must have a name" do
+      @account.should be_valid
+      @account.name = nil
+      @account.should_not be_valid
+      @account.name = ""
+      @account.should_not be_valid
+    end    
+  end
+  
+  describe "#name" do
+    it "sets the last name to the last word" do
+      @account.name = "First Name Last"
+      @account.last_name.should == "Last"
+    end
+
+    it "sets the first name to the rest" do
+      @account.name = "First Name Last"
+      @account.first_name.should == "First Name"
+    end
+
+    it "respects hyphenated last names" do
+      @account.name = "First Word Last-Name"
+      @account.last_name.should == "Last-Name"
+      @account.first_name.should == "First Word"
+    end
+
+    it "works with crazy names" do
+      @account.name = "M El Hoy-G. Siegler"
+      @account.first_name.should == "M El Hoy-G."
+      @account.last_name.should == "Siegler"
+    end
+    
+    it "returns the first name and last name with a space in between" do
+      @account.first_name = "First"
+      @account.last_name = "Last"
+      @account.name.should == "First Last"
+    end
+    
+    it "sets the name to the first name if only one word is given" do
+      @account.name = "Firstnameonly"
+      @account.first_name.should == "Firstnameonly"
+    end
+    
+    it "causes the name to have errors if set to nothing" do
+      @account.name = ""
+      @account.should_not be_valid
+      @account.errors[:name].should be_present
+    end
   end
   
   describe "#salt" do
@@ -39,9 +98,9 @@ describe PasswordAccount do
     end
 
     it "resets on save when the password is changed" do
+      @account.password = "initialpassword"
       @account.save
       @account.password_salt = "initialsalt"
-      @account.password = "initialpassword"
       @account.password = "newpassword"
       expect { @account.save }.to change(@account, :password_salt)
     end
@@ -80,6 +139,30 @@ describe PasswordAccount do
       @account.save
       @account.user.should == @user
     end
+    
+    it "sets the users name fields to its name fields if the user doesnt have a name" do
+      @user = Factory.create(:user, :first_name => nil, :last_name => nil)
+      @account.user = @user
+      @account.save
+      @account.user.first_name.should == @account.first_name
+      @account.user.last_name.should == @account.last_name
+    end
+
+    it "leaves the users name alone if the user has a name" do
+      @user = Factory.create(:user, :first_name => "Not The", :last_name => "Same Name")
+      @account.user = @user
+      @account.save
+      @account.user.first_name.should_not == @account.first_name
+      @account.user.last_name.should_not == @account.last_name
+    end
+    
+    it "uses a user with the same email if one exists and it is not associated with a user" do
+      @account.user = nil
+      @account.login = Factory.next(:email)
+      @user = Factory.create(:user, :email => @account.login)
+      @account.save
+      @account.user_id.should == @user.id
+    end
   end
     
   describe "#authenticate" do
@@ -101,6 +184,89 @@ describe PasswordAccount do
     it "returns nil if the password is incorrect" do
       result = PasswordAccount.authenticate(:login => @account.login, :password => "notapassword")
       result.should be_nil
+    end
+  end
+
+  describe "#register" do
+    before do 
+      @login = Factory.next(:email)
+      @params = { :first_name => "First", :last_name => "Last", :login => @login, :password => "password" }
+    end
+
+    it "returns an account with no errors if given valid params" do
+      account = PasswordAccount.register(@params)
+      account.should be_kind_of PasswordAccount
+      account.valid?
+      account.should be_valid
+    end
+
+    it "returns an account with the given login" do
+      account = PasswordAccount.register(@params)
+      account.login.should == @login
+    end
+
+    it "returns an account with the given first name" do
+      account = PasswordAccount.register(@params)
+      account.first_name.should == @params[:first_name]
+    end
+
+    it "returns an account with the given last name" do
+      account = PasswordAccount.register(@params)
+      account.last_name.should == @params[:last_name]
+    end
+      
+    it "returns an account with errors unless given an invalid email" do
+      @params[:login] = "INVALID EMAIL"
+      account = PasswordAccount.register(@params)
+      account.should_not be_valid
+      @params[:login] = ""
+      account = PasswordAccount.register(@params)
+      account.should_not be_valid
+      @params[:login] = nil
+      account = PasswordAccount.register(@params)
+      account.should_not be_valid
+    end
+
+    it "returns an account with errors unless given a name" do
+      @params[:first_name] = ""
+      @params[:last_name] = ""
+      account = PasswordAccount.register(@params)
+      account.should_not be_valid
+      @params[:first_name] = nil
+      @params[:last_name] = nil
+      account = PasswordAccount.register(@params)
+      account.should_not be_valid
+    end
+
+    it "returns an account with errors unless given a password" do
+      @params[:password] = nil
+      account = PasswordAccount.register(@params)
+      account.should_not be_valid
+      @params[:password] = ""
+      account = PasswordAccount.register(@params)
+      account.should_not be_valid
+    end
+    
+    it "returns an account with errors if given an existing email with an invalid password" do
+      account = PasswordAccount.create(@params)
+      account.should be_valid
+      @params[:password] = "badpass"
+      account = PasswordAccount.register(@params)
+      account.should_not be_valid
+    end
+    
+    it "returns an existing account if given a valid login and password for an existing account" do
+      registered = PasswordAccount.register(@params)
+      registered.save.should == true
+      reregistered = PasswordAccount.register(@params)
+      reregistered.should == registered
+    end
+    
+    it "returns an account that can be authenticated with the given login and password" do
+      registered = PasswordAccount.register(@params)
+      registered.save.should == true
+      authenticated = PasswordAccount.authenticate(@params)
+      registered.should == authenticated
     end
   end
 end

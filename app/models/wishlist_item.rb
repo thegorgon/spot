@@ -42,7 +42,7 @@ class WishlistItem < ActiveRecord::Base
     Twitter.oauth_token = global_account['oauth_token']
     Twitter.oauth_token_secret = global_account['oauth_token_secret']
     begin
-      Twitter.update tweet if tweet
+      Twitter.update tweet if tweet && Rails.env.production?
       true
     rescue Twitter::Forbidden => e
       false

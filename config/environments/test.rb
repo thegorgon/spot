@@ -32,4 +32,9 @@ Spot::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+  
+  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Geo' 
+  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Google' 
+  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Wrapr'
+  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Strategies' 
 end

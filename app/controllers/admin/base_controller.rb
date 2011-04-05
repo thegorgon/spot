@@ -2,7 +2,7 @@ class Admin::BaseController < ApplicationController
   layout 'admin'
   USERS = {"pp" => "pilates!"}
 
-  before_filter :authenticate
+  before_filter :require_user
   
   def default_render(*args)
     respond_to do |format|
@@ -24,10 +24,12 @@ class Admin::BaseController < ApplicationController
     end
   end
   
-  def authenticate
-    authenticate_or_request_with_http_basic do |username, password|
-      username == "pp" && password == USERS["pp"]
+  def require_user
+    authenticate
+    unless current_user && current_user.admin?
+      store_location
+      flash[:error] = "Sorry, that's for Spot administrators only."
+      redirect_to root_path
     end
-    warden.custom_failure! if performed?
   end  
 end

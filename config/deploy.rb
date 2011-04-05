@@ -84,8 +84,8 @@ end
 # JAMMIT Assets
 namespace :assets do
   task :optimize, :roles => :web do
-    send(:run, "cd #{release_path} && /usr/local/bin/jammit")
     send(:run, "cd #{release_path} && RAILS_ENV=#{rails_env} rake sass:update")
+    send(:run, "cd #{release_path} && /usr/local/bin/jammit")
   end
 end
 

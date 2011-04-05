@@ -35,6 +35,12 @@
     }
   });
   $.extend($.fn, {
+    absolutize: function() {
+      var $this = $(this),
+        offset = $this.offset(),
+        parent = $this.offsetParent();
+      $this.css({width: $this.innerWidth(), height: $this.innerHeight(), position: 'absolute', top: offset.top, left: offset.left});
+    },
     ajaxForm: function(options) {
       options = options || {};
       this.filter('form').each(function() {

@@ -2,7 +2,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper :application, :place
   
-  private
+  private  
+  
+  def logged_in?
+    authenticated? && (warden.winning_strategy.nil? || warden.winning_strategy.store?)
+  end
+  helper_method :logged_in?
   
   def geo_ip
     @geo_ip ||= GeoIP.new('db/GeoIP.dat')
@@ -17,7 +22,7 @@ class ApplicationController < ActionController::Base
     geo_country.country_code3
   end
   helper_method :country_code
-    
+  
   # Return the rendered page namespace, derived from the Controller name and rendered template. This identifier
   # can be used as a CSS class/id name and JavaScript variable name.  
   def page_namespace

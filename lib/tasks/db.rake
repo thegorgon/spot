@@ -40,4 +40,20 @@ namespace :db do
     puts 'removing remote dump file'
     `ssh #{tunnel} -p #{@port} "rm ~/spotdbsync.sql"`
   end
+  
+  task(:reset => :environment) do
+    unless Rails.env.production?
+      Rake::Task["db:drop"].invoke
+      Rake::Task["db:create"].invoke
+      Rake::Task["db:migrate"].invoke
+    end
+  end
+  
+  task(:unsubscribe => :environment) do
+    unless Rails.env.production?
+      [User, PasswordAccount, FacebookAccount].each do |account|
+        account.connection.execute("TRUNCATE #{account.table_name}")
+      end
+    end
+  end
 end

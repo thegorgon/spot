@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Strategies::Device do
   before :each do 
     @nonce = Nonce.new

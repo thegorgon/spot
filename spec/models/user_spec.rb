@@ -1,8 +1,47 @@
 require 'spec_helper'
 
 describe User do
+  before(:all) { User.delete_all; }
   before :each do 
     @user = Factory.build(:user)
+  end
+  
+  describe "#validations" do
+    it "must have a locale" do
+      @user.should be_valid
+      @user.locale = nil
+      @user.should_not be_valid
+    end
+  end
+  
+  describe "#name" do
+    it "sets the last name to the last word" do
+      @user.name = "First Name Last"
+      @user.last_name.should == "Last"
+    end
+
+    it "sets the first name to the rest" do
+      @user.name = "First Name Last"
+      @user.first_name.should == "First Name"
+    end
+
+    it "respects hyphenated last names" do
+      @user.name = "First Word Last-Name"
+      @user.last_name.should == "Last-Name"
+      @user.first_name.should == "First Word"
+    end
+
+    it "works with crazy names" do
+      @user.name = "M El Hoy-G. Siegler"
+      @user.first_name.should == "M El Hoy-G."
+      @user.last_name.should == "Siegler"
+    end
+    
+    it "returns the first name and last name with a space in between" do
+      @user.first_name = "First"
+      @user.last_name = "Last"
+      @user.name.should == "First Last"
+    end
   end
   
   describe "#wishlist" do
@@ -164,8 +203,8 @@ describe User do
       user.should == @user
     end
 
-    it "returns a user with the given token if one exists, no age is provided and the token is younger than 1 hour old" do
-      @user.updated_at = Time.now - 55.minutes
+    it "returns a user with the given token if one exists, no age is provided and the token is younger than 1 day old" do
+      @user.updated_at = Time.now - 23.hours
       @user.save
       user = User.find_using_perishable_token(@user.perishable_token)
       user.should == @user
@@ -183,8 +222,8 @@ describe User do
       user.should be_nil      
     end
 
-    it "returns nil if the token is older than 1 hour old and no age is provided" do
-      @user.updated_at = Time.now - 65.minutes
+    it "returns nil if the token is older than 1 day old and no age is provided" do
+      @user.updated_at = Time.now - 1.day - 5.minutes
       @user.save
       user = User.find_using_perishable_token(@user.perishable_token)
       user.should be_nil
@@ -202,6 +241,39 @@ describe User do
       @user.save
       user = User.find_using_perishable_token(@user.perishable_token, -1)
       user.should == @user
+    end
+  end
+
+  describe "#nickname" do
+    it "returns the downcased first name and first initial of the last name followed by a period" do
+      @user.first_name = "First"
+      @user.last_name = "Last"
+      @user.nickname.should == "first l."
+    end
+
+    it "returns the downcased first name if there is no last name" do
+      @user.first_name = "First"
+      @user.last_name = nil
+      @user.nickname.should == "first"
+    end
+
+    it "returns the last name if there is no first name" do
+      @user.first_name = nil
+      @user.last_name = "Last"
+      @user.nickname.should == "last"
+    end
+  end
+
+  describe "#admin!" do
+    it "makes the admin flag true" do
+      @user.should_not be_admin
+      @user.admin!
+      @user.should be_admin      
+    end
+
+    it "saves the user" do
+      @user.admin!
+      @user.should_not be_changed      
     end
   end
 end

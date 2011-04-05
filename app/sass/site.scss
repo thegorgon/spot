@@ -5,7 +5,9 @@
 @import "shared/_devices.scss";
 @import "shared/_forms.scss";
 @import "site/_layout.scss";
-@import "site/_sessions.scss";
+@import "site/_authentication.scss";
+@import "site/_accounts.scss";
+@import "site/_password_resets.scss";
 @import "site/_slideshow.scss";
 @import "site/_blog.scss";
 @import "site/_email.scss";

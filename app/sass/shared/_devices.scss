@@ -115,4 +115,37 @@
       }
     }
   }
+  .wishlist {
+    background: #f0f0f0;
+    .wishlist_item {
+      background: #f0f0f0;
+      .photo {
+        float: left;
+        height: 84px;
+      }
+      .info {
+        background: #f0f0f0 url(/images/assets/general/orange_disclosure_triangle_right11x15.png) no-repeat 95% center;
+        position: relative;
+        float: left;
+        padding: 5px;
+        height: 73px;
+        border-bottom: 1px solid #ddd;
+        width: 194px;
+        .name {
+          font-weight: bold;
+          font-size: 15px;
+          color: #000;
+        }
+        .location {
+          color: #999;
+        }
+        .timestamp {
+          position: absolute;
+          bottom: 5px;
+          left: 5px;
+          color: #ff8419;
+        }
+      }
+    }    
+  }
 }

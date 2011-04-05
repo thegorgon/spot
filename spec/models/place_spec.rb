@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 describe Place do
+  before(:all) { User.delete_all }
   describe "#validations" do
     before { @place = Factory.build(:place) }
 
@@ -165,10 +166,7 @@ describe Place do
     end
 
     it "responds with wishlisted places if the filters 1st bit is 1" do
-      @wishlisted = Factory.create(:place)
-      # Incrementing happens offline, so gotta do it with resque
-      Twitter.should_receive(:update).and_return(true)
-      with_resque { wi = Factory.create(:wishlist_item, :item => @wishlisted) }
+      @wishlisted = Factory.create(:place, :wishlist_count => 2)
       @unwishlisted = Factory.create(:place)
       Place.filter(:filter => 1).should include @wishlisted
       Place.filter(:filter => 1).should_not include @unwishlisted

@@ -2,7 +2,7 @@
   #about {
     margin: 0 auto;
     @include black_radial_gradient(300);
-    width: 500px;
+    width: 630px;
     font-size: 15px;
     text-align: center;
     text-shadow: #000 0px 1px 0px;
@@ -17,6 +17,26 @@
       height: 0;
       border-bottom : 1px solid #222;
       margin: 1.5em 5em 0em;
+    }
+    .pictures {
+      padding: 1em;
+      margin: 0 auto;
+      .row {
+        margin: 20px 0;
+        .profile {
+          width: 300px;
+          text-align: center;
+          .caption {
+            font-weight: bold;
+          }
+        }
+        .left {
+          float: left;
+        }
+        .right {
+          float: right;
+        }
+      }
     }
   }
   #press {
@@ -49,7 +69,7 @@
           float: left;
           margin: 10px 13px 0 0;
           &.loading {
-            background: transparent url('/images/assets/loading/orange-3block-16x11.gif') no-repeat center center;            
+            background: transparent url(/images/assets/loading/orange-3block-16x11.gif) no-repeat center center;            
           }
           &.last {
             margin-right: 0;

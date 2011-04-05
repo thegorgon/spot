@@ -1,18 +1,28 @@
+require 'resque/server'
+
 Spot::Application.routes.draw do
   scope :module => "site", :constraints => {:subdomain => /www|m/} do
     resources :previews, :only => [:index, :create] do
       get "share"
     end
     resources :blog, :controller => "blog", :only => [:index]
-    resource :sessions, :only => [:new, :create, :destroy]
+    resource :session, :only => [:new, :create, :destroy]
+    resource :account, :only => [:new, :create, :destroy]
+    resource :password_reset, :only => [:new, :create, :edit, :update]
+    resources :places, :only => [:show]
     resource :email, :only => [:show] do
       delete "unsubscribe"
       get "goodbye"
+      get "availability"
+      get "existence"
     end
     controller "support" do
       get "about", :action => "about"
       get "press", :action => "press"
+      get "secret", :action => "secret"
     end
+    get "login" => redirect("/session/new")
+    get "register" => redirect("/account/new")
   end
   
   scope :module => "api", :constraints => {:subdomain => /api\d*/}, :as => "api" do
@@ -51,5 +61,7 @@ Spot::Application.routes.draw do
     root :to => "home#index"
   end
   
+  mount Resque::Server.new, :at => "/admin/resque"
+
   root :to => "site/previews#index"
 end

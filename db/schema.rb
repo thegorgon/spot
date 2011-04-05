@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110328010407) do
+ActiveRecord::Schema.define(:version => 20110330180826) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -176,6 +176,8 @@ ActiveRecord::Schema.define(:version => 20110328010407) do
     t.integer  "user_id",          :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "password_accounts", ["login"], :name => "index_password_accounts_on_login", :unique => true
@@ -230,16 +232,20 @@ ActiveRecord::Schema.define(:version => 20110328010407) do
 
   create_table "users", :force => true do |t|
     t.datetime "current_login_at"
-    t.integer  "login_count",         :default => 0, :null => false
+    t.integer  "login_count",         :default => 0,       :null => false
     t.string   "persistence_token"
     t.string   "single_access_token"
     t.string   "perishable_token"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "full_name"
     t.string   "email"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "locale",              :default => "en-US", :null => false
+    t.boolean  "admin",               :default => false,   :null => false
   end
 
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
 
   create_table "wishlist_items", :force => true do |t|

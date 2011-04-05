@@ -50,34 +50,7 @@ form.inline {
   margin: 0;
   padding: 0;
 }
-div.file_field {
-  position: relative;
-  .filename {
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    text-align: left;
-    padding: 5px;
-  }
-  input {
-    @include opacity(0);
-    z-index: 100;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    height: 100%;
-    width: 100%;
-    cursor: pointer;
-  }
-  .browse_button {
-    z-index: 10;
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
-  }
+.narrow_center {
+  margin: 0 auto;
+  width: 300px;
 }

@@ -25,8 +25,11 @@ class Site::BaseController < ApplicationController
   end
   
   def require_user
-    store_location
     authenticate
-    redirect_to new_sessions_path unless logged_in?
+    unless logged_in?
+      store_location
+      flash[:error] = "Sorry, can you login first?"
+      redirect_to new_session_path 
+    end
   end
 end

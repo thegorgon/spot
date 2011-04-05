@@ -1,6 +1,10 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    POpen4 (0.1.4)
+      Platform (>= 0.4.0)
+      open4
+    Platform (0.4.0)
     ZenTest (4.5.0)
     abstract (1.0.0)
     actionmailer (3.0.3)
@@ -37,6 +41,7 @@ GEM
       ZenTest (>= 4.4.1)
     autotest-fsevent (0.2.5)
       sys-uname
+    autotest-growl (0.2.9)
     aws-s3 (0.6.2)
       builder
       mime-types
@@ -53,15 +58,15 @@ GEM
     capistrano (2.5.20)
       highline
       highline
-      net-scp
       net-scp (>= 1.0.0)
+      net-scp
       net-sftp
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh
       net-ssh-gateway
       net-ssh-gateway (>= 1.0.0)
-    closure-compiler (1.0.0)
+    closure-compiler (1.1.1)
     columnize (0.3.2)
     curb (0.7.15)
     daemons (1.0.10)
@@ -103,7 +108,7 @@ GEM
     multi_json (0.0.5)
     multi_xml (0.2.2)
     multipart-post (1.1.0)
-    mysql2 (0.2.6)
+    mysql2 (0.2.7)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -113,12 +118,13 @@ GEM
       net-ssh (>= 1.99.1)
     nokogiri (1.4.4)
     oauth (0.4.4)
+    open4 (1.0.1)
     paperclip (2.3.8)
       activerecord
       activesupport
     polyglot (0.3.1)
     rack (1.2.2)
-    rack-mount (0.6.13)
+    rack-mount (0.6.14)
       rack (>= 1.0.0)
     rack-test (0.5.7)
       rack (>= 1.0)
@@ -138,7 +144,7 @@ GEM
       rake (>= 0.8.7)
       thor (~> 0.14.4)
     rake (0.8.7)
-    redis (2.1.1)
+    redis (2.2.0)
     redis-namespace (0.8.0)
       redis (< 3.0.0)
     redis-store (1.0.0.beta4)
@@ -151,7 +157,7 @@ GEM
       vegas (~> 0.1.2)
     resque-lock-timeout (0.2.1)
       resque (>= 1.8.0)
-    resque_spec (0.5.0)
+    resque_spec (0.5.1)
       resque (>= 1.6.0)
       rspec (>= 2.5.0)
     riddle (1.2.2)
@@ -216,9 +222,10 @@ GEM
     warden (1.0.3)
       rack (>= 1.0.0)
     will_paginate (3.0.pre2)
-    xml-simple (1.0.14)
-    yajl-ruby (0.8.1)
-    yui-compressor (0.9.4)
+    xml-simple (1.0.15)
+    yajl-ruby (0.8.2)
+    yui-compressor (0.9.6)
+      POpen4 (>= 0.1.4)
 
 PLATFORMS
   ruby
@@ -227,6 +234,7 @@ DEPENDENCIES
   amatch
   autotest
   autotest-fsevent
+  autotest-growl
   aws-s3
   aws-ses (~> 0.3.2)
   capistrano

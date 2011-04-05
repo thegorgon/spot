@@ -26,7 +26,7 @@
     @include box_shadow("0px 0px 12px rgba(0, 0, 0, 0.7)");
     background: #fff;
     &.loading {
-      background: #fff url(/images/assets/loading/orange-chasing-arrows16x16.gif) no-repeat center center;
+      background: #fff url(/images/assets/loading/orange-chasing16x16.gif) no-repeat center center;
       height: 50px;      
     }
   }

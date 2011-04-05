@@ -18,6 +18,7 @@
       level: function(level) {
         if (level) {
           logLevel = _LEVELS[level];
+          return logLevel;
         } else {
           return logLevel;
         }

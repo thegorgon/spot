@@ -1,11 +1,12 @@
 class User < ActiveRecord::Base
+  validates :locale, :presence => true
   before_validation :reset_persistence_token, :if => :reset_persistence_token?
   before_validation :reset_single_access_token, :if => :reset_single_access_token?
   before_save :reset_perishable_token
   has_many :devices, :dependent => :destroy
   has_many :wishlist_items, :dependent => :destroy
   
-  def self.find_using_perishable_token(token, age=1.hour) 
+  def self.find_using_perishable_token(token, age=1.day) 
     if token.present?
       finder = self
       finder = finder.where(["updated_at > ?", age.to_i.seconds.ago]) if age.to_i > 0
@@ -39,20 +40,49 @@ class User < ActiveRecord::Base
     self.class.where(:id => id).update_all(["login_count = COALESCE(login_count, 0) + 1, current_login_at = ?, updated_at = ?", Time.now.utc, Time.now.utc])    
   end
 
-  def as_json(*args)
-    options = args.extract_options!
-    hash = {
-      :_type => self.class.to_s,
-      :id => id,
-      :full_name => full_name
-    }
+  def name=(value)
+    splits = value.split(' ')
+    self.last_name = splits.pop
+    self.first_name = splits.join(' ')
+  end
+
+  def name
+    "#{first_name} #{last_name}"
+  end
+  
+  def nickname
+    if @nickname.blank?
+      if first_name.present? && last_name.present?
+        @nickname = [first_name, last_name.to_s.first].compact.join(" ")
+        @nickname << "."
+      else
+        @nickname = [first_name, last_name].compact.join
+      end
+      @nickname.downcase!
+    end
+    @nickname
+  end
+
+  def admin!
+    update_attribute(:admin, true)
   end
   
   def reset_perishable_token!
     reset_perishable_token
     save!
   end
-  
+
+  def as_json(*args)
+    options = args.extract_options!
+    hash = {
+      :_type => self.class.to_s,
+      :id => id,
+      :first_name => first_name,
+      :last_name => last_name,
+      :name => name
+    }
+  end
+    
   private
   
   def reset_persistence_token

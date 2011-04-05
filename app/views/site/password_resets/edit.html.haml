@@ -1,0 +1,11 @@
+.vcc
+  .vc
+    #password_reset.narrow_center
+      %h1
+        Reset Password
+      =form_for :reset, :url => password_reset_path(:token => current_user.perishable_token), :html => { :class => "faded", :method => "put" } do |f|
+        %ul.form
+          %li=f.password_field :password, :class => "text", :placeholder => "new password"
+          %li.buttons
+            =button_tag do
+              submit

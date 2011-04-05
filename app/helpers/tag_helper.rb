@@ -43,7 +43,25 @@ module TagHelper
     tags.join("\n").html_safe
   end
   
+  def spot_form_for(record, options={}, &proc)
+    options[:builder] ||= Spot::FormBuilder
+    (options[:html] ||= {})['data-validate'] ||= "validate"
+    content_tag(:ul, form_for(record, options, &proc).html_safe, :class => "form")
+  end
+  
   def meta_tag(property, content)
     tag(:meta, :property => property, :content => content)
-  end  
+  end
+  
+  def flashes
+    if flash[:notice] || flash[:error]
+      content_tag(:div, :id => "flashes") do
+        content = ""
+        content << content_tag(:div, flash[:notice].html_safe, :class => "flash notice") if flash[:notice]
+        content << content_tag(:div, flash[:error].html_safe, :class => "flash error") if flash[:error]
+        content << content_tag(:div, "&nbsp;".html_safe, :class => "close")
+        content.html_safe
+      end
+    end
+  end
 end

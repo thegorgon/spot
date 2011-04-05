@@ -1,7 +1,6 @@
 window.Spot = {};
 window.fbAsyncInit = function() {
-  // FB.init({appId: 476398305034, status: true, cookie: true,
-  //          xfbml: true});
+  FB.init({appId: Spot.getVar('env') == 'production' ? 146911415372759 : 329653055238, status: true, cookie: true, xfbml: true});
 };
 (function() {
   var e = document.createElement('script'); e.async = true;
