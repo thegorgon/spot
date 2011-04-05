@@ -26,6 +26,7 @@ gem 'oauth'
 gem 'faraday'
 gem 'sinatra', '1.1.3'
 gem 'geoip'
+gem 'rack-ssl-enforcer'
 
 group :production do
   gem 'unicorn'

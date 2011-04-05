@@ -25,3 +25,5 @@ Twitter.oauth = OAuth::Consumer.new(
 })
 
 ActionMailer::Base.add_delivery_method :ses, AWS::SES::Base, S3_CONFIG[Rails.env].symbolize_keys
+
+Rails.configuration.middleware.use Rack::SslEnforcer if Rails.env.production?
