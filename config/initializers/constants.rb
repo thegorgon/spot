@@ -5,3 +5,4 @@ S3_CONFIG = YAML.load_file(File.join(Rails.root, 'config', 'apis', 's3.yml'))
 S3_HOST = S3_CONFIG[Rails.env]['host']
 S3_BUCKET = S3_CONFIG[Rails.env]['bucket']
 S3_BUCKET_URL = "http://#{S3_BUCKET}.s3.amazonaws.com/"
+REQUIRE_SSL = Rails.env.production?
