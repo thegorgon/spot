@@ -11,14 +11,19 @@
         }
         placeholder.add($input).unbind('.placeholder');
         placeholder.bind('focus.placeholder', function(e) {
+          e.preventDefault();
           $input.focus(); 
         });
         $input.bind('focus.placeholder', function(e) {
-          placeholder.fadeOut($.support.opacity ? 250 : 0);
+          placeholder.fadeOut($.support.opacity ? 250 : 0, function() {
+            $input.data('focused', true);
+          });
         });
         $input.bind('blur.placeholder', function(e) {
-          if ($input.val() === '') {
-            placeholder.fadeIn($.support.opacity ? 250 : 0);
+          if ($input.val() === '' && $input.data('focused')) {
+            placeholder.fadeIn($.support.opacity ? 250 : 0, function() {
+              $input.data('focused', false);              
+            });
             placeholder.blur();          
           }
         });
@@ -50,7 +55,7 @@
           if (response.session) {
             $.each(['access_token', 'base_domain', 'expires', 'uid', 'secret', 'session_key', 'sig', 'uid'], function(i) {
               form.find('input[rel=' + this + ']').val(response.session[this]);
-            })
+            });
             form.submit();
           }
         }, {perms:'email'});
@@ -109,18 +114,16 @@
       $('.radio, .label', container).click(function(e) {
         var choice = $(this).parents('.choice'),
           rel = choice.attr('rel'),
-          cb = choice.find('.radio');
-        $('.choice', container).each(function(i) {
-          $($(this).attr('rel')).fadeOut($.support.opacity ? 250 : 0, function() {
-            $(this).removeClass('selected');            
-            $(this).parent('ul.form').clear();
-          });
+          cb = choice.find('.radio'),
+          curChoice = $('.choice.selected', container);
+        curChoice.removeClass('selected');
+        choice.addClass('selected');
+        $(curChoice.attr('rel')).fadeOut($.support.opacity ? 250 : 0, function(i) {
+          $(this).removeClass('selected');
         });
         $(rel).fadeIn($.support.opacity ? 250 : 0, function() {
           $(this).addClass('selected');
         });
-        $('.radio', container).removeClass('checked');
-        cb.addClass('checked');
       });
     },
     fileField: function() {

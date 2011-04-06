@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   helper_method :geo_country
   
   def country_code
-    geo_country.country_code3
+    geo_country.country_code2
   end
   helper_method :country_code
   

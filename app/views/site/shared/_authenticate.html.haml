@@ -21,12 +21,12 @@
   %li.divider
   %li.section.email
     .radio_fade.clearfix
-      .choice.clearfix{:rel => "#login_form"}
-        .radio.faded{:class => conditionally('checked', mode == :login)}
+      .choice.clearfix{:rel => "#login_form", :class => conditionally('selected', mode == :login)}
+        .radio.faded
           .indicator
         .label login
-      .choice.clearfix{:rel => "#register_form"}
-        .radio.faded{:class => conditionally('checked', mode == :register)}
+      .choice.clearfix{:rel => "#register_form", :class => conditionally('selected', mode == :register)}
+        .radio.faded
           .indicator
         .label register
     %h3 Email : 

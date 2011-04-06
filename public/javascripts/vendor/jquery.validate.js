@@ -1,5 +1,6 @@
-(function($){
-  var emailRegex = /\b[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,4}\b/i,
+(function($) {
+  var preloadable = ["/images/assets/general/check.png", "/images/assets/general/white_cross.png", "/images/assets/loading/bw-chasing30x30.gif"],
+    emailRegex = /\b[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,4}\b/i,
     invalid = function(input, message) {
       $(input).parent('li').removeClass('valid').removeClass('loading').addClass('invalid');
       $(input).parent('li').find('.validity .message').html(message || '');
@@ -48,6 +49,13 @@
           },
           dataType: 'json'
         });
+      }
+    }, preload = function() {
+      var img, src;
+      while (preloadable.length > 0) {
+        src = preloadable.pop();
+        img = new Image();
+        img.src = src;
       }
     };
   $.extend($.fn, {
@@ -121,6 +129,7 @@
       }
     },
     validate: function() {
+      preload();
       $(this).filter('form').each(function(i) {
         var form = $(this),
           required = form.find('input[required]:not([formnovalidate])'),
