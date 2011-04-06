@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Site::EmailsController do
   before do
+    init_rails_warden!
     @email = Factory.next(:email)
   end
   
