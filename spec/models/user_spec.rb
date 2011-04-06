@@ -5,15 +5,7 @@ describe User do
   before :each do 
     @user = Factory.build(:user)
   end
-  
-  describe "#validations" do
-    it "must have a locale" do
-      @user.should be_valid
-      @user.locale = nil
-      @user.should_not be_valid
-    end
-  end
-  
+    
   describe "#name" do
     it "sets the last name to the last word" do
       @user.name = "First Name Last"

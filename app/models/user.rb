@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  validates :locale, :presence => true
   attr_protected :admin
   before_validation :reset_persistence_token, :if => :reset_persistence_token?
   before_validation :reset_single_access_token, :if => :reset_single_access_token?
