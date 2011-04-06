@@ -34,6 +34,7 @@ class Place < ActiveRecord::Base
     :storage          => :s3,
     :s3_credentials   => "#{Rails.root}/config/apis/s3.yml",
     :path             => "/places/:id/:attachment_:style.:extension",
+    :s3_protocol      => "https",
     :bucket           => S3_BUCKET
   process_attachment_in_background :image, :job => Jobs::PlaceImageProcessor
   
