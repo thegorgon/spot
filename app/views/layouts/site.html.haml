@@ -40,14 +40,17 @@
         -if logged_in?
           #account_nav
             ="Logged in as #{current_user.nickname} #{link_to "logout", session_path, 'data-method' => "delete"}".html_safe
-      #signup_form.flips
-        %p.title
-          Coming Soon! Sign up for early access :
-        =spot_form_for :preview, :url => previews_path, :html => {:class => "page"} do |f|
-          =f.hidden_field :rid, :value => params[:rid]
-          =f.text_field :email, "placeholder" => "enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"
-          =button_tag(:class => "hlfrndblk_80x30") do
-            submit
+      -if itunes_store_link
+        #itunes_store_link=itunes_store_link
+      -else
+        #signup_form.flips
+          %p.title
+            Coming Soon! Sign up for early access :
+          =spot_form_for :preview, :url => previews_path, :html => {:class => "page"} do |f|
+            =f.hidden_field :rid, :value => params[:rid]
+            =f.text_field :email, "placeholder" => "enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"
+            =button_tag(:class => "hlfrndblk_80x30") do
+              submit
     #fb-root
   :javascript
     if (! /MSIE (\d+\.\d+);/.test(navigator.userAgent)) {

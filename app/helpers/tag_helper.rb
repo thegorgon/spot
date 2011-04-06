@@ -53,6 +53,11 @@ module TagHelper
     tag(:meta, :property => property, :content => content)
   end
   
+  def itunes_store_link
+    url = MobileApp.url_for(request_location || current_user.try(:location), "itunes")
+    link_to image_tag("assets/general/app_store183x60.png", :size => "183x60"), getspot_path if url
+  end
+  
   def flashes
     if flash[:notice].present? || flash[:error].present?
       content_tag(:div, :id => "flashes") do

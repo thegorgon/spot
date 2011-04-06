@@ -19,6 +19,7 @@ Spot::Application.routes.draw do
     controller "support" do
       get "about", :action => "about"
       get "press", :action => "press"
+      get "getspot", :action => "getspot"
       get "secret", :action => "secret"
     end
     get "login" => redirect("/session/new")

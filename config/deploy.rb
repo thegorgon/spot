@@ -93,9 +93,17 @@ end
 namespace :logs do
   task :tail, :roles => :web do
     run "tail -f #{shared_path}/log/production.log" do |channel, stream, data|
-     puts # for an extra line break before the host name
      puts "#{channel[:host]}: #{data}"
      break if stream == :err
+    end
+  end
+end
+
+namespace :watch do
+  task :unicorn, :roles => :web, :once => true do
+    run "ps aux | grep unicorn" do |channel, stream, data|
+      puts "#{channel[:host]}: #{data}"
+      break if stream == :err
     end
   end
 end

@@ -171,13 +171,13 @@ ActiveRecord::Schema.define(:version => 20110405202827) do
 
   create_table "mobile_apps", :force => true do |t|
     t.string  "name",                        :null => false
-    t.string  "locale",                      :null => false
+    t.string  "location",                    :null => false
     t.string  "store_id",                    :null => false
     t.string  "store",                       :null => false
     t.boolean "live",     :default => false, :null => false
   end
 
-  add_index "mobile_apps", ["store", "locale"], :name => "index_mobile_apps_on_store_and_locale", :unique => true
+  add_index "mobile_apps", ["store", "location"], :name => "index_mobile_apps_on_store_and_location", :unique => true
 
   create_table "password_accounts", :force => true do |t|
     t.string   "login",            :null => false
