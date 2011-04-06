@@ -3,6 +3,12 @@ class ApplicationController < ActionController::Base
   helper :application, :place
   
   private  
+
+  def with_flash_maintenance
+    old_flash = flash
+    yield
+    flash = old_flash
+  end
   
   def logged_in?
     authenticated? && (warden.winning_strategy.nil? || warden.winning_strategy.store?)

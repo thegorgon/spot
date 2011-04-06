@@ -2,7 +2,7 @@ class Site::SessionsController < Site::BaseController
   skip_before_filter :require_user, :except => [:destroy]
   
   def new
-    logout
+    with_flash_maintenance { logout }
     @nonce = Nonce.new(:session => session)
   end
   
