@@ -39,4 +39,5 @@ end
 
 Warden::Manager.before_logout do |user, warden, options|
   warden.request.cookie_jar.signed[Strategies::Cookie.cookie_key] = nil
+  warden.request.cookie_jar[Strategies::Cookie.cookie_key] = nil
 end
