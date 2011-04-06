@@ -1,25 +1,25 @@
 html { background:#efefef; font-family:Arial, Verdana, sans-serif; font-size:13px; }
 body { padding:0; margin:0; }
 
-.header { background:#000; padding:8px 5% 0 5%; border-bottom:1px solid #444;border-bottom:5px solid #ce1212;}
+.header { background:#333 url(/images/backgrounds/linen_bottomshadow.jpg) repeat center bottom; padding:8px 5% 0 5%; border-bottom: 5px solid #fff; text-shadow: rgba(0, 0, 0, 0.5) 0 2px 0;}
 .header h1 { color:#333; font-size:90%; font-weight:bold; margin-bottom:6px;}
 .header ul li { display:inline;}
 .header ul li a { color:#fff; text-decoration:none; margin-right:10px; display:inline-block;  padding:8px; -webkit-border-top-right-radius:6px; -webkit-border-top-left-radius:6px; -moz-border-radius-topleft:6px; -moz-border-radius-topright:6px; }
 .header ul li a:hover { background:#333;}
-.header ul li.current a { background:#ce1212; font-weight:bold; color:#fff;}
+.header ul li.current a { background:#fff; font-weight:bold; color:#333; text-shadow: none}
 
 .header .namespace { position: absolute; right: 75px; top: 10px; color: #7A7A7A; }
 
-.subnav { padding:2px 5% 7px 5%; background:#ce1212; font-size:90%;}
+.subnav { padding:2px 5% 7px 5%; background:#fff; font-size:90%;}
 .subnav li { display:inline;}
-.subnav li a { color:#fff; text-decoration:none; margin-right:10px; display:inline-block; background:#dd5b5b; padding:5px; -webkit-border-radius:3px; -moz-border-radius:3px;}
-.subnav li.current a { background:#fff; font-weight:bold; color:#ce1212;}
-.subnav li a:active { background:#b00909;}
+.subnav li a { color:#fff; text-decoration:none; margin-right:10px; display:inline-block; background:#666; padding:5px; -webkit-border-radius:3px; -moz-border-radius:3px;}
+.subnav li.current a { background:#ff8419; font-weight: bold; }
+.subnav li a:active { background:#ff8419;}
 
 #main { padding:10px 5%; background:#fff; overflow:hidden; }
 #main .logo { float:right; margin:10px;}
-#main span.hl { background:#efefef; padding:2px;}
-#main h1 { margin:10px 0; font-size:190%; font-weight:bold; color:#ce1212;}
+#main span.hl { padding:2px;}
+#main h1 { margin:10px 0; font-size:190%; font-weight:bold; color:#ff8419;}
 #main h2 { margin:10px 0; font-size:130%;}
 #main table { width:100%; margin:10px 0;}
 #main table tr td, #main table tr th { border:1px solid #ccc; padding:6px;}
@@ -34,8 +34,8 @@ body { padding:0; margin:0; }
 #main table.queues { width:40%;}
 #main table.queues td.queue { font-weight:bold; width:50%;}
 #main table.queues tr.failed td { border-top:2px solid; font-size:90%; }
-#main table.queues tr.failure td { background:#ffecec; border-top:2px solid #d37474; font-size:90%; color:#d37474;}
-#main table.queues tr.failure td a{ color:#d37474;}
+#main table.queues tr.failure td { background:#ffeeee; border-top:2px solid #dd3333; font-size:90%; color:#dd3333;}
+#main table.queues tr.failure td a{ color:#dd3333;}
 
 #main table.jobs td.class { font-family:Monaco, "Courier New", monospace; font-size:90%; width:50%;}
 #main table.jobs td.args{ width:50%;}
@@ -43,7 +43,7 @@ body { padding:0; margin:0; }
 #main table.workers td.icon {width:1%; background:#efefef;text-align:center;}
 #main table.workers td.where { width:25%;}
 #main table.workers td.queues { width:35%;}
-#main .queue-tag { background:#b1d2e9; padding:2px; margin:0 3px; font-size:80%; text-decoration:none; text-transform:uppercase; font-weight:bold; color:#3274a2; -webkit-border-radius:4px; -moz-border-radius:4px;}
+#main .queue-tag { background:#FFBB7F; color: #666; padding:2px; margin:0 3px; font-size:80%; text-decoration:none; text-transform:uppercase; font-weight:bold; -webkit-border-radius:4px; -moz-border-radius:4px;}
 #main table.workers td.queues.queue { width:10%;}
 #main table.workers td.process { width:35%;}
 #main table.workers td.process span.waiting { color:#999; font-size:90%;}
