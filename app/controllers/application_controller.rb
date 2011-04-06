@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
   end
     
   def ip_location
-    "#{header_locale.split('-', 2).first}-#{country_code}" if country_code.present? && country_code != "--"
+    "#{request.user_preferred_languages.first.split('-', 2).first}-#{country_code}" if country_code.present? && country_code != "--"
   end
   helper_method :ip_location
   
