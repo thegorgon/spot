@@ -54,11 +54,11 @@ module TagHelper
   end
   
   def flashes
-    if flash[:notice] || flash[:error]
+    if flash[:notice].present? || flash[:error].present?
       content_tag(:div, :id => "flashes") do
         content = ""
-        content << content_tag(:div, flash[:notice].html_safe, :class => "flash notice") if flash[:notice]
-        content << content_tag(:div, flash[:error].html_safe, :class => "flash error") if flash[:error]
+        content << content_tag(:div, flash[:notice].html_safe, :class => "flash notice") if flash[:notice].present?
+        content << content_tag(:div, flash[:error].html_safe, :class => "flash error") if flash[:error].present?
         content << content_tag(:div, "&nbsp;".html_safe, :class => "close")
         content.html_safe
       end

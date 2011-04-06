@@ -89,6 +89,7 @@ body {
   right: 0;
   height: 125px;
   z-index: 100;
+  text-shadow: rgba(0,0,0,0.5) 0 2px 0;
   background: #333 url(/images/backgrounds/linen_topshadow.jpg) repeat center center;
   &.loading {
     display: none;

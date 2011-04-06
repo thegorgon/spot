@@ -1,10 +1,20 @@
 class User < ActiveRecord::Base
   validates :locale, :presence => true
+  attr_protected :admin
   before_validation :reset_persistence_token, :if => :reset_persistence_token?
   before_validation :reset_single_access_token, :if => :reset_single_access_token?
   before_save :reset_perishable_token
   has_many :devices, :dependent => :destroy
   has_many :wishlist_items, :dependent => :destroy
+  
+  def self.adminify!(email)
+    if (user = where(:email => email).first)
+      user.admin!
+      true
+    else
+      false
+    end
+  end
   
   def self.find_using_perishable_token(token, age=1.day) 
     if token.present?
