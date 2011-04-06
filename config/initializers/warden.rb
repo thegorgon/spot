@@ -21,7 +21,7 @@ class Warden::SessionSerializer
 
   def deserialize(keys)
     klass, id = keys
-    klass = klass.classify if klass.kind_of?(String)
+    klass = klass.constantize if klass.kind_of?(String)
     klass.find(:first, :conditions => { :id => id })
   end
 end
