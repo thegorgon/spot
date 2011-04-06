@@ -9,4 +9,4 @@ redis_config.symbolize_keys!
 
 Resque.redis = Redis.new(redis_config)
 
-# Resque::Server.use AdminAuthentication
+Resque::Server.use AdminAuthentication
