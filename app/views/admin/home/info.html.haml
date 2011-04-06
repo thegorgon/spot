@@ -4,6 +4,14 @@
   .top.clearfix
     %h1.title Your Location :
   %table.data
+    %tr
+      %td.left 
+        %strong I18n Locale
+      %td=I18n.locale
+    %tr
+      %td.left 
+        %strong Request Location
+      %td=request_location_with_source
     -geo_country.to_hash.each do |key, value|
       %tr
         %td.left 

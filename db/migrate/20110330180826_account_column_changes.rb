@@ -5,7 +5,7 @@ class AccountColumnChanges < ActiveRecord::Migration
     add_column :users, :first_name, :string
     add_column :users, :last_name, :string
     remove_column :users, :full_name
-    add_column :users, :locale, :string, :null => false, :default => "en-US"
+    add_column :users, :locale, :string
     add_column :users, :admin, :boolean, :null => false, :default => 0
     add_index :users, :email, :unique => true
   end

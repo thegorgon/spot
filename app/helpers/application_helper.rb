@@ -16,4 +16,13 @@ module ApplicationHelper
       "last"
     end
   end
+  
+  def request_location_with_source
+    if request_location
+      source = ip_location ? 'ip' : 'header'
+      "#{request_location} ( #{source} )"
+    else
+      "--"
+    end
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110330180826) do
+ActiveRecord::Schema.define(:version => 20110405202827) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -169,6 +169,16 @@ ActiveRecord::Schema.define(:version => 20110330180826) do
   add_index "gowalla_places", ["lat", "lng"], :name => "index_gowalla_places_on_lat_and_lng"
   add_index "gowalla_places", ["place_id"], :name => "index_gowalla_places_on_place_id"
 
+  create_table "mobile_apps", :force => true do |t|
+    t.string  "name",                        :null => false
+    t.string  "locale",                      :null => false
+    t.string  "store_id",                    :null => false
+    t.string  "store",                       :null => false
+    t.boolean "live",     :default => false, :null => false
+  end
+
+  add_index "mobile_apps", ["store", "locale"], :name => "index_mobile_apps_on_store_and_locale", :unique => true
+
   create_table "password_accounts", :force => true do |t|
     t.string   "login",            :null => false
     t.string   "crypted_password", :null => false
@@ -232,7 +242,7 @@ ActiveRecord::Schema.define(:version => 20110330180826) do
 
   create_table "users", :force => true do |t|
     t.datetime "current_login_at"
-    t.integer  "login_count",         :default => 0,       :null => false
+    t.integer  "login_count",         :default => 0,     :null => false
     t.string   "persistence_token"
     t.string   "single_access_token"
     t.string   "perishable_token"
@@ -241,8 +251,9 @@ ActiveRecord::Schema.define(:version => 20110330180826) do
     t.string   "email"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "locale",              :default => "en-US", :null => false
-    t.boolean  "admin",               :default => false,   :null => false
+    t.string   "locale"
+    t.boolean  "admin",               :default => false, :null => false
+    t.string   "location"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

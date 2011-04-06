@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :localize
   helper :application, :place
   
   private  
@@ -53,5 +54,25 @@ class ApplicationController < ActionController::Base
   def redirect_back_or_default(default)
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
+  end
+    
+  def ip_location
+    "#{header_locale.split('-', 2).first}-#{country_code}" if country_code.present? && country_code != "--"
+  end
+  helper_method :ip_location
+  
+  def request_location
+    ip_location || request.user_preferred_languages.first
+  end
+  helper_method :request_location
+  
+  def localize
+    I18n.locale = current_user.try(:locale) || request.compatible_language_from(I18n.available_locales) || I18n.default_locale
+    if logged_in?
+      attributes = {}
+      attributes[:locale] = I18n.locale if current_user.locale.nil?
+      attributes[:location] = request_location if current_user.location != request_location
+      current_user.update_attributes(attributes) if logged_in? && attributes.present?
+    end
   end
 end
