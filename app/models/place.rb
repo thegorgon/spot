@@ -153,6 +153,7 @@ class Place < ActiveRecord::Base
       :_type => self.class.to_s,
       :name => full_name,
       :address => address_lines,
+      :bitch_dis_where_it_be => {:lines => address_lines, :city => city, :region => region},
       :lat => lat.to_f,
       :lng => lng.to_f,
       :id => id,
