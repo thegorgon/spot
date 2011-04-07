@@ -16,16 +16,18 @@
   = yield :head
 %body{:id => page_namespace, :class => controller_name}
   #bg
+    .left
+    .right
   #page
     #hd
       #logo
-        =image_tag "logos/gradient_script_340x270.png", :height => "100", :alt => "spot"
-      #nav
-        =link_to "Search", new_admin_search_path
-        =link_to "Places", admin_places_path
-        =link_to "Duplicates", admin_duplicates_path
-        =link_to "Resque", '/admin/resque'
-        =link_to "Request", admin_info_path
+        =image_tag "logos/white_admin_spot158x86.png", :height => "86", :alt => "spot"
+      %ul#nav
+        %li.first=link_to_with_current "Search", new_admin_search_path, :class => "page"
+        %li=link_to_with_current "Places", admin_places_path, :class => "page"
+        %li=link_to_with_current "Dupes", admin_duplicates_path, :class => "page"
+        %li=link_to_with_current "Resque", admin_resque_path
+        %li.last=link_to_with_current "Request", admin_info_path, :class => "page"
     #bd.clearfix
       = yield
       -if flash[:error] || flash[:notice]
@@ -34,6 +36,11 @@
             -if flash[key].present?
               %div{:class => key}= flash[key]
   #fb-root
+  :javascript
+    if (! /MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
+      document.getElementById('hd').style.display = 'none';
+      document.getElementById('bg').style.display = 'none';
+    }  
   =google_maps_api_include
   =include_javascripts :vendor
   =include_javascripts :admin

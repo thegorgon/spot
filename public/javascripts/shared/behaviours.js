@@ -65,27 +65,26 @@
       $(this).hide().each(function(i) {
         var img = new Image(), $this = $(this),
           bg = $this.css('background-image').replace(/url\([\"\']?([^\)]+?)[\"\']?\)/i, '$1');
-        img.onload = function() { $this.fadeIn(1000); };
-        img.src = bg;
+        if (bg !== "none") {
+          img.onload = function() { $this.fadeIn(1000); };
+          img.src = bg;          
+        }
       });
     },
     preloadAll: function(cb) {
       var parent = $(this),
-        imgCount = 0,
-        loadCount = 0,
+        images = [], loadCount = 0,
         loaded = function() {
           loadCount = loadCount + 1;
-          if (loadCount >= imgCount) {
-            parent.hide().removeClass('loading').fadeIn(1000, cb);
-          }
+          if (loadCount >= images.length) { parent.hide().removeClass('loading').fadeIn(1000, cb); }
         };
       parent.addClass('loading').find('*').add(parent).each(function(i) {
         var img, child = $(this), src = child[0].src || child.css('background-image').replace(/url\([\"\']?([^\)]+?)[\"\']?\)/i, '$1'),
           ext = src.toString().split(".").pop();
-        ext = ext.replace(/([^\?]+)?.+/i, '$1');
-        if (ext === 'jpg' || ext === 'jpeg' || ext === 'png') {
+        ext = ext.replace(/([^\?]+)\?.+/i, '$1');
+        if ($.inArray(src, images) < 0 && (ext === 'jpg' || ext === 'jpeg' || ext === 'png')) {
           img = new Image();
-          imgCount = imgCount + 1;
+          images.push(src);
           img.onload = loaded;
           img.src = src;
         }
@@ -147,8 +146,9 @@
       $.logger.level(_vars.env === 'production' ? 'ERROR' : 'DEBUG');
       go.Navigator.init();
       if ($.support.opacity) {
+        $('#hd').preloadAll();
         $('#ft').preloadAll();
-        $('#bg').preloadBackground();        
+        $('#bg').preloadAll();        
       }
     },
     getVar: function(name) {

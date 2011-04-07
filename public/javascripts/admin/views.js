@@ -1,11 +1,12 @@
 (function(go) {
   $.provide(go, 'Views', {
-    run: function() {
+    run: function(url) {
       var body = $('body'),
         pageNS = body[0].id,
         pageClass = body.attr('class');
-      $.logger.debug("Running page views for class: ", pageClass, "and namespace: ", pageNS);
-      this.layout.call();
+      url = url || go.Navigator.current();
+      $.logger.debug("Running page views for class: ", pageClass, "and namespace: ", pageNS, " and URL: ", url);
+      this.layout.call(this, url);
       go.behave();
       if ($.isFunction(go.Views[pageClass])) {
         go.Views[pageClass].call();
@@ -14,7 +15,10 @@
         go.Views[pageNS].call();        
       }
     },
-    layout: function() {
+    layout: function(url) {
+      $('li a[href!=' + url + ']', '#nav').removeClass('current');
+      $('li a[href=' + url + ']', '#nav').addClass('current');
+      $.preload(['/images/buttons/black_button_77x32_active.png', '/images/buttons/black_button_77x32_hover.png', '/images/buttons/black_button_77x32.png']);
       go.Navigator.link($("a.page"));
       go.Navigator.form($("form.page"));
     },
@@ -29,18 +33,12 @@
         start: function() {
           $(this).parents('.duplicate').slideUp();
         }, success: function(data) {
-          // var html = $(data.html);
-          // $(this).parents('.duplicate').replaceWith(html.hide())
-          // html.slideDown();
         }
       });
       $('.resolve').ajaxForm({
         start: function() {
           $(this).parents('.duplicate').slideUp();
         }, success: function(data) {
-          // var html = $(data.html);
-          // $(this).parents('.duplicate').replaceWith(html.hide())
-          // html.slideDown();
         }
       });
     },

@@ -96,6 +96,35 @@ button.link {
     color: #999;
   }
 }
+.blackimg_77x32 {
+  display: block;
+  background: transparent url(/images/buttons/black_button_77x32.png) no-repeat center center;
+  float: left;
+  margin-right: 15px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 12px;
+  height: 32px;
+  width: 77px;
+  text-decoration: none;
+  color: #ddd;
+  font-weight: bold;
+  line-height: 32px;
+  text-shadow: #000 0px 1px 0px;
+  &:hover {
+    color: #BBB;
+    background: transparent url(/images/buttons/black_button_77x32_hover.png) no-repeat center center;
+    text-shadow: #000 0px -1px 0px;
+  }
+  &:active {
+    text-shadow: #000 0px -1px 0px;
+    background: transparent url(/images/buttons/black_button_77x32_active.png) no-repeat center center;
+  }
+  &.active {
+    text-shadow: #000 0px -1px 0px;
+    background: transparent url(/images/buttons/black_button_77x32_active.png) no-repeat center center;
+  }
+}
 .hlfrndblk_80x30 {
   font-size: 16px;
   height: 30px;

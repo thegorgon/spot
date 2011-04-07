@@ -18,11 +18,11 @@
           bd.html(html).unbind("faded.navComplete");
           body.attr("id", data.page.namespace);
           body.attr('class', data.page.controller);
-          go.Views.run();
+          go.Views.run(url);
           bd.fadeIn();
         });
         if (!bd.is(":animated")) {
-          bd.trigger("faded");            
+          bd.trigger("faded");
         }
       } else {
         $.logger.debug("UNHANDLED : ", data);
@@ -90,6 +90,9 @@
         url = url.length > 0 ? url : initialUrl;
         that.get(url, {force: false});
       });
+    },
+    current: function() {
+      return getHash();
     },
     get: function(url, options) {
       options = options || {};

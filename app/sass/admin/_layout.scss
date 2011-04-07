@@ -7,13 +7,29 @@ body, html, input, textarea, button {
   font-family: 'Helvetica Neue', 'Helvetica', 'Lucida Grande', 'Arial', sans-serif;
 }
 #bg {
+  min-width: 1000px;
+  .left {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    background: #fff url(/images/backgrounds/paisley_light_borderfade.jpg) no-repeat center left;
+    width: 400px;    
+  }
+  .right {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    background: #fff url(/images/backgrounds/paisley_light_borderfade.jpg) no-repeat center right;
+    width: 400px;    
+  }
   z-index: 1;
   position: fixed;
   top: 0px;
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background: #ffffff url(/images/backgrounds/paisley_light_transparent.jpg) no-repeat fixed center center;
 }
 a, a:visited {
   color: #333;
@@ -23,39 +39,56 @@ a, a:visited {
   };
 }
 #page {
+  padding: 115px 0 0 0;
   min-height: 100%;
-  width: 1000px;
+  width: 1230px;
   position: relative;
   z-index: 10;
   margin: 0 auto;
-  background: #ddd;
-  @include gradient_top_down(#eee, #fff, 40%);
-  @include box_shadow("5px -1px 3px #999, -5px -1px 3px #999");
+  background: #fff;
+  background: -webkit-gradient(linear, left top, right top, from(rgba(255,255,255,0)), color-stop(0.10, rgba(255,255,255,1.0)), color-stop(0.90, rgba(255,255,255,1.0)), to(rgba(255,255,255,0)));
+  background: -moz-linear-gradient(left center, rgba(255,255,255,0), rgba(255,255,255,1.0) 10%, rgba(255,255,255,1.0) 90%, rgba(255,255,255,0.0) 100%);
+  .ie7 &, .ie8 & {
+    width: 1030px;
+  }
   #hd {
-    margin: 0;
-    height: 100px;
-    padding: 15px;
-    background: #000000 url(/images/backgrounds/paisley_dark_centerfade.jpg) no-repeat fixed center center;
+    position: absolute;
+    top: 0px;
+    left: 100px;
+    right: 100px;
+    height: 108px;
+    padding: 7px 25px 0;
+    background: transparent url(/images/backgrounds/top_nav1020x115.png) no-repeat top left;
+    .ie7 &, .ie8 & {
+      left: 0px;
+      right: 0px;
+    }
     #logo {
       float: left;
     }
     #nav {
       float: right;
-      padding: 80px 0 0 0;
+      padding: 50px 0 0 0;
       text-align: right;
       font-size: 1.5em;
+      li {
+        list-style: none;
+        float: left;
+      }
       a {
         color: #ddd;
-        font-weight: bold;
-        padding: 0 0 0 15px;
-        &:hover {
-         color: #ff8419;
+        @extend .blackimg_77x32;
+        &.current {
+          color: #ddd;
+          text-shadow: #333 0px -1px 0px;
+          background: transparent url(/images/buttons/black_button_77x32_active.png) no-repeat center center;
         }
       }
     }
   }
   #bd {
-    padding: 5px 10px 10px;
+    width: 980px;
+    margin: 0 auto;
     #flash {
       position: absolute;
       top: 130px;
@@ -93,4 +126,7 @@ h2.title {
 }
 .right {
   float: right;
+}
+.center {
+  text-align: center;
 }

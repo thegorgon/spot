@@ -58,6 +58,16 @@ module TagHelper
     link_to image_tag("assets/general/app_store183x60.png", :size => "183x60"), getspot_path if url
   end
   
+  def link_to_with_current(*args)
+    options = args.extract_options!
+    current_class = options.delete(:current_class) || "current"
+    options[:class] ||= ""
+    options[:class] << " " if options[:class].present?
+    options[:class] << current_class if request.path == args.last
+    args << options
+    link_to *args
+  end
+  
   def flashes
     if flash[:notice].present? || flash[:error].present?
       content_tag(:div, :id => "flashes") do
