@@ -55,9 +55,13 @@ class ApplicationController < ActionController::Base
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
   end
-    
+  
+  def request_language
+    request.user_preferred_languages.first.split('-', 2).first rescue "en"
+  end
+  
   def ip_location
-    "#{request.user_preferred_languages.first.split('-', 2).first}-#{country_code}" if country_code.present? && country_code != "--"
+    "#{request_language}-#{country_code}" if country_code.present? && country_code != "--"
   end
   helper_method :ip_location
   
