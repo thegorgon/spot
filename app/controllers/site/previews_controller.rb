@@ -1,7 +1,4 @@
 class Site::PreviewsController < Site::BaseController
-  def index
-  end
-  
   def create
     @preview = PreviewSignup.signup(params[:preview])
     success = @preview.save

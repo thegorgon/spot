@@ -44,7 +44,7 @@
         }
       });
     },
-    site_previews_index: function() {
+    site_home_index: function() {
       var slideshow = $("#slideshow").slideshow({
         slides: [{ src : '/images/assets/slideshow/slide_00.jpg', gravity: '0x0' },
                  { src : '/images/assets/slideshow/slide_01.jpg', gravity: '0.75x0.75' },
@@ -53,7 +53,7 @@
         version: 2
       });
     },
-    site_support_press: function() {
+    site_home_press: function() {
       go.AppPreview.init();
     },
     site_previews_share: function() {

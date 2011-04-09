@@ -148,7 +148,7 @@
       if ($.support.opacity) {
         $('#hd').preloadAll();
         $('#ft').preloadAll();
-        $('#bg').preloadAll();        
+        $('#bg').preloadBackground();        
       }
     },
     getVar: function(name) {

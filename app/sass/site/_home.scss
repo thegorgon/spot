@@ -1,4 +1,4 @@
-.site_support {
+.site_home {
   #about {
     margin: 0 auto;
     @include black_radial_gradient(300);
@@ -126,7 +126,7 @@
   }
 }
 .ie7, .ie8 {
-  .site_support {
+  .site_home {
     #about {
       padding: 50px 30px;
     }

@@ -1,7 +1,9 @@
-class Admin::BaseController < ApplicationController
-  layout 'admin'
-
+class Biz::BaseController < ApplicationController
   before_filter :require_admin
+  
+  layout 'biz'
+  
+  private
   
   def default_render(*args)
     respond_to do |format|
@@ -21,5 +23,19 @@ class Admin::BaseController < ApplicationController
       format.html { super(*args) }
       format.js { js_redirect_to(*args)}
     end
-  end  
+  end
+  
+  def biz_account
+    current_user.try(:biz_account)
+  end
+  helper_method :biz_account
+  
+  def require_biz_account
+    authenticate
+    unless biz_account
+      store_location
+      flash[:error] = current_user ? "Tell us about your business." : "Please login first."
+      redirect_to current_user ? new_business_path : new_session_path
+    end
+  end
 end

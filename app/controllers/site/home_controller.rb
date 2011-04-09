@@ -1,4 +1,7 @@
-class Site::SupportController < Site::BaseController  
+class Site::HomeController < Site::BaseController
+  def index
+  end
+  
   def about
   end
   

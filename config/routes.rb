@@ -16,7 +16,7 @@ Spot::Application.routes.draw do
       get "availability"
       get "existence"
     end
-    controller "support" do
+    controller "home" do
       get "about", :action => "about"
       get "press", :action => "press"
       get "getspot", :action => "getspot"
@@ -62,7 +62,16 @@ Spot::Application.routes.draw do
     root :to => "home#index"
   end
   
+  namespace "biz" do
+    resource :account, :only => [:new, :show]
+
+    controller "home" do
+      get "help"
+    end
+    root :to => "home#index"
+  end
+  
   mount Resque::Server.new, :at => "/admin/resque"
 
-  root :to => "site/previews#index"
+  root :to => "site/home#index"
 end

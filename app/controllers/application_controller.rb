@@ -5,6 +5,15 @@ class ApplicationController < ActionController::Base
   
   private  
 
+  def require_admin
+    authenticate
+    unless current_user && current_user.admin?
+      store_location
+      flash[:error] = "Sorry, that's for Spot administrators only. <a href=\"#{new_session_path}\">Login?</a>"
+      redirect_to root_path
+    end
+  end  
+
   def with_flash_maintenance
     old_flash = flash
     yield
