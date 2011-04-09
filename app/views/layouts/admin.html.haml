@@ -36,11 +36,6 @@
             -if flash[key].present?
               %div{:class => key}= flash[key]
   #fb-root
-  :javascript
-    if (! /MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
-      document.getElementById('hd').style.display = 'none';
-      document.getElementById('bg').style.display = 'none';
-    }  
   =google_maps_api_include
   =include_javascripts :vendor
   =include_javascripts :admin

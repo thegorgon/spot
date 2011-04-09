@@ -76,9 +76,18 @@
     preloadAll: function(cb) {
       var parent = $(this),
         images = [], loadCount = 0,
+        completed = false,
         loaded = function() {
           loadCount = loadCount + 1;
-          if (loadCount >= images.length) { parent.hide().removeClass('loading').fadeIn(1000, cb); }
+          if (loadCount >= images.length && !completed) { 
+            completed = true;
+            parent.hide().removeClass('loading').fadeIn(500, cb); 
+          }
+        },
+        forceLoad = function() {
+          $.logger.debug("Force loading");
+          loadCount = images.length;
+          loaded();
         };
       parent.addClass('loading').find('*').add(parent).each(function(i) {
         var img, child = $(this), src = child[0].src || child.css('background-image').replace(/url\([\"\']?([^\)]+?)[\"\']?\)/i, '$1'),
@@ -92,6 +101,7 @@
         }
       });
       if (images.length === 0) { loaded(); }
+      setTimeout(forceLoad, 5000);
     },
     actionLink: function() {
       $(this).die('click').live('click', function(e) {
