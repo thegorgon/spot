@@ -30,7 +30,7 @@
       = yield
     #ft
       #logo.flips
-        =image_tag 'logos/white_shadowed_spot_with_tagline_200x101.png', :width => '200'
+        =image_tag 'logos/white_shadowed_spot_with_tagline_200x101.png', :size => '200x101'
       #nav.flips
         =link_to "press", press_path, :class => "page"      
         =link_to "twitter", "http://www.twitter.com/spotteam", :target => "_new"      
@@ -44,7 +44,7 @@
         #signup_form.flips
           %p.title
             Coming Soon! Sign up for early access :
-          =spot_form_for :preview, :url => previews_path, :html => {:class => "page"} do |f|
+          =spot_form_for :preview, :url => previews_path do |f|
             =f.hidden_field :rid, :value => params[:rid]
             =f.text_field :email, "placeholder" => "enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"
             =button_tag(:class => "hlfrndblk_80x30") do
