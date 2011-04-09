@@ -1,5 +1,7 @@
 class Site::PlacesController < Site::BaseController
+  layout 'emptysite'
+  
   def show
-    redirect_to getspot_path
+    @place = Place.find(params[:id])
   end
 end

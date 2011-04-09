@@ -1,5 +1,5 @@
 #press
-  #logo.flips.preload
+  #logo.flips
     =image_tag "logos/gradient_script_340x270.png", :size => "170x135", :alt => "spot"
   #content
     %h1 Press
@@ -16,17 +16,17 @@
     .divider
     %h2 Logos
     #logos.clearfix
-      .preview.preload
+      .preview
         =image_tag "logos/gradient_script_340x270.png", :width => "150"
       .download
         =link_to "Download our logo pack", "http://spot-production.s3.amazonaws.com/downloads/logo_pack.zip"
     .divider
     %h2 Screenshots
     #screenshots.clearfix
-      .screenshot.preload.first=link_to_image "assets/screenshots/wishlist.png", :size => "150x225"
-      .screenshot.preload=link_to_image "assets/screenshots/search.png", :size => "150x225"
-      .screenshot.preload=link_to_image "assets/screenshots/place.png", :size => "150x225"
-      .screenshot.preload.last=link_to_image "assets/screenshots/activity.png", :size => "150x225"
+      .screenshot.first=link_to_image "assets/screenshots/wishlist.png", :size => "150x225"
+      .screenshot=link_to_image "assets/screenshots/search.png", :size => "150x225"
+      .screenshot=link_to_image "assets/screenshots/place.png", :size => "150x225"
+      .screenshot.last=link_to_image "assets/screenshots/activity.png", :size => "150x225"
     .divider
     %h2 Spot in Action
     #preview.clearfix

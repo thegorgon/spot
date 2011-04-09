@@ -1,0 +1,33 @@
+body.site_places {
+  width: 320px;
+  min-height: 600px;
+  height: 600px;
+  position: relative;
+  #page, #bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0;
+  }
+  #page {
+    #hd {
+      #logo {
+        margin: 0 auto;
+        float: none;
+      }
+      text-align: center;
+    }
+    .place {
+      background: #f0f0f0;
+      .border {
+        display: none;
+      }
+      .image {
+        border: none;
+        @include border_radius(0px)
+      }
+    }
+  }
+}

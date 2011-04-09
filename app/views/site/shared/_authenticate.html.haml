@@ -1,8 +1,6 @@
 -mode = (mode || :login).to_sym
 -@account ||= PasswordAccount.new
 %ul#authenticate.form.faded.fade_in.narrow_center
-  :javascript
-    document.getElementById('authenticate').style.display = 'none';
   %li.header.clearfix
     %h1 
       Login to

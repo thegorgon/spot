@@ -9,13 +9,13 @@
   %title= page_title
   %meta{'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
   %meta{'http-equiv' => "X-UA-Compatible", :content => "IE=edge,chrome=1"}
-  = meta_tag("viewport", "width=device-width; initial-scale=1.0; maximum-scale=1.0;")
-  = meta_tag("keywords", "spot, iphone, app, application, place, wishlist")
-  = meta_tag("description", "Spot for iPhone lets you save and quickly recall friends' recommendations of places, like restaurants, bars, cafes, spas and other local shops.")
+  = iphone_meta_tags
+  = seo_tags
   = auto_discovery_link_tag(:rss, "http://spotteam.tumblr.com/rss")
   = favicon_link_tag("/favicon.ico")
   = open_graph_tags
   = include_stylesheets :site, :media => 'all'
+  = include_stylesheets :iphonesite, :media => 'only screen and (max-device-width: 480px)'
   = csrf_meta_tag 
   = yield :head
   -if Rails.env.production?
@@ -23,8 +23,8 @@
 %body{:id => page_namespace, :class => controller_name}
   #bg
   #page
-    #hd
-      = yield :hd
+    = hide_content_tag    
+    #hd= yield :hd
     #bd
       = flashes
       = yield
@@ -40,9 +40,7 @@
         -if logged_in?
           #account_nav
             ="Logged in as #{current_user.nickname} #{link_to "logout", session_path, 'data-method' => "delete"}".html_safe
-      -if itunes_store_link
-        #itunes_store_link=itunes_store_link
-      -else
+      =itunes_store_link("assets/general/app_store183x60.png", :size => "183x60") do
         #signup_form.flips
           %p.title
             Coming Soon! Sign up for early access :
@@ -52,11 +50,6 @@
             =button_tag(:class => "hlfrndblk_80x30") do
               submit
     #fb-root
-  :javascript
-    if (! /MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
-      document.getElementById('ft').style.display = 'none';
-      document.getElementById('bg').style.display = 'none';
-    }
   =include_javascripts :vendor
   =include_javascripts :site
   :javascript

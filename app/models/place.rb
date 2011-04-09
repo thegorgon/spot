@@ -111,6 +111,15 @@ class Place < ActiveRecord::Base
     self.full_name = value
   end
   
+  def share_tweet
+    @tweet = "Add #{name}"
+    @tweet << " in #{city}" if city
+    @tweet << " to your wishlist on Spot"
+    @tweet << " ##{city.gsub(' ', '').downcase}" if city
+    @tweet << " ##{region_abbr.gsub(' ', '').downcase}" if region
+    @tweet << " via @SpotTeam"
+  end
+  
   def address_lines
     full_address.to_s.split("\n")
   end
@@ -162,7 +171,8 @@ class Place < ActiveRecord::Base
       :image_url_234x168 => image.url(:i234x168),
       :image_url => image.url,
       :updated_at => updated_at,
-      :path => place_path(self)
+      :path => place_path(self),
+      :short_path => p_path(self.id)
     }
     unless image.file? || options[:default_images]
       hash.merge!(:image_url_640x400 => nil, :image_url_234x168 => nil, :image_url => nil)

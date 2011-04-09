@@ -1,14 +1,9 @@
 =content_for :hd do
   #logo
-    =image_tag "logos/black_spot_with_tag180x86.png", :height => "64", :alt => "spot"
+    =image_tag "logos/black_spot_with_tag180x86.png", :height => "86", :alt => "spot"
 
 .place{:id => "place_#{@place.id}"}
-  .border
-    =image_tag "backgrounds/shadow_border357x476.png", :size => "357x476"
-  .image
-    .tl
-    .tr
-    =image_tag @place.image.url(:i640x400), :size => "320x200"
+  .image=image_tag @place.image.url(:i640x400), :size => "320x200"
   .content
     %h1.name=@place.name
     .address
@@ -22,6 +17,6 @@
 
 =content_for :ft do
   .share.clearfix
-    .fb=fb_share_url(place_url(@place))
-    .twitter=twitter_share_url(place_url(@place), @place.share_tweet)
-  =itunes_store_link('assets/general/app_store_transparent116x40.png', :size => "116x40")    
+    .fb=fb_share_url(place_path(@place))
+    .twitter=twitter_share_url(place_path(@place), "")
+  =itunes_store_link('assets/general/app_store_transparent116x40.png', :size => "116x40")

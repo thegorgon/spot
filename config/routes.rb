@@ -1,7 +1,7 @@
 require 'resque/server'
 
-Spot::Application.routes.draw do
-  scope :module => "site", :constraints => {:subdomain => /www|m|app/} do
+Spot::Application.routes.draw do  
+  scope :module => "site" do
     resources :previews, :only => [:index, :create] do
       get "share"
     end
@@ -10,6 +10,7 @@ Spot::Application.routes.draw do
     resource :account, :only => [:new, :create, :destroy]
     resource :password_reset, :only => [:new, :create, :edit, :update]
     resources :places, :only => [:show]
+    resources :p, :only => [:show]
     resource :email, :only => [:show] do
       delete "unsubscribe"
       get "goodbye"

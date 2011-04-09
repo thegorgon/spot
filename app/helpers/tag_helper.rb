@@ -34,12 +34,16 @@ module TagHelper
   
   def open_graph_tags
     tags = []
-    tags << meta_tag("og:title", "Spot App")
-    tags << meta_tag("og:url", "#{request.url}")
-    tags << meta_tag("og:image", "http://www.spot-app.com/images/logos/og_image.png")
-    tags << meta_tag("og:site_name", "Spot App")
-    tags << meta_tag("og:description", "Spot App, Coming Soon")
-    tags << meta_tag("fb:admins", "100000043724571")
+    if @place
+      tags << meta_property("og:image", @place.image.url(:i640x400))
+    else
+      tags << meta_property("og:image", "http://www.spot-app.com/images/logos/og_image.png")
+    end
+    tags << meta_property("og:title", page_title)
+    tags << meta_property("og:description", page_description)
+    tags << meta_property("og:url", "#{request.url}")
+    tags << meta_property("og:site_name", "Spot - Never Forget a Place")
+    tags << meta_property("fb:admins", "100000043724571")
     tags.join("\n").html_safe
   end
   
@@ -49,13 +53,43 @@ module TagHelper
     content_tag(:ul, form_for(record, options, &proc).html_safe, :class => "form")
   end
   
-  def meta_tag(property, content)
+  def iphone_meta_tags
+    [ meta_name("apple-mobile-web-app-capable", "yes"),
+      meta_name("apple-mobile-web-app-status-bar-style", "black-translucent"),
+      meta_name("viewport", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0") ].join("\n").html_safe
+  end
+  
+  def seo_tags
+    [ meta_name("keywords", page_keywords),
+      meta_name("description", page_description)].join("\n").html_safe
+  end
+  
+  def meta_property(property, content)
     tag(:meta, :property => property, :content => content)
   end
   
-  def itunes_store_link
+  def meta_name(name, content)
+    tag(:meta, :name => name, :content => content)
+  end
+  
+  def itunes_store_link(*args, &block)
     url = MobileApp.url_for(request_location || current_user.try(:location), "itunes")
-    link_to image_tag("assets/general/app_store183x60.png", :size => "183x60"), getspot_path if url
+    if url
+      content_tag(:div, link_to(image_tag(*args), getspot_path), :id => "itunes_store_link")
+    elsif block
+      capture(&block)
+    else
+      ""
+    end
+  end
+  
+  def hide_content_tag
+    content_tag(:script, :type => Mime::JS) do
+      "if ( navigator.userAgent.index('MSIE') === -1 ) {
+        document.getElementById('page').style.display = 'none';
+        document.getElementById('bg').style.display = 'none';
+      }"
+    end
   end
   
   def link_to_with_current(*args)

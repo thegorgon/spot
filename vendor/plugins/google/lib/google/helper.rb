@@ -40,6 +40,11 @@ module Google
       end.html_safe
     end
     
+    def gmap_url(params)
+      ll = params[:ll].to_lat_lng.to_s
+      "http://maps.google.com?sll=#{ll}&q=#{params[:name]}"
+    end
+    
     def google_load(library, version)
       @_google_loaders[library] = version
     end

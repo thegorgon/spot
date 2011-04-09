@@ -1,0 +1,138 @@
+.site_places {
+  background: #fff;
+  #bg {
+    background: transparent url(/images/backgrounds/paisley_light.jpg) no-repeat fixed center center;    
+  }
+  #ft {
+    background: transparent;
+    position: static;
+    width: 320px;
+    min-width: 320px;
+    margin: 0 auto;
+    #itunes_store_link {
+      margin: 20px auto;
+      width: 116px;
+    }
+    .share {
+      position: relative;
+      z-index: 1000;
+      width : 125px;
+      margin: 10px auto;
+      .fb {
+        padding: 1px 0 0 0;
+        float: left;
+      }
+      .twitter {
+        float: right;
+      }
+    }
+  }
+  #page {
+    position: relative;
+    width: 320px;
+    margin: 0 auto;
+    z-index: 10;
+    .ie7 &, .ie8 & {
+      width: 1030px;
+    }
+    #hd {
+      height: 71px;
+      width: 320px;
+      padding: 7px 0px 0;
+      margin: 0 auto;
+      .ie7 &, .ie8 & {
+        left: 0px;
+        right: 0px;
+      }
+      #logo {
+        float: left;
+        padding: 0 0 0 0;
+      }
+    }
+    #bd {
+      text-align: center;
+      margin: 0 auto;
+      position: static;
+      top: 105px;
+      width: 320px;
+    }
+    .place {
+      text-align: left;
+      position: relative;
+      width: 320px;
+      height: 440px;
+      background: #f0f0f0;
+      @include top_border_radius(5px);
+      overflow: visible;
+      color: #000;
+      .border {
+        z-index: 100;
+        position: absolute;
+        top: -18px;
+        left: -18px;
+        width: 357px;
+        height: 476px;
+      }
+      .image {
+        border: 1px solid transparent;
+        overflow: hidden;
+        @include top_border_radius(7px);
+        .ie7 &, .ie8 & {
+          .tl {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 6px;
+            background: transparent url("/images/assets/general/round_corner_tl.png") no-repeat top left;
+          }
+          .tr {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 6px;
+            height: 6px;
+            background: transparent url("/images/assets/general/round_corner_tr.png") no-repeat top left;
+          }
+        }
+      }
+      .content {
+        padding: 5px 16px;
+        .name {
+          font-size: 20px;
+        }
+        .address {
+          margin: 10px 0 0 0;
+          h2 {
+            font-size: 14px;
+            font-weight: normal;
+          }        
+        }
+        .buttons_container {
+          margin: 20px auto 0 auto;
+          text-align: center;
+          width: 288px;
+          position: relative;
+          z-index: 200;
+          a {
+            cursor: pointer;
+            margin: 10px 0 0 0;
+          }
+        }
+      }
+      .wishlists {
+        margin: 10px 0 0 0;
+        padding: 0 0 0 18px;
+        height: 18px;
+        line-height: 21px;
+        font-size: 14px;
+        color: #999;
+        background: transparent url("/images/assets/general/star.png") no-repeat left center;
+      }
+    }
+    .meta {
+      text-align: center;
+      margin: 20px 0 0 0;
+    }
+  }
+}

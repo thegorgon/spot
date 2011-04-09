@@ -3,6 +3,25 @@
     'beforeSend': function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name=csrf-token]').attr('content')); }
   });
   $.extend($, {
+    mobile: function() {
+      return navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/android/i) || navigator.userAgent.match(/ipod/i);
+    },
+    updateOrientation: function() {
+      var orient = Math.abs(window.orientation) === 90 ? "landscape" : "portrait";
+      if (orient !== $('body').attr('orient')) {
+        $('body').attr('orient', orient);        
+        window.scrollTo(0, 1);
+      }
+      return true;
+    },
+    mobileOptimize: function() {
+      if (this.mobile()) {
+        setTimeout(this.updateOrientation, 0);
+        window.onorientationchange = function() {
+          $.updateOrientation();
+        }
+      }
+    },
     preload: function(images, cb) {
       var img;
       cb = $.isFunction(cb) ? cb : function() {};
