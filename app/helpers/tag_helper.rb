@@ -22,7 +22,7 @@ module TagHelper
   end
 
   def twitter_share_url(url, text)
-    share = content_tag(:a, "", :href => "http://twitter.com/share", :class => "twitter-share-button", "data-count" => "none", "data-url" => url, "data-text" => text)
+    share = content_tag(:a, "", :href => "https://twitter.com/share", :class => "twitter-share-button", "data-count" => "none", "data-url" => url, "data-text" => text)
     share << external_js_include("http://platform.twitter.com/widgets.js")  
     share.html_safe
   end
@@ -85,7 +85,7 @@ module TagHelper
   
   def hide_content_tag
     content_tag(:script, :type => Mime::JS) do
-      "if ( navigator.userAgent.index('MSIE') === -1 ) {
+      "if ( ! /MSIE (\d+\.\d+);/.test(navigator.userAgent) ) {
         document.getElementById('page').style.display = 'none';
         document.getElementById('bg').style.display = 'none';
       }"
