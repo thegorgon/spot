@@ -150,7 +150,6 @@
       go.Navigator.init();
       $.mobileOptimize();
       if ($.support.opacity) {
-        alert("HERE?");
         $('#bg').preloadBackground();
         $('#page').preloadAll();
       }
