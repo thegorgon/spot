@@ -19,8 +19,6 @@ class ShortUrl < ActiveRecord::Base
     if shortened
       shortened.increment(:visits)    
       shortened.url
-    else
-      raise ActiveRecord::RecordNotFound
     end
   end
   

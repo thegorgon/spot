@@ -21,6 +21,9 @@ body.site_places {
     }
     .place {
       background: #f0f0f0;
+      border: 1px solid #B3B3B3;
+      border-left: none;
+      border-right: none;
       .border {
         display: none;
       }
