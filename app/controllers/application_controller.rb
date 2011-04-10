@@ -3,17 +3,24 @@ class ApplicationController < ActionController::Base
   before_filter :localize
   helper :application, :place
   
+  rescue_from Exception, :with => :render_error
   rescue_from ActionController::RoutingError, :with => :render_404
   rescue_from ActionController::UnknownController, :with => :render_404
   rescue_from ActionController::UnknownAction, :with => :render_404
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   
-  private  
+  private
 
   def log_error(exception)
     message = "\n#{exception.class} (#{exception.message}):\n"
     message << exception.annoted_source_code.to_s if exception.respond_to?(:annoted_source_code)
     message << "  " << clean_backtrace(exception, :silent).join("\n  ")
     logger.fatal("#{message}\n\n")
+  end
+
+  def render_error
+    log_error(exception)
+    render :template => "/site/errors/500.html.haml", :status => 404
   end
   
   def clean_backtrace(exception, *args)

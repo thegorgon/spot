@@ -1,17 +1,9 @@
 class Site::BaseController < ApplicationController
   layout 'site'
   helper 'site'
-
-  rescue_from Exception, :with => :render_error
-  rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   
   protected
   
-  def render_error(exception=nil)
-    log_error(exception)
-    render :template => "/site/errors/500.html.haml", :status => 500
-  end
-    
   def default_render(*args)
     respond_to do |format|
       format.html { render(*args) }
