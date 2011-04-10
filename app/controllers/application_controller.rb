@@ -8,8 +8,20 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::UnknownAction, :with => :render_404
   
   private  
+
+  def log_error(exception)
+    message = "\n#{exception.class} (#{exception.message}):\n"
+    message << exception.annoted_source_code.to_s if exception.respond_to?(:annoted_source_code)
+    message << "  " << clean_backtrace(exception, :silent).join("\n  ")
+    logger.fatal("#{message}\n\n")
+  end
+  
+  def clean_backtrace(exception, *args)
+    Rails.backtrace_cleaner.clean(exception.backtrace, *args)
+  end
   
   def render_404(exception=nil)
+    log_error(exception)
     render :template => "/site/errors/404.html.haml", :status => 404
   end
   

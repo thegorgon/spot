@@ -8,6 +8,7 @@ class Site::BaseController < ApplicationController
   protected
   
   def render_error(exception=nil)
+    log_error(exception)
     render :template => "/site/errors/500.html.haml", :status => 500
   end
     

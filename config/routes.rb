@@ -74,6 +74,7 @@ Spot::Application.routes.draw do
   
   mount Resque::Server.new, :at => "/admin/resque"
   
+  get "/error",    :to => "site/errors#error_test"
   get "/404.html", :to => "site/errors#not_found", :as => "not_found"
   get "/422.html", :to => "site/errors#unprocessable", :as => "unprocessable"
   get "/500.html", :to => "site/errors#server_error", :as => "server_error"

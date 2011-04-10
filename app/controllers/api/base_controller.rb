@@ -7,6 +7,7 @@ class Api::BaseController < ApplicationController
   
   def exception_handler(exception=nil)
     Rails.logger.info("spot-app: handling exception of type : #{exception.class}")
+    log_error(exception)
     
     case exception
     when ActiveRecord::RecordNotUnique
