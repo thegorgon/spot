@@ -26,7 +26,7 @@ class Biz::BaseController < ApplicationController
   end
   
   def biz_account
-    current_user.try(:biz_account)
+    nil
   end
   helper_method :biz_account
   
