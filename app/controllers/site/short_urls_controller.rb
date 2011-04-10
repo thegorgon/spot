@@ -1,5 +1,7 @@
 class Site::ShortUrlsController < Site::BaseController
   def show
-    redirect_to ShortUrl.expand(params[:id]), :status => 301
+    @url = ShortUrl.expand(params[:id])
+    raise ActiveRecord::RecordNotFound unless @url
+    redirect_to @url, :status => 301
   end
 end
