@@ -7,7 +7,7 @@ class Admin::SearchController < Admin::BaseController
     @search = PlaceSearch.from_params(params)
     respond_to do |format|
       format.html
-      format.js { render :json => {:html => render_to_string(:partial => "results") }}
+      format.js { render :json => { :html => render_to_string(:partial => "results") }}
     end
   end  
 end

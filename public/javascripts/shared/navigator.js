@@ -15,6 +15,7 @@
       } else if (data.html) {
         html = $(data.html);
         bd.unbind('faded.navComplete').bind("faded.navComplete", function() {
+          $.logger.debug("Received data : ", data);
           bd.html(html).unbind("faded.navComplete");
           body.attr("id", data.page.namespace);
           body.attr('class', data.page.controller);

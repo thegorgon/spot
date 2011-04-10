@@ -2,6 +2,7 @@ body, html {
   height: 100%;
   width: 100%;
   font-size: 12px;
+  position: relative;
 }
 body, html, input, textarea, button {
   font-family: 'Helvetica Neue', 'Helvetica', 'Lucida Grande', 'Arial', sans-serif;
@@ -30,9 +31,6 @@ a, a:visited {
   bottom: 0;
   padding: 115px 0 0 0;
   z-index: 10;
-  .ie7 &, .ie8 & {
-    width: 1030px;
-  }
   #hd {
     position: absolute;
     top: 0px;
@@ -41,12 +39,13 @@ a, a:visited {
     height: 108px;
     padding: 7px 25px 0;
     background: transparent url(/images/backgrounds/repeatable_top_nav_1000x115.png) repeat-x top left;
-    .ie7 &, .ie8 & {
-      left: 0px;
-      right: 0px;
-    }
+    overflow: hidden;
     #logo {
       float: left;
+    }
+    #place_search {
+      padding: 55px 0 0 0;
+      float: right;
     }
     #nav {
       float: right;

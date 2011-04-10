@@ -42,13 +42,6 @@
         }
       });
     },
-    admin_places_index: function() {
-      $('.search_link').toggle(function(e) {
-        $('#search_form_wrapper').hide().removeClass('hidden').slideDown();
-      }, function() {
-        $('#search_form_wrapper').slideUp();
-      });
-    },
     admin_places_edit: function() {
       go.PlaceForm.init({mapDiv: $('.map')});
     },

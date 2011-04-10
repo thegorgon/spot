@@ -85,8 +85,7 @@
           }
         },
         forceLoad = function() {
-          $.logger.debug("Force loading");
-          loadCount = images.length;
+          loadCount = images.length + 100;
           loaded();
         };
       parent.addClass('loading').find('*').add(parent).each(function(i) {
@@ -101,7 +100,7 @@
         }
       });
       if (images.length === 0) { loaded(); }
-      setTimeout(forceLoad, 5000);
+      setTimeout(forceLoad, 3000);
     },
     actionLink: function() {
       $(this).die('click').live('click', function(e) {
@@ -180,9 +179,11 @@
       $('.fbconnect').fbconnect();
       $('ul.form input').focus(function(e) {
         $(this).parent('li').addClass('focus');
+        $(this).parents('ul').addClass('focus');
       });
       $('ul.form input').blur(function(e) {
         $(this).parent('li').removeClass('focus');
+        $(this).parents('ul').removeClass('focus');
       });
       $('.radio_fade').radioFade();
       $('#flashes .close').click(function(e) {

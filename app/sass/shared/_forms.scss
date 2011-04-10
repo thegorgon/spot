@@ -239,3 +239,69 @@ form.faded, .form.faded {
     }
   }
 }
+ul.form.search {
+  width: 106px;
+  height: 20px;
+  position: relative;
+  border: 1px solid #333;
+  @include border_radius(17px);
+  @include transition(all 0.5s);
+  li {
+    padding: 0;
+    margin: 0;
+  }
+  &.focus {
+    width: 176px;
+    @include transition(all 0.5s);
+    .search_icon {
+      background: transparent url(/images/assets/general/search13x14.png) no-repeat left center;
+    }
+  }
+  li.search_icon {
+    z-index: 10;
+    position: absolute;
+    top: 2px;
+    height: 18px;
+    bottom: 0;
+    left: 7px;
+    width: 18px;
+    background: transparent url(/images/assets/general/search_light13x14.png) no-repeat left center;
+  }
+  li.search {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    padding: 0 0 0 26px;
+    background: #444;
+    @include border_radius(15px);
+    @include transition(all 0.5s);
+    @include box_shadow("rgba(0, 0, 0, 0.6) 0px 2px 1px inset, rgba(255, 255, 255, 0.2) 0 1px 0");
+    input {
+      color: #fff;
+      position: absolute;
+      top: 4px;
+      bottom: 3px;
+      font-size: 11px;
+      left: 26px;
+      height: 14px;
+      line-height: 14px;
+      right: 5px;
+      border: none;
+      padding: 0;
+      margin: 0;
+      width: 70px;
+      background: transparent;
+    }
+    &.focus {
+      @include transition(all 0.5s);
+      background: #fff;
+      input {
+        width: 140px;
+        color: #000000;
+      }
+    }
+  }
+}

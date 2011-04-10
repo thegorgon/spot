@@ -22,6 +22,11 @@
     #hd
       #logo
         =image_tag "logos/white_admin_spot158x86.png", :height => "86", :alt => "spot"
+      #place_search
+        %ul.form.search
+          =form_tag admin_places_path, :method => :get, :class => "page", :autocomplete => "off" do
+            %li.search_icon
+            %li.search=text_field_tag :query
       %ul#nav
         %li.first=link_to_with_current "search", new_admin_search_path, :class => "page"
         %li=link_to_with_current "places", admin_places_path, :class => "page"

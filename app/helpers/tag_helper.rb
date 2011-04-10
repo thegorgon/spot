@@ -85,7 +85,7 @@ module TagHelper
   
   def hide_content_tag
     content_tag(:script, :type => Mime::JS) do
-      "if ( ! /MSIE (\d+\.\d+);/.test(navigator.userAgent) ) {
+      " if ( ! /MSIE/.test(navigator.userAgent) ) {
         document.getElementById('page').style.display = 'none';
         document.getElementById('bg').style.display = 'none';
       }"

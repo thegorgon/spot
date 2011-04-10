@@ -19,7 +19,7 @@
         setTimeout(this.updateOrientation, 0);
         window.onorientationchange = function() {
           $.updateOrientation();
-        }
+        };
       }
     },
     preload: function(images, cb) {
