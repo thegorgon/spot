@@ -64,6 +64,11 @@
           setTimeout(function() { jumpTo(currentSlide, false); }, 1);
         }
       },
+      forceLoad = function() {
+        $.logger.debug("Force loading");
+        loadCount = options.slides.length;
+        loaded();
+      },
       jumpTo = function(i) {
         currentSlide = i;
         if (currentSlide === 0) {
@@ -100,7 +105,7 @@
       img.src = options.slides[i].src + '?' + options.version;
       buildSlide(img, i).appendTo(slidereel);
     }
-    setTimeout(loaded, 5000);
+    setTimeout(forceLoad, 5000);
     nextControl.click(nextSlide);
     lastControl.click(lastSlide);
     viewport.swipe({
