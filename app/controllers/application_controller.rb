@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   def mobile?
     request.user_agent.match(/iphone/) || request.user_agent.match(/android/)
   end
-  # helper_method :mobile?
+  helper_method :mobile?
 
   def log_error(exception)
     message = "\n#{exception.class} (#{exception.message}):\n"
