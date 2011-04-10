@@ -108,7 +108,6 @@
       swipeLeft: function() { nextSlide(); },
       swipeRight: function() { lastSlide(); }
     });
-    viewport.addEventListener()
     return {
       nextSlide: nextSlide,
       lastSlide: lastSlide,
