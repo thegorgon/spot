@@ -3,8 +3,16 @@ class ApplicationController < ActionController::Base
   before_filter :localize
   helper :application, :place
   
+  rescue_from ActionController::RoutingError, :with => :render_404
+  rescue_from ActionController::UnknownController, :with => :render_404
+  rescue_from ActionController::UnknownAction, :with => :render_404
+  
   private  
-
+  
+  def render_404(exception=nil)
+    render :template => "/site/errors/404.html.haml", :status => 404
+  end
+  
   def require_admin
     authenticate
     unless current_user && current_user.admin?
@@ -87,11 +95,5 @@ class ApplicationController < ActionController::Base
       attributes[:location] = request_location if current_user.location != request_location
       current_user.update_attributes(attributes) if logged_in? && attributes.present?
     end
-  end
-  
-  def method_missing(methodname, *args)
-    @methodname = methodname
-    @args = args
-    redirect_to 404_path
-  end
+  end  
 end
