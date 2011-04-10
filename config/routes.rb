@@ -10,7 +10,6 @@ Spot::Application.routes.draw do
     resource :account, :only => [:new, :create, :destroy]
     resource :password_reset, :only => [:new, :create, :edit, :update]
     resources :places, :only => [:show]
-    resources :short_urls, :only => [:show], :path => "!"
     resource :email, :only => [:show] do
       delete "unsubscribe"
       get "goodbye"
@@ -25,6 +24,7 @@ Spot::Application.routes.draw do
     end
     get "login" => redirect("/session/new")
     get "register" => redirect("/account/new")
+    match "/!/:id", :to => redirect(:status => 301) { |params| ShortUrl.expand(params[:id]) }
   end
   
   scope :module => "api", :constraints => {:subdomain => /api\d*/}, :as => "api" do
