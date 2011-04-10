@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   private
 
   def mobile?
-    request.user_agent.match(/iphone/) || request.user_agent.match(/android/)
+    !!(request.user_agent.match(/iphone/) || request.user_agent.match(/android/))
   end
   helper_method :mobile?
 
