@@ -88,4 +88,10 @@ class ApplicationController < ActionController::Base
       current_user.update_attributes(attributes) if logged_in? && attributes.present?
     end
   end
+  
+  def method_missing(methodname, *args)
+    @methodname = methodname
+    @args = args
+    redirect_to 404_path
+  end
 end
