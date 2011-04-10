@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     logger.fatal("#{message}\n\n")
   end
 
-  def render_error
+  def render_error(exception)
     log_error(exception)
     render :template => "/site/errors/500.html.haml", :status => 404
   end

@@ -80,4 +80,6 @@ Spot::Application.routes.draw do
   get "500.html", :to => "site/errors#server_error", :as => "server_error"
   
   root :to => "site/home#index"  
+  
+  match "*path", :to => "site/errors#not_found"
 end
