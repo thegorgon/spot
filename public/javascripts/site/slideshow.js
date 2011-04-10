@@ -100,6 +100,7 @@
       img.src = options.slides[i].src + '?' + options.version;
       buildSlide(img, i).appendTo(slidereel);
     }
+    setTimeout(loaded, 5000);
     nextControl.click(nextSlide);
     lastControl.click(lastSlide);
     return {
