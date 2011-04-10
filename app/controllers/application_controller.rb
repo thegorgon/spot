@@ -11,6 +11,11 @@ class ApplicationController < ActionController::Base
   
   private
 
+  def mobile?
+    request.user_agent.match(/iphone/) || request.user_agent.match(/android/)
+  end
+  # helper_method :mobile?
+
   def log_error(exception)
     message = "\n#{exception.class} (#{exception.message}):\n"
     message << exception.annoted_source_code.to_s if exception.respond_to?(:annoted_source_code)
@@ -20,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   def render_error(exception)
     log_error(exception)
-    render :template => "/site/errors/500.html.haml", :status => 404
+    render :template => "/site/errors/500.html.haml", :status => 500, :layout => "site"
   end
   
   def clean_backtrace(exception, *args)
@@ -29,7 +34,7 @@ class ApplicationController < ActionController::Base
   
   def render_404(exception=nil)
     log_error(exception)
-    render :template => "/site/errors/404.html.haml", :status => 404
+    render :template => "/site/errors/404.html.haml", :status => 404, :layout => "site"
   end
   
   def require_admin

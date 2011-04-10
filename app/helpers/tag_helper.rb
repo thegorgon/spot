@@ -56,7 +56,7 @@ module TagHelper
   def iphone_meta_tags
     [ meta_name("apple-mobile-web-app-capable", "yes"),
       meta_name("apple-mobile-web-app-status-bar-style", "black-translucent"),
-      meta_name("viewport", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0") ].join("\n").html_safe
+      meta_name("viewport", "width=device-width, initial-scale=1.0, maximum-scale=1.0") ].join("\n").html_safe
   end
   
   def seo_tags

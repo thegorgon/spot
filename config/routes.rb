@@ -24,7 +24,7 @@ Spot::Application.routes.draw do
     end
     get "login" => redirect("/session/new")
     get "register" => redirect("/account/new")
-    match "/!/:id", :to => redirect { |params| ShortUrl.expand(params[:id]) || "/404.html" }
+    match "/!/:id", :to => redirect { |params| ShortUrl.expand(params[:id]) || "/404.html" }, :as => "short"
   end
   
   scope :module => "api", :constraints => {:subdomain => /api\d*/}, :as => "api" do
