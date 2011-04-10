@@ -10,7 +10,7 @@ Spot::Application.routes.draw do
     resource :account, :only => [:new, :create, :destroy]
     resource :password_reset, :only => [:new, :create, :edit, :update]
     resources :places, :only => [:show]
-    resources :p, :only => [:show]
+    resources :short_urls, :only => [:show], :path => "!"
     resource :email, :only => [:show] do
       delete "unsubscribe"
       get "goodbye"

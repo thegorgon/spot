@@ -54,6 +54,7 @@ GEM
       mime-types
       xml-simple
       xml-simple
+    base62 (0.1.4)
     builder (2.1.2)
     capistrano (2.5.20)
       highline
@@ -238,6 +239,7 @@ DEPENDENCIES
   autotest-growl
   aws-s3
   aws-ses (~> 0.3.2)
+  base62
   capistrano
   curb
   factory_girl_rails

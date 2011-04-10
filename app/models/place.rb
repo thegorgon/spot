@@ -172,7 +172,7 @@ class Place < ActiveRecord::Base
       :image_url => image.url,
       :updated_at => updated_at,
       :path => place_path(self),
-      :short_path => p_path(self.id)
+      :short_url => ShortUrl.shorten(place_path(self))
     }
     unless image.file? || options[:default_images]
       hash.merge!(:image_url_640x400 => nil, :image_url_234x168 => nil, :image_url => nil)
