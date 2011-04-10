@@ -2,6 +2,22 @@
   #ft {
     display: none;
   }
-  #slideshow {
+  #bd {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    #slideshow {
+      #nextslide {
+        height: 0;
+        width: 0;
+        display: none;
+      }
+      #lastslide {
+        height: 0;
+        width: 0;
+        display: none;
+      }
+    }
   }
 }

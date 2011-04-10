@@ -103,6 +103,11 @@
     setTimeout(loaded, 5000);
     nextControl.click(nextSlide);
     lastControl.click(lastSlide);
+    viewport.swipe({
+      threshold: { x: 5, y: 1000},
+      swipeLeft: function() { nextSlide(); },
+      swipeRight: function() { lastSlide(); }
+    });
     return {
       nextSlide: nextSlide,
       lastSlide: lastSlide,

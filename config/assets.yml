@@ -8,6 +8,7 @@ javascripts:
     - public/javascripts/vendor/jquery-ui-1.8.10.custom.min.js
     - public/javascripts/vendor/logger.js
     - public/javascripts/vendor/jquery.validate.js
+    - public/javascripts/vendor/jquery.jswipe.js
   site:
     - public/javascripts/shared/extensions.js
     - public/javascripts/shared/spot.js
