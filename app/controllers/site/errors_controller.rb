@@ -1,11 +1,11 @@
 class Site::ErrorsController < Site::BaseController
   def error_test
-    exception =  Exception
-    exception =  ActiveRecord::RecordNotFound if params[:type] == "notfound"
-    exception =  ActionController::RoutingError if params[:type] == "routing"
-    exception =  ActionController::UnknownController if params[:type] == "controller"
-    exception =  ActionController::UnknownAction if params[:type] == "action"
-    raise exception
+    ex = Exception
+    ex = ActiveRecord::RecordNotFound if params[:type] == "notfound"
+    ex = ActionController::RoutingError if params[:type] == "routing"
+    ex = ActionController::UnknownController if params[:type] == "controller"
+    ex = ActionController::UnknownAction if params[:type] == "action"
+    raise ex
   end
       
   def not_found
