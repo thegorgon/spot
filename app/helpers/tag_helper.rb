@@ -15,15 +15,14 @@ module TagHelper
     content_tag(:script, "", :src => file, :type => "text/javascript")
   end
   
-  def fb_share_url(url)
-    share = content_tag(:a, "", :name => "fb_share", :share_url => url, :type => "button")
-    share << external_js_include("#{request.ssl?? "https" : "http"}://static.ak.fbcdn.net/connect.php/js/FB.Share")  
+  def fb_share_url(url, properties={})
+    share = content_tag("fb:like", "&nbsp;".html_safe, :href => url, :layout => "button_count", :show_faces => false, :width => 90, :font => "lucida grande")
     share.html_safe
   end
 
   def twitter_share_url(url, text)
-    params = {:url => url, :via => "spotteam", :text => text}.to_query
-    share = content_tag(:a, "&nbsp;".html_safe, :href => "https://twitter.com/share?#{params}", :target => "_blank", :class => "twitter-share-button")
+    params = {:url => url, :via => "spotteam", :text => text}
+    share = content_tag(:a, "&nbsp;".html_safe, :href => "https://twitter.com/share?#{params.to_query}", :target => "_blank", :class => "twitter-share-button")
     share.html_safe
   end
   

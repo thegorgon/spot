@@ -22,6 +22,6 @@
 
 =content_for :ft do
   .share.clearfix
-    .fb=fb_share_url(place_url(@place))
+    .fb=fb_share_url(place_url(@place), :title => page_title, :description => page_description, :image => @place.image.url(:i117x84))
     .twitter=twitter_share_url(place_url(@place), @place.share_tweet)
   =itunes_store_link('assets/general/app_store_transparent116x40.png', :size => "116x40")    
