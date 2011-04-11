@@ -1,0 +1,20 @@
+xml.instruct!
+xml.urlset "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9", "xmlns:image" => "http://www.google.com/schemas/sitemap-image/1.1", "xmlns:mobile" => "http://www.google.com/schemas/sitemap-mobile/1.0" do
+  @places.each do |place|
+    xml.url do
+      xml.loc        place_url(place)
+      xml.lastmod    w3c_date(place.updated_at)
+      xml.changefreq "daily"
+      xml.priority   1
+      xml.mobile :mobile
+      if place.image.file?
+        xml.image :image do
+          xml.image :loc, place.image.url(:i640x400)
+          xml.image :caption, place.name_with_city
+          xml.image :title, place.name_with_city
+          xml.image :geo_location, place.city_and_region
+        end 
+      end
+    end
+  end
+end
