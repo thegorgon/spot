@@ -67,6 +67,7 @@
       },
       forceLoad = function() {
         loadCount = options.slides.length + 100;
+        jumpTo(currentSlide, false);
         resize();
         loaded();
       },
