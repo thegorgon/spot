@@ -16,8 +16,13 @@
     .form
       =render :partial => "form", :object => @place, :as => :place
     -unless @place.new_record?
-      =link_to "Delete", admin_place_path(@place), "data-confirm" => "Are you sure you want to delete #{@place.name}?", "data-method" => "delete"
-  =render :partial => "shared/places/iphone", :object => @place, :as => :place
+      %p=link_to "Delete", admin_place_path(@place), "data-confirm" => "Are you sure you want to delete #{@place.name}?", "data-method" => "delete"
+  
+  .left
+    =render :partial => "shared/places/iphone", :object => @place, :as => :place
+    -unless @place.new_record?
+      %p.page_link=link_to "Web Page", ShortUrl.shorten(place_path(@place))
+  
   .duplication
     -if @place.duplicate?
       %h2 Duplicate of...

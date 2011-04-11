@@ -98,20 +98,24 @@
       }
       .content {
         padding: 5px 16px;
-        .name {
-          font-size: 20px;
-        }
-        .address {
-          margin: 10px 0 0 0;
-          h2 {
+        .contact {
+          position: relative; 
+          .name {
+            font-size: 20px;
+          }
+          .address {
+            margin: 10px 0 0 0;
+            h2 {
+              font-size: 14px;
+              font-weight: normal;
+            }        
+          }
+          .phone {
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
             font-size: 14px;
-            font-weight: normal;
-          }        
-        }
-        .phone {
-          float: right;
-          margin: 27px 0 0 0;
-          font-size: 14px;
+          }
         }
         .buttons_container {
           margin: 20px auto 20px auto;

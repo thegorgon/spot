@@ -8,12 +8,13 @@
   .image
     =image_tag @place.image.url(:i640x400), :size => "320x200", :alt => @place.name_with_city
   .content
-    %h1.name=@place.name
-    -if @place.phone_number.present?
-      .phone=phone_link(@place.phone_number)
-    .address
-      -@place.address_lines.each do |a|
-        %h2=a
+    .contact
+      %h1.name=@place.name
+      -if @place.phone_number.present?
+        .phone=phone_link(@place.phone_number)
+      .address
+        -@place.address_lines.each do |a|
+          %h2=a
     .wishlists
       ="#{@place.wishlist_count} Wishlists"
     .buttons_container
