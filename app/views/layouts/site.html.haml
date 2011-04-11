@@ -40,6 +40,8 @@
         -if logged_in?
           #account_nav
             ="Logged in as #{current_user.nickname} #{link_to "logout", session_path, 'data-method' => "delete"}".html_safe
+            -if current_user.admin?
+              =link_to "admin", admin_root_path
       =itunes_store_link("assets/general/app_store183x60.png", :size => "183x60") do
         #signup_form.flips
           %p.title

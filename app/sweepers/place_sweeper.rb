@@ -15,10 +15,9 @@ class PlaceSweeper < ActionController::Caching::Sweeper
 
   def expire_cache_for(place)
     Rails.logger.info("spot-app: expiring cache for place #{place.to_param}")
-    [ {:controller => "site/places", :action=>"show", :id => place.id}, 
-      {:controller => "site/places", :action=>"show", :id => place.to_param}, 
-      {:controller => "site/sitemaps", :action=>"show"} ].each do |action|
-        Rails.logger.info("spot-app: expiring cache #{ActionController::Caching::Actions::ActionCachePath.new(self, action, false).path}")
+    [ {:controller => "site/places", :action => "show", :id => place.id}, 
+      {:controller => "site/places", :action => "show", :id => place.to_param}, 
+      {:controller => "site/sitemaps", :action => "show"} ].each do |action|
         expire_action(action)      
       end
   end
