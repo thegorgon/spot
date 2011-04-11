@@ -57,10 +57,11 @@
       },
       loaded = function() {
         loadCount = loadCount + 1;
-        if (loadCount >= options.slides.length && !finalized) {
+        loadCount >= options.slides.length;
+        setTimeout(resize, 1);
+        if ( !finalized) {
           finalized = true;
           element.fadeIn(1000);
-          setTimeout(resize, 1);
           setTimeout(function() { jumpTo(currentSlide, false); }, 1);
         }
       },

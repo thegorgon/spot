@@ -1,0 +1,31 @@
+#biz_home_index {
+  min-width: 1000px;
+  .left {
+    width: 400px;
+    float: left;
+    padding: 10px 0 0 20px;
+    h1 {
+      font-size: 20px;
+    }
+    .buttons {
+      text-align: center;
+      margin: 2em 0 0 0;
+      a {
+        margin: 0 auto;
+      }
+    }
+    .bullets {
+      li {
+        margin: 1em 0;
+      }
+      .title {
+        font-weight: bold;
+        font-size: 1.2em;
+        padding: 0 0 0.5em 0;
+      }
+    }
+  }
+  .right {
+    width: 400px;
+  }
+}

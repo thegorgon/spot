@@ -1,6 +1,22 @@
 require 'resque/server'
 
-Spot::Application.routes.draw do  
+Spot::Application.routes.draw do    
+  scope :module => "api", :constraints => {:subdomain => /api\d*/}, :as => "api" do
+    resources :places, :only => [:index] do
+      collection do 
+        get "search"
+      end
+    end
+    resource :sessions, :only => [:new, :create, :destroy]
+    resource :activity, :only => [:show], :controller => "activity"
+    resource :wishlist, :only => [:show] do
+      collection do
+        get "activity"
+      end
+      resources :items, :only => [:create, :destroy], :controller => :wishlist_items
+    end
+  end
+  
   scope :module => "site", :constraints => {:subdomain => /www|m|app/} do
     resources :previews, :only => [:index, :create] do
       get "share"
@@ -25,22 +41,6 @@ Spot::Application.routes.draw do
     get "login" => redirect("/session/new")
     get "register" => redirect("/account/new")
     match "/!/:id", :to => redirect { |params| ShortUrl.expand(params[:id]) || "/404.html" }, :as => "short"
-  end
-  
-  scope :module => "api", :constraints => {:subdomain => /api\d*/}, :as => "api" do
-    resources :places, :only => [:index] do
-      collection do 
-        get "search"
-      end
-    end
-    resource :sessions, :only => [:new, :create, :destroy]
-    resource :activity, :only => [:show], :controller => "activity"
-    resource :wishlist, :only => [:show] do
-      collection do
-        get "activity"
-      end
-      resources :items, :only => [:create, :destroy], :controller => :wishlist_items
-    end
   end
   
   namespace "admin" do

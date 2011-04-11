@@ -39,9 +39,7 @@ javascripts:
     - public/javascripts/shared/lightbox.js
     - public/javascripts/shared/gmap.js
     - public/javascripts/shared/place_form.js
-    - public/javascripts/admin/search_emulator.js
-    - public/javascripts/admin/shared.js
-    - public/javascripts/admin/views.js
+    - public/javascripts/biz/views.js
 stylesheets:
   site:
     - public/stylesheets/site.css

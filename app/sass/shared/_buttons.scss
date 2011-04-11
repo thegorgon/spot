@@ -50,6 +50,27 @@ button.link {
    color: #ff8419; 
   }  
 }
+.btnorg156x31, a.btnorg156x31 {
+  display: block;
+  width: 156px;
+  height: 31px;
+  line-height: 31px;
+  text-align: center;
+  color: #000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 0px 1px #fff;
+  background: transparent url(/images/buttons/orange_button156x31.png) no-repeat center center;  
+  &:hover {
+    color: #000 !important;
+    background: transparent url(/images/buttons/orange_button156x31_hover.png) no-repeat center center;  
+  }
+  &:active {
+    color: #000;
+    background: transparent url(/images/buttons/orange_button156x31_active.png) no-repeat center center;  
+  }
+}
 .phone_whitegray_288x37, a.phone_whitegray_288x37 {
   display: block;
   width: 288px;

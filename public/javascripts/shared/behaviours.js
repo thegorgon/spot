@@ -158,6 +158,8 @@
       $.logger.level(_vars.env === 'production' ? 'ERROR' : 'DEBUG');
       go.Navigator.init();
       $.mobileOptimize();
+      $.logger.debug(vars.preload);
+      $.preload(vars.preload);
       if ($.support.opacity) {
         $('#bg').preloadBackground();
         $('#page').preloadAll();
