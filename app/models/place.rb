@@ -111,6 +111,16 @@ class Place < ActiveRecord::Base
     self.full_name = value
   end
   
+  def name_with_city
+    city.present?? "#{name.titlecase} in #{city.titlecase}" : "#{name.titlecase}"
+  end
+
+  def name_with_address_and_city
+    string = name.titlecase
+    string << " at #{address_lines[0].titlecase}" if address_lines[0].present? 
+    string << " in #{city.titlecase}" if city.present?
+  end
+  
   def share_tweet
     @tweet = "Add #{name}"
     @tweet << " in #{city}" if city

@@ -1,7 +1,7 @@
 module ApplicationHelper
   def page_title
     if @place
-      "Spot - Never Forget #{@place.name} in #{@place.city}".titlecase
+      "Spot - Never Forget #{@place.name_with_city}"
     elsif @page_title
       @page_title
     else
@@ -21,7 +21,7 @@ module ApplicationHelper
   
   def page_description
     if @place
-      "Spot for iPhone : #{@place.name.titlecase} at #{@place.address} in #{@place.city.titlecase}."
+      "Spot for iPhone : #{@place.name_with_address_and_city}." 
     elsif @page_description
       @page_description
     else
@@ -50,6 +50,14 @@ module ApplicationHelper
       "#{request_location} ( #{source} )"
     else
       "--"
+    end
+  end
+  
+  def phone_link(number)
+    if iphone_browser?
+      link_to(number, "tel:#{number.gsub(/[^\d]+/i, '')}")
+    else
+      number
     end
   end
 end

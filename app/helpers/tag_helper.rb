@@ -85,10 +85,17 @@ module TagHelper
   
   def hide_content_tag
     content_tag(:script, :type => Mime::JS) do
-      " if ( ! /MSIE/.test(navigator.userAgent) ) {
-        document.getElementById('page').style.display = 'none';
-        document.getElementById('bg').style.display = 'none';
-      }"
+      "(function() {
+        if ( ! /MSIE/.test(navigator.userAgent) ) {
+          var hide = {'page': null, 'bg': null, 'flashes': null};
+          for (var key in hide) {
+            if (hide.hasOwnProperty(key)) {
+              hide[key] = document.getElementById(key);
+              if (hide[key]) { hide[key].style.display = 'none'; }
+            }
+          }
+        }
+      }());"
     end
   end
   

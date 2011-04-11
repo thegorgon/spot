@@ -158,11 +158,11 @@
       $.logger.level(_vars.env === 'production' ? 'ERROR' : 'DEBUG');
       go.Navigator.init();
       $.mobileOptimize();
-      $.logger.debug(vars.preload);
       $.preload(vars.preload);
       if ($.support.opacity) {
         $('#bg').preloadBackground();
         $('#page').preloadAll();
+        $('#flashes').preloadAll();
       }
     },
     getVar: function(name) {
@@ -175,9 +175,6 @@
       $('a[data-method]:not(.ajax)').actionLink();
       $('a[data-confirm][data-method]:not(.ajax)').actionLink();
       $('.fade_in').fadeIn();
-      $('#flash').hide().removeClass('hidden').slideDown(500, function() {
-        setTimeout(function() { $('#flash').slideUp(500); }, 3000);
-      });
       $('.fbconnect').fbconnect();
       $('ul.form input').focus(function(e) {
         $(this).parent('li').addClass('focus');
@@ -190,8 +187,9 @@
       $('.radio_fade').radioFade();
       $('#flashes .close').click(function(e) {
         var height = $('#flashes').outerHeight();
-        $('#flashes').animate({top: -1 * height}, 500, 'linear', function() {
-          $('#flashes').remove();
+        $('#flashes .flash').absolutize();
+        $('#flashes').slideUp(function() {
+          $("#flashes").remove();
         });
       });
       $('li.invalid input, input.invalid').focus(function(e) {

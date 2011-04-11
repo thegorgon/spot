@@ -40,37 +40,6 @@ body {
   left: 0px;
   right: 0px;
   bottom: 125px;
-  #flashes {
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: 0;
-    text-shadow: #000 0 1px 0;
-    background: #333 url(/images/backgrounds/linen_bottomshadow.jpg) repeat bottom center;
-    position: absolute;
-    overflow: hidden;
-    z-index: 100;
-    padding: 15px 0 20px 0;
-    text-align: center;
-    font-weight: bold;
-    font-size: 14px;
-    color: #ff8419;
-    .close {
-      background: transparent url(/images/assets/general/orange_cross_12x13.png) no-repeat center right;
-      position: absolute;
-      top: 0px;
-      right: 10px;
-      bottom: 0px;
-      width: 20px;
-      cursor: pointer;
-    }
-    a {
-      color: #ff8419;
-      &:hover {
-        color: #ccc;
-      }
-    }
-  }
 }
 #page {
   position: absolute;

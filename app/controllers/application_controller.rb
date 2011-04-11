@@ -11,10 +11,20 @@ class ApplicationController < ActionController::Base
   
   private
 
-  def mobile?
-    !!(request.user_agent.match(/iphone/) || request.user_agent.match(/android/))
+  def mobile_browser?
+    iphone_browser? || android_browser?
   end
-  helper_method :mobile?
+  helper_method :mobile_browser?
+
+  def iphone_browser?
+    !!request.user_agent.match(/iphone/)
+  end
+  helper_method :iphone_browser?
+  
+  def android_browser?
+    !!request.user_agent.match(/android/)
+  end
+  helper_method :android_browser?
 
   def log_error(exception)
     message = "\n#{exception.class} (#{exception.message}):\n"

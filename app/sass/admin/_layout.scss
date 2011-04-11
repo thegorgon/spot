@@ -69,28 +69,6 @@ a, a:visited {
   #bd {
     width: 980px;
     margin: 0 auto;
-    #flash {
-      position: absolute;
-      top: 130px;
-      left: 0;
-      right: 0;
-      font-size: 20px;
-      height: 40px;
-      line-height: 40px;
-      text-align: center;
-      font-weight: bold;
-      .flash {
-        height: 40px;
-      }
-      .error {
-        background: #993333;
-        color: #fff;
-      }
-      .notice {
-        background: #339933;
-        color: #fff;
-      }
-    }
   }
 }
 h1.title {

@@ -5,6 +5,24 @@ describe User do
   before :each do 
     @user = Factory.build(:user)
   end
+  
+  describe "#adminify!" do
+    it "makes the user with the given email an admin" do
+      @user = Factory.create(:user, :admin => false)
+      @user.should_not be_admin
+      User.adminify!(@user.email)
+      @user.reload.should be_admin
+    end
+
+    it "returns true if given a real email" do
+      @user = Factory.create(:user)
+      User.adminify!(@user.email).should == true
+    end
+
+    it "returns false if given a non-existent email" do
+      User.adminify!("falseemail").should == false
+    end
+  end
     
   describe "#name" do
     it "sets the last name to the last word" do

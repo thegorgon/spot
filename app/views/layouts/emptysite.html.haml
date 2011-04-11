@@ -22,12 +22,12 @@
     = google_analytics_tag(:account_id => 'UA-21193799-1')
 %body{:id => page_namespace, :class => controller_name}
   #bg
+  = flashes
   #page
     =hide_content_tag
     #hd
       = yield :hd
     #bd
-      = flashes
       = yield
     #ft
       =yield :ft

@@ -1,16 +1,16 @@
 =content_for :hd do
-  #logo
-    =image_tag "logos/black_spot_with_tag160x75.png", :size => "160x75 ", :alt => "spot"
+  %h1#message="Remember places like #{@place.name_with_city} with #{link_to("Spot&nbsp;for&nbsp;iPhone".html_safe, getspot_path)}".html_safe
+  #card_header
+    #logo
+      =image_tag "logos/black_spot_with_tag160x75.png", :size => "160x75 ", :alt => "spot"
 
 .place{:id => "place_#{@place.id}"}
-  .border
-    =image_tag "backgrounds/shadow_border357x476.png", :size => "357x476"
   .image
-    .tl
-    .tr
-    =image_tag @place.image.url(:i640x400), :size => "320x200"
+    =image_tag @place.image.url(:i640x400), :size => "320x200", :alt => @place.name_with_city
   .content
     %h1.name=@place.name
+    -if @place.phone_number.present?
+      .phone=phone_link(@place.phone_number)
     .address
       -@place.address_lines.each do |a|
         %h2=a

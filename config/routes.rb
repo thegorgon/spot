@@ -17,7 +17,7 @@ Spot::Application.routes.draw do
     end
   end
   
-  scope :module => "site", :constraints => {:subdomain => /www|m|app/} do
+  scope :module => "site", :constraints => {:subdomain => /www|m|app|/} do
     resources :previews, :only => [:index, :create] do
       get "share"
     end

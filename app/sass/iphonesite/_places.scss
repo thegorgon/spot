@@ -1,9 +1,12 @@
 body.site_places {
   width: 320px;
   min-height: 600px;
-  height: 600px;
   position: relative;
-  #page, #bg {
+  #message {
+    padding: 5px 0 10px 0;
+    font-size: 0.9em;
+  }
+  #bg {
     position: absolute;
     top: 0;
     left: 0;
@@ -13,20 +16,21 @@ body.site_places {
   }
   #page {
     #hd {
-      #logo {
-        margin: 0 auto;
-        float: none;
-      }
-      text-align: center;
+      #card_header {
+        text-align: center;
+        #logo {
+          margin: 0 auto;
+          float: none;
+          width: 160px;
+        }
+      }      
     }
     .place {
       background: #f0f0f0;
       border: 1px solid #B3B3B3;
       border-left: none;
       border-right: none;
-      .border {
-        display: none;
-      }
+      @include border_radius(0px);
       .image {
         border: none;
         @include border_radius(0px)

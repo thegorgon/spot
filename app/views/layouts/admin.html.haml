@@ -17,6 +17,7 @@
   = yield :head
 %body{:id => page_namespace, :class => controller_name}
   #bg
+  =flashes
   #page
     =hide_content_tag
     #hd
@@ -35,11 +36,6 @@
         %li.last=link_to_with_current "info", admin_info_path, :class => "page"
     #bd.clearfix
       = yield
-      -if flash[:error] || flash[:notice]
-        #flash.hidden
-          -[:error, :notice].each do |key|
-            -if flash[key].present?
-              %div{:class => key}= flash[key]
   #fb-root
   =google_maps_api_include
   =include_javascripts :vendor
