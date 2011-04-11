@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def w3c_date(date)
+    date.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")
+  end  
+  
   def page_title
     if @place
       "Spot - Never Forget #{@place.name_with_city}"

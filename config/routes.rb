@@ -40,7 +40,8 @@ Spot::Application.routes.draw do
     end
     get "login" => redirect("/session/new")
     get "register" => redirect("/account/new")
-    match "/!/:id", :to => redirect { |params| ShortUrl.expand(params[:id]) || "/404.html" }, :as => "short"
+    get "/!/:id", :to => redirect { |params| ShortUrl.expand(params[:id]) || "/404.html" }, :as => "short"
+    get "sitemap(.:format)", :to => "sitemaps#show", :constraints => {:format => :xml}
   end
   
   namespace "admin" do
@@ -65,7 +66,6 @@ Spot::Application.routes.draw do
   
   namespace "biz" do
     resource :account, :only => [:new, :show]
-
     controller "home" do
       get "help"
     end
@@ -74,12 +74,11 @@ Spot::Application.routes.draw do
   
   mount Resque::Server.new, :at => "/admin/resque"
   
-  get "error",    :to => "site/errors#error_test"
   get "404.html", :to => "site/errors#not_found", :as => "not_found"
   get "422.html", :to => "site/errors#unprocessable", :as => "unprocessable"
   get "500.html", :to => "site/errors#server_error", :as => "server_error"
-  
-  root :to => "site/home#index"  
+
+  root :to => "site/home#index"
   
   match "*path", :to => "site/errors#not_found"
 end

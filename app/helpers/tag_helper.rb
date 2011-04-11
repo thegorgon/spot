@@ -22,8 +22,8 @@ module TagHelper
   end
 
   def twitter_share_url(url, text)
-    share = content_tag(:a, "", :href => "https://twitter.com/share", :class => "twitter-share-button", "data-count" => "none", "data-url" => url, "data-text" => text)
-    share << external_js_include("http://platform.twitter.com/widgets.js")  
+    params = {:url => url, :via => "spotteam", :text => text}.to_query
+    share = content_tag(:a, "&nbsp;".html_safe, :href => "https://twitter.com/share?#{params}", :target => "_blank", :class => "twitter-share-button")
     share.html_safe
   end
   

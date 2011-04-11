@@ -120,6 +120,10 @@ class Place < ActiveRecord::Base
     string << " at #{address_lines[0].titlecase}" if address_lines[0].present? 
     string << " in #{city.titlecase}" if city.present?
   end
+
+  def city_and_region
+    [city, region].compact.join(", ")
+  end
   
   def share_tweet
     @tweet = "Add #{name}"

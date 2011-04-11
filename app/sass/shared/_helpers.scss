@@ -54,6 +54,19 @@ form.inline {
   margin: 0 auto;
   width: 300px;
 }
+.twitter-share-button {
+  width: 55px;
+  display: block;
+  height: 20px;
+  text-decoration: none;
+  background: transparent url(/images/assets/general/tweet.png) no-repeat;
+  &:hover {
+    background-position: 0px -21px;
+  }
+  &:active {
+    background-position: 0 -42px;
+  }
+}
 #flashes {
   text-shadow: #000 0 1px 0;
   background: #333 url(/images/backgrounds/linen_bottomshadow.jpg) repeat bottom center;
