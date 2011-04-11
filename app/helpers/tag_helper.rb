@@ -17,7 +17,7 @@ module TagHelper
   
   def fb_share_url(url)
     share = content_tag(:a, "", :name => "fb_share", :share_url => url, :type => "button")
-    share << external_js_include("http://static.ak.fbcdn.net/connect.php/js/FB.Share")  
+    share << external_js_include("#{request.ssl? "https" : "http"}://static.ak.fbcdn.net/connect.php/js/FB.Share")  
     share.html_safe
   end
 
