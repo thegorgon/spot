@@ -1,5 +1,6 @@
 class PlaceSweeper < ActionController::Caching::Sweeper
   observe Place
+  include Rails.application.routes.url_helpers
 
   def after_update(place)
     Rails.logger.info "place-sweeper: after_update place #{place.to_param}"
@@ -15,12 +16,12 @@ class PlaceSweeper < ActionController::Caching::Sweeper
 
   def expire_cache_for(place)
     Rails.logger.info("spot-app: expiring cache for place #{place.to_param}")
-    expire_page(:controller=>"site/places",:action=>"show",:id => place.id)
-    expire_page(:controller=>"site/places",:action=>"show",:id => place.to_param)
-    expire_page(:controller=>"site/sitemaps", :action=>"show")
-    expire_cache(:controller=>"site/places",:action=>"show",:id => place.id)
-    expire_cache(:controller=>"site/places",:action=>"show",:id => place.to_param)
-    expire_cache(:controller=>"site/sitemaps", :action=>"show")
+    expire_page(place_path(place.id))
+    expire_page(place_path(place.to_param))
+    expire_page(sitemap_path(:format => :xml))
+    expire_cache(place_path(place.id))
+    expire_cache(place_path(place.to_param))
+    expire_cache(sitemap_path(:format => :xml))
   end
   
 end
