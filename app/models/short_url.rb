@@ -1,7 +1,7 @@
 class ShortUrl < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   EXPANDER = 1234567890
-  DEFAULT_HOST = Rails.env.production?? "spot-app.com" : "www.rails.local"
+  DEFAULT_HOST = Rails.env.production?? "www.spot-app.com" : "www.rails.local"
   validates :url, :presence => true
   validate :url_validity
   
