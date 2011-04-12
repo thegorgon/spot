@@ -8,11 +8,11 @@
         .previous=link_to "&larr; Previous".html_safe, admin_places_path(filters.merge(:page => @places.previous_page)), :class => "page"
     %h1.title="#{@places.total_entries} Places"
     .links
-      =link_to "Image Queue", admin_places_path(filters.merge(:filter => 3))
-      =link_to "Imageless", admin_places_path(filters.merge(:filter => 2))
-      =link_to "Wishlisted", admin_places_path(filters.merge(:filter => 1))
-      =link_to "All", admin_places_path
-      =link_to "New", new_admin_place_path
+      =link_to "Image Queue", admin_places_path(filters.merge(:filter => 3)), :class => "page"
+      =link_to "Imageless", admin_places_path(filters.merge(:filter => 2)), :class => "page"
+      =link_to "Wishlisted", admin_places_path(filters.merge(:filter => 1)), :class => "page"
+      =link_to "All", admin_places_path, :class => "page"
+      =link_to "New", new_admin_place_path, :class => "page"
   =render :partial => "table", :object => @places, :as => :places
   .pagination.bottom
     -if @places.next_page
