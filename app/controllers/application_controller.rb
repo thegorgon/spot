@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :stash_controller
   before_filter :localize
   helper :application, :place
   
@@ -120,6 +121,10 @@ class ApplicationController < ActionController::Base
     ip_location || request.user_preferred_languages.first
   end
   helper_method :request_location
+  
+  def stash_controller
+    Thread.current[:controller] = self
+  end
   
   def localize
     I18n.locale = current_user.try(:locale) || request.compatible_language_from(I18n.available_locales) || I18n.default_locale

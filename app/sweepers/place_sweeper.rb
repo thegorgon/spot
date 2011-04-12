@@ -18,8 +18,8 @@ class PlaceSweeper < ActionController::Caching::Sweeper
     [ {:controller => "site/places", :action => "show", :id => place.id}, 
       {:controller => "site/places", :action => "show", :id => place.to_param}, 
       {:controller => "site/sitemaps", :action => "show"} ].each do |action|
-        expire_action(action)      
-      end
+      Thread.current[:controller].send(:expire_action, action)
+    end
   end
   
 end

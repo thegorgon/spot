@@ -19,4 +19,4 @@
         %td= place.to_lat_lng
         %td
           =link_to "Edit", edit_admin_place_path(place)
-          =link_to "Page", ShortUrl.shorten(place_path(place))
+          =link_to "Page", place_path(place)
