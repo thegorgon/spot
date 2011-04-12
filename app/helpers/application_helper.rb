@@ -1,10 +1,14 @@
 module ApplicationHelper
+  def place_page?
+    @place && !@place.new_record?
+  end
+  
   def w3c_date(date)
     date.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")
   end  
   
   def page_title
-    if @place
+    if place_page?
       "Spot - Never Forget #{@place.name_with_city}"
     elsif @page_title
       @page_title
@@ -15,16 +19,16 @@ module ApplicationHelper
   
   def page_keywords
     keywords = ["spot", "iphone", "app", "application", "place", "wishlist"]
-    if @place
+    if place_page?
       keywords += [@place.name.downcase, @place.city.downcase]
     elsif @page_keywords
       keywords += @keywords
     end
     keywords.join(", ")
-   end
+  end
   
   def page_description
-    if @place
+    if place_page?
       "Spot for iPhone : #{@place.name_with_address_and_city}." 
     elsif @page_description
       @page_description
