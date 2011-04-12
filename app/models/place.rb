@@ -21,9 +21,9 @@ class Place < ActiveRecord::Base
     has "RADIANS(lat)", :as => :latitude, :type => :float
     has "RADIANS(lng)", :as => :longitude, :type => :float  
     has :wishlist_count
-    set_sphinx_primary_key :canonical_id
     set_property :delta => ThinkingSphinx::Deltas::ResqueDelta
   end
+  set_sphinx_primary_key "canonical_id"
   
   has_attached_file :image, 
     :styles           => { :i640x400 => { :geometry => "640x400#", :format => "jpg" }, 
