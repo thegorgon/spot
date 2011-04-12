@@ -4,9 +4,9 @@ module Wrapr
       property :id, :checkins_count, :items_count, :photos_count, :strict_radius, :name, :image_url, 
                     :lat, :lng, :trending_level, :websites, :radius_meters, :phone_number, 
                     :foursquare_id, :description, :image_url
-      property :address, :model => Address
-      property :creator, :model => User
-      property :categories, :model => Category, :list => true, :as => :spot_categories
+      property :address, :model => Wrapr::Gowalla::Address
+      property :creator, :model => Wrapr::Gowalla::User
+      property :categories, :model => Wrapr::Gowalla::Category, :list => true, :as => :spot_categories
       
       def self.search(params={}, options={})
         ll = Geo::LatLng.normalize(params)

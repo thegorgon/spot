@@ -2,8 +2,8 @@ module Wrapr
   module Foursquare
     class Venue < Wrapr::Model
       property :id, :name
-      property :categories, :model => Category, :list => true
-      property :location, :model => Location
+      property :categories, :model => Wrapr::Foursquare::Category, :list => true
+      property :location, :model => Wrapr::Foursquare::Location
       property :phone, :twitter, :in => :contact
       
       def self.search(params={}, options={})

@@ -3,9 +3,9 @@ module Wrapr
     class Business < Wrapr::Model
       property :id, :name, :image_url, :url, :mobile_url, :phone,
                 :display_phone, :review_count, :rating_img_url, :rating_img_url_small
-      property :categories, :list => true, :model => Category
-      property :location, :model => Location
-      property :reviews, :list => true, :model => Review
+      property :categories, :list => true, :model => Wrapr::Yelp::Category
+      property :location, :model => Wrapr::Yelp::Location
+      property :reviews, :list => true, :model => Wrapr::Yelp::Review
       
       def self.search(params={}, options={})
         ll = Geo::LatLng.normalize(params)
