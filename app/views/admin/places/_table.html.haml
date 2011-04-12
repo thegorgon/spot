@@ -19,10 +19,4 @@
         %td= place.to_lat_lng
         %td
           =link_to "Edit", edit_admin_place_path(place)
-          =link_to "Page", place_path(place)
-          -ExternalPlace.sources.each do |src|
-            -if ep = place.external_place(src)
-              =link_to "#{src.to_sym}", external_place_url(ep), :target => "_new"
-            -else
-              =link_to "#{src.to_sym}", admin_place_matches_path(@place, :src => src.to_sym), :class => "potential"
-            
+          =link_to "Page", place_path(place)            
