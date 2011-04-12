@@ -106,6 +106,12 @@ namespace :watch do
       break if stream == :err
     end
   end
+  task :revision, :roles => :web, :once => true do
+    run "cd /u/app/current && cat REVISION" do |channel, stream, data|
+      puts "#{channel[:host]}: #{data}"
+      break if stream == :err
+    end
+  end
 end
 
 # Tag Deploys

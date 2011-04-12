@@ -9,7 +9,7 @@ module ApplicationHelper
   
   def page_title
     if place_page?
-      "Spot - Never Forget #{@place.name_with_city}"
+      "#{@place.name_with_city} on Spot"
     elsif @page_title
       @page_title
     else
@@ -29,7 +29,7 @@ module ApplicationHelper
   
   def page_description
     if place_page?
-      "Spot for iPhone : #{@place.name_with_address_and_city}." 
+      "#{@place.name_with_address_and_city} on Spot." 
     elsif @page_description
       @page_description
     else
