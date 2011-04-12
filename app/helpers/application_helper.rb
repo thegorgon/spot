@@ -9,7 +9,7 @@ module ApplicationHelper
   
   def page_title
     if place_page?
-      "#{@place.name_with_city} on Spot"
+      [@place.name, @place.city, "Spot"].compact.join(" - ")
     elsif @page_title
       @page_title
     else
@@ -29,7 +29,7 @@ module ApplicationHelper
   
   def page_description
     if place_page?
-      "#{@place.name_with_address_and_city} on Spot." 
+      "#{@place.name} at #{@place.address} - Spot"
     elsif @page_description
       @page_description
     else

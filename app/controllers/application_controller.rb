@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_error(exception)
-    log_error(exception)
+    handle_error(exception)
     render :template => "/site/errors/500.html.haml", :status => 500, :layout => "site"
   end
   
@@ -44,8 +44,14 @@ class ApplicationController < ActionController::Base
   end
   
   def render_404(exception=nil)
-    log_error(exception)
+    handle_error(exception)
     render :template => "/site/errors/404.html.haml", :status => 404, :layout => "site"
+  end
+  
+  def handle_error(exception=nil)
+    log_error(exception)
+    @controller_name = "site_errors"
+    @page_namespace = "site_errors_show"
   end
   
   def require_admin
@@ -90,8 +96,7 @@ class ApplicationController < ActionController::Base
   helper_method :page_namespace
   
   def controller_name
-    name = params[:controller].tr('/','_')
-    return name
+    @controller_name ||= params[:controller].tr('/','_')
   end
   helper_method :controller_name
     
