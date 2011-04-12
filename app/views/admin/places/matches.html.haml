@@ -21,13 +21,13 @@
     %tbody
       -@places.each do |place|
         %tr
-          %td
-            .name=place.name
+          %td.place
+            .name=link_to place.name, admin_place_path(place)
             .address=place.address
             .position=place.to_lat_lng.to_s
           -ExternalPlace.sources.each do |src|
             -ep = @externals[place.id][src.to_sym]
-            %td
+            %td{:class => conditionally('filled', ep)}
               -if ep
                 -proximity = PlaceMatch.proximity(place, ep)
                 .name=link_to "#{ep.name}", external_place_url(ep), :target => "_new", :class => "matched"

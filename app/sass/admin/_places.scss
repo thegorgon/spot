@@ -5,7 +5,17 @@
 }
 #admin_matches_index {
   .match {
-    background: #CCCA97;
+    background: #F2F2E6;
+  }
+}
+#admin_places_matches {
+  .data {
+    .place {
+      background: #FFDEC2;
+    }
+    .filled {
+      background: #F2F2E6;
+    }
   }
 }
 .place.detail {
