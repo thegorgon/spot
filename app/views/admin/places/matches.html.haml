@@ -36,7 +36,7 @@
                 -if src.to_sym != :google
                   .links=link_to "edit", admin_place_matches_path(place, :src => src.to_sym)
               -elsif src.to_sym != :google
-                =link_to "match", admin_place_matches_path(place, :src => src.to_sym)
+                =link_to "match #{src.to_sym}", admin_place_matches_path(place, :src => src.to_sym)
   .pagination.bottom
     -if @places.next_page
       .next=link_to "Next &rarr;".html_safe, matches_admin_places_path(filters.merge(:page => @places.next_page)), :class => "page"
