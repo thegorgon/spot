@@ -46,7 +46,8 @@ Spot::Application.routes.draw do
   
   namespace "admin" do
     resources :places do
-      resources :matches, :only => [:index, :create]
+      resources :matches, :only => [:index, :show]
+      get "matches", :on => :collection
       member do
         get "images"
       end

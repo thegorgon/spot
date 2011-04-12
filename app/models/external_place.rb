@@ -15,6 +15,17 @@ module ExternalPlace
     end
   end
   
+  def self.associated_with(place_ids)
+    associated = {}
+    sources.each do |source| 
+      places = source.where(:place_id => place_ids).all.hash_by { |p| p.place_id }
+      place_ids.each do |id|
+        (associated[id] ||= {})[source.to_sym] = places[id]
+      end
+    end
+    associated
+  end
+  
   module Macros
     def external_place(options)
       @_external_place_options = options
@@ -72,6 +83,12 @@ module ExternalPlace
     def source_id
       id_method = self.class.instance_variable_get("@_external_place_options")[:id]
       send(id_method)
+    end
+    
+    def name_with_city
+      string = name.clone
+      string << " in #{city.titlecase}" if city.present?
+      string
     end
     
     def bind_to!(place)

@@ -1,0 +1,42 @@
+-filters = params.slice('filter')
+.manager
+  .top.clearfix
+    .pagination
+      -if @places.next_page
+        .next=link_to "Next &rarr;".html_safe, matches_admin_places_path(filters.merge(:page => @places.next_page)), :class => "page"
+      -if @places.previous_page
+        .previous=link_to "&larr; Previous".html_safe, matches_admin_places_path(filters.merge(:page => @places.previous_page)), :class => "page"
+    %h1.title="#{@places.total_entries} Places"
+    .links
+      =link_to "Image Queue", matches_admin_places_path(filters.merge(:filter => 3)), :class => "page"
+      =link_to "Imageless", matches_admin_places_path(filters.merge(:filter => 2)), :class => "page"
+      =link_to "Wishlisted", matches_admin_places_path(filters.merge(:filter => 1)), :class => "page"
+      =link_to "All", matches_admin_places_path, :class => "page"
+  %table.data
+    %thead
+      %tr
+        %th Spot
+        -ExternalPlace.sources.each do |src|
+          %th=src.to_sym.to_s.titlecase
+    %tbody
+      -@places.each do |place|
+        %tr
+          %td
+            .name=place.name
+            .address=place.address
+            .position=place.to_lat_lng.to_s
+          -ExternalPlace.sources.each do |src|
+            -ep = @externals[place.id][src.to_sym]
+            %td
+              -if ep
+                -proximity = PlaceMatch.proximity(place, ep)
+                .name=link_to "#{ep.name}", external_place_url(ep), :target => "_new", :class => "matched"
+                .address=place.address
+                .distance="#{proximity.geo_distance.round} m"
+              -else
+                =link_to "match", admin_place_matches_path(place, :src => src.to_sym), :class => "potential"
+  .pagination.bottom
+    -if @places.next_page
+      .next=link_to "Next &rarr;".html_safe, matches_admin_places_path(filters.merge(:page => @places.next_page)), :class => "page"
+    -if @places.previous_page
+      .previous=link_to "&larr; Previous".html_safe, matches_admin_places_path(filters.merge(:page => @places.previous_page)), :class => "page"

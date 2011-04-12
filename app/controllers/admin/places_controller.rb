@@ -7,6 +7,11 @@ class Admin::PlacesController < Admin::BaseController
     respond_with(@places)
   end
   
+  def matches
+    @places = Place.filter(params)
+    @externals = ExternalPlace.associated_with(@places.collect { |p| p.id })
+  end
+  
   def new
     @place = Place.new
     respond_with(@place)
