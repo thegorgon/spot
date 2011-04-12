@@ -26,7 +26,7 @@ module Wrapr
       def self.find(id, options={})
         response = FbGraph::Request.get("/#{id}", {}, options)
         if response.success?
-          parse(response.payload)
+          self.parse(response.payload)
         else
           nil
         end

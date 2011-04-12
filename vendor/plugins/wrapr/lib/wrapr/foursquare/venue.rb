@@ -28,7 +28,7 @@ module Wrapr
       def self.find(id, options={})
         response = Wrapr::Foursquare::Request.get("/venues/#{id}", {}, options)
         if response.success?
-          parse(response.payload["venue"])
+          self.parse(response.payload["venue"])
         else
           nil
         end

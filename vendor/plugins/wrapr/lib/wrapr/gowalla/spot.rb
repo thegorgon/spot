@@ -25,7 +25,7 @@ module Wrapr
       def self.find(id, options={})
         response = Wrapr::Gowalla::Request.get("/spots/#{id}", {}, options)
         if response.success?
-          parse(response.payload)
+          self.parse(response.payload)
         else
           nil
         end
