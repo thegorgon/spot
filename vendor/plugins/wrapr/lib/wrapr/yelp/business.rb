@@ -27,6 +27,7 @@ module Wrapr
       def self.find(id, options={})
         response = Yelp::Request.get("/business/#{id}", {}, options)
         if response.success?
+          Rail.logger.info("HERE : #{self}")
           parse response.payload
         else
           nil
