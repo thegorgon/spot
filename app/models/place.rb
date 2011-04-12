@@ -113,7 +113,7 @@ class Place < ActiveRecord::Base
   
   def name_with_city
     string = name
-    string << "in #{city.titlecase}" if city.present?
+    string << " in #{city.titlecase}" if city.present?
     string
   end
 
