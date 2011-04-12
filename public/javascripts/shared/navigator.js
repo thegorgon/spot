@@ -20,7 +20,7 @@
           body.attr("id", data.page.namespace);
           body.attr('class', data.page.controller);
           go.Views.run(url);
-          bd.fadeIn();
+          bd.preloadAll();
         });
         if (!bd.is(":animated")) {
           bd.trigger("faded");
