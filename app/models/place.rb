@@ -112,13 +112,13 @@ class Place < ActiveRecord::Base
   end
   
   def name_with_city
-    string = name
+    string = name.clone
     string << " in #{city.titlecase}" if city.present?
     string
   end
 
   def name_with_address_and_city
-    string = name
+    string = name.clone
     string << " at #{address_lines[0].titlecase}" if address_lines[0].present? 
     string << " in #{city.titlecase}" if city.present?
   end
