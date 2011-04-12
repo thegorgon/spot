@@ -12,7 +12,6 @@ module Wrapr
           elsif options[:list] && options[:method] && value.kind_of?(Enumerable)
             value = value.collect { |value| value.try(options[:method]) }
           elsif options[:model]
-            Rails.logger.info("ATTEMPTING TO CALL PARSE ON #{options[:model]} : #{options[:model].inspect}")
             value = options[:model].parse(value) if options[:model]
           elsif options[:method] && value.respond_to?(options[:method])
             value = value.try(options[:method])

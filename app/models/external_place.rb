@@ -56,7 +56,6 @@ module ExternalPlace
     end
     
     def fetch(id)
-      Rails.logger.info "#{@_external_place_options[:wrapr]}"
       wrapr = @_external_place_options[:wrapr].find(id)
       result = from_wrapr(wrapr)
       id_method = @_external_place_options[:id]

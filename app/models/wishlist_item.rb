@@ -64,6 +64,7 @@ class WishlistItem < ActiveRecord::Base
     item_type.constantize.increment_counter(:wishlist_count, item_id)
     generate_activity! :action => "CREATE", :source => source, :public => true
     source.update_attribute(:result_id, item_id) if source.kind_of?(PlaceSearch)
+    PlaceMatch.run(item) if item.kind_of?(Place)
   end
     
   def as_json(*args)
