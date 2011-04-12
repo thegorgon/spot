@@ -23,8 +23,8 @@ class PlaceMatch
   # = METHOD DEFINITIONS =
   # ======================
 
-  def self.run(place, sources=nil)
-    new(place, sources).run
+  def self.run(place, options={})
+    new(place, options).run
   end
 
   def self.proximity(place1, place2)
@@ -40,11 +40,11 @@ class PlaceMatch
     Proximity.new(name_match, addr_match, geo_dist)
   end
   
-  def initialize(place, sources=nil)
+  def initialize(place, options={})
     @place = place
     @query = Geo::Cleaner.clean(:name => @place.name, :extraneous => true)
-    @sources = sources
-    @sources ||= ExternalPlace.sources
+    @options = options
+    @sources = @options[:source] || ExternalPlace.sources
     @sources = [@sources] unless @sources.kind_of?(Array)
   end
   
@@ -52,7 +52,7 @@ class PlaceMatch
     unless @potentials.present?
       @potentials = {}
       @sources.each do |src|
-        @potentials[src.to_sym] = src.search(:ll => @place, :query => @query) unless @place.external_place(src)
+        @potentials[src.to_sym] = src.search(:ll => @place, :query => @query) unless @place.external_place(src) && !@options[:force]
       end
     end
     @potentials

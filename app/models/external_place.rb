@@ -104,7 +104,7 @@ module ExternalPlace
     end
     
     def to_place
-      p = Place.new
+      p = ::Place.new
       [:name, :address_lines, :lat, :lng, :city, :region, :country, :phone_number].each do |key|
         p.send("#{key}=", send(key)) if respond_to?(key)
       end
