@@ -6,7 +6,6 @@ xml.urlset "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9", "xmlns:imag
       xml.lastmod    w3c_date(place.updated_at)
       xml.changefreq "daily"
       xml.priority   1
-      xml.mobile :mobile
       if place.image.file? && !place.image_processing?
         xml.image :image do
           xml.image :loc, place.image.url(:i640x400)
