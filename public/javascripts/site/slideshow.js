@@ -57,17 +57,16 @@
       loaded = function() {
         loadCount = loadCount + 1;
         loadCount >= options.slides.length;
-        setTimeout(resize, 1);
         if ( !finalized) {
           finalized = true;
-          element.fadeIn(1000);
+          setTimeout(resize, 1);
           setTimeout(function() { jumpTo(currentSlide, false); }, 1);
+          element.fadeIn(1000);
         }
       },
       forceLoad = function() {
         loadCount = options.slides.length + 100;
         jumpTo(currentSlide, false);
-        resize();
         loaded();
       },
       jumpTo = function(i) {
@@ -87,7 +86,7 @@
         slidereel.animate({left : -1 * currentSlide * viewport.width()}, 1500);
       }, 
       nextSlide = function() {
-        if (currentSlide < options.slides.length) {
+        if (currentSlide < options.slides.length - 1) {
           jumpTo(currentSlide + 1);          
         }
       },
@@ -110,9 +109,11 @@
     nextControl.click(nextSlide);
     lastControl.click(lastSlide);
     viewport.swipe({
-      threshold: { x: 5, y: 1000},
+      threshold: { x: 25, y: 100},
       swipeLeft: function() { nextSlide(); },
-      swipeRight: function() { lastSlide(); }
+      swipeRight: function() { lastSlide(); },
+      swipeDown: function(y) { window.scrollTo(0, 1000) },
+      swipeUp: function(y) { window.scrollTo(0, -60) }
     });
     return {
       nextSlide: nextSlide,

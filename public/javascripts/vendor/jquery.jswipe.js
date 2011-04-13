@@ -12,6 +12,12 @@
             },
             swipeRight: function() {
                 alert('swiped right')
+            },
+            swipeDown: function() {
+              return false;
+            },
+            swipeUp: function() {
+              return false;              
             }
         };
 
@@ -54,15 +60,20 @@
             function touchEnd(event) {
                 //console.log('Ending swipe gesture...')
                 var changeY = originalCoord.y - finalCoord.y
-                if (changeY < defaults.threshold.y && changeY > (defaults.threshold.y * -1)) {
-                    changeX = originalCoord.x - finalCoord.x
+                
+                if (changeY > defaults.threshold.y) {
+                  defaults.swipeDown(changeY);
+                } else if (changeY < (defaults.threshold.y * -1)) {
+                  defaults.swipeUp(changeY);
+                } else {
+                  changeX = originalCoord.x - finalCoord.x
 
-                    if (changeX > defaults.threshold.x) {
-                        defaults.swipeLeft()
-                    }
-                    if (changeX < (defaults.threshold.x * -1)) {
-                        defaults.swipeRight()
-                    }
+                  if (changeX > defaults.threshold.x) {
+                      defaults.swipeLeft(changeX)
+                  }
+                  if (changeX < (defaults.threshold.x * -1)) {
+                      defaults.swipeRight(changeX)
+                  }
                 }
             }
 

@@ -1,7 +1,46 @@
 html, body {
   width: 320px;
   #ft {
-    height: 0px;
+    bottom: -60px;
+    height: 60px;
+    width: 320px;
+    min-width: 320px;
+    padding: 0;
+    left: 0;
+    right: 0;
+    #logo {
+      height: 50px;
+      width: 100px;
+      img {
+        height: 50px;
+        width: 100px;
+      }
+      display: block;
+      margin: 5px auto 5px auto;
+      float: none;
+    }
+    #signup_form {
+      display: none;
+    }
+    #nav {
+      display: none;
+      float: right;
+      padding: 0;
+      margin: 25px 5px 0 0;
+      width: 150px;
+      font-size: 8px;
+      #account_nav {
+        font-size: 6px;
+        padding: 2px 0;
+        a {
+          font-size: 6px;
+        }
+      }
+      a {
+        margin-left: 3px;
+        font-size: 8px;
+      }
+    }
   }
   #flashes {
     height: 8px;

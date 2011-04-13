@@ -17,6 +17,7 @@
     mobileOptimize: function() {
       if (this.mobile()) {
         setTimeout(this.updateOrientation, 0);
+        setTimeout(function() { window.scrollTo(0, 1); }, 0);
         window.onorientationchange = function() {
           $.updateOrientation();
         };
