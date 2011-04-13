@@ -33,7 +33,7 @@ class ImageSearch
   end
   
   def google_options
-    {:imgtype => "photo", :safe => "active", :userip => @request.remote_ip, :rsz => 8, :imgsiz => "medium|large|xlarge|xxlarge|huge"}
+    {:imgtype => "photo", :safe => "off", :userip => @request.remote_ip, :rsz => 8, :imgsiz => "medium|large|xlarge|xxlarge|huge"}
   end
   
   def custom_query
