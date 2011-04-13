@@ -46,9 +46,9 @@
     },
     site_home_index: function() {
       var slideshow = $("#slideshow").slideshow({
-        slides: [{ src : '/images/assets/slideshow/slide_00.jpg', gravity: '0.5x0.6' },
-                 { src : '/images/assets/slideshow/slide_01.jpg', gravity: '0.5x0.1' },
-                 { src : '/images/assets/slideshow/slide_02.jpg', gravity: '0.5x0.75' }],
+        slides: [{ src : '/images/assets/slideshow/slide_00.jpg', gravity: '0.39x0.6' },
+                 { src : '/images/assets/slideshow/slide_01.jpg', gravity: '0.51x0.1' },
+                 { src : '/images/assets/slideshow/slide_02.jpg', gravity: '0.70x0.75' }],
         start: 0,
         version: 2
       });
