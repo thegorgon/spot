@@ -50,7 +50,7 @@
                  { src : '/images/assets/slideshow/slide_01.jpg', gravity: '0.51x0.1', size: '2292x1423' },
                  { src : '/images/assets/slideshow/slide_02.jpg', gravity: '0.70x0.75', size: '2292x1298' }],
         start: 0,
-        version: 2
+        version: 3
       });
     },
     site_home_press: function() {

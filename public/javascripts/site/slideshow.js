@@ -1,7 +1,7 @@
 (function($) {
   $.fn.sizeToFit = function(container, options) {
     container = $(container);
-    var resize = $(this),
+    var resize = $(this), forceTO,
       gravities = (options.gravity || '0.5x0.5').split('x'),
       rH = resize.height(), rW = resize.width(),
       cW = container.width(), cH = container.height(),
@@ -61,7 +61,8 @@
           finalized = true;
           setTimeout(resize, 1);
           setTimeout(function() { jumpTo(currentSlide, false); }, 1);
-          element.fadeIn(1000);
+          clearTimeout(forceTO);
+          element.fadeIn();
         }
       },
       forceLoad = function() {
@@ -109,7 +110,7 @@
       img.src = options.slides[i].src + '?' + options.version;
       buildSlide(img, i).appendTo(slidereel);
     }
-    setTimeout(forceLoad, 3000);
+    forceTO = setTimeout(forceLoad, 3000);
     nextControl.click(nextSlide);
     lastControl.click(lastSlide);
     viewport.swipe({
