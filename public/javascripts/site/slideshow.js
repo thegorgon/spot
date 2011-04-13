@@ -100,7 +100,10 @@
     $(window).unbind('resize.slideshow').bind('resize.slideshow', resize);
     element.hide();
     for (i = 0; i < options.slides.length; i++) {
-      var img = new Image();
+      var img = new Image(),
+        size = options.slides[i].size.split('x');
+      img.width = size[0];
+      img.height = size[1];
       img.onload = loaded;
       img.src = options.slides[i].src + '?' + options.version;
       buildSlide(img, i).appendTo(slidereel);
