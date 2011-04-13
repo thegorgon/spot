@@ -57,7 +57,7 @@
       loaded = function() {
         loadCount = loadCount + 1;
         loadCount >= options.slides.length;
-        if ( !finalized) {
+        if (!finalized) {
           finalized = true;
           setTimeout(resize, 1);
           setTimeout(function() { jumpTo(currentSlide, false); }, 1);
@@ -67,6 +67,7 @@
       forceLoad = function() {
         loadCount = options.slides.length + 100;
         jumpTo(currentSlide, false);
+        resize();
         loaded();
       },
       jumpTo = function(i) {
