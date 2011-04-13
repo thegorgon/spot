@@ -7,20 +7,18 @@
       cW = container.width(), cH = container.height(),
       cRatio = (cH / cW).toFixed(2), rRatio = ( rH / rW).toFixed(2),
       dims = {}, off = {},
-      gravityTop = parseFloat(gravities[0], 10) || 0.5, 
-      gravityLeft = parseFloat(gravities[1], 10) || 0.5;
+      gravityTop = parseFloat(gravities[0], 10), 
+      gravityLeft = parseFloat(gravities[1], 10);
     if (cRatio > rRatio) {
       dims.h = cH;
-      dims.w = cH/rRatio;
+      dims.w = Math.round(cH/rRatio);
     } else {
       dims.w = cW;
-      dims.h = cW * rRatio;
+      dims.h = Math.round(cW * rRatio);
     }
-    resize.width(dims.w);
-    resize.height(dims.h);
-    off.top = gravityTop * (cH - dims.h);
-    off.left = gravityLeft * (cW - dims.w);
-    resize.css({top: off.top, left: top.left});
+    off.top = Math.round(gravityTop * (cH - dims.h));
+    off.left = Math.round(gravityLeft * (cW - dims.w));
+    resize.css({'position': 'absolute', 'width': dims.w, 'height': dims.h, 'top': off.top, 'left': off.left});
   };
   $.fn.slideshow = function(opts) {
     var element = $(this),
@@ -38,9 +36,10 @@
       slidenav = element.find('#slidenav'),
       navList = $('<ul class="clearfix"></ul>').appendTo(slidenav),
       resize = function() {
+        $.logger.debug("Resizing slideshow");
         var width = viewport.width(),
           height = viewport.height();
-        slidereel.width(options.slides.length * width).height(height).css({left: -1 * currentSlide * width});
+        slidereel.width(options.slides.length * width).height(height).css({left: Math.round(-1 * currentSlide * width)});
         $('.slide', slidereel).width(width).height(height).each(function(i) {
           var thisSlide = $(this),
             left = i * width;
