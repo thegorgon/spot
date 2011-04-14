@@ -11,14 +11,16 @@
       gravityLeft = parseFloat(gravities[1], 10);
     if (cRatio > rRatio) {
       dims.h = cH;
-      dims.w = Math.round(cH/rRatio);
+      dims.w = (cH/rRatio);
     } else {
       dims.w = cW;
-      dims.h = Math.round(cW * rRatio);
+      dims.h = (cW * rRatio);
     }
+    resize.width(dims.w);
+    resize.height(dims.h);
     off.top = Math.round(gravityTop * (cH - dims.h));
     off.left = Math.round(gravityLeft * (cW - dims.w));
-    resize.css({'position': 'absolute', 'width': dims.w, 'height': dims.h, 'top': off.top, 'left': off.left});
+    resize.css({'top': off.top, 'left': off.left});
   };
   $.fn.slideshow = function(opts) {
     var element = $(this),
