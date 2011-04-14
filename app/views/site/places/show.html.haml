@@ -5,7 +5,7 @@
       =image_tag "logos/black_spot_with_tag320x158.png", :size => "160x79", :alt => "spot"
 
 .place{:id => "place_#{@place.id}"}
-  .image
+  .image.preload
     =image_tag @place.image.url(:i640x400), :size => "320x200", :alt => @place.name_with_city
   .content
     .contact

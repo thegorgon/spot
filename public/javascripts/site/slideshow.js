@@ -56,6 +56,7 @@
       },
       loaded = function() {
         loadCount = loadCount + 1;
+        resize();
         if (loadCount >= options.slides.length && !finalized) {
           finalized = true;
           setTimeout(resize, 1);
@@ -101,7 +102,6 @@
       img.onload = loaded;
       img.src = options.slides[i].src + '?' + options.version;
       buildSlide(img, i).appendTo(slidereel);
-      resize();
     }
     nextControl.click(nextSlide);
     lastControl.click(lastSlide);
