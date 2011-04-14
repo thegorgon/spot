@@ -43,7 +43,6 @@
       $(this).addClass('loading').find('img').hide().each(function(i) {
         var img = new Image(), $this = $(this);
         img.onload = function() { $this.hide().removeClass('loading').fadeIn(1000); };
-        $.logger.debug("PRELOADING ", this.src);
         img.src = this.src;
       });
     },
@@ -68,7 +67,6 @@
           bg = $this.css('background-image').replace(/url\([\"\']?([^\)]+?)[\"\']?\)/i, '$1'),
           loaded = function() { $this.fadeIn(1000); };
         if (bg !== "none") {
-          $.logger.debug("PRELOADING BG", bg);
           img.onload = loaded;
           img.src = bg;
         }
@@ -185,7 +183,6 @@
       go.Navigator.init();
       $.mobileOptimize();
       $.preload(vars.preload);
-      $('#hd').preloadBackground();
       $('#bg').preloadBackground();
       $('#logo').imagePreload();
     },

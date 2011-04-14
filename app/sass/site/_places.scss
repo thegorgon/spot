@@ -92,6 +92,8 @@
         height: 476px;
       }
       .image {
+        width: 320px;
+        height: 200px;
         border: 0px solid transparent;
         overflow: hidden;
         @include top_border_radius(4px);

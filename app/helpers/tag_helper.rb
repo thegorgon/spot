@@ -87,7 +87,7 @@ module TagHelper
     content_tag(:script, :type => Mime::JS) do
       "(function() {
         if ( ! /MSIE/.test(navigator.userAgent) ) {
-          var hide = {bg: null, hd: null};
+          var hide = {bg: null};
           for (var key in hide) {
             if (hide.hasOwnProperty(key)) {
               hide[key] = document.getElementById(key);
