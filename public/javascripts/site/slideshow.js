@@ -101,6 +101,7 @@
       img.onload = loaded;
       img.src = options.slides[i].src + '?' + options.version;
       buildSlide(img, i).appendTo(slidereel);
+      resize();
     }
     nextControl.click(nextSlide);
     lastControl.click(lastSlide);
