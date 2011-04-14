@@ -21,6 +21,10 @@
       $(document).unbind('konami').bind('konami', function(e) {
         $('.flips').toggleClass('upside_down');
       });
+      if ($.support.opacity) {
+        $('.preload').imagePreload();
+        $('.preload_bg').preloadBackground();
+      }
     },
     site_blog: function() {
       $('#pagination a').ajaxLink({

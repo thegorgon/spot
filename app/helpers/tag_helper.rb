@@ -97,6 +97,7 @@ module TagHelper
         }
       }());"
     end
+    nil
   end
   
   def link_to_with_current(*args)

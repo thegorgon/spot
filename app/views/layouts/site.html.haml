@@ -32,11 +32,11 @@
       #logo.flips
         =image_tag 'logos/white_shadowed_spot_with_tagline_200x101.png', :size => '200x101'
       #nav.flips
-        =link_to "press", press_path, :class => "page"
-        =link_to "twitter", "http://www.twitter.com/spotteam", :target => "_new"      
-        =link_to "blog", blog_index_path, :class => "page"
-        =link_to "about", about_path, :class => "page"
-        =link_to "home", root_path, :class => "page"
+        =link_to "press", press_path, :class => "page dark"
+        =link_to "twitter", "http://www.twitter.com/spotteam", :target => "_new", :class => "dark"
+        =link_to "blog", blog_index_path, :class => "page dark"
+        =link_to "about", about_path, :class => "page dark"
+        =link_to "home", root_path, :class => "page dark"
         -if logged_in?
           #account_nav
             ="Logged in as #{current_user.nickname} #{link_to "logout", session_path, 'data-method' => "delete"}".html_safe

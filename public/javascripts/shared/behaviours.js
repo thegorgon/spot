@@ -43,6 +43,7 @@
       $(this).addClass('loading').find('img').hide().each(function(i) {
         var img = new Image(), $this = $(this);
         img.onload = function() { $this.hide().removeClass('loading').fadeIn(1000); };
+        $.logger.debug("PRELOADING ", this.src);
         img.src = this.src;
       });
     },
@@ -89,14 +90,20 @@
           loaded();
         };
       parent.addClass('loading').find('*').add(parent).each(function(i) {
-        var img, child = $(this), src = child[0].src || child.css('background-image').replace(/url\([\"\']?([^\)]+?)[\"\']?\)/i, '$1'),
-          ext = src.toString().split(".").pop();
-        ext = ext.replace(/([^\?]+)\?.+/i, '$1');
-        if ($.inArray(src, images) < 0 && (ext === 'jpg' || ext === 'jpeg' || ext === 'png')) {
-          img = new Image();
-          images.push(src);
-          img.onload = loaded;
-          img.src = src;
+        if ($(this).hasClass("preload")) {
+          $(this).imagePreload();
+        } else if ($(this).hasClass('preload_bg')) {
+          $(this).preloadBackground();
+        } else {
+          var img, child = $(this), src = child[0].src || child.css('background-image').replace(/url\([\"\']?([^\)]+?)[\"\']?\)/i, '$1'),
+            ext = src.toString().split(".").pop();
+          ext = ext.replace(/([^\?]+)\?.+/i, '$1');
+          if ($.inArray(src, images) < 0 && (ext === 'jpg' || ext === 'jpeg' || ext === 'png')) {
+            img = new Image();
+            images.push(src);
+            img.onload = loaded;
+            img.src = src;
+          }
         }
       });
       if (images.length === 0) { loaded(); }
@@ -177,11 +184,6 @@
       go.Navigator.init();
       $.mobileOptimize();
       $.preload(vars.preload);
-      if ($.support.opacity) {
-        $('#bg').preloadBackground();
-        $('#page').preloadAll();
-        $('#flashes').preloadAll();
-      }
     },
     getVar: function(name) {
       return _vars[name];

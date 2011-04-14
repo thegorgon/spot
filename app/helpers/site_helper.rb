@@ -17,6 +17,6 @@ module SiteHelper
     name_with_nick = "#{names[0]} &ldquo;#{nick}&rdquo; #{names[1]}"
     content << content_tag(:div, name_with_nick.html_safe, :class => "name")
     content << content_tag(:div, title.html_safe, :class => "title")
-    mail_to "#{name} <#{email}>".html_safe, content, :encode => "hex", :class => "shadowed profile hoverable"
+    mail_to "#{name} <#{email}>".html_safe, content, :encode => "hex", :class => "shadowed profile hoverable dark"
   end
 end
