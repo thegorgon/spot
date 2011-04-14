@@ -21,7 +21,7 @@
   -if Rails.env.production?
     = google_analytics_tag(:account_id => 'UA-21193799-1')
 %body{:id => page_namespace, :class => controller_name}
-  #bg
+  #bg.preload_bg
   = flashes
   #page
     = hide_content_tag
@@ -39,9 +39,9 @@
         =link_to "home", root_path, :class => "page dark"
         -if logged_in?
           #account_nav
-            ="Logged in as #{current_user.nickname} #{link_to "logout", session_path, 'data-method' => "delete"}".html_safe
+            ="Logged in as #{current_user.nickname} #{link_to "logout", session_path, 'data-method' => "delete", :class => "dark"}".html_safe
             -if current_user.admin?
-              =link_to "admin", admin_root_path
+              =link_to "admin", admin_root_path, :class => "dark"
       =itunes_store_link("assets/general/app_store183x60.png", :size => "183x60") do
         #signup_form.flips
           %p.title

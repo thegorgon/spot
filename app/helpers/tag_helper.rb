@@ -87,7 +87,7 @@ module TagHelper
     content_tag(:script, :type => Mime::JS) do
       "(function() {
         if ( ! /MSIE/.test(navigator.userAgent) ) {
-          var hide = {'page': null, 'bg': null, 'flashes': null};
+          var hide = {'bg': null};
           for (var key in hide) {
             if (hide.hasOwnProperty(key)) {
               hide[key] = document.getElementById(key);
@@ -97,7 +97,6 @@ module TagHelper
         }
       }());"
     end
-    nil
   end
   
   def link_to_with_current(*args)
