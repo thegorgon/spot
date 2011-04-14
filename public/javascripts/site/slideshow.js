@@ -38,7 +38,6 @@
       slidenav = element.find('#slidenav'),
       navList = $('<ul class="clearfix"></ul>').appendTo(slidenav),
       resize = function() {
-        $.logger.debug("RESIZING")
         var width = viewport.width(),
           height = viewport.height();
         slidereel.width(options.slides.length * width).height(height).css({left: Math.round(-1 * currentSlide * width)});
