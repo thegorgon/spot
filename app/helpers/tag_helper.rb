@@ -15,9 +15,22 @@ module TagHelper
     content_tag(:script, "", :src => file, :type => "text/javascript")
   end
   
-  def fb_share_url(url, properties={})
-    share = content_tag("fb:like", "&nbsp;".html_safe, :href => url, :layout => "button_count", :show_faces => false, :width => 90, :font => "lucida grande")
-    share.html_safe
+  def fb_share_url(url)
+    query = { :href => url, 
+              :layout => "button_count", 
+              :show_faces => false, 
+              :width => 90, 
+              :action => "like",
+              :colorscheme => "light",
+              :height => 21,
+              :font => "lucida grande" }
+              
+    props = { :scrolling => "no", 
+              :frameborder => "0", 
+              :style => "border:none; overflow:hidden; width:450px; height:21px;", 
+              :allowTransparency => "true",
+              :src => "http://www.facebook.com/plugins/like.php?#{query.to_query}" }
+    content_tag(:iframe, "", props)
   end
 
   def twitter_share_url(url, text)
