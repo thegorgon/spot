@@ -68,8 +68,9 @@
           bg = $this.css('background-image').replace(/url\([\"\']?([^\)]+?)[\"\']?\)/i, '$1'),
           loaded = function() { $this.fadeIn(1000); };
         if (bg !== "none") {
+          $.logger.debug("PRELOADING BG", bg);
           img.onload = loaded;
-          img.src = bg;          
+          img.src = bg;
         }
         if (bg === null || bg === "") { loaded(); }
       });
@@ -184,11 +185,18 @@
       go.Navigator.init();
       $.mobileOptimize();
       $.preload(vars.preload);
+      $('#hd').preloadBackground();
+      $('#bg').preloadBackground();
+      $('#logo').imagePreload();
     },
     getVar: function(name) {
       return _vars[name];
     },
     behave: function() {
+      if ($.support.opacity) {
+        $('.preload').imagePreload();
+        $('.preload_bg').preloadBackground();
+      }
       $('[placeholder]').placeholder();
       $('[data-mode=select]').selectOnly();
       $('.file_field input').fileField();

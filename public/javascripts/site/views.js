@@ -5,7 +5,6 @@
       var body = $('body'),
         pageNS = body[0].id,
         pageClass = body.attr('class');
-      $.logger.debug("Running page views for class: ", pageClass, "and namespace: ", pageNS);
       this.layout.call();
       go.behave();
       if ($.isFunction(go.Views[pageClass])) {

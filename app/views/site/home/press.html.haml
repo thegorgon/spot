@@ -15,8 +15,8 @@
       =mail_to "Julia Graham <julia@spot-app.com>".html_safe, "Julia Graham", :encode => "hex"
     .divider
     %h2 Logos
-    #logos.clearfix.preload
-      .preview
+    #logos.clearfix
+      .preview.preload
         =image_tag "logos/gradient_script_340x270.png", :width => "150"
       .download
         =link_to "Download our logo pack", "http://spot-production.s3.amazonaws.com/downloads/logo_pack.zip"

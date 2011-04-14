@@ -18,9 +18,12 @@
     layout: function(url) {
       $('li a[href!=' + url + ']', '#nav').removeClass('current');
       $('li a[href=' + url + ']', '#nav').addClass('current');
-      $.preload(['/images/buttons/black_button_77x32_active.png', '/images/buttons/black_button_77x32_hover.png', '/images/buttons/black_button_77x32.png']);
       go.Navigator.link($("a.page"));
       go.Navigator.form($("form.page"));
+      if ($.support.opacity) {
+        $('.preload').imagePreload();
+        $('.preload_bg').preloadBackground();
+      }
     },
     admin_places: function() {
       go.ImageSelector.init('.place_image');

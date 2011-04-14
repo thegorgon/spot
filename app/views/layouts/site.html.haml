@@ -24,7 +24,6 @@
   #bg.preload_bg
   = flashes
   #page
-    = hide_content_tag
     #hd
       = yield :hd
     #bd= yield
@@ -52,6 +51,7 @@
             =button_tag(:class => "hlfrndblk_80x30") do
               submit
     #fb-root
+  = hide_content_tag
   =include_javascripts :vendor
   =include_javascripts :site
   :javascript

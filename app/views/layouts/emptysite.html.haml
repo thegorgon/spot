@@ -24,7 +24,6 @@
   #bg
   = flashes
   #page
-    =hide_content_tag
     #hd
       = yield :hd
     #bd
@@ -32,6 +31,7 @@
     #ft
       =yield :ft
     #fb-root
+  = hide_content_tag
   =include_javascripts :vendor
   =include_javascripts :site
   :javascript

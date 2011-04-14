@@ -23,7 +23,7 @@
     width: 274px;
     .content {
       top: 89px;
-      left: 16px;
+      left: 17px;
       width: 241px;
       height: 360px;
     }
@@ -148,4 +148,9 @@
       }
     }    
   }
+}
+@-moz-document url-prefix() {
+  .iphone.size274x535 .content {
+    left: 16px;
+  } 
 }

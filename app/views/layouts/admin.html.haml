@@ -19,7 +19,6 @@
   #bg
   =flashes
   #page
-    =hide_content_tag
     #hd
       #logo
         =image_tag "logos/white_admin_spot158x86.png", :height => "86", :alt => "spot"
@@ -37,6 +36,7 @@
     #bd.clearfix
       = yield
   #fb-root
+  =hide_content_tag
   =google_maps_api_include
   =include_javascripts :vendor
   =include_javascripts :admin
