@@ -20,10 +20,6 @@
       $('li a[href=' + url + ']', '#nav').addClass('current');
       go.Navigator.link($("a.page"));
       go.Navigator.form($("form.page"));
-      if ($.support.opacity) {
-        $('.preload').imagePreload();
-        $('.preload_bg').preloadBackground();
-      }
     },
     admin_places: function() {
       go.ImageSelector.init('.place_image');
