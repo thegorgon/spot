@@ -9,7 +9,7 @@ module ApplicationHelper
   
   def page_title
     if place_page?
-      [@place.name, @place.city, "Spot"].compact.join(" - ")
+      [@place.name, @place.city, "Spot"].select { |p| p.present? }.join(" - ")
     elsif @page_title
       @page_title
     else
