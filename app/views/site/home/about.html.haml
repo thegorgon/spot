@@ -1,9 +1,19 @@
 .vcc
   .vc
     #about
-      %h1 Never Forget a Place
-      %p We're creating Spot to help people remember places they want to visit.
-      %p We hear about great places all the time but then we forget them. There's no great, simple app that solves this problem, so we're making one.
-      .divider
-      %p.signature Spot is being handcrafted with care in San Francisco by the PlacePop team.
-
+      .info
+        %h1 Never Forget a Place
+        %p We're creating Spot to help people remember places they want to visit.
+        %p We hear about great places all the time but then we forget them. There's no great, simple app that solves this problem, so we're making one.
+        .divider
+        %p.signature Spot is being handcrafted with care in San Francisco by the PlacePop team.
+      .pictures.clearfix
+        =profile("Jim Egbert", "jim@spot-app.com", "Business Development", "Bond")              
+        =profile("Julia Graham", "julia@spot-app.com", "Marketing", "Secret Bully")
+        =profile("Niels Gabel", "engineering@spot-app.com", "Engineering", "The Interuptor")
+        =profile("Jesse Reiss", "engineering@spot-app.com", "Engineering", "Roadblock")
+      .contact
+        =mail_to "Feedback <feedback@spot-app.com>".html_safe, "Contact Us", :encode => "hex", :subject => "Spot Feedback"
+      .attribution
+        Drawings Courtesy of
+        =link_to "Joy Kim", "http://mumbojumbojoy.posterous.com/"

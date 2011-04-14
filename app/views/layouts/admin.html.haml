@@ -36,6 +36,12 @@
         %li.last=link_to_with_current "info", admin_info_path, :class => "page"
     #bd.clearfix
       = yield
+      .popover.right_arrow
+        .top
+        .middle
+        .content
+          
+        .bottom
   #fb-root
   =google_maps_api_include
   =include_javascripts :vendor

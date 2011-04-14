@@ -137,6 +137,24 @@
         });
       });
     },
+    hoverable: function() {
+      $(this).each(function() {
+        var imgs =  $(this).find('img').add(this).filter('img'),
+          hoversrc = function(src) {
+            var ext = src.split('.').pop();
+            return src.replace("." + ext, "_hover." + ext);
+          };
+        imgs.each(function() {
+          $.preload( [hoversrc($(this).attr('src'))] );
+        });
+        $(this).bind('mouseenter', function(e) {
+         imgs.each(function(i) { $(this).attr('src', hoversrc($(this).attr('src'))); });
+        });
+        $(this).bind('mouseleave', function(e) {
+          imgs.each(function(i) { $(this).attr('src',$(this).attr('src').replace('_hover', '')); });        
+        });        
+      });
+    },
     fileField: function() {
       var $this = $(this),
         setFilename = function() {
@@ -192,6 +210,7 @@
           $("#flashes").remove();
         });
       });
+      $('.hoverable').hoverable();
       $('li.invalid input, input.invalid').focus(function(e) {
         $(this).parent('li').add(this).removeClass('invalid');
       });
@@ -200,7 +219,7 @@
         var left = screen.width > 350 ? Math.round(0.5 * (screen.width - 350)) : 0,
           top = screen.height > 300 ? Math.round(0.5 * (screen.height - 300)) : 0;
         window.open(this.href, "tweetwindow", "scrollbars=yes,resizable=yes,toolbar=no,location=yes,width=350,height=300,left=" + left + ",top=" + top);
-      })
+      });
       $('form[data-validate]').validate();
     }
   });

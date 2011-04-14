@@ -94,3 +94,42 @@ form.inline {
     }
   }
 }
+.popover {
+  width: 220px;
+  .top {
+    width: 220px;
+    height: 75px;
+    position: relative;
+    z-index: 11;
+  }
+  &.left_arrow {
+    .top {
+      background: url(/images/assets/general/popovertop_left220x75.png) no-repeat top center;
+    }
+  }
+  &.right_arrow {
+    .top {
+      background: url(/images/assets/general/popovertop_right220x75.png) no-repeat top center;      
+    }
+  }
+  &.center_arrow {
+    .top {
+      background: url(/images/assets/general/popovertop_center220x75.png) no-repeat top center;            
+    }
+  }
+  .middle {
+    width: 200px;
+    padding: 0 10px;
+    height: 100px;
+    background: url(/images/assets/general/popovermiddle220x1.png) repeat-y top center;
+  }
+  .bottom {
+    width: 200px;
+    padding: 0 10px 10px;
+    height: 11px;
+    background: url(/images/assets/general/popoverbottom220x25.png) repeat-y top center; 
+  }
+  .content {
+    
+  }
+}

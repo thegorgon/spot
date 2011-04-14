@@ -8,9 +8,6 @@ class Site::HomeController < Site::BaseController
   def press
   end 
   
-  def secret
-  end
-
   def getspot
     location = request_location || current_user.try(:location)
     store = "itunes" if request.user_agent =~ /iPhone/

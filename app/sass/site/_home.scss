@@ -1,11 +1,19 @@
 .site_home {
   #about {
     margin: 0 auto;
-    @include black_radial_gradient(300);
-    width: 630px;
-    font-size: 15px;
+    @include black_radial_gradient(500);
+    width: 717px;
     text-align: center;
     text-shadow: #000 0px 1px 0px;
+    .info {
+      font-size: 15px;
+      width: 600px;
+      margin: 0 auto;
+    }
+    .ie7 &, .ie8 & {
+      padding: 50px 30px;
+      width: 728px;
+    }
     p {
       margin: 1em auto;
     }
@@ -19,24 +27,27 @@
       margin: 1.5em 5em 0em;
     }
     .pictures {
-      padding: 1em;
-      margin: 0 auto;
-      .row {
-        margin: 20px 0;
-        .profile {
-          width: 300px;
-          text-align: center;
-          .caption {
-            font-weight: bold;
-          }
+      margin: 40px auto;
+      text-align: center;
+      .profile {
+        float: left;
+        margin: 0px 20px;
+        .name {
+          font-size: 1em;
+          font-weight: bold;
         }
-        .left {
-          float: left;
-        }
-        .right {
-          float: right;
+        .title {
+          padding: 3px 0;
+          font-size: 0.8em;
         }
       }
+    }
+    .contact {
+      font-size: 15px;
+    }
+    .attribution {
+      font-size: 1em;
+      padding: 1em;
     }
   }
   #press {
@@ -122,13 +133,6 @@
         border-bottom : 1px solid #ededed;
         margin: 1.5em 0em;
       }
-    }
-  }
-}
-.ie7, .ie8 {
-  .site_home {
-    #about {
-      padding: 50px 30px;
     }
   }
 }
