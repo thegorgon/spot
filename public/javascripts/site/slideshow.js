@@ -36,7 +36,7 @@
       slidenav = element.find('#slidenav'),
       navList = $('<ul class="clearfix"></ul>').appendTo(slidenav),
       resize = function() {
-        $.logger.debug("Resizing slideshow");
+        $.logger.debug("RESIZING")
         var width = viewport.width(),
           height = viewport.height();
         slidereel.width(options.slides.length * width).height(height).css({left: Math.round(-1 * currentSlide * width)});
@@ -53,16 +53,6 @@
         navList.append(navLink);
         navList.width(navList.width() + navLink.width());
         return slide.append(img);
-      },
-      loaded = function() {
-        loadCount = loadCount + 1;
-        resize();
-        if (loadCount >= options.slides.length && !finalized) {
-          finalized = true;
-          setTimeout(resize, 1);
-          setTimeout(function() { jumpTo(currentSlide, false); }, 1);
-          element.fadeIn(250);
-        }
       },
       jumpTo = function(i) {
         currentSlide = i;
@@ -97,12 +87,21 @@
     for (i = 0; i < options.slides.length; i++) {
       var img = new Image(),
         size = options.slides[i].size.split('x');
-      img.width = size[0];
-      img.height = size[1];
-      img.onload = loaded;
       img.src = options.slides[i].src + '?' + options.version;
       buildSlide(img, i).appendTo(slidereel);
     }
+    $(document).ready(function() {
+      resize();
+    });
+    $(window).load(function() {
+      setTimeout(function() {
+        element.fadeIn(250);
+        jumpTo(currentSlide, false);
+        resize();
+        resize();
+      }, 100);
+    });
+    
     nextControl.click(nextSlide);
     lastControl.click(lastSlide);
     viewport.swipe({
