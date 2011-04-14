@@ -20,7 +20,7 @@
     resize.height(dims.h);
     off.top = Math.round(gravityTop * (cH - dims.h));
     off.left = Math.round(gravityLeft * (cW - dims.w));
-    resize.css({'top': off.top, 'left': off.left});
+    resize.css({width: dims.w, height: dims.h, top: off.top, left: off.left});
   };
   $.fn.slideshow = function(opts) {
     var element = $(this),
