@@ -80,6 +80,11 @@ class User < ActiveRecord::Base
     reset_perishable_token
     save!
   end
+  
+  def reset_persistence_token!
+    reset_persistence_token
+    save!
+  end
 
   def as_json(*args)
     options = args.extract_options!

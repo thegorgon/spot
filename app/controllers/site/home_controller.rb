@@ -15,5 +15,5 @@ class Site::HomeController < Site::BaseController
     url = MobileApp.url_for(location, store)
     flash[:error] = "Hold Tight. Spot is Coming Soon to an App Store Near You." unless url
     redirect_to  url || root_path
-  end
+  end  
 end

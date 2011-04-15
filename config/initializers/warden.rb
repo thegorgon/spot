@@ -38,6 +38,6 @@ Warden::Manager.after_set_user do |user, warden, options|
 end
 
 Warden::Manager.before_logout do |user, warden, options|
-  warden.request.cookie_jar.signed[Strategies::Cookie.cookie_key] = nil
-  warden.request.cookie_jar[Strategies::Cookie.cookie_key] = nil
+  user.try(:reset_persistence_token!)
+  warden.response.set_cookie(Strategies::Cookie.cookie_key, nil)
 end
