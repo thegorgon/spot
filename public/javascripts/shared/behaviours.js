@@ -4,6 +4,7 @@
       $(this).filter('input,textarea').each(function() {
         var $input = $(this), placeholder,
           txt = text || $input.attr('placeholder');
+        $input.removeAttr('placeholder');
         placeholder = $('#' + this.id + '_placeholder');        
         if (placeholder.length === 0) {
           $input.after('<input id="'+ this.id + '_placeholder" type="text" tabindex="-1" value="' + txt + '" autocomplete="off" class="'+ $input.attr('class') + ' placeholder" formnovalidate="formnovalidate"/>');
@@ -61,6 +62,12 @@
         }, {perms:'email'});
       });
     },
+    reveals: function() {
+      $(this).click(function(e) {
+        e.preventDefault();
+        $($(this).attr('href')).toggle(250);
+      })
+    },
     preloadBackground: function() {
       $(this).hide().each(function(i) {
         var img = new Image(), $this = $(this),
@@ -109,7 +116,7 @@
       setTimeout(forceLoad, 3000);
     },
     actionLink: function() {
-      $(this).die('click').live('click', function(e) {
+      $(this).unbind('click.submit').bind('click.submit', function(e) {
         e.preventDefault();
         var link = $(this),
           url = link.attr('href'),
@@ -184,12 +191,14 @@
       $.mobileOptimize();
       $.preload(vars.preload);
       $('#bg').preloadBackground();
-      $('#logo').imagePreload();
     },
     getVar: function(name) {
       return _vars[name];
     },
     behave: function() {
+      if (!$('body').hasClass('loaded')) { $('body').addClass('loaded'); }
+      $.popover.bind();
+      $('a.reveals').reveals();
       if ($.support.opacity) {
         $('.preload').imagePreload();
         $('.preload_bg').preloadBackground();

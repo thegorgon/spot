@@ -5,7 +5,7 @@ input.text {
   line-height: 20px;
   width: 234px;
 }
-input.faded {
+input.faded, input.light {
   font-weight: normal;
   border: 1px solid #666;
   color: #333;
@@ -13,14 +13,80 @@ input.faded {
   @include border_radius(6px);          
   background: #fff;
   margin: 0;
+}
+input.faded {
   @include gradient_top_down(#999999, #dddddd, 20%);
   &.placeholder {
-    text-shadow: #333 1px 1px 3px;
+    text-shadow: #333 0px 0px 3px;
     color: #aaa;
     background: #333;
     @include gradient_top_down(#333333, #444444, 20%);
   }
 }
+input.light {
+  @include gradient_top_down(#dddddd, #fff, 20%);
+  &.placeholder {
+    color: #999;
+    text-shadow: none;
+  }
+}
+.validity.faded, .validity.light {
+  @include opacity(0);
+  @include transition(opacity 0.25s);
+  width: 200px;
+  height: 30px;
+  position: absolute;
+  right: -230px;
+  top: 0px;
+  z-index: 1;
+  padding: 0 0 0 30px;
+  .message {
+    text-align: left;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    color : #ccc;
+  }
+  .focus & {
+    @include opacity(0);
+    @include transition(opacity 0.25s);
+  }
+  .loading & {
+    @include opacity(1);
+    @include transition(opacity 0.25s);
+  }
+  .valid & {
+    @include opacity(1);
+    @include transition(opacity 0.25s);
+  }
+  .invalid & {
+    @include opacity(1);
+    @include transition(opacity 0.25s);
+  }  
+}
+.validity.faded {
+  .loading & {
+    background: transparent url(/images/assets/loading/white-chasing30x30.gif?1) no-repeat left center;    
+  }
+  .valid & {
+    background: transparent url(/images/assets/general/white_check.png?3) no-repeat left center;    
+  }
+  .invalid & {
+    background: transparent url(/images/assets/general/white_cross.png?1) no-repeat left center;        
+  }    
+}
+.validity.light {
+  .loading & {
+    background: transparent url(/images/assets/loading/black-chasing30x30.gif?1) no-repeat left center;    
+  }
+  .valid & {
+    background: transparent url(/images/assets/general/black_check.png?3) no-repeat left center;    
+  }
+  .invalid & {
+    background: transparent url(/images/assets/general/black_cross.png?1) no-repeat left center;        
+  }    
+}
+
 .checkbox.faded {
   cursor: pointer;
   height: 12px;
@@ -92,6 +158,7 @@ input.faded {
   line-height: 20px;
   text-shadow: #000 0px -1px 0px;
   z-index: 10;
+  color: #ddd;
   .error_message {
     font-size: 11px;
     color: #993333;
@@ -100,44 +167,6 @@ input.faded {
     background: transparent url(/images/assets/general/hint_black_noshadow.png) no-repeat left top;
   }
 }
-.validity.faded {
-  @include opacity(0);
-  @include transition(opacity 0.25s);
-  width: 200px;
-  height: 30px;
-  position: absolute;
-  right: -230px;
-  top: 0px;
-  z-index: 1;
-  padding: 0 0 0 30px;
-  .message {
-    text-align: left;
-    height: 30px;
-    line-height: 30px;
-    font-size: 12px;
-    color : #ccc;
-  }
-  .focus & {
-    @include opacity(0);
-    @include transition(opacity 0.25s);
-  }
-  .loading & {
-    background: transparent url(/images/assets/loading/bw-chasing30x30.gif?1) no-repeat left center;    
-    @include opacity(1);
-    @include transition(opacity 0.25s);
-  }
-  .valid & {
-    background: transparent url(/images/assets/general/check.png?3) no-repeat left center;    
-    @include opacity(1);
-    @include transition(opacity 0.25s);
-  }
-  .invalid & {
-    background: transparent url(/images/assets/general/white_cross.png?1) no-repeat left center;        
-    @include opacity(1);
-    @include transition(opacity 0.25s);
-  }
-}
-
 ul.form {
   list-style: none;
   margin: 0;
@@ -202,7 +231,7 @@ div.file_field {
     bottom: 0px;
   }
 }
-form.faded, .form.faded {
+.form.faded {
   li.focus {
     .hint {
       @include opacity(1.0);
@@ -229,8 +258,39 @@ form.faded, .form.faded {
   .checkbox {
     @extend .checkbox.faded;
   }
-  button {
-    @extend .rndblk_80x30;
+  a {
+    color: #AAA;
+    &:hover {
+      color: #999;
+    }
+  }
+}
+.form.light {
+  li.focus {
+    .hint {
+      @include opacity(1.0);
+      @include transition(opacity 0.25s);
+    }
+  }
+  li.buttons {
+    margin: 20px 0 0 0;
+    line-height: 30px;
+    line-height: 30px;
+  }
+  .validity {
+    @extend .validity.light;
+  }
+  .hint {
+    @extend .hint.faded;
+  }
+  input {
+    @extend input.light;
+  }
+  .radio {
+    @extend .radio.faded;
+  }
+  .checkbox {
+    @extend .checkbox.faded;
   }
   a {
     color: #AAA;
@@ -239,20 +299,51 @@ form.faded, .form.faded {
     }
   }
 }
+ul.form.oneline {
+  @extend .clearfix;
+  li {
+    float: left;
+    margin: 0 10px 0 0;
+  }
+  li.text {
+    width: 140px;
+    input {
+      width: 90px;
+    }
+  }
+  li.select {
+    padding: 5px 30px 0 0;
+  }
+  li.buttons {
+    width: 90px;
+    margin: 0;
+    float: left;
+  }
+  .validity {
+    width: 30px;
+    right: 0px;
+    top: 0px;
+    padding: 0px;
+    .message {
+      display: none;
+    }    
+  }
+}
 ul.form.search {
   width: 106px;
   height: 20px;
   position: relative;
   border: 1px solid #333;
   @include border_radius(17px);
-  @include transition(all 0.5s);
+  .loaded & {
+    @include transition("width 0.5s, background 0.5s");
+  }
   li {
     padding: 0;
     margin: 0;
   }
   &.focus {
     width: 176px;
-    @include transition(all 0.5s);
     .search_icon {
       background: transparent url(/images/assets/general/search13x14.png) no-repeat left center;
     }

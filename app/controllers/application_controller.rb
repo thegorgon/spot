@@ -139,5 +139,15 @@ class ApplicationController < ActionController::Base
       attributes[:location] = request_location if current_user.location != request_location
       current_user.update_attributes(attributes) if logged_in? && attributes.present?
     end
-  end  
+  end
+  
+  def record_user_event(event, value=nil)
+    event = Event.lookup(event) if event.kind_of? String
+    UserEvent.create! do |ue|
+      ue.user_id = current_user.try(:id) || -1
+      ue.event_id = event
+      ue.value = value.to_s
+      ue.locale = I18n.locale
+    end
+  end
 end

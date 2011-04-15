@@ -25,14 +25,27 @@
       #place_search
         %ul.form.search
           =form_tag admin_places_path, :method => :get, :class => "page", :autocomplete => "off" do
-            %li.search_icon
-            %li.search=text_field_tag :query
+            %label{:for => "search_query_text"}
+              %li.search_icon
+              %li.search=text_field_tag :query, "", :id => "search_query_text"
       %ul#nav
-        %li.first=link_to_with_current "search", new_admin_search_path, :class => "page"
-        %li=link_to_with_current "places", admin_places_path, :class => "page"
-        %li=link_to_with_current "dupes", admin_duplicates_path, :class => "page"
-        %li=link_to_with_current "resque", admin_resque_path
-        %li.last=link_to_with_current "info", admin_info_path, :class => "page"
+        %li.first=link_to_with_current "search", new_admin_search_path
+        %li{'data-popoverable' => '#places_subnav', 'data-popover-title' => 'places'}
+          %span.title places
+          %ul.popoverable.subnav#places_subnav
+            %li=link_to "All", admin_places_path
+            %li=link_to "New", new_admin_place_path
+            %li=link_to "Image Queue", admin_places_path(:filter => 3)
+            %li=link_to "Imageless", admin_places_path(:filter => 2)
+            %li=link_to "Wishlisted", admin_places_path
+            %li=link_to "Dupes", admin_duplicates_path
+            %li=link_to "Hydra", matches_admin_places_path
+        %li{'data-popoverable' => '#tools_subnav', 'data-popover-title' => 'tools'}
+          %span.title tools
+          %ul.popoverable.subnav#tools_subnav
+            %li=link_to "Resque", admin_resque_path
+            %li=link_to "Request Info", admin_info_path
+            %li=link_to "Settings", admin_settings_path
     #bd.clearfix
       = yield
   #fb-root

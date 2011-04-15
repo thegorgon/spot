@@ -16,11 +16,13 @@
       dims.w = cW;
       dims.h = (cW * rRatio);
     }
-    resize.width(dims.w);
-    resize.height(dims.h);
-    off.top = Math.round(gravityTop * (cH - dims.h));
-    off.left = Math.round(gravityLeft * (cW - dims.w));
-    resize.css({width: dims.w, height: dims.h, top: off.top, left: off.left});
+    if (dims.w > 0 && dims.h > 0) {
+      resize.width(dims.w);
+      resize.height(dims.h);
+      off.top = Math.round(gravityTop * (cH - dims.h));
+      off.left = Math.round(gravityLeft * (cW - dims.w));
+      resize.css({width: dims.w, height: dims.h, top: off.top, left: off.left});
+    }
   };
   $.fn.slideshow = function(opts) {
     var element = $(this),
@@ -88,6 +90,8 @@
     for (i = 0; i < options.slides.length; i++) {
       var img = new Image(),
         size = options.slides[i].size.split('x');
+      img.style.width = size[0];
+      img.style.height = size[1];
       img.src = options.slides[i].src + '?' + options.version;
       buildSlide(img, i).appendTo(slidereel);
     }
@@ -96,7 +100,7 @@
     });
     $(window).load(function() {
       setTimeout(function() {
-        element.fadeIn(250);
+        element.fadeIn(250)
         jumpTo(currentSlide, false);
         resize();
         resize();

@@ -33,9 +33,13 @@
       padding: 0 1em 0 0;
     }
   }
+  .form {
+    clear: both;
+    margin: 1em 0;
+  }
   table.data {
     width: 100%;
-    tbody {
+    tbody {      
       tr {
         border-bottom: 1px solid #bbb;
       }
@@ -46,9 +50,18 @@
       color: #ddd;
       text-align: center;
       text-shadow: 0px 1px 0px #000;
+      &.text_right {
+        text-align: right;
+        padding: 5px 7px;
+      }
+      &.text_left {
+        padding: 5px 7px;
+        text-align: left;
+      }
     }
     td {
       padding: 10px 5px;
+      vertical-align: middle;
     }
     .center {
       text-align: center;

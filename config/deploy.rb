@@ -38,6 +38,13 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "sudo bluepill restart unicorn"
   end
+  task :cleanup, :roles => :app do
+    deploy.sphinx.stop
+    deploy.workers.stop
+    run "if [ `readlink #{current_path}` != #{current_release} ]; then rm -rf #{current_release}; fi"
+    deploy.sphinx.start
+    deploy.workers.start
+  end
   
   # Sphinx deploy settings
   namespace :sphinx do
@@ -77,7 +84,15 @@ end
 # Restart resque workers, simplistic version
 namespace :workers do
   task :restart, :roles => :bg do
-    "sudo bluepill restart resque"
+    "sudo bluepill restart workers"
+  end
+
+  task :stop, :roles => :bg do
+    "sudo bluepill stop workers"
+  end
+
+  task :start, :roles => :bg do
+    "sudo bluepill start workers"
   end
 end
 

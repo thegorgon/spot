@@ -1,0 +1,32 @@
+.manager
+  .top.clearfix
+    .pagination
+    %h1.title="App Settings"
+    .links
+      =link_to "New", '#new_setting_form', :class => "reveals"
+    =spot_form_for :setting, :url => admin_settings_path, :display => "light oneline", :ul_id => "new_setting_form" do |f|
+      =f.text_field :key, :placeholder => "key", "data-validate-url" => available_admin_settings_path, :required => true
+      =f.text_field :value, :placeholder => "value", :required => true
+      =f.select :category, AppSetting::CATEGORIES
+      %li.buttons
+        =button_tag :class => 'blackimg_77x32' do
+          Save
+    %table.data
+      %thead
+        %tr
+          %th.text_left Key
+          %th Category
+          %th Value
+          %th.text_right Actions
+      %tbody
+        -@settings.to_a.each do |setting|
+          %tr.center.setting{:id => dom_id(setting)}
+            %td.text_left= setting.key
+            %td= setting.category
+            %td= setting.value
+            %td.text_right
+              -if setting.category.timestamp?
+                =link_to image_tag('assets/general/black_cross.png'), admin_setting_path(setting), 'data-method' => "delete", 'data-confirm' => "Are you sure you want to delete #{setting.key}?", :class => "right", :title => "delete"
+                =form_for :setting, :url => admin_setting_path(setting), :html => {:class => "right", :method => :put} do |f|
+                  =f.hidden_field :value, :value => Time.now.to_i.to_s
+                  =button_tag :class => 'blkrefresh_30x30 right', :title => "refresh"

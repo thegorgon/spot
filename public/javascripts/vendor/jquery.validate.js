@@ -1,5 +1,9 @@
 (function($) {
-  var preloadable = ["/images/assets/general/check.png", "/images/assets/general/white_cross.png", "/images/assets/loading/bw-chasing30x30.gif"],
+  var preloadable = [ "/images/assets/general/white_check.png", 
+                      "/images/assets/general/white_cross.png", 
+                      "/images/assets/general/black_check.png", 
+                      "/images/assets/general/black_cross.png", 
+                      "/images/assets/loading/white-chasing30x30.gif" ],
     emailRegex = /\b[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,4}\b/i,
     invalid = function(input, message) {
       $(input).parent('li').removeClass('valid').removeClass('loading').addClass('invalid');

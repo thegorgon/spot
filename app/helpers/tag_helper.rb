@@ -6,7 +6,7 @@ module TagHelper
       button << " #{k}=\"#{v}\""
     end
     button << "><div class=\"btntxt\">"
-    button << capture(&block)
+    button << capture(&block) if block
     button << "</div></button>"
     button.html_safe
   end
@@ -62,8 +62,10 @@ module TagHelper
   
   def spot_form_for(record, options={}, &proc)
     options[:builder] ||= Spot::FormBuilder
+    display = options.delete(:display) || "faded"
+    ul_id = options.delete(:ul_id)
     (options[:html] ||= {})['data-validate'] ||= "validate"
-    content_tag(:ul, form_for(record, options, &proc).html_safe, :class => "form")
+    content_tag(:ul, form_for(record, options, &proc).html_safe, :class => "form #{display}", :id => ul_id)
   end
   
   def iphone_meta_tags

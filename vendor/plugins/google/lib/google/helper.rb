@@ -41,8 +41,9 @@ module Google
     end
     
     def gmap_url(params)
-      ll = params[:ll].to_lat_lng.to_s
-      "http://maps.google.com?sll=#{ll}&q=#{params[:name]}"
+      ll = Geo::LatLng.normalize!(params)
+      query = {:ll => ll, :sll => ll, :q => params[:name], :z => params[:z] || 16}
+      "http://maps.google.com?#{query.to_query}"
     end
     
     def google_load(library, version)

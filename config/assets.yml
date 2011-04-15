@@ -5,7 +5,6 @@ javascript_compressor: closure
 javascripts:
   vendor:
     - public/javascripts/vendor/jquery-1.4.4.min.js
-    - public/javascripts/vendor/jquery-ui-1.8.10.custom.min.js
     - public/javascripts/vendor/logger.js
     - public/javascripts/vendor/jquery.validate.js
     - public/javascripts/vendor/jquery.jswipe.js
@@ -16,6 +15,7 @@ javascripts:
     - public/javascripts/shared/navigator.js
     - public/javascripts/shared/app_preview.js
     - public/javascripts/shared/konami.js
+    - public/javascripts/shared/popover.js
     - public/javascripts/site/slideshow.js
     - public/javascripts/site/shared.js
     - public/javascripts/site/views.js
@@ -27,6 +27,7 @@ javascripts:
     - public/javascripts/shared/lightbox.js
     - public/javascripts/shared/gmap.js
     - public/javascripts/shared/place_form.js
+    - public/javascripts/shared/popover.js
     - public/javascripts/admin/search_emulator.js
     - public/javascripts/admin/image_selector.js
     - public/javascripts/admin/shared.js
@@ -39,6 +40,7 @@ javascripts:
     - public/javascripts/shared/lightbox.js
     - public/javascripts/shared/gmap.js
     - public/javascripts/shared/place_form.js
+    - public/javascripts/shared/popover.js
     - public/javascripts/biz/views.js
 stylesheets:
   site:

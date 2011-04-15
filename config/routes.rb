@@ -10,9 +10,6 @@ Spot::Application.routes.draw do
     resource :sessions, :only => [:new, :create, :destroy]
     resource :activity, :only => [:show], :controller => "activity"
     resource :wishlist, :only => [:show] do
-      collection do
-        get "activity"
-      end
       resources :items, :only => [:create, :destroy], :controller => :wishlist_items
     end
   end
@@ -58,6 +55,9 @@ Spot::Application.routes.draw do
       end
     end
     resource :search, :only => [:new, :show], :controller => "search"
+    resources :settings, :only => [:index, :create, :update, :destroy] do
+      get "available", :on => :collection
+    end
     controller "home" do
       get "info"
     end

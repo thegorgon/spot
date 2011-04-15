@@ -3,6 +3,7 @@ class Api::ActivityController < Api::BaseController
    
   def show
     @activity = ActivityItem.feed(params)
+    record_user_event("api activity load")
     render :json => @activity
   end
 end

@@ -19,17 +19,6 @@ class WishlistItem < ActiveRecord::Base
   
   scope :active, where(:deleted_at => nil)
     
-  def self.activity(params={})
-    params = params.symbolize_keys
-    origin = Geo::LatLng.normalize(params)
-    radius = params[:radius] || 50
-    params[:page] = [1, params[:page].to_i].max
-    finder = where(:item_type => "Place").joins("INNER JOIN places ON places.id = wishlist_items.item_id")
-    finder = finder.where("#{Place.distance_sql(origin)} <= #{radius}") if origin
-    finder = finder.order("id DESC")
-    finder.paginate(params.slice(:page, :per_page))
-  end
-  
   def location=(value)
     if value = Geo::Position.from_http_header(value)
       self.lat = value.lat

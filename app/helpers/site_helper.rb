@@ -7,7 +7,14 @@ module SiteHelper
                     '/images/buttons/black_button_77x32_hover.png',
                     '/images/buttons/orange_button156x31_hover.png', 
                     '/images/buttons/orange_button156x31_active.png',
-                    '/images/assets/general/search13x14.png' ]
+                    '/images/assets/general/search13x14.png',
+                    '/images/assets/popover/bottom220x25.png',
+                    '/images/assets/popover/hood220x15.png',
+                    '/images/assets/popover/middle220x1.png',
+                    '/images/assets/popover/middle_left25x1.png',
+                    '/images/assets/popover/middle_right25x1.png',
+                    '/images/assets/popover/top_center220x60.png',
+                    '/images/assets/popover/top_right220x60.png' ]
     }.to_json
   end
   

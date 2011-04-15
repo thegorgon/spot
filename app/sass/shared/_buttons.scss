@@ -125,6 +125,7 @@ button.link {
 }
 .blackimg_77x32 {
   display: block;
+  border: none;
   background: transparent url(/images/buttons/black_button_77x32.png) no-repeat center center;
   float: left;
   margin-right: 15px;
@@ -176,6 +177,14 @@ button.link {
     @include gradient_top_down(#000, #333, 100%);
     color: #999;
   }
+}
+.blkrefresh_30x30 {
+  height: 30px;
+  width: 30px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent url(/images/assets/general/blkrefresh_30x30.png) no-repeat center center;
 }
 .ie7 {
   button {
