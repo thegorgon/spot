@@ -29,7 +29,7 @@ module TagHelper
               :frameborder => "0", 
               :style => "border:none; overflow:hidden; width:450px; height:21px;", 
               :allowTransparency => "true",
-              :src => "http://www.facebook.com/plugins/like.php?#{query.to_query}" }
+              :src => "https://www.facebook.com/plugins/like.php?#{query.to_query}" }
     content_tag(:iframe, "", props)
   end
 
