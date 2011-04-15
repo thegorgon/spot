@@ -2,7 +2,7 @@ class Site::PlacesController < Site::BaseController
   layout 'emptysite'
 
   caches_action :show,
-    :cache_path => Proc.new { |c| [c.send(:place_path, c.params[:id]), c.send(:locale), REVISION].join('/').gsub(/^\//, '') },
+    :cache_path => Proc.new { |c| AppSetting.cache_path(:blog, c) },  
     :expires_in => 1.week
   
   def show

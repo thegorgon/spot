@@ -119,17 +119,27 @@
     submit: function(form, options) {
       var method = form.attr('method').toUpperCase(),
         data = form.find('[name!=utf8]').serialize(),
-        url = form.attr('action');
+        url = form.attr('action'),
+        confirmMsg = form.attr('data-confirm');
       form.find('input, textarea').val('').blur();
       if (method == "GET") { url = url.indexOf('?') > 0 ? url + '&' + data : url + '?' + data; }
-      onStart();
-      return method == "GET" ? this.get(url, options) : this.post(url, data, options);
+      if (confirmMsg === undefined || confirmMsg.length === 0 || window.confirm(confirmMsg)) {
+        onStart();
+        return method == "GET" ? this.get(url, options) : this.post(url, data, options);
+      } else {
+        return false;
+      }
     },
     click: function(link, options) {
       var method = (link.attr('data-method') || 'GET').toUpperCase(),
-        url = link.attr('href');
-      onStart();
-      return method == "GET" ? this.get(url, options) : this.post(url, {_method: method}, options);
+        url = link.attr('href'),
+        confirmMsg = link.attr('data-confirm');
+        if (confirmMsg === undefined || confirmMsg.length === 0 || window.confirm(confirmMsg)) {
+          onStart();
+          return method == "GET" ? this.get(url, options) : this.post(url, {_method: method}, options);
+        } else {
+          return false;
+        }
     }, 
     link: function(link, options) {
       link.filter('a').each(function() {
