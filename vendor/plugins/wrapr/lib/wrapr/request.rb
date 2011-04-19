@@ -32,7 +32,7 @@ module Wrapr
         Rails.logger.info("#{self.class.to_s.underscore} : requesting #{@curb.url} with body : #{@curb.post_body}")
         @curb.send("http_#{@method}")
         @response.body = @curb.body_str
-        Rails.cache.write(cache_string, @response, :expires => @cache_expiry) if @cache
+        Rails.cache.write(cache_string, @response, :expires => @cache_expiry) if @cache && @response.success?
       end
       @response
     end
