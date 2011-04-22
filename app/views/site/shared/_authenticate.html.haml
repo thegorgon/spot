@@ -1,13 +1,13 @@
 -mode = (mode || :login).to_sym
 -@account ||= PasswordAccount.new
-%ul#authenticate.form.faded.fade_in.narrow_center
+%ul#authenticate.form.faded.narrow_center
   %li.header.clearfix
     %h1 
       Login to
     .image=image_tag("logos/gradient_script_340x270.png", :width => 100, :height => 82)
   %li.section.clearfix.fb
     =form_for :credentials, :url => session_path, :html => { :id => "fbconnect_form" } do |f|
-      =f.hidden_field :key, :value => @nonce.digested
+      =f.hidden_field :key, :value => nonce.digested
       =f.fields_for :facebook do |g|
         =g.hidden_field :access_token, :rel => "access_token"
         =g.hidden_field :facebook_id, :rel => "uid"
@@ -30,7 +30,7 @@
     %h3 Email : 
     .form_container
       =spot_form_for :credentials, :url => session_path, :html => { :class => conditionally('selected', mode == :login), :id => "login_form" } do |f|
-        =f.hidden_field :key, :value => @nonce.digested
+        =f.hidden_field :key, :value => nonce.digested
         =f.fields_for :password do |p|
           =p.email_field :login, :placeholder => "email", "data-validate-url" => existence_email_path, :required => true
           =p.password_field :password, :placeholder => "password", :required => true

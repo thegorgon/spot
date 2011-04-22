@@ -24,6 +24,9 @@
         return val ? valid(input) : invalid(input, message);        
       }
     },
+    testTelephone = function(input){
+      validity(input, true, "doesn't look right");
+    },
     testRequired = function(input) {
       validity(input, $(input).val().replace(/^\s+|\s+$/g, '').length > 0, "required");
     },
@@ -128,6 +131,8 @@
         return this;
       } else if ($(this).filter('[type=email]').length > 0) {
         return emailRegex;
+      } else if ($(this).filter('[type=tel]').length > 0) {
+        return telRegex;
       } else {
         return new RegExp($(this).attr('pattern'));
       }
@@ -138,6 +143,7 @@
         var form = $(this),
           required = form.find('input[required]:not([formnovalidate])'),
           patterned = form.find('input[type=email]:not([formnovalidate]), input[pattern]:not([formnovalidate])'),
+          telephone = form.find('input[type=tel]:not([formnovalidate])'),
           value = form.find('input[type=number][min]:not([formnovalidate]), input[type=number][max]:not([formnovalidate]):not([min])'),
           length = form.find('input[minlength]:not([formnovalidate]), input[maxlength]:not([formnovalidate]):not([minlength])'),
           server = form.find('input[data-validate-url]:not([formnovalidate])');
@@ -150,6 +156,7 @@
         value.bind('change', function() { testValue(this); });
         length.bind('change', function() { testLength(this); });
         server.bind('change', function() { testAgainstServer(this); });
+        // telephone.bind('change', function() { testTelephone(this); });
 
         form.bind('submit', function(e) {
           if (!form.data('validity')) {
@@ -158,6 +165,7 @@
             patterned.each(function(i) { testPattern(this); });
             value.each(function(i) { testValue(this); });
             length.each(function(i) { testLength(this); });
+            // telephone.each(function(i) { testTelephone(this); });
 
             if (form.find('input[aria-invalid=true]').length === 0) {
               form.data('validity', true);

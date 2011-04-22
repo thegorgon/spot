@@ -55,5 +55,5 @@ namespace :db do
         account.connection.execute("TRUNCATE #{account.table_name}")
       end
     end
-  end
+  end  
 end

@@ -1,0 +1,17 @@
+-if @search.results.blank?
+  .empty_msg.msg
+    No businesses found.
+-else
+  %ul
+    -@search.results.each do |r|
+      -place = r.place
+      %li.result.clearfix
+        =form_for :business, :url => biz_businesses_path do |f|
+          %button{:type => "submit", :class => "overlay"}
+          =f.hidden_field :place_id, :value => r.place.id
+          .image
+            =image_tag(place.image.url(:i234x168), :size => "117x84")
+          .info
+            .name=place.name
+            .location=place.city_and_region
+  

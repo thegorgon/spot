@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110414013925) do
+ActiveRecord::Schema.define(:version => 20110416005534) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -47,6 +47,31 @@ ActiveRecord::Schema.define(:version => 20110414013925) do
   end
 
   add_index "blocked_emails", ["address"], :name => "index_blocked_emails_on_address", :unique => true
+
+  create_table "business_accounts", :force => true do |t|
+    t.integer  "user_id",                             :null => false
+    t.string   "first_name",                          :null => false
+    t.string   "last_name",                           :null => false
+    t.string   "email",                               :null => false
+    t.string   "title",                               :null => false
+    t.string   "phone",                               :null => false
+    t.integer  "status",               :default => 0, :null => false
+    t.integer  "businesses_count",     :default => 0, :null => false
+    t.integer  "max_businesses_count",                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "business_accounts", ["user_id"], :name => "index_business_accounts_on_user_id"
+
+  create_table "businesses", :force => true do |t|
+    t.integer  "place_id",            :null => false
+    t.integer  "business_account_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "businesses", ["business_account_id", "place_id"], :name => "index_businesses_on_business_account_id_and_place_id", :unique => true
 
   create_table "devices", :force => true do |t|
     t.string   "udid",          :null => false

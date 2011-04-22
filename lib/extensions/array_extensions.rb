@@ -10,6 +10,10 @@ module ArrayExtensions
       each { |p| hash[yield(p)] = p }
       hash
     end
+    
+    def full_compact
+      select { |x| x.present? }
+    end
   end
   
   module ClassMethods

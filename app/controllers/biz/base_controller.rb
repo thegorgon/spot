@@ -1,5 +1,6 @@
 class Biz::BaseController < ApplicationController
-  before_filter :require_admin
+  before_filter :require_admin, :if => Proc.new { Rails.env.production? }
+  before_filter :require_account
   
   layout 'biz'
   
@@ -25,17 +26,28 @@ class Biz::BaseController < ApplicationController
     end
   end
   
-  def biz_account
-    nil
+  def current_account
+    current_user.try(:business_account)
   end
-  helper_method :biz_account
+  helper_method :current_account
   
-  def require_biz_account
+  def require_account
     authenticate
-    unless biz_account
+    unless current_account
       store_location
       flash[:error] = current_user ? "Tell us about your business." : "Please login first."
-      redirect_to current_user ? new_business_path : new_session_path
+      url = current_user ? new_biz_account_path : new_session_path
+      Rails.logger.info "spot-app: redirecting from require_account to #{url}"
+      redirect_to url
+    end
+  end
+
+  def require_no_account
+    if current_account
+      authenticate
+      url = biz_account_path
+      Rails.logger.info "spot-app: redirecting from require_no_account to #{url}"
+      redirect_to url 
     end
   end
 end

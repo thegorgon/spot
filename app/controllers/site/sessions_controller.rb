@@ -3,13 +3,12 @@ class Site::SessionsController < Site::BaseController
   
   def new
     with_flash_maintenance { logout }
-    @nonce = Nonce.new(:session => session)
   end
   
   def create
     authenticate
     if logged_in?
-      redirect_back_or_default root_path
+      redirect_back_or_default params[:return_to] || root_path
     else
       flash[:error] = "We couldn't log you in. Please try again."
       redirect_to new_session_path

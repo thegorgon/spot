@@ -1,0 +1,213 @@
+.popover {
+  position: relative;
+  min-width: 50px;
+  min-height: 65px; // Needs to be contentHeight + topHeight
+  &.titled {
+    min-height: 80px;
+    .hd {
+      height: 65px;
+      padding-bottom: 10px;
+      .title {
+        text-align: center;
+        left: 0px;
+        right: 0px;
+        position: absolute;
+        text-shadow: rgba(0,0,0,0.5) 0px 1px 0px;
+        font-size: 15px;
+        line-height: 20px;
+        top: 33px;
+        bottom: 10px;
+        z-index: 3;
+        color: #fff;
+        font-weight: bold;
+        display: block;
+      }
+      .lft {
+        height: 75px;
+        background: transparent url(/images/assets/popover/titled_hdl25x75.png) no-repeat top left;
+      }
+      .rt {
+        height: 75px;
+        background: transparent url(/images/assets/popover/titled_hdr25x75.png) no-repeat top right;
+      }
+      .pad {
+        height: 75px;
+        background: transparent url(/images/assets/popover/titled_hdpad1x75.png) repeat-x top center;
+      }
+      .arr {
+        height: 75px;
+        background: transparent url(/images/assets/popover/titled_hdarr40x75.png) repeat-x top center;
+      }
+    }
+    .bd {
+      top: 60px;
+    }
+  }
+  &.arrownone {
+    .hd {
+      .lpad.pad {
+        width: auto;
+        left: 25px;
+        right: 25px;
+      }
+      .rpad.pad {
+        width: 0px;
+      }
+      .arr {
+        width: 0px;
+      }
+    }
+  }
+  &.arrowleft {
+    min-width: 90px;
+    .hd {
+      .lpad.pad {
+        width: 0px;
+      }
+      .rpad.pad {
+        width: auto;
+        left: 65px;
+        right: 25px;
+      }
+      .arr {
+        right: auto;
+        left: 25px;
+      }
+    }
+  }
+  &.arrowright {
+    min-width: 90px;
+    .hd {
+      .rpad.pad {
+        width: 0px;
+      }
+      .lpad.pad {
+        width: auto;
+        left: 25px;
+        right: 65px;
+      }
+      .arr {
+        left: auto;
+        right: 25px;
+      }
+    }
+  }
+  .hd {
+    z-index: 11;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    height: 30px;
+    padding-bottom: 10px;
+    .title {
+      display: none;
+    }
+    .lft {
+      width: 25px;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      height: 40px;
+      background: transparent url(/images/assets/popover/hdl25x40.png) repeat-x top center;
+    }
+    .pad {
+      position: absolute;
+      top: 0px;
+      height: 40px;
+      background: transparent url(/images/assets/popover/hdpad1x40.png) repeat-x top center;
+      &.lpad {
+        width: 67px; // Needs to be (totalWidth - 2 * cornerWidth - arrowWidth)/2.0
+        left: 25px;
+      }
+      &.rpad {
+        width: 68px; // Needs to be (totalWidth - 2 * cornerWidth - arrowWidth)/2.0
+        right: 25px;
+      }
+    }
+    .arr {
+      width: 40px;
+      position: absolute;
+      top: 0px;
+      left: 92px; // Needs to be cornerWidth + lftCntr width
+      height: 40px;
+      background: transparent url(/images/assets/popover/hdarr40x40.png) repeat-x top center;
+    }
+    .rt {
+      width: 25px;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      height: 40px;
+      background: transparent url(/images/assets/popover/hdr25x40.png) repeat-x top center;
+    }
+  }
+  .bd {
+    padding: 0;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top: 25px;
+    .bgl {
+      position: absolute;
+      top: 15px;
+      left: 0px;
+      width: 25px;
+      bottom: 25px;
+      background: transparent url(/images/assets/popover/bdl25x1.png) repeat-y top center;
+      z-index: 100;
+    }
+    .bgr {
+      position: absolute;
+      top: 15px;
+      right: 0px;
+      width: 25px;
+      bottom: 25px;
+      background: transparent url(/images/assets/popover/bdr25x1.png) repeat-y top center;
+      z-index: 100;
+    }
+    .content {
+      position: absolute;
+      top: 5px;
+      left: 13px;
+      right: 13px;
+      bottom: 13px;
+      background: #fff;
+      overflow: hidden;
+    }
+  }
+  .ft {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding-top: 10px;
+    height: 15px;
+    z-index: 100;
+    .lft {
+      width: 25px;
+      height: 25px;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      background: transparent url(/images/assets/popover/ftl25x25.png) no-repeat top left;
+    }
+    .cntr {
+      height: 25px;
+      position: absolute;
+      top: 0px;
+      left: 25px;        
+      right: 25px;
+        background: transparent url(/images/assets/popover/ftc1x25.png) repeat-x top center;
+    }
+    .rt {
+      width: 25px;
+      height: 25px;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      background: transparent url(/images/assets/popover/ftr25x25.png) no-repeat top left;
+    }
+  }
+}

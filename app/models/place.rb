@@ -7,6 +7,7 @@ class Place < ActiveRecord::Base
   after_create :update_canonical_id
   after_validation :enqueue_image_processing
   after_save :enqueue_deduping
+  after_create :enqueue_deduping
 
   cattr_accessor :per_page
   @@per_page = 15

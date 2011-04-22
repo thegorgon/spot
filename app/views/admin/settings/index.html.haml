@@ -14,17 +14,17 @@
     %table.data
       %thead
         %tr
-          %th.text_left Key
+          %th.ltxt Key
           %th Category
           %th Value
-          %th.text_right Actions
+          %th.rtxt Actions
       %tbody
         -@settings.to_a.each do |setting|
           %tr.center.setting{:id => dom_id(setting)}
-            %td.text_left= setting.key
+            %td.ltxt= setting.key
             %td= setting.category
             %td= setting.value
-            %td.text_right
+            %td.rtxt
               -if setting.category.timestamp?
                 =link_to image_tag('assets/general/black_cross.png'), admin_setting_path(setting), 'data-method' => "delete", 'data-confirm' => "Are you sure you want to delete #{setting.key}?", :class => "right page ajax", :title => "delete"
                 =form_for :setting, :url => admin_setting_path(setting), :html => {:class => "right page", :method => :put} do |f|

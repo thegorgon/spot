@@ -4,7 +4,7 @@ describe User do
   before(:all) { User.delete_all; }
   before :each do 
     @user = Factory.build(:user)
-  end
+  end  
   
   describe "#adminify!" do
     it "makes the user with the given email an admin" do
@@ -101,6 +101,13 @@ describe User do
       @wi = @user.wishlist(:item_type => item.class.to_s, :item_id => item.id, :source_type => source.class.to_s, :source_id => source.id)
       @wi.should be_new_record
       @wi.source.should == source
+    end
+    
+    it "deletes all it's wishlist items on destroy" do
+      wi = Factory.create(:wishlist_item, :user => @user)
+      wi.user_id.should == @user.id
+      @user.destroy
+      WishlistItem.find_by_id(wi.id).should be_nil
     end
   end
   

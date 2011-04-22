@@ -98,20 +98,8 @@ module TagHelper
     end
   end
   
-  def hide_content_tag
-    content_tag(:script, :type => Mime::JS) do
-      "(function() {
-        if ( ! /MSIE/.test(navigator.userAgent) ) {
-          var hide = {bg: null};
-          for (var key in hide) {
-            if (hide.hasOwnProperty(key)) {
-              hide[key] = document.getElementById(key);
-              if (hide[key]) { hide[key].style.display = 'none'; }
-            }
-          }
-        }
-      }());"
-    end
+  def js_trigger_tag
+    content_tag(:script, "document.getElementsByTagName('html')[0].setAttribute('class', 'js');", :type => Mime::JS)
   end
   
   def link_to_with_current(*args)
@@ -132,6 +120,36 @@ module TagHelper
         content << content_tag(:div, flash[:error].html_safe, :class => "flash error") if flash[:error].present?
         content << content_tag(:div, "&nbsp;".html_safe, :class => "close")
         content.html_safe
+      end
+    end
+  end
+  
+  def popover(content_or_options={}, options=nil, &block)
+    content = block ? capture(&block) : content_or_options.to_s
+    options ||= block ? content_or_options : {}
+    options[:dir] ||= "none"
+    klass = "popover"
+    klass << " #{options[:class]}" if options[:class].present?
+    klass << " titled" if options[:title].present?
+    klass << " arrow#{options[:dir]}"
+    content_tag(:div, :class => klass, :id => options[:id]) do
+      content_tag(:div, :class => "hd") do
+        content_tag(:div, options[:title], :class => "title") +
+        content_tag(:div, '', :class => "lft") +
+        content_tag(:div, '', :class => "lpad pad") +
+        content_tag(:div, '', :class => "arr") +
+        content_tag(:div, '', :class => "rpad pad") +
+        content_tag(:div, '', :class => "rt")
+      end +
+      content_tag(:div, :class => "bd") do
+        content_tag(:div, '', :class => "bgl") +
+        content_tag(:div, '', :class => "bgr") +
+        content_tag(:div, content, :class => "content")
+      end +
+      content_tag(:div, :class => "ft") do
+        content_tag(:div, '', :class => "lft") +
+        content_tag(:div, '', :class => "cntr") +
+        content_tag(:div, '', :class => "rt")
       end
     end
   end

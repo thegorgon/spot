@@ -1,8 +1,8 @@
 !!! 5
-/[if lt IE 7 ]<html lang="en" class="no-js ie6">
-/[if IE 7 ]<html lang="en" class="no-js ie7">
-/[if IE 8 ]<html lang="en" class="no-js ie8">
-/[if IE 9 ]<html lang="en" class="no-js ie9">
+/[if lt IE 7 ]<html lang="en" class="ie6 no-js">
+/[if IE 7 ]<html lang="en" class="ie7 no-js">
+/[if IE 8 ]<html lang="en" class="ie8 no-js">
+/[if IE 9 ]<html lang="en" class="ie9 no-js">
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
 %head
   %meta{'charset' => 'utf-8'}
@@ -17,11 +17,12 @@
   = include_stylesheets :site, :media => 'all'
   = include_stylesheets :iphonesite, :media => 'handheld, only screen and (max-device-width: 480px)'
   = csrf_meta_tag 
+  = js_trigger_tag
   = yield :head
   -if Rails.env.production?
     = google_analytics_tag(:account_id => 'UA-21193799-1')
-%body{:id => page_namespace, :class => controller_name}
-  #bg
+%body{:id => page_namespace, :class => "site #{controller_name}"}
+  #bg.preload_bg
   = flashes
   #page
     #hd
@@ -33,6 +34,6 @@
     #fb-root
   = hide_content_tag
   =include_javascripts :vendor
-  =include_javascripts :site
+  =include_javascripts :scripts
   :javascript
     Spot.init(#{js_vars});

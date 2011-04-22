@@ -58,7 +58,7 @@
               });
             } else {
               if ($.isFunction(_geocodeopts.error)) { _geocodeopts.error.call(status); }
-              alert("Geocode was not successful for the following reason: " + status);
+              else { alert("Geocode was not successful for the following reason: " + status); }
             }
           });
         };          

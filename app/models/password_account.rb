@@ -9,6 +9,7 @@ class PasswordAccount < ActiveRecord::Base
   validates :login, :presence => true, :format => EMAIL_REGEX, :uniqueness => true
   before_save :update_encryption
   before_validation :update_user
+  name_attribute :name
   
   def self.authenticate(params)
     account = PasswordAccount.find_by_login(params[:login])
@@ -35,16 +36,6 @@ class PasswordAccount < ActiveRecord::Base
     authenticate(params) || create(params)
   end
   
-  def name=(value)
-    splits = value.to_s.split(' ')
-    self.last_name = splits.length > 1 ? splits.pop : nil
-    self.first_name = splits.join(' ')
-  end
-
-  def name
-    [first_name, last_name].compact.join(' ')
-  end
-  
   def password_changed?
     @password.present?
   end
@@ -69,6 +60,6 @@ class PasswordAccount < ActiveRecord::Base
     user.email ||= login
     user.first_name ||= first_name
     user.last_name ||= last_name
-    user.save! if user.changed?
+    errors.add(:base, "User is invalid") if user.changed? && !user.save
   end
 end

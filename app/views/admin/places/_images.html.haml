@@ -10,7 +10,7 @@
   .sections
     -@images.each do |title, images|
       .section
-        %h1=title
+        %h2=title
         -images.each do |image|
           =form_for [:admin, @place], :html => {"data-place-id" => @place.id} do |f|
             =f.hidden_field :external_image_url, :value => image.url

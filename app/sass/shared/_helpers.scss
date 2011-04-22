@@ -1,5 +1,19 @@
 @import "shared/_lightbox.scss";
 
+html {
+  &.js {
+    #bg, #page, .preload {
+      opacity: 0;
+    }
+  }
+  &.loaded {
+    #bg, #page, .preload {
+      opacity: 1.0;
+      @include transition(opacity 0.25s);
+    }
+  }
+}
+
 .vcc {
   display: table;
   width: 100%;
@@ -94,102 +108,11 @@ form.inline {
     }
   }
 }
-.popoverable {
-  display: none;
+.hidden {
+  display: none !important;
 }
-.popover_screen {
-  position: absolute;
-  z-index: 1000;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #fff;
-  @include opacity(0);
-}
-.popover {
-  position: absolute;
-  z-index: 10000;
-  .top {
-    width: 222px;
-    padding: 33px 0 0 0;
-    height: 27px;
-    z-index: 11;
-    text-align: center;
-    font-size: 15px;
-    color: #fff;
-    font-weight: bold;
-    text-shadow: rgba(0,0,0,0.5) 0px 1px 0px;
-  }
-  &.left_arrow {
-    .top {
-      background: url(/images/assets/popover/top_left220x60.png) no-repeat top center;
-    }
-  }
-  &.right_arrow {
-    .top {
-      background: url(/images/assets/popover/top_right220x60.png) no-repeat top center;      
-    }
-  }
-  &.center_arrow {
-    .top {
-      background: url(/images/assets/popover/top_center220x60.png) no-repeat top center;            
-    }
-  }
-  .middle {
-    width: 200px;
-    padding: 0 10px;
-    position: relative;
-    .hood {
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      right: 0px;
-      height: 15px;
-      z-index: 100;
-      background: url(/images/assets/popover/hood220x15.png) no-repeat top center;
-    }
-    .bg_left {
-      position: absolute;
-      top: 15px;
-      left: 0px;
-      width: 25px;
-      bottom: 25px;
-      background: url(/images/assets/popover/middle_left25x1.png) repeat-y top center;
-      z-index: 100;
-    }
-    .bg_right {
-      position: absolute;
-      top: 15px;
-      right: 0px;
-      width: 25px;
-      bottom: 25px;
-      background: url(/images/assets/popover/middle_right25x1.png) repeat-y top center;
-      z-index: 100;
-    }
-    .floor {
-      position: absolute;
-      left: 0px;
-      right: 0px;
-      bottom: 0px;
-      height: 25px;
-      z-index: 100;
-      background: url(/images/assets/popover/bottom220x25.png) repeat-y top center; 
-    }
-    .content {
-      position: absolute;
-      top: 5px;
-      left: 13px;
-      right: 13px;
-      bottom: 13px;
-      background: #fff;
-    }
-  }
-}
-@-moz-document url-prefix() {
-  .iphone.size274x535 .content {
-    left: 16px;
-  } 
+h1 {
+  font-size: 1.8em;
 }
 .center {
   text-align: center;
@@ -200,9 +123,39 @@ form.inline {
   display: inline;
   float: none;
 }
-.text_right {
+.rtxt {
   text-align: right;
 }
-.text_left {
+.ltxt {
   text-align: left;
+}
+.small {
+  font-size: 0.8em;
+}
+
+.ui-autocomplete {
+  background-color: white;
+  border: 1px solid #666;
+  width: 200px;
+  border-bottom: 0px;
+  list-style-type: none;
+  padding-left: 0px;
+  .ui-menu-item {
+    a {
+      color: #333;
+      display: block;
+      padding: 10px;
+      border-bottom: 1px solid #666;
+      &.ui-state-hover, &:hover {
+        background: #ff8419;
+        color: #fff;
+      } 
+    }
+  }
+}
+.dropdown {
+  .options {
+    display: none;
+  }
+  background: transparent url(/images/assets/defaults)
 }

@@ -100,7 +100,7 @@
     });
     $(window).load(function() {
       setTimeout(function() {
-        element.fadeIn(250)
+        element.fadeIn(250);
         jumpTo(currentSlide, false);
         resize();
         resize();
@@ -113,8 +113,8 @@
       threshold: { x: 25, y: 100},
       swipeLeft: function() { nextSlide(); },
       swipeRight: function() { lastSlide(); },
-      swipeDown: function(y) { window.scrollTo(0, 1000) },
-      swipeUp: function(y) { window.scrollTo(0, -60) }
+      swipeDown: function(y) { window.scrollTo(0, 1000); },
+      swipeUp: function(y) { window.scrollTo(0, -60); }
     });
     return {
       nextSlide: nextSlide,

@@ -12,7 +12,7 @@ module Spot
         error = error.join(" ") if error.respond_to?(:join)
         message = @template.send(:content_tag, :div, error, :class => "message")
         validity = @template.content_tag(:div, message.html_safe, :class => "validity")
-        @template.content_tag(:li, "#{prepend}#{hint}#{input}#{validity}".html_safe, :class => "#{type}#{error.present?? ' invalid' : nil}")
+        @template.content_tag(:li, "#{prepend}#{hint}#{input}#{validity}".html_safe, :class => "text #{type}#{error.present?? ' invalid' : nil}")
       end
     end
     

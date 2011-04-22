@@ -38,6 +38,7 @@
     margin: 1em 0;
   }
   table.data {
+    clear: both;
     width: 100%;
     tbody {      
       tr {
@@ -50,11 +51,11 @@
       color: #ddd;
       text-align: center;
       text-shadow: 0px 1px 0px #000;
-      &.text_right {
+      &.rtxt {
         text-align: right;
         padding: 5px 7px;
       }
-      &.text_left {
+      &.ltxt {
         padding: 5px 7px;
         text-align: left;
       }

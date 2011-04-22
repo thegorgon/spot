@@ -3,9 +3,7 @@ require 'resque/server'
 Spot::Application.routes.draw do    
   scope :module => "api", :constraints => {:subdomain => /api\d*/}, :as => "api" do
     resources :places, :only => [:index] do
-      collection do 
-        get "search"
-      end
+      get "search", :on => :collection
     end
     resource :sessions, :only => [:new, :create, :destroy]
     resource :activity, :only => [:show], :controller => "activity"
@@ -45,9 +43,7 @@ Spot::Application.routes.draw do
     resources :places do
       resources :matches, :only => [:index, :create]
       get "matches", :on => :collection
-      member do
-        get "images"
-      end
+      get "images", :on => :member
     end
     resources :duplicates, :only => [:index] do
       member do 
@@ -66,7 +62,10 @@ Spot::Application.routes.draw do
   end
   
   namespace "biz" do
-    resource :account, :only => [:new, :show]
+    resource :account, :only => [:new, :create, :show]
+    resources :businesses, :only => [:new, :create, :show] do
+      get :search, :on => :collection
+    end
     controller "home" do
       get "help"
     end

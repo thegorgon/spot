@@ -4,7 +4,14 @@ class User < ActiveRecord::Base
   before_validation :reset_single_access_token, :if => :reset_single_access_token?
   before_save :reset_perishable_token
   has_many :devices, :dependent => :destroy
-  has_many :wishlist_items, :dependent => :destroy
+  has_many :wishlist_items, :dependent => :delete_all
+  has_many :activity_items, :foreign_key => :actor_id, :dependent => :destroy
+  has_one :business_account
+  has_one :facebook_account
+  has_one :password_account
+  
+  validates :email, :format => EMAIL_REGEX, :uniqueness => true, :if => :email?
+  name_attribute :name
   
   def self.adminify!(email)
     if (user = where(:email => email).first)
@@ -47,16 +54,6 @@ class User < ActiveRecord::Base
   
   def login!
     self.class.where(:id => id).update_all(["login_count = COALESCE(login_count, 0) + 1, current_login_at = ?, updated_at = ?", Time.now.utc, Time.now.utc])    
-  end
-
-  def name=(value)
-    splits = value.split(' ')
-    self.last_name = splits.pop
-    self.first_name = splits.join(' ')
-  end
-
-  def name
-    "#{first_name} #{last_name}"
   end
   
   def nickname

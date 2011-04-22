@@ -53,8 +53,8 @@ class PlaceSearch < ActiveRecord::Base
   
   def position=(value)
     @position = value.kind_of?(Geo::Position) ? value : Geo::Position.from_http_header(value)
-    self.lat = @position.lat
-    self.lng = @position.lng
+    self.lat = @position.try(:lat)
+    self.lng = @position.try(:lng)
     self[:position] = @position.try(:to_http_header)
   end
   

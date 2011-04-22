@@ -50,11 +50,12 @@ button.link {
    color: #ff8419; 
   }  
 }
+
 .btnorg156x31, a.btnorg156x31 {
   display: block;
   width: 156px;
   height: 31px;
-  line-height: 31px;
+  line-height: 30px;
   text-align: center;
   color: #000;
   text-decoration: none;
@@ -71,6 +72,7 @@ button.link {
     background: transparent url(/images/buttons/orange_button156x31_active.png) no-repeat center center;  
   }
 }
+
 .phone_whitegray_288x37, a.phone_whitegray_288x37 {
   display: block;
   width: 288px;
@@ -124,11 +126,13 @@ button.link {
   }
 }
 .blackimg_77x32 {
+  .btntxt {
+    margin-top: -3px;
+  }
   display: block;
   border: none;
   background: transparent url(/images/buttons/black_button_77x32.png) no-repeat center center;
   float: left;
-  margin-right: 15px;
   text-align: center;
   cursor: pointer;
   font-size: 12px;

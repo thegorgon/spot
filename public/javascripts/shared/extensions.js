@@ -6,6 +6,13 @@
     mobile: function() {
       return navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/android/i) || navigator.userAgent.match(/ipod/i);
     },
+    slice: function(object, keys) {
+      var retVal = {};
+      $.each(keys, function(i) {
+        retVal[this] = object[this];
+      });
+      return retVal;
+    },
     updateOrientation: function() {
       var orient = Math.abs(window.orientation) === 90 ? "landscape" : "portrait";
       if (orient !== $('body').attr('orient')) {
@@ -52,6 +59,25 @@
       } else {
         options.error.call(window, -1, "Geolocation is not supported in this browser");
       }
+    },
+    geocode: function(options) {
+      window._geocoder = window._geocoder || new google.maps.Geocoder();
+      if (options.addrIn) { options.address = $(options.addrIn).val(); }
+      if (options.llIn) { options.latLng = $(options.llIn).val(); }
+
+      options.success = $.isFunction(options.success) ? options.success : function() {};
+      options.error = $.isFunction(options.error) ? options.error : function() {};
+      options.noresults = $.isFunction(options.noresults) ? options.noresults : options.error;
+      
+      window._geocoder.geocode($.slice(options, ["address", "latLng", "bounds", "language", "region"]), function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
+          options.success.call(window._geocoder, results);
+        } else if (status == google.maps.GeocoderStatus.OK) {
+          options.noresults.call(window._geocoder, status);
+        } else {
+          options.error.call(window._geocoder, status);
+        }
+      });
     }
   });
   $.extend($.fn, {
@@ -60,6 +86,52 @@
         offset = $this.offset(),
         parent = $this.offsetParent();
       $this.css({width: $this.innerWidth(), height: $this.innerHeight(), position: 'absolute', top: offset.top, left: offset.left});
+    },
+    setClass: function(klass, others) {
+      var $this = $(this);
+      $.each(others, function() {
+        $this.removeClass(this);
+      });
+      $this.addClass(klass);
+    },
+    autogeocode: function(options) {
+      var input = $(this),
+        acopts = options.autocomplete || {};
+      $.extend(acopts, {
+        minLength: 3,
+        source: function(request, response) {
+          $.geocode({ address: request.term,
+            success: function(results) {
+              response($.map(results, function(item) {
+                          return {
+                            label:  item.formatted_address,
+                            value: item.formatted_address,
+                            ll: item.geometry.location.lat() + ", " + item.geometry.location.lng()
+                          };
+                        }));
+              if ($.isFunction(options.geocode)) {
+                options.geocode.call(input, event, ui);
+              }
+            },
+            error: function() {
+              input.parent('li').setClass('invalid', ['valid', 'loading']);
+              if ($.isFunction(options.geocodeErr)) {
+                options.geocodeErr.call(input, event, ui);
+              }
+            }
+          });
+        },
+        select: function(event, ui) {
+          options.ll.val(ui.item.ll);
+          input.val(ui.item.value);
+          input.parent('li').setClass('valid', ['invalid', 'loading']);
+          input.blur();
+          if ($.isFunction(options.select)) {
+            options.select.call(input, event, ui);
+          }
+        }
+      });
+      return input.autocomplete(acopts);
     },
     ajaxForm: function(options) {
       options = options || {};

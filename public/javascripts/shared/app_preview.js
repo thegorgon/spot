@@ -12,6 +12,7 @@
     },
     run = function() {
       dT = 5000;
+      $.logger.debug("RUN nextStep = ", nextStep);
       if (nextStep === 0) {
         dT = 7000;
         next.addClass('pending');
@@ -49,12 +50,10 @@
     };
   $.provide(go, "AppPreview", {
     init: function() {
-      $('#phone').preloadAll(function() {
-        start();
-      });
       active = $('.screen').removeClass('active').eq(0).addClass('active'); 
       screenCount = $('.screen').length;      
       step = 0;
+      start();
       startClock();
     }
   });

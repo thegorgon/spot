@@ -2,9 +2,8 @@ class Api::SessionsController < Api::BaseController
   skip_before_filter :require_user, :except => :destroy
   
   def new
-    @nonce = Nonce.new(:session => session)
     record_user_event("api nonce fetch")
-    render :json => { :nonce => @nonce.token }
+    render :json => { :nonce => nonce.token }
   end
   
   def create

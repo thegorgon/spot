@@ -1,8 +1,8 @@
 !!! 5
-/[if lt IE 7 ]<html lang="en" class="no-js ie6">
-/[if IE 7 ]<html lang="en" class="no-js ie7">
-/[if IE 8 ]<html lang="en" class="no-js ie8">
-/[if IE 9 ]<html lang="en" class="no-js ie9">
+/[if lt IE 7 ]<html lang="en" class="ie6 no-js">
+/[if IE 7 ]<html lang="en" class="ie7 no-js">
+/[if IE 8 ]<html lang="en" class="ie8 no-js">
+/[if IE 9 ]<html lang="en" class="ie9 no-js">
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
 %head
   %meta{'charset' => 'utf-8'}
@@ -14,9 +14,10 @@
   = favicon_link_tag("/favicon.ico")
   = include_stylesheets :admin, :media => 'all'
   = csrf_meta_tag 
+  = js_trigger_tag
   = yield :head
-%body{:id => page_namespace, :class => controller_name}
-  #bg
+%body{:id => page_namespace, :class => "admin #{controller_name}"}
+  #bg.preload_bg
   =flashes
   #page
     #hd
@@ -30,9 +31,9 @@
               %li.search=text_field_tag :query, "", :id => "search_query_text"
       %ul#nav
         %li.first=link_to_with_current "search", new_admin_search_path
-        %li{'data-popoverable' => '#places_subnav', 'data-popover-title' => 'places'}
+        %li{'data-popover' => '#places_subnav'}
           %span.title places
-          %ul.popoverable.subnav#places_subnav
+          %ul.hidden.subnav#places_subnav
             %li=link_to "All", admin_places_path
             %li=link_to "New", new_admin_place_path
             %li=link_to "Image Queue", admin_places_path(:filter => 3)
@@ -40,18 +41,17 @@
             %li=link_to "Wishlisted", admin_places_path
             %li=link_to "Dupes", admin_duplicates_path
             %li=link_to "Hydra", matches_admin_places_path
-        %li{'data-popoverable' => '#tools_subnav', 'data-popover-title' => 'tools'}
+        %li{'data-popover' => '#tools_subnav'}
           %span.title tools
-          %ul.popoverable.subnav#tools_subnav
+          %ul.hidden.subnav#tools_subnav
             %li=link_to "Resque", admin_resque_path
             %li=link_to "Request Info", admin_info_path
             %li=link_to "Settings", admin_settings_path
     #bd.clearfix
       = yield
   #fb-root
-  =hide_content_tag
   =google_maps_api_include
   =include_javascripts :vendor
-  =include_javascripts :admin
+  =include_javascripts :scripts
   :javascript
     Spot.init(#{js_vars});

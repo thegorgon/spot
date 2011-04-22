@@ -8,10 +8,11 @@
         .divider
         %p.signature Spot is being handcrafted with care in San&nbsp;Francisco.
       .pictures.clearfix.preload
-        =profile("Jim Egbert", "jim@spot-app.com", "Business Development", "Bond")              
-        =profile("Julia Graham", "julia@spot-app.com", "Marketing", "Secret Bully")
-        =profile("Niels Gabel", "engineering@spot-app.com", "Engineering", "The Interrupter")
-        =profile("Jesse Reiss", "engineering@spot-app.com", "Engineering", "Roadblock")
+        =profile("Kent Lindstrom", "kent@spot-app.com", "Founder & CEO", nil)
+        =profile("Jim Egbert", "jim@spot-app.com", "Business Development", nil)              
+        =profile("Julia Graham", "julia@spot-app.com", "Marketing", nil)
+        =profile("Niels Gabel", "engineering@spot-app.com", "Engineering", nil)
+        =profile("Jesse Reiss", "info@spot-app.com", "Engineering", nil)
       .contact
         =mail_to "Feedback <feedback@spot-app.com>".html_safe, "Contact Us", :encode => "hex", :subject => "Spot Feedback", :class => "dark"
       .attribution

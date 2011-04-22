@@ -12,6 +12,11 @@ class ApplicationController < ActionController::Base
   
   private
 
+  def nonce
+    @nonce ||= Nonce.new(:session => session)
+  end
+  helper_method :nonce
+
   def mobile_browser?
     iphone_browser? || android_browser?
   end
@@ -50,6 +55,7 @@ class ApplicationController < ActionController::Base
   
   def handle_error(exception=nil)
     log_error(exception)
+    @exception = exception
     @controller_name = "site_errors"
     @page_namespace = "site_errors_show"
   end
@@ -65,8 +71,10 @@ class ApplicationController < ActionController::Base
 
   def with_flash_maintenance
     old_flash = flash
+    return_to = session[:return_to]
     yield
     flash = old_flash
+    session[:return_to] = return_to
   end
   
   def logged_in?

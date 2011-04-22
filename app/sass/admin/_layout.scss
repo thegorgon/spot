@@ -30,7 +30,7 @@ a, a:visited {
   right: 0;
   bottom: 0;
   padding: 115px 0 0 0;
-  z-index: 10;
+  z-index: 2;
   #hd {
     min-width: 735px;
     position: absolute;
@@ -60,6 +60,7 @@ a, a:visited {
         list-style: none;
         float: left;
         @extend .blackimg_77x32;
+        margin-right: 15px;
         &.current {
           color: #ddd;
           text-shadow: #333 0px -1px 0px;
@@ -96,6 +97,7 @@ h2.title {
 }
 .popover {
   .subnav {
+    width: 150px;
     li {
       border-bottom: 1px solid #ddd;
       a {

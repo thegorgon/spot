@@ -45,7 +45,6 @@ input.light {
     height: 30px;
     line-height: 30px;
     font-size: 12px;
-    color : #ccc;
   }
   .focus & {
     @include opacity(0);
@@ -65,6 +64,9 @@ input.light {
   }  
 }
 .validity.faded {
+  .message {
+    color : #ccc;
+  }
   .loading & {
     background: transparent url(/images/assets/loading/white-chasing30x30.gif?1) no-repeat left center;    
   }
@@ -76,6 +78,9 @@ input.light {
   }    
 }
 .validity.light {
+  .message {
+    color : #333;
+  }
   .loading & {
     background: transparent url(/images/assets/loading/black-chasing30x30.gif?1) no-repeat left center;    
   }
@@ -83,6 +88,9 @@ input.light {
     background: transparent url(/images/assets/general/black_check.png?3) no-repeat left center;    
   }
   .invalid & {
+    .message {
+      color : #993333;
+    }
     background: transparent url(/images/assets/general/black_cross.png?1) no-repeat left center;        
   }    
 }
@@ -142,9 +150,10 @@ input.light {
     }
   }
 }
-.hint.faded {
+.hint {
   @include opacity(0);
-  @include transition(opacity 0.25s);
+  @include transition("all 0.25s");
+  z-index: 1;
   background: transparent url(/images/assets/general/hint_black.png) no-repeat left top;
   position: absolute;
   top: -17px;
@@ -157,11 +166,16 @@ input.light {
   font-size: 12px;
   line-height: 20px;
   text-shadow: #000 0px -1px 0px;
-  z-index: 10;
+  z-index: 1;
   color: #ddd;
   .error_message {
     font-size: 11px;
     color: #993333;
+  }
+  li.focus & {
+    z-index: 10;
+    @include opacity(1.0);
+    @include transition("all 0.25s");
   }
   .ie8 &, .ie7 & {
     background: transparent url(/images/assets/general/hint_black_noshadow.png) no-repeat left top;
@@ -180,7 +194,8 @@ ul.form {
       left: -15px;
     }
   }
-  li.text, li.email, li.password, li.buttons {
+  li.text, li.buttons {
+    @extend .clearfix;
     height: 30px;
     width: 300px;
     input {
@@ -195,8 +210,26 @@ ul.form {
       }
     }
   }
-  button {
-    float: right;
+  li.buttons {
+    margin: 20px 0 0 0;
+    line-height: 30px;
+    line-height: 30px;
+    button {
+      float: right;
+    }
+    &.left {
+      text-align: left;
+      button {
+        float: left;
+      }
+    }
+    &.center {
+      text-align: center;
+      button {
+        margin: 0 auto;
+        float: none;
+      }
+    }
   }
 }
 
@@ -232,12 +265,6 @@ div.file_field {
   }
 }
 .form.faded {
-  li.focus {
-    .hint {
-      @include opacity(1.0);
-      @include transition(opacity 0.25s);
-    }
-  }
   li.buttons {
     margin: 20px 0 0 0;
     line-height: 30px;
@@ -245,9 +272,6 @@ div.file_field {
   }
   .validity {
     @extend .validity.faded;
-  }
-  .hint {
-    @extend .hint.faded;
   }
   input {
     @extend input.faded;
@@ -266,22 +290,8 @@ div.file_field {
   }
 }
 .form.light {
-  li.focus {
-    .hint {
-      @include opacity(1.0);
-      @include transition(opacity 0.25s);
-    }
-  }
-  li.buttons {
-    margin: 20px 0 0 0;
-    line-height: 30px;
-    line-height: 30px;
-  }
   .validity {
     @extend .validity.light;
-  }
-  .hint {
-    @extend .hint.faded;
   }
   input {
     @extend input.light;
@@ -306,27 +316,55 @@ ul.form.oneline {
     margin: 0 10px 0 0;
   }
   li.text {
-    width: 140px;
+    width: 195px;
     input {
-      width: 90px;
+      padding: 4px 35px 4px 8px;
+      width: 150px;
     }
+  }
+  li.middle {
+    line-height: 30px;
+    height: 30px;
+    text-align: center;
   }
   li.select {
     padding: 5px 30px 0 0;
   }
   li.buttons {
+    z-index: 2;
     width: 90px;
     margin: 0;
     float: left;
+    .blackimg_77x32 {
+      margin-top: -2px;
+    }
   }
   .validity {
     width: 30px;
-    right: 0px;
+    right: 5px;
     top: 0px;
     padding: 0px;
     .message {
       display: none;
-    }    
+    }
+  }
+}
+ul.form.inpopover {
+  padding: 2px 0;
+  li {
+    margin: 0;
+    width: 248px;
+    float: none;
+    border-bottom: 1px solid #999;
+    input {
+      border: none;
+      width: 250px;
+    }
+    &.buttons {
+      padding: 15px 10px;
+      width: 230px;
+      border-bottom: none;
+    }
   }
 }
 ul.form.search {

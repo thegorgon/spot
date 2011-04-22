@@ -10,6 +10,9 @@
       =f.label "address_lines[1]", "Address 2: "
       =f.text_field "address_lines[1]", :value => @place.address_lines[1], :id => "place_address_lines_1", :class => "address_field"
     %li
+      =f.label "phone_number", "Phone : "
+      =f.telephone_field "phone_number", :value => @place.phone_number, :id => "place_phone_number"
+    %li
       =f.label :city, "City : "
       =f.text_field :city
     %li

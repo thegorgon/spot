@@ -2,6 +2,7 @@ body, html {
   height: 100%;
   width: 100%;
   font-size: 12px;
+  position: relative;
 }
 body, html, input, textarea, button {
   font-family: 'Helvetica Neue', 'Helvetica', 'Lucida Grande', 'Arial', sans-serif;
@@ -28,12 +29,10 @@ a, a:visited {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 115px 0 0 0;
-  z-index: 10;
-  .ie7 &, .ie8 & {
-    width: 1030px;
-  }
+  padding: 135px 0 0 0;
+  z-index: 2;
   #hd {
+    min-width: 500px;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -41,34 +40,41 @@ a, a:visited {
     height: 108px;
     padding: 7px 25px 0;
     background: transparent url(/images/backgrounds/repeatable_top_nav_1000x115.png) repeat-x top left;
-    .ie7 &, .ie8 & {
-      left: 0px;
-      right: 0px;
-    }
+    overflow: hidden;
     #logo {
       float: left;
+    }
+    #place_search {
+      padding: 55px 0 0 0;
+      float: right;
     }
     #nav {
       float: right;
       padding: 50px 0 0 0;
       text-align: right;
       font-size: 1.5em;
+      .subnav {
+        display: none;
+      }
       li {
         list-style: none;
         float: left;
-      }
-      a {
         @extend .blackimg_77x32;
+        margin-right: 15px;
         &.current {
           color: #ddd;
           text-shadow: #333 0px -1px 0px;
           background: transparent url(/images/buttons/black_button_77x32_active.png) no-repeat center center;
         }
+        a {
+          color: #fff;
+          text-decoration: none;
+        }
       }
     }
   }
   #bd {
-    width: 980px;
+    max-width: 980px;
     margin: 0 auto;
   }
 }
@@ -87,5 +93,38 @@ h2.title {
   float: right;
 }
 .center {
+  float: none;
+  margin: 0 auto;
   text-align: center;
+}
+.popover {
+  .subnav {
+    li {
+      border-bottom: 1px solid #ddd;
+      a {
+        cursor: pointer;
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+      }
+      &:hover {
+        background: #ff8419;
+        a {
+          color: #fff;
+        }
+      }
+    }
+  }
+  #login_popover {
+    width: 250px;
+    .buttons {
+      clear: both;
+    }
+    .forgot {
+      display: block;
+      padding: 2px 0 0 0;
+      font-size: 0.9em;
+      width: 90px;
+    }
+  }
 }
