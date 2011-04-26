@@ -126,7 +126,7 @@ class ApplicationController < ActionController::Base
   end
   
   def ip_location
-    "#{request_language}-#{country_code}" if country_code.present? && country_code != "--"
+    country_code if country_code.present? && country_code != "--"
   end
   helper_method :ip_location
   
