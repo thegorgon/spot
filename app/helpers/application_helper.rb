@@ -54,7 +54,9 @@ module ApplicationHelper
   
   def request_location_with_source
     if request_location
-      source = ip_location == request_location ? 'ip' : 'header'
+      source ||= 'param' if params[:loc]
+      source ||= 'ip' if ip_location == request_location
+      source ||= 'header' 
       "#{request_location} ( #{source} )"
     else
       "--"

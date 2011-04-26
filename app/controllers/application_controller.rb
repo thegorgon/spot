@@ -87,7 +87,7 @@ class ApplicationController < ActionController::Base
   end
   
   def geo_country
-    geo_ip.country(request.remote_ip)
+    geo_ip.country(params[:ip] || request.remote_ip)
   end
   helper_method :geo_country
   
@@ -131,7 +131,8 @@ class ApplicationController < ActionController::Base
   helper_method :ip_location
   
   def request_location
-    (request.user_preferred_languages.first || ip_location).split(/[-_\s]/, 2).last rescue "US"
+    locale_location = request.user_preferred_languages.first.split(/[-_\s]/, 2).last rescue nil
+    params[:loc] || ip_location || locale_location || "US"
   end
   helper_method :request_location
   
