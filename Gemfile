@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'linecache19'
 gem 'rails', '3.0.3'
 gem 'capistrano'
 gem 'haml'
