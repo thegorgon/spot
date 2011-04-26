@@ -7,7 +7,7 @@ class MobileApp < ActiveRecord::Base
   validates :store, :presence => true, :inclusion => STORES
   
   def self.url_for(location, store=nil)    
-    where(:location => location, :store => store || "itunes", :live => true).first.try(:url)
+    where(:location => location.downcase, :store => store || "itunes", :live => true).first.try(:url)
   end
   
   def self.country_code(request)
@@ -17,6 +17,10 @@ class MobileApp < ActiveRecord::Base
   
   def country
     location.split('-', 2).last.downcase
+  end
+  
+  def location=(value)
+    self[:location] = value.downcase
   end
   
   def live!
