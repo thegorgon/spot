@@ -131,8 +131,8 @@ class ApplicationController < ActionController::Base
   helper_method :ip_location
   
   def request_location
-    locale_location = request.user_preferred_languages.first.split(/[-_\s]/, 2).last rescue nil
-    params[:loc] || ip_location || locale_location || "US"
+    locale_location = request.user_preferred_languages.first.split(/[-_\s]/, 2)[1] rescue nil
+    params[:loc] || locale_location || ip_location
   end
   helper_method :request_location
   

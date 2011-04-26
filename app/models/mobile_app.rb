@@ -6,8 +6,8 @@ class MobileApp < ActiveRecord::Base
   validates :store_id, :presence => true
   validates :store, :presence => true, :inclusion => STORES
   
-  def self.url_for(location, store=nil)    
-    where(:location => location.downcase, :store => store || "itunes", :live => true).first.try(:url)
+  def self.url_for(location, store=nil)
+    where(:location => location.downcase, :store => store || "itunes", :live => true).first.try(:url) if location
   end
   
   def self.country_code(request)
