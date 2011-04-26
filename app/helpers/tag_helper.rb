@@ -64,7 +64,7 @@ module TagHelper
     options[:builder] ||= Spot::FormBuilder
     display = options.delete(:display) || "faded"
     ul_id = options.delete(:ul_id)
-    (options[:html] ||= {})['data-validate'] ||= "validate"
+    (options[:html] ||= {})['data-validate'] ||= "validate" unless options.delete(:validate) == false
     content_tag(:ul, form_for(record, options, &proc).html_safe, :class => "form #{display}", :id => ul_id)
   end
   
@@ -88,7 +88,7 @@ module TagHelper
   end
   
   def itunes_store_link(*args, &block)
-    url = MobileApp.url_for(request_location || current_user.try(:location), "itunes")
+    url = MobileApp.url_for(current_user.try(:location) || request_location, "itunes")
     if url
       content_tag(:div, link_to(image_tag(*args), getspot_path), :id => "itunes_store_link")
     elsif block
@@ -116,8 +116,8 @@ module TagHelper
     if flash[:notice].present? || flash[:error].present?
       content_tag(:div, :id => "flashes") do
         content = ""
-        content << content_tag(:div, flash[:notice].html_safe, :class => "flash notice") if flash[:notice].present?
-        content << content_tag(:div, flash[:error].html_safe, :class => "flash error") if flash[:error].present?
+        content << content_tag(:div, flash[:notice].to_s.html_safe, :class => "flash notice") if flash[:notice].present?
+        content << content_tag(:div, flash[:error].to_s.html_safe, :class => "flash error") if flash[:error].present?
         content << content_tag(:div, "&nbsp;".html_safe, :class => "close")
         content.html_safe
       end
