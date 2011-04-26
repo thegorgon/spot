@@ -2,6 +2,10 @@ class Biz::BusinessesController < Biz::BaseController
   def new
   end
 
+  def edit
+    @business = current_account.businesses.find(params[:id])
+  end
+  
   def create
     @business = current_account.claim(params[:business])
     if @business.save

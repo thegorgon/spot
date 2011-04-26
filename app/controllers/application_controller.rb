@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
     message = "\n#{exception.class} (#{exception.message}):\n"
     message << exception.annoted_source_code.to_s if exception.respond_to?(:annoted_source_code)
     message << "  " << clean_backtrace(exception, :silent).join("\n  ")
-    logger.fatal("#{message}\n\n")
+    Rails.logger.fatal("#{message}\n\n") if Rails.logger
   end
 
   def render_error(exception)

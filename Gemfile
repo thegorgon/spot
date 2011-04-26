@@ -28,6 +28,7 @@ gem 'sinatra', '1.1.3'
 gem 'geoip'
 gem 'rack-ssl-enforcer'
 gem 'base62'
+gem 'hoptoad_notifier'
 
 group :production do
   gem 'unicorn'

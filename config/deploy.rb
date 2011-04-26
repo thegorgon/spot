@@ -1,3 +1,5 @@
+require './config/boot'
+require 'hoptoad_notifier/capistrano'
 require 'bundler/capistrano'
 
 set :application, "Spot"

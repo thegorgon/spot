@@ -63,7 +63,7 @@ Spot::Application.routes.draw do
   
   namespace "biz" do
     resource :account, :only => [:new, :create, :show]
-    resources :businesses, :only => [:new, :create, :show] do
+    resources :businesses, :only => [:new, :create, :show, :edit] do
       get :search, :on => :collection
     end
     controller "home" do
