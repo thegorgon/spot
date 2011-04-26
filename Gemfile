@@ -4,6 +4,7 @@ gem 'linecache19'
 gem 'rails', '3.0.3'
 gem 'capistrano'
 gem 'haml'
+gem 'sass'
 gem 'jammit'
 gem "paperclip", "~> 2.3"
 gem "curb"
