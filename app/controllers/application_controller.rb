@@ -122,7 +122,7 @@ class ApplicationController < ActionController::Base
   end
   
   def request_language
-    request.user_preferred_languages.first.split('-', 2).first rescue "en"
+    request.user_preferred_languages.first.split(/[-_\s]/, 2).first rescue "en"
   end
   
   def ip_location
@@ -131,7 +131,7 @@ class ApplicationController < ActionController::Base
   helper_method :ip_location
   
   def request_location
-    ip_location || request.user_preferred_languages.first
+    (request.user_preferred_languages.first || ip_location).split(/[-_\s]/, 2).last rescue "US"
   end
   helper_method :request_location
   
