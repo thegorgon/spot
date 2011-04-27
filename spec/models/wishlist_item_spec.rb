@@ -210,7 +210,7 @@ describe WishlistItem do
     
     it "handles a twitter forbidden error" do
       Rails.should_receive(:env).and_return(ActiveSupport::StringInquirer.new("production"))
-      Twitter.should_receive(:update).and_raise(Twitter::Forbidden)
+      Twitter.should_receive(:update).and_raise(Twitter::Forbidden.new('error', {:error => 'error'}))
       expect { @wi.create_tweets! }.to_not raise_error
     end
     
