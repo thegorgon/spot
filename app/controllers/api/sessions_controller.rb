@@ -8,12 +8,12 @@ class Api::SessionsController < Api::BaseController
   
   def create
     require_user
-    record_user_event("api login")
+    record_user_event("api login", current_user.try(:id))
     render :json => { :user => current_user }
   end
   
   def destroy
-    record_user_event("api logout")
+    record_user_event("api logout", current_user.try(:id))
     logout
     head :ok
   end
