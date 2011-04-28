@@ -9,9 +9,6 @@ class Device < ActiveRecord::Base
   def self.authenticate(credentials)
     device_credentials = credentials[:device] if credentials
     if device_credentials && device_credentials[:id]
-      if device_credentials[:id] == 'c06b167458298cdb1171247db5bd619b6322d289'
-        device_credentials[:id] = "TEST-#{Nonce.hex_token}" # If it's neils, pretend it's someone new
-      end
       device = Device.find_or_initialize_by_udid(device_credentials[:id])
       device.attributes = device_credentials.except(:id)
       device.save
