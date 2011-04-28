@@ -52,8 +52,11 @@ class PreviewSignup < ActiveRecord::Base
   
   def send_thank_you
     unless emailed? || BlockedEmail.blocked?(self.email)
-      TransactionMailer.preview_thanks(self).deliver! 
-      update_attribute(:emailed, true)
+      begin 
+        TransactionMailer.preview_thanks(self).deliver! 
+        update_attribute(:emailed, true)
+      rescue AWS::SES::ResponseError => e
+      end
     end
   end
 end
