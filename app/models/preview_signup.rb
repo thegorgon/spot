@@ -55,7 +55,7 @@ class PreviewSignup < ActiveRecord::Base
       begin 
         TransactionMailer.preview_thanks(self).deliver! 
         update_attribute(:emailed, true)
-      rescue AWS::SES::ResponseError => e
+      rescue
       end
     end
   end
