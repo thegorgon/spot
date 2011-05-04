@@ -11,6 +11,7 @@ class WishlistItem < ActiveRecord::Base
   validates :lat, :numericality => {:greater_than => -90, :less_than => 90}, :if => :lat?
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}, :if => :lng
   
+  after_create :update_item_wishlist_count
   after_create :enque_tweeting
   after_create :enque_propagation
   
@@ -50,7 +51,6 @@ class WishlistItem < ActiveRecord::Base
   end
   
   def propagate!
-    item_type.constantize.increment_counter(:wishlist_count, item_id)
     generate_activity! :action => "CREATE", :source => source, :public => true
     source.update_attribute(:result_id, item_id) if source.kind_of?(PlaceSearch)
     PlaceMatch.run(item) if item.kind_of?(Place)
@@ -84,6 +84,10 @@ class WishlistItem < ActiveRecord::Base
     params = {:actor => user, :activity => self, :item => item, :lat => item.lat, :lng => item.lng}
     params.merge! extra
     ActivityItem.create! params
+  end
+
+  def update_item_wishlist_count
+    item_type.constantize.increment_counter(:wishlist_count, item_id)
   end
 
   def enque_propagation
