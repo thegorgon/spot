@@ -20,6 +20,7 @@ class ActivityItem < ActiveRecord::Base
     params[:page] = [1, params[:page].to_i].max
     finder = self
     finder = finder.within(radius, :origin => origin) if origin
+    finder = finder.where(:action => "CREATE")
     finder = finder.since(params[:since]) if params[:since]
     finder = finder.order("activity_items.created_at DESC")
     records = finder.paginate(:page => params[:page], :per_page => params[:per_page], :include => [:actor, :activity, :item])
