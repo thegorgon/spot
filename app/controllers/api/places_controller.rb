@@ -10,9 +10,13 @@ class Api::PlacesController < Api::BaseController
   end
   
   def search
-    @search = PlaceSearch.from_params!(params)
-    response.headers["X-Search-ID"] = @search.id.to_s
-    record_user_event("api place search")
-    render :json => @search
+    @search = PlaceSearch.from_params(params)
+    if @search.save
+      response.headers["X-Search-ID"] = @search.id.to_s
+      record_user_event("api place search", params[:query])
+      render :json => @search
+    else
+      render :json => []
+    end
   end
 end
