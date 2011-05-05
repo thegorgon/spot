@@ -17,6 +17,7 @@ class ClaimingBusinesses < ActiveRecord::Migration
     create_table :businesses do |t|
       t.integer :place_id, :null => false
       t.integer :business_account_id, :null => false
+      t.integer :average_spend, :null => false, :default => 0
       t.datetime :verified_at
       t.timestamps
     end
