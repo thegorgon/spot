@@ -36,7 +36,7 @@ Spot::Application.routes.draw do
     get "register" => redirect("/account/new")
     get "logout", :to => "sessions#destroy"
     get "/!/:id", :to => redirect { |params| ShortUrl.expand(params[:id]) || "/404.html" }, :as => "short"
-    get "sitemap(.:format)", :to => "sitemaps#show", :constraints => {:format => :xml}
+    get "sitemap(.:format)", :to => "sitemaps#show", :constraints => {:format => :xml}, :as => "sitemap"
   end
   
   namespace "admin" do
