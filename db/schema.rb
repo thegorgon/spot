@@ -55,9 +55,9 @@ ActiveRecord::Schema.define(:version => 20110416005534) do
     t.string   "email",                               :null => false
     t.string   "title",                               :null => false
     t.string   "phone",                               :null => false
-    t.integer  "status",               :default => 0, :null => false
     t.integer  "businesses_count",     :default => 0, :null => false
     t.integer  "max_businesses_count",                :null => false
+    t.datetime "verified_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20110416005534) do
   create_table "businesses", :force => true do |t|
     t.integer  "place_id",            :null => false
     t.integer  "business_account_id", :null => false
+    t.datetime "verified_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

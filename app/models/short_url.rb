@@ -11,7 +11,15 @@ class ShortUrl < ActiveRecord::Base
     uri.host ||= DEFAULT_HOST
     uri.scheme ||= "http"
     uri.port ||= 3000 if Rails.env.development?
-    find_or_create_by_url(uri.to_s).shortened
+    short = find_by_url(uri.to_s)
+    short ||= new(:url => uri.to_s)
+    begin
+      short.save!
+    rescue ActiveRecord::StatementInvalid => error
+      raise error unless error.to_s =~ /Mysql2::Error: Duplicate/
+      short = find_by_url(uri.to_s)
+    end
+    short.shortened    
   end
   
   def self.expand(key)

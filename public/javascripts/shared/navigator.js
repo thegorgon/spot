@@ -33,7 +33,7 @@
     getHash = function(hash) {
       hash = hash || window.location.hash.toString();
       hash = hash.replace(/^[^#]*#?(.*)$/, '$1');                
-      hash = hash.replace(/^\s+|\s+$/g, "");
+      hash = $.trim(hash);
       hash = hash || window.location.pathname + window.location.search;
       return hash;
     },

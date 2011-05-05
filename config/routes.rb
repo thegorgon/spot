@@ -65,6 +65,9 @@ Spot::Application.routes.draw do
     resource :account, :only => [:new, :create, :show]
     resources :businesses, :only => [:new, :create, :show, :edit] do
       get :search, :on => :collection
+      get :calendar, :on => :member
+      resources :deals, :only => [:index, :create, :update, :destroy]
+      resources :templates, :path => "deals/templates", :controller => "deal_templates", :only => [:index, :create, :update, :destroy]
     end
     controller "home" do
       get "help"

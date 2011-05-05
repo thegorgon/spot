@@ -1,2 +1,6 @@
-%h1.dropdown
-  =@business.place.name
+=render :partial => "header"
+
+.status
+  Status :
+  %span{:class => @business.status_string.downcase}
+    =@business.status_string.titlecase    

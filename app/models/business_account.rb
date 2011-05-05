@@ -35,6 +35,10 @@ class BusinessAccount < ActiveRecord::Base
     businesses_count < max_businesses_count
   end
   
+  def verified?
+    !!verified_at
+  end
+  
   private
   
   def set_defaults

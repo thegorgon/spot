@@ -20,23 +20,40 @@
         ul.outerWidth( width );
       };
       
-      $('#search_form').ajaxForm({
+      $('#search_form').attr('novalidate', 'novalidate').change(function() {
+        $(this).validate();
+      }).ajaxForm({
         start: function() {
           var popover = $('#search_results'),
             loadingMsg = popover.find('.loading_msg'),
-            query = $(this).find('input#search_query').val(),
-            location = $(this).find('input#search_location').val();
-          $('#search_results').removeClass('empty').addClass('loading');
-          loadingMsg.html("Searching for '" + query + "' near " + location);
-          $.popover.resize(popover, loadingMsg, {animateT: 1000});
+            query = $(this).find('input#search_query').val().replace(' ', '&nbsp;'),
+            location = $(this).find('input#search_location').val().replace(' ', '&nbsp;'),
+            errorMsg = popover.find('.error_msg'), msg;
+          $(this).find('input').blur();
+          if ($(this).validate()) {
+            popover.setClass('loading', ['empty', 'error']);
+            msg = "Searching for '" + query + "'";
+            if (location && location.length > 0) { msg += " near " + location; }
+            loadingMsg.html(msg);
+            $.popover.resize(popover, loadingMsg, {animateT: 1000});            
+          } else {
+            popover.setClass('error', ['empty', 'loading']);
+            errorMsg.html("<p>What should we search for?</p>Search for your business using the form on the left.")
+            $.popover.resize(popover, errorMsg, {animateT: 1000});            
+            return false;
+          }
         }, success: function(data) {
           var bd = $(data.html),
             popover = $('#search_results');
           popover.find('.content .results').html(bd);
-          popover.removeClass('loading').removeClass('empty');
+          popover.setClass(null, ['loading', 'empty', 'error']);
           $.popover.resize(popover, bd, {animateT: 1000});
         }
       });
+    },
+    biz_businesses_calendar: function() {
+      var cal = Spot.DealCalendar.init({ calendar: '#calendar' });
+      $.logger.debug(cal);
     }
   });
 }(Spot));

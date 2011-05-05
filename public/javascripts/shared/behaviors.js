@@ -7,8 +7,8 @@
         $input.removeAttr('placeholder');
         placeholder = $('#' + this.id + '_placeholder');        
         if (placeholder.length === 0) {
-          $input.after('<input id="'+ this.id + '_placeholder" type="text" tabindex="-1" value="' + txt + '" autocomplete="off" class="'+ $input.attr('class') + ' placeholder" formnovalidate="formnovalidate"/>');
-          placeholder = $('#' + this.id + '_placeholder');        
+          placeholder = $input.clone().attr('id', this.id).val(txt).removeAttr('name').attr('autocomplete', 'off').attr('type', 'text').attr('formnovalidate', 'formnovalidate').attr('tabindex', '-1').addClass('placeholder');
+          $input.after(placeholder);
         }
         placeholder.add($input).unbind('.placeholder');
         placeholder.bind('focus.placeholder', function(e) {
@@ -169,11 +169,11 @@
       fetch('a[data-method]:not(.ajax)').actionLink();
       fetch('a[data-confirm][data-method]:not(.ajax)').actionLink();
       fetch('.fbconnect').fbconnect();
-      fetch('ul.form input').focus(function(e) {
+      fetch('ul.form input, ul.form textarea').focus(function(e) {
         $(this).parent('li').addClass('focus');
         $(this).parents('ul').addClass('focus');
       });
-      fetch('ul.form input').blur(function(e) {
+      fetch('ul.form input, ul.form textarea').blur(function(e) {
         $(this).parent('li').removeClass('focus');
         $(this).parents('ul').removeClass('focus');
       });
@@ -188,7 +188,7 @@
           top = screen.height > 300 ? Math.round(0.5 * (screen.height - 300)) : 0;
         window.open(this.href, "tweetwindow", "scrollbars=yes,resizable=yes,toolbar=no,location=yes,width=350,height=300,left=" + left + ",top=" + top);
       });
-      fetch('form[data-validate]').validate();
+      fetch('form[data-validate]').autovalidate();
     }
   });
 }(Spot));

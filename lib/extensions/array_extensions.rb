@@ -13,7 +13,7 @@ module ArrayExtensions
     
     def full_compact
       select { |x| x.present? }
-    end
+    end    
   end
   
   module ClassMethods

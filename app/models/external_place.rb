@@ -94,7 +94,14 @@ module ExternalPlace
     def bind_to!(place)
       place.save if place.changed?
       self.place = place
-      save! if place_id && changed?
+      begin
+        save! if place_id && changed?
+      rescue ActiveRecord::StatementInvalid => error
+        raise error unless error.to_s =~ /Mysql2::Error: Duplicate/
+        existing = self.class.where(@_external_place_options[:id] => source_id)
+        self.id = existing.id
+        reload
+      end
     end
 
     def bind_to_place!

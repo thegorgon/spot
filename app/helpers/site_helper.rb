@@ -8,19 +8,19 @@ module SiteHelper
                     '/images/buttons/orange_button156x31_hover.png', 
                     '/images/buttons/orange_button156x31_active.png',
                     '/images/assets/general/search13x14.png',
-                    '/images/assets/popover/bdl25x1.png',
-                    '/images/assets/popover/bdr25x1.png',
-                    '/images/assets/popover/ftc1x25.png',
-                    '/images/assets/popover/ftl25x25.png',
-                    '/images/assets/popover/ftr25x25.png',
+                    '/images/assets/popover/lftpad40x1.png',
+                    '/images/assets/popover/rtpad40x1.png',
+                    '/images/assets/popover/ftpad1x40.png',
+                    '/images/assets/popover/ftl40x40.png',
+                    '/images/assets/popover/ftr40x40.png',
                     '/images/assets/popover/hdarr40x40.png',
-                    '/images/assets/popover/hdl25x40.png',
+                    '/images/assets/popover/hdl40x60.png',
                     '/images/assets/popover/hdpad1x40.png',
-                    '/images/assets/popover/hdr25x40.png',
+                    '/images/assets/popover/hdr40x60.png',
                     '/images/assets/popover/titled_hdarr40x75.png',
-                    '/images/assets/popover/titled_hdl25x75.png',
+                    '/images/assets/popover/titled_hdl40x75.png',
                     '/images/assets/popover/titled_hdpad1x75.png',
-                    '/images/assets/popover/titled_hdr25x75.png']
+                    '/images/assets/popover/titled_hdr40x75.png']
     }.to_json
   end
   

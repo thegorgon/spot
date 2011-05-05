@@ -128,6 +128,12 @@
   opacity: $opacity;
 }
 
+@mixin divider($top, $bottom) {
+  height: 0;
+  border-top: 1px solid $top;
+  border-bottom: 1px solid $bottom;
+}
+
 // Don't allow wrapping.
 @mixin nowrap {
   white-space: nowrap; 

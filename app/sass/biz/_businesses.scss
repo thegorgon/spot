@@ -1,6 +1,205 @@
+.biz_businesses {
+  min-width: 980px;
+  .bizhd {
+    margin-bottom: 15px;
+    .title {
+      float: left;
+      margin-bottom: 15px;
+    }
+    .pillbox {
+      float: right;
+      margin: 12px 0 0 30px;
+    }
+    .divider {
+      clear: both;
+      @include divider(#ccc, #fff);
+    }
+  }
+}
+#biz_businesses_calendar {
+  h3 {
+    font-weight: normal;
+    color: #808080;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    margin: 0 0 1em 0;
+    text-shadow: 0px 1px 0px #ffffff;
+  }
+  .section {
+    h1 {
+      text-align: left;
+      font-size: 2em;
+      margin: 0 0 0.25em 0;
+    }
+  }
+  #my_deals {
+    float: left;
+    width: 200px;
+    ul {
+      border: 1px solid #666;
+      height: 500px;
+      margin: 0.25em 0 0.5em;
+      background: #fff;
+    }
+    .new {
+      text-decoration: none;
+      float: right;
+      width: 198px;
+      height: 25px;
+      line-height: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+  }
+  #newdealtpl {
+    width: 350px;
+    height: 460px;
+    position: relative;
+    form {
+      width: 300px;
+      margin: 0 auto;
+    }
+    .details {
+      h2 {
+        font-size: 20px;
+      }
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      top: 200px;
+      li.select {
+        line-height: 27px;
+      }
+    }
+    button.bottom {
+      bottom: 30px;
+      position: absolute;
+      left: 30px;
+      right: 30px;
+      font-size: 16px;
+      height: 35px;
+    }
+    #template_deal_count_container {
+      .append {
+        position: absolute;
+        left: 50px;
+        line-height: 30px;
+      }
+    }
+    #template_average_spend_container {
+      margin-left: 15px;
+      .prepend, .append {
+        position: absolute;
+        z-index: 100;
+        line-height: 30px;
+        top: 0px;
+      }
+      .hint {
+        left: -20px;
+      }
+      .append {
+        left: 75px;
+      }
+      .prepend {
+        left: -12px;
+      }    
+    }
+  }
+  #calendar {
+    float: left;
+    width: 750px;
+    margin: 0px 0px 200px 30px;
+    #monthnav {
+      float: left;
+      margin: 3px 15px 0 0;
+      height: 20px;
+      .pill {
+        width: 30px;
+        .lftarrow {
+          margin: 5px auto;
+          @include triangle_left(11px, 5px, #333);
+        }
+        .rtarrow {
+          margin: 5px auto;
+          @include triangle_right(11px, 5px, #333);
+        }
+        &:hover {
+          .lftarrow {
+            @include triangle_left(11px, 5px, #000);
+          }
+          .rtarrow {
+            @include triangle_right(11px, 5px, #000);
+          }
+        }
+        &:active, &.current {
+          .lftarrow {
+            @include triangle_left(11px, 5px, #fff);
+          }
+          .rtarrow {
+            @include triangle_right(11px, 5px, #fff);
+          }          
+        }
+      }
+    }
+    table {
+      border: 1px solid #666;
+      float: left;
+      thead {
+        background: #666;
+        width: 757px;
+        th {
+          display: block;
+          float: left;
+          width: 107px;
+          height: 20px;
+          line-height: 17px;
+          background: #666;
+          border: none;
+          color: #fff;
+          text-shadow: 0px -1px 0px #000;
+        }
+      }
+      tbody {
+        width: 757px;
+        display: block;
+        height: 480px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        td {
+          display: block;
+          float: left;
+          width: 95px;
+          padding: 5px;
+          border-right: 1px solid #ccc;
+          border-bottom: 1px solid #ccc;
+          height: 96px;
+          text-align: right;
+          &.even_month {
+            background: #f2f2f2;
+          }
+          &.odd_month {
+            background: #fff;
+          }
+          &.past {
+            color: #999;
+          }
+          &.present {
+            background: #FFDDBF;
+          }
+        }
+        tr.last {
+          td {            
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+}
+
 #biz_businesses_new {
   #bd {
-    width: 800px;
+    width: 850px;
     .form_container {
       width: 300px;
       float: left;
@@ -21,11 +220,27 @@
       width: 425px;
       min-height: 250px;
       .msg {
-        padding: 75px 10px;
+        padding: 75px 25px 40px;
+        font-weight: bold;
+        font-size: 1.2em;
         text-align: center;
+        display: none;
       }
       .loading_msg {
-        display: none;
+        background: #fff url(/images/assets/loading/org3blck16x11.gif) no-repeat bottom center;
+      }
+      .start_msg {
+        display: block;
+      }
+      .empty_msg {
+        display: block;
+        h3 {
+          margin: 1em 0 0.25em;
+        }
+        .submessage {
+          font-size: 12px;
+          font-weight: normal;
+        }  
       }
       &.loading {
         .results {
@@ -34,49 +249,27 @@
         .loading_msg {
           display: block;
         }
+        .error_msg {
+          display: none;
+        }
       }
-      .result {
-        position: relative;
-        width: 400px;
-        background: #fff url(/images/assets/general/orange_disclosure_triangle_right11x15.png) no-repeat 95% center;
-        &:hover {        
-          background: #ff8419 url(/images/assets/general/white_disclosure_triangle_right11x15.png) no-repeat 95% center;
-          .name {
-            color: #fff;
-          }
+      &.error {
+        .results {
+          display: none;
         }
-        button.overlay {
-          position: absolute;
-          top: 0px;
-          left: 0px;
-          right: 0px;
-          bottom: 0px;
-          z-index: 100;
-          @include opacity(0);
-          width: 100%;
-          height: 100%;
-          padding: 0px;
-          margin: 0px;
-          border: 0px;
+        .error_msg {
+          display: block;
         }
-        .image {
-          float: left;
-          width: 117px;
-          height: 84px;
-        }
-        .info {
-          height: 63px;
-          width: 263px;
-          padding: 10px;
-          border-bottom: 1px solid #ddd;
-          float: left;
-        }
-        .name {
-          font-weight: bold;
-        }
-        .location {
-          color: #999;
-        }
+      }
+      .cantfind {
+        border-top: 1px solid #999;
+        background: #e6e6e6;
+        height: 55px;
+        font-size: 12px;
+        font-weight: normal;
+        padding: 10px 40px 10px 40px;
+        text-shadow: 0px 1px 0px rgba(255,255,255,0.8);
+        text-align: center;
       }
     }
   }

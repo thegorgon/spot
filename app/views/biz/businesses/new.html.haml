@@ -1,16 +1,16 @@
 .form_container
   %h1 Let's find your business...
-  =spot_form_for :search, :url => search_biz_businesses_path, :display => "light", :html => {:id => "search_form", :method => :get, :autocomplete => :off} do |f|
+  =spot_form_for :search, :url => search_biz_businesses_path, :display => "light", :validate => false, :html => {:id => "search_form", :method => :get, :autocomplete => :off} do |f|
     =f.hidden_field :ll
     =f.text_field :query, :placeholder => "business name", :required => true, :hint => "what should we search for?"
-    =f.text_field :location, :placeholder => "city name", :required => true, :hint => "and where should we search?", :formnovalidate => true
+    =f.text_field :location, :placeholder => "city name", :hint => "and where should we search?"
     %li.buttons.left
       =button_tag :class => "blackimg_77x32" do
         search
         
 =popover :id => "search_results" do
   .loading_msg.msg
-    Searching for {query} near {location}
+  .error_msg.msg
   .results
     .start_msg.msg
       Search for your business using the form on the left.

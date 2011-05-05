@@ -88,7 +88,7 @@ module TagHelper
   end
   
   def itunes_store_link(*args, &block)
-    url = MobileApp.url_for(current_user.try(:location) || request_location, "itunes")
+    url = MobileApp.url_for(request_location, "itunes")
     if url
       content_tag(:div, link_to(image_tag(*args), getspot_path), :id => "itunes_store_link")
     elsif block
@@ -148,7 +148,9 @@ module TagHelper
       end +
       content_tag(:div, :class => "ft") do
         content_tag(:div, '', :class => "lft") +
-        content_tag(:div, '', :class => "cntr") +
+        content_tag(:div, '', :class => "lpad pad") +
+        content_tag(:div, '', :class => "arr") +
+        content_tag(:div, '', :class => "rpad pad") +
         content_tag(:div, '', :class => "rt")
       end
     end

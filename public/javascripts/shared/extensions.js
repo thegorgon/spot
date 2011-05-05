@@ -89,10 +89,10 @@
     },
     setClass: function(klass, others) {
       var $this = $(this);
-      $.each(others, function() {
-        $this.removeClass(this);
+      $.each(others, function(i) {
+        $this.removeClass(others[i]);
       });
-      $this.addClass(klass);
+      if (klass) { $this.addClass(klass); }
     },
     autogeocode: function(options) {
       var input = $(this),
@@ -158,10 +158,10 @@
     ajaxClick: function(options) {
       var $this = $(this), success, method, httpMethod, data, confirmMsg;
       options = options || {};
+      options.start = $.isFunction(options.start) ? options.start : function() {};
       if (!$this.data('sending')) {
         confirmMsg = $this.attr('data-confirm') || '';
-        if (confirmMsg.length === 0 || window.confirm(confirmMsg)) {
-          if ($.isFunction(options.start)) { options.start.apply(this); }
+        if ((confirmMsg.length === 0 || window.confirm(confirmMsg)) && options.start.apply(this) !== false) {
           $this.data('sending', true);
           success = ($.isFunction(options.success) ? options.success: function() {});
           options.success = function() {
@@ -187,10 +187,10 @@
     ajaxSubmit: function(options) {
       var $this = $(this), success, confirmMsg;
       options = options || {};
+      options.start = $.isFunction(options.start) ? options.start : function() {};
       if (!$this.data('sending')) {
         confirmMsg = $this.attr('data-confirm') || '';
-        if (confirmMsg.length === 0 || window.confirm(confirmMsg)) {
-          if ($.isFunction(options.start)) { options.start.apply(this); }
+        if ((confirmMsg.length === 0 || window.confirm(confirmMsg)) && options.start.apply(this) !== false) {
           $this.data('sending', true);
           success = ($.isFunction(options.success) ? options.success: function() {});
           options.success = function() {

@@ -1,0 +1,204 @@
+.twitter-share-button {
+  width: 55px;
+  display: block;
+  height: 20px;
+  text-decoration: none;
+  background: transparent url(/images/assets/general/tweet.png) no-repeat;
+  &:hover {
+    background-position: 0px -21px;
+  }
+  &:active {
+    background-position: 0 -42px;
+  }
+}
+
+#flashes {
+  text-shadow: #000 0 1px 0;
+  background: #333 url(/images/backgrounds/linen_bottomshadow.jpg) repeat bottom center;
+  overflow: hidden;
+  position: relative;
+  z-index: 100;
+  padding: 15px 0 20px 0;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  color: #ff8419;
+  .close {
+    background: transparent url(/images/assets/general/orange_cross_12x13.png) no-repeat center right;
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    bottom: 0px;
+    width: 20px;
+    cursor: pointer;
+  }
+  a {
+    color: #ff8419;
+    &:hover {
+      color: #ccc;
+    }
+  }
+}
+
+ul.pillbox {
+  @include border_radius(5px);
+  overflow: hidden;
+  @include clearfix;
+  float: left;
+  background: #f2f2f2;
+  border: 1px solid #808080;
+  li.pill {
+    position: relative;
+    border-right: 1px solid #808080;
+    float: left;
+    height: 25px;
+    line-height: 25px;
+    width: 125px;
+    text-align: center;
+    &.last {
+      border: none;
+      a {
+        @include right_border_radius(4px);        
+      }
+    }
+    &.first {
+      a {
+        @include left_border_radius(4px);        
+      }
+    }
+    a {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      color: #333;
+      text-decoration: none;
+      text-shadow: 0px 1px 0px #fff;
+      @include gradient_top_down(#f2f2f2, #A2A2A2); 
+      &:hover {
+        color: #000;
+        @include gradient_top_down(#f2f2f2, #808080);
+      }
+      &:active, &.current {
+        background: #666666;
+        @include box_shadow(#000 0px 1px 5px inset);        
+        color: #fff;
+        text-shadow: 0px -1px 0px #000;
+      }
+    }
+  }
+}
+
+.ui-autocomplete {
+  background-color: white;
+  border: 1px solid #666;
+  width: 200px;
+  border-bottom: 0px;
+  list-style-type: none;
+  padding-left: 0px;
+  .ui-menu-item {
+    a {
+      color: #333;
+      display: block;
+      padding: 10px;
+      border-bottom: 1px solid #666;
+      &.ui-state-hover, &:hover {
+        background: #ff8419;
+        color: #fff;
+      } 
+    }
+  }
+}
+
+.placelist {
+  .place {
+    position: relative;
+    background: #fff url(/images/assets/general/orgtrirt11x15.png) no-repeat 95% center;
+    button.overlay {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      z-index: 100;
+      @include opacity(0);
+      width: 100%;
+      height: 100%;
+      padding: 0px;
+      margin: 0px;
+      border: 0px;
+    }
+    a {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      text-decoration: none;
+    }
+    &:hover {    
+      background: #ff8419 url(/images/assets/general/whttrirt11x15.png) no-repeat 95% center;
+      .name, .location {
+        color: #fff;
+      }
+    }
+    .image {
+      float: left;
+    }
+    .info {
+      float: left;
+      border-bottom: 1px solid #ddd;
+    }
+    &.last .info {
+      border-bottom: 0px;
+    }
+    &.current {
+      background: #ededed;
+      &:hover {
+        background: #ededed;        
+        .name {
+          color: #333;
+        }
+        .location {
+          color: #999;
+        }
+      }
+    }
+    .name {
+      font-weight: bold;
+      color: #333;
+    }
+    .location {
+      color: #999;
+      font-weight: normal;
+    }
+    &.small {
+      .image {
+        width: 58px;
+        height: 42px;
+      }
+      .info {
+        height: 31px;
+        width: 136px;
+        padding: 5px 20px 5px 5px;
+        .name, .location {
+          font-size: 12px;
+        }
+      }
+    }
+    &.large {
+      width: 400px;
+      .image {
+        height: 84px;
+        width: 117px;
+      }
+      .info {
+        height: 63px;
+        width: 232px;
+        padding: 10px 40px 10px 10px;
+        .location {
+          margin: 0.25em 0 0 0;
+        }
+      }
+    }
+  }
+}

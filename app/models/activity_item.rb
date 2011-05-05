@@ -15,11 +15,11 @@ class ActivityItem < ActiveRecord::Base
   
   def self.feed(params={})
     params = params.symbolize_keys
-    origin = Geo::LatLng.normalize(params)
-    radius = params[:radius] || 50
+    origin = Geo::Position.normalize(params)
+    radius = params[:radius]
     params[:page] = [1, params[:page].to_i].max
     finder = self
-    finder = finder.within(radius, :origin => origin) if origin
+    finder = finder.within(radius, :origin => origin) if radius
     finder = finder.where(:action => "CREATE")
     finder = finder.since(params[:since]) if params[:since]
     finder = finder.order("activity_items.created_at DESC")

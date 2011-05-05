@@ -1,0 +1,43 @@
+=render :partial => "header"
+
+%h3
+  Create Deals to drive traffic to your business. Select a discount, the maximum number of coupons per day, and the times you’d like the coupon to be valid. 
+  Then just apply that deal to the dates on the calendar.
+  
+#my_deals.section
+  .title.clearfix
+    %h1 My Deals
+  %ul
+  %a.btngrypill.new{:href => "#", "data-popover" => "#newdealtpl", "data-popover-title" => "New Deal", "data-popover-pos" => ",top"}
+    %span.big + 
+    New Deal
+  
+  =spot_form_for :template, :url => biz_business_templates_path(@business), :display => "light hidden lowhints", :ul_id => "newdealtpl" do |f|
+    =f.text_field :name, :placeholder => "name", :hint => "give your deal a name to easily reference it later on."
+    =f.text_area :description, :placeholder => "description", :hint => "sell your spot, be colorful and descriptive! no restrictions or limitations please."
+    .details
+      =f.text_field :deal_count, :append => "deals per period", :class => "short"
+      %li.text.select
+        for a
+        =select :template, :discount_percent, {'20%' => 20, '25%' => 25, '40%' => 40, '50%' => 50}
+        discount
+      %li.text.select
+        valid from
+        =select_hour nil, :field_name => "start_time", :prefix => 'template', :twelve_hour => true, :offset => 6, :prompt => "--", :midnight => true, :noon => true
+        to
+        =select_hour nil, :field_name => "end_time", :prefix => 'template', :twelve_hour => true, :offset => 7, :prompt => "--", :midnight => true, :noon => true
+      =f.text_field :average_spend, :prepend => "$", :append => "avg. spend per person", :class => "abbrev", :hint => "help us understand the value of your deal. how much do your customers usually spend?"
+    =button_tag :class => "bottom btngrypill" do
+      Save Deal
+-calendar_start = Date.today.calendar_start
+#calendar.section{'data-start-date' => calendar_start.to_time.to_i}
+  .title.clearfix
+    %h1#monthtitle
+      ="#{Date::MONTHNAMES[calendar_start.month]} #{calendar_start.year}"
+  %table#datesgrid
+    %thead
+      %tr
+        -Date::DAYNAMES.each_with_index do |dow, i|
+          %th{:class => 'dow', :id => "dow_#{i}"}
+            =dow.to_s.downcase
+    %tbody        

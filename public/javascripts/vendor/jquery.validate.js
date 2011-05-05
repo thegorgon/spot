@@ -28,7 +28,7 @@
       validity(input, true, "doesn't look right");
     },
     testRequired = function(input) {
-      validity(input, $(input).val().replace(/^\s+|\s+$/g, '').length > 0, "required");
+      validity(input, $.trim($(input).val()).length > 0, "required");
     },
     testPattern = function(input) {
       validity(input, $(input).pattern().test($(input).val()), "doesn't look right");
@@ -39,7 +39,7 @@
       validity(input, floatVal >= $(input).maxValue() && floatVal <= $(input).minValue(), msg);
     },
     testLength = function(input) {
-      var length = $(input).val().replace(/^\s+|\s+$/g, '').length,
+      var length = $.trim($(input).val()).length,
         msg = [$(input).minLength(), "to", $(input).maxLength(), "characters"].join(' ');
       validity(input, length <= $(input).maxLength() && length >= $(input).minLength(), msg);
     },
@@ -137,7 +137,7 @@
         return new RegExp($(this).attr('pattern'));
       }
     },
-    validate: function() {
+    autovalidate: function() {
       preload();
       $(this).filter('form').each(function(i) {
         var form = $(this),
@@ -150,24 +150,18 @@
 
         form.attr('novalidate', 'novalidate');
         form.find('input').valid(true);
-
+      
         required.bind('change', function() { testRequired(this); });
         patterned.bind('change', function() { testPattern(this); });
         value.bind('change', function() { testValue(this); });
         length.bind('change', function() { testLength(this); });
         server.bind('change', function() { testAgainstServer(this); });
-        // telephone.bind('change', function() { testTelephone(this); });
-
+      
         form.bind('submit', function(e) {
           if (!form.data('validity')) {
             e.preventDefault();
-            required.each(function(i) { testRequired(this); });
-            patterned.each(function(i) { testPattern(this); });
-            value.each(function(i) { testValue(this); });
-            length.each(function(i) { testLength(this); });
-            // telephone.each(function(i) { testTelephone(this); });
-
-            if (form.find('input[aria-invalid=true]').length === 0) {
+            
+            if (form.validate({submit: true})) {
               form.data('validity', true);
               form.submit();
               form.data('validity', false);
@@ -175,6 +169,32 @@
           }
         });
       });
+    },
+    validate: function(options) {
+      options = options || {};
+      var validity = true;
+      $(this).filter('form').each(function(i) {
+        
+        var form = $(this),
+          required = form.find('input[required]:not([formnovalidate])'),
+          patterned = form.find('input[type=email]:not([formnovalidate]), input[pattern]:not([formnovalidate])'),
+          telephone = form.find('input[type=tel]:not([formnovalidate])'),
+          value = form.find('input[type=number][min]:not([formnovalidate]), input[type=number][max]:not([formnovalidate]):not([min])'),
+          length = form.find('input[minlength]:not([formnovalidate]), input[maxlength]:not([formnovalidate]):not([minlength])'),
+          server = form.find('input[data-validate-url]:not([formnovalidate])');
+          
+        form.find('input').attr('aria-invalid', 'false');
+        
+        required.each(function(i) { testRequired(this); }); 
+        patterned.each(function(i) { testPattern(this); }); 
+        value.each(function(i) { testValue(this); }); 
+        length.each(function(i) { testLength(this); }); 
+        if (!options.submit) { server.each(function(i) { testAgainstServer(this); }); }
+        // telephone.each(function(i) { testTelephone(this); }); 
+        
+        validity = validity && form.find('input[aria-invalid=true]').length === 0;
+      });
+      return validity;
     }
   });
 }(jQuery));

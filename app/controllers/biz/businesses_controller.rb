@@ -1,9 +1,9 @@
 class Biz::BusinessesController < Biz::BaseController
+  before_filter :require_business, :except => [:new, :create, :search]
   def new
   end
 
   def edit
-    @business = current_account.businesses.find(params[:id])
   end
   
   def create
@@ -25,6 +25,15 @@ class Biz::BusinessesController < Biz::BaseController
   end
   
   def show
+  end
+  
+  def calendar
+  end
+  
+  private
+  
+  def require_business
     @business = current_account.businesses.find(params[:id])
+    redirect_to new_biz_business_path unless @business
   end
 end

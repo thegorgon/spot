@@ -10,10 +10,6 @@
       width: 600px;
       margin: 0 auto;
     }
-    .ie7 &, .ie8 & {
-      padding: 50px 30px;
-      width: 728px;
-    }
     p {
       margin: 1em auto;
     }
@@ -21,9 +17,7 @@
       width: 300px;
     }
     .divider {
-      border-top : 1px solid #333;
-      height: 0;
-      border-bottom : 1px solid #222;
+      @include divider(#333, #222);
       margin: 1.5em 5em 0em;
     }
     .pictures {
@@ -81,7 +75,7 @@
           float: left;
           margin: 10px 13px 0 0;
           &.loading {
-            background: transparent url(/images/assets/loading/orange-3block-16x11.gif) no-repeat center center;            
+            background: transparent url(/images/assets/loading/org3blck16x11.gif) no-repeat center center;            
           }
           &.last {
             margin-right: 0;
@@ -129,9 +123,7 @@
         margin: 1em 0;
       }
       .divider {
-        border-top : 1px solid #ddd;
-        height: 0;
-        border-bottom : 1px solid #ededed;
+        @include divider(#ddd, #ededed);
         margin: 1.5em 0em;
       }
     }

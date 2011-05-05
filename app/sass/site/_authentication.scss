@@ -8,9 +8,7 @@
     width: 300px;
   }
   li.divider {
-    height: 0;
-    border-top: 1px solid #999;
-    border-bottom: 1px solid #666;
+    @include divider(#999, #666);
   }
   li.header {
     height: 82px;

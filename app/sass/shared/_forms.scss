@@ -1,11 +1,18 @@
-input.text {
+input.text, textarea {
   padding: 4px 8px;
   height: 20px;
   font-size: 14px;
   line-height: 20px;
   width: 234px;
 }
-input.faded, input.light {
+textarea {
+  height: 100px;
+  resize: none;
+  &:focus {
+    outline: none;
+  }
+}
+input.faded, input.light, textarea.faded, textarea.light {
   font-weight: normal;
   border: 1px solid #666;
   color: #333;
@@ -23,6 +30,15 @@ input.faded {
     @include gradient_top_down(#333333, #444444, 20%);
   }
 }
+textarea.faded {
+  @include gradient_top_down(#999999, #dddddd, 5%);
+  &.placeholder {
+    text-shadow: #333 0px 0px 3px;
+    color: #aaa;
+    background: #333;
+    @include gradient_top_down(#333333, #444444, 5%);
+  }
+}
 input.light {
   @include gradient_top_down(#dddddd, #fff, 20%);
   &.placeholder {
@@ -30,6 +46,14 @@ input.light {
     text-shadow: none;
   }
 }
+textarea.light {
+  @include gradient_top_down(#dddddd, #fff, 5%);
+  &.placeholder {
+    color: #999;
+    text-shadow: none;
+  }
+}
+
 .validity.faded, .validity.light {
   @include opacity(0);
   @include transition(opacity 0.25s);
@@ -151,10 +175,10 @@ input.light {
   }
 }
 .hint {
-  @include opacity(0);
+  opacity : 0;
   @include transition("all 0.25s");
   z-index: 1;
-  background: transparent url(/images/assets/general/hint_black.png) no-repeat left top;
+  background: transparent url(/images/assets/general/blkhntrt220x64.png) no-repeat left top;
   position: absolute;
   top: -17px;
   right: -233px;
@@ -174,11 +198,29 @@ input.light {
   }
   li.focus & {
     z-index: 10;
-    @include opacity(1.0);
+    opacity: 1.0;
     @include transition("all 0.25s");
   }
-  .ie8 &, .ie7 & {
-    background: transparent url(/images/assets/general/hint_black_noshadow.png) no-repeat left top;
+}
+ul.light.lowhints {
+  li.text.hinted.focus {
+    height: 80px;
+  }
+  li.text_area.hinted.focus {
+    height: 160px;
+  }
+  .hint {
+    line-height: 1.4em;
+    top: auto;
+    bottom: -5px;
+    width: 290px;
+    height: 34px;
+    padding: 16px 10px 10px 13px;
+    left: -5px;
+    background: transparent url(/images/assets/general/whthntdwn310x65.png) no-repeat left top;
+    color: #333;
+    font-weight: normal;
+    text-shadow: 0px 1px 0px #fff;    
   }
 }
 ul.form {
@@ -198,7 +240,7 @@ ul.form {
     @extend .clearfix;
     height: 30px;
     width: 300px;
-    input {
+    input, textarea {
       width: 282px;
       display: block;
       position: absolute;
@@ -208,7 +250,18 @@ ul.form {
       &.placeholder {
         z-index: 2;
       }
+      &.short {
+        width: 27px;
+        text-align: center;
+      }
+      &.abbrev {
+        width: 50px;
+        text-align: center;
+      }
     }
+  }
+  li.text_area {
+    height: 110px;
   }
   li.buttons {
     margin: 20px 0 0 0;
@@ -276,6 +329,9 @@ div.file_field {
   input {
     @extend input.faded;
   }
+  textarea {
+    @extend textarea.faded;
+  }
   .radio {
     @extend .radio.faded;
   }
@@ -290,11 +346,18 @@ div.file_field {
   }
 }
 .form.light {
+  select {
+    border: 1px solid #333;
+    background: #fff;
+  }
   .validity {
     @extend .validity.light;
   }
   input {
     @extend input.light;
+  }
+  textarea {
+    @extend textarea.light;
   }
   .radio {
     @extend .radio.faded;
@@ -317,7 +380,7 @@ ul.form.oneline {
   }
   li.text {
     width: 195px;
-    input {
+    input, textarea {
       padding: 4px 35px 4px 8px;
       width: 150px;
     }

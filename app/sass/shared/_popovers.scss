@@ -1,7 +1,7 @@
 .popover {
   position: relative;
-  min-width: 50px;
-  min-height: 65px; // Needs to be contentHeight + topHeight
+  min-width: 120px;
+  min-height: 85px; // Needs to be contentHeight + topHeight
   &.titled {
     min-height: 80px;
     .hd {
@@ -12,7 +12,7 @@
         left: 0px;
         right: 0px;
         position: absolute;
-        text-shadow: rgba(0,0,0,0.5) 0px 1px 0px;
+        text-shadow: rgba(0,0,0,1) 1px 0px 0px;
         font-size: 15px;
         line-height: 20px;
         top: 33px;
@@ -24,11 +24,11 @@
       }
       .lft {
         height: 75px;
-        background: transparent url(/images/assets/popover/titled_hdl25x75.png) no-repeat top left;
+        background: transparent url(/images/assets/popover/titled_hdl40x75.png) no-repeat top left;
       }
       .rt {
         height: 75px;
-        background: transparent url(/images/assets/popover/titled_hdr25x75.png) no-repeat top right;
+        background: transparent url(/images/assets/popover/titled_hdr40x75.png) no-repeat top right;
       }
       .pad {
         height: 75px;
@@ -41,54 +41,76 @@
     }
     .bd {
       top: 60px;
-    }
-  }
-  &.arrownone {
-    .hd {
-      .lpad.pad {
-        width: auto;
-        left: 25px;
-        right: 25px;
-      }
-      .rpad.pad {
-        width: 0px;
-      }
-      .arr {
-        width: 0px;
+      .bgl, .bgr {
+        top: 15px;
       }
     }
   }
-  &.arrowleft {
-    min-width: 90px;
+  &.arrowtplft {
     .hd {
       .lpad.pad {
         width: 0px;
       }
       .rpad.pad {
         width: auto;
-        left: 65px;
-        right: 25px;
+        left: 80px;
+        right: 40px;
       }
       .arr {
         right: auto;
-        left: 25px;
+        width: 40px;
+        left: 40px;
       }
     }
   }
-  &.arrowright {
-    min-width: 90px;
+  &.arrowtprt {
     .hd {
       .rpad.pad {
         width: 0px;
       }
       .lpad.pad {
         width: auto;
-        left: 25px;
-        right: 65px;
+        left: 40px;
+        right: 80px;
       }
       .arr {
         left: auto;
-        right: 25px;
+        width: 40px;
+        right: 40px;
+      }
+    }
+  }
+  &.arrowbtmlft {
+    .ft {
+      .lpad.pad {
+        width: 0px;
+      }
+      .rpad.pad {
+        width: auto;
+        left: 80px;
+        right: 40px;
+      }
+      .arr {
+        right: auto;
+        width: 40px;
+        left: 40px;
+      }
+    }
+  }
+  &.arrowbtmrt {
+    .ft {
+      .rpad.pad {
+        width: 0px;
+      }
+      .lpad.pad {
+        width: auto;
+        left: 40px;
+        right: 80px;
+      }
+      .arr {
+        left: auto;
+        width: 40px;
+        right: 40px;
       }
     }
   }
@@ -99,17 +121,17 @@
     right: 0px;
     top: 0px;
     height: 30px;
-    padding-bottom: 10px;
+    padding-bottom: 0px;
     .title {
       display: none;
     }
     .lft {
-      width: 25px;
+      width: 40px;
       position: absolute;
       top: 0px;
       left: 0px;
-      height: 40px;
-      background: transparent url(/images/assets/popover/hdl25x40.png) repeat-x top center;
+      height: 60px;
+      background: transparent url(/images/assets/popover/hdl40x60.png) repeat-x top center;
     }
     .pad {
       position: absolute;
@@ -117,29 +139,31 @@
       height: 40px;
       background: transparent url(/images/assets/popover/hdpad1x40.png) repeat-x top center;
       &.lpad {
-        width: 67px; // Needs to be (totalWidth - 2 * cornerWidth - arrowWidth)/2.0
-        left: 25px;
+        width: auto;
+        left: 40px;
+        right: 40px;
       }
       &.rpad {
-        width: 68px; // Needs to be (totalWidth - 2 * cornerWidth - arrowWidth)/2.0
-        right: 25px;
+        width: 0px;
+        right: 40px;
       }
     }
     .arr {
-      width: 40px;
+      width: 0px;
+      max-width: 40px;
       position: absolute;
       top: 0px;
-      left: 92px; // Needs to be cornerWidth + lftCntr width
+      left: 0px; // Needs to be cornerWidth + lftCntr width
       height: 40px;
       background: transparent url(/images/assets/popover/hdarr40x40.png) repeat-x top center;
     }
     .rt {
-      width: 25px;
+      width: 40px;
       position: absolute;
       top: 0px;
       right: 0px;
-      height: 40px;
-      background: transparent url(/images/assets/popover/hdr25x40.png) repeat-x top center;
+      height: 60px;
+      background: transparent url(/images/assets/popover/hdr40x60.png) repeat-x top center;
     }
   }
   .bd {
@@ -151,27 +175,27 @@
     top: 25px;
     .bgl {
       position: absolute;
-      top: 15px;
+      top: 35px;
       left: 0px;
-      width: 25px;
+      width: 40px;
       bottom: 25px;
-      background: transparent url(/images/assets/popover/bdl25x1.png) repeat-y top center;
+      background: transparent url(/images/assets/popover/lftpad40x1.png) repeat-y top center;
       z-index: 100;
     }
     .bgr {
       position: absolute;
-      top: 15px;
+      top: 35px;
       right: 0px;
-      width: 25px;
+      width: 40px;
       bottom: 25px;
-      background: transparent url(/images/assets/popover/bdr25x1.png) repeat-y top center;
+      background: transparent url(/images/assets/popover/rtpad40x1.png) repeat-y top center;
       z-index: 100;
     }
     .content {
       position: absolute;
       top: 5px;
-      left: 13px;
-      right: 13px;
+      left: 30px;
+      right: 30px;
       bottom: 13px;
       background: #fff;
       overflow: hidden;
@@ -186,28 +210,44 @@
     height: 15px;
     z-index: 100;
     .lft {
-      width: 25px;
-      height: 25px;
+      width: 40px;
       position: absolute;
       top: 0px;
       left: 0px;
-      background: transparent url(/images/assets/popover/ftl25x25.png) no-repeat top left;
+      height: 40px;
+      background: transparent url(/images/assets/popover/ftl40x40.png) repeat-x top center;
     }
-    .cntr {
-      height: 25px;
+    .pad {
       position: absolute;
       top: 0px;
-      left: 25px;        
-      right: 25px;
-        background: transparent url(/images/assets/popover/ftc1x25.png) repeat-x top center;
+      height: 40px;
+      background: transparent url(/images/assets/popover/ftpad1x40.png) repeat-x top center;
+      &.lpad {
+        width: auto;
+        left: 40px;
+        right: 40px;
+      }
+      &.rpad {
+        width: 0px;
+        right: 40px;
+      }
+    }
+    .arr {
+      max-width: 40px;
+      width: 0px;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      height: 40px;
+      background: transparent url(/images/assets/popover/ftarr40x40.png) repeat-x top center;
     }
     .rt {
-      width: 25px;
-      height: 25px;
+      width: 40px;
       position: absolute;
       top: 0px;
       right: 0px;
-      background: transparent url(/images/assets/popover/ftr25x25.png) no-repeat top left;
+      height: 60px;
+      background: transparent url(/images/assets/popover/ftr40x40.png) repeat-x top center;
     }
   }
 }

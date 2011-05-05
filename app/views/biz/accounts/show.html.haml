@@ -1,2 +1,18 @@
-%h1
-  =current_account.name
+%h1=current_account.name
+
+.bizlist
+  %h2 My Businesses
+  %ul.placelist
+    -current_account.businesses.each_with_index do |biz, i|
+      %li.place.large.clearfix{:class => first_or_last(current_account.businesses, i)}
+        %a{:href => biz_business_path(biz)} 
+          .image=image_tag biz.place.image(:i117x84), :size => '117x84'
+          .info
+            .name=biz.place.name
+            .location=biz.place.city_and_region
+        %li.new
+          %a{:href => new_biz_business_path}
+            Claim Another Business
+
+.contact.left
+  %h2.shaded My Contact Information

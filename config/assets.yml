@@ -10,6 +10,7 @@ javascripts:
     - public/javascripts/vendor/jquery.validate.js
     - public/javascripts/vendor/jquery.jswipe.js
   scripts:
+    - public/javascripts/shared/date_extensions.js
     - public/javascripts/shared/extensions.js
     - public/javascripts/shared/spot.js
     - public/javascripts/shared/behaviors.js
@@ -26,6 +27,7 @@ javascripts:
     - public/javascripts/shared/views.js
     - public/javascripts/site/site.js
     - public/javascripts/admin/admin.js
+    - public/javascripts/biz/deal_calendar.js
     - public/javascripts/biz/biz.js
 
 stylesheets:

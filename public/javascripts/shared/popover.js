@@ -1,30 +1,32 @@
 (function($) {  
   var settings = {
-    padding: 15,
-    arrowHeight: 10,
-    appendTo: 'body',
-    html: "<div class='popover'> \
-            <div class='hd'> \
-              <div class='title'></div> \
-              <div class='lft'></div> \
-              <div class='pad lpad'></div> \
-              <div class='arr'></div> \
-              <div class='pad rpad'></div> \
-              <div class='rt'></div> \
-            </div> \
-            <div class='bd'> \
-              <div class='bgl'></div> \
-              <div class='bgr'></div> \
-              <div class='content'></div> \
-            </div> \
-            <div class='ft'> \
-              <div class='lft'></div> \
-              <div class='cntr'></div> \
-              <div class='rt'></div> \
-            </div> \
-          </div>",
-    beforeShow: function() {}
-  };
+      padding: 15,
+      arrowHeight: 10,
+      appendTo: 'body',
+      html: "<div class='popover'> \
+              <div class='hd'> \
+                <div class='title'></div> \
+                <div class='lft'></div> \
+                <div class='pad lpad'></div> \
+                <div class='arr'></div> \
+                <div class='pad rpad'></div> \
+                <div class='rt'></div> \
+              </div> \
+              <div class='bd'> \
+                <div class='bgl'></div> \
+                <div class='bgr'></div> \
+                <div class='content'></div> \
+              </div> \
+              <div class='ft'> \
+                <div class='lft'></div> \
+                <div class='pad lpad'></div> \
+                <div class='arr'></div> \
+                <div class='pad rpad'></div> \
+                <div class='rt'></div> \
+              </div> \
+            </div>",
+      beforeShow: function() {}
+    };
   $.extend($, {
     popover: {
       settings: function(options) {
@@ -43,11 +45,11 @@
         raw.css({position: 'absolute', left: -9999, zIndex: 10000}).appendTo($.popover.settings().appendTo).find('.content').html(body);
         body.show();
         if (title && title.length > 0) {
-          raw.addClass('titled').find('.title').html(title)
+          raw.addClass('titled').find('.title').html(title);
         } else {
           raw.removeClass('titled');
         }
-        $.popover.resize(raw, body)
+        $.popover.resize(raw, body);
         raw.hide().css({left: 0});
         return raw;
       },
@@ -125,68 +127,102 @@
           popover.width(popWidth);
         }
       },
-      positionArrow: function(popover, position) {
-        var hd = popover.find('.hd'),
-            arrow = hd.find('.arr'),
-            hdlPad = hd.find('.lpad'),
-            hdrPad = hd.find('.rpad'),
-            hdlWidth = hd.find('.lft').width(),
-            hdrWidth = hd.find('.rt').width(),
+      removeArrows: function(popover) {
+        popover.find('.arr').css({width: '0px'});
+        $.each(['top', 'center', 'bottom'], function() {
+          $.popover.positionArrow(popover, this, 'center');
+        });
+      },
+      positionArrow: function(popover, vertical, horizontal) {
+        var container = popover.find(vertical == 'bottom' ? '.hd' : '.ft'),
+            arrow = container.find('.arr'),
+            lPad = container.find('.lpad'),
+            rPad = container.find('.rpad'),
+            lWidth = container.find('.lft').width(),
+            rWidth = container.find('.rt').width(),
             popWidth = popover.width(),
             lpadWidth, rpadWidth;
-            
-        if (position == 'center') {
-          lpadWidth = rpadWidth = 0.5 * (popWidth - hdlWidth - hdrWidth - arrow.width());
-        } else if (position == 'left') {
+        
+        if (horizontal == 'center') {
+          lpadWidth = rpadWidth = 0.5 * (popWidth - lWidth - rWidth - arrow.width());
+        } else if (horizontal == 'right') {
           lpadWidth = 0;
-          rpadWidth = (popWidth - hdlWidth - hdrWidth - arrow.width());
-        } else if (position == 'right') {
-          lpadWidth = (popWidth - hdlWidth - hdrWidth - arrow.width());          
+          rpadWidth = (popWidth - lWidth - rWidth - arrow.width());
+        } else if (horizontal == 'left') {
+          lpadWidth = (popWidth - lWidth - rWidth - arrow.width());          
           rpadWidth = 0;
-        } else if (position == 'none') {
-          lpadWidth = rpadWidth = 0.5 * (popWidth - hdlWidth - hdrWidth);          
-          arrow.width(0);
         }
-        hdlPad.width(lpadWidth);
-        hdrPad.width(rpadWidth);
-        arrow.css({left: lpadWidth + hdlWidth, right: rpadWidth + hdrWidth});
+        
+        lPad.width(lpadWidth);
+        rPad.width(rpadWidth);
+        arrow.css({left: lpadWidth + lWidth, right: rpadWidth + rWidth});
       },
       position: function(trigger, popover) {
         var offset = trigger.offset(),
-          hdlWidth = popover.find('.hd .lft').width(),
-          arrow = popover.find('.arr'),
+          popHeight = popover.outerHeight(),
           popWidth = popover.outerWidth(),
           trigWidth = trigger.outerWidth(),
+          trigHeight = trigger.outerHeight(),
+          windowTop = $(window).scrollTop() + $.popover.settings().padding,
+          windowBottom = windowTop + $(window).height() - $.popover.settings().padding,
           windowLeft = $(window).scrollLeft() + $.popover.settings().padding,
           windowRight = windowLeft + $(window).width() - $.popover.settings().padding,
-          position = trigger.attr('data-popover-dir');
+          positions = trigger.attr('data-popover-pos'), 
+          vertical, horizontal, lWidth, arrow;
+
+        if (positions) {
+          positions = positions.split(',');
+          horizontal = $.trim(positions[0]);
+          vertical = $.trim(positions[1]);
+        }
+
+        if (!vertical) {
+          if (offset.top + trigHeight * 0.5 + popHeight * 0.5 > windowBottom) {
+            vertical = 'top';
+          } else {//if (offset.top + trigHeight * 0.5 - popHeight * 0.5 < windowTop) {
+            vertical = 'bottom';
+          } 
+          // else {
+          //   vertical = 'center';
+          // }
+        }
         
-        offset.top = offset.top + trigger.outerHeight() * 0.5;
+        if (vertical == 'bottom') {
+          offset.top = offset.top + trigger.outerHeight() * 0.5;
+          lWidth = popover.find('.hd .lft').width();
+          arrow = popover.find('.hd .arr');
+        } else if (vertical == 'top') {
+          offset.top = offset.top - trigger.outerHeight() * 0.5 - popHeight;
+          lWidth = popover.find('.ft .lft').width();
+          arrow = popover.find('.ft .arr');
+        } else if (vertical == 'center') {
+          offset.top = offset.top - trigger.outerHeight() * 0.5 - popHeight;
+        }
         
-        if (!position) {
+        $.popover.removeArrows(popover);
+        arrow.css({width: arrow.css('max-width')});
+
+        if (!horizontal) {
           if (offset.left + trigWidth * 0.5 + popWidth * 0.5 > windowRight) {
-            position = 'right';
+            horizontal = 'left';
           } else if (offset.left + trigWidth * 0.5 - popWidth * 0.5 < windowLeft) {
-            position = 'left';
+            horizontal = 'right';
           } else {
-            position = 'center';
+            horizontal = 'center';
           }
         }
-                
-        if (position == 'right') {
-          offset.left = offset.left + trigWidth * 0.5 - popWidth + arrow.width() * 0.5 + hdlWidth;
-        } else if (position == 'left') {
-          offset.left = offset.left + trigWidth * 0.5 - arrow.width() * 0.5 + hdlWidth;
-        } else if (position == 'center') {
+
+        if (horizontal == 'left') {
+          offset.left = offset.left + trigWidth * 0.5 - popWidth + arrow.width() * 0.5 + lWidth;
+        } else if (horizontal == 'right') {
+          offset.left = offset.left + trigWidth * 0.5 - arrow.width() * 0.5 - lWidth;
+        } else if (horizontal == 'center') {
           offset.left = offset.left + trigWidth * 0.5 - popWidth * 0.5;
-        } else if (position == 'none') {
-          offset.left = offset.left + trigWidth * 0.5 - popWidth * 0.5;
-          offset.top = offset.top - $.popover.settings().arrowHeight;
         }
-        
-        $.popover.positionArrow(popover, position);
-        
-        popover.offset(offset);        
+
+        $.popover.positionArrow(popover, vertical, horizontal);
+
+        popover.css(offset);
       },
       show: function(trigger, title, content) {
         var popid = trigger.data('popover-id'),
