@@ -13,7 +13,7 @@
     New Deal
   
   =spot_form_for :template, :url => biz_business_templates_path(@business), :display => "light hidden lowhints", :ul_id => "newdealtpl" do |f|
-    =f.text_field :name, :placeholder => "name", :hint => "give your deal a name to easily reference it later on."
+    =f.text_field :name, :placeholder => "name", :hint => "give your deal a name to easily remember it by later on."
     =f.text_area :description, :placeholder => "description", :hint => "sell your spot, be colorful and descriptive! no restrictions or limitations please."
     .details
       =f.text_field :deal_count, :append => "deals per period", :class => "short"
