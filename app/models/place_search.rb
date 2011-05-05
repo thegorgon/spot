@@ -3,8 +3,8 @@ class PlaceSearch < ActiveRecord::Base
   attr_accessor :page, :per_page
   DEFAULT_PAGE_SIZE = 10
   validates :query, :presence => true, :length => {:minimum => 0}
-  validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
-  validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
+  validates :lat, :numericality => {:greater_than => -90, :less_than => 90}, :if => :lng?
+  validates :lng, :numericality => {:greater_than => -180, :less_than => 180}, :if => :lat?
   belongs_to :result, :class_name => "Place"
       
   class Result
