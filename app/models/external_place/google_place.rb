@@ -10,7 +10,7 @@ class ExternalPlace::GooglePlace < ActiveRecord::Base
     object.city = wrapr.city
     object.region = wrapr.region
     object.country = wrapr.country
-    object.address = wrapr.address_lines.join("\n")
+    object.address = wrapr.address_lines.join("\n") if wrapr.address_lines.respond_to?(:join)
     object.phone_number = wrapr.phone_number
     object.lat = wrapr.lat.to_f
     object.lng = wrapr.lng.to_f    
