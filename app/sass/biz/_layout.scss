@@ -131,30 +131,28 @@ h2.title {
       width: 90px;
     }
   }
+  .bizlist {
+    .new {
+      position: relative;
+      height: 50px;
+      a {
+        @extend .btngrypill;
+        @include border_radius(0px);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        text-align: center;
+        font-size: 15px;
+        line-height: 43px;
+      }
+    }
+  }
 }
 
 .bizlist {
-  width: 402px;
   ul {
     border: 1px solid #333;
-  }
-  li.new {
-    a {
-      display: block;
-      padding: 20px 0;
-      border-top: 1px solid #999;
-      background: #ededed url(/images/assets/general/orgplus18x19.png) no-repeat 105px center;
-      text-align: center;
-      cursor: pointer;
-      @include box_shadow(rgba(0, 0, 0, 0.3) 0px 1px 5px inset);
-      text-decoration: none;
-      text-shadow: 0px 1px 0px #fff;
-      &:hover {
-        text-shadow: 0px 1px 0px #000;
-        background-color: #ff8419;
-        background-image: url(/images/assets/general/whtplus18x19.png);
-        color: #fff;
-      }        
-    }
   }
 }

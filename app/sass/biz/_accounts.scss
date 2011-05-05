@@ -1,4 +1,19 @@
 .biz_accounts {
+  .accounthd {
+    margin-bottom: 15px;
+    .title {
+      float: left;
+      margin-bottom: 15px;
+    }
+    .pillbox {
+      float: right;
+      margin: 12px 0 0 30px;
+    }
+    .divider {
+      clear: both;
+      @include divider(#ccc, #fff);
+    }
+  }
   .form_container {
     width: 300px;
     margin: 0 auto;
@@ -6,15 +21,39 @@
       margin: 2em auto 1em;
     }
   }
-  .bizlist {
-    margin: 2em 0;
+  .accountcontent {
+    position: relative;
+    height: 500px;
+  }
+  .section {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    display: none;
+    .content {
+      margin: 0 auto;
+    }
     h2 {
       height: 50px;
       line-height: 50px;
       font-size: 1.5em;
-      text-align: left;
+      text-align: center;
+    }
+    .buttons {
+      margin: 5px 0;
+    }
+    .contact {
+      width: 300px;
+    }
+    &#businesses {
+      display: block;
       .content {
-        line-height: 50px;
+        width: 400px;
+        margin: 0 auto;
+      }
+      .newbiz {
+        margin: 1em 0;
       }
     }
   }

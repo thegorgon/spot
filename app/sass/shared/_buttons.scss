@@ -73,12 +73,15 @@ button.link {
   }
 }
 .btngrypill, a.btngrypill {
+  display: block;
   @include border_radius(5px);
   @include gradient_top_down(#f2f2f2, #A2A2A2); 
   text-decoration: none;
   border: 1px solid #808080;
   text-shadow: 0px 1px 0px #fff;
   color: #333;
+  text-align: center;
+  text-decoration: none;
   &:hover {
     color: #000 !important;
     @include gradient_top_down(#f2f2f2, #808080);
@@ -89,6 +92,21 @@ button.link {
     color: #fff !important;
     text-shadow: 0px -1px 0px #000;
   }
+}
+.btngrypill300x30 {
+  @extend .btngrypill;
+  width: 300px;
+  height: 30px;
+  line-height: 25px;
+  font-size: 15px;
+}
+.btngrypill200x30 {
+  @extend .btngrypill300x30;
+  width: 200px;
+}
+.btngrypill400x30 {
+  @extend .btngrypill300x30;
+  width: 400px;
 }
 
 .phone_whitegray_288x37, a.phone_whitegray_288x37 {

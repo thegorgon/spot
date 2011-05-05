@@ -1,0 +1,8 @@
+-current_account.businesses.each_with_index do |biz, i|
+  -current = biz == @business
+  %li.place.clearfix{:class => "#{first_or_last(current_account.businesses, i)} #{conditionally("current", current)}"}
+    =content_tag(current ? :div : :a, :href => current ? nil : biz_business_path(biz)) do
+      .image=image_tag biz.place.image(:i117x84), :size => '117x84'
+      .info
+        .name=biz.place.name
+        .location=biz.place.city_and_region

@@ -1,18 +1,30 @@
-%h1=current_account.name
+.accounthd.clearfix
+  %h1.title=current_account.name
+  
+  %ul.pillbox.tabbar
+    %li.pill.first=link_to "businesses", '#businesses', :class => "tab current"
+    %li.pill.last=link_to "contact info", '#contactinfo', :class => "tab"
 
-.bizlist
-  %h2 My Businesses
-  %ul.placelist
-    -current_account.businesses.each_with_index do |biz, i|
-      %li.place.large.clearfix{:class => first_or_last(current_account.businesses, i)}
-        %a{:href => biz_business_path(biz)} 
-          .image=image_tag biz.place.image(:i117x84), :size => '117x84'
-          .info
-            .name=biz.place.name
-            .location=biz.place.city_and_region
-        %li.new
-          %a{:href => new_biz_business_path}
-            Claim Another Business
+  .divider
 
-.contact.left
-  %h2.shaded My Contact Information
+.accountcontent.clearfix
+  #businesses.section
+    .content.bizlist
+      %h2 My Businesses
+      %ul.placelist.large
+        =render :partial => "/biz/businesses/list"
+      %a.newbiz.btngrypill400x30{:href => new_biz_business_path}
+        %span.big + 
+        Claim Another Business
+
+  #contactinfo.section
+    .contact.content
+      %h2 My Contact Information
+      =spot_form_for current_account, :url => biz_account_path(current_account), :display => "light" do |f|
+        =f.text_field :name, :placeholder => "name", :required => true, :hint => "what should we call you?", :value => current_user.try(:name)
+        =f.email_field :email, :placeholder => "email", :required => true, :hint => "how should we reach you?", :value => current_user.try(:email)
+        =f.phone_field :phone, :placeholder => "phone number", :required => true, :hint => "what is your phone number?"
+        =f.text_field :title, :placeholder => "title", :required => true, :hint => "what is your role?"
+        %li.buttons.left.clearfix
+          =button_tag :class => "btngrypill300x30" do
+            update

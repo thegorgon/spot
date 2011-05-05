@@ -115,6 +115,7 @@ ul.pillbox {
   .place {
     position: relative;
     background: #fff url(/images/assets/general/orgtrirt11x15.png) no-repeat 95% center;
+    border-bottom: none;
     button.overlay {
       position: absolute;
       top: 0px;
@@ -171,21 +172,10 @@ ul.pillbox {
       color: #999;
       font-weight: normal;
     }
-    &.small {
-      .image {
-        width: 58px;
-        height: 42px;
-      }
-      .info {
-        height: 31px;
-        width: 136px;
-        padding: 5px 20px 5px 5px;
-        .name, .location {
-          font-size: 12px;
-        }
-      }
-    }
-    &.large {
+  }
+  &.large {
+    width: 400px;
+    .place {
       width: 400px;
       .image {
         height: 84px;
@@ -197,6 +187,24 @@ ul.pillbox {
         padding: 10px 40px 10px 10px;
         .location {
           margin: 0.25em 0 0 0;
+        }
+      }
+    }    
+  }
+  &.small {
+    width: 220px;
+    .place {
+      width: 219px;
+      .image {
+        width: 58px;
+        height: 42px;
+      }
+      .info {
+        height: 31px;
+        width: 136px;
+        padding: 5px 20px 5px 5px;
+        .name, .location {
+          font-size: 12px;
         }
       }
     }

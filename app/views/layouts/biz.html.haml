@@ -27,6 +27,14 @@
       %ul#nav
         -if current_account
           %li=link_to_with_current "Account", biz_account_path
+          %li{'data-popover' => '#business_list', 'data-popover-title' => 'My Businesses'}
+            Businesses
+            %ul#business_list.bizlist.hidden.placelist.large
+              =render :partial => "/biz/businesses/list"
+              %li.new.clearfix
+                %a{:href => new_biz_business_path}
+                  %span.big + 
+                  Claim Another Business
         -else
           %li=link_to_with_current "Sign Up", new_biz_account_path        
           -unless logged_in?

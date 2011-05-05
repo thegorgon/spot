@@ -90,7 +90,7 @@
       },
       hide: function(trigger, popover, options) {
         trigger = trigger || $('[data-popover]');
-        popover = popover || $('.popover');
+        popover = popover || $('.popover:not(.permanent)');
         trigger.removeClass('active');
         options = options || {};
         if (!$.isFunction(options.complete)) { options.complete = function() {}; }

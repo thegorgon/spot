@@ -1,10 +1,10 @@
-%ul.placelist
+%ul.placelist.large
   -if @search.results.blank?
     %li.empty_msg.msg No businesses found.
   -else
     -@search.results.each_with_index do |r, i|
       -place = r.place
-      %li.place.large.result.clearfix{:class => first_or_last(@search.results, i)}
+      %li.place.result.clearfix{:class => first_or_last(@search.results, i)}
         =form_for :business, :url => biz_businesses_path do |f|
           %button{:type => "submit", :class => "overlay"}
           =f.hidden_field :place_id, :value => r.place.id

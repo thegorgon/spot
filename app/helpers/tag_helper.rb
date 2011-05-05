@@ -128,7 +128,7 @@ module TagHelper
     content = block ? capture(&block) : content_or_options.to_s
     options ||= block ? content_or_options : {}
     options[:dir] ||= "none"
-    klass = "popover"
+    klass = "popover permanent"
     klass << " #{options[:class]}" if options[:class].present?
     klass << " titled" if options[:title].present?
     klass << " arrow#{options[:dir]}"

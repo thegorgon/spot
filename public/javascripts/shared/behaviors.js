@@ -147,6 +147,21 @@
       $this.live('mouseout change', function(e) {
         setFilename();
       });
+    },
+    tabBar: function() {
+      var bar = $(this),
+        tabs = bar.find('.tab');
+      tabs.click(function(e) {
+        e.preventDefault();
+        var $this = $(this),
+          current = tabs.filter('.current'),
+          curcontent = $(current.attr('href')),
+          rel = $($(this).attr('href'));
+        curcontent.fadeOut();
+        tabs.removeClass('current');
+        $this.addClass('current');
+        rel.fadeIn();
+      });
     }
   });
 }(jQuery));
@@ -182,6 +197,7 @@
       fetch('li.invalid input, input.invalid').focus(function(e) {
         $(this).parent('li').add(this).removeClass('invalid');
       });
+      fetch('.tabbar').tabBar();
       fetch('.twitter-share-button').click(function(e) {
         e.preventDefault();
         var left = screen.width > 350 ? Math.round(0.5 * (screen.width - 350)) : 0,

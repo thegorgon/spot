@@ -34,21 +34,12 @@
   }
   #my_deals {
     float: left;
-    width: 200px;
+    width: 202px;
     ul {
       border: 1px solid #666;
       height: 500px;
       margin: 0.25em 0 0.5em;
       background: #fff;
-    }
-    .new {
-      text-decoration: none;
-      float: right;
-      width: 198px;
-      height: 25px;
-      line-height: 20px;
-      text-align: center;
-      font-size: 14px;
     }
   }
   #newdealtpl {
@@ -108,7 +99,7 @@
   #calendar {
     float: left;
     width: 750px;
-    margin: 0px 0px 200px 30px;
+    margin: 0px 0px 200px 28px;
     #monthnav {
       float: left;
       margin: 3px 15px 0 0;
@@ -217,7 +208,7 @@
     #search_results {
       z-index: 1;
       float: right;
-      width: 425px;
+      width: 462px;
       min-height: 250px;
       .msg {
         padding: 75px 25px 40px;

@@ -65,8 +65,9 @@ ActiveRecord::Schema.define(:version => 20110416005534) do
   add_index "business_accounts", ["user_id"], :name => "index_business_accounts_on_user_id"
 
   create_table "businesses", :force => true do |t|
-    t.integer  "place_id",            :null => false
-    t.integer  "business_account_id", :null => false
+    t.integer  "place_id",                           :null => false
+    t.integer  "business_account_id",                :null => false
+    t.integer  "average_spend",       :default => 0, :null => false
     t.datetime "verified_at"
     t.datetime "created_at"
     t.datetime "updated_at"
