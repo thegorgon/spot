@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
     message << exception.annoted_source_code.to_s if exception.respond_to?(:annoted_source_code)
     message << "  " << clean_backtrace(exception, :silent).join("\n  ")
     Rails.logger.fatal("#{message}\n\n") if Rails.logger
-    notify_hoptoad(exception)
+    notify_hoptoad(exception) if exception.notifiable?
   end
 
   def render_error(exception)
