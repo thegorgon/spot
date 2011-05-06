@@ -7,7 +7,7 @@
         $input.removeAttr('placeholder');
         placeholder = $('#' + this.id + '_placeholder');        
         if (placeholder.length === 0) {
-          placeholder = $input.clone().attr('id', this.id).val(txt).removeAttr('name').attr('autocomplete', 'off').attr('type', 'text').attr('formnovalidate', 'formnovalidate').attr('tabindex', '-1').addClass('placeholder');
+          placeholder = $input.clone().attr('id', this.id).val(txt).removeAttr('name').attr('autocomplete', 'off').attr('formnovalidate', 'formnovalidate').attr('tabindex', '-1').addClass('placeholder');
           $input.after(placeholder);
         }
         placeholder.add($input).unbind('.placeholder');
