@@ -102,8 +102,11 @@ class DuplicatePlace < ActiveRecord::Base
   # THEY MUST BE EXPLICITLY ADDED HERE. DYNAMIC PROGRAMMING BE DAMNED! THIS IS DELICATE!
   def resolve!(canonical, options={})
     duplicate = place_1_id == canonical.id ? place_2 : place_1
-    duplicate.update_attributes(:canonical_id => canonical.id, :wishlist_count => 0)
+    duplicate.canonical_id = canonical.id
+    duplicate.wishlist_count = 0
+    duplicate.save
     WishlistItem.where(:item_type => duplicate.class.to_s, :item_id => duplicate.id).update_all(:item_type => canonical.class.to_s, :item_id => canonical.id)
+    ActivityItem.where(:item_type => duplicate.class.to_s, :item_id => duplicate.id).update_all(:item_type => canonical.class.to_s, :item_id => canonical.id)
     ExternalPlace.sources.each do |source|
       source.where(:place_id => duplicate.id).update_all(:place_id => canonical.id)
     end

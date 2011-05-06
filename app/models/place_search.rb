@@ -101,7 +101,7 @@ class PlaceSearch < ActiveRecord::Base
         options[:order] << ", @geodist ASC"
       end
       options.merge!(:match_mode => :any)
-      local = Place.search(@cleanq, options)
+      local = Place.search(@cleanq, options).compact
     end
     local.each do |lp|
       @results[lp.canonical_id] ||= Result.new(:place => lp, :position => @position, :query => @cleanq, :source => "local")
