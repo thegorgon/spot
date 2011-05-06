@@ -80,9 +80,12 @@ module ExternalPlace
   end
   
   module InstanceMethods
+    def source_id_method
+      self.class.instance_variable_get("@_external_place_options")[:id]
+    end
+    
     def source_id
-      id_method = self.class.instance_variable_get("@_external_place_options")[:id]
-      send(id_method)
+      send(source_id_method)
     end
     
     def name_with_city
@@ -98,7 +101,7 @@ module ExternalPlace
         save! if place_id && changed?
       rescue ActiveRecord::StatementInvalid => error
         raise error unless error.to_s =~ /Mysql2::Error: Duplicate/
-        existing = self.class.where(@_external_place_options[:id] => source_id)
+        existing = self.class.where(source_id_method => source_id)
         self.id = existing.id
         reload
       end
