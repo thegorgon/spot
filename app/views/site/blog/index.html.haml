@@ -1,4 +1,4 @@
--cache(AppSetting.cache_path(:blog, controller)) do
+-cache(AppSetting.cache_path(:blog, controller), :expires => 1.week) do
   #blog
     #logo.flips
       =image_tag "logos/gradient_script_340x270.png", :size => "170x135", :alt => "spot"
