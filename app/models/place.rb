@@ -39,6 +39,7 @@ class Place < ActiveRecord::Base
     :bucket           => S3_BUCKET
   process_attachment_in_background :image, :job => Jobs::PlaceImageProcessor
   
+  scope :duplicates, where("canonical_id <> id")
   scope :canonical, where("canonical_id = id")
   scope :with_canonical, joins("INNER JOIN places canonical ON canonical.id = places.canonical_id").select("canonical.*")
   
