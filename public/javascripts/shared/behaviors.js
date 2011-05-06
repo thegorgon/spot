@@ -48,7 +48,7 @@
       $(this).find('img').hide().each(function(i) {
         var img = $(this),
           obj = new Image();
-        obj.onload = function() { img.fadeIn(); },
+        obj.onload = function() { img.fadeIn(); };
         obj.src = img.attr('src');
       });
     },
@@ -169,7 +169,7 @@
 (function(go) {
   $.provide(go, "Behaviors", {
     train: function(container) {
-      var fetch = function(sel) { return $(sel, container); }
+      var fetch = function(sel) { return $(sel, container); };
       go.Navigator.link(fetch("a.page"));
       go.Navigator.form(fetch("form.page"));
       $.popover.bind(container);

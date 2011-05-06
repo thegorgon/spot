@@ -1,5 +1,5 @@
 (function(go) {
-    buildCell = function(date) {
+  var buildCell = function(date) {
       var cell = $("<td></td>").addClass('date').addClass(((date.getMonth() + 1) % 2 === 0 ? 'even' : 'odd') + "_month");
       if (date.isToday()) {          
         cell.addClass('present');
@@ -10,9 +10,11 @@
       }
       cell.attr('id', "date_" + date.getMonth() + "_" + date.getDate() + "_" + date.getFullYear()).html(date.getDate()).data('date', date);
       cell.hover(function() {
-        $(this).html($(this).data('date').toString("ddd, MMM d"));
+        var date = $(this).data('date');
+        $(this).html(date.toString("ddd, MMM d"));
       }, function() {
-        $(this).html($(this).data('date').getDate());        
+        var date = $(this).data('date');
+        $(this).html(date.getDate());        
       });
       return cell;
     },
@@ -55,9 +57,10 @@
         rowIndex = Math.round(scrollTop/rowHeight),
         rowCount = Math.round(viewHeight/rowHeight),
         minDate, maxDate,
-        endDate = tbody.find('td:last').data('date');
-        
-      if (tbody[0].scrollHeight - scrollTop - viewHeight < 100) {
+        endDate = tbody.find('td:last').data('date'),
+        daysRendered = Date.now().daysUntil(endDate);
+      
+      if (tbody[0].scrollHeight - scrollTop - viewHeight < 100 && daysRendered <= 90) {
         fillDates(tbody, endDate.clone().addDays(1), 1);
       }
       minDate = rows.eq(rowIndex).find('td:first').data('date');

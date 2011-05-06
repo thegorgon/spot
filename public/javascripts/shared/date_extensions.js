@@ -252,6 +252,60 @@ Date.prototype.between = function(start, end) {
     var t = this.getTime();
     return t >= start.getTime() && t <= end.getTime();
 };
+Date.millisecondsBetween = function(start, end) {
+  return end.getTime() - start.getTime();
+};
+Date.secondsBetween = function(start, end) {
+  return this.millisecondsBetween(start, end)/1000.0;
+};
+Date.minutesBetween = function(start, end) {
+  return this.millisecondsBetween(start, end)/60000.0;
+};
+Date.hoursBetween = function(start, end) {
+  return this.millisecondsBetween(start, end)/3600000.0;
+};
+Date.daysBetween = function(start, end) {
+  return this.millisecondsBetween(start, end)/86400000.0;
+};
+Date.weeksBetween = function(start, end) {
+  return this.millisecondsBetween(start, end)/604800000.0;
+};
+Date.prototype.millisecondsUntil = function(date) {
+  return Date.millisecondsBetween(this, date);
+};
+Date.prototype.secondsUntil = function(date) {
+  return this.millisecondsUntil(start, end)/1000.0;
+};
+Date.prototype.minutesUntil = function(date) {
+  return this.millisecondsUntil(start, end)/60000.0;
+};
+Date.prototype.hoursUntil = function(date) {
+  return this.millisecondsUntil(start, end)/3600000.0;
+};
+Date.prototype.daysUntil = function(date) {
+  return this.millisecondsUntil(date)/86400000.0;
+};
+Date.prototype.weeksUntil = function(date) {
+  return this.millisecondsUntil(date)/604800000.0;
+};
+Date.prototype.millisecondsSince = function(date) {
+  return Date.millisecondsBetween(date, this);
+};
+Date.prototype.secondsSince = function(date) {
+  return this.millisecondsSince(date)/1000.0;
+};
+Date.prototype.minutesSince = function(date) {
+  return this.millisecondsSince(date)/60000.0;
+};
+Date.prototype.hoursSince = function(date) {
+  return this.millisecondsSince(date)/3600000.0;
+};
+Date.prototype.daysSince = function(date) {
+  return this.millisecondsSince(date)/86400000.0;
+};
+Date.prototype.weeksSince = function(date) {
+  return this.millisecondsSince(date)/604800000.0;
+};
 Date.prototype.addMilliseconds = function(value) {
     this.setMilliseconds(this.getMilliseconds() + value);
     return this;
@@ -536,6 +590,8 @@ Date.prototype.toString = function(format) {
         case "zzz":
         case "zz":
         case "z":
+            return "";
+        default:
             return "";
         }
     }):

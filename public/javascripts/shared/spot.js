@@ -22,7 +22,7 @@ window.Spot = {};
       }
     }
   });
-}(Spot))
+}(Spot));
 
 window.fbAsyncInit = function() {
   FB.init({appId: Spot.getVar('env') == 'production' ? 146911415372759 : 329653055238, status: true, cookie: true, xfbml: true});

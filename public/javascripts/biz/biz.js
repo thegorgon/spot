@@ -36,9 +36,10 @@
             if (location && location.length > 0) { msg += " near " + location; }
             loadingMsg.html(msg);
             $.popover.resize(popover, loadingMsg, {animateT: 1000});            
+            return true;
           } else {
             popover.setClass('error', ['empty', 'loading']);
-            errorMsg.html("<p>What should we search for?</p>Search for your business using the form on the left.")
+            errorMsg.html("<p>What should we search for?</p>Search for your business using the form on the left.");
             $.popover.resize(popover, errorMsg, {animateT: 1000});            
             return false;
           }
@@ -53,7 +54,6 @@
     },
     biz_businesses_calendar: function() {
       var cal = Spot.DealCalendar.init({ calendar: '#calendar' });
-      $.logger.debug(cal);
     }
   });
 }(Spot));
