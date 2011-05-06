@@ -101,9 +101,10 @@ module ExternalPlace
         save! if place_id && changed?
       rescue ActiveRecord::StatementInvalid => error
         raise error unless error.to_s =~ /Mysql2::Error: Duplicate/
-        existing = self.class.where(source_id_method => source_id)
-        self.id = existing.id
-        reload
+        if existing = self.class.where(source_id_method => source_id).first
+          self.id = existing.id
+          reload
+        end
       end
     end
 
