@@ -18,7 +18,7 @@ class ExternalPlace::GooglePlace < ActiveRecord::Base
   end
   
   def address_lines
-    address.split("\n")
+    (address || "").split("\n")
   end
   
 end
