@@ -58,6 +58,11 @@ class Place < ActiveRecord::Base
     finder
   end
   
+  def self.search(*args)
+    ids = search_for_ids(*args)
+    where(:id => ids).all
+  end
+  
   def self.dedupe!
     all.each { |p| DuplicatePlace.dedupe(p) }
   end
