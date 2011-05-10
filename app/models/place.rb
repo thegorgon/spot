@@ -58,10 +58,17 @@ class Place < ActiveRecord::Base
     finder
   end
   
-  # def self.search(*args)
-  #   ids = search_for_ids(*args)
-  #   where(:id => ids).all
-  # end
+  def self.search(*args)
+    @sphinx_key_override = :id #Hack, forces the search to think the pk is :id
+    search = ThinkingSphinx::Search.new *search_options(args)
+    search.send(:populate)
+    @sphinx_key_override = nil #Remove Hack
+    search
+  end
+  
+  def self.primary_key_for_sphinx
+    @sphinx_key_override || :canonical_id
+  end
   
   def self.dedupe!
     all.each { |p| DuplicatePlace.dedupe(p) }
