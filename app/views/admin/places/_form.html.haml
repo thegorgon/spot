@@ -1,4 +1,4 @@
-=spot_form_for [:admin, @place], :display => "light inlinelabels", :html => {:method => :put, :multipart => true} do |f|
+=spot_form_for [:admin, @place], :display => "light inlinelabels", :html => {:multipart => true} do |f|
   =f.text_field :full_name, :label => "Name :", :required => true, :class => "name_field", :hint => "what is the place name?"
   =f.text_field 'address_lines[0]', :value => @place.address_lines[0], :label => "Address (line 1) :", :hint => "what's the street address?", :required => true, :class => "address_field"
   =f.text_field 'address_lines[1]', :value => @place.address_lines[1], :label => "Address (line 2) :", :hint => "and the city, region, zip?", :required => true, :class => "address_field"

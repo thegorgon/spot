@@ -11,8 +11,11 @@
         _map.setPosition(newLL.lat(), newLL.lng());
         return newLL;
       },
+      getAddressLines = function() {
+        return [$('.address_field:eq(0)').val(), $('.address_field:eq(1)').val()];
+      },
       getAddress = function() {
-        return $('.address_field:eq(0)').val() + ' ' + $('.address_field:eq(1)').val();
+        return getAddressLines().join(" ");
       },
       getName = function() {
         return $('.name_field').val();
@@ -29,17 +32,23 @@
         $('.name_field').unbind('keyup.placeform').bind('keyup.placeform', updateDetail);
         $('.address_field').unbind('keyup.placeform').bind('keyup.placeform', updateDetail);
         $('#place_lat, #place_lng').unbind('change.remap').bind('change.remap', function() {
-          setFormPosition(getFormPosition())
+          setFormPosition(getFormPosition());
         });
         $('.address_field').unbind('change.geocode').bind('change.geocode', function(e) {
-          _map.geocode(getAddress(), {
-            uncertain: function(results) {
-              $('.map_message').html("We found a few possible matches for that address. Please clarify by clicking the right pin on the map.")
-            },
-            success: function() {
-              setFormPosition(this);
-            }
-          });
+          var lines = getAddressLines();
+          if (lines[0].length > 0 && lines[1].length > 0) {
+            _map.geocode(getAddress(), {
+              uncertain: function(results) {
+                $('.map_message').html("We found a few possible matches for that address. Please clarify by clicking the right pin on the map.");
+              },
+              error: function(status) {
+                $('.map_message').html("We couldn't find that location. Did you type the address wrong?");
+              },
+              success: function() {
+                setFormPosition(this);
+              }
+            });
+          }
         });
       };
   $.provide(go, "PlaceForm", {
