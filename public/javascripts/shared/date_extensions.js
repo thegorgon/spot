@@ -723,5 +723,5 @@ Date.prototype.isToday = function() {
   return this.clearTime().equals(Date.today());
 };
 Date.prototype.isPast = function() {
-  this.compareTo(Date.now()) === -1;
+  return this.compareTo(Date.now()) < 0;
 };

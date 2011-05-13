@@ -16,7 +16,7 @@
     %h3
       .logo=image_tag("assets/general/fb_f_24x22.png", :size => "24x22")
       Facebook : 
-  %li.divider
+  %hr
   %li.section.email
     .radio_fade.clearfix
       .choice.clearfix{:rel => "#login_form", :class => conditionally('selected', mode == :login)}
@@ -37,7 +37,7 @@
         %li.buttons.clearfix
           =button_tag :class => "rndblk_80x30" do
             login
-          =link_to "forgot password", new_password_reset_path
+          =link_to "forgot password?", new_password_reset_path
   
       =spot_form_for @account, :url => account_path, :html => {:id => "register_form", :class => conditionally('selected', mode == :register)} do |f|
         =f.text_field :name, :placeholder => "name", :required => true, :hint => "what should we call you?"

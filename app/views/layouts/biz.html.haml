@@ -27,7 +27,7 @@
       %ul#nav
         -if current_account
           %li=link_to_with_current "Account", biz_account_path
-          %li{'data-popover' => '#business_list', 'data-popover-title' => 'My Businesses'}
+          %li{'data-popover' => '#business_list', 'data-popover-title' => 'My Businesses', 'data-popover-orient' => 'vertical'}
             Businesses
             %ul#business_list.bizlist.hidden.placelist.large
               =render :partial => "/biz/businesses/list"
@@ -38,7 +38,7 @@
         -else
           %li=link_to_with_current "Sign Up", new_biz_account_path        
           -unless logged_in?
-            %li{'data-popover' => '#login_popover', 'data-popover-title' => 'Log In'} 
+            %li{'data-popover' => '#login_popover', 'data-popover-title' => 'Log In', 'data-popover-orient' => 'vertical'} 
               Log In
               =spot_form_for :credentials, :url => session_path, :ul_id => "login_popover", :display => "hidden inpopover" do |f|
                 =hidden_field_tag :return_to, biz_account_path

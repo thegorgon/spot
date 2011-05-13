@@ -24,7 +24,7 @@ h2 {
 a.dark, a.dark:visited {
   color: #ccc;
   cursor: pointer;
-  &:hover, &:active {
+  &:hover, &.hover, &:active, &.active {
     color: #fff;
   }
   &.shadowed {

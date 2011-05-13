@@ -62,8 +62,8 @@ Spot::Application.routes.draw do
   end
   
   namespace "biz" do
-    resource :account, :only => [:new, :create, :show]
-    resources :businesses, :only => [:new, :create, :show, :edit] do
+    resource :account, :only => [:new, :create, :show, :update]
+    resources :businesses, :only => [:new, :create, :show, :edit, :update] do
       get :search, :on => :collection
       get :calendar, :on => :member
       resources :deals, :only => [:index, :create, :update, :destroy]

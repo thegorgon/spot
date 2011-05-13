@@ -1,6 +1,13 @@
 =render :partial => "header"
 
-.status
+.status.stat
   Status :
   %span{:class => @business.status_string.downcase}
-    =@business.status_string.titlecase    
+    =@business.status_string.titlecase
+  %span.question{'data-jstooltip' => @business.verified?? "You have full access to all of Spot's business tools." : "Certain features are restricted to verified businesses. A member of our staff will contact you shortly to verify your identity."}
+    =image_tag "assets/general/question23x22.png", :size => '23x22'
+
+.wishlist_count.stat
+  ="Wishlisted by #{@business.place.wishlist_count} Spot Members"
+.claim_date.stat
+  ="Claimed on #{@business.created_at.strftime("%B %d, %Y")}, #{time_ago_in_words(@business.created_at)} ago"

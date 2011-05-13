@@ -9,7 +9,7 @@
       float: right;
       margin: 12px 0 0 30px;
     }
-    .divider {
+    hr {
       clear: both;
       @include divider(#ccc, #fff);
     }
@@ -26,11 +26,6 @@
     height: 500px;
   }
   .section {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    display: none;
     .content {
       margin: 0 auto;
     }

@@ -202,25 +202,71 @@ textarea.light {
     @include transition("all 0.25s");
   }
 }
-ul.light.lowhints {
-  li.text.hinted.focus {
-    height: 80px;
+ul.form.light.inlinelabels {
+  li.text.labelled {
+    @include clearfix;
+    overflow: visible;
+    .label {
+      float: left;
+      width: 50%;
+      line-height: 30px;
+      text-align: right;
+      label {
+        font-weight: bold;
+      }
+    }
+    input, select {
+      display: inline;
+      position: static;
+    }
+    .input {
+      width: 50%;
+      text-align: left;
+      float: right;
+    }
   }
-  li.text_area.hinted.focus {
-    height: 160px;
+  .invalid {
+    label {
+      color: #cc3333;
+    }
+  }
+}
+ul.form.light.lowhints {
+  li.text.hinted {
+    height: 48px;
+  }
+  li.text_area.hinted {
+    height: 144px;
+  }
+  li.text.hinted.tall {
+    height: 65px;
   }
   .hint {
+    text-align: center;
+    position: absolute;
+    color: #666;
+    opacity: 1;
     line-height: 1.4em;
     top: auto;
-    bottom: -5px;
-    width: 290px;
-    height: 34px;
-    padding: 16px 10px 10px 13px;
-    left: -5px;
-    background: transparent url(/images/assets/general/whthntdwn310x65.png) no-repeat left top;
-    color: #333;
+    bottom: 0px;
+    height: auto;
+    width: auto;
+    left: 5px;
+    right: 5px;
+    padding: 0;
+    background: transparent;
     font-weight: normal;
     text-shadow: 0px 1px 0px #fff;    
+  }
+  .invalid, .valid {
+    .validity {
+      background: transparent;
+    }
+  }
+  .invalid {
+    input, textarea, select {
+      border: 1px solid #cc3333;
+    }
   }
 }
 ul.form {
@@ -286,37 +332,62 @@ ul.form {
   }
 }
 
-div.file_field {
-  position: relative;
-  .filename {
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    text-align: left;
-    padding: 5px;
-  }
-  input {
-    @include opacity(0);
-    z-index: 100;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    height: 100%;
-    width: 100%;
-    cursor: pointer;
-  }
-  .browse_button {
-    z-index: 10;
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
+.light {
+  .file_field {
+    @include border_radius(5px);
+    @include gradient_top_down(#dddddd, #fff, 20%);
+    border: 1px solid #666;
+    padding: 0px;
+    width: 298px;
+    height: 28px;
+    position: relative;
+    .browse_button {
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 28px;
+      border: 1px solid #666;
+      color: #333;
+      width: 80px;
+      text-align: center;
+      background: #333;
+      @include gradient_top_down(#f2f2f2, #A2A2A2); 
+      @include right_border_radius(5px);
+      text-shadow: #fff 0px -1px 0px;
+      z-index: 1;
+      position: absolute;
+      right: -1px;
+      top: -1px;
+      height: auto;
+      bottom: -1px;
+    }
+    .filename {
+      position: absolute;
+      z-index: 1;
+      left: 5px;
+      top: 5px;
+      height: 18px;
+      line-height: 18px;
+      bottom: 5px;
+      text-align: left;
+    }
+    input.file {
+      width: 100%;
+      height: 100%;
+      @include opacity(0);
+      z-index: 100;
+      position: absolute !important;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      height: 100%;
+      width: 100%;
+      cursor: pointer;
+    }
   }
 }
+
 .form.faded {
   li.buttons {
     margin: 20px 0 0 0;
@@ -340,7 +411,7 @@ div.file_field {
   }
   a {
     color: #AAA;
-    &:hover {
+    &:hover, &.hover {
       color: #999;
     }
   }
@@ -367,7 +438,7 @@ div.file_field {
   }
   a {
     color: #AAA;
-    &:hover {
+    &:hover, &.hover {
       color: #999;
     }
   }

@@ -12,7 +12,6 @@ class Site::HomeController < Site::BaseController
     store = "itunes" if request.user_agent =~ /iPhone/
     store ||= params[:store]
     url = MobileApp.url_for(request_location, store)
-    url ||= "http://itunes.apple.com/app/spot/id414793658" if store.nil? || store == "itunes"
     flash[:error] = "Hold Tight. Spot is Coming Soon to an App Store Near You." unless url
     redirect_to  url || root_path
   end  

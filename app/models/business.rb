@@ -1,8 +1,11 @@
 class Business < ActiveRecord::Base
   belongs_to :business_account, :counter_cache => true
   belongs_to :place
+  has_many :deal_templates
+  has_many :deal_events
   validate :account_can_claim, :on => :create
   before_validation :autovalidate, :on => :create
+  accepts_nested_attributes_for :place
   
   def to_param
     "#{id}-#{place.name.parameterize}"
@@ -10,6 +13,14 @@ class Business < ActiveRecord::Base
   
   def status_string
     verified?? "Verified" : "Unverified"
+  end
+  
+  def verify!
+    update_attribute(:verified_at, Time.now)
+  end
+
+  def unverify!
+    update_attribute(:verified_at, nil)
   end
   
   def verified?

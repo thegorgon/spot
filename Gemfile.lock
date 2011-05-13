@@ -33,6 +33,7 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
+    acts_as_list (0.1.2)
     addressable (2.2.5)
     amatch (0.2.5)
     archive-tar-minitar (0.5.2)
@@ -235,6 +236,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_list
   amatch
   autotest
   autotest-fsevent

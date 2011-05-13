@@ -6,6 +6,7 @@ javascripts:
   vendor:
     - public/javascripts/vendor/jquery-1.4.4.min.js
     - public/javascripts/vendor/jquery-ui-1.8.11.custom.min.js
+    - public/javascripts/vendor/jquery.tmpl.js
     - public/javascripts/vendor/logger.js
     - public/javascripts/vendor/jquery.validate.js
     - public/javascripts/vendor/jquery.jswipe.js
@@ -21,6 +22,7 @@ javascripts:
     - public/javascripts/shared/app_preview.js
     - public/javascripts/shared/place_form.js
     - public/javascripts/shared/popover.js
+    - public/javascripts/shared/jstooltip.js
     - public/javascripts/shared/search_emulator.js
     - public/javascripts/shared/image_selector.js
     - public/javascripts/shared/slideshow.js

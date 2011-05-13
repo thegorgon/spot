@@ -1,10 +1,10 @@
 (function($) {
-  $.ajaxSetup({
-    'beforeSend': function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name=csrf-token]').attr('content')); }
-  });
   $.extend($, {
     mobile: function() {
       return navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/android/i) || navigator.userAgent.match(/ipod/i);
+    },
+    capitalize: function(string) {
+      return string.replace(/^(.)|\s(.)/g, function($1){ return $1.toUpperCase( ); });
     },
     slice: function(object, keys) {
       var retVal = {};
@@ -93,6 +93,11 @@
         $this.removeClass(others[i]);
       });
       if (klass) { $this.addClass(klass); }
+    },
+    clear: function() {
+      var inputs = $(this).filter('form').find(':input').not(':button, :submit, :reset, [type=hidden], .placeholder');
+      inputs.val('').removeAttr('checked').removeAttr('selected').blur(); 
+      return $(this);
     },
     autogeocode: function(options) {
       var input = $(this),
@@ -193,9 +198,14 @@
         if ((confirmMsg.length === 0 || window.confirm(confirmMsg)) && options.start.apply(this) !== false) {
           $this.data('sending', true);
           success = ($.isFunction(options.success) ? options.success: function() {});
+          error = ($.isFunction(options.error) ? options.error: function() {});
           options.success = function() {
             $this.data('sending', false);
             success.apply($this, arguments);
+          };
+          options.error = function() {
+            $this.data('sending', false);
+            error.apply($this, arguments);
           };
           options = $.extend({
             dataType: 'json',
@@ -208,6 +218,14 @@
           return false;
         }
       }
+    },
+    serializeObject: function() {
+      var array = $(this).serializeArray(),
+        object = {}, i;
+      for (i = 0; i < array.length; i++) {
+        object[array[i].name] = array[i].value;
+      }
+      return object;
     },
     popup: function() {
       var wrapper = $("<div id=\"popup_wrapper\"></div>");

@@ -7,7 +7,9 @@ class MobileApp < ActiveRecord::Base
   validates :store, :presence => true, :inclusion => STORES
   
   def self.url_for(location, store=nil)
-    where(:location => location.downcase, :store => store || "itunes", :live => true).first.try(:url) if location
+    if store.nil? || store == "itunes"
+      "http://itunes.apple.com/app/spot/id414793658"
+    end
   end
   
   def self.country_code(request)
@@ -32,7 +34,7 @@ class MobileApp < ActiveRecord::Base
   end
   
   def url
-    if store == "itunes"
+    if store == "itunes" && country.present?
       "http://itunes.apple.com/#{country}/app/#{name.parameterize}/id#{store_id}"
     end
   end

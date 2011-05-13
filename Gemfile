@@ -33,6 +33,7 @@ gem 'geoip'
 gem 'rack-ssl-enforcer'
 gem 'base62'
 gem 'hoptoad_notifier'
+gem "acts_as_list"
 
 group :production do
   gem 'unicorn'

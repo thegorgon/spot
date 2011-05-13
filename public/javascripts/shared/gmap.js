@@ -29,33 +29,46 @@
           _geocodeMarkers = [];
         },
         addMarker = function(options) {
-          var marker = newMarker(options),
-            bounds = _map.getBounds();
-          if (bounds) {
-            bounds.extend(marker.getPosition());
-            _map.fitBounds(bounds);            
-          }
+          var marker = newMarker(options);
           $.each(['click', 'dblclick', 'mouseup', 'mousedown', 'mouseover', 'mouseout'], function(i) {
             if ($.isFunction(options[this])) { google.maps.event.addListener(marker, this, options[this]); }              
           });
           return marker;
         },
         addGeocodeMarker = function(result) {
-          var marker = addMarker({clickable: true, position: result.geometry.location});
+          var marker = addMarker({clickable: true, position: result.geometry.location, title: result.formatted_address}),
+            bounds = new google.maps.LatLngBounds();
           _geocodeMarkers.push(marker);
+          $.each(_geocodeMarkers, function(i) {
+            bounds.extend(_geocodeMarkers[i].getPosition());
+          });
+          _map.fitBounds(bounds);
           google.maps.event.addListener(marker, 'click', function(e) {
-            if ($.isFunction(_geocodeopts.success)) { _geocodeopts.success.call(this.getPosition()); }
-            clearGeocodeMarkers();
-          });         
+            selectGeocodeResult(this);
+          });
           marker.setMap(_map);
         },
+        selectGeocodeResult = function(result) {
+          if ($.isFunction(_geocodeopts.success)) { _geocodeopts.success.call(result.getPosition()); }
+          _marker = result;
+          clearGeocodeMarkers();
+          _marker.setMap(_map);          
+        },
         geocode = function(address) {
+          var marker;
           _geocoder.geocode({ 'address': address }, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
+              _marker.setMap(null);
               clearGeocodeMarkers();
-              $.each(results, function(i) {
-                addGeocodeMarker(this);
-              });
+              if (results.length == 1) {
+                marker = addMarker({clickable: true, position: results[0].geometry.location, title: results[0].formatted_address});
+                selectGeocodeResult(marker);
+              } else {
+                if ($.isFunction(_geocodeopts.uncertain)) { _geocodeopts.uncertain.call(results); }
+                $.each(results, function(i) {
+                  addGeocodeMarker(this);
+                });
+              }
             } else {
               if ($.isFunction(_geocodeopts.error)) { _geocodeopts.error.call(status); }
               else { alert("Geocode was not successful for the following reason: " + status); }

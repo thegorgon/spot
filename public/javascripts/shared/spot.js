@@ -9,6 +9,7 @@ window.Spot = {};
       go.Navigator.init();
       $.mobileOptimize();
       $.preload(vars.preload);
+      $.jstooltip.init();
       go.Views.run();
       $(window).load(this.loaded);    // Call loaded on load
       setTimeout(this.loaded, 2000);  // Call loaded in two seconds if not loaded by then
@@ -34,3 +35,6 @@ window.fbAsyncInit = function() {
   document.getElementById('fb-root').appendChild(e);
 }());
 
+$.ajaxSetup({
+  'beforeSend': function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name=csrf-token]').attr('content')); }
+});

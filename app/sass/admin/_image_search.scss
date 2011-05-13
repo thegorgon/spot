@@ -43,7 +43,7 @@
     @include border_radius(3px);
     background: #ddd no-repeat center center;
     cursor: pointer;
-    &:hover {
+    &:hover, &.hover {
       border: 1px solid #ff8419;
     }
   }

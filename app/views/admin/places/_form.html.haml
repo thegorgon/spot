@@ -1,45 +1,26 @@
-%ul.form_wrapper
-  =form_for [:admin, @place], :html => {:multipart => true, :autocomplete => "off", :novalidate => "novalidate"} do |f|
-    %li
-      =f.label :full_name, "Name : "
-      =f.text_field :full_name
-    %li
-      =f.label "address_lines[0]", "Address 1: "
-      =f.text_field "address_lines[0]", :value => @place.address_lines[0], :id => "place_address_lines_0", :class => "address_field"
-    %li
-      =f.label "address_lines[1]", "Address 2: "
-      =f.text_field "address_lines[1]", :value => @place.address_lines[1], :id => "place_address_lines_1", :class => "address_field"
-    %li
-      =f.label "phone_number", "Phone : "
-      =f.telephone_field "phone_number", :value => @place.phone_number, :id => "place_phone_number"
-    %li
-      =f.label :city, "City : "
-      =f.text_field :city
-    %li
-      =f.label :region, "Region : "
-      =f.text_field :region
-    %li
-      =f.label :country, "Country : "
-      =f.text_field :country
-    %li.actions
-      =link_to "Geocode", "javascript:;", :class => "geocode action"
-      =link_to "Remap", "javascript:;", :class => "updatemap action"
-    %li
-      =f.label :lat, "Lat : "
-      =f.text_field :lat, :type => "number", :max => 90, :min => -90
-    %li
-      =f.label :lng, "Lng : "
-      =f.text_field :lng, :type => "number", :max => 180, :min => -180
-    %li
-      =f.label :image, "Image : "
+=spot_form_for :place, :url => admin_place_path(@place), :display => "light inlinelabels", :html => {:method => :put, :multipart => true} do |f|
+  =f.text_field :full_name, :label => "Name :", :required => true, :class => "name_field", :hint => "what is the place name?"
+  =f.text_field 'address_lines[0]', :value => @place.address_lines[0], :label => "Address (line 1) :", :hint => "what's the street address?", :required => true, :class => "address_field"
+  =f.text_field 'address_lines[1]', :value => @place.address_lines[1], :label => "Address (line 2) :", :hint => "and the city, region, zip?", :required => true, :class => "address_field"
+  =f.text_field :city, :label => "City :", :hint => "what city is the place in?", :required => true
+  =f.text_field :region, :label => "Region :", :hint => "what state is the place in?", :required => true
+  =f.text_field :country, :label => "Country :", :hint => "what country is the place in?", :required => true
+  =f.phone_field :phone_number, :label => "Phone Number :", :hint => "what is the place's number?"
+  =f.text_field :lat, :min => -90, :max => 90, :label => "Lat :", :hint => "do you really know the lat?"
+  =f.text_field :lng, :min => -180, :max => 180, :label => "Lng :", :hint => "do you really know the lng?"
+  %li.text.labelled
+    .label
+      =f.label :image, "Choose an Image :"
+    .input
       .file_field
-        =f.file_field :image, :value => ""
         .filename
         .browse_button.hlfrndblk_80x30
           Choose File
-    %li
-      =f.label :lng, "Image URL : "
-      =f.text_field :external_image_url, :value => ""
-    %li.buttons
-      =button_tag :class => "rndblk_80x30" do
-        Save
+        =f.file_field :image, :value => "", :class => "file"
+  =f.text_field :external_image_url, :label => "Image URL :", :hint => "an image from the tubes?"
+  %li.buttons
+    =button_tag :class => "btngrypill300x30" do
+      Save Changes
+    -unless @place.new_record?
+      %p=link_to "Delete", admin_place_path(@place), "data-confirm" => "Are you sure you want to delete #{@place.name}?", "data-method" => "delete"
+    

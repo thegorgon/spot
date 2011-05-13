@@ -44,6 +44,10 @@ module TagHelper
     link_to image_tag(url, options.slice(:size, :width, :height)), image_path(url), options.slice(:class, :target, :id)
   end
   
+  def img_link_to(src, url, options={})
+    link_to image_tag(src, options.slice(:size, :width, :height)), url, options.except(:size, :width, :height)
+  end
+  
   def open_graph_tags
     tags = []
     if place_page?
@@ -104,7 +108,7 @@ module TagHelper
   
   def link_to_with_current(*args)
     options = args.extract_options!
-    current_class = options.delete(:current_class) || "current"
+    current_class = options.delete(:current_class) || "active"
     options[:class] ||= ""
     options[:class] << " " if options[:class].present?
     options[:class] << current_class if request.path == args.last
@@ -132,7 +136,8 @@ module TagHelper
     klass << " #{options[:class]}" if options[:class].present?
     klass << " titled" if options[:title].present?
     klass << " arrow#{options[:dir]}"
-    content_tag(:div, :class => klass, :id => options[:id]) do
+    html_options = {:class => klass, :id => options[:id]}.merge(options[:html] || {})
+    content_tag(:div, html_options) do
       content_tag(:div, :class => "hd") do
         content_tag(:div, options[:title], :class => "title") +
         content_tag(:div, '', :class => "lft") +
@@ -142,8 +147,16 @@ module TagHelper
         content_tag(:div, '', :class => "rt")
       end +
       content_tag(:div, :class => "bd") do
-        content_tag(:div, '', :class => "bgl") +
-        content_tag(:div, '', :class => "bgr") +
+        content_tag(:div, :class => "bgl") do 
+          content_tag(:div, '', :class => 'tpad') +
+          content_tag(:div, '', :class => 'arr') +
+          content_tag(:div, '', :class => 'bpad')
+        end +
+        content_tag(:div, '', :class => "bgr") do 
+          content_tag(:div, '', :class => 'tpad') +
+          content_tag(:div, '', :class => 'arr') +
+          content_tag(:div, '', :class => 'bpad')
+        end +
         content_tag(:div, content, :class => "content")
       end +
       content_tag(:div, :class => "ft") do

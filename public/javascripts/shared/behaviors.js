@@ -8,6 +8,9 @@
         placeholder = $('#' + this.id + '_placeholder');        
         if (placeholder.length === 0) {
           placeholder = $input.clone().attr('id', this.id).val(txt).removeAttr('name').attr('autocomplete', 'off').attr('formnovalidate', 'formnovalidate').attr('tabindex', '-1').addClass('placeholder');
+          if (placeholder.attr('type') == 'password') {
+            placeholder.attr('type', 'text');
+          }
           $input.after(placeholder);
         }
         placeholder.add($input).unbind('.placeholder');
@@ -185,11 +188,11 @@
       fetch('a[data-confirm][data-method]:not(.ajax)').actionLink();
       fetch('.fbconnect').fbconnect();
       fetch('ul.form input, ul.form textarea').focus(function(e) {
-        $(this).parent('li').addClass('focus');
+        $(this).parents('li').addClass('focus');
         $(this).parents('ul').addClass('focus');
       });
       fetch('ul.form input, ul.form textarea').blur(function(e) {
-        $(this).parent('li').removeClass('focus');
+        $(this).parents('li').removeClass('focus');
         $(this).parents('ul').removeClass('focus');
       });
       fetch('.radio_fade').radioFade();

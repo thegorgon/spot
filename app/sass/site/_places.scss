@@ -41,7 +41,7 @@
     color: #fff;
     a {
       color: #fff;
-      &:hover {
+      &:hover, &.hover {
         color: #ccc;
       }
     }

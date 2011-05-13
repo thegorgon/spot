@@ -4,7 +4,7 @@
   height: 20px;
   text-decoration: none;
   background: transparent url(/images/assets/general/tweet.png) no-repeat;
-  &:hover {
+  &:hover, &.hover {
     background-position: 0px -21px;
   }
   &:active {
@@ -34,7 +34,7 @@
   }
   a {
     color: #ff8419;
-    &:hover {
+    &:hover, &.hover {
       color: #ccc;
     }
   }
@@ -76,11 +76,11 @@ ul.pillbox {
       text-decoration: none;
       text-shadow: 0px 1px 0px #fff;
       @include gradient_top_down(#f2f2f2, #A2A2A2); 
-      &:hover {
+      &:hover, &.hover {
         color: #000;
         @include gradient_top_down(#f2f2f2, #808080);
       }
-      &:active, &.current {
+      &:active, &.active {
         background: #666666;
         @include box_shadow(#000 0px 1px 5px inset);        
         color: #fff;
@@ -103,7 +103,7 @@ ul.pillbox {
       display: block;
       padding: 10px;
       border-bottom: 1px solid #666;
-      &.ui-state-hover, &:hover {
+      &.ui-state-hover, &:hover, &.hover {
         background: #ff8419;
         color: #fff;
       } 
@@ -136,7 +136,7 @@ ul.pillbox {
       margin: 0;
       text-decoration: none;
     }
-    &:hover {    
+    &:hover, &.hover {    
       background: #ff8419 url(/images/assets/general/whttrirt11x15.png) no-repeat 95% center;
       .name, .location {
         color: #fff;
@@ -152,9 +152,9 @@ ul.pillbox {
     &.last .info {
       border-bottom: 0px;
     }
-    &.current {
+    &.current, &.active {
       background: #ededed;
-      &:hover {
+      &:hover, &.hover {
         background: #ededed;        
         .name {
           color: #333;
@@ -208,5 +208,20 @@ ul.pillbox {
         }
       }
     }
+  }
+}
+#jsTooltip {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 200px;
+  background: #ffffdd;
+  border: 1px solid #999;
+  @include border_radius(5px);
+  padding: 5px;
+  z-index: 1000000;
+  color: #333;
+  &.error {
+    background: #ffdddd;
   }
 }

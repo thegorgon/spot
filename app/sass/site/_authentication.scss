@@ -7,7 +7,7 @@
     margin: 15px 0 0 0;
     width: 300px;
   }
-  li.divider {
+  hr {
     @include divider(#999, #666);
   }
   li.header {

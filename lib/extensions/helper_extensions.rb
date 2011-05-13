@@ -19,7 +19,9 @@ module HelperExtensions
             elsif value == 12 && @options[:noon]
               text = @options[:noon].eql?(true) ? 'noon' : @options[:noon]
             else
-              text = "#{value == 12 ? 12 : (value / 12 == 1 ? value % 12 : value)}#{value <= 11 ? ' AM' : ' PM'}"
+              text = 12 if value == 0 || value == 12
+              text ||= "#{value / 12 == 1 ? value % 12 : value}"
+              text = "#{text}#{value <= 11 ? 'am' : 'pm'}"
             end
             tag_options = { :value => value }
             tag_options[:selected] = "selected" if hour == value

@@ -1,1 +1,42 @@
 =render :partial => "header"
+#bizbd.clearfix
+  -unless @business.verified?
+    .lock
+      .screen
+      %h1 Locked
+      .message
+        Sorry, but entry editing is locked until your business is verified.
+  .preview.place.detail
+    %h2 In App Preview
+    %h3 This is what your business looks like in Spot.
+    =render :partial => "/shared/places/iphone", :locals => {:place => @business.place}
+
+  .form_container
+    %h1 Edit Your Business Entry
+    %h3 
+      Changed your phone number? Moved to a new location? 
+      We’re just plain wrong? 
+      Update your information here so Spot users can find your business.
+    =spot_form_for :business, :url => biz_business_path(@business), :display => "light inlinelabels", :html => {:method => :put, :multipart => true} do |f|
+      =f.fields_for :place_attributes, @business.place do |pf|
+        =pf.hidden_field :lat, :id => "place_lat"
+        =pf.hidden_field :lng, :id => "place_lng"
+        =pf.text_field :full_name, :label => "Name :", :required => true, :hint => "what should we call you?", :class => "name_field"
+        =pf.text_field 'address_lines[0]', :value => @business.place.address_lines[0], :label => "Address (line 1) :", :hint => "what's your street address?", :required => true, :class => "address_field"
+        =pf.text_field 'address_lines[1]', :value => @business.place.address_lines[1], :label => "Address (line 2) :", :hint => "and your city, region, zip?", :required => true, :class => "address_field"
+        =pf.text_field :city, :label => "City :", :hint => "what city is your business in?", :required => true
+        =pf.phone_field :phone_number, :label => "Phone Number :", :hint => "where can our users call you?"
+        %li.text.labelled
+          .label
+            =pf.label :image, "Choose an Image :"
+          .input
+            .file_field
+              .filename
+              .browse_button.hlfrndblk_80x30
+                Choose File
+              =pf.file_field :image, :value => "", :class => "file"
+        %li.buttons
+          =button_tag :class => "btngrypill300x30" do
+            Save Changes
+    .map_message
+    .map=image_tag(google_static_map_url(@business.place, :size => "380x250"))

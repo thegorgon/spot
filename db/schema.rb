@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110416005534) do
+ActiveRecord::Schema.define(:version => 20110505214137) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -74,6 +74,46 @@ ActiveRecord::Schema.define(:version => 20110416005534) do
   end
 
   add_index "businesses", ["business_account_id", "place_id"], :name => "index_businesses_on_business_account_id_and_place_id", :unique => true
+
+  create_table "deal_events", :force => true do |t|
+    t.integer  "deal_template_id"
+    t.integer  "business_id",                          :null => false
+    t.string   "name",                                 :null => false
+    t.text     "description"
+    t.integer  "deal_count",            :default => 0, :null => false
+    t.integer  "discount_percentage",   :default => 0, :null => false
+    t.datetime "starts_at",                            :null => false
+    t.datetime "ends_at",                              :null => false
+    t.integer  "sale_count",            :default => 0, :null => false
+    t.integer  "cost_cents"
+    t.integer  "estimated_cents_value", :default => 0, :null => false
+    t.datetime "removed_at"
+    t.datetime "approved_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deal_events", ["business_id"], :name => "index_deal_events_on_business_id"
+  add_index "deal_events", ["starts_at", "ends_at"], :name => "index_deal_events_on_starts_at_and_ends_at"
+
+  create_table "deal_templates", :force => true do |t|
+    t.string   "name",                               :null => false
+    t.text     "description"
+    t.integer  "position"
+    t.integer  "deal_count",          :default => 0, :null => false
+    t.integer  "discount_percentage", :default => 0, :null => false
+    t.integer  "start_time",          :default => 0, :null => false
+    t.integer  "end_time",            :default => 0, :null => false
+    t.integer  "average_spend",       :default => 0, :null => false
+    t.integer  "business_id",                        :null => false
+    t.integer  "cost_cents"
+    t.datetime "removed_at"
+    t.datetime "approved_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deal_templates", ["business_id"], :name => "index_deal_templates_on_business_id"
 
   create_table "devices", :force => true do |t|
     t.string   "udid",          :null => false

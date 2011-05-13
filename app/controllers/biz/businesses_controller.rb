@@ -1,9 +1,24 @@
 class Biz::BusinessesController < Biz::BaseController
   before_filter :require_business, :except => [:new, :create, :search]
+
   def new
   end
 
   def edit
+  end
+  
+  def update
+    @business.attributes = params[:business].except(:place_attributes)
+    @business.place.attributes = params[:business][:place_attributes]
+    if @business.verified? && @business.save
+      redirect_to edit_biz_business_path(@business)
+    else
+      flash[:error] = @business.verified?? 
+        "We had some errors with your submission." : 
+        "Sorry, you need to be verified before you can edit your entry."
+      @page_namespace = "biz_businesses_edit"
+      render :action => :edit
+    end
   end
   
   def create

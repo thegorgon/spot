@@ -3,12 +3,9 @@
   =spot_form_for @account, :url => biz_account_path, :display => "light" do |f|
     -if logged_in?
       =f.hidden_field :user_id, :value => current_user.id
-    =f.text_field :name, :placeholder => "name", :required => true, :hint => "what should we call you?", :value => current_user.try(:name)
-    =f.email_field :email, :placeholder => "email", :required => true, :hint => "how should we reach you?", :value => current_user.try(:email)
-    =f.phone_field :phone, :placeholder => "phone number", :required => true, :hint => "what is your phone number?"
-    =f.text_field :title, :placeholder => "title", :required => true, :hint => "what is your role?"
+    =render :partial => "/biz/accounts/fields", :locals => {:form => f}
     -unless logged_in?
       =f.password_field :password, :placeholder => "password", :required => true, :hint => "4 to 25 characters please", :minlength => 4, :maxlength => 25, :value => ""
-    %li.buttons.clearfix
-      =button_tag :class => "blackimg_77x32" do
+    %li.buttons.left.clearfix
+      =button_tag :class => "btngrypill300x30" do
         continue

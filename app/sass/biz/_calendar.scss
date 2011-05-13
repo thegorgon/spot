@@ -1,0 +1,385 @@
+#biz_businesses_calendar {
+  #hd {
+    z-index: 100;
+  }
+  .bizhd {
+    h1.title {
+      @include transition(all 0.25s);
+      position: relative;
+      z-index: 100;
+    }
+  }
+  .lightscreen {
+    position: absolute;
+    top: 0px; left: 0; right: 0; bottom: 0;
+    background: #000;
+    @include transition(all 0.25s);
+    min-height: 5000px;
+    z-index: 0;
+    @include opacity(0);
+  }
+  &.lightsout {
+    .bizhd {
+      h1.title {
+        color: #ddd;
+      }
+    }
+    .lightscreen {
+      z-index: 10;
+      @include opacity(0.5);
+    }
+    .section {
+      h1 {
+        color: #ddd;
+      }
+      #messages {
+        color: #fff;
+        text-shadow: 0px -1px 0px #333;
+        .cancel {
+        }
+      }
+      &.left {
+        .new {
+          @include opacity(0.5);
+        }
+      }
+    }
+  }
+  .instructions {
+    font-weight: normal;
+    color: #808080;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    margin: 0 0 1em 0;
+    text-shadow: 0px 1px 0px #ffffff;
+  }
+  #messages {
+    @include transition(all 0.25s);
+    clear: both;
+    font-size: 1.5em;
+    padding: 5px;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+    &.error {
+      color: #c84336;
+    }
+    .cancel {
+      float: right;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      margin-left: 10px;
+      background: transparent url(/images/assets/general/white_cross.png) no-repeat center center;
+      display: none;
+    }
+    .content {
+      line-height: 30px;
+    }
+    &.visible {
+      .cancel {
+        display: block;
+      }
+    }
+  }
+  .section {
+    position: relative;
+    z-index: 100;
+    h1 {
+      @include transition(all 0.25s);
+      text-align: left;
+      font-size: 2em;
+      margin: 0 0 0.25em 0;
+    }
+  }
+  .section.left {
+    float: left;
+    width: 212px;
+    .new {
+      width: 210px;
+    }
+    ul {
+      width: 210px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      border: 1px solid #666;
+      height: 500px;
+      margin: 0.25em 0 0.5em;
+      background: #fff;
+      &.empty {
+        .empty_message {
+          display: block;
+        }
+      }
+      &.loading {
+        background: #fff url(/images/assets/loading/grygears30x40.gif) no-repeat center center;
+      }
+      .empty_message {
+        display: none;
+        font-size: 1.2em;
+        h3 {
+          margin: 10px;
+          font-size: 1.2em;
+        }
+        p {
+          padding: 10px;
+        }
+      }
+      .template {
+        height: 50px;
+        .approval {
+          position: absolute;
+          top: 30px;
+          left: 7px;
+          font-weight: bold;
+          width: 10px;
+          text-align: center;
+          &.approved {
+            color: #556B2F;
+            left: 6px;
+          }
+          &.pending {
+            color: #EEAD0E;
+          }
+        }
+        h3 {
+          width: 170px;
+        }
+        &.pending, &.inactive, &.deleting {
+          @include opacity(0.5);
+        }
+        &:hover, &.hover {
+          height: 50px;
+          background: #ededed;
+          @include box_shadow(rgba(0,0,0,0.25) 0px 1px 3px inset);
+        }
+        &:active, &.active {
+          background: #666;
+          color: #ededed;
+          height: 90px;
+          @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px inset);
+          h3, h2 {
+            text-shadow: 0px -1px 0px #333;
+            color: #ededed;
+          }
+          .controls {
+            display: block;
+            .link {
+              text-decoration: underline;
+              font-weight: bold;
+              margin-top: 20px;
+              float: right;
+              color: #fff;
+            }
+          }
+        }
+        .controls {
+          display: none;
+          button {
+            width: 85px;
+          }
+        }
+      }
+    }
+  }
+  #newdealtpl {
+    width: 350px;
+    height: 475px;
+    position: relative;
+    form {
+      width: 300px;
+      margin: 0 auto;
+    }
+    .details {
+      font-weight: bold;
+      font-size: 12px;
+      .label, .input {
+        width: 145px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+      li.select {
+        line-height: 27px;
+      }
+    }
+    #template_average_spend_container {
+      height: 67px;
+    }
+    button.bottom {
+      bottom: 30px;
+      position: absolute;
+      left: 30px;
+      right: 30px;
+      font-size: 16px;
+      height: 35px;
+    }
+  }
+  .section.right {
+    float: left;
+    width: 750px;
+    margin: 0px 0px 200px 15px;
+    table {
+      border: 1px solid #666;
+      float: left;
+      thead {
+        background: #666;
+        width: 757px;
+        th {
+          display: block;
+          float: left;
+          width: 106px;
+          height: 20px;
+          line-height: 17px;
+          background: #666;
+          border: none;
+          color: #fff;
+          cursor: pointer;
+          text-shadow: 0px -1px 0px #000;
+          &.selectable {
+            &:hover {
+              text-decoration: underline;
+              background: #ededed;
+              color: #333;
+              text-shadow: 0px 1px 0px #fff;
+            }
+          }
+        }
+      }
+      &.loading tbody {
+        background: #fff url(/images/assets/loading/grygears30x40.gif) no-repeat center center;
+      }
+      tbody {
+        width: 757px;
+        display: block;
+        height: 480px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        td {
+          cursor: pointer;
+          position: relative;
+          display: block;
+          float: left;
+          padding-top: 20px;
+          width: 105px;
+          height: 90px;
+          border-right: 1px solid #ccc;
+          border-bottom: 1px solid #ccc;
+          text-align: right;
+          &.even_month {
+            background: #f2f2f2;
+          }
+          &.odd_month {
+            background: #fff;
+          }
+          &.past {
+            color: #999;
+          }
+          &.present {
+            font-weight: bold;
+          }
+          .datenumber {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+          }
+          .todaynote {
+            position: absolute;
+            top: auto;
+            height: 14px;
+            bottom: 5px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #666;
+            font-weight: bold;
+          }
+          &.smallevents {
+            .event {
+              padding: 0px 5px;
+              h2 {
+                line-height: 1em;
+              }
+              .timeframe {
+                display: none;
+              }
+            }
+          }
+          .event {
+            border-style: solid;
+            border-width: 3px;
+            @include border_radius(5px);
+            padding: 1px 5px;
+            h2 {
+              font-size: 10px;
+              font-weight: bold;
+            }
+            .timeframe {
+              font-size: 10px;
+            }
+            &.preview {
+              background-color: #fff !important;
+              border-style: dotted;
+            }
+            &.saved, &.saving {
+              color: #fff !important;
+            }
+            &.saving, &.deleting {
+              @include opacity(0.5);
+            }
+            &.removed {
+              color: #333 !important;
+              background-color: #ccc !important;
+            }
+          }
+        }
+        tr.last {
+          td {            
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+
+  .template, .datedetail .event {
+    position: relative;
+    padding: 10px 10px 10px 20px;
+    border-bottom: 1px solid #999;
+    cursor: pointer;
+    .color {
+      position: absolute;
+      top: 15px;
+      left: 7px;
+      height: 8px;
+      width: 8px;
+      @include border_radius(4px);
+    }
+    h3 {
+      font-size: 1em;
+      margin: 5px 0 0 0;
+      text-shadow: 0px 1px 0px #fff;
+      color: #999;
+    }
+    h2 {
+      font-size: 1.2em;
+      text-shadow: 0px 1px 0px #fff;
+    }
+    form {
+      margin: 1em 0 0;
+      float: left;
+    }
+  }
+  .datedetail {
+    width: 300px;
+    button {
+      width: 145px;
+    }
+    .removed {
+      margin: 1em 0 0;
+      float: left;
+      color: #c84336;
+      font-weight: bold;
+    }
+  }
+}

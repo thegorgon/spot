@@ -1,0 +1,18 @@
+%li.template{'data-id' => template.try(:id) || '${id}'}
+  .color{:style => "background:#{template.try(:color) || '${color}'}"}
+  %h2=template.try(:name) || '${name}'
+  %h3=template.try(:summary) || '${summary}'
+  {{if approved_at}}
+  .approval.approved{'data-jstooltip' => "Deal Approved!"}
+    Y
+  {{else}}
+  .approval.pending{'data-jstooltip' => "Pending Approval. Your deal won't be available until it's approved."}
+    N
+  {{/if}}
+  .controls
+    =form_tag CGI.unescape(biz_business_template_path(@business, '${id}')), :method => "delete", :class => "remove", 'data-confirm' => "Are you sure you want to delete '${name}'? This action is irreversible." do
+      =button_tag :class => "withx btngrypill" do
+        %span.redx
+          &times;
+        Delete
+    .link Finish

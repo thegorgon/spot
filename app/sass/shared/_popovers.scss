@@ -2,6 +2,13 @@
   position: relative;
   min-width: 120px;
   min-height: 85px; // Needs to be contentHeight + topHeight
+  &.permanent {
+    .bgl, .bgr {
+      .bpad {
+        top: 0px;
+      }
+    }
+  }
   &.titled {
     min-height: 80px;
     .hd {
@@ -45,6 +52,72 @@
         top: 15px;
       }
     }
+  }
+  &.arrowlfttp {
+    .bd {
+      .bgl {
+        .tpad {
+          height: 0px;
+        }
+        .arr {
+          top: 0px;
+          height: 40px;
+        }
+        .bpad {
+          top: 40px;
+        }
+      }
+    }
+  }
+  &.arrowlftbtm {
+    .bd {
+      .bgl {
+        .tpad {
+          height: auto;
+          bottom: 40px;
+        }
+        .arr {
+          bottom: 0px;
+          height: 40px;
+        }
+        .bpad {
+          height: 0px;
+        }
+      }
+    }    
+  }
+  &.arrowrttp {
+    .bd {
+      .bgr {
+        .tpad {
+          height: 0px;
+        }
+        .arr {
+          top: 0px;
+          height: 40px;
+        }
+        .bpad {
+          top: 40px;
+        }
+      }
+    }
+  }
+  &.arrowrtbtm {
+    .bd {
+      .bgr {
+        .tpad {
+          height: auto;
+          bottom: 40px;
+        }
+        .arr {
+          bottom: 0px;
+          height: 40px;
+        }
+        .bpad {
+          height: 0px;
+        }
+      }
+    }    
   }
   &.arrowtplft {
     .hd {
@@ -175,12 +248,36 @@
     top: 25px;
     .bgl {
       position: absolute;
-      top: 35px;
       left: 0px;
+      top: 35px;
+      bottom: 25px;
       width: 40px;
       bottom: 25px;
-      background: transparent url(/images/assets/popover/lftpad40x1.png) repeat-y top center;
       z-index: 100;
+      .tpad {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        height: 0px;
+        background: transparent url(/images/assets/popover/lftpad40x1.png) repeat-y top center;
+      }
+      .arr {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        height: 0px;
+        max-height: 40px;
+        background: transparent url(/images/assets/popover/lftarr40x40.png) repeat-y top center;
+      }
+      .bpad {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        background: transparent url(/images/assets/popover/lftpad40x1.png) repeat-y top center;
+        bottom: 0px;
+        height: auto;
+      }
     }
     .bgr {
       position: absolute;
@@ -188,8 +285,31 @@
       right: 0px;
       width: 40px;
       bottom: 25px;
-      background: transparent url(/images/assets/popover/rtpad40x1.png) repeat-y top center;
       z-index: 100;
+      .tpad {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        height: 0px;
+        background: transparent url(/images/assets/popover/rtpad40x1.png) repeat-y top center;
+      }
+      .arr {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        height: 0px;
+        max-height: 40px;
+        background: transparent url(/images/assets/popover/rtarr40x40.png) repeat-y top center;
+      }
+      .bpad {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        background: transparent url(/images/assets/popover/rtpad40x1.png) repeat-y top center;
+        bottom: 0px;
+        height: auto;
+      }
     }
     .content {
       position: absolute;

@@ -53,7 +53,10 @@
       });
     },
     biz_businesses_calendar: function() {
-      var cal = Spot.DealCalendar.init({ calendar: '#calendar' });
+      var cal = go.DealCalendar.init({ calendar: '#calendar' });
+    },
+    biz_businesses_edit: function() {
+      go.PlaceForm.init({mapDiv: $('.map')});
     }
   });
 }(Spot));

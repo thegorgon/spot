@@ -12,7 +12,6 @@
     },
     run = function() {
       dT = 5000;
-      $.logger.debug("RUN nextStep = ", nextStep);
       if (nextStep === 0) {
         dT = 7000;
         next.addClass('pending');

@@ -11,7 +11,8 @@ class Place < ActiveRecord::Base
 
   cattr_accessor :per_page
   @@per_page = 15
-  
+  attr_reader :external_image_url
+    
   has_many :wishlist_items, :as => :item, :conditions => { :deleted_at => nil }
   serialize :image_attribution, Hash
   acts_as_mappable
@@ -108,7 +109,7 @@ class Place < ActiveRecord::Base
       @external_image_url = value
     end
   end
-  
+    
   def image=(file)
     attachment_for(:image).assign(file)
     if file.nil?
@@ -162,7 +163,7 @@ class Place < ActiveRecord::Base
   def address
     address_lines.join(', ')
   end
-  
+    
   def region_abbr
     inverted = Geo::STATES.invert
     inverted[region.downcase] || region

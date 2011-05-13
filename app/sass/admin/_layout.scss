@@ -20,7 +20,7 @@ body, html, input, textarea, button {
 a, a:visited {
   color: #333;
   font-weight: bold;
-  &:hover {
+  &:hover, &.hover {
     color: #ff8419;
   };
 }
@@ -62,7 +62,7 @@ a, a:visited {
         float: left;
         @extend .blackimg_77x32;
         margin-right: 15px;
-        &.current {
+        &.active {
           color: #ddd;
           text-shadow: #333 0px -1px 0px;
           background: transparent url(/images/buttons/black_button_77x32_active.png) no-repeat center center;
@@ -110,7 +110,7 @@ h2.title {
         padding: 10px;
         text-decoration: none;
       }
-      &:hover {
+      &:hover, &.hover {
         background: #ff8419;
         a {
           color: #fff;

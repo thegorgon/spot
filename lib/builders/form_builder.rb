@@ -12,14 +12,19 @@ module Spot
         hint = @template.send(:content_tag, :div, hint.html_safe, :class => "hint") if hint.present?
         input = @template.send(selector, @object_name, method, objectify_options(options))
         error = @object.errors[method] if @object
+        if options[:label]
+          lbl = @template.send(:content_tag, :div, label(method, options[:label]), :class => "label")
+          input = @template.send(:content_tag, :div, input, :class => "input")
+        end
         error = error.join(" ") if error.respond_to?(:join)
         message = @template.send(:content_tag, :div, error, :class => "message")
         validity = @template.content_tag(:div, message.html_safe, :class => "validity")
         liclass = "text"
         liclass << " #{type}" if type != "text"
         liclass << " invalid" if error.present?
+        liclass << " labelled" if lbl.present?
         liclass << " hinted" if hint.present?
-        @template.content_tag(:li, "#{prepend}#{hint}#{input}#{validity}#{append}".html_safe, :id => "#{@object_name}_#{method}_container", :class => liclass)
+        @template.content_tag(:li, "#{lbl}#{prepend}#{hint}#{input}#{validity}#{append}".html_safe, :id => "#{@object_name}_#{method}_container", :class => liclass)
       end
     end
     

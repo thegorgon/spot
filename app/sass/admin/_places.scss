@@ -19,38 +19,81 @@
   }
 }
 .place.detail {
+  margin: 0 auto;
+  .external_places {
+    width: 272px;
+    margin: 0 auto;
+    a.potential {
+      padding: 5px;
+      color: #999;
+      &:hover, &.hover {
+        color: #ff8419;
+      }
+    }
+  }
+  ul.form.light.inlinelabels {
+    width: 420px;
+    a {
+      color: #000;
+    }
+    .hint {
+      padding-left: 0px;
+      right: -205px;
+    }
+    li.actions {
+      text-align: left;
+      padding-left: 120px;
+      .action {
+        padding: 0 20px 0 0;
+        &.loading {
+          color: #ff8419;
+          background: url(/images/assets/loading/org3blck16x11.gif) no-repeat right center;
+        }
+      }
+    }
+    li.text.labelled {
+      width: 420px;
+      .label {
+        width: 110px;
+      }
+      .input {
+        width: 300px;
+      }
+    }
+    li.buttons {
+      padding-left: 120px;
+    }
+  }
   .iphone {
     float: left;
     .content {
       background: #fff;
     }
   }
-  .page_link {
+  .subtext {
     padding: 1em 0;
     text-align: center;
     clear: both;
-  }
-  padding: 0 1em;
-  width: 725px;
-  margin: 0 auto;
-  .sidebar {
-    padding: 0 0 0 0;
-    float: right;
-    text-align: center;
-    .map {
-      width: 320px;
-      height: 250px;
-      margin: 0 auto;
+    .page_link {
+      padding: 1em 0;
     }
   }
-  .external_places {
-    width: 320px;
-    a.potential {
-      padding: 5px;
-      color: #999;
-      &:hover {
-        color: #ff8419;
-      }
+  .sidebar {
+    margin-left: 20px;
+    width: 420px;
+    padding: 0 0 0 0;
+    float: left;
+    text-align: center;
+    .map_message {
+      width: 380px;
+      margin: 0 auto;
+      height: 40px;
+      font-weight: bold;
+    }
+    .map {
+      width: 420px;
+      height: 250px;
+      margin: 0 auto;
     }
   }
   .duplication {

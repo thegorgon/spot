@@ -31,11 +31,11 @@ button[type]{
     line-height: 12px;
     height: 14px;   
   }
-  &:hover {
+  &:hover, &.hover {
     color: #BBB;
     @include gradient_top_down(#333, #000, 50%);
   }
-  &:active {
+  &:active, &.active {
     @include gradient_top_down(#000, #333, 100%);
     color: #999;
   }
@@ -46,7 +46,7 @@ button.link {
   background: transparent;
   text-decoration: underline;
   color: #333;
-  &:hover {
+  &:hover, &.hover {
    color: #ff8419; 
   }  
 }
@@ -63,11 +63,11 @@ button.link {
   font-weight: bold;
   text-shadow: 0px 1px #fff;
   background: transparent url(/images/buttons/orange_button156x31.png) no-repeat center center;  
-  &:hover {
+  &:hover, &.hover {
     color: #000 !important;
     background: transparent url(/images/buttons/orange_button156x31_hover.png) no-repeat center center;  
   }
-  &:active {
+  &:active, &.active {
     color: #000 !important;
     background: transparent url(/images/buttons/orange_button156x31_active.png) no-repeat center center;  
   }
@@ -82,11 +82,11 @@ button.link {
   color: #333;
   text-align: center;
   text-decoration: none;
-  &:hover {
+  &:hover, &.hover {
     color: #000 !important;
     @include gradient_top_down(#f2f2f2, #808080);
   }
-  &:active, &.current {
+  &:active, &.active {
     background: #666666;
     @include box_shadow(#000 0px 1px 5px inset);        
     color: #fff !important;
@@ -109,6 +109,40 @@ button.link {
   width: 400px;
 }
 
+.btnredpill {
+  display: block;
+  @include border_radius(5px);
+  @include gradient_top_down(#cd7777, #c84336); 
+  color: #fff;
+  text-shadow: 0px -1px 0px #000;
+  text-decoration: none;
+  border: 1px solid #993333;
+  padding: 0px 10px;
+  &:hover {
+    color: #fff !important;
+    @include gradient_top_down(#cd7777, #C72112);
+  }
+  &:active, &.active {
+    background: #993333;
+    @include box_shadow(#000 0px 1px 5px inset);        
+    color: #fff !important;
+    text-shadow: 0px -1px 0px #000;
+  }
+}
+
+button.withx {
+  position: relative;
+  padding-left: 10px;
+  .redx {
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #c84336;
+  }
+}
+
 .phone_whitegray_288x37, a.phone_whitegray_288x37 {
   display: block;
   width: 288px;
@@ -124,11 +158,11 @@ button.link {
   @include gradient_top_down(#F3F3F4, #E7E8E9, 100%);
   border: 1px solid #d5d5d6;
   @include border_radius(7px);
-  &:hover {
+  &:hover, &.hover {
     @include gradient_top_down(#F3F3F4, #E7E8E9, 50%);
     text-shadow: 0px 1px #fff;
   }
-  &:active {
+  &:active, &.active {
     @include gradient_top_down(#E7E8E9, #f0f0f0, 100%);
     text-shadow: 0px -1px #fff;
   }
@@ -152,11 +186,11 @@ button.link {
     line-height: 15px;
     height: 30px;   
   }
-  &:hover {
+  &:hover, &.hover {
     color: #BBB;
     @include gradient_top_down(#333, #000, 50%);
   }
-  &:active {
+  &:active, &.active {
     @include gradient_top_down(#000, #333, 100%);
     color: #999;
   }
@@ -179,12 +213,12 @@ button.link {
   font-weight: bold;
   line-height: 32px;
   text-shadow: #000 0px 1px 0px;
-  &:hover {
+  &:hover, &.hover {
     color: #BBB;
     background: transparent url(/images/buttons/black_button_77x32_hover.png) no-repeat center center;
     text-shadow: #000 0px -1px 0px;
   }
-  &:active {
+  &:active, &.active {
     text-shadow: #000 0px -1px 0px;
     background: transparent url(/images/buttons/black_button_77x32_active.png) no-repeat center center;
   }
@@ -209,11 +243,11 @@ button.link {
     line-height: 15px;
     height: 30px;   
   }
-  &:hover {
+  &:hover, &.hover {
     color: #BBB;
     @include gradient_top_down(#333, #000, 50%);
   }
-  &:active {
+  &:active, &.active {
     @include gradient_top_down(#000, #333, 100%);
     color: #999;
   }

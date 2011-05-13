@@ -24,7 +24,7 @@
         margin: 0;
         font-size: 1.2em;
         color: #ccc;
-        &:hover {
+        &:hover, &.hover {
          color: #ff8419;
         }
       }

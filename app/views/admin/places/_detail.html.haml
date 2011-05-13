@@ -1,27 +1,26 @@
 .place.detail{:id => dom_id(@place)}
-  .sidebar
-    .map=image_tag(google_static_map_url(@place, :size => "320x250"))
-    .latlng="@#{@place.to_lat_lng}"
-    -if @place.image_attribution.present?
-      .attribution
-        ="Image Courtesy Of "
-        =link_to "#{@place.image_attribution["source"].titlecase} API", @place.image_attribution["owner_url"], :target => "_new"       
-    -unless @place.new_record?
-      .external_places
-        -ExternalPlace.sources.each do |src|
-          -if ep = place.external_place(src)
-            =link_to "#{src.to_sym}", external_place_url(ep), :target => "_new", :class => "matched"
-          -else
-            =link_to "#{src.to_sym}", admin_place_matches_path(@place, :src => src.to_sym), :class => "potential"
-    .form
-      =render :partial => "form", :object => @place, :as => :place
-    -unless @place.new_record?
-      %p=link_to "Delete", admin_place_path(@place), "data-confirm" => "Are you sure you want to delete #{@place.name}?", "data-method" => "delete"
-  
   .left
     =render :partial => "shared/places/iphone", :object => @place, :as => :place
     -unless @place.new_record?
-      %p.page_link=link_to "Web Page", ShortUrl.shorten(place_path(@place))
+      .subtext
+        -if @place.image_attribution.present?
+          .attribution
+            ="Image Courtesy Of "
+            =link_to "#{@place.image_attribution["source"].titlecase} API", @place.image_attribution["owner_url"], :target => "_new"       
+        %p.page_link=link_to "spot page", ShortUrl.shorten(place_path(@place))
+        .external_places
+          -ExternalPlace.sources.each do |src|
+            -if ep = place.external_place(src)
+              =link_to "#{src.to_sym}", external_place_url(ep), :target => "_new", :class => "matched"
+            -else
+              =link_to "#{src.to_sym}", admin_place_matches_path(@place, :src => src.to_sym), :class => "potential"
+
+  .sidebar
+    .map_message
+    .map=image_tag(google_static_map_url(@place, :size => "320x250"))
+    .latlng="@#{@place.to_lat_lng}"
+    =render :partial => "form", :object => @place, :as => :place
+
   
   .duplication
     -if @place.duplicate?
