@@ -123,7 +123,7 @@ class User < ActiveRecord::Base
       :first_name => first_name,
       :last_name => last_name,
       :name => name,
-      :notification_settings => notification_settings
+      :requested_notifications => requested_notifications
     }
   end
     
