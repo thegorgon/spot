@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  NOTIFICATION_FLAGS = ["deals"]
+  
   attr_protected :admin
   before_validation :reset_persistence_token, :if => :reset_persistence_token?
   before_validation :reset_single_access_token, :if => :reset_single_access_token?
@@ -73,6 +75,36 @@ class User < ActiveRecord::Base
     update_attribute(:admin, true)
   end
   
+  def requested_notifications=(value)
+    (NOTIFICATION_FLAGS & value.to_a).each do |setting|
+      send("#{setting}=", true) if respond_to?("#{setting}=")
+    end
+    (NOTIFICATION_FLAGS - value.to_a).each do |setting|
+      send("#{setting}=", false) if respond_to?("#{setting}=")
+    end
+  end
+  
+  def requested_notifications
+    settings = []
+    NOTIFICATION_FLAGS.each do |flag|
+      settings << flag if send("notify_#{flag}?")
+    end
+  end
+
+  NOTIFICATION_FLAGS.each_with_index do |flag, i|
+    define_method("notify_#{flag}=") do |value|
+      if value
+        self[:notification_flags] |= (1 << i)
+      else
+        self[:notification_flags] &= ~(1 << i)
+      end
+    end
+    
+    define_method("notify_#{flag}?") do
+      self[:notification_flags] & (1 << i) > 0
+    end    
+  end
+    
   def reset_perishable_token!
     reset_perishable_token
     save!
@@ -90,7 +122,8 @@ class User < ActiveRecord::Base
       :id => id,
       :first_name => first_name,
       :last_name => last_name,
-      :name => name
+      :name => name,
+      :notification_settings => notification_settings
     }
   end
     

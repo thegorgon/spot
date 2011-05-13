@@ -66,5 +66,4 @@ class Api::BaseController < ApplicationController
     Rails.logger.info("spot-app: requiring user, current user id : #{current_user.try(:id)}")
     raise UnauthorizedAccessError, "An active user session is required to access this resource." unless logged_in?
   end
-
 end
