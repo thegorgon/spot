@@ -219,9 +219,14 @@
             eventDetail.data('calendarevent', $(this));
             content.append(eventDetail);
           });
+          grid.find('tbody').css('overflow', 'hidden');
           popover = $.popover.init($(cell).data('date').toString("ddd, MMM d"), content);
           bindDeleteEventForms(popover);
           $.popover.reveal($(cell), popover, {orient: 'horizontal'});
+          $(window).unbind('popoverhide.returnscroll').bind('popoverhide.returnscroll', function(e) {
+            grid.find('tbody').css('overflow-y', 'scroll');
+            $(window).unbind('popoverhide.returnscroll');
+          });
         },
         createEvent = function(cell) {
           cell = $(cell);

@@ -60,10 +60,16 @@
     }
     h1 {
       color: #993333;
-      margin: 30px 0 0 0;
+      margin: 100px 0 0 0;
     }
     .message {
+      font-size: 15px;
+      line-height: 1.2em;
       margin: 10px 0 0 0;
+      p {
+        width: 450px;
+        margin: 20px auto;
+      }
     }
   }
   .preview {
@@ -83,6 +89,7 @@
     }
   }
   .form_container {
+    position: relative;
     width: 430px;
     float: left;
     margin-left: 5em;

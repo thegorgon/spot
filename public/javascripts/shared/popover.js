@@ -194,21 +194,22 @@
       if (!horizontal) { // Auto determine left or right side
         if (offset.left + trigWidth + popWidth > windowRight) {
           horizontal = 'left'; // Popover on left side
-          arrow = popover.find('.bgr .arr'); // implies arrow on right
         } else {
           horizontal = 'right'; // Popover on right side
-          arrow = popover.find('.bgl .arr'); // implies arrow on left
         }
+      }
+
+      
+      if (horizontal == 'left') { // Put the popover to the left of the trigger
+        arrow = popover.find('.bgr .arr'); // implies arrow on right
+        offset.left = offset.left - popWidth + arrow.width() * 0.5;
+      } else if (horizontal == 'right') { // Put the popover to the right of the trigger
+        arrow = popover.find('.bgl .arr'); // implies arrow on left
+        offset.left = offset.left + trigWidth - arrow.width() * 0.5;
       }
 
       removeArrows(popover);
       arrow.css({height: arrow.css('max-height')});
-      
-      if (horizontal == 'left') { // Put the popover to the left of the trigger
-        offset.left = offset.left - popWidth + arrow.width() * 0.5;
-      } else if (horizontal == 'right') { // Put the popover to the right of the trigger
-        offset.left = offset.left + trigWidth - arrow.width() * 0.5;
-      }
 
       if (!vertical) {
         if (offset.top - popHeight * 0.5 < windowTop) {
@@ -287,8 +288,8 @@
         $(window).unbind('resize.popover').bind('resize.popover', function() { $.popover.position(trigger, popover); });
         $(window).unbind('scroll.popover').bind('scroll.popover', function() { $.popover.position(trigger, popover); });
         setTimeout(function() { // Otherwise this event might count
-          $('body').click(function(e) {
-            if ($(e.target).is(':not(.popover, .popover *)')) { $.popover.hide(trigger, popover); }
+          $('body').unbind('click.hidepopover').bind('click.hidepopover', function(e) {
+            if ($(e.target).is(':not(.popover, .popover *)')) { $.popover.hide(); }
           });          
         }, 1);
         popover.find('a').unbind('click.popover').bind('click.popover', function(e) { $.popover.hide(trigger, popover); });
@@ -299,14 +300,17 @@
         popover = popover || $('.popover:not(.permanent)');
         trigger.removeClass('active');
         options = options || {};
+        $('body').unbind('click.hidepopover');
         $(window).unbind('resize.popover').unbind('scroll.popover');
         if (!$.isFunction(options.complete)) { options.complete = function() {}; }
         if ($.support.opacity) {
           popover.fadeOut(250, function() {
+            $(window).trigger('popoverhide');
             options.complete.call(popover);
           });
         } else {
           popover.hide();
+          $(window).trigger('popoverhide');
           options.complete.call(popover);
         }
       },

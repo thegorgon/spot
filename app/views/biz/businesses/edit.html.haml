@@ -1,17 +1,21 @@
 =render :partial => "header"
-#bizbd.clearfix
-  -unless @business.verified?
-    .lock
-      .screen
-      %h1 Locked
-      .message
-        Sorry, but entry editing is locked until your business is verified.
+#bizbd.clearfix        
   .preview.place.detail
     %h2 In App Preview
     %h3 This is what your business looks like in Spot.
     =render :partial => "/shared/places/iphone", :locals => {:place => @business.place}
 
   .form_container
+    -unless @business.verified?
+      .lock
+        .screen
+        %h1 Locked
+        .message
+          %p Sorry, but entry editing is locked until your business is verified.
+          %p 
+            Verification usually only takes a day or so. In the meantime, you can start
+            ="#{link_to "preparing your deals", calendar_biz_business_path(@business)}.".html_safe
+    
     %h1 Edit Your Business Entry
     %h3 
       Changed your phone number? Moved to a new location? 
