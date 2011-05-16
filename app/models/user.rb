@@ -77,10 +77,10 @@ class User < ActiveRecord::Base
   
   def requested_notifications=(value)
     (NOTIFICATION_FLAGS & value.to_a).each do |setting|
-      send("#{setting}=", true) if respond_to?("notify_#{setting}=")
+      send("notify_#{setting}=", true) if respond_to?("notify_#{setting}=")
     end
     (NOTIFICATION_FLAGS - value.to_a).each do |setting|
-      send("#{setting}=", false) if respond_to?("notify_#{setting}=")
+      send("notify_#{setting}=", false) if respond_to?("notify_#{setting}=")
     end
   end
   
