@@ -85,7 +85,15 @@ class PlaceSearch < ActiveRecord::Base
         @results = {}
         load_local_places
         load_google_places if @position
-        @results = @results.values.sort { |r1, r2| r2.relevance == r1.relevance ? r1.distance <=> r2.distance : r2.relevance <=> r1.relevance }
+        @results = @results.values.sort do |r1, r2| 
+          if r2.relevance == r1.relevance && r1.wishlist_count == r2.wishlist_count 
+            r1.distance <=> r2.distance
+          elsif r2.relevance == r1.relevance
+            r2.wishlist_count <=> r1.wishlist_count
+          else
+            r2.relevance <=> r1.relevance
+          end
+        end
         @loaded = true
       end
     end
@@ -95,7 +103,7 @@ class PlaceSearch < ActiveRecord::Base
     local = []
     @benchmarks[:local] = Benchmark.measure do 
       options = {:page => page, :per_page => per_page}
-      options[:order] = "@relevance DESC"
+      options[:order] = "@relevance DESC, wishlist_count DESC"
       if @position
         options[:geo] = @position.ts_geo
         options[:order] << ", @geodist ASC"

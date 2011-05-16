@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  NOTIFICATION_FLAGS = ["deals"]
+  NOTIFICATION_FLAGS = ["deal-emails"]
   
   attr_protected :admin
   before_validation :reset_persistence_token, :if => :reset_persistence_token?
