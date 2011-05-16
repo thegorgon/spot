@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  NOTIFICATION_FLAGS = ["deal-emails"]
+  NOTIFICATION_FLAGS = ["deal_emails"]
   
   attr_protected :admin
   before_validation :reset_persistence_token, :if => :reset_persistence_token?
@@ -89,6 +89,7 @@ class User < ActiveRecord::Base
     NOTIFICATION_FLAGS.each do |flag|
       settings << flag if send("notify_#{flag}?")
     end
+    settings
   end
 
   NOTIFICATION_FLAGS.each_with_index do |flag, i|
