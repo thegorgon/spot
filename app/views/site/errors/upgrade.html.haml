@@ -1,10 +1,7 @@
-#upgrade_error.error_page.vcc
-  .vc
-    .image=image_tag "assets/general/upgrade218x226.gif", :size => "218x226"
-    
-    %h1 Spot uses some advanced technology, which your older browser is not sophisticated enough to properly render. Please consider upgrading or switching to a more sophisticated browser.
-    .home_link
-      =link_to "Upgrade?", 'http://www.microsoft.com/windows/internet-explorer/default.aspx'
-      &nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;
-      =link_to "Switch to Chrome?", "http://www.google.com/chrome" 
-      
+#upgrade_error.error_page.center
+  %h1 The browser you are currently using cannot properly render Spot. Please consider upgrading or switching to a more sophisticated browser.
+
+  .links
+    .link=link_to "Upgrade?", 'http://www.microsoft.com/windows/internet-explorer/default.aspx'
+    &nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;
+    .link="Switch to #{link_to "Chrome", "http://www.google.com/chrome"}, #{link_to "Firefox", "http://www.mozilla/com/firefox"}, #{link_to "Safari", "http://www.apple.com/safari"}, or #{link_to "Opera", "http://www.opera.com/"}?".html_safe      
