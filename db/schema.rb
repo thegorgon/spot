@@ -316,7 +316,7 @@ ActiveRecord::Schema.define(:version => 20110518201043) do
     t.string   "interest",                          :null => false
   end
 
-  add_index "preview_signups", ["email"], :name => "index_preview_signups_on_email", :unique => true
+  add_index "preview_signups", ["interest", "email"], :name => "index_preview_signups_on_interest_and_email", :unique => true
 
   create_table "short_urls", :force => true do |t|
     t.string   "url"
