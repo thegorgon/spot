@@ -14,9 +14,6 @@ Spot::Application.routes.draw do
   end
   
   scope :module => "site", :constraints => {:subdomain => /www|m|app|/} do
-    resources :previews, :only => [:index, :create] do
-      get "share"
-    end
     resources :blog, :controller => "blog", :only => [:index]
     resource :session, :only => [:new, :create, :destroy]
     resource :account, :only => [:new, :create, :destroy]
@@ -77,9 +74,13 @@ Spot::Application.routes.draw do
       resources :deals, :only => [:index, :create, :update, :destroy]
       resources :templates, :path => "deals/templates", :controller => "deal_templates", :only => [:index, :create, :update, :destroy]
     end
+    resource :contact, :only => [:new, :create]
     controller "home" do
       get "help"
     end
+    get "faq", :to => "home#faq"
+    get "tos", :to => "home#tos"
+    get "widgets", :to => "home#widgets"
     root :to => "home#index"
   end
   

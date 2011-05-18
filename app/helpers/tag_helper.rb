@@ -33,9 +33,23 @@ module TagHelper
     content_tag(:iframe, "", props)
   end
 
-  def twitter_share_url(url, text)
+  def twitter_share_url(url, text, content=nil)
+    klass = content ? "twitter-share-link" : "twitter-share-button"
+    content ||= "&nbsp;".html_safe
     params = {:url => url, :via => "spotteam", :text => text}
-    share = content_tag(:a, "&nbsp;".html_safe, :href => "https://twitter.com/share?#{params.to_query}", :target => "_blank", :class => "twitter-share-button")
+    share = content_tag(:a, content, :href => "https://twitter.com/share?#{params.to_query}", :target => "_blank", :class => klass)
+    share.html_safe
+  end
+  
+  def fb_share(options, content=nil)
+    klass = content ? "fb-share-link" : "fb-share-button"
+    content ||= "&nbsp;".html_safe
+    params = { 'data-fb-url' => options[:url], 
+               'data-fb-name' => options[:name], 
+               'data-fb-caption' => options[:caption], 
+               'data-fb-description' => options[:description], 
+               'data-fb-image' => options[:image] }
+    share = content_tag(:a, content, params.merge!(:href => "javascript:;", :class => klass))
     share.html_safe
   end
   

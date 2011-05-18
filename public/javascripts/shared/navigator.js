@@ -32,9 +32,14 @@
     },
     getHash = function(hash) {
       hash = hash || window.location.hash.toString();
-      hash = hash.replace(/^[^#]*#?(.*)$/, '$1');                
+      hash = hash.replace(/^[^#]*#?(.*)$/, '$1');
       hash = $.trim(hash);
-      hash = hash || window.location.pathname + window.location.search;
+      hash = hash || "!" + window.location.pathname + window.location.search;
+      if (hash.charAt(0) != "!") {
+        hash = null;
+      } else {
+        hash = hash.slice(1);
+      }
       return hash;
     },
     setLastHash = function(hash) {
@@ -52,16 +57,16 @@
       if (url == initialUrl) {
         setLastHash(url);
         if (force && window.location.hash.toString().length > 0) {
-          window.location.href = "#" + initialUrl;
+          window.location.href = "#!" + initialUrl;
         }        
       } else {
         setLastHash(url);
-        window.location.href = "#" + url;        
+        window.location.href = "#!" + url;        
       }
     },
     onHashChange = function() {
       var lastHash = getLastHash(), e;
-      if (getHash() != lastHash) {
+      if (getHash() && getHash() != lastHash) {
         onStart();
         e = jQuery.Event("navigator");
         e.lastHash = lastHash;

@@ -4,4 +4,11 @@ class Biz::HomeController < Biz::BaseController
   
   def index
   end
+  
+  def faq
+    @faqs = YAML.load_file("#{Rails.root}/db/bizfaqs.yml")["faqs"]
+  end
+  
+  def tos
+  end
 end

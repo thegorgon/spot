@@ -52,6 +52,13 @@
                   =button_tag :class => "blackimg_77x32" do
                     login
                   =link_to "forgot password", new_password_reset_path, :class => "forgot"
+        %li{'data-popover' => '#help_topics', 'data-popover-orient' => 'vertical'} 
+          Help
+          %ul#help_topics.subnav.hidden
+            %li=link_to "FAQ", biz_faq_path
+            %li=link_to "Terms of Service", biz_tos_path
+            %li=link_to "Contact Us", new_biz_contact_path
+              
     #bd.clearfix
       = yield
   #fb-root

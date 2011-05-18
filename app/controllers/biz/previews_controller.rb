@@ -1,4 +1,4 @@
-class Site::PreviewsController < Site::BaseController
+class Biz::PreviewsController < Biz::BaseController
   def create
     @preview = PreviewSignup.signup(params[:preview])
     if @preview.save

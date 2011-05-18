@@ -1,7 +1,6 @@
 class BusinessMailer < ActionMailer::Base
   layout 'mailer'
   default_url_options[:host] = Rails.env.production?? "www.spot-app.com" : "www.rails.local:3000"
-  PHONE_NUMBER = "1-877-555-5555"
   FROM = "The Spot Team <noreply@spot-app.com>"
   REPLY_TO = "Julia Graham <julia@spot-app.com>"
   default :from => FROM, :reply_to => REPLY_TO
@@ -12,6 +11,16 @@ class BusinessMailer < ActionMailer::Base
     mail( :to => @account.email_with_name,
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
           :subject => "Welcome to Spot for Businesses!" )
+  end
+  
+  def contact(account, parameters)
+    @account = account
+    @contact = parameters[:contact]
+    @subject = parameters[:subject]
+    @message = parameters[:message]
+    mail( :to => Rails.env.production?? "contact@spot-app.com" : "jreiss@spot-app.com",
+          :reply_to => @contact,
+          :subject => "New business message : #{@subject}")
   end
   
   def deal_approved(deal)

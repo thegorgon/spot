@@ -1,0 +1,89 @@
+faqs:
+  - 
+    question: What is a "deal"?
+    name: dealdef
+    answer:
+      A deal is a discount valid for a certain time period. 
+      Use deals to attract visitors on days when your business is typically slower. 
+      You have control over the number of discounts to issue, the times when your 
+      discount should be valid, and the size of the discount to offer. 
+      You can also make your deal more attractive by adding a colorful editorial 
+      description of your deal.
+  -
+    question: Who sees my deals and how?
+    name: dealwho
+    answer:
+      Deals are made available to all Spot members. Spot members are...
+  -
+    question: Who are Spot members?
+    name: spotwho
+    answer:
+      
+  -
+    question: How do I grow my Spot membership?
+    name: spotgrow
+    answer:
+      
+  -
+    question: How can I get a Spot widget onto my website?
+    name: spotwidget
+    answer:
+      
+  -
+    question: What does my deal look like in the world?
+    name: dealdisplay
+    answer:
+      
+  -
+    question: Why do I "schedule" deals?
+    name: dealschedwhy
+    answer:
+      
+  -
+    question: How do I schedule deals?
+    name: dealschedhow
+    answer:
+  -
+    question: How far ahead can I schedule a deal?
+    name: dealschedadv
+    answer:
+      
+  -
+    question: Can I have more than 1 deal a day?
+    name: dealsperday
+    answer:
+      
+  -
+    question: How can I tell what deals are running on what days?
+    name: dealsrunning
+    answer:
+      
+  -
+    question: How do I change my deals?
+    name: dealschange
+    answer:
+      
+  -
+    question: How does the redemption process work?
+    name: redemptionprocess
+    answer:
+      
+  -
+    question: What happens if a customer shows up after the deal expires?
+    name: afterexpire
+    answer:
+      
+  -
+    question: Who tracks my deals?
+    name: dealtracking
+    answer:
+      
+  -
+    question: How do I know when my deals expire?
+    name: dealexpires
+    answer:
+      
+  -
+    question: I'm still confused. How can I get more help?
+    name: morehelp
+    answer: 

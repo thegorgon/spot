@@ -1,0 +1,11 @@
+.faqs
+  %h1 Frequently Asked Questions
+  %ul.summary.clearfix
+    -@faqs.each do |faq|
+      %li 
+        %a{:href => "##{faq["name"]}"}=faq["question"]
+  %dl
+    -@faqs.each do |faq|
+      %a{:name => faq["name"]}
+      %dt=faq["question"]
+      %dd=faq["answer"]

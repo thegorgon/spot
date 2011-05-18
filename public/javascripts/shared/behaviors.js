@@ -190,11 +190,29 @@
           $(this).parent('li').add(this).removeClass('invalid');
         });
         fetch('.tabbar').tabBar();
-        fetch('.twitter-share-button').click(function(e) {
+        fetch('.twitter-share-button, .twitter-share-link').click(function(e) {
           e.preventDefault();
           var left = screen.width > 350 ? Math.round(0.5 * (screen.width - 350)) : 0,
             top = screen.height > 300 ? Math.round(0.5 * (screen.height - 300)) : 0;
           window.open(this.href, "tweetwindow", "scrollbars=yes,resizable=yes,toolbar=no,location=yes,width=350,height=300,left=" + left + ",top=" + top);
+        });
+        fetch('.fb-share-button, .fb-share-link').click(function(e) {
+          e.preventDefault();
+          FB.ui(
+            {
+              method: 'feed',
+              name: $(this).attr('data-fb-name'),
+              link: $(this).attr('data-fb-url') || 'http://www.spot-app.com',
+              picture: $(this).attr('data-fb-image') || 'http://www.spot-app.com/images/logos/og_image.png',
+              caption: $(this).attr('data-fb-caption'),
+              description: $(this).attr('data-fb-description')
+            },
+            function(response) {
+              if (response && response.post_id) {
+              } else {
+              }
+            }
+          );
         });
         fetch('form[data-validate]').autovalidate();        
       } catch(e) {

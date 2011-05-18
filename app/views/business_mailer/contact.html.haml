@@ -1,0 +1,16 @@
+%p
+  Someone contacted us on our awesome business site.
+
+%p
+  On 
+  =Time.now.strftime("%B %d %Y at %l:%M %p")
+  =@account.try(:name) || "an unregistered business user"
+  ="(#{@contact})"
+  asked :
+
+%p{:style => "padding: 20px"}
+  =@message
+  
+%p
+  To reply to this question, respond to this email or email directly to:
+  =mail_to @contact

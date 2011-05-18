@@ -42,15 +42,7 @@
             ="Logged in as #{current_user.nickname} #{link_to "logout", session_path, 'data-method' => "delete", :class => "dark"}".html_safe
             -if current_user.admin?
               =link_to "admin", admin_root_path, :class => "dark"
-      =itunes_store_link("assets/general/app_store183x60.png", :size => "183x60") do
-        #signup_form.flips
-          %p.title
-            Coming Soon! Sign up for early access :
-          =spot_form_for :preview, :url => previews_path, :class => "page" do |f|
-            =f.hidden_field :rid, :value => params[:rid]
-            =f.text_field :email, "placeholder" => "enter your email address", "spellcheck" => "false", :type => "email", :class => "faded placeholder"
-            =button_tag(:class => "hlfrndblk_80x30") do
-              submit
+      =itunes_store_link("assets/general/app_store183x60.png", :size => "183x60")
     #fb-root
   =include_javascripts :vendor
   =include_javascripts :scripts
