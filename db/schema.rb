@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110513220608) do
+ActiveRecord::Schema.define(:version => 20110518201043) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -313,6 +313,7 @@ ActiveRecord::Schema.define(:version => 20110513220608) do
     t.integer  "referrer_id"
     t.datetime "created_at"
     t.boolean  "emailed",        :default => false, :null => false
+    t.string   "interest",                          :null => false
   end
 
   add_index "preview_signups", ["email"], :name => "index_preview_signups_on_email", :unique => true
