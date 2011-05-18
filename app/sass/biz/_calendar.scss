@@ -126,7 +126,6 @@
         }
       }
       .template {
-        height: 50px;
         .approval {
           position: absolute;
           top: 30px;
@@ -152,16 +151,17 @@
           @include opacity(0.5);
         }
         &:hover, &.hover {
-          height: 50px;
           background: #ededed;
           @include box_shadow(rgba(0,0,0,0.25) 0px 1px 3px inset);
         }
         &:active, &.active {
           background: #666;
           color: #ededed;
-          height: 90px;
+          height: auto;
           @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px inset);
           h3, h2 {
+            overflow: visible;
+            white-space: normal;
             text-shadow: 0px -1px 0px #333;
             color: #ededed;
           }
@@ -327,6 +327,7 @@
             @include border_radius(3px);
             padding: 1px 5px;
             h2 {
+              @include ellipsis;
               font-size: 10px;
               font-weight: bold;
             }

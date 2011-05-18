@@ -13,6 +13,13 @@
       });
       return retVal;
     },
+    shorten: function(string, length) {
+      if (string.length < length) {
+        return string;
+      } else {
+        return string.slice(0, length - 3) + "...";
+      }
+    },
     updateOrientation: function() {
       var orient = Math.abs(window.orientation) === 90 ? "landscape" : "portrait";
       if (orient !== $('body').attr('orient')) {

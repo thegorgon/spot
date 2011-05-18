@@ -12,7 +12,7 @@
   .approval.rejected{'data-jstooltip' => "Deal rejected, contact #{mail_to "julia@spot-app.com"} to resolve."}
     N
   {{/if}}
-  .controls
+  .controls.clearfix
     =form_tag CGI.unescape(biz_business_template_path(@business, '${id}')), :method => "delete", :class => "remove", 'data-confirm' => "Are you sure you want to delete '${name}'? This action is irreversible." do
       =button_tag :class => "withx btngrypill" do
         %span.redx
