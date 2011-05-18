@@ -1,14 +1,23 @@
 class Biz::PreviewsController < Biz::BaseController
+  skip_before_filter :require_admin
+  skip_before_filter :require_account
+  
+  layout 'site'
+  
+  def index
+  end
+  
   def create
     @preview = PreviewSignup.signup(params[:preview])
     if @preview.save
-      redirect_to preview_share_path(@preview.rid)
+      flash[:notice] = "Thank you for your interest. We'll be in touch."
     else
-      redirect_to root_path
+      flash[:error] = "Sorry, there was an error with your submission, please try again."
     end
+    redirect_to root_path
   end
   
-  def share
+  def show
     @preview = PreviewSignup.find_by_rid(params[:preview_id])
   end
 end

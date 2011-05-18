@@ -1,9 +1,10 @@
 %p Hello,
 
-%p Thank you for your invitation request! We're hard at work getting Spot ready for you but we'll let you know as soon as it's ready. 
+-if @signup.interest == "business"
+  %p Thank you for your interest! We're hard at work building something revolutionary to help out business owners like you.
 
-%p In the meantime, tell your friends, because, you know, Spot is awesome!
+  %p We'll let you know as soon as it's ready.
 
-%p Thanks,
-%p The Spot Team
-=image_tag 'http://www.spot-app.com/images/logos/gradient_script_340x270.png', :size => "170x135"
+  %p Thanks,
+  %p The Spot Team
+  =image_tag 'http://www.spot-app.com/images/logos/black_biz_spot158x108.png', :size => "158x108"

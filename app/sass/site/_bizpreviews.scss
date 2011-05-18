@@ -1,0 +1,26 @@
+.biz_previews {
+  .form_container {
+    p {
+      font-size: 15px;
+      line-height: 1.2em;
+      margin: 15px auto;    
+    }
+    form {
+      width: 325px;
+      margin: 15px auto;
+      position: relative;
+      .validity {
+        right: -260px;
+      }
+      .placeholder {
+        text-align: left;
+      }
+      button {
+        z-index: 10;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+      }
+    }
+  }
+}

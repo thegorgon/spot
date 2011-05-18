@@ -9,7 +9,7 @@ class TransactionMailer < ActionMailer::Base
     mail( :from => "noreply@spot-app.com",
           :to => @email,
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
-          :subject => "Thanks From the Spot Team!" )
+          :subject => "Thanks for your interest!" )
   end
   
   def password_reset(user)

@@ -128,12 +128,16 @@ body {
   #nav {
     float: right;
     padding: 0;
-    margin: 55px 40px 0 0;
+    margin: 40px 40px 0 0;
     width: 252px;
-    #account_nav {
-      float: right;
+    p {
+      padding: 0 0 5px 0;
+    }
+    .account {
+      clear: both;
+      float: none;
+      text-align: right;
       font-size: 12px;
-      padding: 10px 0;
       a {
         cursor: pointer;
         display: inline;

@@ -1,9 +1,8 @@
 class PreviewSignup < ActiveRecord::Base
+  INTERESTS = ["iphone", "business"]
   SEED_RID = 4372
-  CURRENT_TESTS = [*2..4]
-  FORMATS = {2 => "gif"}
-  validates :email, :presence => true, :format => { :with => EMAIL_REGEX }, :uniqueness => true
-  before_validation :set_test, :on => :create
+  validates :email, :presence => true, :format => { :with => EMAIL_REGEX }, :uniqueness => {:scope => "interest"}
+  validates :interest, :presence => true, :inclusion => INTERESTS
   after_create :credit_referrer
   after_save :send_thank_you, :unless => :emailed?
   
@@ -13,7 +12,8 @@ class PreviewSignup < ActiveRecord::Base
   
   def self.signup(params)
     email = params[:email]
-    if email && preview = find_by_email(email)
+    interest = params[:interest]
+    if email && preview = find_by_email_and_interest(email, interest)
       preview
     else
       new(params)
@@ -24,10 +24,6 @@ class PreviewSignup < ActiveRecord::Base
     if rid.to_i > SEED_RID
       find_by_id(rid.to_i - SEED_RID)
     end
-  end
-  
-  def image_format
-    FORMATS[test] || "jpg"
   end
   
   def rid=(value)
@@ -41,10 +37,6 @@ class PreviewSignup < ActiveRecord::Base
   end
   
   private
-  
-  def set_test
-    self.test = CURRENT_TESTS[rand(CURRENT_TESTS.length)]
-  end
   
   def credit_referrer
     self.class.credit!(referrer_id)
