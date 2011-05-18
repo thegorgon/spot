@@ -89,17 +89,17 @@
 }
 
 @mixin transition($rule) {
-  -webkit-transition: $rule; 
-  -moz-transition: $rule; 
-  -o-transition: $rule; 
-  transition: $rule;
+  -webkit-transition: unquote($rule); 
+  -moz-transition: unquote($rule); 
+  -o-transition: unquote($rule); 
+  transition: unquote($rule);
 }
 
 @mixin transform($rule) {
-  -webkit-transform: $rule; 
-  -moz-transform: $rule; 
-  -o-transform: $rule; 
-  transform: $rule;  
+  -webkit-transform: unquote($rule); 
+  -moz-transform: unquote($rule); 
+  -o-transform: unquote($rule); 
+  transform: unquote($rule);  
 }
 
 @mixin gradient_top_down($from, $to, $point: 100%) {
@@ -116,9 +116,9 @@
 }
 
 @mixin box_shadow($shadow) {
-  -moz-box-shadow: $shadow;
-  -webkit-box-shadow: $shadow;
-  box-shadow: $shadow;
+  -moz-box-shadow: unquote($shadow);
+  -webkit-box-shadow: unquote($shadow);
+  box-shadow: unquote($shadow);
 }
 
 @mixin opacity($opacity) {

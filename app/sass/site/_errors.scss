@@ -21,3 +21,21 @@
     }
   }
 }
+
+#upgrade_error {
+  .image {
+    margin: 40px auto 0px;
+  }
+  h1 {
+    font-size: 20px;
+    line-height: 25px;
+    width: 500px;
+    margin: 20px auto;
+  }
+  .links {
+    a {
+      display: inline-block;
+      padding: 0 50px;
+    }
+  }
+}

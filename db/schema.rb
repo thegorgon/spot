@@ -99,7 +99,9 @@ ActiveRecord::Schema.define(:version => 20110513220608) do
   create_table "deal_templates", :force => true do |t|
     t.string   "name",                               :null => false
     t.text     "description"
+    t.text     "rejection_reasoning"
     t.integer  "position"
+    t.integer  "status",              :default => 0, :null => false
     t.integer  "deal_count",          :default => 0, :null => false
     t.integer  "discount_percentage", :default => 0, :null => false
     t.integer  "start_time",          :default => 0, :null => false
@@ -107,8 +109,6 @@ ActiveRecord::Schema.define(:version => 20110513220608) do
     t.integer  "average_spend",       :default => 0, :null => false
     t.integer  "business_id",                        :null => false
     t.integer  "cost_cents"
-    t.datetime "removed_at"
-    t.datetime "approved_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

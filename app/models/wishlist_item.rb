@@ -42,9 +42,10 @@ class WishlistItem < ActiveRecord::Base
   def tweet(options={})
     if @tweet.blank? || options[:reload]
       @tweet = "Hot on Spot: #{item.name} was just wishlisted"
-      @tweet << " in" if item.city || item.region
-      @tweet << " ##{item.city.gsub(' ', '').downcase}" if item.city
-      @tweet << " ##{item.region_abbr.gsub(' ', '').downcase}" if item.region
+      @tweet << " in" if item.city.present? || item.region.present? || item.country.present?
+      @tweet << " ##{item.city.gsub(' ', '').downcase}" if item.city.present?
+      @tweet << " ##{item.region_abbr.gsub(' ', '').downcase}" if item.region.present?
+      @tweet << " ##{item.region_abbr.gsub(' ', '').downcase}" if item.country.present? && item.city.empty? && item.region.empty?
       @tweet << " via @SpotTeam"
     end
     @tweet.length <= 140 ? @tweet : nil

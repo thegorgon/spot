@@ -13,7 +13,7 @@ module Spot
         input = @template.send(selector, @object_name, method, objectify_options(options))
         error = @object.errors[method] if @object
         if options[:label]
-          lbl = @template.send(:content_tag, :div, label(method, options[:label]), :class => "label")
+          lbl = @template.send(:content_tag, :div, label(method, options.delete(:label), :class => "label"))
           input = @template.send(:content_tag, :div, input, :class => "input")
         end
         error = error.join(" ") if error.respond_to?(:join)

@@ -1,0 +1,20 @@
+.manager
+  .message
+  .top.clearfix
+    .pagination
+      -if @deals.next_page
+        .next=link_to "Next &rarr;".html_safe, admin_deals_path(:page => @deals.next_page, :filter => params[:filter])
+      -if @deals.previous_page
+        .previous=link_to "&larr; Previous".html_safe, admin_deals_path(:page => @deals.previous_page, :filter => params[:filter])
+    %h1.title="#{@deals.total_entries} Deals"
+    .links
+      =link_to "Pending Approval", admin_deals_path(:filter => 1)
+      =link_to "Approved", admin_deals_path(:filter => 2)
+      =link_to "Rejected", admin_deals_path(:filter => 4)
+      =link_to "All", admin_deals_path
+  =render :partial => "table", :object => @deals, :as => :deals
+  .pagination.bottom
+    -if @deals.next_page
+      .next=link_to "Next &rarr;".html_safe, admin_deals_path(:page => @deals.next_page, :filter => params[:filter])
+    -if @deals.previous_page
+      .previous=link_to "&larr; Previous".html_safe, admin_deals_path(:page => @deals.previous_page, :filter => params[:filter])

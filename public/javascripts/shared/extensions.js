@@ -142,8 +142,7 @@
       options = options || {};
       this.filter('form').each(function() {
         var $this = $(this);
-        $this.unbind('submit.ajaxForm');
-        $this.bind('submit.ajaxForm', function(e) {
+        $this.unbind('submit.ajaxForm').bind('submit.ajaxForm', function(e) {
           e.preventDefault();
           $this.ajaxSubmit(options);
         });	    
@@ -153,8 +152,7 @@
       options = options || {};
       this.filter('a').each(function() {
         var $this = $(this);
-        $this.unbind('click.ajaxLink');
-        $this.bind('click.ajaxLink', function(e) {
+        $this.unbind('click.ajaxLink').bind('click.ajaxLink', function(e) {
           e.preventDefault();
           $this.ajaxClick(options);
         });

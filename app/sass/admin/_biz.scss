@@ -1,0 +1,30 @@
+.admin_deals {
+  .deal {
+    margin: 1em 0 2em;
+    .summary {
+      margin-top: 10px;
+      .status {
+        font-weight: bold;
+        &.approved {
+          color: #556B2F;
+        }
+        &.pending {
+          color: #EEAD0E;
+        }
+        &.rejected {
+          color: #ff3333;
+        }
+      }
+    }
+    label {
+      font-weight: bold;
+    }
+    ul {
+      margin-right: 1em;
+      float: left;
+      li.vcenter {
+        padding-top: 80px;
+      }
+    }
+  }
+}

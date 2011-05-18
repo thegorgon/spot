@@ -103,7 +103,13 @@ module TagHelper
   end
   
   def js_trigger_tag
-    content_tag(:script, "document.getElementsByTagName('html')[0].setAttribute('class', 'js');", :type => Mime::JS)
+    script = <<-script
+      (function() {
+        var html = document.getElementsByTagName('html')[0];
+        html.className = html.className.replace('no-js', 'js');
+      }());
+    script
+    content_tag(:script, script, :type => Mime::JS)
   end
   
   def link_to_with_current(*args)

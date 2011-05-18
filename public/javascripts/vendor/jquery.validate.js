@@ -6,17 +6,17 @@
                       "/images/assets/loading/white-chasing30x30.gif" ],
     emailRegex = /\b[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,4}\b/i,
     invalid = function(input, message) {
-      $(input).parents('li').removeClass('valid').removeClass('loading').addClass('invalid');
-      $(input).parents('li').find('.validity .message').html(message || '');
+      $(input).parents('li:first').removeClass('valid').removeClass('loading').addClass('invalid');
+      $(input).parents('li:first').find('.validity .message').html(message || '');
     },
     loading = function(input) {
-      $(input).parents('li').removeClass('valid').removeClass('invalid').addClass('loading');
-      $(input).parents('li').find('.validity .message').html('checking');
+      $(input).parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
+      $(input).parents('li:first').find('.validity .message').html('checking');
       $(input).valid(false);
     },
     valid = function(input) {
-      $(input).parents('li').removeClass('loading').removeClass('invalid').addClass('valid');
-      $(input).parents('li').find('.validity .message').html('');
+      $(input).parents('li:first').removeClass('loading').removeClass('invalid').addClass('valid');
+      $(input).parents('li:first').find('.validity .message').html('');
     },
     validity = function(input, val, message) {
       if ($(input).valid() || val || $(input).parent('li').is('.loading')) {

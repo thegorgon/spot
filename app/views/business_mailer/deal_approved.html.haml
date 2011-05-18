@@ -1,0 +1,14 @@
+%p="Hello #{@account.first_name},"
+
+%p="Congratulations! Your deal, '#{@deal.name}' has been approved for distribution."
+
+%p So what now?
+
+%p="Go to #{link_to "your deal calendar", calendar_biz_business_url(@deal.business)} to start making your deal available by date."
+
+%p="If you need any assistance, please feel free to contact me by email at #{mail_to @reply_to} or by phone at #{@phone_to} anytime of day.".html_safe
+
+%p Thanks,
+%p Julia & The Spot Team
+
+=image_tag 'http://www.spot-app.com/images/logos/black_spot_with_tag320x158.png', :size => "160x75"

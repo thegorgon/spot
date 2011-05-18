@@ -52,6 +52,13 @@ Spot::Application.routes.draw do
         put "ignore"
       end
     end
+    resources :deals, :only => [:index, :edit, :update] do 
+      put "reject", :on => :member
+    end
+    resources :businesses, :only => [:index] do 
+      put "toggle", :on => :member
+      put "toggle_account", :on => :member
+    end
     resource :search, :only => [:new, :show], :controller => "search"
     resources :settings, :only => [:index, :create, :update, :destroy] do
       get "available", :on => :collection
@@ -78,6 +85,7 @@ Spot::Application.routes.draw do
   
   mount Resque::Server.new, :at => "/admin/resque"
   
+  get "upgrade", :to => "site/errors#upgrade", :as => "upgrade"
   get "404.html", :to => "site/errors#not_found", :as => "not_found"
   get "422.html", :to => "site/errors#unprocessable", :as => "unprocessable"
   get "500.html", :to => "site/errors#server_error", :as => "server_error"

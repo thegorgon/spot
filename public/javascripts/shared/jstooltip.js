@@ -8,8 +8,8 @@
     jstooltip: {
       init: function() {
         var tt = $('<div></div>').attr('id', 'jsTooltip').hide().appendTo('body');
-        $(window).unbind('mousemove.tooltip').bind('mousemove.tooltip', function(e) {
-          tt.css({left:e.pageX + 10, top: e.pageY + 10});
+        $('body').unbind('mousemove.tooltip').bind('mousemove.tooltip', function(e) {
+          tt.css({position: 'absolute', left:e.pageX + 10, top: e.pageY + 10});
         });
         bind();
       }, 

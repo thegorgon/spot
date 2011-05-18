@@ -3,13 +3,17 @@ class BusinessAccount < ActiveRecord::Base
   
   belongs_to :user
   has_many :businesses, :dependent => :destroy
+  
   validates :first_name, :presence => true
   validates :last_name, :presence => true
   validates :email, :presence => true, :format => EMAIL_REGEX
   validates :phone, :presence => true
   validates :title, :presence => true
   validates :max_businesses_count, :presence => true, :numericality => { :minimum => 0 }
-  before_validation :set_defaults  
+  
+  before_validation :set_defaults 
+  after_create :deliver_welcome_message 
+  
   name_attribute :name
   
   def self.register(params)
@@ -26,6 +30,10 @@ class BusinessAccount < ActiveRecord::Base
     end
   end
   
+  def email_with_name
+    "#{name} <#{email}>"
+  end
+  
   def claim(params)
     biz = businesses.where(:place_id => params[:place_id]).first
     biz || businesses.new(:place_id => params[:place_id])
@@ -35,11 +43,30 @@ class BusinessAccount < ActiveRecord::Base
     businesses_count < max_businesses_count
   end
   
+  def toggle_verification!
+    verified?? unverify! : verify!
+  end
+  
+  def verify!
+    update_attribute(:verified_at, Time.now)
+    businesses.map { |b| b.verify! }
+  end
+
+  def unverify!
+    update_attribute(:verified_at, nil)
+    update_attribute(:verified_at, Time.now)
+    businesses.map { |b| b.unverify! }
+  end
+  
   def verified?
     !!verified_at
   end
   
   private
+  
+  def deliver_welcome_message
+    BusinessMailer.welcome(self).deliver!
+  end
   
   def set_defaults
     self[:max_businesses_count] ||= DEFAULT_MAX_BUSINESSES

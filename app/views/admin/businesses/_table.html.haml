@@ -1,0 +1,13 @@
+%table.data
+  %thead
+    %tr
+      %th ID
+      %th Place
+      %th Claimed By
+      %th Phone
+      %th Verified
+      %th Claimed On
+      %th Actions
+  %tbody
+    -@businesses.to_a.each do |biz|
+      =render :partial => "row", :object => biz, :as => :business

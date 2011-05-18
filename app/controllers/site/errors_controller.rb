@@ -10,4 +10,8 @@ class Site::ErrorsController < Site::BaseController
   def server_error
     render :template => "/site/errors/500.html.haml", :status => 500, :layout => "site"
   end
+  
+  def upgrade
+    render :template => "/site/errors/upgrade.html.haml", :status => 200, :layout => "site"
+  end
 end

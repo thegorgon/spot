@@ -1,0 +1,31 @@
+-place = deal.business.place
+-account = deal.business.business_account
+.deal.clearfix
+  %h1="#{deal.id}. #{link_to(place.name, edit_admin_place_path(place))} - #{deal.name}".html_safe
+  .summary
+    = deal.summary
+    &bull;
+    %span.status{:class => deal.status_string}= deal.status_string
+    
+  -if deal.rejected? || deal.pending? || deal.approved?
+    =spot_form_for deal, :url => admin_deal_path(deal), :display => "light" do |f|
+      =hidden_field_tag :filter, params[:filter]
+      =f.hidden_field :status, :value => DealTemplate::APPROVED_STATUS
+      %li.label
+        =f.label :description, "Editorial Description : "
+      =f.text_area :description
+      =button_tag :class => "btngrypill" do
+        =deal.approved?? "Update" : "Approve With Edits"
+
+  -if deal.pending?
+    %ul
+      %li.vcenter or
+
+    =spot_form_for deal, :url => admin_deal_path(deal), :display => "light" do |f|
+      =hidden_field_tag :filter, params[:filter]
+      =f.hidden_field :status, :value => DealTemplate::REJECTED_STATUS
+      %li.label=f.label :rejection_reasoning, "Reason For Rejection :"
+      =f.text_area :rejection_reasoning
+      =button_tag :class => "btngrypill" do
+        Reject
+    

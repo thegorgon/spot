@@ -11,3 +11,10 @@
   ="Wishlisted by #{@business.place.wishlist_count} Spot Members"
 .claim_date.stat
   ="Claimed on #{@business.created_at.strftime("%B %d, %Y")}, #{time_ago_in_words(@business.created_at)} ago"
+.deals_count.stat
+  ="#{@business.deal_templates.count} Deals Created : "
+  =link_to "Create a Deal", calendar_biz_business_path(@business)
+.deal_events_count.stat
+  ="#{@business.deal_events.where("starts_at > ?", Time.now).count} Upcoming Deals on the Calendar : "
+  =link_to "Schedule More Deals", calendar_biz_business_path(@business)
+  

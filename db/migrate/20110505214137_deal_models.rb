@@ -3,7 +3,9 @@ class DealModels < ActiveRecord::Migration
     create_table "deal_templates" do |t|
       t.string :name, :null => false
       t.text :description
+      t.text :rejection_reasoning
       t.integer :position
+      t.integer :status, :limit => 4, :null => false, :default => 0
       t.integer :deal_count, :null => false, :default => 0
       t.integer :discount_percentage, :null => false, :default => 0
       t.integer :start_time, :null => false, :default => 0, :limit => 4
@@ -11,8 +13,6 @@ class DealModels < ActiveRecord::Migration
       t.integer :average_spend, :null => false, :default => 0
       t.integer :business_id, :null => false
       t.integer :cost_cents
-      t.datetime :removed_at
-      t.datetime :approved_at
       t.timestamps
     end
     add_index "deal_templates", :business_id

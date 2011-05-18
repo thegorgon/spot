@@ -1,0 +1,13 @@
+%p="Hello #{@account.first_name},"
+
+%p="I'm very sorry, but your deal, '#{@deal.name}' has been rejected for the following reasons : "
+
+%p{:style => "padding: 20px;"}
+  =@deal.rejection_reasoning
+
+%p="Please contact me directly by email at #{mail_to @reply_to}, or by phone at #{@phone_to} at any time of day to discuss rectifying these issues.".html_safe
+
+%p Thanks,
+%p Julia & The Spot Team
+
+=image_tag 'http://www.spot-app.com/images/logos/black_spot_with_tag320x158.png', :size => "160x75"

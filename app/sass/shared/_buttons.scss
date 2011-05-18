@@ -12,8 +12,8 @@ button, .button {
   padding: 0;
 }
 button[type]{
-    padding: 5px 0px 5px 0px; /* Firefox */
-    line-height: 17px; /* Safari */
+  padding: 5px 5px; /* Firefox */
+  line-height: 17px; /* Safari */
 }
 .rndblk_80x26 {
   font-size: 12px;
@@ -72,9 +72,10 @@ button.link {
     background: transparent url(/images/buttons/orange_button156x31_active.png) no-repeat center center;  
   }
 }
-.btngrypill, a.btngrypill {
+.btngrypill, a.btngrypill, button.btngrypill {
   display: block;
   @include border_radius(5px);
+  background: #f2f2f2;
   @include gradient_top_down(#f2f2f2, #A2A2A2); 
   text-decoration: none;
   border: 1px solid #808080;
@@ -84,6 +85,7 @@ button.link {
   text-decoration: none;
   &:hover, &.hover {
     color: #000 !important;
+    background: #ffffff;
     @include gradient_top_down(#f2f2f2, #808080);
   }
   &:active, &.active {
@@ -140,6 +142,11 @@ button.withx {
     font-size: 25px;
     font-weight: bold;
     color: #c84336;
+  }
+  .ie7 &, .ie8 & {
+    .redx {
+      top: 6px;
+    }
   }
 }
 

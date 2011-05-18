@@ -39,6 +39,9 @@
     tbody {      
       tr {
         border-bottom: 1px solid #bbb;
+        &.loading {
+          @include opacity(0.5);
+        }
       }
     }
     th {

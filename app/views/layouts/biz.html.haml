@@ -17,6 +17,8 @@
   = csrf_meta_tag 
   = js_trigger_tag
   = yield :head
+  -if Rails.env.production?
+    = google_analytics_tag(:account_id => 'UA-21193799-1')
 %body{:id => page_namespace, :class => "#{controller_name} biz"}
   #bg.preload_bg
   =flashes

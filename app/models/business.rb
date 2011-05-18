@@ -7,12 +7,25 @@ class Business < ActiveRecord::Base
   before_validation :autovalidate, :on => :create
   accepts_nested_attributes_for :place
   
+  def self.filter(n)
+    finder = self
+    finder = finder.where(:verified_at => nil) if n & 1 > 0
+    finder = finder.where("verified_at IS NOT NULL") if n & 2 > 0
+    finder = finder.order("id DESC")
+    finder = finder.includes(:place, :business_account)
+    finder
+  end
+  
   def to_param
     "#{id}-#{place.name.parameterize}"
   end
   
   def status_string
     verified?? "Verified" : "Unverified"
+  end
+  
+  def toggle_verification!
+    verified?? unverify! : verify!
   end
   
   def verify!

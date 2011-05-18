@@ -20,7 +20,7 @@
           %td="#{match.proximity.geo_distance.round} m"
           %td="#{(match.proximity.name_match * 100).round}%"
           %td="#{(match.proximity.address_match * 100).round}%"
-          %td="#{match.proximity.close?? 'Yes' : 'No'}"
+          %td=yes_no(match.proximity.close?).titlecase
           %td
             =link_to "Page", external_place_url(match.candidate)
             =form_for :match, :url => admin_place_matches_path(@place), :html => { :class => "inline" } do |t|

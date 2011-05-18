@@ -7,32 +7,20 @@
         $input.removeAttr('placeholder');
         placeholder = $('#' + this.id + '_placeholder');        
         if (placeholder.length === 0) {
-          placeholder = $input.clone().attr('id', this.id).val(txt).removeAttr('name').attr('autocomplete', 'off').attr('formnovalidate', 'formnovalidate').attr('tabindex', '-1').addClass('placeholder');
-          if (placeholder.attr('type') == 'password') {
-            placeholder.attr('type', 'text');
-          }
+          placeholder = $('<div></div>').html(txt).attr('class', $input.attr('class')).addClass('placeholder').addClass($input.is("textarea") ? 'textarea' : 'input');
           $input.after(placeholder);
         }
         placeholder.add($input).unbind('.placeholder');
-        placeholder.bind('focus.placeholder', function(e) {
+        placeholder.bind('click.placeholder', function(e) {
           e.preventDefault();
           $input.focus(); 
         });
-        $input.bind('focus.placeholder', function(e) {
-          placeholder.fadeOut($.support.opacity ? 250 : 0, function() {
-            $input.data('focused', true);
-          });
-        });
         $input.bind('blur.placeholder', function(e) {
-          if ($input.val() === '' && $input.data('focused')) {
-            placeholder.fadeIn($.support.opacity ? 250 : 0, function() {
-              $input.data('focused', false);              
-            });
-            placeholder.blur();          
+          if ($input.val() === '') {
+            placeholder.css('display', '');
+          } else {
+            placeholder.hide();
           }
-        });
-        $input.bind('change.placeholder', function(e) {
-          placeholder.change();
         });
         if ($input.val() === '') {
           $input.blur();          
@@ -172,42 +160,46 @@
 (function(go) {
   $.provide(go, "Behaviors", {
     train: function(container) {
-      var fetch = function(sel) { return $(sel, container); };
-      go.Navigator.link(fetch("a.page"));
-      go.Navigator.form(fetch("form.page"));
-      $.popover.bind(container);
-      fetch('a.reveals').reveals();
-      if ($.support.opacity) {
-        fetch('.preload_bg').preloadBg();
-        fetch('.preload').preloadImgs();
+      try {
+        var fetch = function(sel) { return $(sel, container); };
+        go.Navigator.link(fetch("a.page"));
+        go.Navigator.form(fetch("form.page"));
+        $.popover.bind(container);
+        fetch('a.reveals').reveals();
+        if ($.support.opacity) {
+          fetch('.preload_bg').preloadBg();
+          fetch('.preload').preloadImgs();
+        }
+        fetch('[placeholder]').placeholder();
+        fetch('[data-mode=select]').selectOnly();
+        fetch('.file_field input').fileField();
+        fetch('a[data-method]:not(.ajax)').actionLink();
+        fetch('a[data-confirm][data-method]:not(.ajax)').actionLink();
+        fetch('.fbconnect').fbconnect();
+        fetch('ul.form input, ul.form textarea').focus(function(e) {
+          $(this).parents('li:first').addClass('focus');
+          $(this).parents('ul:first').addClass('focus');
+        });
+        fetch('ul.form input, ul.form textarea').blur(function(e) {
+          $(this).parents('li:first').removeClass('focus');
+          $(this).parents('ul:first').removeClass('focus');
+        });
+        fetch('.radio_fade').radioFade();
+        fetch('.hoverable').hoverable();
+        fetch('li.invalid input, input.invalid').focus(function(e) {
+          $(this).parent('li').add(this).removeClass('invalid');
+        });
+        fetch('.tabbar').tabBar();
+        fetch('.twitter-share-button').click(function(e) {
+          e.preventDefault();
+          var left = screen.width > 350 ? Math.round(0.5 * (screen.width - 350)) : 0,
+            top = screen.height > 300 ? Math.round(0.5 * (screen.height - 300)) : 0;
+          window.open(this.href, "tweetwindow", "scrollbars=yes,resizable=yes,toolbar=no,location=yes,width=350,height=300,left=" + left + ",top=" + top);
+        });
+        fetch('form[data-validate]').autovalidate();        
+      } catch(e) {
+        alert("ERROR " + e);
       }
-      fetch('[placeholder]').placeholder();
-      fetch('[data-mode=select]').selectOnly();
-      fetch('.file_field input').fileField();
-      fetch('a[data-method]:not(.ajax)').actionLink();
-      fetch('a[data-confirm][data-method]:not(.ajax)').actionLink();
-      fetch('.fbconnect').fbconnect();
-      fetch('ul.form input, ul.form textarea').focus(function(e) {
-        $(this).parents('li').addClass('focus');
-        $(this).parents('ul').addClass('focus');
-      });
-      fetch('ul.form input, ul.form textarea').blur(function(e) {
-        $(this).parents('li').removeClass('focus');
-        $(this).parents('ul').removeClass('focus');
-      });
-      fetch('.radio_fade').radioFade();
-      fetch('.hoverable').hoverable();
-      fetch('li.invalid input, input.invalid').focus(function(e) {
-        $(this).parent('li').add(this).removeClass('invalid');
-      });
-      fetch('.tabbar').tabBar();
-      fetch('.twitter-share-button').click(function(e) {
-        e.preventDefault();
-        var left = screen.width > 350 ? Math.round(0.5 * (screen.width - 350)) : 0,
-          top = screen.height > 300 ? Math.round(0.5 * (screen.height - 300)) : 0;
-        window.open(this.href, "tweetwindow", "scrollbars=yes,resizable=yes,toolbar=no,location=yes,width=350,height=300,left=" + left + ",top=" + top);
-      });
-      fetch('form[data-validate]').autovalidate();
     }
   });
 }(Spot));

@@ -82,6 +82,13 @@ h1 {
 .big {
   font-size: 1.5em;
 }
+.plus {
+  font-size: 1.5em;
+  .ie8 &, .ie7 & {
+    display: inline-block;
+    margin-top: 3px;
+  } 
+}
 .inline {
   display: inline;
   float: none;

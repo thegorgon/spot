@@ -1,6 +1,6 @@
 (function(go) {
   var buildCell = function(date) {
-      var cell = $("<td></td>").addClass('date').addClass(((date.getMonth() + 1) % 2 === 0 ? 'even' : 'odd') + "_month").addClass("dow_" + date.getDay()),
+      var cell = $("<div></div>").addClass("td").addClass('date').addClass(((date.getMonth() + 1) % 2 === 0 ? 'even' : 'odd') + "_month").addClass("dow_" + date.getDay()),
         datenumber = $('<div></div>').addClass('datenumber').html(date.getDate()).appendTo(cell);
       if (date.isToday()) {          
         cell.addClass('present');
@@ -22,9 +22,9 @@
     },
     fillDates = function(tbody, startDate, weekCount) {
       var row, wk, dy;
-      tbody.find('tr').removeClass('last');
+      tbody.find('.tr').removeClass('last');
       for (wk = 0; wk < weekCount; wk++) {
-        row = $('<tr></tr>');
+        row = $('<div></div>').addClass('tr');
         for (dy = 0; dy < 7; dy++) {
           buildCell(startDate.clone().addDays(7 * wk + dy)).appendTo(row);
         }
@@ -52,23 +52,23 @@
       }
     },
     updateScroll = function(grid) {
-      var tbody = grid.find('tbody'),
+      var tbody = grid.find('.tbody'),
         title = grid.parent('.section').find('h1'),
-        rows = tbody.find('tr'), 
+        rows = tbody.find('.tr'), 
         rowHeight = rows.outerHeight(),
         viewHeight = tbody.outerHeight(),
         scrollTop = tbody.scrollTop(),
         rowIndex = Math.round(scrollTop/rowHeight),
         rowCount = Math.round(viewHeight/rowHeight),
         minDate, maxDate,
-        endDate = tbody.find('td:last').data('date'),
+        endDate = tbody.find('.td:last').data('date'),
         daysRendered = Date.now().daysUntil(endDate);
 
       if (tbody[0].scrollHeight - scrollTop - viewHeight < 100 && daysRendered <= 90) {
         fillDates(tbody, endDate.clone().addDays(1), 1);
       }
-      minDate = rows.eq(rowIndex).find('td:first').data('date');
-      maxDate = rows.eq(rowIndex + rowCount - 1).find('td:last').data('date');
+      minDate = rows.eq(rowIndex).find('.td:first').data('date');
+      maxDate = rows.eq(rowIndex + rowCount - 1).find('.td:last').data('date');
       setTitle(title, minDate, maxDate);
     };
     
@@ -81,7 +81,7 @@
         grid = calendar.find('.grid'),
         list = calendar.find('ul.templates'),
         newtplform = $('form.newtplform'),
-        tbody = grid.find('tbody'),
+        tbody = grid.find('.tbody'),
         templates = [], events = {},
         messaging = calendar.find('#messages'),
         currentTemplate,
@@ -219,12 +219,12 @@
             eventDetail.data('calendarevent', $(this));
             content.append(eventDetail);
           });
-          grid.find('tbody').css('overflow', 'hidden');
+          grid.find('.tbody').css('overflow', 'hidden');
           popover = $.popover.init($(cell).data('date').toString("ddd, MMM d"), content);
           bindDeleteEventForms(popover);
           $.popover.reveal($(cell), popover, {orient: 'horizontal'});
           $(window).unbind('popoverhide.returnscroll').bind('popoverhide.returnscroll', function(e) {
-            grid.find('tbody').css('overflow-y', 'scroll');
+            grid.find('.tbody').css('overflow-y', 'scroll');
             $(window).unbind('popoverhide.returnscroll');
           });
         },
@@ -333,9 +333,9 @@
             dataType: 'json',
             data: {},
             success: function(data) {
-              var tbody = grid.find('tbody'),
-                startDate = new Date(calendar.attr('data-start-date')),
-                endDate = new Date(calendar.attr('data-end-date'));
+              var tbody = grid.find('.tbody'),
+                startDate = new Date(Date.parse(calendar.attr('data-start-date'))),
+                endDate = new Date(Date.parse(calendar.attr('data-end-date')));
               events = data.events;
               grid.removeClass('loading');
               tbody.html("");
@@ -399,7 +399,7 @@
               removeMessage();
             }, success: function(data) {
               var event = $(this).parents('.event').data('calendarevent'),
-                cell = event.parent('td.date');
+                cell = event.parent('.td.date');
               event.removeClass('saved').removeClass('deleting');
               if (data.event) {
                 event.data('eventdata', data.event).addClass('removed');

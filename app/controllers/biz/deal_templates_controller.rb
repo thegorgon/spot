@@ -19,10 +19,7 @@ class Biz::DealTemplatesController < Biz::BaseController
       end
     end
   end
-  
-  def update
-  end
-  
+    
   def destroy
     @template = @business.deal_templates.find(params[:id])
     @template.remove!

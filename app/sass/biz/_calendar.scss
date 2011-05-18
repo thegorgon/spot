@@ -141,6 +141,9 @@
           &.pending {
             color: #EEAD0E;
           }
+          &.rejected {
+            color: #ff3333;
+          }
         }
         h3 {
           width: 170px;
@@ -217,15 +220,25 @@
   }
   .section.right {
     float: left;
-    width: 750px;
-    margin: 0px 0px 200px 15px;
-    table {
+    width: 760px;
+    margin: 0px 0px 200px 5px;
+    .ie7 &, .ie8 & {
+      h1 {
+        margin-bottom: 9px;
+      }
+    }
+    .table {
       border: 1px solid #666;
       float: left;
-      thead {
+      .thead {
         background: #666;
-        width: 757px;
-        th {
+        width: 760px;
+        .tr {
+          @extend .clearfix;
+        }
+        .th {
+          text-align: center;
+          font-weight: bold;
           display: block;
           float: left;
           width: 106px;
@@ -246,16 +259,19 @@
           }
         }
       }
-      &.loading tbody {
-        background: #fff url(/images/assets/loading/grygears30x40.gif) no-repeat center center;
-      }
-      tbody {
-        width: 757px;
-        display: block;
+      .tbody {
+        width: 760px;
+        display: block !important;
         height: 480px;
+        max-height: 480px;
+        zoom: 1;
+        overflow: scroll;
         overflow-x: hidden;
-        overflow-y: auto;
-        td {
+        overflow-y: scroll;
+        .tr {
+          @extend .clearfix;
+        }
+        .td {
           cursor: pointer;
           position: relative;
           display: block;
@@ -308,7 +324,7 @@
           .event {
             border-style: solid;
             border-width: 3px;
-            @include border_radius(5px);
+            @include border_radius(3px);
             padding: 1px 5px;
             h2 {
               font-size: 10px;
@@ -333,13 +349,21 @@
             }
           }
         }
-        tr.last {
-          td {            
+        .tr.last {
+          .td {            
             border-bottom: none;
           }
         }
       }
     }
+    .loading {
+      .table {
+        .tbody {
+          background: #fff url(/images/assets/loading/grygears30x40.gif) no-repeat center center;
+        }
+      }
+    }
+    
   }
 
   .template, .datedetail .event {

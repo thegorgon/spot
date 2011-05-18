@@ -8,7 +8,7 @@
 
 -calendar_start = [(@business.deal_events.minimum(:created_at) || Time.now).calendar_start, Time.now.calendar_start].min
 -calendar_end = calendar_start + 4.months
-#calendar.clearfix{'data-start-date' => calendar_start.strftime('%Y-%m-%d'), 'data-end-date' => calendar_end.strftime('%Y-%m-%d')}
+#calendar.clearfix{'data-start-date' => calendar_start.strftime('%B %d, %Y'), 'data-end-date' => calendar_end.strftime('%B %d, %Y')}
   =render :partial => "/biz/deal_templates/form"
   .section.left
     .title.clearfix
@@ -22,7 +22,7 @@
           Set the parameters of your deal, then apply it to dates 
           using the calendar on the right.
     %a.btngrypill200x30.new.center{:href => "#", "data-popover" => "#newdealtpl", "data-popover-title" => "New Deal", "data-popover-pos" => ",top"}
-      %span.big + 
+      %span.plus + 
       New Deal
     
   .section.right
@@ -30,14 +30,14 @@
       %h1.gridtitle
         ="#{Date::MONTHNAMES[calendar_start.month]} #{calendar_start.year}"
 
-    .grid{'data-src' => biz_business_deals_path(@business)}      
-      %table.loading
-        %thead
-          %tr
+    .grid.loading{'data-src' => biz_business_deals_path(@business)}      
+      .table
+        .thead
+          .tr
             -Date::DAYNAMES.each_with_index do |dow, i|
-              %th{:class => 'dow', :id => "dow_#{i}", 'data-dayindex' => i, 'data-dayname' => dow.to_s.downcase}
+              .th{:class => 'dow', :id => "dow_#{i}", 'data-dayindex' => i, 'data-dayname' => dow.to_s.downcase}
                 =dow.to_s.downcase
-        %tbody
+        .tbody
       #messages
         .cancel
         .content

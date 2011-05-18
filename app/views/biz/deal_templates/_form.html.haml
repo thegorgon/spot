@@ -1,6 +1,6 @@
 =spot_form_for :template, :url => biz_business_templates_path(@business), :display => "light hidden inlinelabels lowhints", :ul_id => "newdealtpl", :html => {'data-validate' => true, :class => "newtplform"} do |f|
   .details
-    =f.text_field :name, :placeholder => "name", :hint => "give your deal a name to easily remember it by later on.", :required => true
+    =f.text_field :name, :placeholder => "name", :hint => "give your deal a name to easily remember it by.", :required => true
     =f.text_field :deal_count, :class => "short", :required => true, :min => 0, :max => 1000, :label => "deals per period :"
     %li.text.select.labelled
       .label=label_tag 'template[discount_percentage]', 'discount percent :'
@@ -13,6 +13,6 @@
         \-
         =select_hour nil, {:field_name => "end_time", :prefix => 'template', :twelve_hour => true, :offset => 7, :prompt => "--"}, {:required => true}
     =f.text_field :average_spend, :class => "abbrev", :required => true, :min => 0, :max => 1000, :label => "avg. spend per person :", :hint => "help us value this deal. how much do your customers usually spend?"
-  =f.text_area :description, :placeholder => "description", :hint => "sell your spot, be colorful and descriptive! no restrictions or limitations please."
+  =f.text_area :description, :placeholder => "description", :hint => "sell your spot to our members. be colorful and descriptive! no restrictions or limitations please."
   =button_tag :class => "bottom btngrypill" do
     Save Deal
