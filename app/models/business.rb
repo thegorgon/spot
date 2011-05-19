@@ -40,6 +40,17 @@ class Business < ActiveRecord::Base
     !!verified_at
   end
   
+  def deliver_deal_codes_for!(date)
+    date = Date.parse(date) if date.kind_of?(String)
+    date = Time.at(date).to_date if date.kind_of?(Fixnum)
+    if deal_events.on_date(date).count > 0
+      BusinessMailer.deal_codes(self, date).deliver!
+      true
+    else
+      false
+    end
+  end
+  
   private
   
   def account_can_claim
