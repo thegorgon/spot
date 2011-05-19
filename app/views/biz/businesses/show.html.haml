@@ -6,13 +6,12 @@
     %span.verification{:class => @business.status_string.downcase}
       =@business.status_string.titlecase
     %span.question{'data-jstooltip' => @business.verified?? "You have full access to all of Spot's business tools." : "Certain features are restricted to verified businesses. A member of our staff will contact you shortly to verify your identity."}
-      =image_tag "assets/general/question23x22.png", :size => '23x22'    
-  
-.claim_date.stat
+      =image_tag "assets/general/question23x22.png", :size => '23x22'
   .title="Claimed on #{@business.created_at.strftime("%B %d, %Y")}, #{time_ago_in_words(@business.created_at)} ago"
 
 .wishlist_count.stat
   .title="Wishlisted by #{@business.place.wishlist_count} Spot Members"
+  %hr
   .content
     %p="Spot members are registered users of the Spot services, primarily savvy urban dwellers who frequent high end restaurants, boutiques and other establishments. Spot members wishlist businesses they are considering going to. You can use #{link_to "deals", calendar_biz_business_path(@business)} to encourage members to come to your business.".html_safe
     %p
@@ -22,6 +21,7 @@
       ="or adding a #{link_to "Spot widget", biz_widgets_path} to your website.".html_safe
 .deals_count.stat
   .title="#{@business.deal_templates.count.pluralize("Deal")} Created"
+  %hr
   .content
     %p 
       Create deals to encourage Spot members to come to your business during slow hours. Set the discount, the number of deals you'd like to offer per day, and the times the deal should be valid for. You can also add descriptive editorial text to add color to your deal and make it more attractive to our members. Once the deal is created, you can schedule the deal to make it valid on any date in the next 90 days.
@@ -30,6 +30,7 @@
       ="#{link_to "deal calendar", calendar_biz_business_path(@business)}.".html_safe
 .deal_events_count.stat
   .title="#{@business.deal_events.where("date >= ?", Date.today).count.pluralize("Upcoming Deal")} on the Calendar "
+  %hr
   .content
     %p
       Once deals are created you need to schedule them on the days you'd like them to be valid. Once they've been approved and scheduled, we'll start to issue them to our members. If at any time you'd like us to stop issuing deals for a specific date, you can cancel any remaining deals on that date. However, you will have to honor deals that have already been issued.
@@ -39,6 +40,7 @@
 
 .stat
   .title="Help, I'm so Confused!"
+  %hr
   .content
     %p 
       If you need help at any time, day or night, we are here to help.
