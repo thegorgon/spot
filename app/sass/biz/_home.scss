@@ -64,4 +64,48 @@
       }
     }
   }
+  .widgets {
+    font-size: 15px;
+    width: 700px;
+    margin: 0 auto;
+    p {
+      margin: 0.5em 0;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1em;
+    }
+    img {
+      position: relative;
+      top: 20px;
+    }
+    .widget {
+      margin: 1em auto;
+      width: 500px;
+      h3 {
+        margin-bottom: 5px;
+      }
+    }
+    .business_select {
+      margin: 1em 0 0;
+      text-align: center;
+      label {
+        font-weight: bold;
+      }
+      select {
+        margin-bottom: 3px;
+      }
+    }
+    .preview {
+      
+    }
+    .source {
+      textarea {
+        width: 300px;
+        height: 90px;
+        border: 1px solid #333;
+        resize: none;
+      }
+    }
+  }
 }

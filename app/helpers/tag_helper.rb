@@ -53,6 +53,12 @@ module TagHelper
     share.html_safe
   end
   
+  def biz_widget(business)
+    content_tag(:a, :href => place_url(business.place), :style => "text-decoration:none;outline:none;border:none;color:#000;display:block;padding:0;margin:-20px 0 0 0;height:90px;width:112px;") do
+      tag(:img, :src => "#{root_url}images/logos/black_spot225x180.png", :width => "112", :height => "90", :target => "_blank")
+    end
+  end
+  
   def link_to_image(url, options={})
     options[:target] = "_new"
     link_to image_tag(url, options.slice(:size, :width, :height)), image_path(url), options.slice(:class, :target, :id)

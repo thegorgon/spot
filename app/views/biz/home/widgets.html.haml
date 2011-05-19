@@ -1,0 +1,20 @@
+.widgets
+  %h1 
+    =image_tag "logos/black_spot225x180.png", :height => 50
+    Widgets
+  %p
+    Put a Spot widget on your website to get more Spot members to wishlist your business. The more wishlists your business is on, the more effective your deal campaigns will be!
+  %p
+    To install the widget, just copy and paste the source code on the right into your website's HTML.
+  .business_select
+    =label_tag :business_select, "Select a business :"    
+    %select{:id => "business_select", :name => "business_select"}
+      -current_account.businesses.includes(:place).all.each do |biz|
+        %option{:value => biz_widget(biz)}=biz.place.name
+  .widget.clearfix
+    .preview.left
+      %h3.title Preview
+      .content
+    .source.right
+      %h3.title Source Code
+      .content=text_area_tag "", "", "data-mode" => "select"

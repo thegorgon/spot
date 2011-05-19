@@ -1,4 +1,6 @@
 class Biz::ContactsController < Biz::BaseController
+  skip_before_filter :require_account
+
   def new
   end
   

@@ -57,6 +57,17 @@
     },
     biz_businesses_edit: function() {
       go.PlaceForm.init({mapDiv: $('.map')});
+    },
+    biz_home_widgets: function() {
+      var setBusiness = function() {
+        var widget = $('#business_select option:selected').val();
+        $('.widget .preview .content').html(widget);
+        $('.widget .source textarea').val(widget);
+      }
+      setBusiness();
+      $('#business_select').bind('change', function(e) {
+        setBusiness();
+      });
     }
   });
 }(Spot));

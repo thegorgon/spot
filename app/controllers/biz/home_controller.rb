@@ -1,5 +1,5 @@
 class Biz::HomeController < Biz::BaseController
-  skip_before_filter :require_account, :only => [:index]
+  skip_before_filter :require_account, :only => [:index, :faq, :tos]
   before_filter :require_no_account, :only => [:index]
   
   def index
@@ -10,5 +10,8 @@ class Biz::HomeController < Biz::BaseController
   end
   
   def tos
+  end
+  
+  def widgets
   end
 end
