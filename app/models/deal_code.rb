@@ -60,7 +60,7 @@ class DealCode < ActiveRecord::Base
   
   def assign_code
     self.code ||= self.class.random_code
-    assign_code if DealCode.where(:business_id => business_id, :code => code, :date => (date - 6.months..date + 6.months)).exists?
+    assign_code if DealCode.where(:business_id => business_id, :code => code, :date => (date - 90.days..date + 90.days)).exists?
   end
     
 end

@@ -43,7 +43,7 @@ class Place < ActiveRecord::Base
   scope :duplicates, where("canonical_id <> id")
   scope :canonical, where("canonical_id = id")
   scope :with_canonical, joins("INNER JOIN places canonical ON canonical.id = places.canonical_id").select("canonical.*")
-  
+  scope :with_image, where("image_file_name IS NOT NULL")
   def self.filter(params={})
     finder = self
     if params[:query]

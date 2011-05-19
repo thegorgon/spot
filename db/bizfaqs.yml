@@ -69,6 +69,10 @@ faqs:
     answer:
       
   -
+    question: What are "discount codes"?
+    name: discountcode
+    answer:
+  -
     question: What happens if a customer shows up after the deal expires?
     name: afterexpire
     answer:
