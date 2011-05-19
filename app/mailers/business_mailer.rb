@@ -44,4 +44,15 @@ class BusinessMailer < ActionMailer::Base
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
           :subject => "Sorry, your deal was rejected" ) 
   end
+  
+  def deal_codes(business, date)
+    @business = business
+    @date = date
+    @account = @business.business_account
+    @email = @account.email
+    @events = business.deal_events.on_date(date).includes(:deal_codes => :owner).all
+    mail( :to => @account.email_with_name,
+          'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
+          :subject => "Discount Codes for #{@date.strftime('%B %d, %Y')}" ) 
+  end
 end

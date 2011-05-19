@@ -1,0 +1,14 @@
+="Hello #{@account.first_name},"
+
+="Here are your discount codes for #{@date.strftime('%B %d, %Y')} :"
+
+-@events.each do |event|
+  ="For your deal, '#{event.name}' :"
+  =event.summary
+
+  -event.deal_codes.each_with_index do |code, i|
+    ="#{i + 1}. #{code.code} - #{code.issued?? "issued to #{code.owner.name}" : "not yet issued"}"
+
+Thanks,
+
+The Spot Team

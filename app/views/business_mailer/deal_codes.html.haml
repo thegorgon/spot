@@ -1,0 +1,18 @@
+%p="Hello #{@account.first_name},"
+
+%p="Here are your discount codes for #{@date.strftime('%B %d, %Y')} :"
+
+-@events.each do |event|
+  %p{:style => "margin:10px 0;font-size:12px;font-weight: bold;"}="For your deal, '#{event.name}':"
+  %p{:style => "margin:10px 0;"}
+    =event.summary
+  %table{:style => "margin-left:10px;"}
+    -event.deal_codes.each_with_index do |code, i|
+      %tr
+        %td{:style => "width: 35px;"}="#{i + 1}."
+        %td{:style => "font-weight: bold;width:50px"}=code.code
+        %td=code.issued?? "issued to #{code.owner.name}" : "not yet issued"
+        
+%p Thanks,
+%p The Spot Team
+=image_tag 'http://www.spot-app.com/images/logos/black_spot_with_tag320x158.png', :size => "160x75"

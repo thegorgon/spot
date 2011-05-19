@@ -29,7 +29,7 @@
       To simplify the process, you cannot edit a deal once it's been created. You can however, delete the deal at any time. You can manage your deals using the
       ="#{link_to "deal calendar", calendar_biz_business_path(@business)}.".html_safe
 .deal_events_count.stat
-  .title="#{@business.deal_events.where("starts_at > ?", Time.now).count} Upcoming Deals on the Calendar "
+  .title="#{@business.deal_events.where("date >= ?", Date.today).count} Upcoming Deals on the Calendar "
   .content
     %p
       Once deals are created you need to schedule them on the days you'd like them to be valid. Once they've been approved and scheduled, we'll start to issue them to our members. If at any time you'd like us to stop issuing deals for a specific date, you can cancel any remaining deals on that date. However, you will have to honor deals that have already been issued.

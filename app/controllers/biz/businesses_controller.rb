@@ -39,6 +39,15 @@ class Biz::BusinessesController < Biz::BaseController
     end
   end
   
+  def codes
+    @date = Date.parse(params[:date])
+    BusinessMailer.deal_codes(@business, @date).deliver!
+    respond_to do |format|
+      format.html { redirect_to calendar_biz_business_path(@business) }
+      format.js { render :json => {:success => true, :flash => "Discount codes sent. Check your email."} }
+    end
+  end
+  
   def show
   end
   

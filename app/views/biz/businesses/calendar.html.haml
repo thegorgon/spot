@@ -1,3 +1,5 @@
+#processmessage
+  %span.msg Loading...
 .lightscreen
 
 =render :partial => "header"
@@ -48,6 +50,14 @@
     .event{:style => "border-color: ${color}; color: ${color}; background-color: ${color};", 'data-template-id' => '${deal_template_id}'}
       %h2 ${name}
       .timeframe ${timeframe}
+  %script.jstpl.datedetail{:type => "text/x-jquery-tmpl"}
+    .datedetail{'data-date' => '${date}'}
+      {{html events}}
+      =form_tag codes_biz_business_path(@business), :class => "sendcodes", :method => :get do
+        =hidden_field_tag :date, '${date}'
+        =button_tag :class => "btngrypill" do
+          Send Discount Codes
+
   %script.jstpl.eventdetails{:type => "text/x-jquery-tmpl"}
     .event.clearfix{'data-template-id' => '${deal_template_id}'}
       .color{:style => "background:${color}"}

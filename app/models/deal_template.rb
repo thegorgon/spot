@@ -46,7 +46,7 @@ class DealTemplate < ActiveRecord::Base
   end
   
   def summary
-    "#{deal_count} deals per day at #{discount_percentage}% off, #{timeframe}"
+    "#{deal_count.pluralize('deal')} per day at #{discount_percentage}% off, #{timeframe}"
   end
 
   def color

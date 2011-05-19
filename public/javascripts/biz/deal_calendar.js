@@ -85,7 +85,32 @@
         templates = [], events = {},
         messaging = calendar.find('#messages'),
         currentTemplate,
-        
+        processMessage = $('#processmessage');
+
+        processing = function(msg, to) {
+          var retain = processMessage.data("retainCount") || 0;
+          to = to || 5000;
+          clearTimeout(processMessage.data("timeout"));
+          if (msg) {
+            processMessage.hide();
+            setTimeout(function() {
+              processMessage.find('span').html(msg);
+              processMessage.show();
+            }, 1);
+            processMessage.data("retainCount", retain + 1);
+            processMessage.data("timeout", setTimeout(function() {
+              processMessage.data("retainCount", 0);
+              processMessage.fadeOut(250);
+            }, to));
+          } else {
+            processMessage.data("retainCount", Math.max(retain - 1, 0));              
+            if (retain - 1 <= 0) {
+              processMessage.fadeOut(250, function() {              
+                processMessage.find('span').html('');
+              });              
+            }
+          }
+        },
         pendingTemplate = function() {
           var params = newtplform.serializeObject(),
             tpl = buildTemplate({name : params["template[name]"], summary: 'saving...', color: '#fff', id: -1});
@@ -212,15 +237,28 @@
         },
         showDateSummary = function(cell) {
           var template = $('.jstpl.eventdetails'), 
-            content = $("<div></div>").addClass('datedetail'), 
+            datetpl = $('.jstpl.datedetail'), 
+            date = $(cell).data('date'),
+            content = datetpl.tmpl({events: "<div class='eventlist'></div>", date: date.toString('yyyy-MM-dd')}),
+            eventlist = content.find('.eventlist'),
             popover, eventDetail;
           $(cell).find('.event').each(function(i) {
             eventDetail = template.tmpl($(this).data('eventdata'));
             eventDetail.data('calendarevent', $(this));
-            content.append(eventDetail);
+            eventlist.append(eventDetail);
           });
           grid.find('.tbody').css('overflow', 'hidden');
-          popover = $.popover.init($(cell).data('date').toString("ddd, MMM d"), content);
+          content.find('.sendcodes').ajaxForm({
+            start: function() {
+              $.popover.hide();
+              processing("Sending Codes...");
+            }, success: function(data) {
+              processing(data.flash);                
+            }, error: function() {
+              processing("There was an error. Please try again.")
+            }
+          })
+          popover = $.popover.init(date.toString("ddd, MMM d"), content);
           bindDeleteEventForms(popover);
           $.popover.reveal($(cell), popover, {orient: 'horizontal'});
           $(window).unbind('popoverhide.returnscroll').bind('popoverhide.returnscroll', function(e) {
@@ -236,6 +274,7 @@
           if (data) {
             data.saving = true;
             eventContainer.data('eventdata', data);
+            processing("Saving...");
             $.ajax({
               type: 'POST',
               url: grid.attr('data-src'),
@@ -248,6 +287,7 @@
                   events[dateString] = events[dateString] || [];
                   events[dateString].push(data.event);
                   displayCellEvent(cell, data.event);                  
+                  processing(null);
                 } else {
                   message("Sorry, we encountered an error applying that deal on that date : " + data.error, 'error');
                 }
@@ -301,7 +341,7 @@
             e.preventDefault();
             if (canPlace(currentTemplate, this, true)) {
               createEvent(this);
-            } else if (!currentTemplate && $(this).find('.event.saved').length > 0) {
+            } else if (!currentTemplate && $(this).find('.event.saved, .event.removed').length > 0) {
               showDateSummary(this);
             }
           });
@@ -310,6 +350,7 @@
           var tplUrl = list.attr('data-src'),
             eventUrl = grid.attr('data-src');
 
+          processing("Loading...");
           $.ajax({
             url: tplUrl,
             dataType: 'json',
@@ -324,10 +365,14 @@
                   addTemplate(data.templates[i]);
                 });
               }
+              processing(false);              
             }, error: function() {
+              processing(false);
               message("Sorry, the system encountered an error. Please refresh this page to continue.", "error");
             }
           });
+
+          processing("Loading...");
           $.ajax({
             url: eventUrl,
             dataType: 'json',
@@ -344,7 +389,9 @@
               updateScroll(grid);
               tbody.scrollTop(0);
               bindDates();
+              processing(false);
             }, error: function() {
+              processing(false);
               message("Sorry, the system encountered an error. Please refresh this page to continue.", "error");
             }
           });
@@ -356,6 +403,7 @@
                 $.popover.hide();
                 pendingTemplate();
                 removeMessage();
+                processing("Saving...");
                 return true;
               } else {
                 return false;
@@ -365,8 +413,10 @@
                 $('li.template.pending').remove();
                 selectTemplate(addTemplate(data.template));                
                 $(this).clear();
+                processing(false);
               } else {
                 $('li.template.pending').remove();
+                processing(false);
                 message("Sorry, there were errors with your submission : " + data.error + ". Please try again.", "error");
               }
             }, error: function() {
@@ -379,15 +429,18 @@
             start: function() {
               var tpl = $(this).parents('.template');
               tpl.addClass('deleting');
+              processing("Deleting...");
             },
             success: function(data) {
               var tpl = $(this).parents('.template');
               tpl.slideUp(function() {
                 tpl.remove();
               });
+              processing(false);
             }, error: function() {
               message("Sorry, something went wrong, please try again.", "error");
               $(this).parents('.template').removeClass('deleting');
+              processing(false);
             }
           });
         },
@@ -397,6 +450,7 @@
               $.popover.hide();
               $(this).parents('.event').data('calendarevent').addClass('deleting');
               removeMessage();
+              processing("Deleting...");
             }, success: function(data) {
               var event = $(this).parents('.event').data('calendarevent'),
                 cell = event.parent('.td.date');
@@ -407,9 +461,11 @@
                 event.remove();
               }
               setCellClass(cell);
+              processing(false);
             }, error: function() {
               message("Sorry, something went wrong, please try again.", "error");
               $(this).parents('.event').data('calendarevent').removeClass('deleting');
+              processing(false);
             }
           });
         };

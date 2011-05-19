@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110518201043) do
+ActiveRecord::Schema.define(:version => 20110518215435) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -75,6 +75,22 @@ ActiveRecord::Schema.define(:version => 20110518201043) do
 
   add_index "businesses", ["business_account_id", "place_id"], :name => "index_businesses_on_business_account_id_and_place_id", :unique => true
 
+  create_table "deal_codes", :force => true do |t|
+    t.integer  "owner_id"
+    t.integer  "deal_event_id"
+    t.string   "code",                :null => false
+    t.integer  "discount_percentage", :null => false
+    t.date     "date",                :null => false
+    t.integer  "start_time",          :null => false
+    t.integer  "end_time",            :null => false
+    t.datetime "issued_at"
+    t.datetime "redeemed_at"
+    t.datetime "locked_at"
+  end
+
+  add_index "deal_codes", ["deal_event_id", "date"], :name => "index_deal_codes_on_deal_event_id_and_date"
+  add_index "deal_codes", ["owner_id", "date"], :name => "index_deal_codes_on_owner_id_and_date"
+
   create_table "deal_events", :force => true do |t|
     t.integer  "deal_template_id"
     t.integer  "business_id",                          :null => false
@@ -82,8 +98,9 @@ ActiveRecord::Schema.define(:version => 20110518201043) do
     t.text     "description"
     t.integer  "deal_count",            :default => 0, :null => false
     t.integer  "discount_percentage",   :default => 0, :null => false
-    t.datetime "starts_at",                            :null => false
-    t.datetime "ends_at",                              :null => false
+    t.integer  "start_time",                           :null => false
+    t.integer  "end_time",                             :null => false
+    t.date     "date",                                 :null => false
     t.integer  "sale_count",            :default => 0, :null => false
     t.integer  "cost_cents"
     t.integer  "estimated_cents_value", :default => 0, :null => false
@@ -93,8 +110,7 @@ ActiveRecord::Schema.define(:version => 20110518201043) do
     t.datetime "updated_at"
   end
 
-  add_index "deal_events", ["business_id"], :name => "index_deal_events_on_business_id"
-  add_index "deal_events", ["starts_at", "ends_at"], :name => "index_deal_events_on_starts_at_and_ends_at"
+  add_index "deal_events", ["business_id", "date"], :name => "index_deal_events_on_business_id_and_date"
 
   create_table "deal_templates", :force => true do |t|
     t.string   "name",                               :null => false
