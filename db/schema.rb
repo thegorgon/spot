@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20110518215435) do
   create_table "deal_codes", :force => true do |t|
     t.integer  "owner_id"
     t.integer  "deal_event_id"
+    t.integer  "business_id",         :null => false
     t.string   "code",                :null => false
     t.integer  "discount_percentage", :null => false
     t.date     "date",                :null => false
@@ -88,7 +89,8 @@ ActiveRecord::Schema.define(:version => 20110518215435) do
     t.datetime "locked_at"
   end
 
-  add_index "deal_codes", ["deal_event_id", "date"], :name => "index_deal_codes_on_deal_event_id_and_date"
+  add_index "deal_codes", ["business_id", "date", "code"], :name => "index_deal_codes_on_business_id_and_date_and_code", :unique => true
+  add_index "deal_codes", ["deal_event_id"], :name => "index_deal_codes_on_deal_event_id"
   add_index "deal_codes", ["owner_id", "date"], :name => "index_deal_codes_on_owner_id_and_date"
 
   create_table "deal_events", :force => true do |t|

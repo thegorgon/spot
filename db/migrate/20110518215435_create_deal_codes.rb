@@ -23,6 +23,7 @@ class CreateDealCodes < ActiveRecord::Migration
     create_table :deal_codes do |t|
       t.integer :owner_id
       t.integer :deal_event_id
+      t.integer :business_id, :null => false
       t.string :code, :null => false
       t.integer :discount_percentage, :null => false
       t.date :date, :null => false
@@ -33,7 +34,8 @@ class CreateDealCodes < ActiveRecord::Migration
       t.datetime :locked_at
     end
     add_index :deal_codes, [:owner_id, :date]
-    add_index :deal_codes, [:deal_event_id, :date]
+    add_index :deal_codes, :deal_event_id
+    add_index :deal_codes, [:business_id, :date, :code], :unique => true
   end
 
   def self.down

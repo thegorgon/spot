@@ -21,7 +21,7 @@
       ="#{fb_share({:name => "Wishlist #{@business.place.name} on Spot!", :caption => "Add #{@business.place.name} to your wishlist on Spot to get updates about deals.", :url => root_url}, "posting")} about your spot on Facebook,".html_safe
       ="or adding a #{link_to "Spot widget", biz_widgets_path} to your website.".html_safe
 .deals_count.stat
-  .title="#{@business.deal_templates.count} Deals Created"
+  .title="#{@business.deal_templates.count.pluralize("Deal")} Created"
   .content
     %p 
       Create deals to encourage Spot members to come to your business during slow hours. Set the discount, the number of deals you'd like to offer per day, and the times the deal should be valid for. You can also add descriptive editorial text to add color to your deal and make it more attractive to our members. Once the deal is created, you can schedule the deal to make it valid on any date in the next 90 days.
@@ -29,7 +29,7 @@
       To simplify the process, you cannot edit a deal once it's been created. You can however, delete the deal at any time. You can manage your deals using the
       ="#{link_to "deal calendar", calendar_biz_business_path(@business)}.".html_safe
 .deal_events_count.stat
-  .title="#{@business.deal_events.where("date >= ?", Date.today).count} Upcoming Deals on the Calendar "
+  .title="#{@business.deal_events.where("date >= ?", Date.today).count.pluralize("Upcoming Deal")} on the Calendar "
   .content
     %p
       Once deals are created you need to schedule them on the days you'd like them to be valid. Once they've been approved and scheduled, we'll start to issue them to our members. If at any time you'd like us to stop issuing deals for a specific date, you can cancel any remaining deals on that date. However, you will have to honor deals that have already been issued.

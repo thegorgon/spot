@@ -253,8 +253,9 @@
               $.popover.hide();
               processing("Sending Codes...");
             }, success: function(data) {
-              processing(data.flash);                
+              processing(data.flash);
             }, error: function() {
+              processing(null);
               processing("There was an error. Please try again.")
             }
           })
@@ -289,6 +290,7 @@
                   displayCellEvent(cell, data.event);                  
                   processing(null);
                 } else {
+                  processing(null);
                   message("Sorry, we encountered an error applying that deal on that date : " + data.error, 'error');
                 }
               }
@@ -365,9 +367,9 @@
                   addTemplate(data.templates[i]);
                 });
               }
-              processing(false);              
+              processing(null);              
             }, error: function() {
-              processing(false);
+              processing(null);
               message("Sorry, the system encountered an error. Please refresh this page to continue.", "error");
             }
           });
@@ -389,9 +391,9 @@
               updateScroll(grid);
               tbody.scrollTop(0);
               bindDates();
-              processing(false);
+              processing(null);
             }, error: function() {
-              processing(false);
+              processing(null);
               message("Sorry, the system encountered an error. Please refresh this page to continue.", "error");
             }
           });
@@ -413,13 +415,14 @@
                 $('li.template.pending').remove();
                 selectTemplate(addTemplate(data.template));                
                 $(this).clear();
-                processing(false);
+                processing(null);
               } else {
                 $('li.template.pending').remove();
-                processing(false);
+                processing(null);
                 message("Sorry, there were errors with your submission : " + data.error + ". Please try again.", "error");
               }
             }, error: function() {
+              processing(null);
               message("Something went wrong, please try again.", "error");
             }
           });
@@ -436,11 +439,11 @@
               tpl.slideUp(function() {
                 tpl.remove();
               });
-              processing(false);
+              processing(null);
             }, error: function() {
               message("Sorry, something went wrong, please try again.", "error");
               $(this).parents('.template').removeClass('deleting');
-              processing(false);
+              processing(null);
             }
           });
         },
@@ -461,11 +464,11 @@
                 event.remove();
               }
               setCellClass(cell);
-              processing(false);
+              processing(null);
             }, error: function() {
               message("Sorry, something went wrong, please try again.", "error");
               $(this).parents('.event').data('calendarevent').removeClass('deleting');
-              processing(false);
+              processing(null);
             }
           });
         };

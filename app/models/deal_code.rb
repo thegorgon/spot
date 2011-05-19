@@ -1,7 +1,9 @@
 class DealCode < ActiveRecord::Base
   CODE_CHARS = ("a".."z").to_a + ("0".."9").to_a 
   belongs_to :owner, :class_name => "User"
-  
+  belongs_to :business
+    
+  validates :business, :presence => true
   validates :code, :presence => true
   validates :discount_percentage, :presence => true, :inclusion => DealTemplate::DISCOUNTS
   validates :date, :presence => true
@@ -23,6 +25,7 @@ class DealCode < ActiveRecord::Base
     self.start_time = value.start_time
     self.end_time = value.end_time
     self.date = value.date
+    self.business = value.business
     @deal_event = value
   end
   
@@ -57,6 +60,7 @@ class DealCode < ActiveRecord::Base
   
   def assign_code
     self.code ||= self.class.random_code
+    assign_code if DealCode.where(:business_id => business_id, :code => code, :date => (date - 6.months..date + 6.months)).exists?
   end
-  
+    
 end
