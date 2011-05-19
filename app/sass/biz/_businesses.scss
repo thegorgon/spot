@@ -3,6 +3,8 @@
   .bizhd {
     margin-bottom: 15px;
     .title {
+      @include ellipsis;
+      width: 550px;
       float: left;
       margin-bottom: 15px;
     }
@@ -49,9 +51,12 @@
       right: 0px;
       bottom: 0px;
       z-index: 100;
-      background: #f7f7f7;
       @include opacity(0.9);
       margin: 0 auto;
+      background: #fff;
+      .ie7 &, .ie8 & {
+        background: #f7f7f7;
+      }
     }    
     h1, .message {
       font-weight: bold;
@@ -128,16 +133,16 @@
       }
     }
     margin-bottom: 3em;
-  }
-  .verification {
-    .verified {
-      color: #339933;
-    }
-    .unverified {
-      color: #993333;
-    }
-    .question {
-      cursor: pointer;
+    .verification {
+      &.verified {
+        color: #339933;
+      }
+      &.unverified {
+        color: #993333;
+      }
+      .question {
+        cursor: pointer;
+      }
     }
   }
 }
