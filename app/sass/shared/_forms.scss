@@ -82,7 +82,7 @@ ul.form {
 }
 
 /* ALL STYLED FORMS */
-.faded, .light {
+.faded, .light, .inpopover {
   .placeholder {
     @include transition(all 0.25s);
     position: absolute;
@@ -494,14 +494,17 @@ ul.form.oneline {
 /* FORMS IN POPOVERS */
 ul.form.inpopover {
   padding: 2px 0;
+  .placeholder {
+    color: #999;
+  }
   li {
     margin: 0;
-    width: 248px;
+    width: 250px;
     float: none;
     border-bottom: 1px solid #999;
     input {
       border: none;
-      width: 250px;
+      width: 234px;
     }
     &.buttons {
       padding: 15px 10px;
