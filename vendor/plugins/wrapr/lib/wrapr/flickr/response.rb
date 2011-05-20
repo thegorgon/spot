@@ -49,8 +49,10 @@ module Wrapr
       def each(&blk)
         if @records.present?
           @records.each(&blk)
-        else
+        elsif @raw_records.present?
           @raw_records.each(&blk)
+        else
+          [].each(&blk)
         end
       end
     
