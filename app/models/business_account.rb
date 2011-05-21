@@ -69,10 +69,10 @@ class BusinessAccount < ActiveRecord::Base
   end
   
   def set_defaults
-    self[:max_businesses_count] ||= DEFAULT_MAX_BUSINESSES
-    self[:first_name] ||= user.first_name
-    self[:last_name] ||= user.last_name
-    self[:email] ||= user.email
+    self[:max_businesses_count] = DEFAULT_MAX_BUSINESSES if self.max_businesses_count.to_i <= 0
+    self[:first_name] ||= user.try(:first_name)
+    self[:last_name] ||= user.try(:last_name)
+    self[:email] ||= user.try(:email)
   end
   
 end

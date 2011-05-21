@@ -12,7 +12,7 @@ class Biz::AccountsController < Biz::BaseController
       warden.set_user @account.user
       redirect_to new_biz_business_path
     else
-      flash.now[:error] = "Something's not right. Can you double check the fields in red?"
+      flash.now[:error] = "Something's not right: #{@account.errors.full_messages.join(', ')}. Can you double check your entry?"
       @page_namespace = "biz_accounts_new"
       render :action => :new
     end
