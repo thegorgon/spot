@@ -16,7 +16,7 @@
     %p="Spot members are registered users of the Spot services, primarily savvy urban dwellers who frequent high end restaurants, boutiques and other establishments. Spot members wishlist businesses they are considering going to. You can use #{link_to "deals", calendar_biz_business_path(@business)} to encourage members to come to your business.".html_safe
     %p
       To get more people to wishlist your business, consider 
-      ="#{twitter_share_url "http://www.spot-app.com", "Wishlist #{@business.place.name} on Spot to get updates about deals.", "tweeting"} about your spot,".html_safe
+      ="#{twitter_share_link "http://www.spot-app.com", "Wishlist #{@business.place.name} on Spot to get updates about deals.", "tweeting"} about your spot,".html_safe
       ="#{fb_post({:name => "Wishlist #{@business.place.name} on Spot!", :caption => "Add #{@business.place.name} to your wishlist on Spot to get updates about deals.", :url => root_url}, "posting")} about your spot on Facebook,".html_safe
       ="or adding a #{link_to "Spot widget", biz_widgets_path} to your website.".html_safe
 .deals_count.stat
