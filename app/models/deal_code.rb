@@ -1,5 +1,5 @@
 class DealCode < ActiveRecord::Base
-  CODE_CHARS = ("a".."z").to_a + ("0".."9").to_a 
+  CODE_CHARS = ['A', 'b', 'C', 'd', 'E', 'F', 'G', 'H', 'i', 'J', 'K', 'L', 'M', 'N', 'P', 'q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] + ("1".."9").to_a 
   belongs_to :owner, :class_name => "User"
   belongs_to :business
     
@@ -44,7 +44,7 @@ class DealCode < ActiveRecord::Base
   def redeem!
     update_attribute(:redeemed_at, Time.now)
   end
-  
+    
   def issue_to!(user)
     self.class.transaction do
       update_attributes!(:owner_id => user.id, :issued_at => Time.now)
@@ -54,6 +54,20 @@ class DealCode < ActiveRecord::Base
   
   def issued?
     !!issued_at
+  end
+  
+  def redeemed?
+    !!redeemed_at
+  end
+  
+  def status_string
+    if issued? && redeemed?
+      "redeemed"
+    elsif issued?
+      "issued"
+    else
+      "unissued"
+    end
   end
   
   private

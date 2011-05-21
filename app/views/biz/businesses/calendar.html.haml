@@ -53,7 +53,7 @@
   %script.jstpl.datedetail{:type => "text/x-jquery-tmpl"}
     .datedetail{'data-date' => '${date}'}
       {{html events}}
-      =form_tag codes_biz_business_path(@business), :class => "sendcodes", :method => :get do
+      =form_tag mail_biz_business_codes_path(@business), :class => "sendcodes", :method => :get do
         =hidden_field_tag :date, '${date}'
         =button_tag :class => "btngrypill" do
           Send Discount Codes

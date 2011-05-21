@@ -1,0 +1,138 @@
+.biz_discount_codes {
+  .bizbd {
+    font-size: 14px;
+    margin: 0 auto;
+    width: 900px;
+    .code.loading {
+      @include opacity(0.5);
+    }
+    .codes {
+      h1 {
+        margin-bottom: 10px;
+      }
+      .title {
+        margin-top: 10px;
+        font-size: 17px;
+        .eventname {
+          font-weight: bold;
+        }
+        .summary {
+          margin: 5px 0;
+          color: #999;
+          font-weight: normal;
+        }
+      }
+      ul.form {
+        padding-left: 10px;
+        padding-top: 20px;
+        &.loading {
+          background: transparent url("/images/assets/loading/org3blck16x11.gif") no-repeat top center;
+          form {
+            @include opacity(0.5);
+          }
+        }
+        li.text {
+          width: 380px;
+          .label {
+            float: left;
+            line-height: 29px;
+            margin-right: 10px;
+          }
+          .input {
+            float: left;
+            margin-right: 10px;
+          }
+          .button {
+            float: left;
+          }
+          input.text {
+            display: inline;
+            position: static;
+            width: 184px;
+          }
+          button {
+            display: inline;
+          }
+        }
+      }
+      table {
+        margin: 10px auto;
+        thead {
+          tr {
+            background: #333;
+            color: #ededed;
+            vertical-align: middle;
+            th {
+              padding: 5px 10px;
+            }
+          }
+        }
+        form {
+          width: 68px;
+          margin: 0 auto;
+        }
+        tr {
+          height: 20px;
+          text-align: center;
+          color: #999;
+          &.issued {
+            color: #333;
+          }
+          &.redeemed {
+            color: #393;
+            .code {
+              text-decoration: line-through;
+            }
+          }
+          td {
+            vertical-align: middle;
+          }
+        }
+        .number {
+          padding: 5px 10px;
+        }
+        .code_string {
+          padding: 5px 10px;
+          font-family: courier, monospace;
+          font-weight: bold;
+        }
+        .issuance {
+          padding: 5px 20px;
+        }
+        .redemption {
+          padding: 5px 20px;
+        }
+      }
+    }
+    .lookup {
+      width: 500px;
+      var {
+        font-style: normal;
+        font-family: courier, monospace;
+      }
+      h1 {
+        text-align: center;
+        margin: 0 0 20px 0;
+      }
+      ul.form {
+        margin: 0 auto;
+        width: 300px;
+        padding-bottom: 20px;
+        &.loading {
+          background: transparent url("/images/assets/loading/org3blck16x11.gif") no-repeat bottom center;
+          form {
+            @include opacity(0.5);
+          }
+        }
+      }
+      .code {
+        margin-top: 10px;
+        width: 500px;
+        form {
+          width: 300px;
+          margin: 0 auto;
+        }
+      }
+    } 
+  }
+}

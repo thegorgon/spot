@@ -1,0 +1,28 @@
+=render :partial => "biz/businesses/header"
+
+.bizbd
+  .codes.left
+    .data=render :partial => "codes"
+    %ul.form.light
+      =form_tag biz_business_codes_path(@business), :method => :get, :id => "change_date_form" do
+        %li.text
+          .label
+            %strong Get codes for 
+          .input
+            =text_field_tag(:date, @date.strftime('%A, %B %d, %Y'), :class => "text")
+          .button
+            =button_tag :class => "btngrypill" do
+              Go
+  
+  .lookup.right
+    %h1 Lookup a Code?
+    %ul.form.light
+      =form_tag lookup_biz_business_codes_path(@business), :method => :get, :id => "lookup_code_form", 'data-validate' => 'validate' do |f|
+        %li.text
+          =text_field_tag :code, "", :class => "text", :placeholder => "enter code", :required => true
+          .validity
+        %li
+          =button_tag :class => "btngrypill300x30" do
+            Lookup
+    .code
+  

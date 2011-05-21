@@ -1,16 +1,16 @@
-.biz_businesses {
+.biz {
   min-width: 980px;
   .bizhd {
     margin-bottom: 15px;
     .title {
       @include ellipsis;
-      width: 550px;
+      width: 460px;
       float: left;
       margin-bottom: 15px;
     }
     .pillbox {
       float: right;
-      margin: 12px 0 0 30px;
+      margin: 12px 0 0 0px;
     }
     hr {
       clear: both;

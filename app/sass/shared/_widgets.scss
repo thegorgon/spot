@@ -238,3 +238,95 @@ ul.pillbox {
     background: #ffdddd;
   }
 }
+.ui-datepicker {
+  background: #fff;
+  padding: 2px;
+  border: 1px solid #999;
+  @include border_radius(5px);
+  font-size: 10px;
+  width: 196px;
+  table {
+    width: 196px;
+    margin: 5px 0 0 0;
+    td {
+      padding: 1px;
+      text-align: center;
+    }
+    .ui-datepicker-current-day {
+      a {
+        border: 1px solid #ff8419;
+        background: #fff;
+      }
+    }
+    a {
+      width: 24px;
+      height: 15px;
+      line-height: 15px;
+      display: block;
+      text-decoration: none;
+      font-weight: normal;
+      background: #f6f6f6;
+      @include gradient_top_down(#fff, #f6f6f6, 100%);
+      border: 1px solid #ccc;
+      @include border_radius(3px);
+      &:hover {
+        background: #ff8419;
+        @include gradient_top_down(#FFB473, #ff8419, 100%);
+        color: #fff;
+      }
+    }
+  }
+  .ui-datepicker-header {
+    position: relative;
+    padding: 5px;
+    background: #ffb473;
+    border: 1px solid #ff8419;
+    @include border_radius(3px);
+    @include gradient_top_down(#FFB473, #ff8419, 100%);
+    .ui-datepicker-next {
+      right: 2px;
+      width: 0;
+      span {
+        @include triangle_right(5px, 5px, #fff);
+      }
+      &:hover {
+        span {
+          @include triangle_right(5px, 5px, #f0f0f0);
+        }
+      }
+    }
+    .ui-datepicker-prev {
+      left: 12px;
+      width: 0;
+      span {
+        @include triangle_left(5px, 5px, #fff);        
+      }
+      &:hover {
+        span {
+          @include triangle_left(5px, 5px, #f0f0f0);
+        }
+      }
+    }
+    .ui-datepicker-title {
+      text-align: center;
+      font-weight: bold;
+      color: #fff;
+    }
+    .ui-datepicker-prev, .ui-datepicker-next {
+      position: absolute;
+      top: 5px;
+      height: 1.8em;
+      cursor: pointer;
+      span {
+        text-indent: -9999px;
+        display: block;
+        position: absolute;
+        left: 50%;
+        margin-left: -8px;
+        top: 50%;
+        margin-top: -8px;
+      }
+    }
+    
+  }
+}

@@ -38,15 +38,7 @@ class Biz::BusinessesController < Biz::BaseController
       format.js { render :json => { :html => render_to_string(:partial => "search") }}
     end
   end
-  
-  def codes
-    success = @business.deliver_deal_codes_for! params[:date]
-    respond_to do |format|
-      format.html { redirect_to calendar_biz_business_path(@business) }
-      format.js { render :json => {:success => success, :flash => success ? "Discount codes sent. Check your email." : "No codes for that date."} }
-    end
-  end
-  
+    
   def show
   end
   

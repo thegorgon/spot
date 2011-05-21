@@ -3,6 +3,7 @@ class Business < ActiveRecord::Base
   belongs_to :place
   has_many :deal_templates
   has_many :deal_events
+  has_many :deal_codes
   validate :account_can_claim, :on => :create
   before_validation :autovalidate, :on => :create
   accepts_nested_attributes_for :place

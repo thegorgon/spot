@@ -1,0 +1,28 @@
+%div{:id => "code_#{code.id}"}
+  -if code && !code.redeemed? && code.date >= Date.today
+    %h1
+      Code :
+      %var=code.code
+      is still valid for
+      =code.date == Date.today ? 'Today, ' : ''
+      =code.date.strftime("%B %d, %Y")
+    =form_tag redeem_biz_business_code_path(code.business, code), :method => :put, :class => "code_redeem_form"  do
+      =button_tag :class => "btngrypill300x30" do
+        Redeem
+  -elsif code && !code.redeemed?
+    %h1
+      Code :
+      %var=code.code
+      expired without being redeemed on
+      =code.date.strftime('%B %d, %Y')
+  -elsif code && code.date >= Date.today
+    %h1
+      Code :
+      %var=code.code
+      was redeemed at 
+      =code.redeemed_at.strftime('%I:%M %P on %B %d, %Y')
+      and is no longer valid
+  -else
+    %h1
+      Nothing found with code : 
+      %var=params[:code]

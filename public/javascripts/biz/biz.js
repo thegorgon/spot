@@ -63,11 +63,56 @@
         var widget = $('#business_select option:selected').val();
         $('.widget .preview .content').html(widget);
         $('.widget .source textarea').val(widget);
-      }
+      };
       setBusiness();
       $('#business_select').bind('change', function(e) {
         setBusiness();
       });
+    },
+    biz_discount_codes_index: function() {
+      var dateForm = $('#change_date_form'), 
+        dateInput = dateForm.find('input.text'),
+        bindDynamicContent = function() {
+          $('.code_redeem_form').ajaxForm({
+            start: function() {
+              $(this).parents('.code').addClass('loading');
+            }, success: function(data) {
+              $(this).parents('.code').removeClass('loading');              
+              $('#event_' + data.event_id).html(data.event);
+              $('#code_' + data.code_id).html(data.code);
+              bindDynamicContent();
+            }
+          });
+        };
+      $('#lookup_code_form').ajaxForm({
+        start: function() {
+          if ($(this).validate()) {
+            $(this).parents('ul.form').addClass('loading');            
+            return true;
+          } else {
+            return false;
+          }
+        },
+        success: function(data) {
+          $(this).parents('ul.form').removeClass('loading');
+          $('.lookup .code').html(data.html);
+          bindDynamicContent();
+        }
+      });
+      dateInput.datepicker({dateFormat: 'DD, MM d, yy'});
+      dateInput.change(function(e) {
+        dateForm.submit();
+      });
+      dateForm.ajaxForm({
+        start: function() {
+          $(this).parents('ul.form').addClass('loading');
+        }, success: function(data) {
+          $(this).parents('ul.form').removeClass('loading');
+          $('.codes .data').html(data.html);
+          bindDynamicContent();
+        }
+      });
+      bindDynamicContent();
     }
   });
 }(Spot));

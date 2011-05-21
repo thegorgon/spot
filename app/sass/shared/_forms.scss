@@ -307,11 +307,16 @@ ul.form {
   li.valid .validity {
     background: transparent url(/images/assets/general/black_check.png?3) no-repeat left center;    
   }
-  li.invalid .validity {
-    .message {
-      color : #993333;
+  li.invalid {
+    input, textarea {
+      border: 1px solid #cc3333;
     }
-    background: transparent url(/images/assets/general/black_cross.png?1) no-repeat left center;        
+    .validity {
+      .message {
+        color : #993333;
+      }
+      background: transparent url(/images/assets/general/black_cross.png?1) no-repeat left center;        
+    }
   }
   .file_field {
     @include border_radius(5px);

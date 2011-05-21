@@ -1,0 +1,6 @@
+%h1="Discount Codes for #{@date.strftime("%B %d, %Y")}"
+-if @events.empty?
+  No codes.
+-@events.each do |event|
+  .event{:id => "event_#{event.id}"}
+    =render :partial => "event", :object => event
