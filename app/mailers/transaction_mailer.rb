@@ -6,8 +6,7 @@ class TransactionMailer < ActionMailer::Base
   def preview_thanks(signup)
     @signup = signup
     @email = signup.email
-    mail( :from => "noreply@spot-app.com",
-          :to => @email,
+    mail( :to => @email,
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
           :subject => "Thanks for your interest!" )
   end
