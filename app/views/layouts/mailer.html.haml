@@ -15,7 +15,7 @@
               %td{:colspan => 5,:height => 10}
             %tr
               %td{:width => 10}
-              %td{:width => 80, :valign => "top"}=image_tag("http://www.spot-app.com/images/logos/shdwapp80x140.png", :size => "80x140")
+              %td{:width => 80, :valign => "top"}=image_tag("http://www.spot-app.com/images/logos/shdwapp80x140.png", :size => "80x140", :alt => "")
               %td{:width => 20}
               %td{:width => 470}
                 %table{:width => 470, :cellpadding => 0, :cellspacing => 0}
@@ -34,7 +34,7 @@
               %td{:colspan => 5, :height => 10}
             %tr{:style =>"padding:0;margin:0;line-height:0px;"}
               %td{:colspan => 5, :style => "padding:0;margin:0;"}
-                =image_tag("https://www.spot-app.com/images/backgrounds/emailft598x110.jpg", :size => "598x110")
+                =image_tag("https://www.spot-app.com/images/backgrounds/emailft598x110.jpg", :size => "598x110", :alt => "spot")
       %tr
         %td{:height => 5}
       %tr
@@ -44,7 +44,7 @@
           ·
           =mail_to "feedback@spot-app.com", "feedback@spot-app.com", :style => "color:#333;"
       -if @email
-        %tr
+        %tr{:style => "line-height:12px;"}
           %td{:style => "text-align:center;font-size:10px;line-height:12px;color:#333;"}
             To unsubscribe from further emails,
             =link_to "click here", email_url(:email => @email), :style => "color:#333;"

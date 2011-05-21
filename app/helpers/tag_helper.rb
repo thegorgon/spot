@@ -67,7 +67,7 @@ module TagHelper
   end
   
   def img_link_to(src, url, options={})
-    link_to image_tag(src, options.slice(:size, :width, :height)), url, options.except(:size, :width, :height)
+    link_to image_tag(src, options.slice(:size, :width, :height, :border, :alt)), url, options.except(:size, :width, :height, :border, :alt)
   end
   
   def open_graph_tags
