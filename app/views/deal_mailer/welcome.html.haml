@@ -1,6 +1,15 @@
+%table
+  %tr
+    -places = Place.find(6019, 5992, 13560)
+    %td{:width => 10}
+    %td=img_link_to "https://s3.amazonaws.com/spot-production/places/6019/images_i234x168.jpg?1299100206", place_url(places[0]), :size => "117x84", :title => "Alinea in Chicago"
+    %td{:width => 20}
+    %td=img_link_to  "https://s3.amazonaws.com/spot-production/places/5992/images_i234x168.jpg?1299097024", place_url(places[1]), :size => "117x84", :title => "Momofuku Noodle Bar in New York City"
+    %td{:width => 20}
+    %td=img_link_to "https://s3.amazonaws.com/spot-production/places/13560/images_i234x168.jpg?1301669260", place_url(places[2]), :size => "117x84", :title => "Serpentine in San Francisco"
+    %td{:width => 29}
 %p
   Spot is a new service that hooks you up with deals at restaurants you want to go to.
-
 %p
   We’re sick of daily emails offering spa discounts, half-price carpet cleaning and other stuff we aren't interested in, so we’re creating something different. 
 
@@ -27,13 +36,13 @@
 %p
   Julia Graham
   %br
-  =mail_to "julia@spot-app.com"
+  =mail_to "julia@spot-app.com", "julia@spot-app.com", :style => "color:#333"
   %br
-  =link_to "http://www.spot-app.com", "http://www.spot-app.com"
+  =link_to "http://www.spot-app.com", "http://www.spot-app.com", :style => "color:#333"
 
 %p
   Tell a friend
   through
-  =link_to "Facebook", fb_share_url("http://www.spot-app.com", "Signed up for new Spot Deals!")
+  =link_to "Facebook", fb_share_url("http://www.spot-app.com", "Signed up for new Spot Deals!"), :style => "color:#333"
   or
-  =link_to "Twitter", twitter_share_url("http://www.spot-app.com", "Signed up for new Spot Deals, I choose places, they get me deals @spotteam")
+  =link_to "Twitter", twitter_share_url("http://www.spot-app.com", "Signed up for new Spot Deals, I choose places, they get me deals @spotteam"), :style => "color:#333"

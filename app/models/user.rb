@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   before_validation :reset_persistence_token, :if => :reset_persistence_token?
   before_validation :reset_single_access_token, :if => :reset_single_access_token?
   before_save :reset_perishable_token
+  after_save :send_deals_welcome_email
   has_many :devices, :dependent => :destroy
   has_many :wishlist_items, :dependent => :delete_all
   has_many :activity_items, :foreign_key => :actor_id, :dependent => :destroy
@@ -137,7 +138,7 @@ class User < ActiveRecord::Base
   
   def send_deals_welcome_email
     if (email.present? && !was_notify_deal_emails? && notify_deal_emails?)
-      # DealMailer.welcome(self).deliver!
+      DealMailer.welcome(self).deliver!
     end
   end
   

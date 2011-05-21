@@ -21,6 +21,7 @@ class Site::HomeController < Site::BaseController
     @email = params[:e]
     @title = params[:t]
     @user = current_user
+    redirect_to root_url unless @template && @email && @title
     render :template => params[:tpl], :layout => "mailer.html"
   end  
 end
