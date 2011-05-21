@@ -58,9 +58,7 @@ module TagHelper
   end
   
   def biz_widget(business)
-    content_tag(:a, :href => place_url(business.place), :style => "text-decoration:none;outline:none;border:none;color:#000;display:block;padding:0;margin:-20px 0 0 0;height:90px;width:112px;") do
-      tag(:img, :src => "#{root_url}images/logos/black_spot225x180.png", :width => "112", :height => "90", :target => "_blank")
-    end
+    content_tag(:iframe, '', :src => widget_url(:pid => business.place.id), :width => 60, :height => 26, :frameborder => 0, :marginheight => 0, :marginwidth => 0, :scrolling => "no")
   end
   
   def link_to_image(url, options={})
