@@ -1,10 +1,11 @@
 .vcc
   .vc
-    .form_container.width500.center
+    .form_container.center
       %h1
         Interested in Spot for Businesses?
-      %p
-        We're working on something revolutionary to help business owners like you. If you're interested, sign up and we'll let you know as soon as it's ready.
+      %p 
+        We're working on something revolutionary to help business owners like you. 
+        If you're interested, sign up and we'll let you know as soon as it's ready.
       =spot_form_for :preview, :url => biz_previews_path do |f|
         =f.hidden_field :interest, :value => "business"
         =f.email_field :email, :placeholder => "enter your email", :required => true

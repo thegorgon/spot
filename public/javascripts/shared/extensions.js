@@ -20,6 +20,33 @@
         return string.slice(0, length - 3) + "...";
       }
     },
+    popup: function(url, options) {
+      options = options || {};
+      options = $.extend({
+        scrollbars: true,
+        resizable: true,
+        toolbar: false,
+        location: true,
+        width: 500,
+        height: 500
+      }, options);
+      var left = screen.width > options.width ? Math.round(0.5 * (screen.width - options.width)) : 0,
+        top = screen.height > options.height ? Math.round(0.5 * (screen.height - options.height)) : 0,
+        query = [], name = options.name, key, value;
+      delete options.name;
+      for (key in options) {
+        if (options.hasOwnProperty(key)) {
+          value = options[key]
+          if (value === true || !value) {
+            value = value ? "yes" : "no";
+          }
+          query.push(key + "=" + value)
+        }
+      }
+      query.push("left=" + left); 
+      query.push("top=" + top);       
+      window.open(url, name || "popup" + (new Date()).getTime(), query.join(","));
+    },
     updateOrientation: function() {
       var orient = Math.abs(window.orientation) === 90 ? "landscape" : "portrait";
       if (orient !== $('body').attr('orient')) {

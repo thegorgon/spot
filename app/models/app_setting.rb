@@ -18,8 +18,6 @@ class AppSetting < ActiveRecord::Base
     path = case page
       when :blog
         path = [cntrlr.send(:blog_index_path), I18n.locale, get(:blog_revision) || '0'].join('/')
-      when :place
-        path = [cntrlr.send(:place_path, cntrlr.params[:id]), I18n.locale, AppSetting.get(:place_revision) || '0'].join('/') 
       when :sitemap
         path = [cntrlr.send(:sitemap_path), AppSetting.get(:sitemap_revision) || '0'].join('/') 
       else

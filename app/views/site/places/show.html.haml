@@ -20,9 +20,14 @@
     .buttons_container
       =link_to "Add to Wishlist", getspot_path, :class => "phone_whitegray_288x37"
       =link_to "View Map", gmap_url(:name => @place.name, :ll => @place), :class => "phone_whitegray_288x37"
-
+      .share.clearfix
+        %a{:href => fb_share_url(place_url(@place), "#{@place.name} on Spot"), :class => "fb-share-button phone_whitegray_135x37 left"}
+          .center
+            =image_tag "assets/general/fb_f_24x22.png", :width => 24, :height => 22
+            Share
+        %a{:href => twitter_share_url(place_url(@place), @place.share_tweet), :class => "twitter-share-button phone_whitegray_135x37 right"}
+          .center
+            =image_tag "assets/general/tweetie30x22.png", :width => 30, :height => 22
+            Tweet
 =content_for :ft do
-  .share.clearfix
-    .fb=fb_share_url(place_url(@place))
-    .twitter=twitter_share_url(place_url(@place), @place.share_tweet)
   =itunes_store_link('assets/general/app_store_transparent116x40.png', :size => "116x40")    

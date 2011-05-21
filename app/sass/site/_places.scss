@@ -130,6 +130,27 @@
             cursor: pointer;
             margin: 10px 0 0 0;
           }
+          .share {
+            a {
+              position:relative;
+              &.left {
+                float: left;                
+              }
+              &.right {
+                float: right;
+              }
+              .center {
+                height: 22px;
+                margin-top: 3px;
+                line-height: 22px;
+                img {
+                  position: relative;
+                  top: 5px;
+                  margin-right: 5px;
+                }
+              }
+            }
+          }
         }
       }
       .wishlists {

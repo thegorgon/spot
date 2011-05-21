@@ -15,34 +15,38 @@ module TagHelper
     content_tag(:script, "", :src => file, :type => "text/javascript")
   end
   
-  def fb_share_url(url)
-    query = { :href => url, 
-              :layout => "button_count", 
-              :show_faces => false, 
-              :width => 90, 
-              :action => "like",
-              :colorscheme => "light",
-              :height => 21,
-              :font => "lucida grande" }
-              
-    props = { :scrolling => "no", 
-              :frameborder => "0", 
-              :style => "border:none; overflow:hidden; width:450px; height:21px;", 
-              :allowTransparency => "true",
-              :src => "https://www.facebook.com/plugins/like.php?#{query.to_query}" }
-    content_tag(:iframe, "", props)
-  end
-
-  def twitter_share_url(url, text, content=nil)
+  def twitter_share_link(url, text, content, options={})
     klass = content ? "twitter-share-link" : "twitter-share-button"
     content ||= "&nbsp;".html_safe
-    params = {:url => url, :via => "spotteam", :text => text}
-    share = content_tag(:a, content, :href => "https://twitter.com/share?#{params.to_query}", :target => "_blank", :class => klass)
+    options[:class] ||= klass
+    options[:target] ||= "_blank"
+    options[:href] = twitter_share_url(url, text)
+    share = content_tag(:a, content,options)
     share.html_safe
   end
   
-  def fb_share(options, content=nil)
+  def twitter_share_url(url, text)
+    params = {:url => url, :via => "spotteam", :text => text}
+    "https://twitter.com/share?#{params.to_query}"
+  end
+  
+  def fb_share_link(url, title=nil, content=nil, options={})
     klass = content ? "fb-share-link" : "fb-share-button"
+    content ||= "&nbsp;".html_safe
+    options[:class] ||= klass
+    options[:target] ||= "_blank"
+    options[:href] = fb_share_url(url, title)
+    share = content_tag(:a, content, options)
+    share.html_safe
+  end
+  
+  def fb_share_url(url, title=nil)
+    params = {:u => url, :title => title}
+    "http://www.facebook.com/sharer.php?#{params.to_query}"
+  end
+  
+  def fb_post(options, content=nil)
+    klass = content ? "fb-post-link" : "fb-post-button"
     content ||= "&nbsp;".html_safe
     params = { 'data-fb-url' => options[:url], 
                'data-fb-name' => options[:name], 

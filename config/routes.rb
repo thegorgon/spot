@@ -19,6 +19,7 @@ Spot::Application.routes.draw do
     resource :account, :only => [:new, :create, :destroy]
     resource :password_reset, :only => [:new, :create, :edit, :update]
     resources :places, :only => [:show]
+    resource :widgets, :only => [:show]
     resource :email, :only => [:show] do
       delete "unsubscribe"
       get "goodbye"
@@ -29,6 +30,7 @@ Spot::Application.routes.draw do
       get "about", :action => "about"
       get "press", :action => "press"
       get "getspot", :action => "getspot"
+      get "viewemail", :action => "email"
     end
     get "login" => redirect("/session/new")
     get "register" => redirect("/account/new")

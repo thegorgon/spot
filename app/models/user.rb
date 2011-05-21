@@ -95,15 +95,19 @@ class User < ActiveRecord::Base
   NOTIFICATION_FLAGS.each_with_index do |flag, i|
     define_method("notify_#{flag}=") do |value|
       if value
-        self[:notification_flags] |= (1 << i)
+        self.notification_flags |= (1 << i)
       else
-        self[:notification_flags] &= ~(1 << i)
+        self.notification_flags &= ~(1 << i)
       end
     end
     
     define_method("notify_#{flag}?") do
-      self[:notification_flags] & (1 << i) > 0
-    end    
+      notification_flags & (1 << i) > 0
+    end
+    
+    define_method("was_notify_#{flag}?") do
+      notification_flags_was & (1 << i) > 0
+    end
   end
     
   def reset_perishable_token!
@@ -130,6 +134,12 @@ class User < ActiveRecord::Base
   end
     
   private
+  
+  def send_deals_welcome_email
+    if (email.present? && !was_notify_deal_emails? && notify_deal_emails?)
+      # DealMailer.welcome(self).deliver!
+    end
+  end
   
   def reset_persistence_token
     self.persistence_token = Nonce.hex_token

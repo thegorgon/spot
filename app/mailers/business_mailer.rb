@@ -6,11 +6,12 @@ class BusinessMailer < ActionMailer::Base
   default :from => FROM, :reply_to => REPLY_TO
   
   def welcome(account)
+    @title = "Welcome to Spot for Businesses!"
     @account = account
     @email = account.email
     mail( :to => @account.email_with_name,
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
-          :subject => "Welcome to Spot for Businesses!" )
+          :subject => @title )
   end
   
   def contact(account, parameters)
@@ -18,6 +19,7 @@ class BusinessMailer < ActionMailer::Base
     @contact = parameters[:contact]
     @subject = parameters[:subject]
     @message = parameters[:message]
+    @title = @subject
     mail( :to => Rails.env.production?? "contact@spot-app.com" : "jreiss@spot-app.com",
           :reply_to => @contact,
           :subject => "New business message : #{@subject}")
@@ -29,6 +31,7 @@ class BusinessMailer < ActionMailer::Base
     @email = @account.email
     @reply_to = "julia@spot-app.com"
     @phone_to = PHONE_NUMBER
+    @title = "Deal Approved!"
     mail( :to => @account.email_with_name,
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
           :subject => "Congratulations! Your deal has been approved for distribution." )  
@@ -40,6 +43,7 @@ class BusinessMailer < ActionMailer::Base
     @email = @account.email
     @reply_to = "julia@spot-app.com"
     @phone_to = PHONE_NUMBER
+    @title = "Deal Rejected"
     mail( :to => @account.email_with_name,
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
           :subject => "Sorry, your deal was rejected" ) 
@@ -51,8 +55,9 @@ class BusinessMailer < ActionMailer::Base
     @account = @business.business_account
     @email = @account.email
     @events = business.deal_events.on_date(date).includes(:deal_codes => :owner).all
+    @title = "Discount Codes for #{@date.strftime('%B %d, %Y')}"
     mail( :to => @account.email_with_name,
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
-          :subject => "Discount Codes for #{@date.strftime('%B %d, %Y')}" ) 
+          :subject => @title) 
   end
 end
