@@ -31,7 +31,6 @@ class BusinessMailer < ActionMailer::Base
     @email = @account.email
     @reply_to = "julia@spot-app.com"
     @phone_to = PHONE_NUMBER
-    @title = "Deal Approved!"
     mail( :to => @account.email_with_name,
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
           :subject => "Congratulations! Your deal has been approved for distribution." )  
@@ -43,7 +42,6 @@ class BusinessMailer < ActionMailer::Base
     @email = @account.email
     @reply_to = "julia@spot-app.com"
     @phone_to = PHONE_NUMBER
-    @title = "Deal Rejected"
     mail( :to => @account.email_with_name,
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
           :subject => "Sorry, your deal was rejected" ) 
