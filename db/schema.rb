@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110518215435) do
+ActiveRecord::Schema.define(:version => 20110522171643) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20110518215435) do
     t.datetime "verified_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "notification_flags",   :default => 0, :null => false
   end
 
   add_index "business_accounts", ["user_id"], :name => "index_business_accounts_on_user_id"

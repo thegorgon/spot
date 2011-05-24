@@ -58,4 +58,22 @@ class BusinessMailer < ActionMailer::Base
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
           :subject => @title) 
   end
+  
+  def weekly_digest(account, start_date=nil, end_date=nil)
+    @account = account
+    @businesses = @account.businesses
+    @start_date = start_date
+    @end_date = end_date
+    if @start_date.nil?
+      @start_date = Date.today.sunday
+      @start_date = @start_date - 1.week if @start_date > Date.today
+    end
+    @end_date ||= @start_date + 6.days
+    @email = @account.email
+    @title = "Your Spot Weekly Digest"
+    @events = 
+    mail( :to => @account.email_with_name,
+          'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
+          :subject => @title) 
+  end
 end

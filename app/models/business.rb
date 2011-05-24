@@ -4,6 +4,7 @@ class Business < ActiveRecord::Base
   has_many :deal_templates
   has_many :deal_events
   has_many :deal_codes
+  after_destroy :cleanup
   validate :account_can_claim, :on => :create
   before_validation :autovalidate, :on => :create
   accepts_nested_attributes_for :place
@@ -17,8 +18,12 @@ class Business < ActiveRecord::Base
     finder
   end
   
+  def name
+    place.name
+  end
+  
   def to_param
-    "#{id}-#{place.name.parameterize}"
+    "#{id}-#{name.parameterize}"
   end
   
   def status_string
@@ -41,6 +46,10 @@ class Business < ActiveRecord::Base
     !!verified_at
   end
   
+  def has_outstanding_deals?
+    deal_codes.where("date >= #{Date.today.to_s(:db)}").count > 0
+  end
+  
   def deliver_deal_codes_for!(date)
     date = Date.parse(date) if date.kind_of?(String)
     date = Time.at(date).to_date if date.kind_of?(Fixnum)
@@ -53,7 +62,7 @@ class Business < ActiveRecord::Base
   end
   
   private
-  
+    
   def account_can_claim
     errors.add(:base, "You cannot claim any more businesses. Please contact us to upgrade your account.") unless business_account.can_claim_more_businesses?
   end

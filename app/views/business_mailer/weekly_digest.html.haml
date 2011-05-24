@@ -1,0 +1,52 @@
+%p="Hello #{@account.first_name},"
+
+%p
+  -if @businesses.count > 0
+    Here is the schedule for 
+    =@businesses.count > 1 ? 'your businesses' : @businesses.first.name
+    for the week from
+    =@start_date.strftime('%A, %B %d, %Y')
+    to
+    =@end_date.strftime('%A, %B %d, %Y')    
+  -else
+    You haven't claimed any businesses. Claim a business to start using Spot to drive
+    traffic to your business when you want it.
+
+-@businesses.each do |biz|
+  %h2{:style => "font-size:15px;font-weight:bold;margin-top:25px;"}
+    =link_to biz.name, biz_business_path(biz), :style => "color:#333 !important;"
+  -events = biz.deal_events.where(:date => (@start_date..@end_date)).includes(:deal_template).all
+  -if events.count > 0  
+    %table{:border => 0, :cellpadding => 0, :cellspacing => 0, :style => "border: 1px solid #999;"}
+      %thead
+        %tr
+          -(@start_date..@end_date).each do |date|
+            %th{:style => "background:#666;color:#fff;text-align:center;vertical-align:middle;font-weight:bold;font-size:8px;width:65px;height:15px;"}
+              =date.strftime("%a, %b %d")
+      %tbody
+        %tr
+          -events = events.group_by { |e| e.date }
+          -(@start_date..@end_date).each do |date|
+            %td{:style => "border:1px solid #999;padding:2px 0;"}
+              -events[date].to_a.each do |event|
+                %div{:style => "font-size:8px;"}
+                  %div{:style => "font-weight:bold;color:#{event.color};"}=truncate(event.name, :length => 10)
+                  %div{:style => ""}=event.timeframe
+  -else
+    %p 
+      No deals scheduled. 
+      =link_to "Schedule deals", calendar_biz_business_url(biz), :style => "color:#333;"
+      to bring more customers to your business during slower times.
+
+%p{:style => "margin:25px 0 15px;"}
+  Check out your 
+  =link_to "business portal", biz_root_url, :style => "color:#333;"
+  to schedule more deals, see more dates, and get more details about your business on 
+  ="#{link_to "Spot", root_url, :style => "color:#333;"}."
+
+%p Sincerely,
+%p Julia & The Spot Team
+%br
+=mail_to "julia@spot-app.com", "julia@spot-app.com", :style => "color:#333"
+%br
+=link_to "http://www.spot-app.com", "http://www.spot-app.com", :style => "color:#333"

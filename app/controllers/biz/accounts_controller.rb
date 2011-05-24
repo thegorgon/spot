@@ -1,6 +1,6 @@
 class Biz::AccountsController < Biz::BaseController
-  skip_before_filter :require_account, :except => [:show]
-  before_filter :require_no_account, :except => [:show]
+  skip_before_filter :require_account, :except => [:show, :update]
+  before_filter :require_no_account, :except => [:show, :update]
   
   def new
     @account = BusinessAccount.new

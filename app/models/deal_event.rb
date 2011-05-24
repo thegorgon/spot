@@ -52,9 +52,13 @@ class DealEvent < ActiveRecord::Base
     deal_codes.available
   end
   
+  def color
+    deal_template.try(:color) || '#808080'
+  end
+  
   def as_json(*args)
     hash = super(*args)
-    hash['color'] = deal_template.try(:color) || '#808080'
+    hash['color'] = color
     hash['timeframe'] = timeframe
     hash['summary'] = summary
     hash['remaining_count'] = remaining_count

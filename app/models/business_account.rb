@@ -1,4 +1,5 @@
 class BusinessAccount < ActiveRecord::Base
+  NOTIFICATION_FLAGS = ["weekly_digest"]
   DEFAULT_MAX_BUSINESSES = 3
   
   belongs_to :user
@@ -11,11 +12,14 @@ class BusinessAccount < ActiveRecord::Base
   validates :title, :presence => true
   validates :max_businesses_count, :presence => true, :numericality => { :minimum => 0 }
   
-  before_validation :set_defaults 
+  before_validation :set_defaults, :on => :create
   after_create :deliver_welcome_message 
   
   name_attribute :name
-  
+  setting_flags NOTIFICATION_FLAGS, :attr => "requested_notifications", 
+                                    :field => "notification_flags", 
+                                    :method_prefix => "send_"
+
   def self.register(params)
     user = User.find_by_id(params[:user_id]) if params[:user_id]
     unless user
@@ -27,6 +31,12 @@ class BusinessAccount < ActiveRecord::Base
       ba.email = params[:email]
       ba.phone = params[:phone]
       ba.title = params[:title]
+    end
+  end
+  
+  def self.deliver_weekly_notifications
+    with_setting("weekly_digest").find_each do |account|
+      BusinessMailer.weekly_digest(account).deliver!
     end
   end
   
@@ -73,6 +83,9 @@ class BusinessAccount < ActiveRecord::Base
     self[:first_name] ||= user.try(:first_name)
     self[:last_name] ||= user.try(:last_name)
     self[:email] ||= user.try(:email)
+    NOTIFICATION_FLAGS.each do |flag| 
+      send("send_#{flag}=", true)
+    end
   end
   
 end

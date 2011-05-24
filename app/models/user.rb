@@ -15,6 +15,9 @@ class User < ActiveRecord::Base
   
   validates :email, :format => EMAIL_REGEX, :uniqueness => true, :if => :email?
   name_attribute :name
+  setting_flags NOTIFICATION_FLAGS, :attr => "requested_notifications", 
+                                    :field => "notification_flags", 
+                                    :method_prefix => "notify_"
   
   def self.adminify!(email)
     if (user = where(:email => email).first)
@@ -75,42 +78,7 @@ class User < ActiveRecord::Base
   def admin!
     update_attribute(:admin, true)
   end
-  
-  def requested_notifications=(value)
-    (NOTIFICATION_FLAGS & value.to_a).each do |setting|
-      send("notify_#{setting}=", true) if respond_to?("notify_#{setting}=")
-    end
-    (NOTIFICATION_FLAGS - value.to_a).each do |setting|
-      send("notify_#{setting}=", false) if respond_to?("notify_#{setting}=")
-    end
-  end
-  
-  def requested_notifications
-    settings = []
-    NOTIFICATION_FLAGS.each do |flag|
-      settings << flag if send("notify_#{flag}?")
-    end
-    settings
-  end
-
-  NOTIFICATION_FLAGS.each_with_index do |flag, i|
-    define_method("notify_#{flag}=") do |value|
-      if value
-        self.notification_flags |= (1 << i)
-      else
-        self.notification_flags &= ~(1 << i)
-      end
-    end
-    
-    define_method("notify_#{flag}?") do
-      notification_flags & (1 << i) > 0
-    end
-    
-    define_method("was_notify_#{flag}?") do
-      notification_flags_was & (1 << i) > 0
-    end
-  end
-    
+      
   def reset_perishable_token!
     reset_perishable_token
     save!

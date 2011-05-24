@@ -25,7 +25,7 @@ module ObjectExtensions
       define_method "#{method}" do
         [send("first_#{method}"), send("last_#{method}")].full_compact.join(" ")
       end
-    end
+    end  
   end
 end
 

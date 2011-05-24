@@ -45,7 +45,7 @@ module ApplicationHelper
   def yes_no(value)
     value ? "yes" : "no"
   end
-  
+    
   def first_or_last(items, i)
     if i == 0 && items.length == 1 
       "first last"

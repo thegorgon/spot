@@ -85,7 +85,7 @@
         templates = [], events = {},
         messaging = calendar.find('#messages'),
         currentTemplate,
-        processMessage = $('#processmessage');
+        processMessage = $('#processmessage'),
 
         processing = function(msg, to) {
           var retain = processMessage.data("retainCount") || 0;
@@ -256,9 +256,9 @@
               processing(data.flash);
             }, error: function() {
               processing(null);
-              processing("There was an error. Please try again.")
+              processing("There was an error. Please try again.");
             }
-          })
+          });
           popover = $.popover.init(date.toString("ddd, MMM d"), content);
           bindDeleteEventForms(popover);
           $.popover.reveal($(cell), popover, {orient: 'horizontal'});
@@ -313,7 +313,7 @@
           var date, msg = false;
             msg = false;
           if (tpl) {
-            date = cell.data('date').clone()
+            date = cell.data('date').clone();
             date.setHours(tpl.end_time);
             if (tpl.start_time > tpl.end_time) {
               date.addDays(1);
@@ -382,14 +382,18 @@
             success: function(data) {
               var tbody = grid.find('.tbody'),
                 startDate = new Date(Date.parse(calendar.attr('data-start-date'))),
-                endDate = new Date(Date.parse(calendar.attr('data-end-date')));
+                endDate = new Date(Date.parse(calendar.attr('data-end-date'))),
+                weeksPassed = Math.floor(Date.weeksBetween(startDate, Date.now())),
+                rowHeight;
               events = data.events;
               grid.removeClass('loading');
               tbody.html("");
               fillDates(tbody, startDate, Date.weeksBetween(startDate, endDate));
               fillEvents();
+              rowHeight = tbody.find('.tr').outerHeight();
               updateScroll(grid);
-              tbody.scrollTop(0);
+              $.logger.debug("ROW HEIGHT : ", rowHeight, "weeksPassed : ", weeksPassed, "SCROLL :", (weeksPassed - 1) * rowHeight);
+              tbody.scrollTop((weeksPassed - 1) * rowHeight);
               bindDates();
               processing(null);
             }, error: function() {

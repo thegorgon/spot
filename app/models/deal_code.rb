@@ -42,7 +42,7 @@ class DealCode < ActiveRecord::Base
   end
   
   def redeem!
-    update_attribute(:redeemed_at, Time.now)
+    update_attribute(:redeemed_at, Time.now) if issued?
   end
     
   def issue_to!(user)
