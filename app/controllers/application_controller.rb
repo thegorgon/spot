@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   helper_method :mobile_browser?
 
   def iphone_browser?
-    !!request.user_agent.match(/iphone/)
+    !!request.user_agent.to_s.match(/iphone/)
   end
   helper_method :iphone_browser?
   
