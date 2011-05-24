@@ -1,6 +1,9 @@
 .admin_deals {
   .deal {
     margin: 1em 0 2em;
+    &.loading {
+      @include opacity(0.5);
+    }
     .summary {
       margin-top: 10px;
       .status {
