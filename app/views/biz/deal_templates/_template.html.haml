@@ -4,13 +4,13 @@
   %h3=template.try(:summary) || '${summary}'
   ="{{if status == #{DealTemplate::APPROVED_STATUS}}}"
   .approval.approved{'data-jstooltip' => "Deal Approved!"}
-    Y
+    Approved
   ="{{else status == #{DealTemplate::PENDING_STATUS}}}"
   .approval.pending{'data-jstooltip' => "Pending Approval. Your deal won't be available until it's approved."}
-    P
+    Pending Approval
   {{else}}
   .approval.rejected{'data-jstooltip' => "Deal rejected, contact #{mail_to "julia@spot-app.com"} to resolve."}
-    N
+    Rejected
   {{/if}}
   .controls.clearfix
     =form_tag CGI.unescape(biz_business_template_path(@business, '${id}')), :method => "delete", :class => "remove", 'data-confirm' => "Are you sure you want to delete '${name}'? This action is irreversible." do

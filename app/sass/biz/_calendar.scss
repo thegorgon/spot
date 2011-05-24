@@ -143,12 +143,8 @@
       }
       .template {
         .approval {
-          position: absolute;
-          top: 30px;
-          left: 7px;
           font-weight: bold;
-          width: 10px;
-          text-align: center;
+          margin: 5px 0 0;
           &.approved {
             color: #556B2F;
             left: 6px;

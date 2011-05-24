@@ -74,6 +74,7 @@ class DealTemplate < ActiveRecord::Base
     hash['summary'] = summary
     hash['color'] = color
     hash['timeframe'] = timeframe
+    hash["status_string"] = status_string
     hash
   end
   

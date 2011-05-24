@@ -22,7 +22,7 @@ class Biz::DealTemplatesController < Biz::BaseController
     
   def destroy
     @template = @business.deal_templates.find(params[:id])
-    @template.remove!
+    @template.removed!
     respond_to do |format|
       format.js { render :json => {:success => true} }
       format.html { redirect_to calendar_biz_business_path(@business) }
