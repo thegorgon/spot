@@ -87,8 +87,16 @@ class ApplicationController < ActionController::Base
     @geo_ip ||= GeoIP.new('db/GeoIP.dat')
   end
   
+  def request_ip
+    if Rails.env.development? && params[:ip]
+      params[:ip]
+    else
+      request.remote_ip
+    end 
+  end
+  
   def geo_country
-    geo_ip.country(params[:ip] || request.remote_ip)
+    geo_ip.country(request_ip)
   end
   helper_method :geo_country
   

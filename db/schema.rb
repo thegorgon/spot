@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110522171643) do
+ActiveRecord::Schema.define(:version => 20110525233247) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -296,6 +296,12 @@ ActiveRecord::Schema.define(:version => 20110522171643) do
     t.integer  "result_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "placepop_emails", :force => true do |t|
+    t.string "email",                      :null => false
+    t.string "first_name",                 :null => false
+    t.string "last_name",  :default => "", :null => false
   end
 
   create_table "places", :force => true do |t|
