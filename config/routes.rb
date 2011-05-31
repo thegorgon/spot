@@ -18,7 +18,9 @@ Spot::Application.routes.draw do
     resource :session, :only => [:new, :create, :destroy]
     resource :account, :only => [:new, :create, :destroy]
     resource :password_reset, :only => [:new, :create, :edit, :update]
-    resources :places, :only => [:show]
+    resources :places, :only => [:show] do
+      resources :deals, :only => [:show]
+    end
     resource :widget, :only => [:show]
     resource :email, :only => [:show] do
       delete "unsubscribe"
@@ -64,6 +66,7 @@ Spot::Application.routes.draw do
     end
     controller "home" do
       get "info"
+      get "analysis"
     end
     root :to => "home#index"
   end

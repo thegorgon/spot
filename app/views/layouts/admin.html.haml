@@ -54,6 +54,7 @@
         %li{'data-popover' => '#tools_subnav', 'data-popover-orient' => 'vertical'}
           %span.title tools
           %ul.hidden.subnav#tools_subnav
+            %li=link_to "Analysis", admin_analysis_path
             %li=link_to "Resque", admin_resque_path
             %li=link_to "Request Info", admin_info_path
             %li=link_to "Settings", admin_settings_path
@@ -63,5 +64,6 @@
   =google_maps_api_include
   =include_javascripts :vendor
   =include_javascripts :scripts
+  =yield :scripts
   :javascript
     Spot.init(#{js_vars});
