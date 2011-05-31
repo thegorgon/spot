@@ -17,7 +17,7 @@
 
   .sidebar
     .map_message
-    .map=image_tag(google_static_map_url(@place, :size => "320x250"))
+    .map=image_tag(google_static_map_url(@place, :size => "420x250"))
     .latlng="@#{@place.to_lat_lng}"
     =render :partial => "form", :object => @place, :as => :place
 
