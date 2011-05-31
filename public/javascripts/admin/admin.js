@@ -62,6 +62,33 @@
         });
       };
       bind();
+    },
+    admin_home_analysis: function() {
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(function() {
+        var url = window.location.href;
+        $('.chart').addClass('loading');
+        $('.chart').each(function(i) {
+          var chartDiv = $(this), scope = chartDiv.attr('data-scope');
+          $.ajax({
+            url: url,
+            data: {scope: scope},
+            type: "GET",
+            dataType: 'json',
+            success: function(data) {
+              var dt = new google.visualization.DataTable(data),
+                chart = new google.visualization[chartDiv.attr('data-type')](chartDiv[0]);
+              $.each(data.analysis[scope].cols, function(i) { 
+                var col = data.analysis[scope].cols[i];
+                dt.addColumn(col.type, col.label, col.id);
+              });
+              dt.addRows(data.analysis[scope].rows);
+              chart.draw(dt, { width: chartDiv.width(), height: chartDiv.height(), title: chartDiv.attr('title'), legend: 'none' });
+              chartDiv.removeClass('loading');
+            }
+          })
+        });        
+      });
     }
   });
 }(Spot));
