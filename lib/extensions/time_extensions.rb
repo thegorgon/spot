@@ -12,7 +12,7 @@ module TimeExtensions
   end
   
   module ClassMethods
-    def twelve_hour(value, options)
+    def twelve_hour(value, options={})
       if value == 0 && options[:midnight]
         text = options[:midnight].eql?(true) ? 'midnight' : options[:midnight]
       elsif value == 12 && options[:noon]
