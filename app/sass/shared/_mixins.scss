@@ -1,51 +1,40 @@
 @mixin border_radius($n) {
-  border-radius: $n;
-  -moz-border-radius: $n;
-  -webkit-border-radius: $n; 
+  border-radius: unquote($n);
+  -moz-border-radius: unquote($n);
+  -webkit-border-radius: unquote($n); 
+  behavior: url(/stylesheets/PIE.htc);
 }
 
 @mixin top_right_border_radius($n) {
-  border-top-right-radius: $n;
-  -moz-border-radius-topright: $n;
-  -webkit-border-top-right-radius: $n; 
+  @include border_radius(0 $n 0 0);
 }
 
 @mixin top_left_border_radius($n) {
-  border-top-left-radius: $n;
-  -moz-border-radius-topleft: $n;
-  -webkit-border-top-left-radius: $n; 
+  @include border_radius($n 0 0 0);
 }
 
 @mixin bottom_right_border_radius($n) {
-  border-bottom-right-radius: $n;
-  -moz-border-radius-bottomright: $n;
-  -webkit-border-bottom-right-radius: $n; 
+  @include border_radius(0 0 $n 0);
 }
 
 @mixin bottom_left_border_radius($n) {
-  border-bottom-left-radius: $n;
-  -moz-border-radius-bottomleft: $n;
-  -webkit-border-bottom-left-radius: $n; 
+  @include border_radius(0 0 0 $n);
 }
 
 @mixin top_border_radius($n) {
-  @include top_left_border_radius($n);
-  @include top_right_border_radius($n); 
+  @include border_radius($n $n 0 0);
 }
 
 @mixin bottom_border_radius($n) {
-  @include bottom_left_border_radius($n);
-  @include bottom_right_border_radius($n); 
+  @include border_radius(0 0 $n $n);
 }
 
 @mixin left_border_radius($n) {
-  @include top_left_border_radius($n);
-  @include bottom_left_border_radius($n); 
+  @include border_radius($n 0 0 $n);
 }
 
 @mixin right_border_radius($n) {
-  @include top_right_border_radius($n);
-  @include bottom_right_border_radius($n); 
+  @include border_radius(0 $n $n 0);
 }
 
 @mixin triangle_up($w, $h, $color) {
@@ -105,6 +94,9 @@
 @mixin gradient_top_down($from, $to, $point: 100%) {
   background: -webkit-gradient(linear, left 0, left $point, from($from), to($to));
   background: -moz-linear-gradient(top, $from, $to $point);
+  -pie-background: linear-gradient(top, $from, $to $point);
+  background: linear-gradient(top, $from, $to $point);
+  behavior: url(/stylesheets/PIE.htc);
 }
 
 @mixin black_radial_gradient($radius) {
@@ -119,6 +111,7 @@
   -moz-box-shadow: unquote($shadow);
   -webkit-box-shadow: unquote($shadow);
   box-shadow: unquote($shadow);
+  behavior: url(/stylesheets/PIE.htc);
 }
 
 @mixin opacity($opacity) {
