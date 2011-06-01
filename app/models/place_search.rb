@@ -104,6 +104,7 @@ class PlaceSearch < ActiveRecord::Base
     @benchmarks[:local] = Benchmark.measure do 
       options = {:page => page, :per_page => per_page}
       options[:order] = "@relevance DESC, wishlist_count DESC"
+      options[:field_weights] = {:clean_name => 5, :city => 2, :country => 1}
       if @position
         options[:geo] = @position.ts_geo
         options[:order] << ", @geodist ASC"

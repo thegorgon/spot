@@ -14,12 +14,14 @@ class Place < ActiveRecord::Base
   attr_reader :external_image_url
     
   has_many :wishlist_items, :as => :item, :conditions => { :deleted_at => nil }
+  has_one :business
   serialize :image_attribution, Hash
   acts_as_mappable
   
   define_index do
     indexes :clean_name, :sortable => true
     indexes :city
+    indexes :country
     has "RADIANS(lat)", :as => :latitude, :type => :float
     has "RADIANS(lng)", :as => :longitude, :type => :float  
     has :wishlist_count
@@ -97,10 +99,12 @@ class Place < ActiveRecord::Base
   
   def relevance_against(query)
     query = query.split(' ').sort.join(' ')
-    relevance_document = Geo::Cleaner.clean(:name => name + ' ' + city).split(' ').sort.join(' ')
+    city_relevance_doc = Geo::Cleaner.clean(:name => name + ' ' + city).split(' ').sort.join(' ')
+    country_relevance_doc = Geo::Cleaner.clean(:name => name + ' ' + country).split(' ').sort.join(' ')
     matcher = (Thread.current[:relevance_matchers] ||= {})[query] ||= Amatch::LongestSubsequence.new(query)
-    character_relevance = (100 * matcher.match(relevance_document)/query.length.to_f).round
-    character_relevance
+    city_relevance = (100 * matcher.match(city_relevance_doc)/query.length.to_f).round
+    country_relevance = (100 * matcher.match(country_relevance_doc)/query.length.to_f).round
+    [city_relevance, country_relevance].max
   end
   
   def external_image_url=(value)
