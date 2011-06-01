@@ -151,6 +151,7 @@
         selectTemplate = function(tpl) {
           $('body').addClass('lightsout');
           currentTemplate = $(tpl).data('template');
+          processing("Click a date to offer " + currentTemplate.name + " on that date.")
           message("Click dates on the calendar to offer '" + currentTemplate.name + "' on those dates.");
           $('.cancel', messaging).click(function(e) {
             unselectTemplates();
@@ -181,6 +182,7 @@
         unselectTemplates = function() {
           removeMessage();
           hideEventPreview();
+          processing(null);
           $('li.template').removeClass('active').removeClass('inactive');
           currentTemplate = null;
           $('body').removeClass('lightsout');

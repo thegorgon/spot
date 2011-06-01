@@ -1,8 +1,18 @@
 %p="Hello #{@account.first_name},"
 
-%p Welcome to Spot for Businesses.
+%p Thank you for registering your business with Spot.
 
-%p Great! You've signed up, so what now?
+%p 
+  Now that you've registered, you can create and schedule deals for the days, times, quantities and discounts you want. 
+  If you need assistance at any step, feel free to call us at 
+  %strong
+    1-888-817-5410
+  \.
+%p  
+  Remember, you can have multiple promotions in the same day or the same promotion for multiple days. 
+  We can help you create, post and manage your promotions.
+
+%p Have a great time promoting your business!
 
 %p Sincerely,
 %p Julia & The Spot Team
@@ -10,3 +20,5 @@
 =mail_to "julia@spot-app.com", "julia@spot-app.com", :style => "color:#333"
 %br
 =link_to "http://www.spot-app.com", "http://www.spot-app.com", :style => "color:#333"
+%br
+1-888-817-5410

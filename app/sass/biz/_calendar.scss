@@ -199,7 +199,7 @@
   }
   #newdealtpl {
     width: 350px;
-    height: 475px;
+    height: 530px;
     position: relative;
     form {
       width: 300px;
@@ -217,6 +217,17 @@
       li.select {
         line-height: 27px;
       }
+    }
+    .description_title {
+      text-align: center;
+      label {
+        font-weight: bold;
+      }
+      .hint {
+        position: static;
+      }
+    }
+    #template_description_container {
     }
     #template_average_spend_container {
       height: 67px;
@@ -338,6 +349,9 @@
             border-width: 3px;
             @include border_radius(3px);
             padding: 1px 5px;
+            .ie7 &, .ie8 & {
+              border-radius: 0;
+            }
             h2 {
               @include ellipsis;
               font-size: 10px;

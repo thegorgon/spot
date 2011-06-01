@@ -1,0 +1,37 @@
+="Hello #{@account.first_name},"
+
+-if @businesses.count > 0
+  Here is the schedule for 
+  =@businesses.count > 1 ? 'your businesses' : @businesses.first.name
+  for the week from
+  =@start_date.strftime('%A, %B %d, %Y')
+  to
+  =@end_date.strftime('%A, %B %d, %Y')    
+-else
+  You haven't claimed any businesses. Claim a business to start using Spot to drive
+  traffic to your business when you want it.
+
+-@businesses.each do |biz|
+  =biz.name
+  -events = biz.deal_events.where(:date => (@start_date..@end_date)).includes(:deal_template).all
+  -if events.count > 0  
+    -events = events.group_by { |e| e.date }
+    
+    -(@start_date..@end_date).each do |date|
+      =date.strftime("%a, %b %d")
+      -events[date].to_a.each do |event|
+        ="#{event.name} : #{event.timeframe}"
+  -else
+    No deals scheduled. Schedule deals to bring more customers to your business during slower times. You can access the deal scheduler by navigating to :
+
+    =calendar_biz_business_url(biz)
+
+Check out your business portal to schedule more deals, see more dates, and get more details about your business on Spot by navigating to :  
+
+=biz_root_url
+
+Sincerely,
+
+Julia & The Spot Team
+julia@spot-app.com
+http://www.spot-app.com
