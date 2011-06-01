@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(:version => 20110525233247) do
     t.date     "date",                                 :null => false
     t.integer  "sale_count",            :default => 0, :null => false
     t.integer  "cost_cents"
-    t.integer  "estimated_cents_value", :default => 0, :null => false
+    t.integer  "average_spend", :default => 0, :null => false
     t.datetime "removed_at"
     t.datetime "approved_at"
     t.datetime "created_at"

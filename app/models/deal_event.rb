@@ -13,12 +13,20 @@ class DealEvent < ActiveRecord::Base
     "#{deal_count.pluralize('deal')} at #{discount_percentage}% off, #{timeframe}"
   end
   
-  def timeframe
-    if all_day?
+  def timeframe(use_all_day=true)
+    if use_all_day && all_day?
       "all day"
     else
       "#{Time.twelve_hour(start_time, :midnight => true, :noon => true)} to #{Time.twelve_hour(end_time, :midnight => true, :noon => true)}"
     end
+  end
+  
+  def dollar_cost
+    cost_cents.to_i/100.0
+  end
+  
+  def savings(party_size)
+    ((average_spend * party_size * discount_percentage)/100.0) - dollar_cost
   end
     
   def all_day?
@@ -79,7 +87,7 @@ class DealEvent < ActiveRecord::Base
       self.discount_percentage = deal_template.discount_percentage if discount_percentage.to_i <= 0
       self.description ||= deal_template.description
       self.name ||= deal_template.name
-      self.estimated_cents_value = deal_template.average_spend * discount_percentage if estimated_cents_value.to_i <= 0
+      self.average_spend = deal_template.average_spend if average_spend <= 0
       self.cost_cents = deal_template.cost_cents if cost_cents.to_i <= 0
       self.approved_at = Time.now if deal_template.approved?
       self.start_time ||= deal_template.start_time

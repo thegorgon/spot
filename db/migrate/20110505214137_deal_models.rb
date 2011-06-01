@@ -28,7 +28,7 @@ class DealModels < ActiveRecord::Migration
       t.datetime :ends_at, :null => false
       t.integer :sale_count, :null => false, :default => 0
       t.integer :cost_cents
-      t.integer :estimated_cents_value, :null => false, :default => 0
+      t.integer :average_spend, :null => false, :default => 0
       t.datetime :removed_at
       t.datetime :approved_at
       t.timestamps
