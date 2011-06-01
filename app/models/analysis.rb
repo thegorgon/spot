@@ -1,5 +1,6 @@
 class Analysis
-  SCOPES = [:overall, :today, :wishlist_histogram, :user_installs, :wishlist_by_date, :sessions_by_date, :actives_by_date]
+  SCOPES = [:overall, :today, :wishlist_histogram, :user_installs, 
+              :wishlist_by_date, :sessions_by_date, :actives_by_date, :version_breakdown]
   attr_accessor :overall, :today
   
   def initialize(params)
@@ -100,6 +101,17 @@ class Analysis
     )
     @actives_by_date = {:rows => result.entries, :cols => [ {:id => "date", :type => "string", :label => "Date"},
                                                              {:id => "count", :type => "number", :label => "Users"} ]}
+  end
+  
+  def populate_version_breakdown
+    result = Device.connection.execute(<<-sql 
+      SELECT app_version, COUNT(id) AS count
+        FROM devices
+      GROUP BY app_version
+      sql
+    )
+    @version_breakdown = {:rows => result.entries, :cols => [ {:id => "app_version", :type => "string", :label => "Version"},
+                                                              {:id => "count", :type => "number", :label => "Devices"} ]}
   end
   
   def as_json(*args)
