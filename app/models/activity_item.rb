@@ -10,6 +10,7 @@ class ActivityItem < ActiveRecord::Base
   validates :action, :inclusion => ACTIONS, :presence => true
 
   scope :since, lambda { |date| where(["created_at > ?", date]) }
+  scope :until, lambda { |date| where(["created_at <= ?", date]) }
 
   acts_as_mappable
   
@@ -19,9 +20,10 @@ class ActivityItem < ActiveRecord::Base
     radius = params[:radius]
     params[:page] = [1, params[:page].to_i].max
     finder = self
-    finder = finder.within(radius, :origin => origin) if radius
+    finder = finder.within(radius, :origin => origin) if radius && origin
     finder = finder.where(:action => "CREATE")
     finder = finder.since(params[:since]) if params[:since]
+    finder = finder.until(params[:until]) if params[:until]
     finder = finder.order("activity_items.created_at DESC")
     records = finder.paginate(:page => params[:page], :per_page => params[:per_page], :include => [:actor, :activity, :item])
     records
