@@ -1,5 +1,6 @@
 class Analysis
   class Chart < Struct.new(:title, :type, :scope); end
+  START = Time.parse("January 01, 2011")
   SCOPES = [:overall, :today, :wishlist_histogram, :user_installs, 
               :wishlist_by_date, :sessions_by_date, :actives_by_date, :version_breakdown]
   CHARTS = [
@@ -11,7 +12,7 @@ class Analysis
     Chart.new("App Version Breakdown", "PieChart", "version_breakdown")
   ]
 
-  attr_accessor :overall, :today, :start, :end, :title
+  attr_accessor :overall, :today, :start, :end
   
   def initialize(params)
     @params = params
@@ -19,7 +20,7 @@ class Analysis
     @scope.map! { |key| key.to_sym } if @scope.kind_of?(Array)
     set_range(params[:range]) if params[:range]    
     @start = Time.parse(params[:since]) if params[:since]
-    @start ||= Time.at(0)
+    @start ||= START
     @start = @start.at_midnight
     @end = Time.parse(params[:until]) if params[:until]
     @end ||= (Time.now + 1.day).at_midnight
@@ -31,18 +32,43 @@ class Analysis
     @range = range
     case range.to_sym
     when :week
-      @title = "This Week"
       @start = (Time.now - 1.week).at_midnight
     when :month
-      @title = "This Month"
       @start = (Time.now - 1.month).at_midnight
     else
-      @title = "Overall"
+    end
+  end
+
+  def title
+    if week?
+      "This Week"
+    elsif month?
+      "This Month"
+    elsif overall?
+      "Overall"
+    else
+      "Custom"
     end
   end
   
   def date_range
     (@start..@end)
+  end
+  
+  def overall?
+    @range.nil? && @start == START && @end > Time.now
+  end
+
+  def week?
+    @range.to_s == "week"
+  end
+
+  def month?
+    @range.to_s == "month"
+  end
+  
+  def custom?
+    @range.nil? && !overall?
   end
   
   def include?(key)

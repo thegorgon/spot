@@ -1,6 +1,21 @@
 %h1 
-  Data Analysis as of 
+  Analysis as of 
   =Time.now.strftime("%b %d, %Y %l:%M%P")
+.filters.clearfix
+  %ul.pillbox
+    %li.pill.first=link_to "overall", admin_analysis_path, :class => conditionally("active", @analysis.overall?)
+    %li.pill=link_to "this week", admin_analysis_path(:range => :week), :class => conditionally("active", @analysis.week?)
+    %li.pill=link_to "this month", admin_analysis_path(:range => :month), :class => conditionally("active", @analysis.month?)
+    %li.pill.last=link_to "custom", '#customrange', :class => "reveals #{conditionally("active", @analysis.custom?)}"
+  
+  %ul#customrange.form.light.oneline{:class => conditionally("hidden", !@analysis.custom?)}
+    -form_tag admin_analysis_path, :method => "get" do
+      %li=text_field_tag :since, @analysis.start.strftime('%A, %B %d, %Y'), :class => "text dateinput"
+      %li=text_field_tag :until, @analysis.end.strftime('%A, %B %d, %Y'), :class => "text dateinput"
+      %li.buttons
+        =button_tag :class => "btngrypill" do
+          Analyze!
+        
 -if @analysis.include?(:overall)
   #overall.summary.clearfix
     %h2="#{@analysis.title || "Overall"} : "
@@ -16,12 +31,6 @@
       .stat{:id => stat[:id]}
         %strong= number_with_delimiter stat[:value]
         =stat[:title]
-
-.filters
-  %ul.pillbox
-    %li.pill.first=link_to "overall", admin_analysis_path, :class => conditionally("active", params[:range].nil?)
-    %li.pill=link_to "this week", admin_analysis_path(:range => :week), :class => conditionally("active", params[:range] == "week")
-    %li.pill.last=link_to "this month", admin_analysis_path(:range => :month), :class => conditionally("active", params[:range] == "month")
 
 .charts
   -Analysis::CHARTS.each do |chart|

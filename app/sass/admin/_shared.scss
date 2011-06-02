@@ -12,6 +12,13 @@
     margin: 1em 0;
     text-shadow: 0px 1px 0px #fff;
   }
+  .filters {
+    margin: 0 0 1em 0;
+    ul.form {
+      clear: both;
+      padding: 1em 0;
+    }
+  }
   .summary {
     margin-bottom: 10px;
     padding: 0 0 0 5px;
@@ -21,7 +28,7 @@
       text-shadow: 0px 1px 0px #fff;
       margin-bottom: 5px;
       font-size: 15px;
-      width: 100px;
+      width: 80px;
     }
     .stat {
       float: left;
@@ -35,10 +42,6 @@
         padding-right: 5px;
       }
     }
-  }
-  .filters {
-    margin: 0 auto;
-    width: 379px;
   }
   .charts {
     width: 980px;
