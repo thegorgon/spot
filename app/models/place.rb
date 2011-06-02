@@ -5,9 +5,8 @@ class Place < ActiveRecord::Base
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
   before_validation :clean
   after_create :update_canonical_id
-  after_validation :enqueue_image_processing
-  after_save :enqueue_deduping
-  after_create :enqueue_deduping
+  after_commit :enqueue_image_processing
+  after_commit :enqueue_deduping
 
   cattr_accessor :per_page
   @@per_page = 15
@@ -110,6 +109,7 @@ class Place < ActiveRecord::Base
   def external_image_url=(value)
     if value.present?
       self.image = nil
+      self.image_processing = true
       @external_image_url = value
     end
   end
@@ -209,7 +209,7 @@ class Place < ActiveRecord::Base
       :path => place_path(self),
       :short_url => ShortUrl.shorten(place_path(self))
     }
-    unless image.file? || options[:default_images]
+    if !image.file? && !options[:default_images]
       hash.merge!(:image_url_640x400 => nil, :image_url_234x168 => nil, :image_url => nil)
     end
     hash[:phone_number] = phone_number if phone_number.present?
@@ -235,7 +235,6 @@ class Place < ActiveRecord::Base
   
   def enqueue_image_processing
     if @external_image_url.present?
-      self.image_processing = true
       Rails.logger.debug("resque : enqueueing image processing job")
       Resque.enqueue(Jobs::PlaceImageProcessor, self.class.name, id, :image, @external_image_url)    
     end
