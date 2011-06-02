@@ -1,13 +1,40 @@
 class Analysis
+  class Chart < Struct.new(:title, :type, :scope); end
   SCOPES = [:overall, :today, :wishlist_histogram, :user_installs, 
               :wishlist_by_date, :sessions_by_date, :actives_by_date, :version_breakdown]
-  attr_accessor :overall, :today
+  CHARTS = [
+    Chart.new("User Installs By Date", "LineChart", "user_installs"),
+    Chart.new("Wishlist Items By Date", "LineChart", "wishlist_by_date"),
+    Chart.new("App Opens By Date", "LineChart", "sessions_by_date"),
+    Chart.new("Active Users By Date", "LineChart", "actives_by_date"),
+    Chart.new("Wishlist Size Distribution", "ColumnChart", "wishlist_histogram"),
+    Chart.new("App Version Breakdown", "PieChart", "version_breakdown")
+  ]
+
+  attr_accessor :overall, :today, :start, :end
   
   def initialize(params)
     @params = params
     @scope = params[:scope].try(:to_sym) || [:overall, :today]
     @scope.map! { |key| key.to_sym } if @scope.kind_of?(Array)
+    set_range(params[:range]) if params[:range]    
+    @start = Time.parse(params[:since]) if params[:since]
+    @start ||= Time.at(0)
+    @start = @start.at_midnight
+    @end = Time.parse(params[:until]) if params[:until]
+    @end ||= (Time.now + 1.day).at_midnight
+    @end = @end.at_midnight
     populate
+  end
+  
+  def set_range(range)
+    case range.to_sym
+    when :week
+      @start = (Time.now - 1.week).at_midnight
+    when :month
+      @start = (Time.now - 1.month).at_midnight
+    else
+    end
   end
   
   def include?(key)
@@ -45,9 +72,10 @@ class Analysis
       SELECT CAST(wishlist_size AS char), COUNT(id) AS users 
         FROM (
           SELECT COUNT(wi.id) wishlist_size, u.id id 
-            FROM users u 
+            FROM users u
             LEFT JOIN wishlist_items wi 
-              ON wi.user_id = u.id 
+              ON wi.user_id = u.id
+            WHERE u.created_at BETWEEN '#{@start.to_s(:db)}' AND '#{@end.to_s(:db)}'
             GROUP BY id
           ) t 
         GROUP BY wishlist_size
@@ -59,8 +87,9 @@ class Analysis
   
   def populate_user_installs
     result = User.connection.execute(<<-sql 
-      SELECT DATE(created_at) AS date, COUNT(id) AS count
+      SELECT DATE_FORMAT(DATE(created_at), '%a %c/%e') AS date, COUNT(id) AS count
         FROM users
+      WHERE created_at BETWEEN '#{@start.to_s(:db)}' AND '#{@end.to_s(:db)}'
       GROUP BY DATE(created_at)
       sql
     )
@@ -70,8 +99,9 @@ class Analysis
   
   def populate_wishlist_by_date
     result = WishlistItem.connection.execute(<<-sql 
-      SELECT DATE(created_at) AS date, COUNT(id) AS count
+      SELECT DATE_FORMAT(DATE(created_at), '%a %c/%e') AS date, COUNT(id) AS count
         FROM wishlist_items
+      WHERE created_at BETWEEN '#{@start.to_s(:db)}' AND '#{@end.to_s(:db)}'
       GROUP BY DATE(created_at)
       sql
     )
@@ -81,9 +111,10 @@ class Analysis
   
   def populate_sessions_by_date
     result = UserEvent.connection.execute(<<-sql 
-      SELECT DATE(created_at) AS date, COUNT(id) AS count
+      SELECT DATE_FORMAT(DATE(created_at), '%a %c/%e') AS date, COUNT(id) AS count
         FROM user_events
       WHERE event_id = #{Event::API_WISHLIST_LOAD}
+        AND created_at BETWEEN '#{@start.to_s(:db)}' AND '#{@end.to_s(:db)}'
       GROUP BY DATE(created_at)
       sql
     )
@@ -93,9 +124,10 @@ class Analysis
   
   def populate_actives_by_date
     result = UserEvent.connection.execute(<<-sql 
-      SELECT DATE(created_at) AS date, COUNT(DISTINCT user_id) AS count
+      SELECT DATE_FORMAT(DATE(created_at), '%a %c/%e') AS date, COUNT(DISTINCT user_id) AS count
         FROM user_events
       WHERE event_id = #{Event::API_WISHLIST_LOAD}
+        AND created_at BETWEEN '#{@start.to_s(:db)}' AND '#{@end.to_s(:db)}'
       GROUP BY DATE(created_at)
       sql
     )
@@ -107,6 +139,7 @@ class Analysis
     result = Device.connection.execute(<<-sql 
       SELECT app_version, COUNT(id) AS count
         FROM devices
+      WHERE created_at BETWEEN '#{@start.to_s(:db)}' AND '#{@end.to_s(:db)}'
       GROUP BY app_version
       sql
     )

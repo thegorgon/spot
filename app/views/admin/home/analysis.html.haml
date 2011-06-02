@@ -16,13 +16,16 @@
       .stat{:id => stat[:id]}
         %strong= number_with_delimiter stat[:value]
         =stat[:title]
-    
-#userinstalls.chart{'data-scope' => "user_installs", 'data-type' => "LineChart", "title" => "User Installs by Date"}
-#wishlistbydate.chart{'data-scope' => "wishlist_by_date", 'data-type' => "LineChart", "title" => "Wishlist Items By Date"}
-#sessionsbydate.chart{'data-scope' => "sessions_by_date", 'data-type' => "LineChart", "title" => "App Opens By Date"}
-#activesbydate.chart{'data-scope' => "actives_by_date", 'data-type' => "LineChart", "title" => "Active Users By Date"}
-#wishlisthistogram.chart{'data-scope' => "wishlist_histogram", 'data-type' => "ColumnChart", "title" => "Wishlist Size Distribution"}
-#versionbkdn.chart{'data-scope' => "version_breakdown", 'data-type' => "PieChart", "title" => "App Version Breakdown"}
+
+.filters
+  %ul.pillbox
+    %li.pill.first=link_to "overall", admin_analysis_path, :class => conditionally("active", params[:range].nil?)
+    %li.pill=link_to "this week", admin_analysis_path(:range => :week), :class => conditionally("active", params[:range] == "week")
+    %li.pill.last=link_to "this month", admin_analysis_path(:range => :month), :class => conditionally("active", params[:range] == "month")
+
+.charts
+  -Analysis::CHARTS.each do |chart|
+    .chart{'id' => chart.scope, 'data-scope' => chart.scope, 'data-type' => chart.type, 'title' => chart.title}
 
 =content_for :scripts do
   =javascript_include_tag "https://www.google.com/jsapi"    

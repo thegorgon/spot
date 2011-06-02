@@ -69,10 +69,11 @@
         var url = window.location.href;
         $('.chart').addClass('loading');
         $('.chart').each(function(i) {
-          var chartDiv = $(this), scope = chartDiv.attr('data-scope');
+          var chartDiv = $(this), 
+            scope = chartDiv.attr('data-scope');
           $.ajax({
             url: url,
-            data: {scope: scope},
+            data: {scope: scope, since: since, until: until},
             type: "GET",
             dataType: 'json',
             success: function(data) {
@@ -87,7 +88,7 @@
               chartDiv.removeClass('loading');
             }
           })
-        });        
+        });
       });
     }
   });
