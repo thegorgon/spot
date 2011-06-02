@@ -16,8 +16,19 @@ html, body {
         width: 100px;
       }
       display: block;
-      margin: 5px auto 5px auto;
-      float: none;
+      margin: 5px;
+      float: left;
+    }
+    #itunes_store_link {
+      display: block;
+      float: right;
+      margin: 10px 5px 5px 5px;
+      width: 122px;
+      height: 40px;
+      img {
+        width: 122px;
+        height: 40px;
+      }
     }
     #signup_form {
       display: none;
