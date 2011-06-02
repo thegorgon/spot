@@ -73,7 +73,7 @@
             scope = chartDiv.attr('data-scope');
           $.ajax({
             url: url,
-            data: {scope: scope, since: since, until: until},
+            data: {scope: scope},
             type: "GET",
             dataType: 'json',
             success: function(data) {
