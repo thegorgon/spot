@@ -11,7 +11,7 @@ class Analysis
     Chart.new("App Version Breakdown", "PieChart", "version_breakdown")
   ]
 
-  attr_accessor :overall, :today, :start, :end
+  attr_accessor :overall, :today, :start, :end, :title
   
   def initialize(params)
     @params = params
@@ -28,13 +28,21 @@ class Analysis
   end
   
   def set_range(range)
+    @range = range
     case range.to_sym
     when :week
+      @title = "This Week"
       @start = (Time.now - 1.week).at_midnight
     when :month
+      @title = "This Month"
       @start = (Time.now - 1.month).at_midnight
     else
+      @title = "Overall"
     end
+  end
+  
+  def date_range
+    (@start..@end)
   end
   
   def include?(key)
@@ -51,9 +59,9 @@ class Analysis
   
   def populate_overall
     @overall = []
-    @overall << {:value => User.count, :title => "Installed Users", :id => "user_count"}
-    @overall << {:value => WishlistItem.count, :title => "Wishlist Entries", :id => "wishlist_count"}
-    @overall << {:value => WishlistItem.connection.execute("SELECT COUNT(DISTINCT item_type, item_id) FROM wishlist_items").entries.first.first, 
+    @overall << {:value => User.where(:created_at => date_range).count, :title => "Installed Users", :id => "user_count"}
+    @overall << {:value => WishlistItem.where(:created_at => date_range).count, :title => "Wishlist Entries", :id => "wishlist_count"}
+    @overall << {:value => WishlistItem.connection.execute("SELECT COUNT(DISTINCT item_type, item_id) FROM wishlist_items WHERE created_at BETWEEN '#{@start.to_s(:db)}' AND '#{@end.to_s(:db)}'").entries.first.first, 
                       :title => "Places Wishlisted", :id => "wishlisted_place_count"}
   end
   

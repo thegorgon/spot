@@ -3,7 +3,7 @@
   =Time.now.strftime("%b %d, %Y %l:%M%P")
 -if @analysis.include?(:overall)
   #overall.summary.clearfix
-    %h2 Overall : 
+    %h2="#{@analysis.title || "Overall"} : "
     -@analysis.overall.each do |stat|
       .stat{:id => stat[:id]}
         %strong= number_with_delimiter stat[:value]
