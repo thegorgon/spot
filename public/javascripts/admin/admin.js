@@ -65,6 +65,8 @@
     },
     admin_home_analysis: function() {
       google.load("visualization", "1", {packages:["corechart"]});
+      $('.dateinput').datepicker({dateFormat: 'DD, MM d, yy'});
+      
       google.setOnLoadCallback(function() {
         var url = window.location.href;
         $('.chart').addClass('loading');
