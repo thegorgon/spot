@@ -71,6 +71,7 @@
       });
     },
     reveals: function() {
+      $($(this).attr('href')).hide().removeClass('hidden');
       $(this).click(function(e) {
         e.preventDefault();
         $($(this).attr('href')).toggle(250);
