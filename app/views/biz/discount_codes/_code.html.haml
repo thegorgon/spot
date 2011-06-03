@@ -1,4 +1,4 @@
-%div{:id => "code_#{code.id}"}
+%div{:id => "code_#{code.try(:id).to_i}"}
   -if code && !code.redeemed? && code.date >= Date.today
     %h1
       %var=code.code
