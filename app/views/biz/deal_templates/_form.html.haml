@@ -15,8 +15,8 @@
     =f.text_field :average_spend, :class => "abbrev", :required => true, :min => 0, :max => 1000, :label => "avg. spend per person :", :hint => "help us value this deal. how much do your customers usually spend?"
   %hr
   %li.description_title
-    =label_tag 'template[description]', "Deal Description"
-    .hint tell our members why they should want this deal. be colorful and descriptive! no restrictions or limitations please
+    =label_tag 'template[description]', "Describe Your Deal"
+    .hint tell our members why they should want this deal. be colorful! no restrictions or limitations please
   =f.text_area :description, :placeholder => "deal description"
   =button_tag :class => "bottom btngrypill" do
     Save Deal

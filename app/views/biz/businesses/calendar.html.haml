@@ -4,9 +4,14 @@
 
 =render :partial => "header"
 
-%h3.instructions
-  Create Deals to drive traffic to your business. Select a discount, the maximum number of coupons per day, and the times you’d like the coupon to be valid. 
-  Then just apply that deal to the dates on the calendar.
+.belowheader
+  #messages
+    .cancel
+    .content
+
+  %h3.instructions
+    Create Deals to drive traffic to your business. Select a discount, the maximum number of coupons per day, and the times you’d like the coupon to be valid. 
+    Then just apply that deal to the dates on the calendar.
 
 -calendar_start = [(@business.deal_events.minimum(:created_at) || Time.now).calendar_start, Time.now.calendar_start].min
 -calendar_end = calendar_start + 4.months
@@ -14,21 +19,26 @@
   =render :partial => "/biz/deal_templates/form"
   .section.left
     .title.clearfix
-      %h1 My Deals
+      %h1 Deal Templates
     %ul.templates.loading{"data-src" => biz_business_templates_path(@business)}
       .empty_message
-        %h3 No Deals
+        %h3 No Deals Yet
         %p 
           Create a deal using the button below. 
         %p 
           Set the parameters of your deal, then apply it to dates 
           using the calendar on the right.
-    %a.btngrypill200x30.new.center{:href => "#", "data-popover" => "#newdealtpl", "data-popover-title" => "New Deal", "data-popover-pos" => ",top"}
+    %a.btngrypill200x30.new.center{:href => "#", "data-popover" => "#newdealtpl", "data-popover-title" => "New Deal Template", "data-popover-pos" => ",top"}
       %span.plus + 
-      New Deal
+      New Deal Template
     
   .section.right
     .title.clearfix
+      %ul.gridnav.pillbox
+        %li.pill.first
+          %a.backward{:href => "javascript:;"} &#9664;
+        %li.pill.last
+          %a.forward{:href => "javascript:;"} &#9654;
       %h1.gridtitle
         ="#{Date::MONTHNAMES[calendar_start.month]} #{calendar_start.year}"
 
@@ -40,9 +50,6 @@
               .th{:class => 'dow', :id => "dow_#{i}", 'data-dayindex' => i, 'data-dayname' => dow.to_s.downcase}
                 =dow.to_s.downcase
         .tbody
-      #messages
-        .cancel
-        .content
       
   %script.jstpl.template{:type => "text/x-jquery-tmpl"}
     =render :partial => "/biz/deal_templates/template", :object => nil

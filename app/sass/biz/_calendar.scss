@@ -30,7 +30,7 @@
     top: 0px; left: 0; right: 0; bottom: 0;
     background: #000;
     @include transition(all 0.25s);
-    min-height: 5000px;
+    min-height: 1000px;
     z-index: 0;
     @include opacity(0);
   }
@@ -40,19 +40,24 @@
         color: #ddd;
       }
     }
+    #messages {
+      background: #7f7f7f;
+      z-index: 10;
+      color: #fff;
+      text-shadow: 0px -1px 0px #333;
+      .cancel {
+      }
+    }
     .lightscreen {
       z-index: 10;
       @include opacity(0.5);
     }
     .section {
       h1 {
-        color: #ddd;
-      }
-      #messages {
         color: #fff;
-        text-shadow: 0px -1px 0px #333;
-        .cancel {
-        }
+      }
+      .gridnav {
+        @include opacity(0.5);
       }
       &.left {
         .new {
@@ -60,6 +65,9 @@
         }
       }
     }
+  }
+  .belowheader {
+    position: relative;
   }
   .instructions {
     font-weight: normal;
@@ -71,7 +79,13 @@
   }
   #messages {
     @include transition(all 0.25s);
-    clear: both;
+    display: none;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     font-size: 1.5em;
     padding: 5px;
     color: #333;
@@ -93,6 +107,7 @@
       line-height: 30px;
     }
     &.visible {
+      display: block;
       .cancel {
         display: block;
       }
@@ -200,6 +215,7 @@
   #newdealtpl {
     width: 350px;
     height: 530px;
+    padding-top: 15px;
     position: relative;
     form {
       width: 300px;
@@ -248,6 +264,15 @@
     .ie7 &, .ie8 & {
       h1 {
         margin-bottom: 9px;
+      }
+    }
+    .gridnav {
+      margin: 3px 10px 0 0;
+      .pill {
+        font-size: 15px;
+        width: 30px;
+        height: 20px;
+        line-height: 20px;
       }
     }
     .table {

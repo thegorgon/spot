@@ -51,25 +51,32 @@
         title.html(text);        
       }
     },
-    updateScroll = function(grid) {
+    getDateRange = function(grid) {
       var tbody = grid.find('.tbody'),
-        title = grid.parent('.section').find('h1'),
         rows = tbody.find('.tr'), 
         rowHeight = rows.outerHeight(),
         viewHeight = tbody.outerHeight(),
         scrollTop = tbody.scrollTop(),
-        rowIndex = Math.round(scrollTop/rowHeight),
-        rowCount = Math.round(viewHeight/rowHeight),
-        minDate, maxDate,
+        startRowIndex = Math.round(scrollTop/rowHeight),
+        visibleRowCount = Math.round(viewHeight/rowHeight),
+        totalRowCount = rows.length,
+        endRowIndex = Math.min(startRowIndex + visibleRowCount - 1, totalRowCount)
+        dates = {},
         endDate = tbody.find('.td:last').data('date'),
         daysRendered = Date.now().daysUntil(endDate);
-
+      
       if (tbody[0].scrollHeight - scrollTop - viewHeight < 100 && daysRendered <= 90) {
         fillDates(tbody, endDate.clone().addDays(1), 1);
       }
-      minDate = rows.eq(rowIndex).find('.td:first').data('date');
-      maxDate = rows.eq(rowIndex + rowCount - 1).find('.td:last').data('date');
-      setTitle(title, minDate, maxDate);
+      dates.min = rows.eq(startRowIndex).find('.td:first').data('date');
+      dates.max = rows.eq(endRowIndex).find('.td:last').data('date');      
+      return dates;
+    },
+    updateScroll = function(grid) {
+      var title = grid.parent('.section').find('h1'),
+        dates = getDateRange(grid);
+
+      setTitle(title, dates.min, dates.max);
     };
     
     
@@ -83,7 +90,7 @@
         newtplform = $('form.newtplform'),
         tbody = grid.find('.tbody'),
         templates = [], events = {},
-        messaging = calendar.find('#messages'),
+        messaging = $('#messages'),
         currentTemplate,
         processMessage = $('#processmessage'),
 
@@ -151,7 +158,6 @@
         selectTemplate = function(tpl) {
           $('body').addClass('lightsout');
           currentTemplate = $(tpl).data('template');
-          processing("Click a date to offer " + currentTemplate.name + " on that date.")
           message("Click dates on the calendar to offer '" + currentTemplate.name + "' on those dates.");
           $('.cancel', messaging).click(function(e) {
             unselectTemplates();
@@ -394,7 +400,6 @@
               fillEvents();
               rowHeight = tbody.find('.tr').outerHeight();
               updateScroll(grid);
-              $.logger.debug("ROW HEIGHT : ", rowHeight, "weeksPassed : ", weeksPassed, "SCROLL :", (weeksPassed - 1) * rowHeight);
               tbody.scrollTop((weeksPassed - 1) * rowHeight);
               bindDates();
               processing(null);
@@ -477,10 +482,37 @@
               processing(null);
             }
           });
+        },
+        bindGridNav = function() {
+          $('.gridnav .forward').click(function(e) {
+            e.preventDefault();
+            if (!$(this).data('clicked')) {
+              $(this).data('clicked', true)
+              var rowHeight = tbody.find('.tr').outerHeight(),
+                newScroll = Math.min(tbody.scrollTop() + rowHeight * 4.0, tbody[0].scrollHeight),
+                btn = $(this);
+              tbody.animate({scrollTop: newScroll}, function() {
+                btn.data('clicked', false);
+              });              
+            }
+          });
+          $('.gridnav .backward').click(function(e) {
+            e.preventDefault();
+            if (!$(this).data('clicked')) {
+              $(this).data('clicked', true)
+              var rowHeight = tbody.find('.tr').outerHeight(),
+                newScroll = Math.max(tbody.scrollTop() - rowHeight * 4.0, 0),
+                btn = $(this);
+              tbody.animate({scrollTop: newScroll}, function() {
+                btn.data('clicked', false);
+              });              
+            }
+          });
         };
       
       loadData();
       bindNewForm();
+      bindGridNav();
       
       tbody.scroll(function(e) {
         updateScroll(grid);

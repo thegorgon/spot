@@ -12,6 +12,7 @@ class DealCode < ActiveRecord::Base
   
   before_validation :assign_code, :on => :create
   
+  scope :redeemed, where("redeemed_at IS NOT NULL")
   scope :available, where(:locked_at => nil, :issued_at => nil)
   scope :issued, where("issued_at IS NOT NULL")
   

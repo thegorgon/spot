@@ -2,6 +2,9 @@
 
 .status.stat
   .title
+    %span.completion
+      =biz_completion(@business)
+  .title
     Status :
     %span.verification{:class => @business.status_string.downcase}
       =@business.status_string.titlecase

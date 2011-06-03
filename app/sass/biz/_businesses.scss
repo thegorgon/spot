@@ -121,6 +121,42 @@
 }
 #biz_businesses_show {
   .stat {
+    .completion {
+      .low {
+        color: #993333;
+      }
+      .medium {
+        color: #EEAD0E;
+      }
+      .high {
+        color: #66dd33;
+      }
+      .complete {
+        color: #339933;
+      }
+      .statusbar {
+        margin: 0.5em 0 0;
+        @include border_radius(5px);
+        border: 1px solid #999;
+        background: #fff;
+        width: 350px;
+        height: 20px;
+        .indicator {
+          height: 20px;
+          background: #ff8419;
+          @include left_border_radius(4px);
+          @include gradient_top_down(#eeb96d, #ff8419, 100%);
+          text-align: center;
+          color: #333;
+          font-size: 10px;
+          line-height: 20px;
+          text-shadow: 0px 1px 0px #fff;
+          &.empty {
+            background: #fff;
+          }
+        }
+      }
+    }
     .title {
       font-size: 20px;
       font-weight: bold;
