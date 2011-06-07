@@ -1,4 +1,11 @@
-%h1="Discount Codes for #{@date.strftime("%B %d, %Y")}"
+
+.title.clearfix
+  =form_tag biz_business_codes_path(@business), :method => :get, :id => "change_date_form" do
+    =hidden_field_tag :date_seconds, @date.to_time.to_i
+    %strong
+      Promotion Codes for 
+    =text_field_tag(:date, @date.strftime('%a, %b %d, %Y'), :class => "text")
+    
 -if @events.empty?
   No codes.
 -@events.each do |event|

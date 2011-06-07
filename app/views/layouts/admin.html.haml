@@ -47,10 +47,10 @@
             %li=link_to "All Biz", admin_businesses_path
             %li=link_to "Pending Biz", admin_businesses_path(:filter => 1)
             %li=link_to "Approved Biz", admin_businesses_path(:filter => 2)
-            %li=link_to "All Deals", admin_deals_path
-            %li=link_to "Pending Deals", admin_deals_path(:filter => 1)
-            %li=link_to "Approved Deals", admin_deals_path(:filter => 2)
-            %li=link_to "Rejected Deals", admin_deals_path(:filter => 4)
+            %li=link_to "All Promotions", admin_deals_path
+            %li=link_to "Pending Promotions", admin_deals_path(:filter => 1)
+            %li=link_to "Approved Promotions", admin_deals_path(:filter => 2)
+            %li=link_to "Rejected Promotions", admin_deals_path(:filter => 4)
         %li{'data-popover' => '#tools_subnav', 'data-popover-orient' => 'vertical'}
           %span.title tools
           %ul.hidden.subnav#tools_subnav

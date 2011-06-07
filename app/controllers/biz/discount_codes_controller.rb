@@ -2,7 +2,7 @@ class Biz::DiscountCodesController < Biz::BaseController
   before_filter :require_business
   
   def index
-    @date = Date.parse(params[:date]) if params[:date]
+    @date = Time.at(params[:date_seconds].to_f).to_date if params[:date_seconds]
     @date ||= Date.today
     @events = @business.deal_events.on_date(@date).includes(:deal_codes => :owner).all
     respond_to do |format|

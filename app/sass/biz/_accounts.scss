@@ -3,7 +3,9 @@
     margin-bottom: 15px;
     .title {
       float: left;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
+      padding-left: 40px;
+      background: transparent url(/images/icons/person23x20.png) no-repeat left center;
     }
     .pillbox {
       float: right;
@@ -21,35 +23,83 @@
       margin: 2em auto 1em;
     }
   }
-  .accountcontent {
+  .accountbd {
     position: relative;
-    height: 500px;
-    padding: 0 100px;
-  }
-  .section {
-    .content {
-      margin: 0 auto;
+    width: 980px;
+    .separator {
+      width: 0px;
+      border-left: 1px solid #ddd;
+      position: absolute;
+      top: 0px;
+      left: 520px;
+      bottom: 0px;
     }
-    h2 {
-      height: 50px;
-      line-height: 50px;
-      font-size: 1.5em;
-      text-align: center;
-    }
-    .buttons {
-      margin: 5px 0;
-    }
-    .contact {
-      width: 300px;
-    }
-    &#businesses {
-      display: block;
+    .section {
+      text-align: left;
+      width: 490px;
       .content {
-        width: 400px;
         margin: 0 auto;
+        &.contact {
+          width: 300px;
+        }
+        &.bizs {
+          width: 400px;
+          margin: 0 auto;
+        }
       }
-      .newbiz {
-        margin: 1em 0;
+      h2 {
+        height: 50px;
+        line-height: 50px;
+        font-size: 1.5em;
+        text-align: left;
+        &.contact {
+          text-align: left;
+          padding-left: 35px;
+          height: 30px;
+          line-height: 30px;
+          margin-top: 10px;
+          background: transparent url(/images/icons/contact24x17.png) no-repeat left center;        
+        }
+        &.bizs {
+          padding-left: 25px;
+          background: transparent url(/images/icons/placemarker14x20.png) no-repeat left center;        
+        }
+        &.email {
+          padding-left: 35px;
+          background: transparent url(/images/icons/settings20x20.png) no-repeat left center;
+        }
+      }
+      .buttons {
+        margin: 10px 0;
+      }
+      .contact {
+        .emailsettings {
+          padding: 5px 0;
+          border: 1px solid #999;
+          @include border_radius(5px);
+          background: #fff;
+          .setting {
+            margin: 0;
+            padding: 5px 10px;
+            border-bottom: 1px solid #999;
+            &.last {
+              border: none;
+            }
+            input {
+              margin-top: 2px;
+              float: right;
+            }
+          }
+        }
+      }
+      &.bizs {
+        display: block;
+        .bizlist {
+          width: 402px;
+        }
+        .newbiz {
+          margin: 1em 0;
+        }
       }
     }
   }

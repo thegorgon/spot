@@ -46,7 +46,7 @@ class DealTemplate < ActiveRecord::Base
   end
   
   def summary
-    "#{deal_count.pluralize('deal')} per day at #{discount_percentage}% off, #{timeframe}"
+    "#{deal_count.pluralize('customers')} per day at #{discount_percentage}% off, #{timeframe}"
   end
 
   def color
@@ -120,7 +120,7 @@ class DealTemplate < ActiveRecord::Base
         BusinessMailer.deal_approved(self).deliver!
       elsif was_approved? && rejected?
         # We're about to reject an approved deal
-        errors.add(:base, "Cannot reject a previously approved deal.")
+        errors.add(:base, "Cannot reject a previously approved promotion.")
       elsif was_pending? && approved?
         # We're about to approve a pending deal
         BusinessMailer.deal_approved(self).deliver!

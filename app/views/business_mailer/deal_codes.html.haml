@@ -3,7 +3,7 @@
 %p="Here are your discount codes for #{@date.strftime('%B %d, %Y')} :"
 
 -@events.each do |event|
-  %p{:style => "margin:10px 0;font-size:12px;font-weight: bold;"}="For your deal, '#{event.name}':"
+  %p{:style => "margin:10px 0;font-size:12px;font-weight: bold;"}="For your promotion, '#{event.name}':"
   %p{:style => "margin:10px 0;"}
     =event.summary
   %table{:style => "margin-left:10px;"}

@@ -6,7 +6,7 @@
         .next=link_to "Next &rarr;".html_safe, admin_deals_path(:page => @deals.next_page, :filter => params[:filter])
       -if @deals.previous_page
         .previous=link_to "&larr; Previous".html_safe, admin_deals_path(:page => @deals.previous_page, :filter => params[:filter])
-    %h1.title="#{@deals.total_entries} Deals"
+    %h1.title="#{@deals.total_entries} Promotions"
     .links
       =link_to "Pending Approval", admin_deals_path(:filter => 1)
       =link_to "Approved", admin_deals_path(:filter => 2)

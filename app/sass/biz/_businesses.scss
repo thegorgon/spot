@@ -4,9 +4,11 @@
     margin-bottom: 15px;
     .title {
       @include ellipsis;
-      width: 460px;
+      background: transparent url(/images/icons/placemarker14x20.png) no-repeat left center;
+      width: 435px;
       float: left;
-      margin-bottom: 15px;
+      padding-left: 25px;
+      margin-bottom: 10px;
     }
     .pillbox {
       float: right;
@@ -79,9 +81,18 @@
   }
   .preview {
     float: left;
+    border-right: 1px solid #ddd;
+    padding-right: 40px;
+    margin-right: 40px;
     h2 {
+      padding-left: 25px;
+      height: 30px;
+      line-height: 30px;
+      background: transparent url(/images/icons/iphone16x30.png) no-repeat left center;
       font-size: 1.5em;
-      text-align: center;
+      text-align: left;
+      margin: 0 auto;
+      width: 128px;
     }
     h3 {
       margin-top: 0.25em;
@@ -97,8 +108,22 @@
     position: relative;
     width: 430px;
     float: left;
-    margin-left: 5em;
+    h1.edit {
+      padding-left: 40px;
+      background: transparent url(/images/icons/rolodex29x20.png) no-repeat left center;
+      width: 260px;
+      margin: 0 auto;
+    }
+    h1.locked {
+      padding-left: 30px;
+      background: transparent url(/images/icons/redlock20x24.png) no-repeat left center;
+      width: 85px;
+      height: 30px;
+      line-height: 35px;
+      margin: 100px auto 0;
+    }
     h3 {
+      text-align: center;
       margin-top: 1em;
     }
     ul.form.light.inlinelabels {
@@ -120,44 +145,70 @@
   }
 }
 #biz_businesses_show {
-  .stat {
-    .completion {
-      .low {
-        color: #993333;
+  .bizhd {
+    margin-bottom: 0px;
+    hr {
+      margin-bottom: 0px;
+    }
+  }
+  .bizbd {
+    padding-top: 0px;
+  }
+  .nextstep {
+    margin: 0;
+    font-size: 15px;
+    position: relative;
+    h1 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    text-align: center;
+    padding: 10px;
+    background: #FFE7D1;
+    border: 1px solid #ff8419;
+    .closer {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      height: 17px;
+      width: 16px;
+      background: transparent url(/images/icons/cross16x17.png) no-repeat center center;
+    }
+  }
+  .status {
+    margin-top: 15px;
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 0.5em;
+    }
+    .verification {
+      cursor: pointer;
+      padding-right: 25px;
+      .explanation {
+        color: #808080;
+        font-weight: normal;
+        font-size: 12px;
       }
-      .medium {
-        color: #EEAD0E;
-      }
-      .high {
-        color: #66dd33;
-      }
-      .complete {
+      &.verified {
+        background: transparent url(/images/icons/grncheckbox20x20.png) no-repeat right center;
         color: #339933;
       }
-      .statusbar {
-        margin: 0.5em 0 0;
-        @include border_radius(5px);
-        border: 1px solid #999;
-        background: #fff;
-        width: 350px;
-        height: 20px;
-        .indicator {
-          height: 20px;
-          background: #ff8419;
-          @include left_border_radius(4px);
-          @include gradient_top_down(#eeb96d, #ff8419, 100%);
-          text-align: center;
-          color: #333;
-          font-size: 10px;
-          line-height: 20px;
-          text-shadow: 0px 1px 0px #fff;
-          &.empty {
-            background: #fff;
-          }
-        }
+      &.unverified {
+        color: #993333;
+      }
+      .question {
+        cursor: pointer;
       }
     }
+  }
+  .stat {
+    margin-bottom: 3em;
     .title {
+      background-color: transparent;
+      background-repeat: no-repeat;
+      background-position: left center;
+      padding-left: 35px;
       font-size: 20px;
       font-weight: bold;
       margin-bottom: 0.5em;
@@ -168,17 +219,26 @@
         margin: 0.5em 0;
       }
     }
-    margin-bottom: 3em;
-    .verification {
-      &.verified {
-        color: #339933;
-      }
-      &.unverified {
-        color: #993333;
-      }
-      .question {
-        cursor: pointer;
-      }
+  }
+  .wishlist_count {
+    .title {
+      background-image: url(/images/icons/star20x20.png);
+    }
+  }
+  .deals_count {
+    .title {
+      background-position: left center;
+      background-image: url(/images/icons/deal25x20.png);      
+    }
+  }
+  .deal_events_count {
+    .title {
+      background-image: url(/images/icons/calendar18x20.png);      
+    }
+  }
+  .help {
+    .title {
+      background-image: url(/images/icons/question20x20.png);
     }
   }
 }

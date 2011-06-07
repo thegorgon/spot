@@ -70,6 +70,11 @@
         }, {perms:'email'});
       });
     },
+    closer: function() {
+      $(this).click(function(e) {
+        $(this).parent().slideUp();
+      });
+    },
     reveals: function() {
       $($(this).attr('href')).hide().removeClass('hidden');
       $(this).click(function(e) {
@@ -173,6 +178,7 @@
         go.Navigator.form(fetch("form.page"));
         $.popover.bind(container);
         fetch('a.reveals').reveals();
+        fetch('a.closer').closer();
         if ($.support.opacity) {
           fetch('.preload_bg').preloadBg();
           fetch('.preload').preloadImgs();

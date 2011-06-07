@@ -1,25 +1,25 @@
 .title
-  %span.eventname="'#{event.name}', "
-  %span.summary="#{event.summary}"
+  .eventname=event.name
+  .summary=event.summary
 %table
   %thead
     %tr
       %th id
       %th code
-      %th issued?
-      %th redeemed?
+      %th issued to
+      %th redeemed on
   -event.deal_codes.each_with_index do |code, i|
-    %tr.code{:class => code.status_string}
-      %td.number="#{i + 1}."
+    %tr.code{:class => "#{code.status_string} #{cycle("even", "odd")}"}
+      %td.number="#{i + 1}"
       %td.code_string=code.code
       %td.issuance
-        =code.issued?? "to #{code.owner.name}" : "no"
+        =code.issued?? "#{code.owner.name}" : "--"
       %td.redemption
         -if code.redeemed?
-          ="on #{code.redeemed_at.strftime('%I:%M %P')}"
+          ="#{code.redeemed_at.strftime('%I:%M %P')}"
         -elsif code.issued?
           =form_tag redeem_biz_business_code_path(code.business, code), :class => "code_redeem_form", :method => :put do
-            =button_tag :class => "btngrypill" do
+            =button_tag :class => "btngryflat" do
               Redeem
         -else
-          N/A
+          ="--"

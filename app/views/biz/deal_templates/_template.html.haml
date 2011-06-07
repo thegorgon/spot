@@ -3,13 +3,13 @@
   %h2=template.try(:name) || '${name}'
   %h3=template.try(:summary) || '${summary}'
   ="{{if status == #{DealTemplate::APPROVED_STATUS}}}"
-  .approval.approved{'data-jstooltip' => "Deal Approved!"}
+  .approval.approved{'data-jstooltip' => "Approved!"}
     Approved
   ="{{else status == #{DealTemplate::PENDING_STATUS}}}"
   .approval.pending{'data-jstooltip' => "Pending Approval. Your deal won't be available until it's approved."}
     Pending Approval
   {{else}}
-  .approval.rejected{'data-jstooltip' => "Deal rejected, contact julia@spot-app.com to resolve."}
+  .approval.rejected{'data-jstooltip' => "Rejected, contact julia@spot-app.com to resolve."}
     Rejected
   {{/if}}
   .controls.clearfix

@@ -9,14 +9,14 @@
     -unless @business.verified?
       .lock
         .screen
-        %h1 Locked
+        %h1.locked Locked
         .message
           %p Sorry, but entry editing is locked until your business is verified.
           %p 
             Verification usually only takes a day or so. In the meantime, you can start
-            ="#{link_to "preparing your deals", calendar_biz_business_path(@business)}.".html_safe
+            ="#{link_to "preparing your promotions", calendar_biz_business_path(@business)}.".html_safe
     
-    %h1 Edit Your Business Entry
+    %h1.edit Edit Your Business Entry
     %h3 
       Changed your phone number? Moved to a new location? 
       We’re just plain wrong? 

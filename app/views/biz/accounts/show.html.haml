@@ -3,25 +3,26 @@
   
   %hr
 
-.accountcontent.clearfix
-  #businesses.section.left
+.accountbd.clearfix
+  .bizs.section.left
     .content.bizlist
-      %h2 My Businesses
+      %h2.bizs My Businesses
       %ul.placelist.large
         =render :partial => "/biz/businesses/list"
       %a.newbiz.btngrypill400x30{:href => new_biz_business_path}
         %span.plus + 
         Claim Another Business
-
-  #contactinfo.section.right
+  .separator
+  .contact.section.right
     .contact.content
-      %h2 My Contact Information
+      %h2.contact My Contact Information
       =spot_form_for current_account, :url => biz_account_path, :display => "light" do |f|
         =render :partial => "/biz/accounts/fields", :locals => {:form => f}
-        %h2 Email Communications
-        %li.checkbox.center
-          =f.label :send_weekly_digest, "Receive Weekly Digest Emails?"
-          =f.check_box :send_weekly_digest
+        %h2.email Email Communications
+        .emailsettings
+          %li.checkbox.setting.last
+            =f.label :send_weekly_digest, "Receive Weekly Digest Emails?"
+            =f.check_box :send_weekly_digest
         %li.buttons.left.clearfix
           =button_tag :class => "btngrypill300x30" do
             Update

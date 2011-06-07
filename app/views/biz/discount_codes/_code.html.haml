@@ -1,6 +1,8 @@
 %div{:id => "code_#{code.try(:id).to_i}"}
   -if code && !code.redeemed? && code.date >= Date.today
-    %h1
+    .summary{:class => code.issued?? "valid" : "unissued"}
+      =code.issued?? "VALID" : "UNISSUED"
+    .description.valid
       %var=code.code
       is still valid for
       =code.date == Date.today ? 'Today, ' : ''
@@ -9,26 +11,32 @@
         and was issued to
         =code.owner.name
         =form_tag redeem_biz_business_code_path(code.business, code), :method => :put, :class => "code_redeem_form"  do
-          =button_tag :class => "btngrypill300x30" do
+          =button_tag :class => "btngrypill" do
             Redeem
       -else
         but has not been issued.
   -elsif code && !code.redeemed?
-    %h1
+    .summary{:class => "expired"}
+      EXPIRED
+    .description.expired
       %var=code.code
       -if code.issued?
         was issued to 
         =code.owner.name
         and
       expired without being redeemed on
-      =code.date.strftime('%B %d, %Y')        
+      =code.date.strftime('%B %d, %Y')
   -elsif code && code.date >= Date.today
-    %h1
+    .summary{:class => "redeemed"}
+      REDEEMED
+    .description.redeemed
       %var=code.code
       was redeemed at
       =code.redeemed_at.strftime('%I:%M %P on %B %d, %Y')
       and is no longer valid
   -else
-    %h1
+    .summary{:class => "invalid"}
+      INVALID
+    .description.empty
       Nothing found with code : 
       %var=params[:code]

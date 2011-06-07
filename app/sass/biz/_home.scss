@@ -1,9 +1,9 @@
 #biz_home_index {
   min-width: 1000px;
-  .lcol {
-    width: 400px;
+  .lcol, .rcol {
+    width: 480px;
     float: left;
-    padding: 10px 0 0 20px;
+    padding: 10px 0 0 0px;
     .section {
       margin: 1em 0;
       h2 {
@@ -30,8 +30,21 @@
       }
     }
   }
-  .rcol {
-    width: 400px;
+  .slideshow {
+    margin: 0 auto;
+    width: 980px;
+    height: 326px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    .slide {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      display: none;
+      background: #fff;
+      margin: 0 auto;
+    }
   }
 }
 .biz_home {

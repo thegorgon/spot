@@ -1,20 +1,20 @@
 faqs:
   - 
-    question: What is a "deal"?
-    name: dealdef
+    question: What is a "promotion"?
+    name: promotiondef
     answer:
-      A deal is a discount valid for a certain time period. 
-      Use deals to attract visitors on days when your business is typically slower. 
+      "A promotion is a discount valid for a certain time period. 
+      Use promotions to attract visitors on days when your business is typically slower. 
       You have control over the number of discounts to issue, the times when your 
       discount should be valid, and the size of the discount to offer. 
-      You can also make your deal more attractive by adding a colorful editorial 
-      description of your deal.
+      You can also make your promotion more attractive by adding a colorful editorial 
+      description of your promotion."
   -
-    question: Who sees my deals and how?
-    name: dealwho
+    question: Who sees my promotions and how?
+    name: promotionwho
     answer:
-      Deals are made available to all Spot members. Spot members use the Spot iPhone
-      app to create a "wishlist" of restaurants they want to go to. When deals become
+      Promotions are made available to all Spot members. Spot members use the Spot iPhone
+      app to create a "wishlist" of restaurants they want to go to. When promotions become
       available at places on their wishlist, we notify them via email. 
   -
     question: Who are Spot members?
@@ -22,85 +22,87 @@ faqs:
     answer:
       Spot members are registered users of the Spot services, primarily savvy urban 
       dwellers who frequent high end restaurants, boutiques and other establishments. 
-      Spot members wishlist businesses they are considering going to. You can use deals 
+      Spot members wishlist businesses they are considering going to. You can use promotions 
       to encourage members to come to your business. 
   -
     question: How do I get more Spot members to wishlist my restaurant?
     name: spotgrow
     answer:
       Encourage people to add your restaurant to their Spot wishlist by adding a Spot button 
-      to your website, and spread the word about your Spot deals on Facebook and Twitter.
+      to your website, and spread the word about your Spot promotions on Facebook and Twitter.
   -
     question: How can I get a Spot button onto my website?
     name: spotwidget
     answer:
       "Copy and paste the code provided on the Spot Widget page into your own website's HTML."
   -
-    question: What does my deal look like in the world?
-    name: dealdisplay
+    question: What does my promotion look like in the world?
+    name: promotiondisplay
     answer:
-      "Your deals will show up in emails to Spot members, and on the Spot website. 
+      "Your promotions will show up in emails to Spot members, and on the Spot website. 
       Here's what they look like."
   -
-    question: What does "schedule a deal" mean?
-    name: dealschedwhy
+    question: What does "schedule a promotion" mean?
+    name: promotionschedwhy
     answer:
-      Our deal calendar allows you to create deal templates that are saved to 
-      "My Deals" and can then be scheduled on the calendar repeatedly.
+      Our promotion calendar allows you to create promotion templates that are saved to 
+      "My Promotions" and can then be scheduled on the calendar repeatedly.
   -
-    question: How do I schedule deals?
-    name: dealschedhow
+    question: How do I schedule promotions?
+    name: promotionschedhow
     answer:
-      First, click on the deal that you want to schedule in the "My Deals" column.
-      Then, simply click on the days in the calendar that you want this deal
-      to run. You can schedule each deal to run for as many days as you like.
-      You can also come back and cancel your deals at any time.
+      First, click on the promotion that you want to schedule in the "My Promotions" column.
+      Then, simply click on the days in the calendar that you want this promotion
+      to run. You can schedule each promotion to run for as many days as you like.
+      You can also come back and cancel your promotions at any time.
   -
-    question: How far ahead can I schedule a deal?
-    name: dealschedadv
+    question: How far ahead can I schedule a promotion?
+    name: promotionschedadv
     answer:
-      You can schedule deals as far as 90 days in advance.
+      You can schedule promotions as far as 90 days in advance.
   -
-    question: Can I have more than 1 deal a day?
-    name: dealsperday
+    question: Can I have more than 1 promotion a day?
+    name: promotionsperday
     answer:
-      "Yes, you can have as many deals as you want (but you'll have to honor them!)."
+      "Yes, you can have as many promotions as you want (but you'll have to honor them!)."
   -
-    question: How can I tell what deals are running and when?
-    name: dealsrunning
+    question: How can I tell what promotions are running and when?
+    name: promotionsrunning
     answer:
-      All your deals that are running will show up on the deal calendar.
+      "All your promotions that are running will show up on the promotion calendar."
   -
-    question: How do I change my deals?
-    name: dealschange
+    question: How do I change my promotions?
+    name: promotionschange
     answer:
-      "You cannot change a deal once it's running, but you can cancel the deal and 
+      "You cannot change a promotion once it's running, but you can cancel the promotion and 
       replace it with a new template if you need to change something."
   -
     question: How does the redemption process work?
     name: redemptionprocess
     answer:
-      Discount codes are automatically generated for each deal that you set up. A list of codes
-      will be emailed to you each day that you have a deal running. You can also find a list of 
+      Promotion codes are automatically generated for each promotion that you set up. A list of codes
+      will be emailed to you each day that you have a promotion running. You can also find a list of 
       codes for any specific date by logging in to your Spot account. Each customer is issued 
       a unique code that must be redeemed in order to receive a discount. When a customer presents 
       their code, you need to cross check with your own list of codes. Once a code has been redeemed, 
       make a note so that it cannot be used again.
   -
-    question: What are "discount codes"?
+    question: What are "promotion codes"?
     name: discountcode
     answer:
-      Discount codes are unique codes that allow you to track how many deals have been redeemed.
+      Promotion codes are unique codes that allow you to track how many promotions have been redeemed.
   -
-    question: What happens if a customer shows up after the deal expires?
+    question: What happens if a customer shows up after the promotion expires?
     name: afterexpire
     answer:
-      "While it's at your own discretion how to handle customer service at your restaurant, you are not required to honor any expired discount codes. Please advise your customer that Spot's support team will be happy to assist them with a refund for any expired codes."
+      "While it's at your own discretion how to handle customer service at your restaurant, you are not required to honor any expired promotion codes. 
+        Please advise your customer that Spot's support team will be happy to assist them with a refund for any expired codes."
   -
-    question: How do I know when my deals expire?
-    name: dealexpires
+    question: How do I know when my promotions expire?
+    name: promotionexpires
     answer:
-      You set the expiration date and time when creating your deal template. The expiration date/time for each set of discount codes will be noted next to the list of daily codes.
+      You set the expiration date and time when creating your promotion template. 
+      The expiration date/time for each set of promotion codes will be noted next to the list of daily codes.
   -
     question: I'm still confused. How can I get more help?
     name: morehelp

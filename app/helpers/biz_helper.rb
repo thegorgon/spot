@@ -1,50 +1,34 @@
 module BizHelper  
-  def biz_completion(biz)
-    percent = 0
+  def biz_nextstep(biz)
     nextstep = nil
 
-    if biz.place.image.file?
-      percent += 10
-    elsif biz.verified?
-      nextstep ||= link_to "Upload a Photo", edit_biz_business_path(biz)
-    end
-    
-    if biz.verified?
-      percent += 15
-    end
-    
-    if biz.deal_templates.active.count > 0
-      percent += 20
+    if biz.verified? && !biz.place.image.file?
+      nextstep = "We don't have an image for your business yet. Please #{link_to "upload a photo", edit_biz_business_path(biz)}."
+    elsif biz.deal_templates.active.count == 0
+      nextstep = "You haven't created any promotions yet. #{link_to("Create a Promotion", calendar_biz_business_path(biz))} to start attracting 
+                    Spot members to your business."
+    elsif biz.deal_events.count == 0
+      nextstep = "You haven't yet scheduled any promotions. Try the  #{link_to("easy-to-use calendar", calendar_biz_business_path(biz))} to schedule promotions
+                    and start attracting Spot members to your business during slower times."
+    elsif biz.deal_codes.issued.count == 0
+      nextstep = "None of your promotions have been issued to Spot members. Try 
+                    #{twitter_share_link "http://www.spot-app.com", "Wishlist #{@business.place.name} on Spot to get updates about promotions.", "tweeting"} 
+                    about your spot, 
+                    #{fb_post({:name => "Wishlist #{@business.place.name} on Spot!", :caption => "Add #{@business.place.name} to your wishlist on Spot to get updates about promotions.", :url => root_url}, "posting")} 
+                    about your spot on Facebook,
+                    or adding a #{link_to "Spot widget", biz_widgets_path} to your website to advertise your promotions to more Spot members."
+    elsif biz.deal_templates.active.count <= 1
+      nextstep = "You've only created one promotion. Did you know that you can 
+                    #{link_to("create as many promotions as you like", calendar_biz_business_path(biz))}?"
+    elsif biz.deal_events.this_week.count == 0
+      nextstep = "You have no promotions scheduled this week. Use the #{link_to "calendar", calendar_biz_business_path(biz)} to 
+                  #{link_to "schedule promotions", calendar_biz_business_path(biz)} at tmes that are normally slow."
     else
-      nextstep ||= link_to("Create a Deal", calendar_biz_business_path(biz))
+      nextstep = "You have #{biz.deal_events.this_week.count} promotions scheduled for this week. 
+                    Monitor your #{link_to "promotion codes", biz_business_codes_path(biz)} or 
+                    #{link_to "schedule more promotions", calendar_biz_business_path(biz)}."
     end
-    
-    if biz.deal_events.count > 0
-      percent += 20
-    else
-      nextstep ||= link_to("Schedule a Deal", calendar_biz_business_path(biz))
-    end
-
-    if biz.deal_codes.issued.count > 0
-      percent += 15
-    else
-      nextstep ||= link_to "Advertise your Deals", biz_widgets_path
-    end
-    
-    if biz.deal_templates.active.count > 1
-      percent += 15
-    else
-      nextstep ||= link_to("Create another Deal", calendar_biz_business_path(biz))
-    end
-    
-    nextstep ||= link_to "Schedule more Deals", calendar_biz_business_path(biz)
-    
-    klass = ["low", "medium", "high", "complete"][(percent/100.0 * 4).floor]
-    
-    percentage = content_tag(:span, "#{percent}% Complete", :class => klass)
-    title = "#{percentage} : #{nextstep}".html_safe
-    width = [10, percent].max
-    bar = content_tag(:div, content_tag(:div, "#{percent}%".html_safe, :class => "indicator#{percent == 0 ? ' empty' : nil}", :style => "width:#{width}%;").html_safe, :class => "statusbar")
-    "#{title}#{bar}".html_safe
+            
+    nextstep.html_safe
   end
 end

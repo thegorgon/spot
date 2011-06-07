@@ -10,8 +10,8 @@
     .content
 
   %h3.instructions
-    Create Deals to drive traffic to your business. Select a discount, the maximum number of coupons per day, and the times you’d like the coupon to be valid. 
-    Then just apply that deal to the dates on the calendar.
+    Create Promotions to drive traffic to your business. Select a discount, the maximum number of customers per day, and the times you’d like the promotion to be valid.
+    Then just apply that promotion to the dates on the calendar.
 
 -calendar_start = [(@business.deal_events.minimum(:created_at) || Time.now).calendar_start, Time.now.calendar_start].min
 -calendar_end = calendar_start + 4.months
@@ -19,18 +19,18 @@
   =render :partial => "/biz/deal_templates/form"
   .section.left
     .title.clearfix
-      %h1 Deal Templates
+      %h1 My Promotions
     %ul.templates.loading{"data-src" => biz_business_templates_path(@business)}
       .empty_message
-        %h3 No Deals Yet
+        %h3 No Promotions Yet
         %p 
-          Create a deal using the button below. 
+          Create a promotion using the button below. 
         %p 
-          Set the parameters of your deal, then apply it to dates 
+          Set the parameters of your promotion, then apply it to dates 
           using the calendar on the right.
-    %a.btngrypill200x30.new.center{:href => "#", "data-popover" => "#newdealtpl", "data-popover-title" => "New Deal Template", "data-popover-pos" => ",top"}
+    %a.btngrypill200x30.new.center{:href => "#", "data-popover" => "#newdealtpl", "data-popover-title" => "New Promotion", "data-popover-pos" => ",top"}
       %span.plus + 
-      New Deal Template
+      New Promotion
     
   .section.right
     .title.clearfix
@@ -63,7 +63,7 @@
       =form_tag mail_biz_business_codes_path(@business), :class => "sendcodes", :method => :get do
         =hidden_field_tag :date, '${date}'
         =button_tag :class => "btngrypill" do
-          Send Discount Codes
+          Send Promotion Codes
 
   %script.jstpl.eventdetails{:type => "text/x-jquery-tmpl"}
     .event.clearfix{'data-template-id' => '${deal_template_id}'}

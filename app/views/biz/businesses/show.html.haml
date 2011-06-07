@@ -1,51 +1,54 @@
 =render :partial => "header"
 
-.status.stat
-  .title
-    %span.completion
-      =biz_completion(@business)
-  .title
-    Status :
-    %span.verification{:class => @business.status_string.downcase}
-      =@business.status_string.titlecase
-    %span.question{'data-jstooltip' => @business.verified?? "You have full access to all of Spot's business tools." : "Certain features are restricted to verified businesses. A member of our staff will contact you shortly to verify your identity."}
-      =image_tag "assets/general/question23x22.png", :size => '23x22'
-  .title="Claimed on #{@business.created_at.strftime("%B %d, %Y")}, #{time_ago_in_words(@business.created_at)} ago"
+.bizbd
+  .nextstep
+    %a.closer{:href => "javascript:;"}
+    %h1="Welcome #{Time.now - @business.created_at < 24.hours ? "" : "back"} to Spot for #{@business.name}!"
+    =biz_nextstep(@business)
+  .status
+    .title
+      Status :
+      %span.verification{:class => @business.status_string.downcase}
+        =@business.status_string.titlecase
+        -unless @business.verified?
+          %span.explanation
+            (Certain features are restricted to verified businesses. A member of our staff will contact you shortly to verify your identity.)
+    .title="Claimed on #{@business.created_at.strftime("%B %d, %Y")}, #{time_ago_in_words(@business.created_at)} ago"
 
-.wishlist_count.stat
-  .title="Wishlisted by #{@business.place.wishlist_count} Spot Members"
-  %hr
-  .content
-    %p="Spot members are registered users of the Spot services, primarily savvy urban dwellers who frequent high end restaurants, boutiques and other establishments. Spot members wishlist businesses they are considering going to. You can use #{link_to "deals", calendar_biz_business_path(@business)} to encourage members to come to your business.".html_safe
-    %p
-      To get more people to wishlist your business, consider 
-      ="#{twitter_share_link "http://www.spot-app.com", "Wishlist #{@business.place.name} on Spot to get updates about deals.", "tweeting"} about your spot,".html_safe
-      ="#{fb_post({:name => "Wishlist #{@business.place.name} on Spot!", :caption => "Add #{@business.place.name} to your wishlist on Spot to get updates about deals.", :url => root_url}, "posting")} about your spot on Facebook,".html_safe
-      ="or adding a #{link_to "Spot widget", biz_widgets_path} to your website.".html_safe
-.deals_count.stat
-  .title="#{@business.deal_templates.count.pluralize("Deal")} Created"
-  %hr
-  .content
-    %p 
-      Create deals to encourage Spot members to come to your business during slow hours. Set the discount, the number of deals you'd like to offer per day, and the times the deal should be valid for. You can also add descriptive editorial text to add color to your deal and make it more attractive to our members. Once the deal is created, you can schedule the deal to make it valid on any date in the next 90 days.
-    %p
-      To simplify the process, you cannot edit a deal once it's been created. You can however, delete the deal at any time. You can manage your deals using the
-      ="#{link_to "deal calendar", calendar_biz_business_path(@business)}.".html_safe
-.deal_events_count.stat
-  .title="#{@business.deal_events.where("date >= ?", Date.today).count.pluralize("Upcoming Deal")} on the Calendar "
-  %hr
-  .content
-    %p
-      Once deals are created you need to schedule them on the days you'd like them to be valid. Once they've been approved and scheduled, we'll start to issue them to our members. If at any time you'd like us to stop issuing deals for a specific date, you can cancel any remaining deals on that date. However, you will have to honor deals that have already been issued.
-    %p 
-      Members who have been issued deals will be granted a unique code that they will present at your business. This code is valid only for your business on the specified date.  We will send you the valid codes for any scheduled deals the morning that the deal is valid. You can also see all the codes for a scheduled deal at any time on the
-      ="#{link_to "deal calendar", calendar_biz_business_path(@business)}.".html_safe
+  .wishlist_count.stat
+    .title="Wishlisted by #{@business.place.wishlist_count} Spot Members"
+    %hr
+    .content
+      %p="Spot members are registered users of the Spot services, primarily savvy urban dwellers who frequent high end restaurants, boutiques and other establishments. Spot members wishlist businesses they are considering going to. You can use #{link_to "promotions", calendar_biz_business_path(@business)} to encourage members to come to your business.".html_safe
+      %p
+        To get more people to wishlist your business, consider 
+        ="#{twitter_share_link "http://www.spot-app.com", "Wishlist #{@business.place.name} on Spot to get updates about promotions.", "tweeting"} about your spot,".html_safe
+        ="#{fb_post({:name => "Wishlist #{@business.place.name} on Spot!", :caption => "Add #{@business.place.name} to your wishlist on Spot to get updates about promotions.", :url => root_url}, "posting")} about your spot on Facebook,".html_safe
+        ="or adding a #{link_to "Spot widget", biz_widgets_path} to your website.".html_safe
+  .deals_count.stat
+    .title="#{@business.deal_templates.count.pluralize("Promotion")} Created"
+    %hr
+    .content
+      %p 
+        Create promotions to encourage Spot members to come to your business during slow hours. Set the discount, the number of promotions you'd like to offer per day, and the times the promotion should be valid for. You can also add descriptive editorial text to add color to your promotion and make it more attractive to our members. Once the promotion is created, you can schedule the promotion to make it valid on any date in the next 90 days.
+      %p
+        To simplify the process, you cannot edit a promotion once it's been created. You can however, delete the promotion at any time. You can manage your promotions using the
+        ="#{link_to "calendar", calendar_biz_business_path(@business)}.".html_safe
+  .deal_events_count.stat
+    .title="#{@business.deal_events.upcoming.count.pluralize("Upcoming Promotion")} on the Calendar "
+    %hr
+    .content
+      %p
+        Once promotions are created you need to schedule them on the days you'd like them to be valid. Once they've been approved and scheduled, we'll start to issue them to our members. If at any time you'd like us to stop issuing promotions for a specific date, you can cancel any remaining promotions on that date. However, you will have to honor promotions that have already been issued.
+      %p 
+        Members who have been issued promotions will be granted a unique code that they will present at your business. This code is valid only for your business on the specified date.  We will send you the valid codes for any scheduled promotions the morning that the promotion is valid. You can also see all the codes for a scheduled promotion at any time on the
+        ="#{link_to "promotion calendar", calendar_biz_business_path(@business)}.".html_safe
 
-.stat
-  .title="Help, I'm so Confused!"
-  %hr
-  .content
-    %p 
-      If you need help at any time, day or night, we are here to help.
-      =link_to "Contact us", new_biz_contact_path
-      ="or call us toll-free, anytime, #{PHONE_NUMBER}."
+  .help.stat
+    .title="Help, I'm so Confused!"
+    %hr
+    .content
+      %p 
+        If you need help at any time, day or night, we are here to help.
+        =link_to "Contact us", new_biz_contact_path
+        ="or call us toll-free, anytime, #{PHONE_NUMBER}."

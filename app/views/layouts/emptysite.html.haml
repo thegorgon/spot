@@ -22,7 +22,7 @@
   -if Rails.env.production?
     = google_analytics_tag(:account_id => 'UA-21193799-1')
 %body{:id => page_namespace, :class => "site #{controller_name}"}
-  #bg.preload_bg
+  #bg.preload_bg=yield :bg
   = flashes
   #page
     #hd

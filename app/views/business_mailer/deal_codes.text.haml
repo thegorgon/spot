@@ -1,9 +1,9 @@
 ="Hello #{@account.first_name},"
 
-="Here are your discount codes for #{@date.strftime('%B %d, %Y')} :"
+="Here are your promotion codes for #{@date.strftime('%B %d, %Y')} :"
 
 -@events.each do |event|
-  ="For your deal, '#{event.name}' :"
+  ="For your promotion, '#{event.name}' :"
   =event.summary
 
   -event.deal_codes.each_with_index do |code, i|

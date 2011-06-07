@@ -167,9 +167,9 @@ ul.pillbox {
       border-bottom: 0px;
     }
     &.current, &.active {
-      background: #ededed;
+      background: #fff url(/images/icons/check20x20.png) no-repeat 95% center;
       &:hover, &.hover {
-        background: #ededed;        
+        background: #fff url(/images/icons/check20x20.png) no-repeat 95% center;
         .name {
           color: #333;
         }

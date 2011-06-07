@@ -5,7 +5,7 @@
   %p.center We're here to help, anytime, day or night.
   %h1.phone= PHONE_NUMBER
   %p.center or
-  %h2 Send us a Message
+  %h2.email Send us a Message
   =spot_form_for :contact, :url => biz_contact_path, :display => "light" do |f|
     =f.text_field :subject, :placeholder => "subject", :hint => "what can we help you with?"
     =f.text_field :contact, :placeholder => "your email", :value => current_account.try(:email), :hint => "where can we reach you?"

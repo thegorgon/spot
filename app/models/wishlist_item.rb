@@ -1,4 +1,5 @@
 class WishlistItem < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
   ITEM_TYPES = ["Place"]
   
   belongs_to :user
@@ -12,8 +13,8 @@ class WishlistItem < ActiveRecord::Base
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}, :if => :lng
   
   after_create :update_item_wishlist_count
-  after_create :enque_tweeting
-  after_create :enque_propagation
+  after_commit :enque_tweeting
+  after_commit :enque_propagation
   
   cattr_accessor :per_page
   @@per_page = 20
@@ -39,16 +40,24 @@ class WishlistItem < ActiveRecord::Base
     end
   end
   
+  def item_path
+    case item
+    when Place
+      place_path(item)
+    else
+      nil
+    end      
+  end
+  
   def tweet(options={})
     if @tweet.blank? || options[:reload]
       @tweet = "Hot on Spot: #{item.name} was just wishlisted"
-      @tweet << " in" if item.city.present? || item.region.present? || item.country.present?
-      @tweet << " ##{item.city.gsub(' ', '').downcase}" if item.city.present?
-      @tweet << " ##{item.region_abbr.gsub(' ', '').downcase}" if item.region.present?
-      @tweet << " ##{item.region_abbr.gsub(' ', '').downcase}" if item.country.present? && item.city.empty? && item.region.empty?
+      @tweet << " in" if item.city.present?
+      @tweet << " ##{item.city.gsub(' ', '').gsub('-', '_').downcase}" if item.city.gsub(' ', '').present?
       @tweet << " via @SpotTeam"
     end
-    @tweet.length <= 140 ? @tweet : nil
+    @tweet << ShortUrl.shorten(item_path) if item_path.present?
+    @tweet.length <= 150 ? @tweet : nil
   end
   
   def propagate!

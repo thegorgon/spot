@@ -8,9 +8,11 @@ class DealEvent < ActiveRecord::Base
   validate :one_deal_template_event_per_date, :on => :create
   
   scope :on_date, lambda { |date| where(:date => date.to_date)}
-      
+  scope :upcoming, lambda { where(["date >= ?", Date.today])}
+  scope :this_week, lambda { where(:date => (Date.today..(Time.now + 7.days).to_date)) }
+  
   def summary
-    "#{deal_count.pluralize('deal')} at #{discount_percentage}% off, #{timeframe}"
+    "#{deal_count.pluralize('customer')} at #{discount_percentage}% off, #{timeframe}"
   end
   
   def timeframe(use_all_day=true)
@@ -98,7 +100,7 @@ class DealEvent < ActiveRecord::Base
   
   def one_deal_template_event_per_date    
     if business.deal_events.where(:deal_template_id => deal_template_id, :date => date).count > 0
-      errors.add(:base, "this deal is already active on that date")
+      errors.add(:base, "this promotion is already active on that date")
     end
   end
 end

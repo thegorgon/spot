@@ -7,57 +7,67 @@
       @include opacity(0.5);
     }
     .codes {
-      width: 400px;
-      h1 {
+      width: 499px;
+      border-right: 1px solid #ddd;
+      &.loading {
+        @include opacity(0.5);
+      }
+      .title {
+        font-size: 17px;
         margin-bottom: 10px;
+        strong {
+          display: block;
+          float: left;
+          height: 25px;
+          padding: 5px 5px 5px 0px;
+          line-height: 25px;
+        }
+        input {
+          border: none;
+          text-decoration: underline;
+          text-align: left;
+          padding: 5px;
+          margin: 0;
+          width: 170px;
+          background: transparent url(/images/icons/grydowntri11x7.png) no-repeat 155px center;
+          overflow: visible;
+          height: 25px;
+          line-height: 25px;
+          display: block;
+          float: left;
+          font-size: 17px;
+          font-weight: bold;
+          &:hover {
+            background-color: #ededed;
+          }
+          &:active, &:focus {
+            padding: 4px;
+            background-position: 154px center;
+            background-color: #fff;
+            border: 1px solid #999;
+            @include border_radius(5px);
+            @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px inset);
+          }
+        }
       }
       .title {
         margin-top: 10px;
         font-size: 17px;
         .eventname {
+          padding-left: 30px;
+          line-height: 25px;
+          background: transparent url(/images/icons/deal25x20.png) no-repeat left center;
           font-weight: bold;
         }
         .summary {
-          margin: 5px 0;
+          margin: 0 0 5px 0;
           color: #999;
           font-weight: normal;
         }
       }
-      ul.form {
-        padding-left: 10px;
-        padding-top: 20px;
-        &.loading {
-          background: transparent url("/images/assets/loading/org3blck16x11.gif") no-repeat top center;
-          form {
-            @include opacity(0.5);
-          }
-        }
-        li.text {
-          width: 380px;
-          .label {
-            float: left;
-            line-height: 29px;
-            margin-right: 10px;
-          }
-          .input {
-            float: left;
-            margin-right: 10px;
-          }
-          .button {
-            float: left;
-          }
-          input.text {
-            display: inline;
-            position: static;
-            width: 184px;
-          }
-          button {
-            display: inline;
-          }
-        }
-      }
       table {
-        margin: 10px auto;
+        margin: 10px 0;
+        width: 400px;
         thead {
           tr {
             background: #333;
@@ -68,6 +78,11 @@
             }
           }
         }
+        button {
+          font-size: 14px;
+          font-weight: normal;
+          padding: 1px 5px;
+        }
         form {
           width: 68px;
           margin: 0 auto;
@@ -76,6 +91,16 @@
           height: 20px;
           text-align: center;
           color: #999;
+          &.even {
+            td {
+              background: #fff;                
+            }
+          }
+          &.odd {
+            td {
+              background: #ededed;                
+            }
+          }
           &.issued {
             color: #333;
           }
@@ -106,32 +131,61 @@
       }
     }
     .lookup {
-      width: 500px;
+      width: 400px;
       var {
         font-style: normal;
         font-family: courier, monospace;
       }
       h1 {
-        text-align: center;
-        margin: 0 0 20px 0;
+        width: 194px;
+        text-align: left;
+        padding-left: 30px;
+        margin: 0 auto 20px;
+        background: transparent url(/images/icons/flatmagnify20x20.png) no-repeat left center;
       }
       ul.form {
         margin: 0 auto;
         width: 300px;
         padding-bottom: 20px;
         &.loading {
-          background: transparent url("/images/assets/loading/org3blck16x11.gif") no-repeat bottom center;
+          background: transparent url(/images/assets/loading/org3blck16x11.gif) no-repeat bottom center;
           form {
             @include opacity(0.5);
           }
         }
       }
       .code {
-        margin-top: 10px;
-        width: 500px;
+        margin: 10px auto 0;
+        width: 300px;
+        .summary {
+          text-align: center;
+          font-size: 25px;
+          margin: 0 0 10px 0;
+          font-weight: bold;
+          &.valid {
+            color: #339933;
+          }
+          &.invalid {
+            color: #993333;
+          }
+          &.redeemed {
+            color: #ff8419;
+          }
+          &.unissued {
+            color: #333;
+          }
+        }
+        .description {
+          font-weight: bold;
+          font-size: 15px;
+        }
         form {
           width: 300px;
           margin: 0 auto;
+          button {
+            margin: 15px auto 0;
+            width: 75px;
+          }
         }
       }
     } 
