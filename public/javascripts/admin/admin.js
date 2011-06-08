@@ -28,17 +28,20 @@
     },
     admin_businesses_index: function() {
       var bindRow = function(row) {
-        $('a.verification', row).ajaxLink({
-          start: function() {
-            $(this).parents('tr').addClass('loading');
-          }, success: function(data) {
-            var html = $(data.html);
-            bindRow(html);
-            $(this).parents('tr').replaceWith(html);
-          }
+        row.each(function(i) {
+          var $this = $(this);
+          $this.find('a.verification').ajaxLink({
+            start: function() {
+              $this.addClass('loading');
+            }, success: function(data) {
+              var html = $(data.html);
+              bindRow(html);
+              $this.replaceWith(html);
+            }
+          });
         });
       };
-      bindRow();
+      bindRow($('tr.business'));
     },
     admin_deals_index: function() {
       var bind = function() {
@@ -89,7 +92,7 @@
               chart.draw(dt, { width: chartDiv.width(), height: chartDiv.height(), title: chartDiv.attr('title'), legend: 'none' });
               chartDiv.removeClass('loading');
             }
-          })
+          });
         });
       });
     }

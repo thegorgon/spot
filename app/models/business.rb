@@ -6,7 +6,7 @@ class Business < ActiveRecord::Base
   has_many :deal_codes
   after_destroy :cleanup
   validate :account_can_claim, :on => :create
-  before_validation :autovalidate, :on => :create
+  before_validation :autoverify, :on => :create
   accepts_nested_attributes_for :place
   
   def self.filter(n)
@@ -16,6 +16,12 @@ class Business < ActiveRecord::Base
     finder = finder.order("id DESC")
     finder = finder.includes(:place, :business_account)
     finder
+  end
+  
+  def self.deliver_daily_codes
+    joins(:deal_events).where(["deal_events.date = ?", Date.today]).find_each do |biz|
+      biz.deliver_deal_codes_for!(date)
+    end
   end
   
   def name
@@ -34,7 +40,12 @@ class Business < ActiveRecord::Base
     verified?? unverify! : verify!
   end
   
-  def verify!
+  def was_verified?
+    verified_at_was.nil?
+  end
+  
+  def verify!(email=true)
+    BusinessMailer.verified(self).deliver! if email && !verified?
     update_attribute(:verified_at, Time.now)
   end
 
@@ -67,7 +78,7 @@ class Business < ActiveRecord::Base
     errors.add(:base, "You cannot claim any more businesses. Please contact us to upgrade your account.") unless business_account.can_claim_more_businesses?
   end
   
-  def autovalidate
+  def autoverify
     self.verified_at = Time.now if business_account.verified?
-  end
+  end  
 end

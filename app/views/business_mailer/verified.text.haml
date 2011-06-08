@@ -1,0 +1,20 @@
+="Hello #{@account.first_name},"
+
+="Congratulations! Your business, '#{@biz.place.name}' has been verified!"
+
+%p What does this mean? You now have full access to all of Spot's tools for businesses! 
+
+You can now :
+
+="Update your business details here : #{edit_biz_business_path(@biz)}."
+="Create promotions for your businesshere : #{calendar_biz_business_path(@biz)}."
+="Schedule promotions for distribution here : #{calendar_biz_business_path(@biz)}."
+="Manage promotion codes for all your running promotions here : #{biz_business_codes_path(@biz)}."
+
+="If you need any assistance, please feel free to contact me by email at #{@reply_to} or by phone at #{@phone_to} anytime of day."
+
+Sincerely,
+Julia & The Spot Team
+
+julia@spot-app.com
+http://www.spot-app.com

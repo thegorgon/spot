@@ -39,7 +39,7 @@ class BusinessAccount < ActiveRecord::Base
       BusinessMailer.weekly_digest(account).deliver!
     end
   end
-  
+    
   def email_with_name
     "#{name} <#{email}>"
   end

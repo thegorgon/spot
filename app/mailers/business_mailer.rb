@@ -25,6 +25,17 @@ class BusinessMailer < ActionMailer::Base
           :subject => "New business message : #{@subject}")
   end
   
+  def verified(biz)
+    @account = biz.business_account
+    @biz = biz
+    @email = @account.email
+    @reply_to = "julia@spot-app.com"
+    @phone_to = PHONE_NUMBER
+    mail( :to => @account.email_with_name,
+          'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
+          :subject => "Congratulations! Your business has been verified!" )  
+  end
+  
   def deal_approved(deal)
     @deal = deal
     @account = deal.business.business_account
