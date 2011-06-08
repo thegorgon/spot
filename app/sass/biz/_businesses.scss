@@ -183,7 +183,6 @@
       margin-bottom: 0.5em;
     }
     .verification {
-      cursor: pointer;
       padding-right: 25px;
       .explanation {
         color: #808080;
@@ -202,8 +201,10 @@
       }
     }
   }
-  .stat {
+  .status, .stat {
     margin-bottom: 3em;
+  }
+  .stat {
     .title {
       background-color: transparent;
       background-repeat: no-repeat;
@@ -212,11 +213,25 @@
       font-size: 20px;
       font-weight: bold;
       margin-bottom: 0.5em;
+      .relatedlink {
+        display: block;
+        float: right;
+        color: #808080;
+        padding-right: 20px;
+        background: transparent url(/images/assets/general/orgtrirt11x15.png) no-repeat right center;
+        &:hover {
+          color: #ff8419;
+        }
+      }
     }
     .content {
       font-size: 15px;
       p {
         margin: 0.5em 0;
+      }
+      ul {
+        margin: 0.5em;
+        list-style: disc inside none;
       }
     }
   }

@@ -127,6 +127,9 @@
     float: left;
     width: 212px;
     .new {
+      height: 30px;
+      line-height: 25px;
+      font-size: 15px;
       width: 210px;
     }
     ul {
@@ -147,6 +150,8 @@
       }
       .empty_message {
         display: none;
+        height: 485px;
+        background: transparent url(/images/assets/general/downarrow50x55.png) no-repeat center center;
         font-size: 1.2em;
         h3 {
           margin: 10px;

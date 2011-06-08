@@ -72,6 +72,30 @@ button.link {
     background: transparent url(/images/buttons/orange_button156x31_active.png) no-repeat center center;  
   }
 }
+
+.btnorgpill, a.btnorgpill, button.btnorgpill {
+  display: block;
+  @include border_radius(5px);
+  background: #FFB473;
+  @include gradient_top_down(#eeb96d, #ff8419); 
+  text-decoration: none;
+  border: 1px solid #e48737;
+  text-shadow: 0px 1px 0px #333;
+  color: #f0f0f0 !important;
+  text-align: center;
+  text-decoration: none;
+  &:hover, &.hover {
+    color: #fff !important;
+    background: #ff8419;
+    @include gradient_top_down(#f4b368, #ff8419);
+  }
+  &:active, &.active {
+    background: #ff8419;
+    color: #fff !important;
+    text-shadow: 0px -1px 0px #000;
+  }
+}
+
 .btngrypill, a.btngrypill, button.btngrypill {
   display: block;
   @include border_radius(5px);
@@ -115,7 +139,7 @@ button.link {
     background: #666666;
     -pie-background: #666666;
     color: #fff !important;
-    text-shadow: 0px -1px 0px #000;
+    text-shadow: 0px 1px 0px #000;
   }
 }
 

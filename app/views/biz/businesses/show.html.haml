@@ -19,36 +19,47 @@
     .title="Wishlisted by #{@business.place.wishlist_count} Spot Members"
     %hr
     .content
-      %p="Spot members are registered users of the Spot services, primarily savvy urban dwellers who frequent high end restaurants, boutiques and other establishments. Spot members wishlist businesses they are considering going to. You can use #{link_to "promotions", calendar_biz_business_path(@business)} to encourage members to come to your business.".html_safe
-      %p
-        To get more people to wishlist your business, consider 
-        ="#{twitter_share_link "http://www.spot-app.com", "Wishlist #{@business.place.name} on Spot to get updates about promotions.", "tweeting"} about your spot,".html_safe
-        ="#{fb_post({:name => "Wishlist #{@business.place.name} on Spot!", :caption => "Add #{@business.place.name} to your wishlist on Spot to get updates about promotions.", :url => root_url}, "posting")} about your spot on Facebook,".html_safe
-        ="or adding a #{link_to "Spot widget", biz_widgets_path} to your website.".html_safe
+      %strong Want more Spot Members to Wishlist your spot?
+      %ul
+        %li="#{twitter_share_link "http://www.spot-app.com", "Wishlist #{@business.place.name} on Spot to get updates about promotions.", "Tweet"} about your spot.".html_safe
+        %li="#{fb_post({:name => "Wishlist #{@business.place.name} on Spot!", :caption => "Add #{@business.place.name} to your wishlist on Spot to get updates about promotions.", :url => root_url}, "Post")} about your spot on Facebook.".html_safe
+        %li="Add a #{link_to "Spot widget", biz_widgets_path} to your website.".html_safe
+        %li="Use #{link_to "promotions", calendar_biz_business_path(@business)} to encourage members to come to your business.".html_safe
   .deals_count.stat
-    .title="#{@business.deal_templates.count.pluralize("Promotion")} Created"
+    .title
+      ="#{@business.deal_templates.count.pluralize("Promotion")} Created"
+      =link_to "Create More Promotions", calendar_biz_business_path(@business), :class => "relatedlink"
     %hr
     .content
-      %p 
-        Create promotions to encourage Spot members to come to your business during slow hours. Set the discount, the number of promotions you'd like to offer per day, and the times the promotion should be valid for. You can also add descriptive editorial text to add color to your promotion and make it more attractive to our members. Once the promotion is created, you can schedule the promotion to make it valid on any date in the next 90 days.
-      %p
-        To simplify the process, you cannot edit a promotion once it's been created. You can however, delete the promotion at any time. You can manage your promotions using the
-        ="#{link_to "calendar", calendar_biz_business_path(@business)}.".html_safe
+      %strong Create promotions to encourage Spot members to come to your business during slow hours.
+      %ul 
+        %li Control the discount, number of promotions you'd like to offer per day, and the times the promotion should be valid for.
+        %li Add a description to make the promotion more attractive.
+        %li Schedule the promotion to make it valid sometime in the next 90 days.
+        %li="Go to your #{link_to "calendar", calendar_biz_business_path(@business)} to manage promotions.".html_safe
+
   .deal_events_count.stat
-    .title="#{@business.deal_events.upcoming.count.pluralize("Upcoming Promotion")} on the Calendar "
+    .title
+      ="#{@business.deal_events.upcoming.count.pluralize("Upcoming Promotion")} on the Calendar "
+      =link_to "Schedule More Promotions", calendar_biz_business_path(@business), :class => "relatedlink"
     %hr
     .content
-      %p
-        Once promotions are created you need to schedule them on the days you'd like them to be valid. Once they've been approved and scheduled, we'll start to issue them to our members. If at any time you'd like us to stop issuing promotions for a specific date, you can cancel any remaining promotions on that date. However, you will have to honor promotions that have already been issued.
-      %p 
-        Members who have been issued promotions will be granted a unique code that they will present at your business. This code is valid only for your business on the specified date.  We will send you the valid codes for any scheduled promotions the morning that the promotion is valid. You can also see all the codes for a scheduled promotion at any time on the
-        ="#{link_to "promotion calendar", calendar_biz_business_path(@business)}.".html_safe
+      %strong Schedule promotions for dates you want them to be valid.
+      %ul 
+        %li Cancel outstanding promotions for any date at any time.
+        %li Issued promotions are associated with unique 4-digit codes.
+        %li Codes are valid only for your business on the specified date.
+        %li Codes are sent every morning.
+        %li="Manage all your #{link_to "promotion codes", biz_business_codes_path(@business)}.".html_safe
+        %li="Schedule more promotions on your #{link_to "calendar", calendar_biz_business_path(@business)}.".html_safe
 
   .help.stat
     .title="Help, I'm so Confused!"
     %hr
     .content
-      %p 
+      %p
         If you need help at any time, day or night, we are here to help.
         =link_to "Contact us", new_biz_contact_path
-        ="or call us toll-free, anytime, #{PHONE_NUMBER}."
+        or call us toll-free, anytime,
+        %strong
+          =PHONE_NUMBER

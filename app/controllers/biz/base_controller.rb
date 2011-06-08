@@ -1,5 +1,4 @@
 class Biz::BaseController < ApplicationController
-  before_filter :require_admin, :if => Proc.new { Rails.env.production? }
   before_filter :require_account
   
   layout 'biz'

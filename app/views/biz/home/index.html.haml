@@ -1,31 +1,10 @@
-.slideshow
-  .slide#slide1=image_tag "assets/biz/slides/bizdetails980x326.png", :size => "980x326", :title => "Reach a targeted audience of high-end customers."
-  .slide#slide2=image_tag "assets/biz/slides/dealform980x326.png", :size => "980x326", :title => "Customize promotions with limited quantities, discount percentage, and specific time periods."
-  .slide#slide3=image_tag "assets/biz/slides/calendar980x326.png", :size => "980x326", :title => "Set your promotions to run only when it makes sense for your business."
-  .slide#slide4=image_tag "assets/biz/slides/cancel980x326.png", :size => "980x326", :title => ""
-  .slide#slide5=image_tag "assets/biz/slides/codes980x326.png", :size => "980x326", :title => "Monitor promotion usage with an easy to use dashboard and regular updates."
-  
-.lcol.left
-  .section
-    %h2 The Problem: 
-    %h2 Getting customers to your location when you want them.
-    %ul
-      %li You know your slow times but can't do anything about it.
-      %li Reservation systems don't incentivize customers to dine off-peak.
-      %li Deal sites take too much of your profit.
-
-    %h3 How do you market your open seats? How do you get new customers?
-  
-  .buttons
-    =link_to "claim your business", new_biz_account_path, :class => "btnorg156x31"
-
-.rcol.right
-  .section
-    %h2 The Solution: 
-    %h2 Introducing Spot
-    %ul
-      %li Reach people who have stated intent to visit your business 
-      %li Targeted, day- or week-parted offers, at no cost to you.
-      %li Pick the days and times you want to run a promotion to fill empty seats.
-      %li Set it and forget it!
-
+.drawing
+  .advertisement.clearfix
+    .preview.left=img_link_to "assets/biz/preview689x537.png", new_biz_account_path, :size => "689x537"
+    .points.right
+      .point.timing.first=img_link_to "assets/biz/time223x124.png", new_biz_account_path, :size => "223x124"
+      .point.free=img_link_to "assets/biz/free223x124.png", new_biz_account_path, :size => "223x124"
+      .point.customers.last=img_link_to "assets/biz/customers223x124.png", new_biz_account_path, :size => "223x124"
+  .content
+    .tagline=img_link_to "assets/biz/tag732x32.png", new_biz_account_path, :size => "732x32"
+    .button=img_link_to "assets/biz/getstarted313x41.png", new_biz_account_path, :size => "291x41", :class => "hoverable"

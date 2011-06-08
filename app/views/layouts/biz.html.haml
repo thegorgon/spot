@@ -55,8 +55,9 @@
         %li{'data-popover' => '#help_topics', 'data-popover-orient' => 'vertical'} 
           Help
           %ul#help_topics.subnav.hidden
-            %li=link_to "FAQ", biz_faq_path
-            %li=link_to "Terms of Service", biz_tos_path
+            -if false # HIDE UNTIL PREPPED
+              %li=link_to "FAQ", biz_faq_path
+              %li=link_to "Terms of Service", biz_tos_path
             -if current_account
               %li=link_to "Spot Widgets", biz_widgets_path
             %li=link_to "Contact Us", new_biz_contact_path

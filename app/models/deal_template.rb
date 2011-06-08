@@ -48,6 +48,10 @@ class DealTemplate < ActiveRecord::Base
   def summary
     "#{deal_count.pluralize('customers')} per day at #{discount_percentage}% off, #{timeframe}"
   end
+  
+  def average_spend=(value)
+    self[:average_spend] = value.to_i
+  end
 
   def color
     Color.hex_series(position.to_i).first
