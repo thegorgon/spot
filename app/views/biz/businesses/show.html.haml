@@ -16,7 +16,11 @@
     .title="Claimed on #{@business.created_at.strftime("%B %d, %Y")}, #{time_ago_in_words(@business.created_at)} ago"
 
   .wishlist_count.stat
-    .title="Wishlisted by #{@business.place.wishlist_count} Spot Members"
+    .title
+      -var = @business.place.wishlist_count
+      %var=var
+      =var == 1 ? "Spot Members" : "Spot Members" 
+      have Wishlisted your place
     %hr
     .content
       %strong Want more Spot Members to Wishlist your spot?
@@ -27,7 +31,10 @@
         %li="Use #{link_to "promotions", calendar_biz_business_path(@business)} to encourage members to come to your business.".html_safe
   .deals_count.stat
     .title
-      ="#{@business.deal_templates.count.pluralize("Promotion")} Created"
+      -var = @business.deal_templates.active.count
+      %var=var
+      =var == 1 ? "Promotion" : "Promotions" 
+      Created
       =link_to "Create More Promotions", calendar_biz_business_path(@business), :class => "relatedlink"
     %hr
     .content
@@ -40,7 +47,10 @@
 
   .deal_events_count.stat
     .title
-      ="#{@business.deal_events.upcoming.count.pluralize("Upcoming Promotion")} on the Calendar "
+      -var = @business.deal_events.upcoming.count
+      %var=var
+      =var == 1 ? "Promotion" : "Promotions"
+      Scheduled
       =link_to "Schedule More Promotions", calendar_biz_business_path(@business), :class => "relatedlink"
     %hr
     .content
