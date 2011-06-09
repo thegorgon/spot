@@ -10,7 +10,13 @@ class GenericTemplate < PromotionTemplate
   end
   
   def summary
-    "#{count} : #{description.length > 25 ? description.slice(0, 22) + '...' : description}"
+    summary = "#{count} : #{description.length > 25 ? description.slice(0, 22) + '...' : description}"
+    if value.to_i > 0 || cost.to_i > 0
+      summary << " ("
+      summary << "value : #{value}" if value.to_i > 0
+      summary << "cost : #{cost.to_i > 0 ? "$#{cost}" : "free"}"
+      summary << ")"
+    end
   end
 
   def event_class
