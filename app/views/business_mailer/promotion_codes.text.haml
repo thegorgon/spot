@@ -6,7 +6,7 @@
   ="For your promotion, '#{event.name}' :"
   =event.summary
 
-  -event.deal_codes.each_with_index do |code, i|
+  -event.codes.each_with_index do |code, i|
     ="#{i + 1}. #{code.code} - #{code.issued?? "issued to #{code.owner.name}" : "not yet issued"}"
 
 Sincerely,

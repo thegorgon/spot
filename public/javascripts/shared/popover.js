@@ -292,7 +292,7 @@
             if ($(e.target).is(':not(.popover, .popover *)')) { $.popover.hide(); }
           });          
         }, 1);
-        popover.find('a').unbind('click.popover').bind('click.popover', function(e) { $.popover.hide(trigger, popover); });
+        popover.find('a:not(.inpopover)').unbind('click.popover').bind('click.popover', function(e) { $.popover.hide(trigger, popover); });
         popover.find('form.page').unbind('submit.popover').bind('submit.popover', function(e) { $.popover.hide(trigger, popover); });
       },
       hide: function(trigger, popover, options) {

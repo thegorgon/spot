@@ -1,27 +1,28 @@
-class Biz::DealTemplatesController < Biz::BaseController
+class Biz::PromotionTemplatesController < Biz::BaseController
   before_filter :require_business
 
   def index
-    @templates = @business.deal_templates.active.all
+    @templates = @business.promotion_templates.active.all
     respond_to do |format|
       format.js { render :json => {:success => true, :templates => @templates}}
     end
   end
   
   def create
-    @template = @business.deal_templates.new(params[:template])
+    @template = @business.new_promotion_template(params[:discount] || params[:generic])
     respond_to do |format|
+      debugger
       if @template.save
         format.js { render :json => {:success => true, :template => @template} }
         format.html { redirect_to calendar_biz_business_path(@business) }
       else
-        format.js { render :json => {:success => false, :error => @template.errors.full_messages.join(" ")} }
+        format.js { render :json => {:success => false, :error => @template.errors.full_messages.join(", ").downcase} }
       end
     end
   end
     
   def destroy
-    @template = @business.deal_templates.find(params[:id])
+    @template = @business.promotion_templates.find(params[:id])
     @template.removed!
     respond_to do |format|
       format.js { render :json => {:success => true} }

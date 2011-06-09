@@ -43,13 +43,13 @@
       };
       bindRow($('tr.business'));
     },
-    admin_deals_index: function() {
+    admin_promotions_index: function() {
       var bind = function() {
-        $('.deal form').ajaxForm({
+        $('.promotion form').ajaxForm({
           start: function() {
-            $(this).parents('.deal').addClass('loading');
+            $(this).parents('.promotion').addClass('loading');
           }, success: function(data) {
-            $(this).parents('.deal').removeClass('loading');
+            $(this).parents('.promotion').removeClass('loading');
             if (data.success) {
               $('#bd').fadeOut(function() { 
                 $('#bd').html(data.html).fadeIn(); 
@@ -59,7 +59,7 @@
               $('.manager .message').addClass('error').html(data.message);
             }
           }, error: function() {
-            $(this).parents('.deal').removeClass('loading');
+            $(this).parents('.promotion').removeClass('loading');
             $('.manager .message').addClass('error').html("Something went wrong");
           }
         });

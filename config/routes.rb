@@ -19,7 +19,7 @@ Spot::Application.routes.draw do
     resource :account, :only => [:new, :create, :destroy]
     resource :password_reset, :only => [:new, :create, :edit, :update]
     resources :places, :only => [:show] do
-      resources :deals, :only => [:show]
+      resources :promotions, :only => [:show]
     end
     resource :widget, :only => [:show]
     resource :email, :only => [:show] do
@@ -53,7 +53,7 @@ Spot::Application.routes.draw do
         put "ignore"
       end
     end
-    resources :deals, :only => [:index, :edit, :update] do 
+    resources :promotions, :only => [:index, :edit, :update] do 
       put "reject", :on => :member
     end
     resources :businesses, :only => [:index] do 
@@ -75,9 +75,9 @@ Spot::Application.routes.draw do
     resource :account, :only => [:new, :create, :show, :update]
     resources :previews, :only => [:index, :create, :show]
     resources :businesses, :only => [:new, :create, :show, :edit, :update] do
-      resources :deals, :only => [:index, :create, :update, :destroy]
-      resources :templates, :path => "deals/templates", :controller => "deal_templates", :only => [:index, :create, :update, :destroy]
-      resources :codes, :only => [:index, :show], :controller => "discount_codes" do
+      resources :promotions, :only => [:index, :create, :update, :destroy]
+      resources :templates, :path => "promotions/templates", :controller => "promotion_templates", :only => [:index, :create, :update, :destroy]
+      resources :codes, :only => [:index, :show], :controller => "promotion_codes" do
         get :lookup, :on => :collection
         get :mail, :on => :collection
         put :redeem, :on => :member

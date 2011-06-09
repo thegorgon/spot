@@ -54,6 +54,43 @@ module ActiveRecordExtensions
         end
       end
     end
+  
+    def nested_attributes(attributes, options={})
+      field = (options[:in] || :params).to_sym
+      
+      serialize field, Hash
+      
+      define_method field do
+        self[field] ||= {}
+      end
+
+      define_method "#{field}=" do |value|
+        self[field] = value
+      end
+    
+      attributes.each do |key, type|
+        define_method(key) do 
+          hash = send(field)
+          hash[key]
+        end
+        
+        define_method("#{key}=") do |value|
+          hash = send(field)
+          case type
+          when :int 
+            value = value.to_i
+          when :string
+            value = value.to_s
+          when :array
+            value = value.to_a
+          else
+            value
+          end
+          hash[key] = value
+          send("#{field}=", hash)
+        end
+      end
+    end
   end
 end
 

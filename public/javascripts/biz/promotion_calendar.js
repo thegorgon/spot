@@ -80,7 +80,7 @@
     };
     
     
-  $.provide(go, 'DealCalendar', {
+  $.provide(go, 'PromotionCalendar', {
     init: function(options) {
       
       var calendar = $(options.calendar || '#calendar'),
@@ -129,7 +129,7 @@
         },
         previewEvent = function(cell) {
           var data = $.slice(currentTemplate, ['name', 'color', 'timeframe', 'start_time', 'end_time']);
-          data.deal_template_id = currentTemplate.id;
+          data.template_id = currentTemplate.id;
           displayCellEvent(cell, data);
         },
         hideEventPreview = function(cell) {
@@ -163,18 +163,18 @@
             unselectTemplates();
           });
           $('.dow').addClass('selectable').each(function(i) {
-            $(this).unbind('mouseenter.applydeal').bind('mouseenter.applydeal', function(e) {
+            $(this).unbind('mouseenter.applypromotion').bind('mouseenter.applypromotion', function(e) {
               $.jstooltip.show("Click to offer '" + currentTemplate.name + "' every " + $.capitalize($(this).attr('data-dayname')) + " for the next 90 days.");
               $('.date.dow_' + $(this).attr('data-dayindex')).each(function(i) {
                 if (canPlace(currentTemplate, this, false)) {
                   previewEvent(this);
                 }
               });
-            }).unbind('mouseleave.applydeal').bind('mouseleave.applydeal', function(e) {
+            }).unbind('mouseleave.applypromotion').bind('mouseleave.applypromotion', function(e) {
               $('.date.dow_' + $(this).attr('data-dayindex')).each(function(i) {
                 hideEventPreview(this);
               });
-            }).unbind('click.applydeal').bind('click.applydeal', function(e) {
+            }).unbind('click.applypromotion').bind('click.applypromotion', function(e) {
               $('.date.dow_' + $(this).attr('data-dayindex')).each(function(i) {
                 if (canPlace(currentTemplate, this, false)) {
                   createEvent(this);
@@ -213,11 +213,17 @@
           });
           return cellEvents;
         },
-        message = function(msg, klass) {
+        message = function(msg, klass, to) {
+          if (to === undefined || to === null) { to = 250 };
           var content = messaging.find('.content');
           messaging.hide().removeAttr('class');
           content.html(msg);
-          messaging.addClass(klass).addClass('visible').fadeIn(250);
+          messaging.addClass(klass).addClass('visible');
+          if (to) {
+            messaging.fadeIn(to);
+          } else {
+            messaging.show();
+          }
         },
         removeMessage = function() {
           messaging.removeClass('visible').find('.content').html('');
@@ -279,7 +285,13 @@
           cell = $(cell);
           var date = cell.data('date'),
             eventContainer = cell.find('.event.preview').removeClass('preview').addClass('saving'),
-            data = eventContainer.data('eventdata');
+            data = eventContainer.data('eventdata'),
+            error = function() {
+              unselectTemplates();
+              eventContainer.remove();
+              processing(null);
+              message("Sorry, the system encountered an error. Please refresh this page to continue.", "error", 0);
+            }
           if (data) {
             data.saving = true;
             eventContainer.data('eventdata', data);
@@ -288,20 +300,20 @@
               type: 'POST',
               url: grid.attr('data-src'),
               dataType: 'json',
-              data: {event: {deal_template_id: currentTemplate.id, date: date.toString('yyyy-MM-dd')}},
+              data: {event: {template_id: currentTemplate.id, date: date.toString('yyyy-MM-dd')}},
               success: function(data) {
                 if (data.success) {
                   var dateString = date.toString('yyyy-MM-dd');
-                  cell.find('.event.saving[data-template-id=' + data.event.deal_template_id + ']').remove();
+                  cell.find('.event.saving[data-template-id=' + data.event.template_id + ']').remove();
                   events[dateString] = events[dateString] || [];
                   events[dateString].push(data.event);
                   displayCellEvent(cell, data.event);                  
                   processing(null);
                 } else {
-                  processing(null);
-                  message("Sorry, we encountered an error applying that deal on that date : " + data.error, 'error');
+                  error();
                 }
-              }
+              },
+              error: error
             });
           }
         },
@@ -327,9 +339,9 @@
               date.addDays(1);
             }
             if (date.isPast()) {
-              msg = "Cannot apply deals in the past.";
+              msg = "Cannot apply promotions in the past.";
             } else if (cell.find('.event.saved[data-template-id=' + tpl.id + ']').length > 0) {
-              msg = "Cannot apply deals multiple times per day.";
+              msg = "Cannot apply promotions multiple times per day.";
             } else {
               if (showMessage) { $.jstooltip.hide(); }
               return true;
@@ -433,6 +445,7 @@
                 message("Sorry, there were errors with your submission : " + data.error + ". Please try again.", "error");
               }
             }, error: function() {
+              $('li.template.pending').remove();
               processing(null);
               message("Something went wrong, please try again.", "error");
             }

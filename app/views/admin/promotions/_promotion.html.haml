@@ -1,0 +1,36 @@
+-place = promotion.business.place
+-account = promotion.business.business_account
+.promotion.clearfix
+  %h1="#{promotion.id}. #{link_to(place.name, edit_admin_place_path(place))} - #{promotion.name}".html_safe
+  .summary
+    = promotion.summary
+    &bull;
+    %span.status{:class => promotion.status_string}= promotion.status_string
+    
+  -if promotion.rejected? || promotion.pending? || promotion.approved?
+    =spot_form_for promotion, :as => :template, :url => admin_promotion_path(promotion), :display => "light" do |f|
+      =hidden_field_tag :filter, params[:filter]
+      =f.hidden_field :status, :value => PromotionTemplate::APPROVED_STATUS
+      %li.cost
+        =label_tag "template[cost_cents]", "Set Promotion Cost : "
+        =select "template", "cost_cents", {"$10" => 1000, "Free" => 0}, :selected => promotion.cost_cents
+      %li.label
+        =f.label :description, promotion.kind_of?(DiscountTemplate) ? "Editorial Description : " : "Promotion Description : "
+      =f.text_area :description
+      %li.center
+        =button_tag :class => "btngrypill center" do
+          =promotion.approved?? "Update" : "Approve With Edits"
+
+  -if promotion.pending?
+    %ul
+      %li.vcenter or
+
+    =spot_form_for promotion, :as => :template, :url => admin_promotion_path(promotion), :display => "light reject" do |f|
+      =hidden_field_tag :filter, params[:filter]
+      =f.hidden_field :status, :value => PromotionTemplate::REJECTED_STATUS
+      %li.label=f.label :rejection_reasoning, "Reason For Rejection :"
+      =f.text_area :rejection_reasoning
+      %li.center
+        =button_tag :class => "btngrypill center" do
+          Reject
+    

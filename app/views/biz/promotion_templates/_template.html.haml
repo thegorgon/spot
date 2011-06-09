@@ -2,11 +2,11 @@
   .color{:style => "background:#{template.try(:color) || '${color}'}"}
   %h2=template.try(:name) || '${name}'
   %h3=template.try(:summary) || '${summary}'
-  ="{{if status == #{DealTemplate::APPROVED_STATUS}}}"
+  ="{{if status == #{PromotionTemplate::APPROVED_STATUS}}}"
   .approval.approved{'data-jstooltip' => "Approved!"}
     Approved
-  ="{{else status == #{DealTemplate::PENDING_STATUS}}}"
-  .approval.pending{'data-jstooltip' => "Pending Approval. Your deal won't be available until it's approved."}
+  ="{{else status == #{PromotionTemplate::PENDING_STATUS}}}"
+  .approval.pending{'data-jstooltip' => "Pending Approval. Your promotion won't be available until it's approved."}
     Pending Approval
   {{else}}
   .approval.rejected{'data-jstooltip' => "Rejected, contact julia@spot-app.com to resolve."}

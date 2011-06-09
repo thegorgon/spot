@@ -53,7 +53,7 @@
       });
     },
     biz_businesses_calendar: function() {
-      var cal = go.DealCalendar.init({ calendar: '#calendar' });
+      var cal = go.PromotionCalendar.init({ calendar: '#calendar' });
     },
     biz_home_index: function() {
       var idx = 0,
@@ -88,7 +88,7 @@
         setBusiness();
       });
     },
-    biz_discount_codes_index: function() {
+    biz_promotion_codes_index: function() {
       var bindDynamicContent = function() {
           var dateForm = $('#change_date_form'), 
             dateInput = dateForm.find('input.text');

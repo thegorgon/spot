@@ -15,7 +15,7 @@
 -@businesses.each do |biz|
   %h2{:style => "font-size:15px;font-weight:bold;margin-top:25px;"}
     =link_to biz.name, biz_business_path(biz), :style => "color:#333 !important;"
-  -events = biz.deal_events.where(:date => (@start_date..@end_date)).includes(:deal_template).all
+  -events = biz.promotion_events.where(:date => (@start_date..@end_date)).includes(:promotion_template).all
   -if events.count > 0  
     %table{:border => 0, :cellpadding => 0, :cellspacing => 0, :style => "border: 1px solid #999;"}
       %thead
@@ -34,14 +34,14 @@
                   %div{:style => ""}=event.timeframe
   -else
     %p 
-      No deals scheduled. 
-      =link_to "Schedule deals", calendar_biz_business_url(biz), :style => "color:#333;"
+      No promotions scheduled. 
+      =link_to "Schedule promotions", calendar_biz_business_url(biz), :style => "color:#333;"
       to bring more customers to your business during slower times.
 
 %p{:style => "margin:25px 0 15px;"}
   Check out your 
   =link_to "business portal", biz_root_url, :style => "color:#333;"
-  to schedule more deals, see more dates, and get more details about your business on 
+  to schedule more promotions, see more dates, and get more details about your business on 
   ="#{link_to "Spot", root_url, :style => "color:#333;"}.".html_safe
 
 %p Sincerely,

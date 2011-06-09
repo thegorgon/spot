@@ -36,9 +36,9 @@ class BusinessMailer < ActionMailer::Base
           :subject => "Congratulations! Your business has been verified!" )  
   end
   
-  def deal_approved(deal)
-    @deal = deal
-    @account = deal.business.business_account
+  def promotion_approved(promotion)
+    @promotion = promotion
+    @account = promotion.business.business_account
     @email = @account.email
     @reply_to = "julia@spot-app.com"
     @phone_to = PHONE_NUMBER
@@ -47,9 +47,9 @@ class BusinessMailer < ActionMailer::Base
           :subject => "Congratulations! Your promotion has been approved for distribution." )  
   end
 
-  def deal_rejected(deal)
-    @deal = deal
-    @account = deal.business.business_account
+  def promotion_rejected(promotion)
+    @promotion = promotion
+    @account = promotion.business.business_account
     @email = @account.email
     @reply_to = "julia@spot-app.com"
     @phone_to = PHONE_NUMBER
@@ -58,12 +58,12 @@ class BusinessMailer < ActionMailer::Base
           :subject => "Sorry, your promotion was rejected" ) 
   end
   
-  def deal_codes(business, date)
+  def promotion_codes(business, date)
     @business = business
     @date = date
     @account = @business.business_account
     @email = @account.email
-    @events = business.deal_events.on_date(date).includes(:deal_codes => :owner).all
+    @events = business.promotion_events.on_date(date).includes(:codes => :owner).all
     @title = "Promotion Codes for #{@date.strftime('%B %d, %Y')}"
     mail( :to => @account.email_with_name,
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",

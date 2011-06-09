@@ -1,6 +1,12 @@
-.admin_deals {
-  .deal {
+.admin_promotions {
+  .promotion {
     margin: 1em 0 2em;
+    .cost {
+      line-height: 30px;
+      label {
+        padding-right: 10px;
+      }
+    }
     &.loading {
       @include opacity(0.5);
     }
@@ -26,7 +32,10 @@
       margin-right: 1em;
       float: left;
       li.vcenter {
-        padding-top: 80px;
+        padding-top: 120px;
+      }
+      &.reject {
+        margin-top: 40px;
       }
     }
   }

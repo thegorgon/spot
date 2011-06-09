@@ -1,10 +1,10 @@
 %p="Hello #{@account.first_name},"
 
-%p="Congratulations! Your promotion, '#{@deal.name}' has been approved for distribution."
+%p="Congratulations! Your promotion, '#{@promotion.name}' has been approved for distribution."
 
 %p So what now?
 
-%p="Go to #{link_to "your calendar", calendar_biz_business_url(@deal.business)} to start making your promotion available by date.".html_safe
+%p="Go to #{link_to "your calendar", calendar_biz_business_url(@promotion.business)} to start making your promotion available by date.".html_safe
 
 %p="If you need any assistance, please feel free to contact me by email at #{mail_to @reply_to} or by phone at #{@phone_to} anytime of day.".html_safe
 

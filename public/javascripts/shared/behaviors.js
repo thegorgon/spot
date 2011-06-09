@@ -151,13 +151,14 @@
       tabs.click(function(e) {
         e.preventDefault();
         var $this = $(this),
-          current = tabs.filter('.current'),
+          current = tabs.filter('.active'),
           curcontent = $(current.attr('href')),
-          rel = $($(this).attr('href'));
+          rel = $($this.attr('href'));
         curcontent.fadeOut();
-        tabs.removeClass('current');
-        $this.addClass('current');
-        rel.fadeIn();
+        tabs.removeClass('active');
+        $.logger.debug(rel);
+        $this.addClass('active');
+        rel.hide().removeClass('hidden').fadeIn();
       });
     },
     popupLink: function(options) {

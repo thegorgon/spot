@@ -1,11 +1,12 @@
-class DealCode < ActiveRecord::Base
+class PromotionCode < ActiveRecord::Base
   CODE_CHARS = ['A', 'b', 'C', 'd', 'E', 'F', 'G', 'H', 'i', 'J', 'K', 'L', 'M', 'N', 'P', 'q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] + ("1".."9").to_a 
   belongs_to :owner, :class_name => "User"
   belongs_to :business
-    
+  belongs_to :event, :class_name => "PromotionEvent"
+  before_validation :set_attributes_from_event, :if => Proc.new { |c| c.event.present? }
+  
   validates :business, :presence => true
   validates :code, :presence => true
-  validates :discount_percentage, :presence => true, :inclusion => DealTemplate::DISCOUNTS
   validates :date, :presence => true
   validates :start_time, :presence => true
   validates :end_time, :presence => true
@@ -18,20 +19,6 @@ class DealCode < ActiveRecord::Base
   
   def self.random_code
     (0..3).collect { CODE_CHARS[rand(CODE_CHARS.length)] }.join
-  end
-  
-  def deal_event=(value)
-    self[:deal_event_id] = value.id
-    self.discount_percentage = value.discount_percentage
-    self.start_time = value.start_time
-    self.end_time = value.end_time
-    self.date = value.date
-    self.business = value.business
-    @deal_event = value
-  end
-  
-  def deal_event
-    @deal_event ||= DealEvent.find(deal_event_id) if deal_event_id
   end
   
   def lock!
@@ -49,7 +36,7 @@ class DealCode < ActiveRecord::Base
   def issue_to!(user)
     self.class.transaction do
       update_attributes!(:owner_id => user.id, :issued_at => Time.now)
-      deal_event.try(:sold!)
+      event.try(:sold!)
     end
   end
   
@@ -75,7 +62,13 @@ class DealCode < ActiveRecord::Base
   
   def assign_code
     self.code ||= self.class.random_code
-    assign_code if DealCode.where(:business_id => business_id, :code => code, :date => (date - 90.days..date + 90.days)).exists?
+    assign_code if PromotionCode.where(:business_id => business_id, :code => code, :date => (date - 90.days..date + 90.days)).exists?
   end
-    
+  
+  def set_attributes_from_event
+    self.start_time = event.start_time
+    self.end_time = event.end_time
+    self.date = event.date
+    self.business = event.business
+  end  
 end

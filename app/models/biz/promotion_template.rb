@@ -1,5 +1,5 @@
-class DealTemplate < ActiveRecord::Base
-  has_many :deal_events
+class PromotionTemplate < ActiveRecord::Base
+  has_many :events, :class_name => "PromotionEvent"
   belongs_to :business
   attr_protected :approved_at
   
@@ -11,8 +11,7 @@ class DealTemplate < ActiveRecord::Base
   STATUSES = [APPROVED_STATUS, REJECTED_STATUS, PENDING_STATUS, REMOVED_STATUS]
   
   validates :name, :presence => true
-  validates :deal_count, :presence => true, :numericality => {:greater_than => 0, :less_than => 101}
-  validates :discount_percentage, :inclusion => DISCOUNTS
+  validates :count, :presence => true, :numericality => {:greater_than => 0, :less_than => 101}
   validates :status, :inclusion => STATUSES
   validates :business, :presence => true
   acts_as_list :scope => 'business_id = #{business_id} AND status >= 0'
@@ -34,31 +33,9 @@ class DealTemplate < ActiveRecord::Base
     finder = finder.includes(:business)
     finder
   end
-  
-  def self.discounts
-    unless @discounts
-      @discounts = {}
-      DISCOUNTS.each do |d|
-        @discounts["#{d}%"] = d
-      end
-    end
-    @discounts
-  end
-  
-  def summary
-    "#{deal_count.pluralize('customers')} per day at #{discount_percentage}% off, #{timeframe}"
-  end
-  
-  def average_spend=(value)
-    self[:average_spend] = value.to_i
-  end
-
+      
   def color
     Color.hex_series(position.to_i).first
-  end
-  
-  def est_value
-    average_spend > 0 ? average_spend.to_i * discount_percentage.to_i/100.0 : "N/A"
   end
   
   def timeframe
@@ -79,6 +56,16 @@ class DealTemplate < ActiveRecord::Base
     hash['color'] = color
     hash['timeframe'] = timeframe
     hash
+  end
+  
+  def event_class
+    PromotionEvent
+  end
+  
+  def generate_event(params)
+    event = event_class.new(params)
+    event.template = self
+    event
   end
   
   # ============
@@ -119,18 +106,18 @@ class DealTemplate < ActiveRecord::Base
   def determine_status_change
     if status_changed?
       if was_rejected? && approved?
-        # We're about to approve a rejected deal
+        # We're about to approve a rejected promotion
         self.rejection_reasoning = nil
-        BusinessMailer.deal_approved(self).deliver!
+        BusinessMailer.promotion_approved(self).deliver!
       elsif was_approved? && rejected?
-        # We're about to reject an approved deal
+        # We're about to reject an approved promotion
         errors.add(:base, "Cannot reject a previously approved promotion.")
       elsif was_pending? && approved?
-        # We're about to approve a pending deal
-        BusinessMailer.deal_approved(self).deliver!
+        # We're about to approve a pending promotion
+        BusinessMailer.promotion_approved(self).deliver!
       elsif was_pending? && rejected?
-        # We're about to approve a pending deal
-        BusinessMailer.deal_rejected(self).deliver!
+        # We're about to approve a pending promotion
+        BusinessMailer.promotion_rejected(self).deliver!
       end
     end
   end

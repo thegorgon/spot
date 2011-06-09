@@ -13,7 +13,7 @@
 
 -@businesses.each do |biz|
   =biz.name
-  -events = biz.deal_events.where(:date => (@start_date..@end_date)).includes(:deal_template).all
+  -events = biz.promotion_events.where(:date => (@start_date..@end_date)).includes(:promotion_template).all
   -if events.count > 0  
     -events = events.group_by { |e| e.date }
     

@@ -1,15 +1,15 @@
-class Biz::DealsController < Biz::BaseController
+class Biz::PromotionsController < Biz::BaseController
   before_filter :require_business
 
   def index
-    @events = @business.deal_events.all
+    @events = @business.promotion_events.all
     respond_to do |format|
       format.js { render :json => {:success => true, :events => @events.group_by { |e| e.date.to_s() }} }
     end
   end
   
   def create
-    @event = @business.deal_events.new(params[:event])
+    @event = @business.new_promotion_event(params[:event])
     respond_to do |format|
       if @event.save
         format.js { render :json => {:success => true, :event => @event} }
@@ -21,7 +21,7 @@ class Biz::DealsController < Biz::BaseController
   end
   
   def destroy
-    @event = @business.deal_events.find(params[:id])
+    @event = @business.promotion_events.find(params[:id])
     @event.remove!
     respond_to do |format|
       format.js { render :json => {:success => true, :event => @event.destroyed?? nil : @event} }

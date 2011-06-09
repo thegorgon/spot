@@ -13,10 +13,10 @@
     Create Promotions to drive traffic to your business. Select a discount, the maximum number of customers per day, and the times you’d like the promotion to be valid.
     Then just apply that promotion to the dates on the calendar.
 
--calendar_start = [(@business.deal_events.minimum(:created_at) || Time.now).calendar_start, Time.now.calendar_start].min
+-calendar_start = [(@business.promotion_events.minimum(:created_at) || Time.now).calendar_start, Time.now.calendar_start].min
 -calendar_end = calendar_start + 4.months
 #calendar.clearfix{'data-start-date' => calendar_start.strftime('%B %d, %Y'), 'data-end-date' => calendar_end.strftime('%B %d, %Y')}
-  =render :partial => "/biz/deal_templates/form"
+  =render :partial => "/biz/promotion_templates/form"
   .section.left
     .title.clearfix
       %h1 My Promotions
@@ -28,7 +28,7 @@
         %p 
           Set the parameters of your promotion, then apply it to dates 
           using the calendar on the right.
-    %a.btnorgpill.new.center{:href => "#", "data-popover" => "#newdealtpl", "data-popover-title" => "New Promotion", "data-popover-pos" => ",top"}
+    %a.btnorgpill.new.center{:href => "#", "data-popover" => "#newpromotiontpl", "data-popover-title" => "New Promotion", "data-popover-pos" => ",top"}
       %span.plus + 
       New Promotion
     
@@ -42,7 +42,7 @@
       %h1.gridtitle
         ="#{Date::MONTHNAMES[calendar_start.month]} #{calendar_start.year}"
 
-    .grid.loading{'data-src' => biz_business_deals_path(@business)}      
+    .grid.loading{'data-src' => biz_business_promotions_path(@business)}      
       .table
         .thead
           .tr
@@ -52,9 +52,9 @@
         .tbody
       
   %script.jstpl.template{:type => "text/x-jquery-tmpl"}
-    =render :partial => "/biz/deal_templates/template", :object => nil
+    =render :partial => "/biz/promotion_templates/template", :object => nil
   %script.jstpl.event{:type => "text/x-jquery-tmpl"}
-    .event{:style => "border-color: ${color}; color: ${color}; background-color: ${color};", 'data-template-id' => '${deal_template_id}'}
+    .event{:style => "border-color: ${color}; color: ${color}; background-color: ${color};", 'data-template-id' => '${template_id}'}
       %h2 ${name}
       .timeframe ${timeframe}
   %script.jstpl.datedetail{:type => "text/x-jquery-tmpl"}
@@ -66,16 +66,16 @@
           Send Promotion Codes
 
   %script.jstpl.eventdetails{:type => "text/x-jquery-tmpl"}
-    .event.clearfix{'data-template-id' => '${deal_template_id}'}
+    .event.clearfix{'data-template-id' => '${template_id}'}
       .color{:style => "background:${color}"}
       %h2 ${name}
       %h3 ${summary}
-      %h3 ${sale_count} of ${deal_count} sold, ${remaining_count} remaining
+      %h3 ${sale_count} of ${count} issued, ${remaining_count} remaining
       {{if removed_at}}
       .removed
         Cancelled
       {{else}}
-      =form_tag CGI.unescape(biz_business_deal_path(@business, '${id}')), :method => "delete", :class => "remove" do
+      =form_tag CGI.unescape(biz_business_promotion_path(@business, '${id}')), :method => "delete", :class => "remove" do
         =button_tag :class => "withx btngrypill" do
           %span.redx
             &times;

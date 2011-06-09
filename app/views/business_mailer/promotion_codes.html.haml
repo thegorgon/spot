@@ -7,7 +7,7 @@
   %p{:style => "margin:10px 0;"}
     =event.summary
   %table{:style => "margin-left:10px;"}
-    -event.deal_codes.each_with_index do |code, i|
+    -event.codes.each_with_index do |code, i|
       %tr
         %td{:style => "width: 35px;"}="#{i + 1}."
         %td{:style => "font-weight: bold;width:50px"}=code.code

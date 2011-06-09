@@ -1,9 +1,9 @@
 class Business < ActiveRecord::Base
   belongs_to :business_account, :counter_cache => true
   belongs_to :place
-  has_many :deal_templates
-  has_many :deal_events
-  has_many :deal_codes
+  has_many :promotion_templates
+  has_many :promotion_events
+  has_many :promotion_codes
   after_destroy :cleanup
   validate :account_can_claim, :on => :create
   before_validation :autoverify, :on => :create
@@ -19,8 +19,8 @@ class Business < ActiveRecord::Base
   end
   
   def self.deliver_daily_codes
-    joins(:deal_events).where(["deal_events.date = ?", Date.today]).find_each do |biz|
-      biz.deliver_deal_codes_for!(date)
+    joins(:promotion_events).where(["promotion_events.date = ?", Date.today]).find_each do |biz|
+      biz.deliver_promotion_codes_for!(date)
     end
   end
   
@@ -57,15 +57,29 @@ class Business < ActiveRecord::Base
     !!verified_at
   end
   
-  def has_outstanding_deals?
-    deal_codes.where("date >= #{Date.today.to_s(:db)}").count > 0
+  def has_outstanding_promotions?
+    promotion_codes.where("date >= #{Date.today.to_s(:db)}").count > 0
   end
   
-  def deliver_deal_codes_for!(date)
+  def new_promotion_template(params)
+    klass = params.delete(:type).classify.constantize
+    tpl = klass.new(params)
+    tpl.business = self
+    tpl
+  end
+
+  def new_promotion_event(params)
+    template = PromotionTemplate.find(params[:template_id])
+    event = template.generate_event(params)
+    event.business = self
+    event
+  end
+  
+  def deliver_promotion_codes_for!(date)
     date = Date.parse(date) if date.kind_of?(String)
     date = Time.at(date).to_date if date.kind_of?(Fixnum)
-    if deal_events.on_date(date).count > 0
-      BusinessMailer.deal_codes(self, date).deliver!
+    if promotion_events.on_date(date).count > 0
+      BusinessMailer.promotion_codes(self, date).deliver!
       true
     else
       false

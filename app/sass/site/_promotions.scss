@@ -1,4 +1,4 @@
-.site_deals {
+.site_promotions {
   padding: 0;
   margin: 0;
   background: #fff;
@@ -37,7 +37,7 @@
       }
     }
   }
-  .deal {
+  .promotion {
     .body {
       float: left;
     }
@@ -74,7 +74,7 @@
       }
     }
     .math {
-      background: transparent url(/images/assets/deals/mathbg195x200.png);
+      background: transparent url(/images/assets/promotions/mathbg195x200.png);
       width: 195px;
       height: 200px;
       margin: 0 auto;
@@ -130,9 +130,9 @@
       h1 {
         font-size: 25px;
       }
-      .dealinfo {
+      .promotioninfo {
         padding: 0 0 0 50px;
-        background: transparent url(/images/assets/deals/dealicon38x22.png) no-repeat left center;
+        background: transparent url(/images/assets/promotions/promotionicon38x22.png) no-repeat left center;
       }
       .date {
         font-size: 20px;

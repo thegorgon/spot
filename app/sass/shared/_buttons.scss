@@ -92,7 +92,7 @@ button.link {
   &:active, &.active {
     background: #ff8419;
     color: #fff !important;
-    text-shadow: 0px -1px 0px #000;
+    text-shadow: none;
   }
 }
 

@@ -29,9 +29,9 @@
         %li="#{fb_post({:name => "Wishlist #{@business.place.name} on Spot!", :caption => "Add #{@business.place.name} to your wishlist on Spot to get updates about promotions.", :url => root_url}, "Post")} about your spot on Facebook.".html_safe
         %li="Add a #{link_to "Spot widget", biz_widgets_path} to your website.".html_safe
         %li="Use #{link_to "promotions", calendar_biz_business_path(@business)} to encourage members to come to your business.".html_safe
-  .deals_count.stat
+  .promotions_count.stat
     .title
-      -var = @business.deal_templates.active.count
+      -var = @business.promotion_templates.active.count
       %var=var
       =var == 1 ? "Promotion" : "Promotions" 
       Created
@@ -45,9 +45,9 @@
         %li Schedule the promotion to make it valid sometime in the next 90 days.
         %li="Go to your #{link_to "calendar", calendar_biz_business_path(@business)} to manage promotions.".html_safe
 
-  .deal_events_count.stat
+  .promotion_events_count.stat
     .title
-      -var = @business.deal_events.upcoming.count
+      -var = @business.promotion_events.upcoming.count
       %var=var
       =var == 1 ? "Promotion" : "Promotions"
       Scheduled

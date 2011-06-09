@@ -8,7 +8,7 @@
       %th code
       %th issued to
       %th redeemed on
-  -event.deal_codes.each_with_index do |code, i|
+  -event.codes.each_with_index do |code, i|
     %tr.code{:class => "#{code.status_string} #{cycle("even", "odd")}"}
       %td.number="#{i + 1}"
       %td.code_string=code.code

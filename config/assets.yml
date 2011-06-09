@@ -29,7 +29,7 @@ javascripts:
     - public/javascripts/shared/views.js
     - public/javascripts/site/site.js
     - public/javascripts/admin/admin.js
-    - public/javascripts/biz/deal_calendar.js
+    - public/javascripts/biz/promotion_calendar.js
     - public/javascripts/biz/biz.js
 
 stylesheets:
