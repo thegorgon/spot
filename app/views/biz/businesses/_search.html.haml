@@ -4,10 +4,8 @@
   -else
     -@search.results.each_with_index do |r, i|
       -place = r.place
-      %li.place.result.clearfix{:class => first_or_last(@search.results, i)}
-        =form_for :business, :url => biz_businesses_path do |f|
-          %button{:type => "submit", :class => "overlay"}
-          =f.hidden_field :place_id, :value => r.place.id
+      %li.place.result.clearfix{:class => "#{first_or_last(@search.results, i)} #{conditionally('claimed', place.business.present?)}"}
+        -if place.business.present?
           .image
             =image_tag(place.image.url(:i234x168), :size => "117x84")
           .info
@@ -15,6 +13,21 @@
             .location
               -place.address_lines.each do |line| 
                 %p=line
+            .message.clear
+              Claimed. Contact
+              =mail_to "julia@spot-app.com"
+              to resolve.
+        -else
+          =form_for :business, :url => biz_businesses_path do |f|
+            %button{:type => "submit", :class => "overlay"}
+            =f.hidden_field :place_id, :value => r.place.id
+            .image
+              =image_tag(place.image.url(:i234x168), :size => "117x84")
+            .info
+              .name=place.name
+              .location
+                -place.address_lines.each do |line| 
+                  %p=line
   
   %li.cantfind
     %h2 Can't find your business?

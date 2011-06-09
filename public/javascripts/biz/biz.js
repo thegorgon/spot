@@ -24,55 +24,43 @@
         $(this).validate();
       }).ajaxForm({
         start: function() {
-          var popover = $('#search_results'),
-            loadingMsg = popover.find('.loading_msg'),
+          var results = $('#search_results'),
+            loadingMsg = results.find('.loading_msg'),
             query = $(this).find('input#search_query').val().replace(' ', '&nbsp;'),
             location = $(this).find('input#search_location').val().replace(' ', '&nbsp;'),
-            errorMsg = popover.find('.error_msg'), msg;
+            errorMsg = results.find('.error_msg'), msg;
           $(this).find('input').blur();
           if ($(this).validate()) {
-            popover.setClass('loading', ['empty', 'error']);
+            results.setClass('loading', ['empty', 'error']);
             msg = "Searching for '" + query + "'";
             if (location && location.length > 0) { msg += " near " + location; }
             loadingMsg.html(msg);
-            $.popover.resize(popover, loadingMsg, {animateT: 1000});            
             return true;
           } else {
-            popover.setClass('error', ['empty', 'loading']);
+            results.setClass('error', ['empty', 'loading']);
             errorMsg.html("<p>What should we search for?</p>Search for your business using the form on the left.");
-            $.popover.resize(popover, errorMsg, {animateT: 1000});            
             return false;
           }
         }, success: function(data) {
           var bd = $(data.html),
-            popover = $('#search_results');
-          popover.find('.content .results').html(bd);
-          popover.setClass(null, ['loading', 'empty', 'error']);
-          $.popover.resize(popover, bd, {animateT: 1000});
+            results = $('#search_results'),
+            height = 0,
+            contents = results.find('.results');
+          results.setClass(null, ['loading', 'empty', 'error']);
+          contents.html('')
+          bd.css({position: "absolute", left: "-1000px"}).appendTo(contents).show();
+          height = bd.outerHeight();
+          contents.css({height: results.height()});
+          bd.removeAttr("style");
+          contents.animate({height: height});
+        }, error: function() {
+          results.setClass('error', ['empty', 'loading']);
+          errorMsg.html("There was an error finding your business. Please try again.");
         }
       });
     },
     biz_businesses_calendar: function() {
       var cal = go.PromotionCalendar.init({ calendar: '#calendar' });
-    },
-    biz_home_index: function() {
-      var idx = 0,
-        animDur = 500,
-        slideWidth = $('.slide').outerWidth(),
-        count = $('.slide').length;
-        cycle = function() {
-          var curSlide = $('#slide' + (idx + 1)),
-            nxtIdx = (idx + 1) % count,
-            nxtSlide = $('#slide' + (nxtIdx + 1))
-          nxtSlide.css({left: slideWidth}).show();
-          curSlide.animate({left: -1 * slideWidth}, 1000);
-          nxtSlide.animate({left: 0}, 1000, function() {
-            idx = nxtIdx;
-          });
-        };
-      $('#slide1').fadeIn(function() {
-        setInterval(cycle, 6000);
-      });
     },
     biz_businesses_edit: function() {
       go.PlaceForm.init({mapDiv: $('.map')});

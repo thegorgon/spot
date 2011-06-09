@@ -286,6 +286,12 @@
       float: right;
       width: 462px;
       min-height: 250px;
+      @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px);
+      @include border_radius(5px);
+      border: 1px solid #ddd;
+      .results {
+        overflow: hidden;
+      }
       .msg {
         padding: 75px 25px 40px;
         font-weight: bold;
@@ -294,10 +300,29 @@
         display: none;
       }
       .loading_msg {
-        background: #fff url(/images/assets/loading/org3blck16x11.gif) no-repeat bottom center;
+        background: transparent url(/images/assets/loading/org3blck16x11.gif) no-repeat bottom center;
       }
       .start_msg {
         display: block;
+      }
+      li.result {
+        width: 462px;
+        .info {
+          width: 295px;
+        }
+      }
+      li.claimed {
+        background: #fff url(/images/icons/check20x20.png) no-repeat 426px center;
+        &:hover {
+          background: #fff url(/images/icons/check20x20.png) no-repeat 426px center;
+          color: #333;
+          .name {
+            color: #333;
+          }
+          .location {
+            color: #999;
+          }
+        }
       }
       .empty_msg {
         display: block;
@@ -329,6 +354,7 @@
         }
       }
       .cantfind {
+        width: 383px;
         border-top: 1px solid #999;
         background: #e6e6e6;
         height: 55px;

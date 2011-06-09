@@ -4,7 +4,6 @@ class Business < ActiveRecord::Base
   has_many :promotion_templates
   has_many :promotion_events
   has_many :promotion_codes
-  after_destroy :cleanup
   validate :account_can_claim, :on => :create
   before_validation :autoverify, :on => :create
   accepts_nested_attributes_for :place
@@ -90,6 +89,7 @@ class Business < ActiveRecord::Base
     
   def account_can_claim
     errors.add(:base, "You cannot claim any more businesses. Please contact us to upgrade your account.") unless business_account.can_claim_more_businesses?
+    errors.add(:base, "This business has already been claimed. Please contact us to resolve.") if Business.where(:place_id => place_id).exists?
   end
   
   def autoverify
