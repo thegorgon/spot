@@ -11,7 +11,6 @@ class Biz::PromotionTemplatesController < Biz::BaseController
   def create
     @template = @business.new_promotion_template(params[:discount] || params[:generic])
     respond_to do |format|
-      debugger
       if @template.save
         format.js { render :json => {:success => true, :template => @template} }
         format.html { redirect_to calendar_biz_business_path(@business) }

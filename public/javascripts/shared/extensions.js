@@ -129,7 +129,7 @@
       if (klass) { $this.addClass(klass); }
     },
     clear: function() {
-      var inputs = $(this).filter('form').find(':input').not(':button, :submit, :reset, [type=hidden], .placeholder');
+      var inputs = $(this).find(':input').not(':button, :submit, :reset, [type=hidden], .placeholder');
       inputs.val('').removeAttr('checked').removeAttr('selected').blur(); 
       return $(this);
     },

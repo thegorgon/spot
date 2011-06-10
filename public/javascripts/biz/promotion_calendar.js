@@ -437,7 +437,7 @@
               if (data.success) {
                 $('li.template.pending').remove();
                 selectTemplate(addTemplate(data.template));                
-                $(this).clear();
+                $('#newpromotiontpl form').clear();
                 processing(null);
               } else {
                 $('li.template.pending').remove();

@@ -258,6 +258,10 @@
       font-size: 12px;
       .label, .input {
         width: 145px;
+        .prepend {
+          display: inline;
+          padding-right: 5px;
+        }
       }
       h2 {
         font-size: 20px;

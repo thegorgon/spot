@@ -1,5 +1,5 @@
 #newpromotiontpl.hidden
-  %ul.tabbar.pillbox
+  %ul.tabbar.pillbox.orange
     %li.pill.first
       %a.tab.active.inpopover{:href => "#discountpromotpl"} discount
     %li.pill.last
@@ -46,7 +46,7 @@
     %hr
     .details
       %h3.center Help Us Understand
-      =f.text_field :value, :class => "abbrev", :label => "monetary value :", :hint => "what is the value of your offer? (optional)"
-      =f.text_field :cost, :class => "abbrev", :label => "cost :", :hint => "what will this cost our members? (optional)"
+      =f.text_field :value, :class => "abbrev", :label => "monetary value :", :hint => "what is the value of your offer? (optional)", :prepend => "$"
+      =f.text_field :cost, :class => "abbrev", :label => "cost :", :hint => "what will this cost our members? (optional)", :prepend => "$"
     =button_tag :class => "bottom btngrypill" do
       Save Promotion

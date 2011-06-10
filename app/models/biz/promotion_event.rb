@@ -9,6 +9,7 @@ class PromotionEvent < ActiveRecord::Base
   scope :on_date, lambda { |date| where(:date => date.to_date)}
   scope :upcoming, lambda { where(["date >= ?", Date.today])}
   scope :this_week, lambda { where(:date => (Date.today..(Time.now + 7.days).to_date)) }
+  scope :approved, joins(:template).where("promotion_templates.status" => PromotionTemplate::APPROVED_STATUS)
   
   def timeframe(use_all_day=true)
     if use_all_day && all_day?

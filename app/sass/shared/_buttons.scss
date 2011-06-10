@@ -51,25 +51,26 @@ button.link {
   }  
 }
 
-.btnorg156x31, a.btnorg156x31 {
+.btnorg300x41, a.btnorg300x41 {
   display: block;
-  width: 156px;
-  height: 31px;
-  line-height: 30px;
+  width: 300px;
+  height: 41px;
+  line-height: 41px;
   text-align: center;
   color: #000;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 25px;
   font-weight: bold;
-  text-shadow: 0px 1px #fff;
-  background: transparent url(/images/buttons/orange_button156x31.png) no-repeat center center;  
+  text-shadow: #000 0px 1px 0px;
+  border: none;
+  background: transparent url(/images/buttons/org300x41.png) no-repeat 0 0;  
   &:hover, &.hover {
     color: #000 !important;
-    background: transparent url(/images/buttons/orange_button156x31_hover.png) no-repeat center center;  
+    background-position: 0px -41px;
   }
   &:active, &.active {
     color: #000 !important;
-    background: transparent url(/images/buttons/orange_button156x31_active.png) no-repeat center center;  
+    background-position: 0px -82px;
   }
 }
 
@@ -80,17 +81,18 @@ button.link {
   @include gradient_top_down(#eeb96d, #ff8419); 
   text-decoration: none;
   border: 1px solid #e48737;
-  text-shadow: 0px 1px 0px #333;
-  color: #f0f0f0 !important;
+  text-shadow: 0px 1px 0px #f0f0f0;
+  color: #333 !important;
   text-align: center;
   text-decoration: none;
   &:hover, &.hover {
-    color: #fff !important;
+    color: #000 !important;
     background: #ff8419;
     @include gradient_top_down(#f4b368, #ff8419);
   }
   &:active, &.active {
     background: #ff8419;
+    @include box_shadow(#000 0px 1px 5px inset);        
     color: #fff !important;
     text-shadow: none;
   }
@@ -178,27 +180,6 @@ button.link {
     @include box_shadow(#000 0px 1px 5px inset);        
     color: #fff !important;
     text-shadow: 0px -1px 0px #000;
-  }
-}
-
-.btnorg200x41 {
-  display: block;
-  width: 200px;
-  height: 41px;
-  line-height: 41px;
-  text-align: center;
-  border: 0px;
-  color: #fff;
-  text-decoration: none;
-  font-size: 25px;
-  font-weight: bold;
-  text-shadow: 0px 1px #333;
-  background: transparent url(/images/buttons/orgbtn200x41.png) no-repeat center center;  
-  &:hover, &.hover {
-    background: transparent url(/images/buttons/orgbtn200x41_hover.png) no-repeat center center;  
-  }
-  &:active, &.active {
-    background: transparent url(/images/buttons/orgbtn200x41_active.png) no-repeat center center;  
   }
 }
 

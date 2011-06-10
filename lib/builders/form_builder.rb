@@ -14,7 +14,7 @@ module Spot
         error = @object.errors[method] if @object
         if options[:label]
           lbl = @template.send(:content_tag, :div, label(method, options.delete(:label)), :class => "label")
-          input = @template.send(:content_tag, :div, input, :class => "input")
+          input = @template.send(:content_tag, :div, "#{prepend}#{input}".html_safe, :class => "input")
         end
         error = error.join(" ") if error.respond_to?(:join)
         message = @template.send(:content_tag, :div, error, :class => "message")
@@ -24,7 +24,7 @@ module Spot
         liclass << " invalid" if error.present?
         liclass << " labelled" if lbl.present?
         liclass << " hinted" if hint.present?
-        @template.content_tag(:li, "#{lbl}#{prepend}#{hint}#{input}#{validity}#{append}".html_safe, :id => "#{@object_name}_#{method}_container", :class => liclass)
+        @template.content_tag(:li, "#{lbl}#{hint}#{input}#{validity}#{append}".html_safe, :id => "#{@object_name}_#{method}_container", :class => liclass)
       end
     end
     

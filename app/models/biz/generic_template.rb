@@ -14,9 +14,10 @@ class GenericTemplate < PromotionTemplate
     if value.to_i > 0 || cost.to_i > 0
       summary << " ("
       summary << "value : #{value}" if value.to_i > 0
-      summary << "cost : #{cost.to_i > 0 ? "$#{cost}" : "free"}"
+      summary << " cost : #{cost.to_i > 0 ? "$#{cost}" : "free"}"
       summary << ")"
     end
+    summary
   end
 
   def event_class

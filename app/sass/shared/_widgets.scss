@@ -60,6 +60,24 @@ ul.pillbox {
   float: left;
   background: #f2f2f2;
   border: 1px solid #808080;
+  &.orange {
+    border: 1px solid #ff8419;
+    li.pill {
+      border-right: 1px solid #ff8419;
+      a {
+        background: #FFB473;
+        @include gradient_top_down(#eeb96d, #ff8419);
+        &:hover, &.hover {
+          background: #ff8419;
+          @include gradient_top_down(#f4b368, #ff8419);
+        }
+        &:active, &.active {
+          background: #ff8419;
+          text-shadow: none;
+        }
+      }
+    }
+  }
   li.pill {
     position: relative;
     border-right: 1px solid #808080;
@@ -95,7 +113,6 @@ ul.pillbox {
       }
       &:active, &.active {
         background: #666666;
-        -pie-background: #666666;
         @include box_shadow(#000 0px 1px 5px inset);        
         color: #fff;
         text-shadow: 0px -1px 0px #000;
