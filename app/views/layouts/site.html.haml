@@ -15,7 +15,6 @@
   = favicon_link_tag("/favicon.ico")
   = open_graph_tags
   = include_stylesheets :site, :media => 'all'
-  = include_stylesheets :iphonesite, :media => 'only screen and (max-device-width: 480px)'
   = csrf_meta_tag 
   = js_trigger_tag
   = yield :head
@@ -46,8 +45,8 @@
             -if current_user.business_account
               =link_to "biz", biz_root_path, :class => "dark"
       #iconlinks.clearfix
-        =img_link_to "assets/general/app_store183x60.png", getspot_path, :size => "183x60"
-        =img_link_to "assets/general/bizlink190x60.png", biz_root_path, :size => "190x60"
+        =img_link_to "assets/general/app_store183x60.png", getspot_path, :size => "183x60", :class => "getspot"
+        =img_link_to "assets/general/bizlink190x60.png", biz_root_path, :size => "190x60", :class => "bizlink"
     #fb-root
   =include_javascripts :vendor
   =include_javascripts :scripts

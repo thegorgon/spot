@@ -1,5 +1,9 @@
 class ExternalPlace::GooglePlace < ActiveRecord::Base
   external_place :id => :cid, :wrapr => Google::Place
+
+  def self.logo
+    ["google", "69x25"]
+  end
   
   def self.from_wrapr(wrapr)
     object = new

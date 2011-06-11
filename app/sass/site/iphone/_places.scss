@@ -1,0 +1,30 @@
+@media only screen and (max-device-width:480px) {
+  #site_places_show {
+    height: 850px;
+    #page {
+      #message {
+        padding: 5px 0 10px 0;
+        font-size: 0.9em;
+      }
+      #hd {
+        #card_header {
+          text-align: center;
+          #logo {
+            margin: 0 auto;
+            float: none;
+            width: 160px;
+          }
+        }      
+      }
+      .place {
+        border-left: none;
+        border-right: none;
+        @include border_radius(0px);
+        .image {
+          border: none;
+          @include border_radius(0px)
+        }
+      }
+    }
+  }
+}

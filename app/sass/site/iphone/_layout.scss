@@ -1,0 +1,100 @@
+@media only screen and (max-device-width:480px) {
+  html, body {
+    overflow: hidden;
+    #bd {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    #fb-root {
+      display: none;
+    }
+    #ft {
+      bottom: -60px;
+      height: 60px;
+      padding: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      min-width: 100%;
+      max-width: 100%;
+      #logo {
+        height: 50px;
+        width: 100px;
+        img {
+          height: 50px;
+          width: 100px;
+        }
+        display: block;
+        margin: 5px;
+        float: left;
+      }
+      #iconlinks {
+        display: block;
+        float: right;
+        margin: 10px 10px 5px 5px;
+        width: 121px;
+        height: 40px;
+        .getspot {
+          background: transparent;
+          border: none;
+          @include box_shadow(none);
+          padding: 0;
+          img {
+            width: 121px;
+            height: 40px;
+          }
+        }
+        .bizlink {
+          display : none;
+        }
+      }
+      #signup_form {
+        display: none;
+      }
+      #nav {
+        display: none;
+        float: right;
+        padding: 0;
+        margin: 25px 5px 0 0;
+        width: 150px;
+        font-size: 8px;
+        #account_nav {
+          font-size: 6px;
+          padding: 2px 0;
+          a {
+            font-size: 6px;
+          }
+        }
+        a {
+          margin-left: 3px;
+          font-size: 8px;
+        }
+      }
+    }
+    #flashes {
+      height: 8px;
+      font-size: 0.8em;
+      .close {
+        display: none;
+      }
+    }
+  }
+}
+
+@media only screen and (max-device-width:480px) and (orientation: portrait) {
+  html, body {
+    width: 320px;
+    min-width: 320px;
+    max-width: 320px;
+  }
+}
+
+@media only screen and (max-device-width:480px) and (orientation: landscape) {
+  html, body {
+    width: 480px;
+    min-width: 480px;
+    max-width: 480px;
+  }
+}

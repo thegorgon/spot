@@ -1,32 +1,24 @@
 .site_places {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
   background: #fff;
+  padding: 0;
   #bg {
     background: transparent url(/images/backgrounds/paisley_light.jpg) no-repeat fixed center center;    
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
   }
   #ft {
-    background: transparent;
-    position: static;
-    width: 320px;
-    min-width: 320px;
-    margin: 0 auto;
-    #itunes_store_link {
-      margin: 20px auto;
-      width: 116px;
-    }
-    .share {
-      position: relative;
-      z-index: 1000;
-      width : 150px;
-      margin: 10px auto;
-      .fb {
-        width: 93px;
-        height: 25px;
-        float: left;
-      }
-      .twitter {
-        float: right;
-      }
-    }
+    display: none;
+  }
+  .appstorelink {
+    text-align: center;
+    margin: 1em 0;
   }
   #message {
     text-shadow: #000 0 1px 0;
@@ -51,6 +43,7 @@
     top: 0px;
     left: 0px;
     right: 0px;
+    padding: 0;
     bottom: 0px;
     z-index: 10;
     #hd {
@@ -70,6 +63,7 @@
       text-align: center;
       margin: 0 auto;
       position: static;
+      padding: 0;
       top: 105px;
       width: 320px;
     }
@@ -162,10 +156,6 @@
         color: #999;
         background: transparent url("/images/assets/general/star.png") no-repeat left center;
       }
-    }
-    .meta {
-      text-align: center;
-      margin: 20px 0 0 0;
     }
   }
 }

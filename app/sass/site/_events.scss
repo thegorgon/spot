@@ -100,6 +100,46 @@
     .description {
       padding: 10px;
       font-size: 14px;
+      .more {
+        margin: 0.5em 0;
+        width: 150px;
+        hr {
+          margin: 5px 0;
+          height: 0px;
+          border-bottom: 1px solid #fff;
+          border-top: 1px solid #ddd;
+        }
+        h3 {
+          margin: 0.5em 0;
+        }
+        .info {
+          padding: 0 0 0 40px;
+          line-height: 30px;
+          font-size: 14px;
+          width: 150px;
+        }
+        .wishlists {
+          background: transparent url(/images/icons/grystar20x20.png) no-repeat 6px center;
+        }
+        .phone {
+          background: transparent url(/images/icons/gryphone30x20.png) no-repeat left center;          
+        }
+        .address {
+          line-height: 20px;
+          background: transparent url(/images/icons/gryplacemarker14x20.png) no-repeat 9px center;
+        }
+      }
+      .external {
+        display: block;
+        float: left;
+        margin: 0 10px 0 0;
+        &.google {
+          margin-top: 4px;
+        }
+        &.foursquare {
+          margin-top: 2px;
+        }
+      }
     }
     .image {
       position: relative;

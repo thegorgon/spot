@@ -13,12 +13,14 @@
       -if @place.phone_number.present?
         .phone=phone_link(@place.phone_number)
       .address
-        -@place.address_lines.each do |a|
-          %h2=a
+        -@place.address_lines.each do |line|
+          %h2=line
     .wishlists
       ="#{@place.wishlist_count} Wishlists"
     .buttons_container
-      =link_to "Add to Wishlist", getspot_path, :class => "phone_whitegray_288x37"
+      -if false && iphone_browser?
+        =link_to "View in Spot", "spot-app://place?id=#{@place.id}", :class => "phone_whitegray_288x37"
+      =link_to "Download Spot", getspot_path, :class => "phone_whitegray_288x37"
       =link_to "View Map", gmap_url(:name => @place.name, :ll => @place), :class => "phone_whitegray_288x37"
       .share.clearfix
         %a{:href => fb_share_url(place_url(@place), "#{@place.name} on Spot"), :class => "fb-share-button phone_whitegray_135x37 left"}
@@ -29,5 +31,6 @@
           .center
             =image_tag "assets/general/tweetie30x22.png", :width => 30, :height => 22
             Tweet
-=content_for :ft do
-  =itunes_store_link('assets/general/app_store_transparent116x40.png', :size => "116x40")    
+
+.appstorelink.center
+  =img_link_to 'assets/general/app_store_transparent116x40.png', getspot_path, :size => "116x40", :class => "getspot"

@@ -179,7 +179,7 @@ class Place < ActiveRecord::Base
   end
   
   def external_places
-    ExternalPlace.sources.collect { |src| external_place(src) }
+    ExternalPlace.sources.collect { |src| external_place(src) }.compact
   end
         
   def reclean!

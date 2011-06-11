@@ -47,21 +47,9 @@
       query.push("top=" + top);       
       window.open(url, name || "popup" + (new Date()).getTime(), query.join(","));
     },
-    updateOrientation: function() {
-      var orient = Math.abs(window.orientation) === 90 ? "landscape" : "portrait";
-      if (orient !== $('body').attr('orient')) {
-        $('body').attr('orient', orient);        
-        window.scrollTo(0, 1);
-      }
-      return true;
-    },
     mobileOptimize: function() {
       if (this.mobile()) {
-        setTimeout(this.updateOrientation, 0);
         setTimeout(function() { window.scrollTo(0, 1); }, 0);
-        window.onorientationchange = function() {
-          $.updateOrientation();
-        };
       }
     },
     preload: function(images, cb) {

@@ -4,6 +4,10 @@ class ExternalPlace::YelpPlace < ActiveRecord::Base
   serialize :categories, Array
   serialize :neighborhoods, Array
   
+  def self.logo
+    ["yelp", "50x25"]
+  end
+
   def self.from_wrapr(wrapr)
     object = new
     object.name = wrapr.name

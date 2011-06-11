@@ -50,6 +50,10 @@ module ExternalPlace
   end
   
   module ClassMethods
+    def logo
+      nil
+    end
+          
     def search(params={})
       results = @_external_place_options[:wrapr].search(params, :cache => true, :cache_expiry => 1.day)
       if results.present?

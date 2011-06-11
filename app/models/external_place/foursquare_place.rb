@@ -1,6 +1,10 @@
 class ExternalPlace::FoursquarePlace < ActiveRecord::Base
   external_place :id => :foursquare_id, :wrapr => Wrapr::Foursquare::Venue, :alias => { :region => :state, :phone_number => :phone }
 
+  def self.logo
+    ["foursquare", "80x25"]
+  end
+  
   def self.from_wrapr(wrapr)
     object = new
     object.name = wrapr.name

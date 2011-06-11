@@ -23,12 +23,12 @@ class ApplicationController < ActionController::Base
   helper_method :mobile_browser?
 
   def iphone_browser?
-    !!request.user_agent.to_s.match(/iphone/)
+    !!(request.user_agent.downcase.to_s =~ /iphone/)
   end
   helper_method :iphone_browser?
   
   def android_browser?
-    !!request.user_agent.match(/android/)
+    !!(request.user_agent.downcase.to_s =~ /android/)
   end
   helper_method :android_browser?
 
