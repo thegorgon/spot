@@ -36,8 +36,6 @@ javascripts:
 stylesheets:
   site:
     - public/stylesheets/site.css
-  iphonesite:
-    - public/stylesheets/iphonesite.css
   admin:
     - public/stylesheets/admin.css
   biz:
