@@ -21,3 +21,12 @@ production:
 test:
   <<: *common
   port: 9313
+  
+staging:
+  <<: *common
+  port: 9313
+  searchd_log_file: "/u/app/current/log/searchd.log"
+  query_log_file: "/u/app/current/log/query.log"
+  pid_file: "/u/app/shared/pids/searchd.pid"
+  bin_path: "/usr/local/bin"
+  version: "0.9.9"

@@ -14,20 +14,42 @@ set :deploy_to,     '/u/app'
 set :keep_releases, 10
 set :app_server_n,  2
 set :bg_server_n,   1
-set :rails_env,     'production'
 
 ssh_options[:forward_agent] = true
 default_run_options[:pty] = true
 
-app_servers = (1..app_server_n).reject { |i| i == -1 }.collect { |num| "spot#{num}.ec2" }
-app_servers.each do |server|
-  role :web, server
-  role :app, server
-end
-role :db, app_servers.first, :primary => true
+desc 'Set the target stage to "production"'
+task :production do
+  set :rails_env, :production
+  set :stage, :production
+  set :branch, :master
 
-bg_servers = (1..bg_server_n).reject { |i| i == -1 }.collect { |num| "spotbg#{num}.ec2" }
-bg_servers.each { |server| role :bg, server }
+  app_servers = (1..app_server_n).collect { |num| "spot#{num}.ec2" }
+  role :web, *app_servers
+  role :app, *app_servers
+  
+  role :db, app_servers.first, :primary => true
+
+  bg_servers = (1..bg_server_n).collect { |num| "spotbg#{num}.ec2" }
+  role :bg, *bg_servers
+end
+
+desc 'Set the target stage to "staging"'
+task :staging do
+  set :rails_env, :staging
+  set :stage, :staging
+  set :branch, :staging
+  servers = ["spotstaging.ec2"]
+  role :app, *servers
+  role :web, *servers
+  role :bg, *servers
+  role :db,  servers.first, :primary => true
+end
+
+task :ensure_stage do
+  abort "No stage specified. Run `cap production deploy` or `cap staging deploy` to set the stage." unless exists?(:stage)
+end
+on :start, :ensure_stage, :except => [ :staging, :production ]
 
 # Unicorn Deploy Settings
 namespace :deploy do
