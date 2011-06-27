@@ -14,3 +14,7 @@ test:
 production:
   <<: *common
   bucket: spot-production
+
+staging:
+  <<: *common
+  bucket: spot-staging
