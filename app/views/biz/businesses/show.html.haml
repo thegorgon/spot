@@ -17,10 +17,14 @@
 
   .wishlist_count.stat
     .title
-      -var = @business.place.wishlist_count
-      %var=var
-      =var == 1 ? "Spot Members" : "Spot Members" 
-      have Wishlisted your place
+      -if @business.place.wishlist_count > 100
+        -var = @business.place.wishlist_count
+        %var=var
+        =var == 1 ? "Spot Members" : "Spot Members" 
+        have Wishlisted your place
+      -else
+        %var &nbsp;
+        Grow your audience
     %hr
     .content
       %strong Want more Spot Members to Wishlist your spot?

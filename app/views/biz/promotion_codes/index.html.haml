@@ -8,8 +8,8 @@
     %h1
       Lookup a Code?
     %ul.form.light
-      =form_tag lookup_biz_business_codes_path(@business), :method => :get, :id => "lookup_code_form", 'data-validate' => 'validate' do |f|
-        %li.text
+      =form_tag lookup_biz_business_codes_path(@business), :method => :get, :id => "lookup_code_form", 'data-validate' => 'validate' do
+        %li.text.accept_focus
           =text_field_tag :code, "", :class => "text", :placeholder => "enter code", :required => true
           .validity
         %li

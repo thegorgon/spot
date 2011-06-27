@@ -16,11 +16,16 @@ Spot::Application.routes.draw do
   scope :module => "site", :constraints => {:subdomain => /www|m|app|/} do
     resources :blog, :controller => "blog", :only => [:index]
     resource :session, :only => [:new, :create, :destroy]
-    resource :account, :only => [:new, :create, :destroy]
+    resource :account, :only => [:new, :create, :show, :update, :destroy]
     resource :password_reset, :only => [:new, :create, :edit, :update]
     resources :places, :only => [:show] do
       resources :events, :only => [:show]
     end
+
+    resources :subscriptions, :only => [:new] do
+      get "endpoint", :action => "endpoint", :on => :collection
+    end
+
     resource :widget, :only => [:show]
     resource :email, :only => [:show] do
       delete "unsubscribe"

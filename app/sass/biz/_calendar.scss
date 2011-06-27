@@ -254,9 +254,8 @@
       margin: 0 auto;
     }
     .details {
-      font-weight: bold;
       font-size: 12px;
-      .label, .input {
+      .label, .input_container {
         width: 145px;
         .prepend {
           display: inline;
@@ -279,18 +278,10 @@
         position: static;
       }
     }
-    #generic_description_container {
-      height: 128px;
-    }      
-    #discount_average_spend_container {
-      height: 67px;
-    }
     button.bottom {
       font-size: 16px;
       height: 35px;
       width: 300px;
-      position: absolute;
-      bottom: 20px;
     }
   }
   .section.right {

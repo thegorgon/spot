@@ -1,6 +1,6 @@
 (function($) {
   $.extend($.fn, {
-    placeholder: function(text) {      
+    placeholder: function(text) {
       $(this).filter('input,textarea').each(function() {
         var $input = $(this), placeholder,
           txt = text || $input.attr('placeholder');
@@ -13,7 +13,9 @@
         placeholder.add($input).unbind('.placeholder');
         placeholder.bind('click.placeholder', function(e) {
           e.preventDefault();
-          $input.focus(); 
+          $input.focus();
+        });
+        $input.bind('focus.placeholder', function(e) {
         });
         $input.bind('blur.placeholder', function(e) {
           if ($input.val() === '') {
@@ -23,7 +25,7 @@
           }
         });
         if ($input.val() === '') {
-          $input.blur();          
+          $input.blur();
         } else {
           placeholder.hide();
         }
@@ -156,7 +158,6 @@
           rel = $($this.attr('href'));
         curcontent.fadeOut();
         tabs.removeClass('active');
-        $.logger.debug(rel);
         $this.addClass('active');
         rel.hide().removeClass('hidden').fadeIn();
       });
@@ -173,61 +174,55 @@
 (function(go) {
   $.provide(go, "Behaviors", {
     train: function(container) {
-      try {
-        var fetch = function(sel) { return $(sel, container); };
-        go.Navigator.link(fetch("a.page"));
-        go.Navigator.form(fetch("form.page"));
-        $.popover.bind(container);
-        fetch('a.reveals').reveals();
-        fetch('a.closer').closer();
-        if ($.support.opacity) {
-          fetch('.preload_bg').preloadBg();
-          fetch('.preload').preloadImgs();
-        }
-        fetch('[placeholder]').placeholder();
-        fetch('[data-mode=select]').selectOnly();
-        fetch('.file_field input').fileField();
-        fetch('a[data-method]:not(.ajax)').actionLink();
-        fetch('a[data-confirm][data-method]:not(.ajax)').actionLink();
-        fetch('.fbconnect').fbconnect();
-        fetch('ul.form input, ul.form textarea').focus(function(e) {
-          $(this).parents('li:first').addClass('focus');
-          $(this).parents('ul:first').addClass('focus');
-        });
-        fetch('ul.form input, ul.form textarea').blur(function(e) {
-          $(this).parents('li:first').removeClass('focus');
-          $(this).parents('ul:first').removeClass('focus');
-        });
-        fetch('.radio_fade').radioFade();
-        fetch('.hoverable').hoverable();
-        fetch('li.invalid input, input.invalid').focus(function(e) {
-          $(this).parent('li').add(this).removeClass('invalid');
-        });
-        fetch('.tabbar').tabBar();
-        fetch('.twitter-share-button, .twitter-share-link').popupLink({width: 350, height: 300});
-        fetch('.fb-share-button, .fb-share-link').popupLink({width: 550, height: 300});
-        fetch('.fb-post-button, .fb-post-link').click(function(e) {
-          e.preventDefault();
-          FB.ui(
-            {
-              method: 'feed',
-              name: $(this).attr('data-fb-name'),
-              link: $(this).attr('data-fb-url') || 'http://www.spot-app.com',
-              picture: $(this).attr('data-fb-image') || 'http://www.spot-app.com/images/logos/og_image.png',
-              caption: $(this).attr('data-fb-caption'),
-              description: $(this).attr('data-fb-description')
-            },
-            function(response) {
-              if (response && response.post_id) {
-              } else {
-              }
-            }
-          );
-        });
-        fetch('form[data-validate]').autovalidate();        
-      } catch(e) {
-        $.logger.error("ERROR " + e);
+      var fetch = function(sel) { return $(sel, container); };
+      go.Navigator.link(fetch("a.page"));
+      go.Navigator.form(fetch("form.page"));
+      $.popover.bind(container);
+      fetch('a.reveals').reveals();
+      fetch('a.closer').closer();
+      if ($.support.opacity) {
+        fetch('.preload_bg').preloadBg();
+        fetch('.preload').preloadImgs();
       }
+      fetch('[placeholder]').placeholder();
+      fetch('[data-mode=select]').selectOnly();
+      fetch('.file_field input').fileField();
+      fetch('a[data-method]:not(.ajax)').actionLink();
+      fetch('a[data-confirm][data-method]:not(.ajax)').actionLink();
+      fetch('.fbconnect').fbconnect();
+      fetch('input, textarea').focus(function(e) {
+        $(this).parents('.accept_focus').addClass('focus');
+      });
+      fetch('form input, form textarea').blur(function(e) {
+        $(this).parents('.accept_focus').removeClass('focus');
+      });
+      fetch('.radio_fade').radioFade();
+      fetch('.hoverable').hoverable();
+      fetch('li.invalid input, input.invalid').focus(function(e) {
+        $(this).parent('li').add(this).removeClass('invalid');
+      });
+      fetch('.tabbar').tabBar();
+      fetch('.twitter-share-button, .twitter-share-link').popupLink({width: 350, height: 300});
+      fetch('.fb-share-button, .fb-share-link').popupLink({width: 550, height: 300});
+      fetch('.fb-post-button, .fb-post-link').click(function(e) {
+        e.preventDefault();
+        FB.ui(
+          {
+            method: 'feed',
+            name: $(this).attr('data-fb-name'),
+            link: $(this).attr('data-fb-url') || 'http://www.spot-app.com',
+            picture: $(this).attr('data-fb-image') || 'http://www.spot-app.com/images/logos/og_image.png',
+            caption: $(this).attr('data-fb-caption'),
+            description: $(this).attr('data-fb-description')
+          },
+          function(response) {
+            if (response && response.post_id) {
+            } else {
+            }
+          }
+        );
+      });
+      fetch('form[data-validate]').autovalidate();        
     }
   });
 }(Spot));

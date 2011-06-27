@@ -94,7 +94,6 @@
             dateFormat: 'D, M d, yy',
             onSelect: function(dateText, inst) {
               date = new Date(Date.parse(dateText));
-              $.logger.debug(date, inst);
               dateForm.find('#date_seconds').val(date.getTime()/1000.0);
               dateInput.attr('disabled', 'disabled');
               dateForm.submit();

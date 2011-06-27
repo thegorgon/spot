@@ -23,13 +23,40 @@ ul.form {
   margin: 0;
   padding: 0;
   display: block;
-  li {
+  li, .li {
     position: relative;
     margin: 10px 0;
     padding: 0;
-    .ie7 & {
-      left: -15px;
+  }
+  .input_container {
+    z-index: 1;
+    position: relative;
+  }
+  .name {
+    height: 30px;
+    width: 300px;
+    li.first_name, li.last_name {
+      margin: 0;
+      position: absolute;
+      top: 0px;
+      width: 151px;
+      input, .placeholder {
+        width: 133px;
+      }
     }
+    li.first_name {
+      left: 0px;
+      input {
+        width: 133px;
+      }
+    }
+    li.last_name {
+      right: 0px;
+    }
+  }
+  li.note {
+    margin: -5px 0 10px;
+    width: 300px;
   }
   li.text, li.buttons {
     @extend .clearfix;
@@ -42,9 +69,6 @@ ul.form {
       top: 0px;
       left: 0px;
       z-index: 1;
-      &.placeholder {
-        z-index: 2;
-      }
       &.short {
         width: 27px;
         text-align: center;
@@ -53,6 +77,50 @@ ul.form {
         width: 50px;
         text-align: center;
       }
+    }
+    .placeholder {
+      &.abbrev {
+        width: 50px;
+        text-align: center;
+      }
+    }
+  }  
+  .file_field {
+    padding: 0px;
+    position: relative;
+    width: 298px;
+    height: 28px;
+    .browse_button {
+      cursor: pointer;
+      z-index: 1;
+      position: absolute;
+      right: -1px;
+      top: -1px;
+      height: auto;
+      bottom: -1px;
+      width: 80px;
+    }
+    .filename {
+      line-height: 18px;
+      position: absolute;
+      z-index: 1;
+      left: 5px;
+      top: 5px;
+      bottom: 5px;
+    }
+    input.file {
+      width: 100%;
+      height: 100%;
+      @include opacity(0);
+      z-index: 100;
+      position: absolute !important;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      height: 100%;
+      width: 100%;
+      cursor: pointer;
     }
   }
   li.text_area {
@@ -93,16 +161,49 @@ ul.form {
     bottom: 0px;
     z-index: 10;
     cursor: text;
+    background: transparent;
   }
   input.text, textarea {
     font-weight: normal;
     @include border_radius(6px);          
     margin: 0;
   }
+  .name {
+    li.first_name {
+      input {
+        @include left_border_radius(5px)
+      }
+    }
+    li.last_name {
+      input {
+        @include right_border_radius(5px);
+      }
+    }
+  }
+  li.note {
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;    
+  }
+  li.file {
+    .validity {
+      right: 80px;
+    }
+  }
+  .file_field {
+    @include border_radius(5px);
+    .browse_button {
+      border: 1px solid #999;
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 28px;
+      text-align: center;
+    }
+  }
   .hint {
     opacity : 0;
     @include transition("all 0.25s");
-    z-index: 1;
+    z-index: 0;
     background: transparent url(/images/assets/general/blkhntrt220x64.png) no-repeat left top;
     position: absolute;
     top: -17px;
@@ -115,7 +216,6 @@ ul.form {
     font-size: 12px;
     line-height: 20px;
     text-shadow: #000 0px -1px 0px;
-    z-index: 1;
     color: #ddd;
     .error_message {
       font-size: 11px;
@@ -127,41 +227,41 @@ ul.form {
       opacity: 0;
       z-index: 1;
     }
+  }
+  li.focus, .li.focus {
     .hint {
-      z-index: 10;
+      z-index: 2;
       opacity: 1.0;
     }
   }
   .validity {
+    cursor: pointer;
     @include opacity(0);
     @include transition(opacity 0.25s);
-    width: 200px;
+    width: 30px;
+    right: 0px;
     height: 30px;
     position: absolute;
-    right: -230px;
     top: 0px;
-    z-index: 1;
-    padding: 0 0 0 30px;
-    .message {
-      text-align: left;
-      height: 30px;
-      line-height: 30px;
-      font-size: 12px;
-    }
+    z-index: 0;
   }
   li.focus .validity {
+    z-index: 3;
     @include opacity(0);
     @include transition(opacity 0.25s);
   }
   li.loading .validity {
+    z-index: 3;
     @include opacity(1);
     @include transition(opacity 0.25s);
   }
   li.valid .validity {
+    z-index: 3;
     @include opacity(1);
     @include transition(opacity 0.25s);
   }
   li.invalid .validity {
+    z-index: 3;
     @include opacity(1);
     @include transition(opacity 0.25s);
   }
@@ -173,12 +273,14 @@ ul.form {
       display: block;
     }
     li.focus {
-      .hint {
-        display: block;
-      }
       .placeholder {
         display: none;
       } 
+    }
+    li.focus, .li.focus {
+      .hint {
+        display: block;
+      }
     }
   }
 }
@@ -206,19 +308,19 @@ ul.form {
     text-shadow: #333 0px 0px 3px;
     @include transition(all 0.25s);
   }
-  .validity {
-    .message {
-      color : #ccc;
-    }
-  }
   li.loading .validity {
-    background: transparent url(/images/assets/loading/white-chasing30x30.gif?1) no-repeat left center;    
+    background: transparent url(/images/assets/loading/white-chasing30x30.gif?1) no-repeat center center;    
   }
   li.valid .validity {
-    background: transparent url(/images/assets/general/white_check.png?3) no-repeat left center;    
+    background: transparent url(/images/icons/checkltgry20x20.png) no-repeat center center;    
   }
-  li.invalid .validity {
-    background: transparent url(/images/assets/general/white_cross.png?1) no-repeat left center;        
+  li.invalid {
+    input, textarea, select {
+      border: 1px solid #cc3333;
+    }
+    .validity {
+      background: transparent url(/images/icons/alertred24x20.png) no-repeat center center;        
+    }
   }
   .checkbox {
     cursor: pointer;
@@ -292,81 +394,37 @@ ul.form {
     border: 1px solid #999;
     @include box_shadow(rgba(0,0,0,0.5) 0px 1px 1px inset);
   }
+  .note {
+    color: #999;
+    text-shadow: #fff 0px 1px 0px;
+  }
   .placeholder {
     color: #999;
     text-shadow: none;
   }
-  .validity {
-    .message {
-      color : #333;
-    }
-  }
   li.loading .validity {
-    background: transparent url(/images/assets/loading/black-chasing30x30.gif?1) no-repeat left center;    
+    background: transparent url(/images/assets/loading/black-chasing30x30.gif?1) no-repeat center center;    
   }
   li.valid .validity {
-    background: transparent url(/images/assets/general/black_check.png?3) no-repeat left center;    
+    background: transparent url(/images/icons/checkltgry20x20.png) no-repeat center center;    
   }
   li.invalid {
-    input, textarea {
+    input, textarea, select {
       border: 1px solid #cc3333;
     }
     .validity {
-      .message {
-        color : #993333;
-      }
-      background: transparent url(/images/assets/general/black_cross.png?1) no-repeat left center;        
+      background: transparent url(/images/icons/alertred24x20.png) no-repeat center center;        
     }
+    label {
+      color: #cc3333;
+    }    
   }
   .file_field {
-    @include border_radius(5px);
-    padding: 0px;
-    width: 298px;
-    height: 28px;
-    position: relative;
     .browse_button {
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: bold;
-      line-height: 28px;
-      border: 1px solid #999;
-      color: #333;
-      width: 80px;
-      text-align: center;
       background: #f2f2f2;
       @include gradient_top_down(#f2f2f2, #A2A2A2); 
       @include right_border_radius(5px);
       text-shadow: #fff 0px -1px 0px;
-      z-index: 1;
-      position: absolute;
-      right: -1px;
-      top: -1px;
-      height: auto;
-      bottom: -1px;
-    }
-    .filename {
-      position: absolute;
-      z-index: 1;
-      left: 5px;
-      top: 5px;
-      height: 18px;
-      line-height: 18px;
-      bottom: 5px;
-      text-align: left;
-    }
-    input.file {
-      width: 100%;
-      height: 100%;
-      @include opacity(0);
-      z-index: 100;
-      position: absolute !important;
-      top: 0px;
-      left: 0px;
-      right: 0px;
-      bottom: 0px;
-      height: 100%;
-      width: 100%;
-      cursor: pointer;
     }
   }
   select {
@@ -383,12 +441,11 @@ ul.form {
 
 /* INLINE LABELS */
 ul.inlinelabels {
-  li.text.labelled {
+  li.text.labelled, .li.labelled {
     @include clearfix;
     overflow: visible;
     .label {
       float: left;
-      width: 50%;
       line-height: 30px;
       text-align: right;
       label {
@@ -399,57 +456,9 @@ ul.inlinelabels {
       display: inline;
       position: static;
     }
-    .input {
-      width: 50%;
+    .input_container {
       text-align: left;
-      float: right;
-    }
-  }
-  .invalid {
-    label {
-      color: #cc3333;
-    }
-  }
-}
-
-/* LIGHT HINTS UNDERNEATH */
-ul.light.lowhints {
-  li.text.hinted {
-    height: 48px;
-  }
-  li.text_area.hinted {
-    height: 144px;
-  }
-  li.text.hinted.tall {
-    height: 65px;
-  }
-  .hint {
-    z-index: 10;
-    display: block;
-    text-align: center;
-    position: absolute;
-    color: #666;
-    opacity: 1;
-    line-height: 1.4em;
-    top: auto;
-    bottom: 0px;
-    height: auto;
-    width: auto;
-    left: 5px;
-    right: 5px;
-    padding: 0;
-    background: transparent;
-    font-weight: normal;
-    text-shadow: 0px 1px 0px #fff;    
-  }
-  .invalid, .valid {
-    .validity {
-      background: transparent;
-    }
-  }
-  .invalid {
-    input, textarea, select {
-      border: 1px solid #cc3333;
+      float: right;      
     }
   }
 }
@@ -485,15 +494,6 @@ ul.form.oneline {
       margin-top: -2px;
     }
   }
-  .validity {
-    width: 30px;
-    right: 5px;
-    top: 0px;
-    padding: 0px;
-    .message {
-      display: none;
-    }
-  }
 }
 
 /* FORMS IN POPOVERS */
@@ -508,6 +508,7 @@ ul.form.inpopover {
     float: none;
     border-bottom: 1px solid #999;
     input {
+      @include border_radius(0);          
       border: none;
       width: 234px;
     }
@@ -515,6 +516,18 @@ ul.form.inpopover {
       padding: 15px 10px;
       width: 230px;
       border-bottom: none;
+    }
+  }
+  li.loading .validity {
+    background: transparent url(/images/assets/loading/black-chasing30x30.gif?1) no-repeat center center;    
+  }
+  li.valid .validity {
+    background: transparent url(/images/icons/checkltgry20x20.png) no-repeat center center;    
+  }
+  li.invalid {
+    border-bottom: 1px solid #cc3333;
+    .validity {
+      background: transparent url(/images/icons/alertred24x20.png) no-repeat center center;        
     }
   }
 }

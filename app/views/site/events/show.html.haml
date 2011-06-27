@@ -1,0 +1,85 @@
+.promotion.clearfix
+  .body
+    .image
+      =image_tag @place.image.url(:i640x400), :size => "520x325"
+      .titlebar
+        %h2=@place.name
+        .date
+          ="#{@promotion.date.strftime("%B #{@promotion.date.day.ordinalize}, %Y")}"
+          =Time.twelve_hour(@promotion.start_time)
+          to 
+          =Time.twelve_hour(@promotion.end_time)
+        .promotioninfo
+          %h1="#{@promotion.discount_percentage}% Off"
+    .description
+      =@promotion.description
+      .more
+        %h3="About #{@place.name}"
+        .info.address
+          -@place.address_lines.each do |line|
+            %p.line=line
+        .info.phone=phone_link(@place.phone_number)
+        .info.wishlists="#{@place.wishlist_count} Wishlists"
+        %h3 Get More From :
+        -@place.external_places.each do |p|
+          -if p.class.logo
+            =img_link_to "logos/external/#{p.class.logo.join}.png", external_place_url(p), :size => p.class.logo.last, :class => "external #{p.class.logo.first}"
+  .sidebar
+    .guestcheck
+      .content
+        The Offer : 
+        -if @promotion.kind_of?(DiscountEvent)
+          %p &nbsp;
+          %ul
+            %li
+              ="#{@promotion.discount_percentage}% off your entire bill at #{@place.name}"
+            %li
+              ="Average Savings : $#{@promotion.savings(2).round}"
+            %li
+              ="Only #{@promotion.remaining_count} Left!"
+        -else
+        
+    .buttons
+      =button_tag :class => "btnorg300x41 getitnow" do
+        =image_tag "assets/events/getitnow120x27.png", :size => "120x27", :alt => "get it now!"
+    .explanation
+      .title
+        =image_tag "assets/events/howitworkshdln115x20.png", :size => "115x20", :alt => "How it Works"
+      .divider
+      .content
+        %ul
+          %li 
+            ="Come to #{@place.name} on"
+            ="#{@promotion.date.strftime("%A %B #{@promotion.date.day.ordinalize}")}"
+            between
+            =Time.twelve_hour(@promotion.start_time)
+            and
+            =Time.twelve_hour(@promotion.end_time)
+          %li Present your 4 digit code. 
+          %li="Save #{@promotion.discount_percentage}% off your entire bill."
+    .explanation
+      .title
+        =image_tag "assets/events/fineprinthdln115x20.png", :size => "115x20", :alt => "The Fine Print"
+      .divider
+      .content
+        %ul
+          %li
+            ="Valid at #{@place.name} on #{@promotion.date.strftime('%m/%d/%Y')}"
+            ="from #{@promotion.timeframe(false)} only."
+          %li Limit 1 per bill. 
+          %li Limit 1 per visit.
+          %li While supplies last.
+    .explanation
+      .title
+        =image_tag "assets/events/guaranteehdln170x30.png", :size => "170x30", :alt => "The Spot Guarantee"
+      .divider
+      .content
+        %p 
+          If you’re not satisfied with your experience using Spot, 
+          we’ll give you your money back.
+        %p 
+          It’s that simple.
+
+#getitnowdialog.hidden.paymentdialog
+  .previous
+  =render :partial => "getitnow"

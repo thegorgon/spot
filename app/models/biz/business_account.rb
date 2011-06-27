@@ -5,6 +5,7 @@ class BusinessAccount < ActiveRecord::Base
   belongs_to :user
   has_many :businesses, :dependent => :destroy
   
+  validates :user, :presence => true
   validates :first_name, :presence => true
   validates :last_name, :presence => true
   validates :email, :presence => true, :format => EMAIL_REGEX
@@ -23,11 +24,15 @@ class BusinessAccount < ActiveRecord::Base
   def self.register(params)
     user = User.find_by_id(params[:user_id]) if params[:user_id]
     unless user
-      password_account = PasswordAccount.register(:login => params[:email], :password => params[:password], :name => params[:name])
+      password_account = PasswordAccount.register( :login => params[:email], 
+                                                   :password => params[:password], 
+                                                   :first_name => params[:first_name], 
+                                                   :last_name => params[:last_name] )
       user = password_account.user
     end
-    user.business_account = BusinessAccount.new do |ba|
-      ba.name = params[:name]
+    user.business_account ||= BusinessAccount.new do |ba|
+      ba.first_name = params[:first_name]
+      ba.last_name = params[:last_name]
       ba.email = params[:email]
       ba.phone = params[:phone]
       ba.title = params[:title]

@@ -1,0 +1,196 @@
+.paymentdialog {
+  position: relative;
+  width: 800px;
+  padding: 0;
+  font-size: 14px;
+  .view {
+    display: none;
+  }
+  .previous {
+    display: none;
+    position: absolute;
+    left: 25px;
+    top: -25px;
+    bottom: 0px;
+    width: 15px;
+    height: 15px;
+    z-index: 100;
+    background: transparent url(/images/buttons/bnwback15x45.png) no-repeat 0 0;
+    cursor: pointer;
+    &:hover, &.hover {
+      background-position: 0px -15px;
+    }
+    &:active, &.active {
+      background-position: 0px -30px;
+    }
+  }
+  .payform {
+    width: 800px;
+    .buttons {
+      width: 300px;
+      margin: 10px auto 0px;
+    }
+    .form {
+      width: 700px;
+      margin: 0 auto;
+      h3 {
+        width: 300px;
+        margin: 0 auto;
+      }
+      h2 {
+        margin: 1em 5px;
+        font-size: 1.2em;
+      }
+      input {
+        position: static;
+      }
+      .customerfields {
+        float: left;
+        width: 310px;
+        select {
+          width: 300px;
+          height: 30px;
+          background: #fff;
+        }
+      }
+      .ccfields {
+        float: right;
+        width: 340px;
+        margin-right: -15px;
+        h2 {
+          margin: 1em 5px 0 20px;
+        }
+        .card {
+          background: transparent url(/images/backgrounds/card340x192.png) no-repeat 0 0;
+          font-family: consolas, courier, monospace;
+          text-shadow: rgba(0,0,0,0.5) 0px 1px 1px;
+          width: 286px;
+          height: 138px;
+          padding: 24px 21px 24px 27px;
+          li {
+            width: 286px;
+          }
+          .username {
+            margin: 8px 0;
+          }
+          .ccnumber {
+            width: 270px;
+          }
+          .cvvcontainer {
+            width: 76px;
+            float: right;
+            margin: 0 0 10px;
+            input {
+              width: 60px;
+              text-align: left;
+            }
+          }
+          .expiration {
+            width: 203px;
+            float: left;
+            margin: 0 0 10px;
+          }
+          input {
+            padding: 10px 8px 6px;
+            font-family: consolas, courier, monospace;
+            height: 14px;
+            line-height: 14px;
+            @include border_radius(0px);
+            border: 1px solid #ededed;
+            @include box_shadow(rgba(0,0,0,0.5) 0px 0px 5px inset);
+          }
+          .invalid input {
+            border: 1px solid #933;
+          }
+          .expiration {
+            padding-top: 5px;
+          }
+          .placeholder {
+            height: 20px;
+            line-height: 25px;
+          }
+          .types {
+            height: 25px;
+            background: transparent url(/images/assets/creditcards/gryaccepted171x25.png) no-repeat top left;
+            width: 171px;
+            margin: 0;
+            float: right;
+            &.selected {
+              background-image: url(/images/assets/creditcards/accepted171x25.png);
+              width: 40px;
+            }
+            &.visa {
+              background-position: 0 0;
+            }
+            &.mastercard {
+              background-position: -45px 0;
+            }
+            &.amex {
+              background-position: -90px 0;
+            }
+            &.discover {
+              background-position: -135px 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  .processing {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding: 25% 0 0 0;
+    text-align: center;
+    background: transparent url(/images/assets/loading/blkgears30x40.gif) no-repeat center center;
+  }
+  .paydescribe {
+    text-align: center;
+    height: 360px;
+    padding: 10px;
+    h1 {
+      margin: 0 0 25px 0;
+    }
+    h3 {
+      margin: 0.5em 0 1em;
+    }
+    .point {
+      margin: 5px auto;
+      font-weight: bold;
+      &.spaced {
+        padding: 15px 0;
+      }
+      &.floating {
+        width: 250px;
+        margin: 5px;
+        float: left;
+      }
+    }
+    .rightarrow {
+      padding-right: 15px;
+    }
+    .subpoint {
+      color: #444;
+      margin: 5px 0px 0px;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 16px;
+    }
+    .button {
+      margin: 15px 0 0;
+      .fineprint {
+        color: #666;
+        font-size: 12px;
+        font-weight: normal;
+        text-align: center;
+        padding: 5px;
+      }
+    }
+    button {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+}

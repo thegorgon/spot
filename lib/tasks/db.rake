@@ -49,11 +49,11 @@ namespace :db do
     end
   end
   
-  task(:unsubscribe => :environment) do
+  task(:prime => :environment) do
     unless Rails.env.production?
-      [User, PasswordAccount, FacebookAccount].each do |account|
-        account.connection.execute("TRUNCATE #{account.table_name}")
-      end
+      Rake::Task["db:reset"].invoke
+      ENV['PRESET'] = 'places'
+      Rake::Task["db:sync"].invoke
     end
-  end  
+  end
 end

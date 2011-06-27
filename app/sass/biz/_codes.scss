@@ -9,6 +9,7 @@
     .codes {
       width: 499px;
       border-right: 1px solid #ddd;
+      min-height: 500px;
       &.loading {
         @include opacity(0.5);
       }

@@ -17,15 +17,16 @@ javascripts:
     - public/javascripts/shared/behaviors.js
     - public/javascripts/shared/navigator.js
     - public/javascripts/shared/konami.js
-    - public/javascripts/shared/lightbox.js
     - public/javascripts/shared/gmap.js
     - public/javascripts/shared/app_preview.js
     - public/javascripts/shared/place_form.js
     - public/javascripts/shared/popover.js
     - public/javascripts/shared/jstooltip.js
     - public/javascripts/shared/search_emulator.js
+    - public/javascripts/shared/lightbox.js
     - public/javascripts/shared/image_selector.js
     - public/javascripts/shared/slideshow.js
+    - public/javascripts/shared/payment_dialog.js
     - public/javascripts/shared/views.js
     - public/javascripts/site/site.js
     - public/javascripts/admin/admin.js

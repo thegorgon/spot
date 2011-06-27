@@ -1,5 +1,3 @@
-@import "shared/_lightbox.scss";
-
 html {
   &.js {
     #bg, #page, .preload {
@@ -39,7 +37,7 @@ html {
     -o-transform: rotate(1260deg);
     -o-transition: -o-transform 1s;
     -webkit-transform: rotate(1260deg);
-    -webkit-transition: -webkit-transform 1s;
+    -webkit-transition: -webkit-transformm 1s;
     -moz-transform: rotate(1260deg);
     -moz-transition: -moz-transform 1s;
     transform: rotate(1260);
@@ -51,6 +49,9 @@ html {
 }
 .clickable {
   cursor: pointer;
+}
+.relative {
+  position: relative;
 }
 form.inline {
   display: inline;
@@ -66,6 +67,12 @@ form.inline {
 }
 h1 {
   font-size: 1.8em;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
 }
 .center {
   text-align: center;
@@ -98,6 +105,10 @@ h1 {
 }
 .small {
   font-size: 0.8em;
+}
+.xsmall {
+  font-size: 0.5em;
+  font-weight: normal;
 }
 .width500 {
   width: 500px;

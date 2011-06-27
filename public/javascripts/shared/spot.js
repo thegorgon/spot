@@ -14,7 +14,7 @@ window.Spot = {};
       $(window).load(this.loaded);    // Call loaded on load
       setTimeout(this.loaded, 2000);  // Call loaded in two seconds if not loaded by then
     },
-    getVar: function(name) {
+    env: function(name) {
       return _vars[name];
     },
     loaded: function() {
@@ -26,7 +26,7 @@ window.Spot = {};
 }(Spot));
 
 window.fbAsyncInit = function() {
-  FB.init({appId: Spot.getVar('env') == 'production' ? 146911415372759 : 329653055238, status: true, cookie: true, xfbml: true});
+  FB.init({appId: Spot.env('env') == 'production' ? 146911415372759 : 329653055238, status: true, cookie: true, xfbml: true});
 };
 (function() {
   var e = document.createElement('script'); e.async = true;

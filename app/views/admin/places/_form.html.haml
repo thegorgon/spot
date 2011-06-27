@@ -8,15 +8,7 @@
   =f.phone_field :phone_number, :label => "Phone Number :", :hint => "what is the place's number?"
   =f.text_field :lat, :min => -90, :max => 90, :label => "Lat :", :hint => "do you really know the lat?"
   =f.text_field :lng, :min => -180, :max => 180, :label => "Lng :", :hint => "do you really know the lng?"
-  %li.text.labelled
-    .label
-      =f.label :image, "Choose an Image :"
-    .input
-      .file_field
-        .filename
-        .browse_button.hlfrndblk_80x30
-          Choose File
-        =f.file_field :image, :value => "", :class => "file"
+  =f.file_field :image, :label => "Choose an Image :"
   =f.text_field :external_image_url, :label => "Image URL :", :hint => "an image from the tubes?"
   %li.buttons
     =button_tag :class => "btngrypill300x30" do

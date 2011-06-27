@@ -85,15 +85,7 @@ module TagHelper
     tags << meta_property("fb:app_id", Wrapr::FbGraph.config.client_id)
     tags.join("\n").html_safe
   end
-  
-  def spot_form_for(record, options={}, &proc)
-    options[:builder] ||= Spot::FormBuilder
-    display = options.delete(:display) || "faded"
-    ul_id = options.delete(:ul_id)
-    (options[:html] ||= {})['data-validate'] ||= "validate" unless options.delete(:validate) == false
-    content_tag(:ul, form_for(record, options, &proc).html_safe, :class => "form #{display}", :id => ul_id)
-  end
-  
+    
   def iphone_meta_tags
     [ meta_name("apple-mobile-web-app-capable", "yes"),
       meta_name("apple-mobile-web-app-status-bar-style", "black-translucent"),

@@ -24,24 +24,24 @@ class Site::PasswordResetsController < Site::BaseController
     new_password = params[:reset] && params[:reset][:password]
     @account = PasswordAccount.find_by_user_id(current_user.id)
     @account.password = new_password
+    @account.override_current_password!
     if new_password.present? && @account.save
       @account.user.reset_perishable_token!
       flash[:notice] = "We've updated your password. Go ahead and login."
       redirect_to new_session_path
     else
       flash[:error] =  "That's not a great new password. Try something between 4 and 25 characters."
-      redirect_to :action => :edit
+      redirect_to edit_password_reset_path(:token => params[:token])
     end
   end
   
   private
   
   def require_user
-    logout
     authenticate
     unless authenticated?
-      flash[:error] = "We couldn't figure out who you are. 
-                       If you are having trouble resetting your password try 
+      flash[:error] = "Something went wrong. 
+                       Having trouble resetting your password? Try 
                        copying and pasting the url from your email to your browser or
                        <a href='#{new_password_reset_path}'>restarting the process</a>."
       redirect_to root_url

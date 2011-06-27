@@ -40,7 +40,7 @@
           =link_to "forgot password?", new_password_reset_path
   
       =spot_form_for @account, :url => account_path, :html => {:id => "register_form", :class => conditionally('selected', mode == :register)} do |f|
-        =f.text_field :name, :placeholder => "name", :required => true, :hint => "what should we call you?"
+        =f.name_fields :required => true
         =f.email_field :login, :placeholder => "email", :required => true, :hint => "how should we reach you?", "data-validate-url" => availability_email_path, "data-invalid-msg" => "looks like you've already registered"
         =f.password_field :password, :placeholder => "password", :required => true, :hint => "4 to 25 characters please", :minlength => 4, :maxlength => 25
         %li.buttons.clearfix

@@ -1,82 +1,184 @@
 (function($) {
-  var preloadable = [ "/images/assets/general/white_check.png", 
-                      "/images/assets/general/white_cross.png", 
-                      "/images/assets/general/black_check.png", 
-                      "/images/assets/general/black_cross.png", 
-                      "/images/assets/loading/white-chasing30x30.gif" ],
-    emailRegex = /\b[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,4}\b/i,
-    invalid = function(input, message) {
-      $(input).parents('li:first').removeClass('valid').removeClass('loading').addClass('invalid');
-      $(input).parents('li:first').find('.validity .message').html(message || '');
-    },
-    loading = function(input) {
-      $(input).parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
-      $(input).parents('li:first').find('.validity .message').html('checking');
-      $(input).valid(false);
-    },
-    valid = function(input) {
-      $(input).parents('li:first').removeClass('loading').removeClass('invalid').addClass('valid');
-      $(input).parents('li:first').find('.validity .message').html('');
-    },
-    validity = function(input, val, message) {
-      if ($(input).valid() || val || $(input).parent('li').is('.loading')) {
-        $(input).valid(val);
-        return val ? valid(input) : invalid(input, message);        
+  var emailRegex = /\b[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,4}\b/i;
+    
+  $.validations = (function() {
+    var invalid = function(input, message) {
+        $(input).parents('li:first').removeClass('valid').removeClass('loading').addClass('invalid');
+        $(input).parents('li:first').find('.validity, label').jstooltip(message, 'error');
+      },
+      valid = function(input) {
+        $(input).parents('li:first').removeClass('loading').removeClass('invalid').addClass('valid');
+        $(input).parents('li:first').find('.validity').removejstooltip();
+      },
+      validity = function(input, val, message) {
+        if ($(input).valid() || val || $(input).parent('li').is('.loading')) {
+          $(input).valid(val);
+          return val ? valid(input) : invalid(input, message);        
+        }
+      },
+      spliceInValidation = function(start, deleteCnt, validation) {
+        validation = $.extend({
+          selector: '*',
+          test: function() { $.validations.validity(this, true, ""); },
+          onChange: 1,
+          onSubmit: 1
+        }, validation || {});
+        validationNames.splice(start, deleteCnt, validation.name);
+        validations.splice(start, deleteCnt, validation);
+      },
+      validationNames = [],
+      validations = [];
+    
+    return {
+      validity: function(input, value, message) {
+        validity(input, value, message);
+      },
+      loading: function(input) {
+        $(input).parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
+        $(input).parents('li:first').find('.validity').jstooltip('checking', 'notice');
+        $(input).valid(false);
+      },
+      describe: function() {
+        $.each(validations, function(i) {
+          var describe = "Run " + this.name + " validation on inputs matching " + this.selector;
+          if (this.onChange) { describe += " on change"; }
+          if (this.onSubmit) { describe += " on submit"; }
+          $.logger.debug(describe);
+        });
+      },
+      register: function(options) {
+        spliceInValidation(validationNames.length, 0, options);
+      },
+      unregister: function(name) {
+        var idx = $.inArray(name, validationNames);
+        if (idx >= 0) {
+          validationNames.splice(idx, 1);
+          validations.splice(idx, 1);
+        }
+      },
+      replace: function(name, options) {
+        var idx = $.inArray(name, validationNames);
+        if (idx >= 0) {
+          spliceInValidation(idx, 1, options);          
+        }
+      },
+      registerBefore: function(name, options) {
+        var idx = $.inArray(name, validationNames);
+        idx = idx >= 0 ? idx : validationNames.length;
+        spliceInValidation(idx, 0, options);
+      },
+      registerAfter: function(name, options) {
+        var idx = $.inArray(name, validationNames);
+        idx = idx >= 0 ? idx : 0;
+        spliceInValidation(idx + 1, 0, options);
+      },
+      run: function(element, options) {
+        element = $(element);
+        options = $.extend({
+          submit: false,
+          change: false
+        }, options || {});
+
+        if (element.is('form')) {
+          element.find('input, textarea, select').filter(':not([formnovalidate])').each(function(e) {
+            $.validations.run(this, options);
+          });
+        } else {
+          $.validations.validity(element, true);
+          $.each(validations, function(i) {
+            var validation = this
+              runValidation = element.valid() && 
+                                element.is(validation.selector) && 
+                                (validation.onSubmit || !options.submit) &&
+                                (validation.onChange || !options.change);
+
+            if (runValidation) {
+              validation.test.call(element);
+            }
+          });
+        }
+        return element;        
       }
-    },
-    testTelephone = function(input){
-      validity(input, true, "doesn't look right");
-    },
-    testRequired = function(input) {
+    };
+  }());
+  
+  // Register Common Validations
+  // Register Required Validation
+  $.validations.register({
+    name: 'required',
+    selector: '[required]',
+    test: function() {
       var select;
-      if ($(input).is('input, textarea')) {
-        validity(input, $.trim($(input).val()).length > 0, "required");        
-      } else if ($(input).is('select')) {
-        select = $(input)[0];
-        validity(input, $.trim(select.options[select.selectedIndex].value), "required");
+      if ($(this).is('input, textarea')) {
+        $.validations.validity(this, $.trim($(this).val()).length > 0, "required");        
+      } else if ($(this).is('select')) {
+        select = $(this)[0];
+         $.validations.validity(this, $.trim(select.options[select.selectedIndex].value), "required");
       }
-    },
-    testPattern = function(input) {
-      validity(input, $(input).pattern().test($(input).val()), "doesn't look right");
-    },
-    testValue = function(input) {
-      var floatVal = $(input).floatVal(),
-        msg = ["between", $(input).minValue(), "and", $(input).maxValue()].join(' ');
-      validity(input, floatVal <= $(input).maxValue() && floatVal >= $(input).minValue(), msg);
-    },
-    testLength = function(input) {
-      var length = $.trim($(input).val()).length,
-        msg = [$(input).minLength(), "to", $(input).maxLength(), "characters"].join(' ');
-      validity(input, length <= $(input).maxLength() && length >= $(input).minLength(), msg);
-    },
-    testAgainstServer = function(input) {
-      var url = $(input).attr('data-validate-url');
-      if ($(input).valid()) {
-        loading(input);
+    }
+  });
+
+  // Register Email Validation
+  $.validations.register({
+    name: 'email',
+    selector: '[type=email], [pattern]',
+    test: function() {
+      $.validations.validity(this, $(this).pattern().test($(this).val()), "that doesn't look like an email address");
+    }
+  });
+
+  // Register Length Validation
+  $.validations.register({
+    name: 'length',
+    selector: '[minlength], [maxlength]',
+    test: function() {
+      var length = $.trim($(this).val()).length,
+        msg = [$(this).minLength(), "to", $(this).maxLength(), "characters please"].join(' ');
+      $.validations.validity(this, length <= $(this).maxLength() && length >= $(this).minLength(), msg);
+    }
+  });
+
+  // Register Numeric Validation
+  $.validations.register({
+    name: 'numeric',
+    selector: '[min], [max]',
+    test: function() {
+      var floatVal = $(this).floatVal(),
+        msg = ["between", $(this).minValue(), "and", $(this).maxValue()].join(' ');
+      $.validations.validity(this, floatVal <= $(this).maxValue() && floatVal >= $(this).minValue(), msg);
+    }
+  });
+    
+  // Register Server Validation
+  $.validations.register({
+    name: 'server',
+    onSubmit: false,
+    selector: '[data-validate-url]',
+    test: function() {
+      var url = $(this).attr('data-validate-url'), self = this;
+      if ($(self).valid()) {
+        $.validations.loading(self);
         $.ajax({
           url: url,
-          data: {value: $(input).val()},
+          data: {value: $(self).val()},
           success: function(data) {
-            var msg = $(input).attr('data-invalid-msg') || data.message;
-            validity(input, data.valid, msg);
+            var msg = $(self).attr('data-invalid-msg') || data.message || "something's not right";
+            $.validations.validity(self, data.valid, msg);
           },
           dataType: 'json'
         });
       }
-    }, preload = function() {
-      var img, src;
-      while (preloadable.length > 0) {
-        src = preloadable.pop();
-        img = new Image();
-        img.src = src;
-      }
-    };
+    }
+  });
+  
   $.extend($.fn, {
     clear: function() {
-      $(this).filter('ul.form').each(function() {
-        $(this).find('input.text').not('.placeholder').val('').blur().valid(true);
-        $(this).find('li').removeClass('invalid').removeClass('focus').removeClass('valid');
+      $(this).filter('form').each(function() {
+        var inputs = $(this).find(':input').not(':button, :submit, :reset, [type=hidden], .placeholder');
+        inputs.val('').removeAttr('checked').removeAttr('selected').blur(); 
+        $(this).find('li').removeClass('valid').removeClass('loading').removeClass('invalid');
       });
+      return $(this);
     },
     valid: function(val) {
       if (val !== undefined && val !== null) {
@@ -144,24 +246,15 @@
       }
     },
     autovalidate: function() {
-      preload();
       $(this).filter('form').each(function(i) {
-        var form = $(this),
-          required = form.find('input[required]:not([formnovalidate]), textarea[required]:not([formnovalidate]), select[required]:not([formnovalidate])'),
-          patterned = form.find('input[type=email]:not([formnovalidate]), input[pattern]:not([formnovalidate])'),
-          telephone = form.find('input[type=tel]:not([formnovalidate])'),
-          value = form.find('input[type=number][min]:not([formnovalidate]), input[type=number][max]:not([formnovalidate]):not([min])'),
-          length = form.find('input[minlength]:not([formnovalidate]), input[maxlength]:not([formnovalidate]):not([minlength])'),
-          server = form.find('input[data-validate-url]:not([formnovalidate])');
-
+        var form = $(this);
+        
         form.attr('novalidate', 'novalidate');
-        form.find('input').valid(true);
-        required.bind('change', function() { testRequired(this); });
-        patterned.bind('change', function() { testPattern(this); });
-        value.bind('change', function() { testValue(this); });
-        length.bind('change', function() { testLength(this); });
-        server.bind('change', function() { testAgainstServer(this); });
-      
+        
+        form.find('input, textarea, select').filter(':not([formnovalidate])').valid(true).bind('change', function(e) {
+          $.validations.run(this, {change: true});
+        });
+
         form.bind('submit', function(e) {
           if (!form.data('validity')) {
             e.preventDefault();
@@ -179,27 +272,11 @@
       options = options || {};
       var validity = true;
       $(this).filter('form').each(function(i) {
-        
-        var form = $(this),
-          required = form.find('input[required]:not([formnovalidate]), textarea[required]:not([formnovalidate]), select[required]:not([formnovalidate])'),
-          patterned = form.find('input[type=email]:not([formnovalidate]), input[pattern]:not([formnovalidate])'),
-          telephone = form.find('input[type=tel]:not([formnovalidate])'),
-          value = form.find('input[min]:not([formnovalidate]), input[max]:not([formnovalidate]):not([min])'),
-          length = form.find('input[minlength]:not([formnovalidate]), input[maxlength]:not([formnovalidate]):not([minlength])'),
-          server = form.find('input[data-validate-url]:not([formnovalidate])');
-          
-        form.find('input, textarea').attr('aria-invalid', 'false');
-        
-        required.each(function(i) { testRequired(this); }); 
-        patterned.each(function(i) { testPattern(this); }); 
-        value.each(function(i) { testValue(this); }); 
-        length.each(function(i) { testLength(this); }); 
-        if (!options.submit) { server.each(function(i) { testAgainstServer(this); }); }
-        // telephone.each(function(i) { testTelephone(this); }); 
-        
-        validity = validity && form.find('input[aria-invalid=true], textarea[aria-invalid=true]').length === 0;
+        $.validations.run(this, options);
+
+        validity = validity && $(this).find('input, textarea, select').filter('[aria-invalid=true]').length === 0;
       });
       return validity;
     }
-  });
+  });  
 }(jQuery));

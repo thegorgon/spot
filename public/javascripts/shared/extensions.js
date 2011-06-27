@@ -6,6 +6,9 @@
     capitalize: function(string) {
       return string.replace(/^(.)|\s(.)/g, function($1){ return $1.toUpperCase( ); });
     },
+    rand: function(array) {
+      return array[Math.floor(Math.random()*array.length)];
+    },
     slice: function(object, keys) {
       var retVal = {};
       $.each(keys, function(i) {
@@ -115,11 +118,6 @@
         $this.removeClass(others[i]);
       });
       if (klass) { $this.addClass(klass); }
-    },
-    clear: function() {
-      var inputs = $(this).find(':input').not(':button, :submit, :reset, [type=hidden], .placeholder');
-      inputs.val('').removeAttr('checked').removeAttr('selected').blur(); 
-      return $(this);
     },
     autogeocode: function(options) {
       var input = $(this),

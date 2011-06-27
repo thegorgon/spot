@@ -1,0 +1,72 @@
+.site_accounts {
+  .account {
+    form {
+      width: 370px;
+    }
+    margin: 10px 15px;
+    li.text.labelled, .li.labelled {
+      padding-left: 70px;
+      .label {
+        position: absolute;
+        left: 0px;
+        width: 60px;
+        font-size: 14px;
+        margin-right: 10px;
+      }
+      .input_container {
+        width: 300px;
+      }
+    }
+    .li.name.labelled {
+      padding-left: 220px;
+      .first_name {
+        left: 220px;
+      }
+      .last_name {
+        right: 0px;
+      }
+      .first_name, .last_name {
+        width: 151px;
+      }
+    }
+    .separator {
+      width: 0px;
+      border-left: 1px solid #ddd;
+      position: absolute;
+      top: 0px;
+      right: 425px;
+      bottom: 0px;
+    }
+    .rcol {
+      width: 400px;
+    }
+    ul.form {
+      margin-bottom: 1em;
+    }
+    .title {
+      padding: 0 0 0 35px;
+      background: transparent url(/images/icons/person23x20.png) no-repeat center left;
+      a {
+        color: #999;
+      }
+    }
+    h2 {
+      padding: 0 0 0 35px;
+      background: transparent no-repeat left center;
+    }
+    .aboutme {
+      background-image: url(/images/icons/contact26x17.png);
+    }
+    .changepassword {
+      background-image: url(/images/icons/pencil20x20.png);
+      background-position: 4px center;
+    }
+    .mymembership {
+      background-image: url(/images/icons/membercard24x17.png);
+    }
+    .myevents {
+      background-image: url(/images/icons/calendar18x20.png);
+      background-position: 2px center;
+    }
+  }
+}

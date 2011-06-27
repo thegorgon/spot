@@ -1,19 +1,21 @@
 class PasswordAccount < ActiveRecord::Base
   FRIENDLY_CHARS = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
   attr_protected :crypted_password
-  attr_accessor :password
+  attr_accessor :password, :current_password
   belongs_to :user
-  validates :name, :presence => true
+  validates :first_name, :presence => true
+  validates :last_name, :presence => true
   validates :password, :presence => true, :if => :password_required?
   validates :password, :length => {:within => (4..25)}, :if => :password_changed?
   validates :login, :presence => true, :format => EMAIL_REGEX, :uniqueness => true
+  validate :can_change_password, :if => :password_changed?
   before_save :update_encryption
   before_validation :update_user
   name_attribute :name
   
   def self.authenticate(params)
     account = PasswordAccount.find_by_login(params[:login])
-    if account && account[:crypted_password] == encrypt(params[:password], account.password_salt) 
+    if account && account.valid_password?(params[:password])
       account
     else
       nil
@@ -36,6 +38,10 @@ class PasswordAccount < ActiveRecord::Base
     authenticate(params) || create(params)
   end
   
+  def valid_password?(password)
+    self[:crypted_password] == self.class.encrypt(password, password_salt)
+  end
+  
   def password_changed?
     @password.present?
   end
@@ -44,14 +50,22 @@ class PasswordAccount < ActiveRecord::Base
     self[:crypted_password].blank?
   end
   
+  def override_current_password!
+    @current_password_check_override = true
+  end
+  
   private
-    
+  
   def update_encryption
     if password_changed?
       self.password_salt = self.class.generate_salt
       self.crypted_password = self.class.encrypt(@password, password_salt)
     end
     @password = nil
+  end
+  
+  def can_change_password
+    errors.add(:current_password, "try again") unless new_record? || valid_password?(@current_password) || @current_password_check_override
   end
   
   def update_user

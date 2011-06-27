@@ -1,5 +1,5 @@
 class Site::AccountsController < Site::BaseController
-  before_filter :require_user, :only => [:destroy]
+  before_filter :require_user, :only => [:show, :destroy, :update]
     
   def new
     @nonce = Nonce.new(:session => session)
@@ -16,4 +16,19 @@ class Site::AccountsController < Site::BaseController
       render :action => :new
     end
   end  
+
+  def show
+    render :layout => "lightsite"
+  end
+  
+  def update
+    current_user.password_account.attributes = params[:password_account] if current_user.password_account
+    current_user.attributes = params[:account]
+    if (current_user.password_account.nil? || current_user.password_account.save) && current_user.save
+      flash[:notice] = "Account Updated!"
+      redirect_to account_path
+    else
+      render :action => "show", :layout => "lightsite"
+    end
+  end
 end

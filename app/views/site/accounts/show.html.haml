@@ -1,0 +1,25 @@
+.account.clearfix
+  %h1.title
+    =current_user.nickname
+    %span.xsmall="( #{link_to "that's not me!", login_path} )".html_safe
+  %hr
+  .relative.clearfix
+    .left.lcol
+      %h2.aboutme About Me
+      =spot_form_for current_user, :as => :account, :url => account_path, :display => "light inlinelabels insetvalidity clearfix" do |f|
+        =f.name_fields :label => "name : "
+        =f.text_field :email, :placeholder => "email", :label => "email : "
+        =f.text_field :location, :label => "city : ", :placeholder => "city"
+        =button_tag :class => "btngrypill300x30 right" do
+          Save Changes
+      -if password = current_user.password_account
+        %h2.changepassword Change Password
+        =spot_form_for password, :as => :password_account, :url => account_path, :display => "light inlinelabels insetvalidity clearfix" do |f|
+          =f.password_field :current_password, :placeholder => "current password", :label => "current : ", :required => true, :hint => "for sercurity's sake", :minlength => 4, :maxlength => 25
+          =f.password_field :password, :placeholder => "new password", :label => "new : ", :required => true, :hint => "4 to 25 characters please", :minlength => 4, :maxlength => 25
+          =button_tag :class => "btngrypill300x30 right" do
+            Change Password
+    .separator
+    .right.rcol
+      %h2.mymembership My Spot Membership
+      %h2.myevents My Upcoming Events

@@ -26,7 +26,7 @@
             %td= setting.value
             %td.rtxt
               -if setting.category.timestamp?
-                =link_to image_tag('assets/general/black_cross.png'), admin_setting_path(setting), 'data-method' => "delete", 'data-confirm' => "Are you sure you want to delete #{setting.key}?", :class => "right", :title => "delete"
+                =link_to image_tag('assets/icons/cross16x17.png'), admin_setting_path(setting), 'data-method' => "delete", 'data-confirm' => "Are you sure you want to delete #{setting.key}?", :class => "right", :title => "delete"
                 =form_for :setting, :url => admin_setting_path(setting), :html => {:class => "right page", :method => :put} do |f|
                   =f.hidden_field :value, :value => Time.now.to_i.to_s
                   =button_tag :class => 'blkrefresh_30x30 right', :title => "refresh"

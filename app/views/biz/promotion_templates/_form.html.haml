@@ -5,48 +5,51 @@
     %li.pill.last
       %a.tab.inpopover{:href => "#genericpromotpl"} special event
       
-  =spot_form_for :discount, :url => biz_business_templates_path(@business), :display => "light inlinelabels lowhints", :ul_id => "discountpromotpl", :html => {'data-validate' => true, :class => "newtplform"} do |f|
+  =spot_form_for :discount, :url => biz_business_templates_path(@business), :display => "light inlinelabels", :ul_id => "discountpromotpl", :html => {'data-validate' => true, :class => "newtplform"} do |f|
     =f.hidden_field :type, :value => "DiscountTemplate"
     .details
-      =f.text_field :name, :placeholder => "promotion name", :hint => "give your promotion a name to easily remember it by.", :required => true
+      =f.text_field :name, :placeholder => "promotion name", :required => true
+      %li.note give your promotion a name to easily remember it by.
       =f.text_field :count, :class => "short", :required => true, :min => 0, :max => 1000, :label => "customers per day :"
-      %li.text.select.labelled
-        .label=label_tag 'discount[discount_percentage]', 'discount percent :'
-        .input
-          =select :discount, :discount_percentage, DiscountTemplate.discounts, {:prompt => "--"}, {:required => true}
+      =f.select :discount_percentage, DiscountTemplate.discounts, {:prompt => "--", :label => "discount percent :"}, :required => true
       %li.text.select.labelled
         .label=label_tag 'discount[start_time]', 'time of day :'
-        .input
+        .input_container
           =select_hour nil, {:field_name => "start_time", :prefix => 'discount', :twelve_hour => true, :offset => 6, :prompt => "--"}, {:required => true}
           \-
           =select_hour nil, {:field_name => "end_time", :prefix => 'discount', :twelve_hour => true, :offset => 7, :prompt => "--"}, {:required => true}
-      =f.text_field :average_spend, :class => "abbrev", :required => true, :min => 0, :label => "avg. spend per person :", :hint => "help us value this promotion. how much do your customers usually spend?"
+      =f.text_field :average_spend, :class => "abbrev", :required => true, :min => 0, :label => "avg. spend per person :"
+      %li.note help us value this promotion. how much do your customers usually spend?
     %hr
     %li.description_title
       =label_tag 'discount[description]', "Describe Your Promotion"
-      .hint tell our members why they should want this. be colorful! no restrictions or limitations please
+    %li.note tell our members why they should want this. be colorful! no restrictions or limitations please
     =f.text_area :description, :placeholder => "promotion description"
     =button_tag :class => "bottom btngrypill" do
       Save Promotion
 
-  =spot_form_for :generic, :url => biz_business_templates_path(@business), :display => "light hidden inlinelabels lowhints", :ul_id => "genericpromotpl", :html => {'data-validate' => true, :class => "newtplform"} do |f|
+  =spot_form_for :generic, :url => biz_business_templates_path(@business), :display => "light hidden inlinelabels", :ul_id => "genericpromotpl", :html => {'data-validate' => true, :class => "newtplform"} do |f|
     =f.hidden_field :type, :value => "GenericTemplate"
     .details
-      =f.text_field :name, :placeholder => "promotion name", :hint => "give your promotion a name to easily remember it by.", :required => true
+      =f.text_field :name, :placeholder => "promotion name", :required => true
+      %li.note give your promotion a name to easily remember it by.
       =f.text_field :count, :class => "short", :required => true, :min => 0, :max => 1000, :label => "customers per day :"
       %li.text.select.labelled
         .label=label_tag 'generic[start_time]', 'time of day :'
-        .input
+        .input_container
           =select_hour nil, {:field_name => "start_time", :prefix => 'generic', :twelve_hour => true, :offset => 6, :prompt => "--"}, {:required => true}
           \-
           =select_hour nil, {:field_name => "end_time", :prefix => 'generic', :twelve_hour => true, :offset => 7, :prompt => "--"}, {:required => true}
     %li.description_title
       =label_tag 'generic[description]', "Describe Your Promotion"
-    =f.text_area :description, :placeholder => "promotion", :hint => "what's the promotion? what are you offering?"
+    =f.text_area :description, :placeholder => "promotion"
+    %li.note what's the promotion? what are you offering?
     %hr
     .details
       %h3.center Help Us Understand
-      =f.text_field :value, :class => "abbrev", :label => "monetary value :", :hint => "what is the value of your offer? (optional)", :prepend => "$"
-      =f.text_field :cost, :class => "abbrev", :label => "cost :", :hint => "what will this cost our members? (optional)", :prepend => "$"
+      =f.text_field :value, :class => "abbrev", :label => "monetary value :", :prepend => "$"
+      %li.note what is the value of your offer? (optional)
+      =f.text_field :cost, :class => "abbrev", :label => "cost :", :prepend => "$"
+      %li.note what will this cost our members? (optional)
     =button_tag :class => "bottom btngrypill" do
       Save Promotion

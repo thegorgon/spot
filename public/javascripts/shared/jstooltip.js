@@ -15,7 +15,10 @@
       }, 
       show: function(msg, klass) {
         $('#jsTooltip').removeAttr('class').addClass(klass).html(msg).show();
-      }, 
+      },
+      reveal: function() {
+        $('#jsTooltip').show();
+      },
       hide: function() {
         $('#jsTooltip').removeAttr('class').html('').hide();
       },
@@ -26,14 +29,14 @@
   });
   $.extend($.fn, {
     jstooltip: function(msg, klass) {
-      $(this).removejstooltip().bind('mouseenter.tooltip', function(e) {
+      $(this).removejstooltip().bind('mouseenter.tooltip, mousemove.tooltip', function(e) {
         $.jstooltip.show(msg, klass);
       }).bind('mouseleave.tooltip', function(e) {
         $.jstooltip.hide();
       });
     }, 
     removejstooltip: function() {
-      return $(this).unbind('mouseenter.tooltip, mouseleave.tooltip');
+      return $(this).mouseleave().unbind('mouseenter.tooltip, mouseleave.tooltip, mousemove.tooltip');
     }
   }); 
 }(jQuery));

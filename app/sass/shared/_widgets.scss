@@ -256,6 +256,62 @@ ul.pillbox {
     background: #ffdddd;
   }
 }
+.ui-widget-overlay {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  @include opacity(0.5);
+}
+.ui-dialog {
+  position: fixed;
+  padding: 0px;
+  overflow: hidden;
+  @include border_radius(5px);
+  background: #fff;
+  @include box_shadow(rgba(0,0,0,0.5) 0 1px 5px);
+}
+#login_popover {
+  width: 250px;
+  hr {
+    margin: 5px 0;
+    @include divider(#999, #ccc);
+  }
+  h3 {
+    padding-left: 35px;
+    font-size: 16px;
+    line-height: 32px;
+    height: 32px;
+  }
+  .email {
+    h3 {
+      background: transparent url("/images/icons/mail24x16.png") no-repeat 5px center;
+      border-bottom: 1px solid #999;
+    }
+  }
+  .fb {
+    padding: 10px 10px 5px 0;
+    h3 {
+      background: transparent url("/images/assets/general/fb_f_24x22.png") no-repeat 6px center;
+    }
+    form {
+      float: right;
+    }
+  }
+  .buttons {
+    clear: both;
+  }
+  .forgot {
+    color: #333;
+    font-weight: bold;
+    display: block;
+    padding: 2px 0 0 0;
+    font-size: 12px;
+    width: 100px;
+  }
+}
 .ui-datepicker {
   display: none;
   background: #fff;

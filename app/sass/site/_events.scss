@@ -1,39 +1,28 @@
 .site_events {
-  padding: 0;
-  margin: 0;
-  background: #fff;
-  #bd {
-    top: 87px;
-  }
-  #bg {
-    background: transparent url(/images/backgrounds/paisley_light.jpg) no-repeat fixed center center;    
-    #middlebg {
-      height: 100%;
-      width: 850px;
-      margin: 0 auto;
-      background: #f7f7f7;
-      @include box_shadow(rgba(0,0,0,0.5) 0px 0px 10px);
-    }
-  }
-  #ft {
-    background: transparent;
-    position: static;
-    width: 320px;
-    min-width: 320px;
-    margin: 0 auto;
-  }
-  #page {
-    color: #333;
-    width: 850px;
-    margin: 0 auto;
+  .ui-dialog-titlebar {
     position: relative;
-    #hd {
-      width: 850px;
-      margin: 0 auto;
-      #logo {
-        float: left;
-        padding: 0 0 0 0;
-        margin: 5px 0 0 10px;
+    background: #999;
+    text-align: center;
+    @include gradient_top_down(#f2f2f2, #A2A2A2); 
+    @include top_border_radius(4px);
+    color: #333;
+    text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 15px;
+    font-weight: bold;
+    .ui-dialog-titlebar-close {
+      background: transparent url(/images/buttons/bnwcloser15x45.png) no-repeat 0 0;
+      height: 15px;
+      width: 15px;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      &:hover, &.hover {
+        background-position: 0px -15px;
+      }
+      &:active, &.active {
+        background-position: 0px -30px;
       }
     }
   }
@@ -47,7 +36,7 @@
       .buttons {
         width: 300px;
         margin: 20px auto 0;
-        .buybtn {
+        .getitnow {
           margin: 0 0 10px 0;
         }
       }
@@ -102,7 +91,6 @@
       font-size: 14px;
       .more {
         margin: 0.5em 0;
-        width: 150px;
         hr {
           margin: 5px 0;
           height: 0px;

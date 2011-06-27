@@ -33,6 +33,9 @@
     },
     site_home_press: function() {
       go.AppPreview.init();
+    },
+    site_events_show: function() {
+      go.PaymentDialog.init({ dialog: '#getitnowdialog', trigger: '.getitnow' });
     }
   });
 }(Spot));

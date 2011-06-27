@@ -1,12 +1,13 @@
 button, .button {
-    display: block;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 5px 0px 6px 0px; /* Links */
-    width: auto;
-    overflow: visible;
-    @extend .no_select;
+  outline: none;
+  display: block;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px 0px 6px 0px; /* Links */
+  width: auto;
+  overflow: visible;
+  @extend .no_select;
 }
 .button {
   padding: 0;
@@ -57,7 +58,7 @@ button.link {
   height: 41px;
   line-height: 41px;
   text-align: center;
-  color: #000;
+  color: #fff;
   text-decoration: none;
   font-size: 25px;
   font-weight: bold;
@@ -65,7 +66,7 @@ button.link {
   border: none;
   background: transparent url(/images/buttons/org300x41.png) no-repeat 0 0;  
   &:hover, &.hover {
-    color: #000 !important;
+    color: #fff !important;
     background-position: 0px -41px;
   }
   &:active, &.active {

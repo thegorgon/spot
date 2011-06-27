@@ -42,16 +42,7 @@
           -unless logged_in?
             %li{'data-popover' => '#login_popover', 'data-popover-title' => 'Log In', 'data-popover-orient' => 'vertical'} 
               Log In
-              =spot_form_for :credentials, :url => session_path, :ul_id => "login_popover", :display => "hidden inpopover" do |f|
-                =hidden_field_tag :return_to, biz_account_path
-                =f.hidden_field :key, :value => nonce.digested
-                =f.fields_for :password do |p|
-                  =p.email_field :login, :placeholder => "email", "data-validate-url" => existence_email_path, :required => true
-                  =p.password_field :password, :placeholder => "password", :required => true
-                %li.buttons.clearfix
-                  =button_tag :class => "blackimg_77x32" do
-                    login
-                  =link_to "forgot password?", new_password_reset_path, :class => "forgot"
+              =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => biz_account_path}
         %li{'data-popover' => '#help_topics', 'data-popover-orient' => 'vertical'} 
           Help
           %ul#help_topics.subnav.hidden
