@@ -18,7 +18,10 @@ class Business < ActiveRecord::Base
   end
   
   def self.deliver_daily_codes
-    joins(:promotion_events).where(["promotion_events.date = ?", Date.today]).find_each do |biz|
+    joins("INNER JOIN promotion_templates pt ON pt.business_id = businesses.id
+           INNER JOIN promotion_events pe ON pe.template_id = pt.id").where(
+      ["pe.date = ? AND pt.status = ?", Date.today, PromotionTemplate::APPROVED_STATUS ]
+    ).find_each do |biz|
       biz.deliver_promotion_codes_for!(Date.today)
     end
   end

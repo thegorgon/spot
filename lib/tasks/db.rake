@@ -4,7 +4,8 @@ namespace :db do
     HOSTS       = { "production" => "masterdb.ec2" }
     TUNNELS     = { "production" => "spot1.ec2" }
     PRESETS     = { "places"     => "places google_places gowalla_places facebook_places foursquare_places yelp_places",
-                    "wishlists"  => "places wishlist_items users devices"}
+                    "wishlists"  => "wishlist_items users devices",
+                    "promotions" => "businesses business_accounts promotion_templates promotion_events promotion_codes"}
     # Configuration Variables
     @port       = "7768"
     @remote_env ||= (ENV['REMOTE'] || "production")
