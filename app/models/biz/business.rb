@@ -19,7 +19,7 @@ class Business < ActiveRecord::Base
   
   def self.deliver_daily_codes
     joins(:promotion_events).where(["promotion_events.date = ?", Date.today]).find_each do |biz|
-      biz.deliver_promotion_codes_for!(date)
+      biz.deliver_promotion_codes_for!(Date.today)
     end
   end
   

@@ -18,7 +18,7 @@ production:
   key_prefix: "ss:"
   
 staging:
-  servers: "redis://:pop3y3z!@localhost:2811"
+  servers: "redis://:p0p3y3z!@localhost:2811"
   port: 2811
   host: localhost
   key_prefix: "ssstaging:"

@@ -38,13 +38,7 @@ class BusinessAccount < ActiveRecord::Base
       ba.title = params[:title]
     end
   end
-  
-  def self.deliver_daily_notifications 
-    Business.find_each do |biz|
-      biz.deliver_promotion_codes_for!(Date.today)
-    end
-  end
-  
+    
   def self.deliver_weekly_notifications
     with_setting("weekly_digest").find_each do |account|
       BusinessMailer.weekly_digest(account).deliver!
