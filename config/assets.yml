@@ -8,7 +8,6 @@ javascripts:
     - public/javascripts/vendor/jquery-ui-1.8.11.custom.min.js
     - public/javascripts/vendor/jquery.tmpl.js
     - public/javascripts/vendor/logger.js
-    - public/javascripts/vendor/modernizr.custom.js
     - public/javascripts/vendor/jquery.validate.js
     - public/javascripts/vendor/jquery.jswipe.js
   scripts:

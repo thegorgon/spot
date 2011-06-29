@@ -1,146 +1,5 @@
 #site_home_index {
   padding: 0;
-  #toplayer {
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    .scene {
-      position: absolute;
-      width: 100%;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      @include transition('left 2s');      
-      .content {
-        @include border_radius(10px);
-        padding: 10px;
-        background: rgba(0,0,0, 0.8) no-repeat center center;
-        h1 {
-          text-shadow: rgba(0,0,0,0.75) 0px 1px 0px;
-          text-align: center;
-          margin: 0 auto;
-          @include cgothic;
-        }
-      }
-    }
-    .intro {
-      left: 0;
-      .content {
-        position: absolute;
-        top: 25%;
-        right: 5%;
-        width: 350px;
-        p {
-          font-size: 18px;
-          color: #aaa;
-          width: 300px;
-          margin: 10px auto;
-          strong {
-            color: #ff8419;
-            font-weight: bold;
-          }
-          em {
-            color: #f0f0f0;
-            font-style: normal;
-            font-weight: bold;
-          }
-        }
-        a.enter {
-          display: block;
-          text-decoration: none;
-          color: #e5e5e5;
-          height: 28px;
-          line-height: 25px;
-          font-size: 25px;
-          margin: 10px auto 0;
-          text-align: center;
-          /* width: 65px; FOR ENTER*/
-          width: 133px;
-          padding-right: 20px;
-          background: transparent url(/images/icons/fwdarrowwht14x21.png) no-repeat right center;
-          &:hover {
-            background-image: url(/images/icons/fwdarrow14x21.png);
-            color: #ff8419;
-          }
-        }
-      }
-    }
-    .map {
-      left: 100%;
-      .content {
-        position: relative;
-        margin: 20px auto;
-        height: 500px;
-        width: 800px;
-        background-image: url(/images/assets/maps/usa645x415.png);
-        .city {
-          position: absolute;
-          height: 30px;
-          padding: 0 20px;
-          @include border_radius(5px);
-          font-size: 20px;
-          line-height: 30px;
-          display: block;
-          background: #999;
-          color: #fff;
-          @include cgothic;
-          text-shadow: rgba(0,0,0,0.75) 0px 1px 0px;
-          text-decoration: none;
-          &:hover {
-            background: #ff8419;
-          }
-        }
-        #sf {
-          top: 200px;
-          left: 40px;
-        }
-      }
-    }
-    .loading {
-      left: 200%;
-      .content {
-        margin: 20px auto;
-        height: 500px;
-        width: 800px;
-        background-image: url(/images/assets/loading/3dgears64x47.gif);
-      }
-    }
-    &.scene2 {
-      .intro {
-        left: -100%;
-      }
-      .map {
-        left: 0%;
-      }
-      .loading {
-        left: 100%;
-      }
-    }
-    &.scene3 {
-      .intro {
-        left: -200%;
-      }
-      .map {
-        left: -100%;
-      }
-      .loading {
-        left: 0;
-      }
-    }
-  }
-  #spotlogo {
-    z-index: 10;
-    position: absolute;
-    top: 30px;
-    left: 40px;
-    height: 90px;
-    background: transparent url(/images/logos/spotwhite120x90.png) no-repeat left center;
-    width: 120px;
-  }
   #slideshow {
     position: absolute;
     overflow: hidden;
@@ -150,31 +9,6 @@
     bottom: 0;
     z-index: 1;
     display: none;
-    #slidetitle {
-      position: absolute;
-      z-index: 10;
-      left: 40px;
-      right: 40px;
-      bottom: -70px;
-      height: 30px;
-      @include transition('bottom 1s');
-      @include cgothic;
-      font-size: 26px;
-      text-shadow: rgba(0,0,0,0.75) 0px 2px 0px;
-      background: transparent no-repeat left center;
-      &.visible {
-        bottom: 40px;            
-      }
-    }
-    #fadeout {
-      z-index: 5;
-      position: absolute;
-      bottom: 0px;
-      left: 0px;
-      right: 0px;
-      top: 0px;
-      background: transparent url(/images/backgrounds/fadeout1x227.png) repeat-x left bottom;
-    }
     #viewport {
       position: absolute;
       overflow: hidden;
@@ -183,39 +17,88 @@
       right: 0;
       bottom: 0;
       z-index: 1;
-      .slide {
-        overflow: hidden;
-        top: 0px;
-        left: 0px;
-        z-index: 10;
-        position: absolute;
-        opacity: 0;
-        @include transition('opacity 2s');
-        &.current {
-          opacity: 1;
-        }
-        .image {
-          position: absolute;
-          z-index: 1;
-          img {
-            outline: none;
-            border: none;
-            -ms-interpolation-mode: bicubic;
+    }
+    #nextslide, #lastslide {
+      position: absolute;
+      top: 0px;
+      bottom: 0px;      
+      width: 100px;
+      cursor: pointer;
+      @include opacity(0.25);
+      z-index: 1000;
+      background-color: transparent; 
+      background-repeat: no-repeat; 
+      background-position: center center;
+      &:hover, &.hover {
+        @include opacity(0.25);
+        background-color: #fff;
+      }
+    }
+    #nextslide {
+      right: 0px;
+      background-image: url(/images/assets/slideshow/nextslide.png);
+    }
+    #lastslide {
+      left: 0px;
+      background-image: url(/images/assets/slideshow/lastslide.png);
+    }
+    #slidenav {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      height: 17px;
+      text-align: center;
+      z-index: 1000;
+      ul {
+        margin: 0 auto;
+        width: 0px;
+        .slidenav {
+          outline: none;
+          border: none;
+          text-decoration: none;
+          float: left;
+          height: 17px;
+          width: 30px;
+          display: block;
+          background: transparent url(/images/assets/slideshow/unselected_slide.png) no-repeat center center;
+          cursor: pointer;
+          &.selected {
+            background: transparent url(/images/assets/slideshow/selected_slide.png) no-repeat center center;
           }
         }
       }
     }
-    &.jsanimated {
-      #slidetitle {
-        @include transition("none");
-        bottom: 40px;
-      }
-      #viewport {
-        .slide {
-          display: none;
-          @include transition("none");
-          opacity: 1;
+    #slidereel {
+      top: 0px;
+      left: 0px;
+      overflow: visible;
+      position: absolute;
+      .slide {
+        overflow: hidden;
+        top: 0px;
+        left: 0px;
+        position: absolute;
+        z-index: 10;
+        &.current {
+          z-index: 100;
         }
+        img {
+          position: absolute;
+          outline: none;
+          border: none;
+          -ms-interpolation-mode: bicubic;
+        }
+      }
+    }
+  }
+}
+.ie7 {
+  #site_home_index {
+    #slideshow {
+      #slidenav {
+        margin: 0 auto;
+        width: 96px;
       }
     }
   }

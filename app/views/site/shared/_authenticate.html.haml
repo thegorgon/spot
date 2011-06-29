@@ -4,7 +4,7 @@
   %li.header.clearfix
     %h1 
       Login to
-    .image=image_tag("logos/spotshimmer340x270.png", :width => 100, :height => 82)
+    .image=image_tag("logos/gradient_script_340x270.png", :width => 100, :height => 82)
   %li.section.clearfix.fb
     =form_for :credentials, :url => session_path, :html => { :id => "fbconnect_form" } do |f|
       =f.hidden_field :key, :value => nonce.digested

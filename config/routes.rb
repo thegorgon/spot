@@ -18,7 +18,6 @@ Spot::Application.routes.draw do
     resource :session, :only => [:new, :create, :destroy]
     resource :account, :only => [:new, :create, :show, :update, :destroy]
     resource :password_reset, :only => [:new, :create, :edit, :update]
-    resources :cities, :only => [:show]
     resources :places, :only => [:show] do
       resources :events, :only => [:show]
     end

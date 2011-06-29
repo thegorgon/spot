@@ -21,25 +21,11 @@
   = yield :head
   -if Rails.env.production?
     = google_analytics_tag(:account_id => 'UA-21193799-1')
-%body{:id => page_namespace, :class => "lightsite #{controller_name}"}
-  #bg.preload_bg
-    #middlebg
-    =yield :bg
+%body{:id => page_namespace, :class => "site #{controller_name}"}
+  #bg.preload_bg=yield :bg
   = flashes
   #page
-    #hd
-      .clearfix
-        #logo=image_tag "logos/black_spot_with_tag320x158.png", :size => "160x79", :alt => "spot"
-        %ul#nav
-          -if logged_in?
-            %li
-              hello
-              =link_to current_user.nickname, account_path
-              ="( #{link_to "not you?", login_path} )".html_safe
-          -else
-            %li=link_to "login?", new_session_path, {'data-popover' => '#login_popover', 'data-popover-title' => 'Log In', 'data-popover-orient' => 'vertical'}
-            =render :partial => "/shared/accounts/loginpopover"
-        = yield :hd
+    #hd= yield :hd
     #bd= yield
     #ft= yield :ft
     #fb-root

@@ -5,17 +5,3 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
-
-sf = City.create({ "country_code" => "US", 
-  "fqn" =>"san francisco, california, US", 
-  "lat" => 37.7768, 
-  "lng" => -122.4196, 
-  "name" => "san francisco", 
-  "population" => 808976, 
-  "radius" => nil, 
-  "region" => "california", 
-  "region_code" => "ca", 
-  "slug" => "sf", 
-  "subscription_count" => 0, 
-  "subscriptions_available" => 10000 
-})

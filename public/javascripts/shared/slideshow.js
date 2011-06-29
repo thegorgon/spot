@@ -26,79 +26,65 @@
   };
   $.fn.slideshow = function(opts) {
     var element = $(this),
+      slidereel = element.find('#slidereel'),
       viewport = element.find('#viewport'),
-      title = element.find('#slidetitle'),
+      nextControl = element.find('#nextslide'),
+      lastControl = element.find('#lastslide'),
       settings = {
         slides: [],
         start: 0,
-        fadeFor: 2000,
-        waitFor: 10000,
-        useCss: true,
         version: 1
-      }, i = 0, runningInterval,
+      }, loadCount = 0, i = 0, finalized = false,
       options = $.extend(settings, opts || {}),
-      currentIdx = options.start,
+      currentSlide = options.start,
+      slidenav = element.find('#slidenav'),
+      navList = $('<ul class="clearfix"></ul>').appendTo(slidenav),
       resize = function() {
         var width = viewport.width(),
           height = viewport.height();
-        $('.slide', viewport).width(width).height(height).each(function(i) {
-          var self = $(this);
-          self.find('img').sizeToFit(self, options.slides[i]);
+        slidereel.width(options.slides.length * width).height(height).css({left: Math.round(-1 * currentSlide * width)});
+        $('.slide', slidereel).width(width).height(height).each(function(i) {
+          var thisSlide = $(this),
+            left = i * width;
+          thisSlide.css({left: left}).find('img').sizeToFit(thisSlide, options.slides[i]);
         });
       },
       buildSlide = function(img, i) {
-        var image = $('<div class="image"></div>').append(img);
-        return $("<div class='slide'></div>").append(image);
+        var slide = $("<div class='slide'></div>"),
+          navLink = $('<li class="slidenav"></li>');
+        navLink.bind("click", function() { jumpTo(i); });
+        navList.append(navLink);
+        navList.width(navList.width() + navLink.width());
+        return slide.append(img);
       },
-      jumpTo = function(i, wait) {
-        var current = viewport.find('.slide').eq(currentIdx),
-          next = viewport.find('.slide').eq(i);
-                
-        if (options.useCss && Modernizr.csstransitions) {
-          title.removeClass('visible');
-          setTimeout(function() {
-            title.text(options.slides[i].title).addClass('visible');
-          }, 1000);
-          setTimeout(function() {
-            next.css({zIndex: 20});
-            current.css({zIndex: 10});
-            next.addClass('current');
-            setTimeout(function() {
-              current.removeClass('current');
-              currentIdx = i;
-            }, 2000);
-          }, 500);
+      jumpTo = function(i) {
+        currentSlide = i;
+        if (currentSlide === 0) {
+          lastControl.fadeOut(1000);
+          nextControl.fadeIn(1000);
+        } else if (currentSlide === options.slides.length - 1) {
+          lastControl.fadeIn(1000);
+          nextControl.fadeOut(1000);
         } else {
-          current.css({zIndex: 20});
-          next.css({zIndex: 10}).show();
-          title.animate({bottom: -70}, 1000, function() {
-            title.text(options.slides[i].title).animate({bottom: 40}, 1000);
-            current.fadeOut(options.fadeFor, function() {
-              next.css({zIndex: 20});
-              current.css({zIndex: 10});
-              currentIdx = i;        
-            });          
-          });
+          lastControl.fadeIn(1000);
+          nextControl.fadeIn(1000);
         }
+        $('.slidenav').removeClass('selected');
+        $('.slidenav').eq(i).addClass('selected');
+        slidereel.animate({left : -1 * currentSlide * viewport.width()}, 1500);
       }, 
       nextSlide = function() {
-        var next = currentIdx < options.slides.length - 1 ? currentIdx + 1 : 0;
-        jumpTo(next);
+        if (currentSlide < options.slides.length - 1) {
+          jumpTo(currentSlide + 1);          
+        }
       },
       lastSlide = function() {
-        var last = currentIdx > 0 ? currentIdx - 1 : options.slides.length - 1;
-        jumpTo(last);
-      },
-      start = function() {
-        runningInterval = setInterval(function() {
-          nextSlide();
-        }, options.waitFor);
-      },
-      stop = function() {
-        clearInterval(runningInterval);
-      }
-    $('.slide img', viewport).unbind("contextmenu.cancel").bind("contextmenu.cancel", function() { return false; });
-    $('.slide img', viewport).unbind("mousedown.cancel").bind("mousedown.cancel", function() { return false; });
+        if (currentSlide > 0) {
+          jumpTo(currentSlide - 1);
+        }
+      };
+    $('.slide img', slidereel).unbind("contextmenu.cancel").bind("contextmenu.cancel", function() { return false; });
+    $('.slide img', slidereel).unbind("mousedown.cancel").bind("mousedown.cancel", function() { return false; });
     $(window).unbind('resize.slideshow').bind('resize.slideshow', resize);
     element.hide();
     for (i = 0; i < options.slides.length; i++) {
@@ -107,42 +93,33 @@
       img.style.width = size[0];
       img.style.height = size[1];
       img.src = options.slides[i].src + '?' + options.version;
-      buildSlide(img, i).appendTo(viewport);
+      buildSlide(img, i).appendTo(slidereel);
     }
     $(document).ready(function() {
       resize();
     });
     $(window).load(function() {
       setTimeout(function() {
-        var current = viewport.find('.slide').eq(currentIdx);
-        viewport.find('.slide').css({zIndex: 10});
-        
-        if (options.useCss && Modernizr.csstransitions) {
-          element.css('-webkit-transform', 'translateZ(0)');
-          title.text(options.slides[currentIdx].title).addClass('visible');
-          current.addClass('current');
-          current.css({zIndex: 20});
-        } else {
-          element.addClass('jsanimated');
-          title.text(options.slides[currentIdx].title);
-          current.css({zIndex: 20}).show();          
-        }
-        element.show();
+        element.fadeIn(250);
+        jumpTo(currentSlide, false);
         resize();
         resize();
       }, 100);
     });
     
-    // $(window).click(function(e) {
-    //   e.preventDefault();
-    //   nextSlide();
-    // });
+    nextControl.click(nextSlide);
+    lastControl.click(lastSlide);
+    viewport.swipe({
+      threshold: { x: 25, y: 100},
+      swipeLeft: function() { nextSlide(); },
+      swipeRight: function() { lastSlide(); },
+      swipeDown: function(y) { window.scrollTo(0, 1000); },
+      swipeUp: function(y) { window.scrollTo(0, -60); }
+    });
     return {
       nextSlide: nextSlide,
       lastSlide: lastSlide,
-      jumpTo: jumpTo,
-      start: start,
-      stop: stop
+      jumpTo: jumpTo
     };
   };
 }(jQuery));
