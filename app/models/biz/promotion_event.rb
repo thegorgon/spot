@@ -15,12 +15,14 @@ class PromotionEvent < ActiveRecord::Base
     timeframe ||= (Date.today..(Time.now + 2.weeks).to_date)
     strings = []
     timeframe.each do |date|
-      strings << "\nOn #{date} : "
+      strings << "\n#{date.strftime('%A, %B %d, %Y')} : \n"
       approved.on_date(date).each do |event|
-        strings << "#{event.description} at #{event.business.place.name}"
+        strings << "#{event.business.place.name}, #{event.timeframe} : "
+        strings << "  #{event.description}"
         event.codes.each do |code|
           strings << "         CODE : #{code.code}"
         end
+        strings << "\n"
       end
     end
     puts strings.join("\n")
