@@ -1,4 +1,56 @@
-.site_home {
+.site_home, .site_blog {
+  background: #000000;
+  color: #f0f0f0;
+  #bg {
+    background: #000000 url(/images/backgrounds/paisley_dark_centerfade.jpg) no-repeat fixed center center;
+  }
+  #bd {
+    bottom: 70px;
+  }
+  #ft {
+    min-width: 920px;
+    padding-top: 5px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    z-index: 100;
+    border-top: 1px solid #333;
+    text-shadow: rgba(0,0,0,0.5) 0 2px 0;
+    background: #000 repeat top center;
+    &.loading {
+      display: none;
+    }
+    #iconlinks {
+      float: left;
+      margin: 14px 0 0 20px;
+      width: 457px;
+      a {
+        display: block;
+        float: left;
+        margin: 0 20px;
+        text-align: center;
+      }
+    }
+    #nav {
+      float: right;
+      padding: 0;
+      margin: 24px 40px 0 0;
+      width: 252px;
+      a {
+        color: #f0f0f0;
+        text-decoration: none;
+        display: block;
+        float: right;
+        margin-left: 11px;
+        font-size: 16px;
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
   #about {
     margin: 0 auto;
     @include black_radial_gradient(500);

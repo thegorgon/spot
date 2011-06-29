@@ -9,9 +9,12 @@ class User < ActiveRecord::Base
   has_many :devices, :dependent => :destroy
   has_many :wishlist_items, :dependent => :delete_all
   has_many :activity_items, :foreign_key => :actor_id, :dependent => :destroy
+  has_many :credit_cards
+  has_one :subscription
   has_one :business_account
   has_one :facebook_account
   has_one :password_account
+  belongs_to :city
   
   validates :email, :format => EMAIL_REGEX, :uniqueness => true, :if => :email?
   name_attribute :name
@@ -27,7 +30,7 @@ class User < ActiveRecord::Base
       false
     end
   end
-  
+
   def self.find_using_perishable_token(token, age=1.day) 
     if token.present?
       finder = self
@@ -35,6 +38,23 @@ class User < ActiveRecord::Base
       finder = finder.where(:perishable_token => token)
       finder.first
     end
+  end
+  
+  def self.from_customer(customer)
+    #TODO : Worry about how to handle existing emails who don't have paswords
+    unless user = find_by_customer_id(customer.id)
+      pass_account = PasswordAccount.register( :login => customer.email,
+                                               :password => customer.custom_fields[:password],
+                                               :first_name => customer.first_name, 
+                                               :last_name => customer.last_name )
+      pass_account.user.customer_id = customer.id
+      pass_account.save!
+      user = pass_account.user
+    end
+    user.city_id = customer.custom_fields[:city_id]
+    customer.credit_cards.each { |cc| user.add_credit_card(cc) }
+    user.save
+    user
   end
   
   def merge_with!(new_user)
@@ -62,6 +82,17 @@ class User < ActiveRecord::Base
     self.class.where(:id => id).update_all(["login_count = COALESCE(login_count, 0) + 1, current_login_at = ?, updated_at = ?", Time.now.utc, Time.now.utc])    
   end
   
+  def add_credit_card(cc)
+    credit_cards.create do |card|
+      card.token = cc.token
+      card.card_type = cc.card_type
+      card.bin = cc.bin
+      card.last_4 = cc.last_4
+      card.expiration_month = cc.expiration_month
+      card.expiration_year = cc.expiration_year
+    end
+  end
+  
   def nickname
     if @nickname.blank?
       if first_name.present? && last_name.present?
@@ -75,7 +106,7 @@ class User < ActiveRecord::Base
     @nickname
   end
 
-  def admin!
+  def adminify!
     update_attribute(:admin, true)
   end
       

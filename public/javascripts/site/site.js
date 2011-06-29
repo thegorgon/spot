@@ -24,12 +24,40 @@
     },
     site_home_index: function() {
       var slideshow = $("#slideshow").slideshow({
-        slides: [{ src : '/images/assets/slideshow/slide_00.jpg', gravity: '0.39x0.6', size: '2292x1524' },
-                 { src : '/images/assets/slideshow/slide_01.jpg', gravity: '0.51x0.1', size: '2292x1423' },
-                 { src : '/images/assets/slideshow/slide_02.jpg', gravity: '0.70x0.75', size: '2292x1298' }],
-        start: 0,
-        version: 3
+          slides: [{ src : '/images/assets/slideshow/slide_00.jpg', 
+                     gravity: '1.0x1.0', size: '2292x1524', 
+                     title: "Chef's Table Exclusive Seating at Credo" },
+                   { src : '/images/assets/slideshow/slide_01.jpg', 
+                     gravity: '1.0x1.0', 
+                     size: '2292x1524', 
+                     title: "Napa Wine Tasting at Foreign Cinema" },
+                   { src : '/images/assets/slideshow/slide_02.jpg', 
+                     gravity: '1.0x1.0', size: '2292x1524', 
+                     title: "Beer and Sausage Pairing at Schmidt's" }],
+          start: Math.floor(Math.random()*3),
+          version: 0
+        }), top = $('#toplayer'), scenes = top.find('.scene');
+      
+      slideshow.start();
+      $('.enter').click(function(e) {
+        e.preventDefault();
+        if (Modernizr.cssTransitions) { top.addClass('scene2'); }
+        else { 
+          top.addClass('jsanimation');
+          scenes.eq(0).animate({left: '-100%'});
+          scenes.eq(1).animate({left: '0%'});
+          scenes.eq(2).animate({left: '100%'});
+        }
+        slideshow.stop();
       });
+      $('.map .city').click(function(e) {
+        if (Modernizr.cssTransitions) { top.addClass('scene3'); }
+        else { 
+          scenes.eq(0).animate({left: '-200%'});
+          scenes.eq(1).animate({left: '-100%'});
+          scenes.eq(2).animate({left: '0%'});
+        }
+      })
     },
     site_home_press: function() {
       go.AppPreview.init();

@@ -1,14 +1,17 @@
 -cache(AppSetting.cache_path(:blog, controller), :expires => 1.week) do
   #blog
     #logo.flips
-      =image_tag "logos/gradient_script_340x270.png", :size => "170x135", :alt => "spot"
+      =image_tag "logos/spotwhite120x90.png", :size => "120x90", :alt => "spot"
     #posts
       -@posts.each_with_index do |post, i|
         =render :partial => "post", :object => post, :locals => {:first_or_last => first_or_last(@posts, i)}
       #pagination
         -if @posts.previous_page
           .last
-            =link_to "< Older Items", blog_index_path(:page => @posts.previous_page, :per_page => params[:per_page])
+            =link_to "< Newer Items", blog_index_path(:page => @posts.previous_page, :per_page => params[:per_page])
         -if @posts.next_page
           .next
-            =link_to "Newer Items >", blog_index_path(:page => @posts.next_page, :per_page => params[:per_page])
+            =link_to "Older Items >", blog_index_path(:page => @posts.next_page, :per_page => params[:per_page])
+            
+=content_for :ft do
+  =render :partial => "/layouts/homefooter.html.haml"

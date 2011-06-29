@@ -1,0 +1,15 @@
+%meta{'charset' => 'utf-8'}
+%title= page_title
+%meta{'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
+%meta{'http-equiv' => "X-UA-Compatible", :content => "IE=edge,chrome=1"}
+= iphone_meta_tags
+= seo_tags
+= auto_discovery_link_tag(:rss, "http://spotteam.tumblr.com/rss")
+= favicon_link_tag("/favicon.ico")
+= open_graph_tags
+= include_stylesheets :site, :media => 'all'
+= csrf_meta_tag 
+= js_trigger_tag
+= yield :head
+-if Rails.env.production?
+  = google_analytics_tag(:account_id => 'UA-21193799-1')
