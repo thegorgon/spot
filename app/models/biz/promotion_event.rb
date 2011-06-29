@@ -11,6 +11,21 @@ class PromotionEvent < ActiveRecord::Base
   scope :this_week, lambda { where(:date => (Date.today..(Time.now + 7.days).to_date)) }
   scope :approved, joins(:template).where("promotion_templates.status" => PromotionTemplate::APPROVED_STATUS)
   
+  def self.summary(timeframe=nil)
+    timeframe ||= (Date.today..(Time.now + 2.weeks).to_date)
+    strings = []
+    timeframe.each do |date|
+      strings << "\nOn #{date} : "
+      approved.on_date(date).each do |event|
+        strings << "#{event.description} at #{event.business.place.name}"
+        event.codes.each do |code|
+          strings << "         CODE : #{code.code}"
+        end
+      end
+    end
+    puts strings.join("\n")
+  end
+  
   def timeframe(use_all_day=true)
     if use_all_day && all_day?
       "all day"
