@@ -53,6 +53,8 @@
         if (bg !== "none") {
           img.onload = loaded;
           img.src = bg;
+        } else {
+          loaded();
         }
         if (bg === null || bg === "") { loaded(); }
       });
@@ -223,6 +225,9 @@
         );
       });
       fetch('form[data-validate]').autovalidate();        
+      $(window).unbind('resize.slideshow').bind('resize.slideshow', function(e) {
+        
+      });
     }
   });
 }(Spot));

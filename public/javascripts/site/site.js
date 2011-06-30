@@ -59,6 +59,8 @@
         }
       })
     },
+    site_cities_show: function() {
+    },
     site_home_press: function() {
       go.AppPreview.init();
     },

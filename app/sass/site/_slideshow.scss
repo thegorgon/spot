@@ -17,13 +17,14 @@
       bottom: 0;
       @include transition('left 2s');      
       .content {
-        @include border_radius(10px);
+        @include border_radius(5px);
         padding: 10px;
         background: rgba(0,0,0, 0.8) no-repeat center center;
         h1 {
           text-shadow: rgba(0,0,0,0.75) 0px 1px 0px;
           text-align: center;
           margin: 0 auto;
+          font-size: 20px;
           @include cgothic;
         }
       }
@@ -34,20 +35,18 @@
         position: absolute;
         top: 15%;
         right: 10%;
-        width: 350px;
+        width: 320px;
         p {
-          font-size: 20px;
+          font-size: 18px;
           line-height: 25px;
           color: #aaa;
           width: 275px;
           margin: 15px auto;
           strong {
-            display: block;
             color: #ff8419;
             font-weight: bold;
           }
           em {
-            display: block;
             color: #f0f0f0;
             font-style: normal;
             font-weight: bold;
@@ -57,13 +56,13 @@
           display: block;
           text-decoration: none;
           color: #e5e5e5;
-          height: 28px;
+          height: 26px;
           line-height: 25px;
-          font-size: 25px;
-          margin: 10px auto 10px;
+          font-size: 20px;
+          margin: 10px auto 0;
           text-align: center;
           /* width: 65px; FOR ENTER*/
-          width: 133px;
+          width: 110px;
           padding-right: 20px;
           background: transparent url(/images/icons/fwdarrowwht14x21.png) no-repeat right center;
           &:hover {
@@ -83,11 +82,11 @@
         background-image: url(/images/assets/maps/usa645x415.png);
         .city {
           position: absolute;
-          height: 30px;
+          height: 25px;
           padding: 0 20px;
           @include border_radius(5px);
-          font-size: 20px;
-          line-height: 30px;
+          font-size: 18px;
+          line-height: 25px;
           display: block;
           background: #999;
           color: #fff;
@@ -107,9 +106,9 @@
     .loading {
       left: 200%;
       .content {
-        margin: 20px auto;
-        height: 500px;
-        width: 800px;
+        margin: 0 auto;
+        height: 200px;
+        width: 200px;
         background-image: url(/images/assets/loading/3dgears64x47.gif);
       }
     }
@@ -159,15 +158,15 @@
       z-index: 10;
       left: 40px;
       right: 40px;
-      bottom: -70px;
-      height: 30px;
+      bottom: -60px;
+      height: 20px;
       @include transition('bottom 1s');
       @include cgothic;
-      font-size: 26px;
+      font-size: 20px;
       text-shadow: rgba(0,0,0,0.75) 0px 2px 0px;
       background: transparent no-repeat left center;
       &.visible {
-        bottom: 40px;            
+        bottom: 30px;            
       }
     }
     #fadeout {
