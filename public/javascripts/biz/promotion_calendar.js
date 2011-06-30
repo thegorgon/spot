@@ -60,7 +60,7 @@
         startRowIndex = Math.round(scrollTop/rowHeight),
         visibleRowCount = Math.round(viewHeight/rowHeight),
         totalRowCount = rows.length,
-        endRowIndex = Math.min(startRowIndex + visibleRowCount - 1, totalRowCount)
+        endRowIndex = Math.min(startRowIndex + visibleRowCount - 1, totalRowCount),
         dates = {},
         endDate = tbody.find('.td:last').data('date'),
         daysRendered = Date.now().daysUntil(endDate);
@@ -211,7 +211,7 @@
           return cellEvents;
         },
         message = function(msg, klass, to) {
-          if (to === undefined || to === null) { to = 250 };
+          if (to === undefined || to === null) { to = 250; }
           var content = messaging.find('.content');
           messaging.hide().removeAttr('class');
           content.html(msg);
@@ -288,7 +288,7 @@
               eventContainer.remove();
               processing(null);
               message("Sorry, the system encountered an error. Please refresh this page to continue.", "error", 0);
-            }
+            };
           if (data) {
             data.saving = true;
             eventContainer.data('eventdata', data);
@@ -497,7 +497,7 @@
           $('.gridnav .forward').click(function(e) {
             e.preventDefault();
             if (!$(this).data('clicked')) {
-              $(this).data('clicked', true)
+              $(this).data('clicked', true);
               var rowHeight = tbody.find('.tr').outerHeight(),
                 newScroll = Math.min(tbody.scrollTop() + rowHeight * 4.0, tbody[0].scrollHeight),
                 btn = $(this);
@@ -509,7 +509,7 @@
           $('.gridnav .backward').click(function(e) {
             e.preventDefault();
             if (!$(this).data('clicked')) {
-              $(this).data('clicked', true)
+              $(this).data('clicked', true);
               var rowHeight = tbody.find('.tr').outerHeight(),
                 newScroll = Math.max(tbody.scrollTop() - rowHeight * 4.0, 0),
                 btn = $(this);
