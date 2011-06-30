@@ -7,7 +7,7 @@
 #toplayer
   .intro.scene
     .content
-      %h1.center 1 City. 10,000 People.
+      %h1 1 City. 10,000 People.
       %p
         Spot members get
         %br
@@ -16,12 +16,12 @@
         %strong unforgettable experiences 
         at the 
         %em best restaurants in town.
-      =link_to "learn more", "#enter", :id => "enter", :class => "enter cgothic"
+      =link_to "learn more", "#enter", :id => "enter", :class => "enter"
   .map.scene
     .vcc
       .vc
         .content
-          %h1.center.cgothic Where?
+          %h1 Where?
           -City.subscriptions_available.each do |city|
             %a.city{:href => city_path(city), :id => city.slug} San Francisco
   .loading.scene
