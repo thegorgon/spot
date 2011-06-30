@@ -19,7 +19,7 @@
       .content {
         @include border_radius(5px);
         padding: 10px;
-        background: rgba(0,0,0, 0.8) no-repeat center center;
+        background: rgba(0,0,0, 0.6) no-repeat center center;
         h1 {
           @include cgothic;
           text-shadow: rgba(0,0,0,0.75) 0px 1px 0px;
