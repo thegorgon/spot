@@ -35,12 +35,15 @@
         position: absolute;
         top: 15%;
         right: 10%;
-        width: 320px;
+        width: 275px;
+        padding: 10px 20px;
+        h1 {
+          text-align: left;
+        }
         p {
           font-size: 18px;
           line-height: 25px;
           color: #aaa;
-          width: 275px;
           margin: 15px auto;
           strong {
             color: #ff8419;
@@ -59,10 +62,9 @@
           height: 26px;
           line-height: 25px;
           font-size: 20px;
-          margin: 10px auto 0;
-          text-align: center;
+          text-align: left;
+          float: left;
           /* width: 65px; FOR ENTER*/
-          width: 110px;
           padding-right: 20px;
           background: transparent url(/images/icons/fwdarrowwht14x21.png) no-repeat right center;
           @include cgothic;
