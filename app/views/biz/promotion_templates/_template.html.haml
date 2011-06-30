@@ -1,7 +1,9 @@
 %li.template{'data-id' => template.try(:id) || '${id}'}
+  .target
   .color{:style => "background:#{template.try(:color) || '${color}'}"}
   %h2=template.try(:name) || '${name}'
   %h3=template.try(:summary) || '${summary}'
+  .description=template.try(:description) || '${description}'
   ="{{if status == #{PromotionTemplate::APPROVED_STATUS}}}"
   .approval.approved{'data-jstooltip' => "Approved!"}
     Approved
@@ -18,4 +20,4 @@
         %span.redx
           &times;
         Delete
-    .link Finish
+    .link.finish Finish

@@ -159,7 +159,7 @@
           $('body').addClass('lightsout');
           currentTemplate = $(tpl).data('template');
           message("Click dates on the calendar to offer '" + currentTemplate.name + "' on those dates.");
-          $('.cancel', messaging).click(function(e) {
+          $('.cancel', messaging).add('.lightscreen').add('.finish', tpl).click(function(e) {
             unselectTemplates();
           });
           $('.dow').addClass('selectable').each(function(i) {
@@ -195,15 +195,12 @@
           $.jstooltip.hide();
         },
         bindTemplate = function(tpl) {
-          $(tpl).unbind('click.selectTemplate').bind('click.selectTemplate', function(e) {
-            if ($(this).is('.active')) {
+          $(tpl).find('.target').unbind('click.selectTemplate').bind('click.selectTemplate', function(e) {
+            if ($(tpl).is('.active')) {
               unselectTemplates();
             } else {
-              selectTemplate(this);
+              selectTemplate(tpl);
             }
-          });
-          $('.lightscreen').click(function(e) {
-            unselectTemplates();
           });
         },
         getCellEvents = function(cell) {
