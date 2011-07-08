@@ -10,6 +10,7 @@ javascripts:
     - public/javascripts/vendor/logger.js
     - public/javascripts/vendor/modernizr.custom.js
     - public/javascripts/vendor/jquery.validate.js
+    - public/javascripts/vendor/jquery.stretcher.js
     - public/javascripts/vendor/jquery.jswipe.js
   scripts:
     - public/javascripts/shared/date_extensions.js
@@ -24,7 +25,7 @@ javascripts:
     - public/javascripts/shared/popover.js
     - public/javascripts/shared/jstooltip.js
     - public/javascripts/shared/search_emulator.js
-    - public/javascripts/shared/lightbox.js
+    - public/javascripts/shared/modal.js
     - public/javascripts/shared/image_selector.js
     - public/javascripts/shared/slideshow.js
     - public/javascripts/shared/payment_dialog.js

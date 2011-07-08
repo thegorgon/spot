@@ -1,0 +1,31 @@
+=spot_form_for :customer, :url => Braintree::TransparentRedirect.url, :display => "light clearfix", :html => {:autocomplete => "off"} do |cf|
+  =hidden_field_tag :tr_data, ERB::Util.html_escape(tr_data)
+  .customerfields
+    %h2 Tell us about yourself...
+    =cf.name_fields :class => "username", :required => true
+    =cf.email_field :email, :hint => "how can we reach you?", :placeholder => "email address", :required => true
+    =cf.fields_for :custom_fields do |ccf|
+      =ccf.password_field 'password', :hint => "4 to 25 characters please", :placeholder => "password", :required => true, :minlength => 4, :maxlength => 25
+      =ccf.select 'city_id', City.subscriptions_available.all.collect { |c| [c.name_and_region, c.id] }, {:validity => false, :prompt => "select your city", :value => @city.try(:id)}, :required => true
+    %li.note
+      Don't see your city? 
+      =mail_to "julia@spot-app.com", "Contact us" 
+      to let us know where we should launch next.
+  .ccfields
+    %h2 How will you be paying...
+    .card.clearfix
+      =cf.fields_for :credit_card do |ccf|
+        .username{"data-default" => default_name ||= "YOUR NAME"}=default_name
+        =ccf.text_field :number, :placeholder => "number", :class => "ccnumber", :required => true, 'data-subtype' => 'creditcard'
+        .clearfix
+          %li.select.expiration.left
+            =ccf.label :expiration_month, "expires", :simple => true
+            =ccf.select :expiration_month, ("01".."12"), {:simple => true}, "data-subtype" => "ccexpiration", "data-part" => "month"
+            =ccf.select :expiration_year, (Time.now.year...(Time.now + 10.years).year), {:simple => true}, "data-subtype" => "ccexpiration", "data-part" => "year"
+          =ccf.text_field :cvv, :placeholder => "CVV", :class => "text", :container_class => "cvvcontainer", :required => true, 'data-subtype' => 'cvv'
+        %li.types
+          .selected
+      .security
+    %li.buttons
+      =button_tag :class => "btnorg300x41 cgothic" do
+        =button

@@ -44,6 +44,9 @@ html {
     transition: transform 1s;
   }
 }
+.white {
+  color: #f0f0f0;
+}
 .clear {
   clear: both;
 }
@@ -112,4 +115,38 @@ h1 {
 }
 .width500 {
   width: 500px;
+}
+.fullscreen {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+.prose {
+  p, ol, ul {
+    line-height: 1.4em;
+    margin: 1em 0;
+  }
+  ol, ul {
+    margin-left: 1em;
+    li {
+      ol, ul {
+        margin-left: 1em;
+      }
+    }
+  }
+  h3 {
+    font-size: 1.4em;
+  }
+  h4, h3 {
+    font-size: 1.2em;
+    margin: 1em 0;
+    font-weight: bold;
+  }
+  ul {
+    li {
+      list-style: disc;
+    }
+  }
 }

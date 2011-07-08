@@ -1,166 +1,267 @@
 .site_events {
-  .ui-dialog-titlebar {
-    position: relative;
-    background: #999;
-    text-align: center;
-    @include gradient_top_down(#f2f2f2, #A2A2A2); 
-    @include top_border_radius(4px);
-    color: #333;
-    text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;
-    height: 35px;
-    line-height: 35px;
-    font-size: 15px;
-    font-weight: bold;
-    .ui-dialog-titlebar-close {
-      background: transparent url(/images/buttons/bnwcloser15x45.png) no-repeat 0 0;
-      height: 15px;
-      width: 15px;
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      &:hover, &.hover {
-        background-position: 0px -15px;
+  .main {
+    .cgothic {
+      text-shadow: #fff 0px 1px 0px;
+    }
+    hr {
+      height: 0px;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #fff;
+    }
+    .name {
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+  }
+  .explanations {
+    margin-top: 30px;
+  }
+  .explanation {
+    float: left;
+    width: 268px;
+    margin-right: 14px;
+    &.last {
+      margin: 0;
+    }
+    .title {
+      padding: 5px 0;
+      margin: 0;
+      height: 27px;
+      overflow: visible;
+      line-height: 12px;
+    }
+    hr {
+      margin: 0;
+      border-top: 1px solid #808080;
+    }
+    .content {
+      font-size: 12px;
+      li {
+        margin: 1em 0;
       }
-      &:active, &.active {
-        background-position: 0px -30px;
+      p {
+        margin: 1em 0;
       }
     }
   }
-  .promotion {
-    .body {
-      float: left;
+  .details {
+    font-size: 18px;
+    margin-bottom: 30px;
+    .event {
+      width: 556px;
+      float: left;        
     }
-    .sidebar {
+    .place {
+      width: 250px;
       float: right;
-      width: 330px;
-      .buttons {
-        width: 300px;
-        margin: 20px auto 0;
-        .getitnow {
-          margin: 0 0 10px 0;
+      .mapit {
+        color: #808080;          
+        a {
+          color: #808080;          
+          &:hover {
+            color: #ff8419;
+          }
         }
-      }
-    }
-    .explanation {
-      width: 300px;
-      margin: 30px auto;
-      .title {
-        padding: 5px 0;
-      }
-      .divider {
-        width: 300px;
-        height: 0px;
-        border-top: 1px solid #999;
-        border-bottom: 1px solid #fff;
-      }
-      .content {
         font-size: 12px;
-        li {
-          margin: 1em 0;
-        }
-        p {
-          margin: 1em 0;
-        }
-      }
-    }
-    .guestcheck {
-      background: transparent url(/images/assets/events/pad300x325.png);
-      width: 300px;
-      height: 325px;
-      margin: 0 auto;
-      position: relative;
-      font-size: 20px;
-      font-weight: bold;
-      text-shadow: #fff 0px 1px 0px;
-      line-height: 31px;
-      .content {
-        padding: 25px 20px 50px 20px;
-        p {
-          margin: 0;
-          padding: 0;
-        }
-        ul {
-          margin: 0 0 0 30px;
-          padding: 0;
-          list-style: disc outside url(/images/icons/check20x20.png);
-        }
-      }
-    }
-    .description {
-      padding: 10px;
-      font-size: 14px;
-      .more {
-        margin: 0.5em 0;
-        hr {
-          margin: 5px 0;
-          height: 0px;
-          border-bottom: 1px solid #fff;
-          border-top: 1px solid #ddd;
-        }
-        h3 {
-          margin: 0.5em 0;
-        }
-        .info {
-          padding: 0 0 0 40px;
-          line-height: 30px;
-          font-size: 14px;
-          width: 150px;
-        }
-        .wishlists {
-          background: transparent url(/images/icons/grystar20x20.png) no-repeat 6px center;
-        }
-        .phone {
-          background: transparent url(/images/icons/gryphone30x20.png) no-repeat left center;          
-        }
-        .address {
-          line-height: 20px;
-          background: transparent url(/images/icons/gryplacemarker14x20.png) no-repeat 9px center;
-        }
-      }
-      .external {
-        display: block;
-        float: left;
-        margin: 0 10px 0 0;
-        &.google {
-          margin-top: 4px;
-        }
-        &.foursquare {
-          margin-top: 2px;
-        }
-      }
-    }
-    .image {
-      position: relative;
-      height: 325px;
-      width: 520px;
-    }
-    .titlebar {
-      z-index: 10;
-      position: absolute;
-      background: transparent url(/images/backgrounds/blkgrdnt1x150.png) repeat-x top left;
-      bottom: 0px;
-      left: 0px;
-      right: 0px;
-      height: 60px;
-      color: #fff;
-      padding: 50px 10px 0px 10px;
-      h1 {
-        font-size: 25px;
-      }
-      .promotioninfo {
-        padding: 0 0 0 50px;
-        background: transparent url(/images/assets/events/promotionicon38x22.png) no-repeat left center;
-      }
-      .date {
-        font-size: 20px;
-        position: absolute;
-        right: 10px;
-        bottom: 6px;
+        line-height: 16px;
+        margin-left: 10px;
       }
       h2 {
-        font-size: 20px;
-        font-weight: bold;
+        font-size: 25px;
+        margin-bottom: 5px;
       }
+      .info {
+        padding: 5px 0 5px 34px;
+        font-size: 14px;
+        display: block;
+        text-decoration: none;
+      }
+      .google {
+        background: transparent url(/images/logos/external/googlegry15x15.png) no-repeat 4px center;        
+        &:hover, &.hover {
+          background-image: url(/images/logos/external/google15x15.png);
+        }
+      }
+      .yelp {
+        background: transparent url(/images/logos/external/yelpgry15x20.png) no-repeat 4px center;
+        &:hover, &.hover {
+          background-image: url(/images/logos/external/yelp15x20.png);
+        }
+      }
+      .wishlists {
+        background: transparent url(/images/icons/grystar20x20.png) no-repeat left center;
+      }
+      .phone {
+        background: transparent url(/images/icons/gryphone21x14.png) no-repeat left center;          
+      }
+      .address {
+        padding-top: 2px;
+        background: transparent url(/images/icons/gryplacemarker14x20.png) no-repeat 3px 9px;
+      }
+    }
+  }
+  .availability {
+    font-size: 18px;
+    margin-top: 30px;
+    .dates {
+      width: 556px;
+      float: left;
+      margin-bottom: 5px;
+    }
+    .hours {
+      float: right;
+      position: relative;
+      height: 185px;
+      margin-top: 20px;
+      width: 250px;
+      text-align: center;
+      .clock {   
+        top: 0;
+        left: 0;       
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        .ring {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 10;
+        }
+        .hands {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          z-index: 1;
+          canvas {
+            margin: 0 auto;
+          }
+        }
+      }
+      .timeframe {
+        position: absolute;
+        bottom: 0;
+        text-shadow: #fff 0px 1px 0px;
+        left: 0;
+        font-size: 18px;
+        z-index: 15;
+        right: 0;
+      }
+    }
+  }
+  .calendar {
+    margin-top: 5px;;
+    border: 2px solid #808080;
+    @include border_radius(5px);
+  }
+  .subtitles {
+    font-size: 12px;
+    padding: 5px;
+    color: #AAAAAA;
+    text-shadow: #fff 0px 1px 0px;
+    a {
+      color: #AAAAAA;
+    }
+    .hide {
+      display: none;
+    }
+  }
+  &.showall {
+    .date {
+      display: block;
+      &.wk1 {
+        border-bottom: 1px solid #808080;
+      }
+    }
+    .subtitles {
+      .show {
+        display: none;
+      }
+      .hide {
+        display: block;
+      }
+    }
+  }
+  .dow {
+    font-size: 10px;
+    color: #666;
+    text-align: left;
+  }
+  .date {
+    position: relative;
+    height: 80px;
+    width: 68px;
+    float: left;
+    border-bottom: 1px solid #808080;
+    border-right: 1px solid #808080;
+    color: #333;
+    padding: 5px;
+    display: none;
+    &.visible {
+      display: block;
+    }
+    &.wday6 {
+      border-right: 0;
+    }
+    &.lastwk, &.wk1 {
+      border-bottom: 0px;
+    }
+    .doy {
+      color: #666;
+      font-size: 15px;
+    }
+    .event {
+      color: #999;
+      position: absolute;
+      bottom: 5px;
+      left: 2px;
+      right: 2px;
+      a {
+        font-size: 11px;
+        display: block;
+        padding: 2px;
+        height: 13px;
+        line-height: 13px;
+        @include border_radius(8px);
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        background: #999;              
+        .join, .claim {
+          display: none;
+          padding-left: 12px;
+          margin: 0 auto;
+          background: transparent url(/images/icons/checkwht9x9.png) no-repeat left center;              
+        }
+        .claim {
+          width: 28px;
+        }
+        .join {
+          width: 45px;
+        }
+        &:hover, &.hover {
+          background: #ff8419;
+          .join {
+            display: block;
+          }
+          .text {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  .evtdis {
+    position: relative;
+    width: 855px;
+    height: 400px;
+    margin-bottom: 10px;
+    .image {
+      top: -62px;
+      width: 835px;
+      height: 400px;
+      overflow: hidden;
     }
   }
 }

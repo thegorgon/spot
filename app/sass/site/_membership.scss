@@ -1,0 +1,44 @@
+.site_membership_applications {
+  font-size: 14px;
+  .appstatus {
+    margin: 20px 0;
+    .statusstring {
+      font-weight: bold;
+    }
+    .pending_review {
+      color: #EEAD0E;
+    }
+    .approved {
+      color: #556B2F;
+    }
+  }
+  .hd {
+    margin-bottom: 15px;
+  }
+  .buckets {
+    margin: 20px 0;
+  }
+  .bucket {
+    margin: 20px 0 0;
+    width: 394px;
+    padding-right: 15px;
+    .text {
+      font-size: 14px;
+      p {
+        margin: 10px 0;        
+      }
+      input {
+        font-size: 12px;
+        width: 200px;
+      }
+      .share {
+        margin: 5px;
+      }
+    }
+    &.last {
+      padding-left: 15px;
+      border-right: none;
+    }
+  }
+}
+  

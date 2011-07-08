@@ -1,85 +1,120 @@
-.promotion.clearfix
-  .body
-    .image
-      =image_tag @place.image.url(:i640x400), :size => "520x325"
-      .titlebar
-        %h2=@place.name
-        .date
-          ="#{@promotion.date.strftime("%B #{@promotion.date.day.ordinalize}, %Y")}"
-          =Time.twelve_hour(@promotion.start_time)
-          to 
-          =Time.twelve_hour(@promotion.end_time)
-        .promotioninfo
-          %h1="#{@promotion.discount_percentage}% Off"
-    .description
-      =@promotion.description
-      .more
-        %h3="About #{@place.name}"
-        .info.address
-          -@place.address_lines.each do |line|
-            %p.line=line
-        .info.phone=phone_link(@place.phone_number)
-        .info.wishlists="#{@place.wishlist_count} Wishlists"
-        %h3 Get More From :
-        -@place.external_places.each do |p|
-          -if p.class.logo
-            =img_link_to "logos/external/#{p.class.logo.join}.png", external_place_url(p), :size => p.class.logo.last, :class => "external #{p.class.logo.first}"
-  .sidebar
-    .guestcheck
-      .content
-        The Offer : 
-        -if @promotion.kind_of?(DiscountEvent)
-          %p &nbsp;
-          %ul
-            %li
-              ="#{@promotion.discount_percentage}% off your entire bill at #{@place.name}"
-            %li
-              ="Average Savings : $#{@promotion.savings(2).round}"
-            %li
-              ="Only #{@promotion.remaining_count} Left!"
-        -else
-        
-    .buttons
-      =button_tag :class => "btnorg300x41 getitnow" do
-        =image_tag "assets/events/getitnow120x27.png", :size => "120x27", :alt => "get it now!"
-    .explanation
-      .title
-        =image_tag "assets/events/howitworkshdln115x20.png", :size => "115x20", :alt => "How it Works"
-      .divider
-      .content
-        %ul
-          %li 
-            ="Come to #{@place.name} on"
-            ="#{@promotion.date.strftime("%A %B #{@promotion.date.day.ordinalize}")}"
-            between
-            =Time.twelve_hour(@promotion.start_time)
-            and
-            =Time.twelve_hour(@promotion.end_time)
-          %li Present your 4 digit code. 
-          %li="Save #{@promotion.discount_percentage}% off your entire bill."
-    .explanation
-      .title
-        =image_tag "assets/events/fineprinthdln115x20.png", :size => "115x20", :alt => "The Fine Print"
-      .divider
-      .content
-        %ul
-          %li
-            ="Valid at #{@place.name} on #{@promotion.date.strftime('%m/%d/%Y')}"
-            ="from #{@promotion.timeframe(false)} only."
-          %li Limit 1 per bill. 
-          %li Limit 1 per visit.
-          %li While supplies last.
-    .explanation
-      .title
-        =image_tag "assets/events/guaranteehdln170x30.png", :size => "170x30", :alt => "The Spot Guarantee"
-      .divider
-      .content
-        %p 
-          If you’re not satisfied with your experience using Spot, 
-          we’ll give you your money back.
-        %p 
-          It’s that simple.
+=content_for :bgimage do
+  .cityscape.stretcher{'data-gravity' => "0.5x0.5"}
+    =image_tag "/images/backgrounds/event/photo#{@promotion.id.modulo(4) + 1}.jpg", :size => "2292x1524"
 
-#getitnowdialog.hidden.paymentdialog
-  .previous
-  =render :partial => "getitnow"
+=content_for :above do
+  -unless current_member?
+    .overlay.clearfix
+      .title.clearfix
+        %h1.cgothic.left Get unlimited access to unforgettable experiences like this
+        =button_tag :class => "btnorg170x41 btnmembership cgothic right" do
+          apply now
+  %h1.toptitle.breadcrumbs.cgothic
+    -if @city
+      =link_to @city.name.titlecase, city_path(@city)
+      ⋅
+    =@promotion.business.place.name
+    ⋅
+    =@promotion.name
+    
+.evtdis
+  .image=image_tag @place.image.url(:i640x400), :size => "856x535"
+.details.clearfix
+  .event
+    .name.cgothic=@promotion.name
+    .description=@promotion.description.html_safe
+  .place
+    .info.address.clearfix
+      %h2.cgothic=@place.name
+      -@place.address_lines.each_with_index do |line, i|
+        %p.line.clearfix
+          .left=line
+          -if @place.address_lines.length - 1 == i
+            .left.mapit="( #{link_to "map it", gmap_url(@place)} )".html_safe
+    .info.phone=phone_link(@place.phone_number)
+    .info.wishlists="#{@place.wishlist_count} Wishlists"
+    -if @place.external_place(:google)
+      =link_to "more info from google", external_place_url(@place.external_place(:google)), :class => "info google"
+    -if @place.external_place(:yelp)
+      =link_to "reviews on yelp", external_place_url(@place.external_place(:yelp)), :class => "info yelp"
+%hr
+.availability.clearfix
+  .dates
+    .title.cgothic
+      Available on the following dates :
+    .calendar.clearfix
+      -events = @promotion.events.upcoming.hash_by { |e| e.date }          
+      -startdate = Date.today.sunday
+      -startdate = startdate > Date.today ? Date.today.sunday - 1.week : Date.today.sunday
+      -enddate = ([startdate + 2.weeks, @promotion.events.upcoming.last.date].max).saturday
+      -(startdate..enddate).each_with_index do |date, i|
+        -week = (i/7).floor
+        -lastweek = enddate.to_time - date.to_time < 1.week
+        -event = events[date]
+        .date{:class => "#{conditionally("visible", week < 2)} wday#{date.wday} wk#{week} #{conditionally("lastwk", lastweek)}"}
+          .dow.cgothic=date.strftime('%a').upcase
+          .doy.cgothic=date.day.ordinalize
+          -if event
+            .event
+              %a{:href => "#", :class => current_member?? "btnclaim" : "btnmembership"}
+                .text="#{event.count} left"
+                -if current_member?
+                  .claim claim
+                -else
+                  .join join spot
+  
+    .subtitles.clearfix
+      .right 
+        click a date to claim
+      .left
+        -if enddate > startdate + 2.weeks
+          =link_to "more", "#", :rel => ".availability", "data-toggle-class" => "showall", :class => "show"
+          =link_to "fewer", "#", :rel => ".availability", "data-toggle-class" => "showall", :class => "hide"
+  .hours
+    .clock
+      .hands
+        %canvas{:id => "timewedge", :height => "150", :width => "150", "data-start-hour" => @promotion.start_time, "data-end-hour" => @promotion.end_time}
+          =image_tag "icons/clockhandsgry150x150.png", :size => "150x150"
+      .ring=image_tag "icons/clockringgry150x150.png", :size => "150x150"
+    .timeframe.cgothic=@promotion.timeframe
+
+.explanations.clear.clearfix
+  .explanation
+    .title
+      =image_tag "assets/events/howitworkshdln138x27.png", :size => "138x27", :alt => "How it Works"
+    %hr
+    .content
+      %ul
+        %li 
+          ="Come to #{@place.name} on the specified dat"
+          between
+          =Time.twelve_hour(@promotion.start_time)
+          and
+          =Time.twelve_hour(@promotion.end_time)
+        %li Present your 4 digit code. 
+        %li="Enjoy your experience."
+  .explanation
+    .title
+      =image_tag "assets/events/fineprinthdln140x27.png", :size => "140x27", :alt => "The Fine Print"
+    %hr
+    .content
+      %ul
+        %li
+          ="Valid at #{@place.name} on the specified date"
+          ="from #{@promotion.timeframe(false)} only."
+        %li Limit 1 per bill. 
+        %li Limit 1 per visit.
+        %li While supplies last.
+  .explanation.last
+    .title
+      =image_tag "assets/events/guaranteehdln201x27.png", :size => "194x27", :alt => "The Spot Guarantee"
+    %hr
+    .content
+      %p 
+        If you’re not satisfied with your experience using Spot, 
+        we’ll give you your money back.
+      %p 
+        It’s that simple.
+
+#applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Spot Member"}
+  =render :partial => "/shared/membership/apply"

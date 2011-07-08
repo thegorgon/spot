@@ -1,3 +1,35 @@
+@mixin bgbutton($bg, $width, $height) {
+  background: transparent url("/images/buttons/" + $bg + ".png") no-repeat 0 0;  
+  line-height: $height;
+  height: $height;
+  width: $width;
+  display: block;
+  border: none;
+  text-align: center;
+  &:hover, &.hover {
+    background-position: 0px -1 * $height;
+  }
+  &:active, &.active {
+    background-position: 0px -2 * $height;
+  }
+}
+@mixin orgbtn {
+  color: #fff;
+  text-shadow: #000 0px 1px 0px;
+  &:hover, &.hover {
+    color: #fff !important;
+  }
+  &:active, &.active {
+    color: #f0f0f0 !important;
+  }  
+}
+.twitter-share-button {
+  @include bgbutton('tweet55x186', 55px, 21px)
+}
+.fb-share-button {
+  @include bgbutton('fbshare57x54', 57px, 18px)
+}
+
 button, .button {
   outline: none;
   display: block;
@@ -53,28 +85,20 @@ button.link {
 }
 
 .btnorg300x41, a.btnorg300x41 {
-  display: block;
-  width: 300px;
-  height: 41px;
-  line-height: 41px;
-  text-align: center;
-  color: #fff;
-  text-decoration: none;
+  @include bgbutton('org300x41', 300px, 41px);
+  @include orgbtn;
   font-size: 25px;
-  font-weight: bold;
-  text-shadow: #000 0px 1px 0px;
-  border: none;
-  background: transparent url(/images/buttons/org300x41.png) no-repeat 0 0;  
-  &:hover, &.hover {
-    color: #fff !important;
-    background-position: 0px -41px;
-  }
-  &:active, &.active {
-    color: #000 !important;
-    background-position: 0px -82px;
-  }
 }
-
+.btnorg200x41, a.btnorg200x41 {
+  @include bgbutton('org200x41', 200px, 41px);
+  @include orgbtn;
+  font-size: 25px;
+}
+.btnorg170x41, a.btnorg170x41 {
+  @include bgbutton('org170x41', 170px, 41px);
+  @include orgbtn;
+  font-size: 25px;
+}
 .btnorgpill, a.btnorgpill, button.btnorgpill {
   display: block;
   @include border_radius(5px);

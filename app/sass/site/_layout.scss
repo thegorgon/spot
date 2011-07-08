@@ -1,111 +1,128 @@
-body, html, #page {
-  width: 100%;
-  height: 100%;
-  font-size: 11px;
-}
-body, html, input, textarea, button {
-  font-family: 'Helvetica Neue', 'Helvetica', 'Lucida Grande', 'Arial', sans-serif;
-}
-h1 {
-  font-weight: bold;
-  font-size: 25px;
-}
-h2 {
-  font-weight: bold;
-  font-size: 20px;
-}
-a.dark, a.dark:visited {
-  color: #ccc;
-  cursor: pointer;
-  &:hover, &.hover, &:active, &.active {
-    color: #fff;
-  }
-  &.shadowed {
-    text-decoration: none;
-    text-shadow: rgba(0,0,0,0.5) 0 2px 0;
-  }
-}
-body {
-  padding: 0 0 125px 0;
-  background: #fff;
-}
-#bg {
-  z-index: 1;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-}
-#bd {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-}
-#page {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  z-index: 10;
-}
-.lightsite {
-  padding: 0;
-  margin: 0;
-  background: #fff;
-  #bd {
-    top: 87px;
+.site {
+  background: #000;
+  a.dark, a.dark:visited {
+    color: #ccc;
+    cursor: pointer;
+    &:hover, &.hover, &:active, &.active {
+      color: #fff;
+    }
+    &.shadowed {
+      text-decoration: none;
+      text-shadow: rgba(0,0,0,0.5) 0 2px 0;
+    }
   }
   #bg {
-    background: transparent url(/images/backgrounds/paisley_light.jpg) no-repeat fixed center center;    
-    #middlebg {
-      height: 100%;
-      width: 850px;
-      margin: 0 auto;
-      background: #f7f7f7;
-      @include box_shadow(rgba(0,0,0,0.5) 0px 0px 10px);
+    background: #000000 url(/images/backgrounds/paisley_dark_centerfade.jpg) no-repeat fixed center center;
+    #bgfade {
+      z-index: 5;
+      position: absolute;
+      bottom: 70px;
+      left: 0px;
+      right: 0px;
+      top: 0px;
+      background: transparent url(/images/backgrounds/fadeout1x227.png) repeat-x left bottom;
     }
   }
-  #ft {
-    background: transparent;
-    position: static;
-    width: 320px;
-    min-width: 320px;
-    margin: 0 auto;
+  #bd {
+    padding-bottom: 150px;
   }
-  #page {
-    color: #333;
-    width: 850px;
-    margin: 0 auto;
-    position: relative;
-    #hd {
-      width: 850px;
-      margin: 0 auto;
-      #logo {
-        float: left;
-        padding: 0 0 0 0;
-        margin: 5px 0 0 10px;
-      }
+  footer {
+    min-width: 920px;
+    padding-top: 5px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    z-index: 100;
+    border-top: 1px solid #333;
+    text-shadow: rgba(0,0,0,0.5) 0 2px 0;
+    background: #000 repeat top center;
+    &.loading {
+      display: none;
     }
-  }
-  #nav {
-    float: right;
-    padding: 60px 5px 0 0;
-    text-align: right;
-    font-size: 1.5em;
-    color: #666;
-    text-shadow: rgba(255,255,255,1.0) 0px 1px 0px;
-    li {
+    nav.icons {
       float: left;
-      margin-right: 15px;
+      margin: 14px 0 0 20px;
+      width: 457px;
       a {
-        color: #999;
-        font-weight: normal;
-        text-decoration: underline;
+        display: block;
+        float: left;
+        margin: 0 20px;
+        text-align: center;
       }
+    }
+    nav.regular {
+      float: right;
+      padding: 0;
+      margin: 24px 40px 0 0;
+      width: 252px;
+      a {
+        color: #f0f0f0;
+        text-decoration: none;
+        display: block;
+        float: right;
+        margin-left: 11px;
+        font-size: 16px;
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  } 
+}
+.oreo {
+  color: #333;
+  width: 895px;
+  margin: 0 auto;
+  padding-top: 20px;
+  .overlay {
+    text-align: left;
+    padding: 10px 30px;
+    border: 1px solid #ff8419;
+    @include border_radius(5px);
+    z-index: 100;
+    margin: 5px 0 10px;
+    background: #fff;
+    .title {
+      height: 41px;
+      line-height: 41px;
+    }
+  }
+  .toptitle { 
+    padding: 10px 20px 15px;
+    background: rgba(230,230,230, 0.65);
+    color: #333;
+    font-size: 18px;
+    @include top_border_radius(5px);
+    a {
+      color: #333;
+      &:hover {
+        color: #ff8419;
+      }
+    }
+  }
+  .main {
+    position: relative;
+    background: #fff;
+    background: #f0f0f0;
+    @include border_radius(5px);
+    padding: 30px;
+    margin: -5px 0 5px;
+  }
+  .footer {
+    color: #f0f0f0;
+    text-align: center;
+    margin: 0 auto 0;
+    a {
+      color: #f0f0f0;
+      &:hover {
+        color: #ff8419;
+      }
+    }
+    .logo {
+      position: relative;
+      top: 13px;
     }
   }
 }

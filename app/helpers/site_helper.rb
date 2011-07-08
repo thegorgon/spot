@@ -2,25 +2,13 @@ module SiteHelper
   def js_vars
     {
       :env => Rails.env,
-      :preload => [ '/images/buttons/black_button_77x32_active.png', 
-                    '/images/buttons/black_button_77x32_hover.png',
-                    '/images/buttons/orange_button156x31_hover.png', 
-                    '/images/buttons/orange_button156x31_active.png',
-                    '/images/assets/general/search13x14.png',
-                    '/images/assets/popover/lftpad40x1.png',
-                    '/images/assets/popover/rtpad40x1.png',
-                    '/images/assets/popover/ftpad1x40.png',
-                    '/images/assets/popover/ftl40x40.png',
-                    '/images/assets/popover/ftr40x40.png',
-                    '/images/assets/popover/hdarr40x40.png',
-                    '/images/assets/popover/hdl40x60.png',
-                    '/images/assets/popover/hdpad1x40.png',
-                    '/images/assets/popover/hdr40x60.png',
-                    '/images/assets/popover/titled_hdarr40x75.png',
-                    '/images/assets/popover/titled_hdl40x75.png',
-                    '/images/assets/popover/titled_hdpad1x75.png',
-                    '/images/assets/popover/titled_hdr40x75.png']
+      :preload => [ ],
+      :member => current_member?
     }.to_json
+  end
+  
+  def current_member?
+    !!current_user.try(:member?)
   end
   
   def profile(name, email_or_url, title, nick)

@@ -1,1 +1,44 @@
-%h1.center=@city.name
+=content_for :bgimage do
+  .cityscape.stretcher{'data-gravity' => "0.5x0.5"}
+    =image_tag "/images/cities/#{@city.slug}1.jpg", :size => "2292x1524"
+
+=content_for :above do
+  -unless current_member?
+    .overlay.clearfix
+      .title.clearfix
+        %h1.cgothic.left
+          Get access to all these unforgettable experiences
+        =button_tag :class => "btnorg170x41 btnmembership cgothic right" do
+          apply now
+  %h1.cgothic.toptitle=@city.name.titlecase
+      
+.title.clearfix
+  %h1.left.cgothic Featured Member Benefits
+  .right
+    =button_tag :class => "btnorg300x41 btnmembership cgothic" do
+      become a member
+
+.featsection{:class => "size#{@page.featured.length}"}
+  -@page.featured.each_with_index do |featured, i|
+    %a.evtdis{:class => "feat#{i}", :href => place_event_path(featured.business.place, featured)}
+      .image
+        .disclosure
+        =image_tag featured.business.place.image.url(:i640x400)
+        .fadeout
+        .text
+          .name="\"#{featured.name}\" at #{featured.business.place.name}"
+      .description= featured.description
+      
+.upcoming.clearfix
+  -(@page.upcoming).each do |template|
+    %a.evtdis.template{:class => cycle("left", "right"), :href => place_event_path(template.business.place, template)}
+      .image
+        .disclosure
+        =image_tag template.business.place.image.url(:i640x400), :size => "400x250"
+        .fadeout
+        .text
+          .name="\"#{template.name}\" at #{template.business.place.name}"
+      .description=template.description
+            
+#applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Spot Member"}
+  =render :partial => "/shared/membership/apply"

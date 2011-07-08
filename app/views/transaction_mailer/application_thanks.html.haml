@@ -1,0 +1,28 @@
+%h1{:style => "font-size:15px;font-family:Century Gothic,Helvetica Neue,Helvetica,Arial,sans-serif;"} We'll review your responses and be in touch shortly.
+    
+.buckets.clearfix{:style => "margin-top:20px"}
+  %h1{:style => "font-size:15px;font-family:Century Gothic,Helvetica Neue,Helvetica,Arial,sans-serif;"} In the meantime...
+  %p
+    You can check the 
+    =link_to "status of your application", application_url(@application)
+    at any time. Updates will be posted as they occur.
+  .left.bucket{:style => "float:left;padding-right:5px;"}
+    %h1{:style => "font-size:15px;font-family:Century Gothic,Helvetica Neue,Helvetica,Arial,sans-serif;"}
+      We appreciate gossips...
+    .text
+      %table{:cellpadding => "0", :cellspacing => "0"}
+        %tr
+          %td
+            Get your friends to join and we'll give you both priority access. 
+            We'll even throw in a free month's subscription.
+          %td{:width => 10}
+          %td
+            %div{:style => "margin-top: 10px;width:77px;height:32px;background:transparent url(http://www.spot-app.com/images/buttons/flatgry77x32.png) no-repeat left center;text-align:center;line-height:32px;"}
+              =link_to "Share", application_url(@application), :style => "color:#333;font-weight:bold;text-decoration:none;"
+        
+  .right.bucket.last
+    %h1{:style => "font-size:15px;font-family:Century Gothic,Helvetica Neue,Helvetica,Arial,sans-serif;"}
+      Ya, there's an app for that...
+    %p{:style => "margin-top: 10px;"}
+      Use our app to remember places you want to go. We'll go to those places on your behalf to make sure your visit is unforgettable.
+      / =img_link_to "assets/general/appstoregry162x56.png", getspot_path, :size => "162x56", :class => "getspot"

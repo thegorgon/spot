@@ -10,7 +10,8 @@ class User < ActiveRecord::Base
   has_many :wishlist_items, :dependent => :delete_all
   has_many :activity_items, :foreign_key => :actor_id, :dependent => :destroy
   has_many :credit_cards
-  has_one :subscription
+  has_many :subscriptions
+  has_many :memberships
   has_one :business_account
   has_one :facebook_account
   has_one :password_account
@@ -57,6 +58,12 @@ class User < ActiveRecord::Base
     user
   end
   
+  def self.register(params)
+    account = FacebookAccount.authenticate(params)
+    account ||= PasswordAccount.register(params)
+    account.try(:user)
+  end
+  
   def merge_with!(new_user)
     new_items = new_user.wishlist_items.hash_by { |item| "#{item.item_type} #{item.item_id}" }
     current_items = wishlist_items.hash_by { |item| "#{item.item_type} #{item.item_id}" }
@@ -71,6 +78,10 @@ class User < ActiveRecord::Base
     FacebookAccount.where(:user_id => new_user.id).update_all(:user_id => id)
     new_user.destroy
     self
+  end
+  
+  def member?
+    memberships.active.exists?
   end
   
   def wishlist(params)

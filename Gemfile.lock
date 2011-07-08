@@ -56,6 +56,8 @@ GEM
       xml-simple
       xml-simple
     base62 (0.1.4)
+    braintree (2.10.1)
+      builder (>= 2.0.0)
     builder (2.1.2)
     capistrano (2.5.21)
       highline
@@ -245,6 +247,7 @@ DEPENDENCIES
   aws-s3
   aws-ses (~> 0.4.1)
   base62
+  braintree
   capistrano
   curb
   factory_girl_rails

@@ -2,7 +2,7 @@ module ApplicationHelper
   def place_page?
     @place && !@place.new_record?
   end
-    
+      
   def w3c_date(date)
     date.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")
   end  
@@ -16,7 +16,7 @@ module ApplicationHelper
       "Spot - Never Forget a Place"
     end
   end
-  
+    
   def page_keywords
     keywords = ["spot", "iphone", "app", "application", "place", "wishlist"]
     if place_page?

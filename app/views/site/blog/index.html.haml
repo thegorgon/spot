@@ -12,6 +12,3 @@
         -if @posts.next_page
           .next
             =link_to "Older Items >", blog_index_path(:page => @posts.next_page, :per_page => params[:per_page])
-            
-=content_for :ft do
-  =render :partial => "/layouts/homefooter.html.haml"

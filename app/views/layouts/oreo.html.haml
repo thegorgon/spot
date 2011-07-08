@@ -1,0 +1,18 @@
+=content_for :content do
+  .oreo 
+    =yield :above
+    .main
+      =content_for?(:oreo) ? yield(:oreo) : yield
+    .footer
+      =image_tag "logos/spotwhite120x90.png", :size => "40x30", :class => "logo"
+      ⋅
+      2601 Mission St.
+      San Francisco, CA 94110
+      ⋅
+      =mail_to "The Spot Team <contact@spot-app.com>", "Contact Us"
+      ⋅
+      =link_to "Privacy Policy", privacy_path
+      ⋅
+      =link_to "Terms of Service", tos_path
+    
+= render :file => 'layouts/site'

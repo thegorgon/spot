@@ -12,6 +12,26 @@ class ApplicationController < ActionController::Base
   
   private
 
+  def default_render(*args)
+    respond_to do |format|
+      format.html { render(*args) }
+      format.js do 
+        options = args.extract_options!
+        (options[:json] ||= {}).merge!(:page => {:namespace => page_namespace, :controller => controller_name})
+        options[:json][:html] ||= render_to_string(:action => params[:action])
+        args << options
+        render(*args)
+      end
+    end
+  end
+      
+  def redirect_to(*args)
+    respond_to do |format|
+      format.html { super(*args) }
+      format.js { js_redirect_to(*args)}
+    end
+  end  
+
   def nonce
     @nonce ||= Nonce.new(:session => session)
   end
@@ -116,6 +136,11 @@ class ApplicationController < ActionController::Base
     @controller_name ||= params[:controller].tr('/','_')
   end
   helper_method :controller_name
+
+  def module_names
+    @module_names ||= params[:controller].split('/').reverse.drop(1).join(" ")
+  end
+  helper_method :module_names
     
   def js_redirect_to(*args)
     render :json => {:redirect_to => url_for(*args)}

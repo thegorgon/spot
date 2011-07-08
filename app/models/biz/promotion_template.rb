@@ -1,5 +1,5 @@
 class PromotionTemplate < ActiveRecord::Base
-  has_many :events, :class_name => "PromotionEvent"
+  has_many :events, :class_name => "PromotionEvent", :foreign_key => "template_id"
   belongs_to :business
   attr_protected :approved_at
   
@@ -33,19 +33,23 @@ class PromotionTemplate < ActiveRecord::Base
     finder = finder.includes(:business)
     finder
   end
+  
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
       
   def color
     Color.hex_series(position.to_i).first
   end
   
-  def timeframe
-    if all_day?
+  def timeframe(use_all_day=true)
+    if use_all_day && all_day?
       "all day"
     else
       "#{Time.twelve_hour(start_time, :midnight => true, :noon => true)} to #{Time.twelve_hour(end_time, :midnight => true, :noon => true)}"
     end
   end
-  
+
   def all_day?
     start_time == 0 && end_time == 0
   end

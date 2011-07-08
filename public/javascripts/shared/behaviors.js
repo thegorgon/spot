@@ -83,7 +83,12 @@
       $($(this).attr('href')).hide().removeClass('hidden');
       $(this).click(function(e) {
         e.preventDefault();
-        $($(this).attr('href')).toggle(250);
+        var target = $($(this).attr('href'));
+        if (target.is(':visible')) {
+          target.hide();          
+        } else {
+          target.show();
+        }
       });
     },
     actionLink: function() {
@@ -149,6 +154,17 @@
         setFilename();
       });
     },
+    toggleClass: function() {
+      $(this).each(function(e) {
+        var self = $(this),
+          klass = self.attr('data-toggle-class'),
+          target = self.is('[rel]') ? $(self.attr('rel')) : self;
+        self.unbind('click.toggle-class').bind('click.toggle-class', function(e) {
+          e.preventDefault();
+          target.hasClass(klass) ? target.removeClass(klass) : target.addClass(klass);
+        });
+      })
+    },
     tabBar: function() {
       var bar = $(this),
         tabs = bar.find('.tab');
@@ -186,6 +202,7 @@
         fetch('.preload_bg').preloadBg();
         fetch('.preload').preloadImgs();
       }
+      fetch('[data-toggle-class]').toggleClass();
       fetch('[placeholder]').placeholder();
       fetch('[data-mode=select]').selectOnly();
       fetch('.file_field input').fileField();
@@ -219,14 +236,19 @@
           },
           function(response) {
             if (response && response.post_id) {
+              // SUCCESS
             } else {
+              // FAIL
             }
           }
         );
       });
       fetch('form[data-validate]').autovalidate();        
+      
+      $('.stretcher').stretcher();
+      $('.stretcher').load(function() { $(this).stretcher(); });
       $(window).unbind('resize.slideshow').bind('resize.slideshow', function(e) {
-        
+        $('.stretcher').stretcher();
       });
     }
   });

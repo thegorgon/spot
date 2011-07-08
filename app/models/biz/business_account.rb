@@ -23,13 +23,7 @@ class BusinessAccount < ActiveRecord::Base
 
   def self.register(params)
     user = User.find_by_id(params[:user_id]) if params[:user_id]
-    unless user
-      password_account = PasswordAccount.register( :login => params[:email], 
-                                                   :password => params[:password], 
-                                                   :first_name => params[:first_name], 
-                                                   :last_name => params[:last_name] )
-      user = password_account.user
-    end
+    user ||= User.register(params)
     user.business_account ||= BusinessAccount.new do |ba|
       ba.first_name = params[:first_name]
       ba.last_name = params[:last_name]

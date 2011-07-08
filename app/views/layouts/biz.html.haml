@@ -1,63 +1,35 @@
-!!! 5
-/[if lt IE 7 ]<html lang="en" class="ie6 no-js">
-/[if IE 7 ]<html lang="en" class="ie7 no-js">
-/[if IE 8 ]<html lang="en" class="ie8 no-js">
-/[if IE 9 ]<html lang="en" class="ie9 no-js">
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
-%head
-  %meta{'charset' => 'utf-8'}
-  %title= page_title
-  %meta{'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
-  %meta{'http-equiv' => "X-UA-Compatible", :content => "IE=edge,chrome=1"}
-  = iphone_meta_tags
-  = seo_tags
-  = favicon_link_tag("/favicon.ico")
-  = open_graph_tags
+=content_for :head do
   = include_stylesheets :biz, :media => 'all'
-  = csrf_meta_tag 
-  = js_trigger_tag
-  = yield :head
-  -if Rails.env.production?
-    = google_analytics_tag(:account_id => 'UA-21193799-1')
-%body{:id => page_namespace, :class => "#{controller_name} biz"}
-  #bg.preload_bg
-  =flashes
-  #page
-    #hd
-      #logo
-        =image_tag "logos/spotbizwhite158x86.png", :height => "86", :alt => "spot"
-      %ul#nav
-        -if current_account
-          %li=link_to_with_current "Account", biz_account_path
-          %li{'data-popover' => '#business_list', 'data-popover-title' => 'My Businesses', 'data-popover-orient' => 'vertical'}
-            Businesses
-            %ul#business_list.bizlist.hidden.placelist.large
-              =render :partial => "/biz/businesses/list"
-              %li.new.clearfix
-                %a{:href => new_biz_business_path}
-                  %span.big + 
-                  Claim Another Business
-        -else
-          %li=link_to_with_current "Sign Up", new_biz_account_path        
-          -unless logged_in?
-            %li{'data-popover' => '#login_popover', 'data-popover-title' => 'Log In', 'data-popover-orient' => 'vertical'} 
-              Log In
-              =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => biz_account_path}
-        %li{'data-popover' => '#help_topics', 'data-popover-orient' => 'vertical'} 
-          Help
-          %ul#help_topics.subnav.hidden
-            -if false # HIDE UNTIL PREPPED
-              %li=link_to "FAQ", biz_faq_path
-              %li=link_to "Terms of Service", biz_tos_path
-            -if current_account
-              %li=link_to "Spot Widgets", biz_widgets_path
-            %li=link_to "Contact Us", new_biz_contact_path
-              
-    #bd.clearfix
-      = yield
-  #fb-root
-  =google_maps_api_include
-  =include_javascripts :vendor
-  =include_javascripts :scripts
-  :javascript
-    Spot.init(#{js_vars});
+
+=content_for :header do
+  #logo
+    =image_tag "logos/spotbizwhite158x86.png", :height => "86", :alt => "spot"
+  %nav
+    %ul
+      -if current_account
+        %li=link_to_with_current "Account", biz_account_path
+        %li{'data-popover' => '#business_list', 'data-popover-title' => 'My Businesses', 'data-popover-orient' => 'vertical'}
+          Businesses
+          %ul#business_list.bizlist.hidden.placelist.large
+            =render :partial => "/biz/businesses/list"
+            %li.new.clearfix
+              %a{:href => new_biz_business_path}
+                %span.big + 
+                Claim Another Business
+      -else
+        %li=link_to_with_current "Sign Up", new_biz_account_path        
+        -unless logged_in?
+          %li{'data-popover' => '#login_popover', 'data-popover-title' => 'Log In', 'data-popover-orient' => 'vertical'} 
+            Log In
+            =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => biz_account_path}
+      %li{'data-popover' => '#help_topics', 'data-popover-orient' => 'vertical'} 
+        Help
+        %ul#help_topics.subnav.hidden
+          -if false # HIDE UNTIL PREPPED
+            %li=link_to "FAQ", biz_faq_path
+            %li=link_to "Terms of Service", biz_tos_path
+          -if current_account
+            %li=link_to "Spot Widgets", biz_widgets_path
+          %li=link_to "Contact Us", new_biz_contact_path
+
+= render :file => 'layouts/application'

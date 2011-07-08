@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110629190749) do
+ActiveRecord::Schema.define(:version => 20110701190749) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -94,6 +94,22 @@ ActiveRecord::Schema.define(:version => 20110629190749) do
   end
 
   add_index "cities", ["slug"], :name => "index_cities_on_slug", :unique => true
+
+  create_table "credit_cards", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "token"
+    t.string   "card_type"
+    t.string   "bin"
+    t.string   "last_4"
+    t.integer  "position"
+    t.integer  "expiration_month"
+    t.integer  "expiration_year"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "credit_cards", ["token"], :name => "index_credit_cards_on_token", :unique => true
+  add_index "credit_cards", ["user_id"], :name => "index_credit_cards_on_user_id"
 
   create_table "devices", :force => true do |t|
     t.string   "udid",          :null => false
@@ -226,6 +242,40 @@ ActiveRecord::Schema.define(:version => 20110629190749) do
   add_index "gowalla_places", ["lat", "lng"], :name => "index_gowalla_places_on_lat_and_lng"
   add_index "gowalla_places", ["place_id"], :name => "index_gowalla_places_on_place_id"
 
+  create_table "invitation_codes", :force => true do |t|
+    t.string  "code",                        :null => false
+    t.integer "invitations", :default => -1, :null => false
+    t.integer "claimed",     :default => 0,  :null => false
+  end
+
+  add_index "invitation_codes", ["code"], :name => "index_invitation_codes_on_code", :unique => true
+
+  create_table "membership_applications", :force => true do |t|
+    t.integer  "user_id",       :null => false
+    t.integer  "city_id",       :null => false
+    t.string   "token",         :null => false
+    t.string   "referral_code", :null => false
+    t.text     "survey",        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "membership_applications", ["city_id", "user_id"], :name => "index_membership_applications_on_city_id_and_user_id", :unique => true
+  add_index "membership_applications", ["token"], :name => "index_membership_applications_on_token", :unique => true
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "user_id",                            :null => false
+    t.string   "payment_method_type",                :null => false
+    t.integer  "payment_method_id",                  :null => false
+    t.integer  "city_id",                            :null => false
+    t.integer  "status",              :default => 0, :null => false
+    t.datetime "expires_at"
+    t.datetime "starts_at",                          :null => false
+    t.datetime "created_at",                         :null => false
+  end
+
+  add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
+
   create_table "mobile_apps", :force => true do |t|
     t.string  "name",                        :null => false
     t.string  "location",                    :null => false
@@ -304,6 +354,17 @@ ActiveRecord::Schema.define(:version => 20110629190749) do
 
   add_index "preview_signups", ["interest", "email"], :name => "index_preview_signups_on_interest_and_email", :unique => true
 
+  create_table "promo_codes", :force => true do |t|
+    t.string   "code",                       :null => false
+    t.integer  "duration",   :default => -1, :null => false
+    t.integer  "users",      :default => -1, :null => false
+    t.integer  "use_count",  :default => 0,  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "promo_codes", ["code"], :name => "index_promo_codes_on_code", :unique => true
+
   create_table "promotion_codes", :force => true do |t|
     t.string   "type"
     t.integer  "owner_id"
@@ -373,6 +434,21 @@ ActiveRecord::Schema.define(:version => 20110629190749) do
 
   add_index "short_urls", ["url"], :name => "index_short_urls_on_url", :unique => true
 
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "plan_id"
+    t.string   "braintree_id"
+    t.integer  "price_cents"
+    t.integer  "balance_cents"
+    t.string   "status"
+    t.integer  "billing_day_of_month"
+    t.datetime "created_at"
+    t.datetime "expires_at"
+    t.datetime "cancelled_at"
+  end
+
+  add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"
+
   create_table "user_events", :force => true do |t|
     t.integer  "user_id",    :default => -1, :null => false
     t.integer  "event_id",                   :null => false
@@ -399,8 +475,12 @@ ActiveRecord::Schema.define(:version => 20110629190749) do
     t.boolean  "admin",               :default => false, :null => false
     t.integer  "notification_flags",  :default => 0,     :null => false
     t.string   "location"
+    t.string   "customer_id"
+    t.integer  "city_id"
   end
 
+  add_index "users", ["city_id"], :name => "index_users_on_city_id", :unique => true
+  add_index "users", ["customer_id"], :name => "index_users_on_customer_id", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
 

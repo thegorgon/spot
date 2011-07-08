@@ -1,0 +1,38 @@
+body, html {
+  height: 100%;
+  width: 100%;
+  font-size: 12px;
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+body, html, input, textarea, button {
+  font-family: 'Helvetica Neue', 'Helvetica', 'Lucida Grande', 'Arial', sans-serif;
+}
+#bg {
+  z-index: 1;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: #f7f7f7;
+  min-width: 1000px;
+}
+#bd {
+  padding-bottom: 100px;
+}
+#page {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 2;
+}
+a, a:visited {
+  color: #333;
+  &:hover, &.hover {
+    color: #ff8419;
+  };
+}

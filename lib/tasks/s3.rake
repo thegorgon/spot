@@ -2,7 +2,8 @@ namespace :s3 do
   task(:sync => :connect) do
     @source_env = (ENV['REMOTE'] || "production")
     @marker = ENV['MARKER']
-    page_size = ENV['PAGE_SIZE'] || 1000
+    @prefix = ENV['PREFIX']
+    @page_size = ENV['PAGE_SIZE'] || 1000
     page = 0
     
     source = S3_CONFIG[@source_env]['bucket']
@@ -10,7 +11,7 @@ namespace :s3 do
     puts "syncing assets from #{source} to #{destination}..."
     time = Time.now.to_i
     loop do
-      assets = AWS::S3::Bucket.objects(source, :marker => @marker, :max_keys => page_size)
+      assets = AWS::S3::Bucket.objects(source, :marker => @marker, :max_keys => @page_size, :prefix => @prefix)
       puts "\nsyncing page #{page += 1}, #{assets.size} assets...\n\n"
       break if assets.size == 0
       assets.each_with_index do |asset, i|

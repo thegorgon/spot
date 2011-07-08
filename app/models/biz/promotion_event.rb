@@ -7,9 +7,13 @@ class PromotionEvent < ActiveRecord::Base
   validate :one_template_event_per_date, :on => :create, :if => Proc.new { |e| e.template.present? }
   
   scope :on_date, lambda { |date| where(:date => date.to_date)}
-  scope :upcoming, lambda { where(["date >= ?", Date.today])}
+  scope :upcoming, lambda { where(["date >= ?", Date.today]).order("date ASC") }
   scope :this_week, lambda { where(:date => (Date.today..(Time.now + 7.days).to_date)) }
+  scope :this_month, lambda { where(:date => (Date.today..(Time.now + 1.month).to_date)) }
   scope :approved, joins(:template).where("promotion_templates.status" => PromotionTemplate::APPROVED_STATUS)
+  scope :within, lambda { |radius, options| 
+    joins(:business => :place).where(["? <= ?", Place.distance_sql(options[:origin]), radius])
+  }
   
   def self.summary(timeframe=nil)
     timeframe ||= (Date.today..(Time.now + 2.weeks).to_date)

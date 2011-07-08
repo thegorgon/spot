@@ -7,7 +7,15 @@ class Site::HomeController < Site::BaseController
   
   def press
   end
+  
+  def privacy
+    render :layout => "oreo"
+  end
       
+  def tos
+    render :layout => "oreo"
+  end
+
   def getspot
     store = "itunes" if request.user_agent =~ /iPhone/
     store ||= params[:store]

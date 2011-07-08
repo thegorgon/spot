@@ -1,0 +1,43 @@
+=content_for :bgimage do
+  .cityscape.stretcher{'data-gravity' => "1.0x1.0"}
+    =image_tag "/images/cities/#{@city.slug}2.jpg", :size => "2292x1524"
+
+=content_for :above do
+  %h1.toptitle.breadcrumbs.cgothic
+    Thank you for applying.
+
+-if @application.approved?
+  %h1.cgothic Congratulations. You're application has been approved.
+-else
+  %h1.cgothic We'll review your responses and be in touch shortly.
+
+.appstatus
+  Application Status : 
+  %span.statusstring{:class => @application.status.gsub(' ', '_')}
+    =@application.status.titlecase
+  %hr
+.buckets.clearfix
+  %h1.cgothic In the meantime...
+  .left.bucket
+    %h1.cgothic.invitetitle
+      We appreciate gossips...
+    .text
+      %p
+        Get your friends to join and we'll give you both priority access. 
+        We'll even throw in a free month's subscription.
+      %p
+        Just share this link via Email, Facebook, or Twitter :
+      
+      -url = new_subscription_url
+      %p.clearfix
+        =text_field_tag "url", url, "data-mode" => "select", :class => "select light left"
+        %a{:href => fb_share_url(url, "Join me on Spot"), :class => "fb-share-button share left"}
+        %a{:href => twitter_share_url(url, "Join me on Spot"), :class => "twitter-share-button share left"}
+      
+  .right.bucket.last
+    %h1.cgothic
+      Ya, there's an app for that...
+    .text
+      %p Use our app to remember places you want to go. We'll go to those places on your behalf to make sure your visit is unforgettable.
+      =img_link_to "assets/general/appstoregry162x56.png", getspot_path, :size => "162x56", :class => "getspot"
+      

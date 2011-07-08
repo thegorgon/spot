@@ -1,10 +1,20 @@
-!!! 5
-/[if lt IE 7 ]<html lang="en" class="ie6 no-js">
-/[if IE 7 ]<html lang="en" class="ie7 no-js">
-/[if IE 8 ]<html lang="en" class="ie8 no-js">
-/[if IE 9 ]<html lang="en" class="ie9 no-js">
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
-%head=render :partial => "/layouts/sitehead.html"
-%body{:id => page_namespace, :class => "site #{controller_name}"}
-  =render :partial => "/layouts/sitebody.html"
-  =render :partial => "/layouts/scripts.html"
+=content_for :head do
+  = include_stylesheets :site, :media => 'all'
+  
+=content_for :bg do
+  = yield :bgimage
+  #bgfade
+  
+=content_for :footer do
+  %nav.regular.clearfix
+    =link_to "press", press_path
+    =link_to "twitter", "http://www.twitter.com/spotteam", :target => "_new"
+    =link_to "blog", blog_index_path
+    =link_to "about", about_path
+    =link_to "home", root_path
+  %nav.icons.clearfix
+    =img_link_to "assets/general/appstore140x40.png", getspot_path, :size => "140x40", :class => "getspot"
+    =img_link_to "assets/general/bizlink160x40.png", biz_root_path, :size => "160x40", :class => "bizlink"
+    
+    
+= render :file => 'layouts/application'

@@ -1,69 +1,44 @@
-!!! 5
-/[if lt IE 7 ]<html lang="en" class="ie6 no-js">
-/[if IE 7 ]<html lang="en" class="ie7 no-js">
-/[if IE 8 ]<html lang="en" class="ie8 no-js">
-/[if IE 9 ]<html lang="en" class="ie9 no-js">
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
-%head
-  %meta{'charset' => 'utf-8'}
-  %title= page_title
-  %meta{'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
-  %meta{'http-equiv' => "X-UA-Compatible", :content => "IE=edge,chrome=1"}
-  = iphone_meta_tags
-  = seo_tags
-  = favicon_link_tag("/favicon.ico")
+=content_for :head do
   = include_stylesheets :admin, :media => 'all'
-  = csrf_meta_tag 
-  = js_trigger_tag
-  = yield :head
-%body{:id => page_namespace, :class => "admin #{controller_name}"}
-  #bg.preload_bg
-  =flashes
-  #page
-    #hd
-      #logo
-        =image_tag "logos/spotadminwhite158x86.png", :height => "86", :alt => "spot"
-      #place_search
-        %ul.form.search
-          =form_tag admin_places_path, :method => :get, :autocomplete => "off" do
-            %label{:for => "search_query_text"}
-              %li.search_icon
-              %li.search=text_field_tag :query, "", :id => "search_query_text"
-      %ul#nav
-        %li.first=link_to_with_current "search", new_admin_search_path
-        %li{'data-popover' => '#places_subnav', 'data-popover-orient' => 'vertical'}
-          %span.title places
-          %ul.hidden.subnav#places_subnav
-            %li=link_to "All", admin_places_path
-            %li=link_to "New", new_admin_place_path
-            %li=link_to "Image Queue", admin_places_path(:filter => 3)
-            %li=link_to "Imageless", admin_places_path(:filter => 2)
-            %li=link_to "Wishlisted", admin_places_path(:filter => 1)
-            %li=link_to "Dupes", admin_duplicates_path
-            %li=link_to "Hydra", matches_admin_places_path
-        %li{'data-popover' => '#biz_subnav', 'data-popover-orient' => 'vertical'}
-          %span.title biz
-          %ul.hidden.subnav#biz_subnav
-            %li=link_to "All Biz", admin_businesses_path
-            %li=link_to "Pending Biz", admin_businesses_path(:filter => 1)
-            %li=link_to "Approved Biz", admin_businesses_path(:filter => 2)
-            %li=link_to "All Promotions", admin_promotions_path
-            %li=link_to "Pending Promotions", admin_promotions_path(:filter => 1)
-            %li=link_to "Approved Promotions", admin_promotions_path(:filter => 2)
-            %li=link_to "Rejected Promotions", admin_promotions_path(:filter => 4)
-        %li{'data-popover' => '#tools_subnav', 'data-popover-orient' => 'vertical'}
-          %span.title tools
-          %ul.hidden.subnav#tools_subnav
-            %li=link_to "Analysis", admin_analysis_path
-            %li=link_to "Resque", admin_resque_path
-            %li=link_to "Request Info", admin_info_path
-            %li=link_to "Settings", admin_settings_path
-    #bd.clearfix
-      = yield
-  #fb-root
-  =google_maps_api_include
-  =include_javascripts :vendor
-  =include_javascripts :scripts
-  =yield :scripts
-  :javascript
-    Spot.init(#{js_vars});
+
+=content_for :header do
+  #logo
+    =image_tag "logos/spotadminwhite158x86.png", :height => "86", :alt => "spot"
+  #place_search
+    %ul.form.search.accept_focus
+      =form_tag admin_places_path, :method => :get, :autocomplete => "off" do
+        %label{:for => "search_query_text"}
+          %li.search_icon
+          %li.search.accept_focus=text_field_tag :query, "", :id => "search_query_text"
+  %nav
+    %ul
+      %li.first=link_to_with_current "search", new_admin_search_path
+      %li{'data-popover' => '#places_subnav', 'data-popover-orient' => 'vertical'}
+        %span.title places
+        %ul.hidden.subnav#places_subnav
+          %li=link_to "All", admin_places_path
+          %li=link_to "New", new_admin_place_path
+          %li=link_to "Image Queue", admin_places_path(:filter => 3)
+          %li=link_to "Imageless", admin_places_path(:filter => 2)
+          %li=link_to "Wishlisted", admin_places_path(:filter => 1)
+          %li=link_to "Dupes", admin_duplicates_path
+          %li=link_to "Hydra", matches_admin_places_path
+      %li{'data-popover' => '#biz_subnav', 'data-popover-orient' => 'vertical'}
+        %span.title biz
+        %ul.hidden.subnav#biz_subnav
+          %li=link_to "All Biz", admin_businesses_path
+          %li=link_to "Pending Biz", admin_businesses_path(:filter => 1)
+          %li=link_to "Approved Biz", admin_businesses_path(:filter => 2)
+          %li=link_to "All Promotions", admin_promotions_path
+          %li=link_to "Pending Promotions", admin_promotions_path(:filter => 1)
+          %li=link_to "Approved Promotions", admin_promotions_path(:filter => 2)
+          %li=link_to "Rejected Promotions", admin_promotions_path(:filter => 4)
+      %li{'data-popover' => '#tools_subnav', 'data-popover-orient' => 'vertical'}
+        %span.title tools
+        %ul.hidden.subnav#tools_subnav
+          %li=link_to "Analysis", admin_analysis_path
+          %li=link_to "Resque", admin_resque_path
+          %li=link_to "Request Info", admin_info_path
+          %li=link_to "Settings", admin_settings_path
+                
+= render :file => 'layouts/application'

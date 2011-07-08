@@ -38,6 +38,14 @@ class PasswordAccount < ActiveRecord::Base
     authenticate(params) || create(params)
   end
   
+  def email=(value)
+    self.login = value
+  end
+  
+  def email
+    login
+  end
+  
   def valid_password?(password)
     self[:crypted_password] == self.class.encrypt(password, password_salt)
   end

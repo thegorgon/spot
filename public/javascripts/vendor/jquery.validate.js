@@ -8,7 +8,7 @@
       },
       valid = function(input) {
         $(input).parents('li:first').removeClass('loading').removeClass('invalid').addClass('valid');
-        $(input).parents('li:first').find('.validity').removejstooltip();
+        $(input).parents('li:first').find('.validity, label').removejstooltip();
       },
       validity = function(input, val, message) {
         if ($(input).valid() || val || $(input).parent('li').is('.loading')) {

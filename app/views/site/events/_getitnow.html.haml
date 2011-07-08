@@ -1,7 +1,7 @@
 .paydescribe.view.clearfix{"data-title" => "Become a Spot Member"}
   =render :partial => "paydescribe"
 #subscriptionview.payform.view.clearfix{"data-title" => "Become a Spot Member"}
-  =render :partial => "paymentform", :locals => {:tr_data => @subdata, :button => ["signmeup", "135x27", "sign me up"], :default_name => "SPOT MEMBER"}
+  =render :partial => "/shared/payments/form", :locals => {:tr_data => @subdata, :button =>  "sign me up", :default_name => "SPOT MEMBER"}
 #processing.processing.view.clearfix
   %h1 Processing Payment...
   

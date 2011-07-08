@@ -35,6 +35,7 @@ gem 'base62'
 gem 'hoptoad_notifier'
 gem "acts_as_list"
 gem "rack-noie", :require => "noie"
+gem "braintree"
 
 group :production do
   gem 'unicorn'

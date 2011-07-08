@@ -17,6 +17,21 @@ form {
   }
 }
 
+input.select {
+  padding: 4px 8px;
+  height: 20px;
+  font-size: 14px;
+  line-height: 20px;
+  width: 234px;
+  &.light {
+    font-weight: normal;
+    @include border_radius(6px);          
+    border: 1px solid #999;
+    @include box_shadow(rgba(0,0,0,0.5) 0px 1px 1px inset);
+    margin: 0;    
+  }
+}
+
 /* ALL LIST BASED FORMS */
 ul.form {
   list-style: none;
@@ -27,6 +42,10 @@ ul.form {
     position: relative;
     margin: 10px 0;
     padding: 0;
+  }
+  li.spacing {
+    height: 10px;
+    width: 100%;
   }
   .input_container {
     z-index: 1;
@@ -58,11 +77,13 @@ ul.form {
     margin: -5px 0 10px;
     width: 300px;
   }
-  li.text, li.buttons {
-    @extend .clearfix;
+  li.text {
     height: 30px;
+  }
+  li.text, li.buttons, li.select {
+    @extend .clearfix;
     width: 300px;
-    input, textarea {
+    input, textarea, select {
       width: 282px;
       display: block;
       position: absolute;
@@ -77,6 +98,11 @@ ul.form {
         width: 50px;
         text-align: center;
       }
+    }
+    select {
+      width: 300px;
+      height: 30px;
+      font-size: 14px;
     }
     .placeholder {
       &.abbrev {
@@ -397,6 +423,13 @@ ul.form {
   .note {
     color: #999;
     text-shadow: #fff 0px 1px 0px;
+    a {
+      color: #999;
+      text-decoration: underline;
+      &:hover {
+        color: #666;        
+      }      
+    }
   }
   .placeholder {
     color: #999;

@@ -1,0 +1,39 @@
+.col.left 
+  %p
+    In order to ensure an 
+    unforgettable membership experience, 
+    membership is limited to 
+    %strong
+      10,000 individuals 
+    per city. We're looking for the 
+    %em
+      best in your city 
+    to take full advantage of our membership advantages. 
+    %strong
+      Apply now 
+    to see if you make the grade. 
+    Applications will be processed in one day or less.
+.col.right
+  =spot_form_for :application, :url => applications_path, :display => "light inlinelabels" do |f|
+    =f.fields_for :user_attributes do |uf|
+      =uf.name_fields :required => true, :label => "name : "
+      =uf.email_field :email, :placeholder => "email address", :required => true, :label => "email : ", "data-validate-url" => availability_email_path, "data-invalid-msg" => "looks like you've already registered"
+      =uf.password_field 'password', :placeholder => "password", :label => "password : "
+    -if (city ||= false)
+      =f.hidden_field :city_id, @city.try(:id)
+    -else
+      =f.select 'city_id', City.subscriptions_available.all.collect { |c| [c.name_and_region, c.id] }, {:validity => false, :prompt => "select your city", :selected => @city.try(:id), :label => "city : "}, :required => true
+    %li.spacing
+    =f.fields_for :survey do |sf|
+      =sf.text_field :referred_by, :label => "referred by :", :placeholder => "referred by"
+      %li.note 
+        how did you hear about us?
+        =link_to "referral code?", "#referral_code", :class => "reveals"
+      #referral_code.hidden=f.text_field :referral_code, :label => "referral code : ", :placeholder => "referral code"
+      =sf.text_field :favrestaurant, :label => "favorite restaurant: ", :placeholder => "favorite restaurant", :required => true
+      %li.note demonstrate your refined taste.
+        
+    %li.buttons.clearfix
+      =button_tag :class => "btnorg300x41 cgothic" do
+        apply now
+      

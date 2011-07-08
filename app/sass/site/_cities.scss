@@ -1,0 +1,42 @@
+.site_cities {
+  background: #000;
+  .main {
+    .title {
+      height: 40px;
+      line-height: 40px;
+      margin: 0 0 10px 0;
+    }    
+  }
+  .featsection {
+    margin: 20px auto;
+    .evtdis {
+      .image {
+        width: 835px;
+        height: 392px;
+        overflow: hidden;
+        position: relative;
+        .name {
+          font-size: 20px;
+        }
+        img {
+          top: -67px;
+          width: 855px;
+          height: 535px;
+        }
+      }
+    }
+  }
+  .evtdis {
+    margin: 10px 0;
+    width: 400px;
+    .image {
+      height: 250px;
+      width: 400px;
+      position: relative;
+    }
+    .description {
+      color: #000 !important;
+      padding: 0 10px;
+    }
+  }
+}

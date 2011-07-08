@@ -19,6 +19,7 @@ Spot::Application.routes.draw do
     resource :account, :only => [:new, :create, :show, :update, :destroy]
     resource :password_reset, :only => [:new, :create, :edit, :update]
     resources :cities, :only => [:show]
+    resources :applications, :only => [:create, :destroy, :edit, :show, :new], :controller => "membership_applications"
     resources :places, :only => [:show] do
       resources :events, :only => [:show]
     end
@@ -36,6 +37,8 @@ Spot::Application.routes.draw do
     end
     controller "home" do
       get "about", :action => "about"
+      get "privacy", :action => "privacy"
+      get "tos", :action => "tos"
       get "press", :action => "press"
       get "getspot", :action => "getspot"
       get "viewemail", :action => "email"
