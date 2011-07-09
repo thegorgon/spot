@@ -17,7 +17,7 @@
             We'll even throw in a free month's subscription.
           %td{:width => 10}
           %td
-            %div{:style => "margin-top: 10px;width:77px;height:32px;background:transparent url(http://www.spot-app.com/images/buttons/flatgry77x32.png) no-repeat left center;text-align:center;line-height:32px;"}
+            %div{:style => "margin-top: 10px;width:77px;height:32px;background:transparent url(#{IMGHOST}buttons/flatgry77x32.png) no-repeat left center;text-align:center;line-height:32px;"}
               =link_to "Share", application_url(@application), :style => "color:#333;font-weight:bold;text-decoration:none;"
         
   .right.bucket.last
@@ -25,4 +25,6 @@
       Ya, there's an app for that...
     %p{:style => "margin-top: 10px;"}
       Use our app to remember places you want to go. We'll go to those places on your behalf to make sure your visit is unforgettable.
-      / =img_link_to "assets/general/appstoregry162x56.png", getspot_path, :size => "162x56", :class => "getspot"
+      %p
+        %a{:href => getspot_url}
+          =image_tag "#{IMGHOST}assets/general/appstoregry162x56.png", :size => "162x56"

@@ -75,7 +75,7 @@ module TagHelper
     if place_page?
       tags << meta_property("og:image", @place.image.url(:i640x400))
     else
-      tags << meta_property("og:image", "http://www.spot-app.com/images/logos/og_image.png")
+      tags << meta_property("og:image", "#{IMGHOST}logos/og_image.png")
     end
     tags << meta_property("og:title", page_title)
     tags << meta_property("og:description", page_description)
