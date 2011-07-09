@@ -1,6 +1,8 @@
 =content_for :content do
   .oreo 
     =yield :above
+    %h1.cgothic.toptitle=yield :toptitle
+    
     .main
       =content_for?(:oreo) ? yield(:oreo) : yield
     .footer

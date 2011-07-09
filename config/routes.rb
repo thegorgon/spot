@@ -23,6 +23,7 @@ Spot::Application.routes.draw do
     resources :places, :only => [:show] do
       resources :events, :only => [:show]
     end
+    resource :membership, :only => [:new, :create]
 
     resources :subscriptions, :only => [:new] do
       get "endpoint", :action => "endpoint", :on => :collection

@@ -36,5 +36,5 @@
         self.find('img').sizeToFit(self, options);
       });
     }
-  })
-}(jQuery))
+  });
+}(jQuery));

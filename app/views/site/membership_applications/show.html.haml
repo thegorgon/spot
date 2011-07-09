@@ -2,9 +2,8 @@
   .cityscape.stretcher{'data-gravity' => "1.0x1.0"}
     =image_tag "/images/cities/#{@city.slug}2.jpg", :size => "2292x1524"
 
-=content_for :above do
-  %h1.toptitle.breadcrumbs.cgothic
-    Thank you for applying.
+=content_for :toptitle do
+  Thank you for applying.
 
 -if @application.approved?
   %h1.cgothic Congratulations. You're application has been approved.

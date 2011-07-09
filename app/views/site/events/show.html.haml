@@ -9,13 +9,14 @@
         %h1.cgothic.left Get unlimited access to unforgettable experiences like this
         =button_tag :class => "btnorg170x41 btnmembership cgothic right" do
           apply now
-  %h1.toptitle.breadcrumbs.cgothic
-    -if @city
-      =link_to @city.name.titlecase, city_path(@city)
-      ⋅
-    =@promotion.business.place.name
+
+=content_for :toptitle do
+  -if @city
+    =link_to @city.name.titlecase, city_path(@city)
     ⋅
-    =@promotion.name
+  =@promotion.business.place.name
+  ⋅
+  =@promotion.name
     
 .evtdis
   .image=image_tag @place.image.url(:i640x400), :size => "856x535"

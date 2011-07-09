@@ -2,6 +2,9 @@
   .cityscape.stretcher{'data-gravity' => "0.5x0.5"}
     =image_tag "/images/cities/#{@city.slug}1.jpg", :size => "2292x1524"
 
+=content_for :toptitle do
+  =@city.name.titlecase
+
 =content_for :above do
   -unless current_member?
     .overlay.clearfix
@@ -10,7 +13,6 @@
           Get access to all these unforgettable experiences
         =button_tag :class => "btnorg170x41 btnmembership cgothic right" do
           apply now
-  %h1.cgothic.toptitle=@city.name.titlecase
       
 .title.clearfix
   %h1.left.cgothic Featured Member Benefits
