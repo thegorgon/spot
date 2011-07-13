@@ -123,6 +123,12 @@ h1 {
   right: 0px;
   bottom: 0px;
 }
+hr.light {
+  height: 1px;
+  border-top: 1px solid #ededed;
+  background: #ddd;
+  border-bottom: 1px solid #fff;
+}
 .prose {
   p, ol, ul {
     line-height: 1.4em;

@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   has_many :credit_cards
   has_many :subscriptions
   has_many :memberships
+  has_many :codes, :foreign_key => :owner_id, :class_name => "PromotionCode"
+  has_one :membership_application
   has_one :business_account
   has_one :facebook_account
   has_one :password_account
@@ -40,28 +42,15 @@ class User < ActiveRecord::Base
       finder.first
     end
   end
-  
-  def self.from_customer(customer)
-    #TODO : Worry about how to handle existing emails who don't have paswords
-    unless user = find_by_customer_id(customer.id)
-      pass_account = PasswordAccount.register( :login => customer.email,
-                                               :password => customer.custom_fields[:password],
-                                               :first_name => customer.first_name, 
-                                               :last_name => customer.last_name )
-      pass_account.user.customer_id = customer.id
-      pass_account.save!
-      user = pass_account.user
-    end
-    user.city_id = customer.custom_fields[:city_id]
-    customer.credit_cards.each { |cc| user.add_credit_card(cc) }
-    user.save
-    user
-  end
-  
+    
   def self.register(params)
     account = FacebookAccount.authenticate(params)
     account ||= PasswordAccount.register(params)
-    account.try(:user)
+    user = account.try(:user)
+    if user
+      user.city_id = params[:city_id]
+    end
+    user
   end
   
   def merge_with!(new_user)
@@ -80,6 +69,10 @@ class User < ActiveRecord::Base
     self
   end
   
+  def active_membership
+    memberships.active.first
+  end
+    
   def member?
     memberships.active.exists?
   end
@@ -93,14 +86,13 @@ class User < ActiveRecord::Base
     self.class.where(:id => id).update_all(["login_count = COALESCE(login_count, 0) + 1, current_login_at = ?, updated_at = ?", Time.now.utc, Time.now.utc])    
   end
   
+  def names
+    [first_name, last_name]
+  end
+  
   def add_credit_card(cc)
     credit_cards.create do |card|
-      card.token = cc.token
-      card.card_type = cc.card_type
-      card.bin = cc.bin
-      card.last_4 = cc.last_4
-      card.expiration_month = cc.expiration_month
-      card.expiration_year = cc.expiration_year
+      card.sync_with(cc)
     end
   end
   

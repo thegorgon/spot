@@ -1,0 +1,23 @@
+-cssclass ||= nil
+
+.explanation.howitworks{:class => cssclass}
+  .title.tf
+    How it Works
+  %hr
+  .content
+    -if @promotion
+      %ul
+        %li 
+          ="Come to #{@place.name} on the specified dat"
+          between
+          =Time.twelve_hour(@promotion.start_time)
+          and
+          =Time.twelve_hour(@promotion.end_time)
+        %li Present your 4 digit code. 
+        %li="Enjoy your experience."
+    -else
+      %p
+        Spot members get 
+        exclusive access to VIP privileges, 
+        unique promotions, and unforgettable experiences 
+        at the best restaurants in town.

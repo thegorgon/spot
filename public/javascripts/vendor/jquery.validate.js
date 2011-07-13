@@ -11,7 +11,7 @@
         $(input).parents('li:first').find('.validity, label').removejstooltip();
       },
       validity = function(input, val, message) {
-        if ($(input).valid() || val || $(input).parent('li').is('.loading')) {
+        if ($(input).valid() || val || $(input).parents('li:first').is('.loading')) {
           $(input).valid(val);
           return val ? valid(input) : invalid(input, message);        
         }
@@ -155,7 +155,8 @@
     onSubmit: false,
     selector: '[data-validate-url]',
     test: function() {
-      var url = $(this).attr('data-validate-url'), self = this;
+      var url = $(this).attr('data-validate-url'), 
+        self = this;
       if ($(self).valid()) {
         $.validations.loading(self);
         $.ajax({

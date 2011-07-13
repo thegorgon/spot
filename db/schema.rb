@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(:version => 20110701190749) do
 
   create_table "credit_cards", :force => true do |t|
     t.integer  "user_id"
+    t.string   "cardholder_name"
     t.string   "token"
     t.string   "card_type"
     t.string   "bin"
@@ -256,6 +257,7 @@ ActiveRecord::Schema.define(:version => 20110701190749) do
     t.string   "token",         :null => false
     t.string   "referral_code", :null => false
     t.text     "survey",        :null => false
+    t.datetime "approved_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -436,6 +438,7 @@ ActiveRecord::Schema.define(:version => 20110701190749) do
 
   create_table "subscriptions", :force => true do |t|
     t.integer  "user_id"
+    t.integer  "credit_card_id"
     t.string   "plan_id"
     t.string   "braintree_id"
     t.integer  "price_cents"

@@ -27,7 +27,7 @@ javascripts:
     - public/javascripts/shared/modal.js
     - public/javascripts/shared/image_selector.js
     - public/javascripts/shared/slideshow.js
-    - public/javascripts/shared/payment_dialog.js
+    - public/javascripts/shared/payment_form.js
     - public/javascripts/shared/views.js
     - public/javascripts/site/site.js
     - public/javascripts/admin/admin.js

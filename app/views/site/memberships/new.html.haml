@@ -1,0 +1,69 @@
+=content_for :bgimage do
+  .stretcher{'data-gravity' => "1.0x1.0"}
+    =image_tag "stretcher/cities/sf3.jpg", :size => "2292x1524"
+
+=content_for :toptitle do
+  Become a Member
+  
+.titles
+  %h1.tf
+    Congratulations. Your application has been accepted.
+  
+  %h1.tf
+    Just one last question...how will you be paying?
+
+=spot_form_for :customer, :url => Braintree::TransparentRedirect.url, :display => "cc light clearfix inlinelabels", :html => {:autocomplete => "off"} do |f|
+  =hidden_field_tag :tr_data, ERB::Util.html_escape(@trdata)
+  =f.fields_for :custom_fields do |cf|
+    =cf.hidden_field :subscription_plan_id, :value => ""
+  .paymentoptions.clearfix
+    .paymentoption.monthly.left{"data-value" => "ea_monthly"}
+      .title.tf grande
+      .description
+        .mval.tf 
+          %span.currency $
+          4.99
+          .period="/mo"
+        %ul.points
+          %li Full member benefits
+          %li Payment recurs monthly
+          %li Unsubscribe at any time
+      .button
+        %a{:class => "btnorg77x32 tf", :href => "#"}
+          Select
+    
+    .paymentoption.annually.right{"data-value" => "ea_annually"}
+      .title.tf venti
+      .description
+        .mval.tf
+          %span.currency $
+          34.99
+          .period="/yr"
+        %ul.points
+          %li Full member benefits
+          %li Payment recurs annually
+          %li
+            %strong
+              Save over 40%
+      .button
+        %a{:class => "btnorg77x32 tf", :href => "#"}
+          Select
+  / .promocode
+  /   =link_to "Apply a Promo Code?", "#promocodefields", :class => "reveals"
+  / #promocodefields
+  /   =f.text_field :promo_code, :placeholder => "code", :label => "promo code : "
+
+  .ccfields.hidden
+    %h1.tf Imagine a credit card...
+    =f.fields_for :credit_card do |ccf|
+      -cc = CreditCard.new(:cardholder_name => current_user.name, :expiration => Time.now + 1.year)
+      =render :partial => "/shared/payments/creditcard", :locals => {:form => ccf, :creditcard => cc}
+    %li.buttons
+      =button_tag :class => "btnorg300x41 tf" do
+        finish & pay
+        
+        
+.explanations.clearfix
+  =render :partial => "/site/shared/explanations/howitworks"
+  / / =render :partial => "/site/shared/explanations/fineprint"
+  =render :partial => "/site/shared/explanations/guarantee"

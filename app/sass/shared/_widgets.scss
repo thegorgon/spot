@@ -257,7 +257,7 @@ ul.pillbox {
   }
 }
 .ui-widget-overlay {
-  position: absolute;
+  position: fixed;
   top: 0px;
   left: 0px;
   width: 100%;
@@ -407,10 +407,15 @@ ul.pillbox {
 .applydialog {
   background: #f0f0f0;
   padding: 20px 30px;
-  p {
-    padding: 10px 0 0 0;
+  h1 {
+    margin: 0 0 20px 0;
+    img {
+      margin-bottom: -17px;
+    }
+  }
+  .about {
+    padding: 10px 0 20px 0;
     font-size: 14px;
-    width: 300px;
     strong, em {
       font-weight: bold;
       font-style: normal;
@@ -418,6 +423,10 @@ ul.pillbox {
     em {
       color: #ff8419;
     }
+  }
+  .descriptions {
+    width: 280px;
+    padding-right: 20px;
   }
   ul.form {
     margin: 10px auto 0;
@@ -427,7 +436,24 @@ ul.pillbox {
         float: right;
       }
     }
+    hr {
+      @extend hr.light;
+      margin: 20px 0px 20px 120px;      
+    }
+    .survey {
+      li.text {
+        width: 300px;
+        padding-left: 120px;
+      }
+    }
+    li.question {
+      text-align: left;
+      font-weight: bold;
+    }
     li.note {
+      text-align: right;
+    }
+    li.note, li.question {
       padding-left: 120px;
     }
     .name {
@@ -495,7 +521,6 @@ ul.pillbox {
     color: #fff;
     padding: 10px 35px 10px 8px;
     .name {
-      @include cgothic;
       font-size: 15px;        
       text-shadow: #000 0px 1px 0x;
     }
@@ -504,5 +529,211 @@ ul.pillbox {
     margin: 5px 0 0 0;
     font-size: 14px;
     line-height: 15px;
+  }
+}
+
+.explanation {
+  margin-top: 10px;
+  text-align: left;
+  .title {
+    padding: 5px 0 5px 35px;
+    margin: 0;
+    height: 27px;
+    overflow: visible;
+    line-height: 32px;
+    font-size: 18px;
+    background: transparent no-repeat left center;
+  }
+  &.guarantee {
+    .title {
+      img {
+        margin-bottom: -7px;
+      }
+      background-image: url("/images/icons/starburst24x24.png");
+    }
+  }
+  &.howitworks {
+    .title {
+      background-image: url("/images/icons/questioncir22x22.png");
+    }
+  }
+  &.fineprint {
+    .title {
+      background-image: url("/images/icons/magnifyshdw22x22.png");
+    }    
+  }
+  &.pricing {    
+    .title {
+      background-image: url("/images/icons/pricetag28x25.png");
+    }
+  }
+  hr {
+    @extend hr.light;
+    margin: 0;
+  }
+  .content {
+    li {
+      font-size: 12px;
+      margin: 8px 0;
+    }
+    p {
+      font-size: 12px;
+      margin: 8px 0;
+      padding: 0;
+    }
+  }
+}
+
+
+.creditcard {
+  text-align: left;
+  position: relative;
+  background: transparent url(/images/backgrounds/card340x204.png) no-repeat 0 0;
+  font-family: consolas, courier, monospace;
+  text-shadow: rgba(0,0,0,0.5) 0px 1px 1px;
+  width: 286px;
+  height: 150px;
+  padding: 24px 27px;
+  font-size: 14px;
+  &.editable.present {
+    .editmode {
+      display: none;
+    }
+    &:hover, &.editing {
+      .editmode {
+        display: block;
+      }
+      .displaymode {
+        display: none;
+      }
+      .logo {
+        background-image: url('/images/icons/pencil20x20.png');
+      }
+    }
+  }
+  ul.form.cc & {
+    .editmode {
+      .username {
+        margin: 8px 0;
+        input {
+          width: 230px;
+          text-transform: uppercase;
+        }
+      }
+      .numcontainer {
+        margin: 0 0 8px;
+      }
+      .ccnumber {
+        width: 270px;
+        margin: 0;
+      }
+      li {
+        margin: 0;
+        width: 286px;
+      }
+      .cvvcontainer {
+        width: 76px;
+        float: right;
+        margin: 0 0 10px;
+        input {
+          width: 60px;
+          text-align: left;
+        }
+      }
+      .expiration {
+        width: 203px;
+        margin: 0 0 10px;
+        padding-top: 5px;
+        width: 203px;
+        label {
+          margin-right: 5px;
+          float: left;
+          height: 22px;
+          line-height: 22px;
+        }
+        select {
+          position: static;
+          float: left;
+          height: 20px;
+          line-height: 20px;
+          &.month {
+            width: 50px;          
+            margin-right: 5px;
+          }
+          &.year {
+            width: 65px;
+          }
+        }
+      }
+      input {
+        padding: 10px 8px 6px;
+        font-family: consolas, courier, monospace;
+        height: 14px;
+        line-height: 14px;
+        @include border_radius(0px);
+        border: 1px solid #ededed;
+        @include box_shadow(rgba(0,0,0,0.5) 0px 0px 5px inset);
+      }
+      .invalid input {
+        border: 1px solid #933;
+      }
+      .placeholder {
+        height: 20px;
+        line-height: 25px;
+      }
+    }
+  }
+  .displaymode {
+    .username {
+      margin: 15px 0 0;
+    }
+    .ccnumber {
+      font-size: 20px;
+      margin: 23px 0;
+    }
+  }
+  .logo {
+    background: transparent url(/images/logos/sgray22x22.png) no-repeat center center;    
+    position: absolute;
+    top: 36px;
+    right: 31px;
+    width: 22px;
+    height: 22px;
+  }
+  .expiration {
+    float: left;
+  }
+  .security {
+    background: transparent url(/images/icons/lockgry14x21.png) no-repeat top left;
+    position: absolute;
+    bottom: 24px;
+    left: 27px;
+    width: 14px;
+    height: 21px;
+  }
+  .types {
+    height: 25px;
+    background: transparent url(/images/assets/creditcards/gryaccepted171x25.png) no-repeat top left;
+    width: 171px;
+    margin: 0;
+    position: absolute;
+    bottom: 24px;
+    right: 27px;
+    &.selected {
+      background-image: url(/images/assets/creditcards/accepted171x25.png);
+      width: 40px;
+    }
+    &.visa {
+      background-position: 0 0;
+    }
+    &.mastercard {
+      background-position: -45px 0;
+    }
+    &.amex {
+      background-position: -90px 0;
+    }
+    &.discover {
+      background-position: -135px 0;
+    }
   }
 }

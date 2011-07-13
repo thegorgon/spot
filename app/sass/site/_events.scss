@@ -1,13 +1,5 @@
 .site_events {
   .main {
-    .cgothic {
-      text-shadow: #fff 0px 1px 0px;
-    }
-    hr {
-      height: 0px;
-      border-top: 1px solid #ddd;
-      border-bottom: 1px solid #fff;
-    }
     .name {
       font-size: 25px;
       margin-bottom: 10px;
@@ -18,30 +10,10 @@
   }
   .explanation {
     float: left;
-    width: 268px;
+    width: 264px;
     margin-right: 14px;
     &.last {
-      margin: 0;
-    }
-    .title {
-      padding: 5px 0;
-      margin: 0;
-      height: 27px;
-      overflow: visible;
-      line-height: 12px;
-    }
-    hr {
-      margin: 0;
-      border-top: 1px solid #808080;
-    }
-    .content {
-      font-size: 12px;
-      li {
-        margin: 1em 0;
-      }
-      p {
-        margin: 1em 0;
-      }
+      margin-right: 0;
     }
   }
   .details {
@@ -49,7 +21,10 @@
     margin-bottom: 30px;
     .event {
       width: 556px;
-      float: left;        
+      float: left;
+      .name {
+        margin-top: 5px;
+      }    
     }
     .place {
       width: 250px;
@@ -66,8 +41,8 @@
         line-height: 16px;
         margin-left: 10px;
       }
-      h2 {
-        font-size: 25px;
+      h1 {
+        line-height: 35px;
         margin-bottom: 5px;
       }
       .info {
@@ -103,6 +78,17 @@
   .availability {
     font-size: 18px;
     margin-top: 30px;
+    position: relative;
+    .shield {
+      z-index: 100;
+      @include opacity(0.6);
+      background: #f0f0f0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
     .dates {
       width: 556px;
       float: left;
@@ -242,11 +228,11 @@
         }
         &:hover, &.hover {
           background: #ff8419;
-          .join {
-            display: block;
-          }
           .text {
             display: none;
+          }
+          .claim {
+            display: block;
           }
         }
       }

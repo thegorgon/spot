@@ -12,7 +12,7 @@
     init: function(element, options) {
       options = options || {};
       var dialog = $(element),
-        position = options.position || ["center", 200];
+        position = options.position || ["center", "center"];
       
       options = $.extend({
         modal: false, 

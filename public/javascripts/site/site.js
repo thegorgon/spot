@@ -50,17 +50,7 @@
       });
     },
     site_cities_show: function() {
-      $('#applydialog').removeClass('hidden').dialog({
-        title: $('#applydialog').attr('data-title'),
-        closeText: '',
-        modal: false,
-        width: 825,
-        autoOpen: false
-      });
-      $('.btnmembership').click(function(e) {
-        $('#applydialog').dialog('open');
-        $('input, button').blur();
-      });
+      $('#applydialog').modal({trigger: '.btnmembership', width: 875});
     },
     site_home_press: function() {
       go.AppPreview.init();
@@ -87,7 +77,18 @@
       } catch(e) {
       }
       
-      $('#applydialog').modal({trigger: '.btnmembership', width: 825});
+      $('#applydialog').modal({trigger: '.btnmembership', width: 875});
+    },
+    site_memberships_new: function() {
+      go.PaymentForm.init({form: $('form')});
+    },
+    site_accounts_show: function() {
+      go.PaymentForm.init({form: $('ul.form.cc form')});
+      $('#applydialog').modal({trigger: '.btnmembership', width: 875});
+      $('.creditcard').click(function(e) {
+        e.preventDefault();
+        $(this).addClass('editing').parents('ul.form').addClass('editing');
+      });
     }
   });
 }(Spot));

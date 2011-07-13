@@ -1,10 +1,17 @@
 =content_for :content do
   .oreo 
     =yield :above
-    %h1.cgothic.toptitle=yield :toptitle
-    
-    .main
-      =content_for?(:oreo) ? yield(:oreo) : yield
+    .filling
+      .toptitle.clearfix
+        %h1.tf.left=yield :toptitle
+        .right
+          -if current_user && !current_page?(account_path)
+            =link_to current_user.nickname, account_path, :class => "accountlnk"
+            %span.logout="(&nbsp;#{link_to "not you?", logout_path}&nbsp;)".html_safe
+          -elsif current_page?(account_path)
+            %span.logout=link_to "logout?", logout_path
+      .main
+        =content_for?(:oreo) ? yield(:oreo) : yield
     .footer
       =image_tag "logos/spotwhite120x90.png", :size => "40x30", :class => "logo"
       ⋅

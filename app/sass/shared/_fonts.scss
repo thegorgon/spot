@@ -1,11 +1,3 @@
-/*@font-face {
-  font-family: "Century Gothic";
-  src: url("/fonts/century_gothic.eot");
-}
-@font-face {
-  font-family: "Century Gothic";
-  src: url("/fonts/century_gothic.ttf") format("truetype");
-}*/
 @font-face {
   font-family: "Century Gothic";
   src: url("/fonts/century_gothic_bold.eot");
@@ -16,10 +8,10 @@
   src: url("/fonts/century_gothic_bold.ttf") format("truetype");
   font-weight: bold;
 }
-@mixin cgothic {
-  font-weight: bold;
-  font-family: "Century Gothic", "Futura", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+@mixin titlefont {
+  font-family: museo-sans, "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+  font-weight: 500;
 }
-.cgothic {
-  @include cgothic;
+.tf {
+  @include titlefont;
 }

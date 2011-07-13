@@ -12,6 +12,9 @@
       color: #556B2F;
     }
   }
+  hr {
+    margin: 20px 0;
+  }
   .hd {
     margin-bottom: 15px;
   }
@@ -19,9 +22,18 @@
     margin: 20px 0;
   }
   .bucket {
-    margin: 20px 0 0;
     width: 394px;
     padding-right: 15px;
+    .img {
+      img {
+        border: 1px solid #333;
+      }
+      margin: 15px 0;
+    }
+    a.getspot {
+      display: block;
+      text-align: center;
+    }
     .text {
       font-size: 14px;
       p {
@@ -29,15 +41,171 @@
       }
       input {
         font-size: 12px;
-        width: 200px;
+        width: 239px;
       }
       .share {
         margin: 5px;
+        &.last {
+          margin-right:0px;
+        }
       }
     }
     &.last {
       padding-left: 15px;
       border-right: none;
+    }
+  }
+}
+
+.site_memberships {
+  .main {
+    text-align: center;
+  }
+  .titles {
+    h1 {
+      margin-bottom: 15px;
+    }
+  }
+  .creditcard {
+    margin: 0 auto;
+  }
+  ul.form {
+    li.buttons {
+      text-align: center;
+      margin: 15px auto 0;
+    }    
+  }
+  .explanations {
+    width: 580px;
+    margin: 20px auto 0;
+    .explanation {
+      float: left;
+      width: 268px;
+      margin-right: 14px;
+      &.guarantee {
+        float: right;
+        margin-right: 0;
+      }
+      .content {
+        p {
+          font-size: 14px;
+          line-height: 1.2em;
+        }
+      }
+    }
+  }
+  .promocode {
+    margin: 0 auto 10px;
+  }
+  .ccfields {
+    margin: 20px 0 0;
+  }
+  #promocodefields {
+    &, li {
+      width: 280px;      
+    }
+    margin: 0 auto;
+    .label {
+      width: 80px;
+    }
+    input, .input {
+      width: 170px;
+    }
+  }
+  .paymentoptions {
+    width: 470px;
+    margin: 20px auto 10px;
+    &.selected {
+      .paymentoption {
+        opacity: 0.5;
+      }
+    }
+    .paymentoption {
+      @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px);
+      width: 200px;
+      height: 220px;
+      border: 1px solid #999;
+      @include border_radius(5px);
+      position: relative;
+      cursor: pointer;
+      .button {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        a {
+          margin: 0 auto;
+        }        
+      }
+      .description {
+        padding: 10px;
+      }
+      .points {
+        text-align: center;
+        clear: both;
+        margin: 0;
+        font-size: 14px;
+      }
+      &.monthly {
+        .mval {
+          width: 75px;
+          padding-right: 25px;
+        }
+      }
+      &.annually {
+        margin-right: 0px;
+        .mval {
+          width: 92px;
+        }
+      }
+      &:hover, &.hover {
+        @include box_shadow("none");
+        opacity: 1.0;
+        background: #fff;
+        a {
+          background-position: 0px -33px;          
+        }
+      }
+      &:active, &.active {
+        @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px inset);
+        background: #fff;
+        opacity: 1.0;
+        .title {
+          @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px inset);
+        }
+        a {
+          background-position: 0px -66px;          
+        }
+      }
+      .title {
+        font-size: 20px;
+        padding: 2px 0 4px;
+        background: #999;
+        color: #f0f0f0;
+        font-weight: bold;
+        text-shadow: 0px -1px 0px rgba(0,0,0,0.25);
+        text-align: center;
+      }
+      .mval {
+        margin: 0 auto;
+        font-size: 35px;
+        position: relative;
+        padding: 0 17px 0 10px;
+        text-shadow: 0px 1px 0px rgba(255,255,255,0.75);
+        .period {
+          position: absolute;
+          bottom: 7px;
+          right: 0;
+          font-size: 14px;
+        }
+        .currency {
+          position: absolute;
+          top: 5px;
+          @include transform("rotate(7deg)");
+          left: 0;
+          font-size: 18px;
+        }
+      }
     }
   }
 }

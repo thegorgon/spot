@@ -20,7 +20,6 @@
         padding: 10px;
         background: rgba(0,0,0, 1.0) no-repeat center center;
         h1 {
-          @include cgothic;
           text-shadow: rgba(0,0,0,0.75) 0px 1px 0px;
           text-align: center;
           margin: 0 auto;
@@ -66,7 +65,6 @@
           float: left;
           padding-right: 20px;
           background: transparent url(/images/icons/fwdarrowwht14x21.png) no-repeat right center;
-          @include cgothic;
           &:hover {
             background-image: url(/images/icons/fwdarrow14x21.png);
             color: #ff8419;
@@ -92,7 +90,6 @@
           display: block;
           background: #999;
           color: #fff;
-          @include cgothic;
           text-shadow: rgba(0,0,0,0.75) 0px 1px 0px;
           text-decoration: none;
           &:hover {
@@ -133,7 +130,6 @@
     right: 40px;
     height: 20px;
     bottom: 100px;
-    @include cgothic;
     color: #fff;
     font-size: 20px;
     text-shadow: rgba(0,0,0,0.75) 0px 2px 0px;

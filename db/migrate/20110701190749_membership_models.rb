@@ -2,6 +2,7 @@ class MembershipModels < ActiveRecord::Migration
   def self.up
     create_table :credit_cards do |t|
       t.integer :user_id
+      t.string :cardholder_name
       t.string :token
       t.string :card_type
       t.string :bin
@@ -37,6 +38,7 @@ class MembershipModels < ActiveRecord::Migration
       t.string   :token, :null => false
       t.string   :referral_code, :null => false
       t.text     :survey, :null => false
+      t.datetime  :approved_at
       t.timestamps
     end
     add_index :membership_applications, [:city_id, :user_id], :unique => true
@@ -60,6 +62,7 @@ class MembershipModels < ActiveRecord::Migration
     
     create_table :subscriptions do |t|
       t.integer   :user_id
+      t.integer   :credit_card_id
       t.string    :plan_id
       t.string    :braintree_id
       t.integer   :price_cents

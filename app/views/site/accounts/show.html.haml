@@ -1,25 +1,87 @@
-.account.clearfix
-  %h1.title
-    =current_user.nickname
-    %span.xsmall="( #{link_to "that's not me!", login_path} )".html_safe
-  %hr
-  .relative.clearfix
-    .left.lcol
-      %h2.aboutme About Me
-      =spot_form_for current_user, :as => :account, :url => account_path, :display => "light inlinelabels insetvalidity clearfix" do |f|
-        =f.name_fields :label => "name : "
-        =f.text_field :email, :placeholder => "email", :label => "email : "
-        =f.text_field :location, :label => "city : ", :placeholder => "city"
+=content_for :toptitle do
+  =current_user.nickname
+  
+
+-membership = current_user.active_membership
+.relative.clearfix
+  .left.lcol
+    %h2.aboutme.tf.top About Me
+    =spot_form_for current_user, :as => :account, :url => account_path, :display => "light inlinelabels insetvalidity clearfix" do |f|
+      =f.name_fields :label => "name : ", :value => current_user.names
+      =f.text_field :email, :placeholder => "email", :label => "email : "
+      =f.select 'city_id', City.subscriptions_available.all.collect { |c| [c.name_and_region, c.id] }, {:validity => false, :prompt => "select your city", :label => "city : "}, :required => true
+      =button_tag :class => "btngrypill300x30 right" do
+        Save Changes
+    -if password = current_user.password_account
+      %h2.changepassword.tf Change Password
+      =spot_form_for password, :as => :password_account, :url => account_path, :display => "light inlinelabels insetvalidity clearfix" do |f|
+        =f.password_field :current_password, :placeholder => "current password", :label => "current : ", :required => true, :hint => "for sercurity's sake", :minlength => 4, :maxlength => 25
+        =f.password_field :password, :placeholder => "new password", :label => "new : ", :required => true, :hint => "4 to 25 characters please", :minlength => 4, :maxlength => 25
         =button_tag :class => "btngrypill300x30 right" do
-          Save Changes
-      -if password = current_user.password_account
-        %h2.changepassword Change Password
-        =spot_form_for password, :as => :password_account, :url => account_path, :display => "light inlinelabels insetvalidity clearfix" do |f|
-          =f.password_field :current_password, :placeholder => "current password", :label => "current : ", :required => true, :hint => "for sercurity's sake", :minlength => 4, :maxlength => 25
-          =f.password_field :password, :placeholder => "new password", :label => "new : ", :required => true, :hint => "4 to 25 characters please", :minlength => 4, :maxlength => 25
-          =button_tag :class => "btngrypill300x30 right" do
-            Change Password
-    .separator
-    .right.rcol
-      %h2.mymembership My Spot Membership
-      %h2.myevents My Upcoming Events
+          Change Password
+  .separator
+  .right.rcol
+    %h2.myevents.tf.top My Upcoming Events
+    %ul.events
+      -if current_user.codes.empty?
+        -if current_user.member?
+          You haven't registered for any events yet. Check out 
+          =link_to "our events in your city", city_path(membership.city)
+          and enjoy an unforgettable experience.
+        -elsif current_user.membership_application 
+          Spot Events are only open to Spot Members.
+          %p
+            -if current_user.membership_application.approved?
+              Congratulations! Your application has been approved.
+              =link_to "Continue the application process.", new_membership_path
+            -else
+              We've received 
+              =link_to "your application", application_path(current_user.membership_application) 
+              and it is currently under review. We'll be in touch shortly, but if you're eager, you can
+              =link_to "check the status", application_path(current_user.membership_application) 
+              at any time.          
+        -else
+          .applyline
+            Events are only open to Spot Members :
+            =button_tag :class => "btnmembership btnorg77x32 right" do
+              Apply
+            
+      -current_user.codes.each do |code|
+        %li=code
+    
+    -if current_user.member?
+      %h2.mymembership.tf My Spot Membership
+      %ul.membership
+        -payment = membership.payment_method
+        %li.subtitle
+          %strong 
+            =membership.city.slug.upcase
+            Member since :
+          =membership.starts_at.strftime("%B %d, %Y")
+          ="( #{link_to "cancel", membership_path, "data-method" => "DELETE", "data-confirm" => "Are you sure you want to cancel your Spot Membership?"} )".html_safe
+        -if payment.respond_to?(:next_bill_date) && payment.next_bill_date
+          %li.subtitle
+            %strong Next bill date : 
+            =payment.next_bill_date.strftime("%B %d, %Y")
+        -if payment.respond_to?(:cancelled_at) && payment.cancelled_at
+          %li.subtitle
+            %strong Cancelled on :
+            =payment.cancelled_at.strftime("%B %d, %Y")
+        -if payment.respond_to?(:expires_at) && payment.expires_at
+          %li.subtitle
+            %strong Expires on :
+            =payment.expires_at.strftime("%B %d, %Y")
+        %li.subtitle
+          %strong Payment Method :
+          -if payment.respond_to?(:credit_card) && card = payment.credit_card
+            =spot_form_for :credit_card, :url => Braintree::TransparentRedirect.url, :display => "light cc" do |f|
+              -trdata = Braintree::TransparentRedirect.update_credit_card_data(:redirect_url => endpoint_account_url, :payment_method_token => card.token)
+              =hidden_field_tag :tr_data, ERB::Util.html_escape(trdata)
+              
+              =render :partial => "/shared/payments/creditcard", :locals => {:form => f, :creditcard => card}
+              %li.button
+                =button_tag :class => "btnorg300x41 tf" do
+                  save changes
+                
+#applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Spot Member"}
+  =render :partial => "/shared/membership/apply"

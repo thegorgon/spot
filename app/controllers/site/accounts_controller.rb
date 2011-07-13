@@ -16,9 +16,25 @@ class Site::AccountsController < Site::BaseController
       render :action => :new
     end
   end  
-
+  
+  def endpoint
+    @result = Braintree::TransparentRedirect.confirm(request.query_string)
+    if @result.credit_card
+      @card = CreditCard.find_by_token(@result.credit_card.token)
+      @card.sync_with(@result.credit_card)
+    end
+    
+    if @card.try(:save)
+      flash[:notice] = "Credit Card Updated!"
+      redirect_to account_path
+    else
+      flash[:error] = "Something Went Wrong...Try Again?"
+      show
+    end
+  end
+  
   def show
-    render :layout => "lightsite"
+    render :layout => "oreo"
   end
   
   def update

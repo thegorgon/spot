@@ -19,12 +19,15 @@
   = yield :head
   -if Rails.env.production?
     = google_analytics_tag(:account_id => 'UA-21193799-1')
+  %script{:src => "http://use.typekit.com/eqy7aff.js", :type => "text/javascript"}
+  %script{:type => "text/javascript"}
+    try{Typekit.load();}catch(e){}
     
 %body{:id => page_namespace, :class => "#{module_names} #{controller_name}"}
   #bg.preload_bg
     =yield :bg
-  = flashes
   #page
+    = flashes
     %header= yield :header
     #bd= content_for?(:content) ? yield(:content) : yield
     %footer= yield :footer

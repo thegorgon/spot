@@ -1,6 +1,6 @@
 =content_for :bgimage do
-  .cityscape.stretcher{'data-gravity' => "0.5x0.5"}
-    =image_tag "/images/cities/#{@city.slug}1.jpg", :size => "2292x1524"
+  .stretcher{'data-gravity' => "0.5x0.5"}
+    =image_tag "stretcher/cities/#{@city.slug}1.jpg", :size => "2292x1524"
 
 =content_for :toptitle do
   =@city.name.titlecase
@@ -9,16 +9,17 @@
   -unless current_member?
     .overlay.clearfix
       .title.clearfix
-        %h1.cgothic.left
+        %h1.tf.left
           Get access to all these unforgettable experiences
-        =button_tag :class => "btnorg170x41 btnmembership cgothic right" do
+        =button_tag :class => "btnorg170x41 btnmembership tf right" do
           apply now
       
 .title.clearfix
-  %h1.left.cgothic Featured Member Benefits
-  .right
-    =button_tag :class => "btnorg300x41 btnmembership cgothic" do
-      become a member
+  %h1.left.tf Featured Member Benefits
+  -unless current_member?
+    .right
+      =button_tag :class => "btnorg300x41 btnmembership tf" do
+        become a member
 
 .featsection{:class => "size#{@page.featured.length}"}
   -@page.featured.each_with_index do |featured, i|
@@ -28,7 +29,7 @@
         =image_tag featured.business.place.image.url(:i640x400)
         .fadeout
         .text
-          .name="\"#{featured.name}\" at #{featured.business.place.name}"
+          .name.tf="\"#{featured.name}\" at #{featured.business.place.name}"
       .description= featured.description
       
 .upcoming.clearfix
@@ -39,7 +40,7 @@
         =image_tag template.business.place.image.url(:i640x400), :size => "400x250"
         .fadeout
         .text
-          .name="\"#{template.name}\" at #{template.business.place.name}"
+          .name.tf="\"#{template.name}\" at #{template.business.place.name}"
       .description=template.description
             
 #applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Spot Member"}

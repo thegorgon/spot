@@ -74,9 +74,12 @@
 .oreo {
   color: #333;
   width: 895px;
+  font-size: 14px;
   margin: 0 auto;
   padding-top: 20px;
   .overlay {
+    height: 41px;
+    line-height: 42px;
     text-align: left;
     padding: 10px 30px;
     border: 1px solid #ff8419;
@@ -89,31 +92,68 @@
       line-height: 41px;
     }
   }
-  .toptitle { 
-    padding: 10px 20px 15px;
-    background: rgba(230,230,230, 0.65);
-    color: #333;
-    font-size: 18px;
-    @include top_border_radius(5px);
-    a {
+  .filling {
+    @include box_shadow(rgba(0,0,0,0.75) 0px 1px 5px);
+    .toptitle { 
+      padding: 10px 20px 15px;
+      background: rgba(230,230,230, 0.75);
       color: #333;
-      &:hover {
-        color: #ff8419;
+      @include top_border_radius(5px);
+      line-height: 22px;
+      h1 {
+        font-size: 18px;
+      }
+      a {
+        color: #333;
+        &:hover {
+          color: #ff8419;
+        }
+      }
+      .accountlnk {
+        padding-left: 23px;
+        background: transparent url("/images/icons/persongry15x14.png") no-repeat left center;
+      }
+      .logout, .logout a {
+        font-size: 12px;
+        color: #666;
+        &:hover {
+          color: #333;
+        }
       }
     }
-  }
-  .main {
-    position: relative;
-    background: #fff;
-    background: #f0f0f0;
-    @include border_radius(5px);
-    padding: 30px;
-    margin: -5px 0 5px;
+    .main {
+      position: relative;
+      background: #fff;
+      background: #f0f0f0;
+      @include border_radius(5px);
+      padding: 30px;
+      margin: -5px 0 5px;
+      hr {
+        @extend hr.light;
+      }
+      h1 {
+        font-size: 23px;
+      }
+      h2 {
+        font-size: 18px;
+      }
+      h1.tf, h2.tf {
+        text-shadow: #fff 0px 1px 0px;
+      }
+      em {
+        font-style: normal;
+        color: #ff8419;
+      }
+      strong {
+        font-weight: bold;
+      }
+    }    
   }
   .footer {
     color: #f0f0f0;
     text-align: center;
     margin: 0 auto 0;
+    text-shadow: #000 0px 0px 5px;
     a {
       color: #f0f0f0;
       &:hover {

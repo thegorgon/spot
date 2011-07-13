@@ -1,13 +1,13 @@
 =content_for :bgimage do
-  .cityscape.stretcher{'data-gravity' => "0.5x0.5"}
-    =image_tag "/images/backgrounds/event/photo#{@promotion.id.modulo(4) + 1}.jpg", :size => "2292x1524"
+  .stretcher{'data-gravity' => "0.5x0.5"}
+    =image_tag "stretcher/event/photo#{@promotion.id.modulo(4) + 1}.jpg", :size => "2292x1524"
 
 =content_for :above do
   -unless current_member?
     .overlay.clearfix
       .title.clearfix
-        %h1.cgothic.left Get unlimited access to unforgettable experiences like this
-        =button_tag :class => "btnorg170x41 btnmembership cgothic right" do
+        %h1.tf.left Get unlimited access to unforgettable experiences like this
+        =button_tag :class => "btnorg170x41 btnmembership tf right" do
           apply now
 
 =content_for :toptitle do
@@ -22,11 +22,11 @@
   .image=image_tag @place.image.url(:i640x400), :size => "856x535"
 .details.clearfix
   .event
-    .name.cgothic=@promotion.name
+    %h1.name.tf=@promotion.name
     .description=@promotion.description.html_safe
   .place
     .info.address.clearfix
-      %h2.cgothic=@place.name
+      %h1.tf=@place.name
       -@place.address_lines.each_with_index do |line, i|
         %p.line.clearfix
           .left=line
@@ -38,11 +38,22 @@
       =link_to "more info from google", external_place_url(@place.external_place(:google)), :class => "info google"
     -if @place.external_place(:yelp)
       =link_to "reviews on yelp", external_place_url(@place.external_place(:yelp)), :class => "info yelp"
-%hr
+
+-if current_member?
+  %hr
+-else
+  .overlay.clearfix
+    %h1.left.tf Exclusively available to Spot Members. 
+    =button_tag :class => "btnorg170x41 btnmembership tf right" do
+      apply now
+
 .availability.clearfix
+  -unless current_member?
+    .shield
+      
   .dates
-    .title.cgothic
-      Available on the following dates :
+    .title.tf
+      Reserve this experience. Click an available date : 
     .calendar.clearfix
       -events = @promotion.events.upcoming.hash_by { |e| e.date }          
       -startdate = Date.today.sunday
@@ -53,8 +64,8 @@
         -lastweek = enddate.to_time - date.to_time < 1.week
         -event = events[date]
         .date{:class => "#{conditionally("visible", week < 2)} wday#{date.wday} wk#{week} #{conditionally("lastwk", lastweek)}"}
-          .dow.cgothic=date.strftime('%a').upcase
-          .doy.cgothic=date.day.ordinalize
+          .dow.tf=date.strftime('%a').upcase
+          .doy.tf=date.day.ordinalize
           -if event
             .event
               %a{:href => "#", :class => current_member?? "btnclaim" : "btnmembership"}
@@ -65,8 +76,6 @@
                   .join join spot
   
     .subtitles.clearfix
-      .right 
-        click a date to claim
       .left
         -if enddate > startdate + 2.weeks
           =link_to "more", "#", :rel => ".availability", "data-toggle-class" => "showall", :class => "show"
@@ -77,45 +86,12 @@
         %canvas{:id => "timewedge", :height => "150", :width => "150", "data-start-hour" => @promotion.start_time, "data-end-hour" => @promotion.end_time}
           =image_tag "icons/clockhandsgry150x150.png", :size => "150x150"
       .ring=image_tag "icons/clockringgry150x150.png", :size => "150x150"
-    .timeframe.cgothic=@promotion.timeframe
+    .timeframe.tf=@promotion.timeframe
 
 .explanations.clear.clearfix
-  .explanation
-    .title
-      =image_tag "assets/events/howitworkshdln138x27.png", :size => "138x27", :alt => "How it Works"
-    %hr
-    .content
-      %ul
-        %li 
-          ="Come to #{@place.name} on the specified dat"
-          between
-          =Time.twelve_hour(@promotion.start_time)
-          and
-          =Time.twelve_hour(@promotion.end_time)
-        %li Present your 4 digit code. 
-        %li="Enjoy your experience."
-  .explanation
-    .title
-      =image_tag "assets/events/fineprinthdln140x27.png", :size => "140x27", :alt => "The Fine Print"
-    %hr
-    .content
-      %ul
-        %li
-          ="Valid at #{@place.name} on the specified date"
-          ="from #{@promotion.timeframe(false)} only."
-        %li Limit 1 per bill. 
-        %li Limit 1 per visit.
-        %li While supplies last.
-  .explanation.last
-    .title
-      =image_tag "assets/events/guaranteehdln201x27.png", :size => "194x27", :alt => "The Spot Guarantee"
-    %hr
-    .content
-      %p 
-        If you’re not satisfied with your experience using Spot, 
-        we’ll give you your money back.
-      %p 
-        It’s that simple.
+  =render :partial => "/site/shared/explanations/howitworks"
+  =render :partial => "/site/shared/explanations/fineprint"
+  =render :partial => "/site/shared/explanations/guarantee"
 
 #applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Spot Member"}
   =render :partial => "/shared/membership/apply"

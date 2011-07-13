@@ -1,16 +1,32 @@
-.site_accounts {
-  .account {
+#site_accounts_show {
+  .toptitle {
+    h1 {
+      padding: 0 0 0 35px;
+      background: transparent url(/images/icons/persongry25x23.png) no-repeat center left;
+    }
+  }
+  .main {
+    h2 {
+      font-size: 18px;
+    }
+    p {
+      margin: 10px 0;
+    }
     form {
       width: 370px;
     }
-    margin: 10px 15px;
+    .membership {
+      margin: 10px 0;
+      .subtitle {
+        padding: 5px 0;
+      }
+    }
     li.text.labelled, .li.labelled {
       padding-left: 70px;
       .label {
         position: absolute;
         left: 0px;
         width: 60px;
-        font-size: 14px;
         margin-right: 10px;
       }
       .input_container {
@@ -31,6 +47,7 @@
     }
     .separator {
       width: 0px;
+      border-right: 1px solid #fff;
       border-left: 1px solid #ddd;
       position: absolute;
       top: 0px;
@@ -39,26 +56,42 @@
     }
     .rcol {
       width: 400px;
+      .applyline {
+        line-height: 32px;
+        width: 350px;
+      }
     }
     ul.form {
       margin-bottom: 1em;
-    }
-    .title {
-      padding: 0 0 0 35px;
-      background: transparent url(/images/icons/person23x20.png) no-repeat center left;
-      a {
-        color: #999;
+      &.cc {
+        li.button {
+          width: 300px;
+          padding: 0px 20px;
+          height: 0;
+          overflow: hidden;
+          @include transition("height 0.25s");
+        }
+        &.editing {
+          li.button {
+            height: 42px;
+          }
+        }
       }
     }
+    
     h2 {
       padding: 0 0 0 35px;
       background: transparent no-repeat left center;
+      margin: 20px 0 10px;
+      &.top {
+        margin-top: 0;
+      }
     }
     .aboutme {
       background-image: url(/images/icons/contact26x17.png);
     }
     .changepassword {
-      background-image: url(/images/icons/pencil20x20.png);
+      background-image: url(/images/icons/key15x20.png);
       background-position: 4px center;
     }
     .mymembership {
@@ -67,6 +100,6 @@
     .myevents {
       background-image: url(/images/icons/calendar18x20.png);
       background-position: 2px center;
-    }
+    }    
   }
 }

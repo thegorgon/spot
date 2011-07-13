@@ -65,9 +65,6 @@ ul.form {
     }
     li.first_name {
       left: 0px;
-      input {
-        width: 133px;
-      }
     }
     li.last_name {
       right: 0px;
@@ -407,9 +404,9 @@ ul.form {
     line-height: 30px;
   }  
   a {
-    color: #AAA;
+    color: #aaa !important;
     &:hover, &.hover {
-      color: #999;
+      color: #f0f0f0;
     }
   }
 }
@@ -633,3 +630,4 @@ ul.form.search {
     }
   }
 }
+

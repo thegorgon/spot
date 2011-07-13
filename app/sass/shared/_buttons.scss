@@ -14,8 +14,9 @@
   }
 }
 @mixin orgbtn {
-  color: #fff;
+  color: #fff !important;
   text-shadow: #000 0px 1px 0px;
+  text-decoration: none;
   &:hover, &.hover {
     color: #fff !important;
   }
@@ -98,6 +99,11 @@ button.link {
   @include bgbutton('org170x41', 170px, 41px);
   @include orgbtn;
   font-size: 25px;
+}
+.btnorg77x32, a.btnorg77x32 {
+  @include bgbutton('org77x32', 77px, 33px);
+  @include orgbtn;
+  font-size: 18px;
 }
 .btnorgpill, a.btnorgpill, button.btnorgpill {
   display: block;

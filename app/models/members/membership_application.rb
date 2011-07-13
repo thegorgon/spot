@@ -5,6 +5,7 @@ class MembershipApplication < ActiveRecord::Base
   accepts_nested_attributes_for :user
   before_validation :set_token
   after_create :deliver_thank_you
+  validate :user_hasnt_applied
   validates :token, :presence => true, :uniqueness => true
 
   def status
@@ -12,7 +13,11 @@ class MembershipApplication < ActiveRecord::Base
   end
 
   def approved?
-    Time.now - created_at >= 1.day
+    !!approved_at && Time.now > approved_at
+  end
+  
+  def approve!
+    update_attribute(:approved_at, Time.now)
   end
 
   def survey=(value)
@@ -32,6 +37,12 @@ class MembershipApplication < ActiveRecord::Base
   end
   
   private
+  
+  def user_hasnt_applied
+    if MembershipApplication.where(:user_id => user_id).exists?
+      errors.add(:base, "Looks like you've already applied. We'll get back to you shortly.")
+    end
+  end
   
   def set_token
     self.token = String.token(5)
