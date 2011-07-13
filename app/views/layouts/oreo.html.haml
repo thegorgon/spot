@@ -7,9 +7,14 @@
         .right
           -if current_user && !current_page?(account_path)
             =link_to current_user.nickname, account_path, :class => "accountlnk"
-            %span.logout="(&nbsp;#{link_to "not you?", logout_path}&nbsp;)".html_safe
+            %span.account="(&nbsp;#{link_to "not you?", logout_path}&nbsp;)".html_safe
           -elsif current_page?(account_path)
-            %span.logout=link_to "logout?", logout_path
+            %span.account=link_to "logout?", logout_path(:return_to => login_path)
+          -else
+            %span.account.accountlnk
+              %a{'data-popover' => '#login_popover', 'data-popover-title' => 'Log In', 'data-popover-orient' => 'vertical'} 
+                login?
+            =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
       .main
         =content_for?(:oreo) ? yield(:oreo) : yield
     .footer

@@ -17,6 +17,6 @@ class Site::SessionsController < Site::BaseController
   
   def destroy
     logout
-    redirect_back_or_default root_path
+    redirect_back_or_default params[:return_to] || root_path
   end
 end

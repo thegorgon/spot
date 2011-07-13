@@ -113,9 +113,11 @@
         padding-left: 23px;
         background: transparent url("/images/icons/persongry15x14.png") no-repeat left center;
       }
-      .logout, .logout a {
+      .account {
+        cursor: pointer;
         font-size: 12px;
         color: #666;
+        line-height: 15px;
         &:hover {
           color: #333;
         }
