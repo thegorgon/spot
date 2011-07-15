@@ -62,7 +62,7 @@
           $('#code_event_id').val($(this).attr('data-eid'));        
           $('#claimdialog').dialog("open");
         });
-      }
+      };
       $('#claimdialog').modal({
         width: 620, 
         close: function() {
@@ -80,7 +80,7 @@
           radius = 73;
         context.beginPath();
         context.moveTo(center[0], center[1]);
-        context.strokeStyle = '#808080;'
+        context.strokeStyle = '#808080;';
         context.fillStyle = 'rgba(48,200,48,0.75)';
         context.arc(center[0], center[1], radius, startangle, endangle);
         context.lineTo(center[0], center[1]);
@@ -108,7 +108,7 @@
           $('#claimdialog').find('.code').html($("<div class='error'></div>").html("Sorry, something went wrong, please refresh this page and try again."));
           $('#claimdialog').removeClass('loading').addClass('claimed');          
         }
-      })
+      });
       bind();
     },
     site_memberships_new: function() {

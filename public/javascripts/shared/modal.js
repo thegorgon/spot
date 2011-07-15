@@ -24,14 +24,14 @@
         closeText: '',
         title: dialog.attr('data-title'),
         position: position,
-        autoOpen: false,
+        autoOpen: false
       }, options);
       options.close = function(event, ui) {
         $(window).unbind("resize.dialog");
         $(window).unbind("scroll.dialog");
         $('body').find('.ui-widget-overlay').remove();
         if ($.isFunction(onclose)) { onclose.call(dialog); }
-      },
+      };
       options.open = function(event, ui) {
         var overlay = $('body').find('.ui-widget-overlay');
         overlay = overlay.length > 0 ? overlay : $('<div></div>').addClass('ui-widget-overlay').appendTo('body');
@@ -44,7 +44,7 @@
         });
         $('input, button, select, textarea').blur();
         if ($.isFunction(onopen)) { onopen.call(dialog); }
-      }
+      };
       
       dialog.removeClass('hidden').dialog(options);
     }
