@@ -38,6 +38,7 @@ class Site::PasswordResetsController < Site::BaseController
   private
   
   def require_user
+    logout
     authenticate
     unless authenticated?
       flash[:error] = "Something went wrong. 

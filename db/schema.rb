@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110701190749) do
+ActiveRecord::Schema.define(:version => 20110715010103) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -57,7 +57,6 @@ ActiveRecord::Schema.define(:version => 20110701190749) do
     t.string   "phone",                               :null => false
     t.integer  "businesses_count",     :default => 0, :null => false
     t.integer  "max_businesses_count",                :null => false
-    t.datetime "verified_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "notification_flags",   :default => 0, :null => false
@@ -66,10 +65,8 @@ ActiveRecord::Schema.define(:version => 20110701190749) do
   add_index "business_accounts", ["user_id"], :name => "index_business_accounts_on_user_id"
 
   create_table "businesses", :force => true do |t|
-    t.integer  "place_id",                           :null => false
-    t.integer  "business_account_id",                :null => false
-    t.integer  "average_spend",       :default => 0, :null => false
-    t.datetime "verified_at"
+    t.integer  "place_id",            :null => false
+    t.integer  "business_account_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -301,6 +298,19 @@ ActiveRecord::Schema.define(:version => 20110701190749) do
 
   add_index "password_accounts", ["login"], :name => "index_password_accounts_on_login", :unique => true
 
+  create_table "place_notes", :force => true do |t|
+    t.integer  "user_id",                   :null => false
+    t.integer  "place_id",                  :null => false
+    t.text     "content",                   :null => false
+    t.integer  "status",     :default => 0, :null => false
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "place_notes", ["place_id"], :name => "index_place_notes_on_place_id"
+  add_index "place_notes", ["user_id"], :name => "index_place_notes_on_user_id"
+
   create_table "place_searches", :force => true do |t|
     t.string   "query",                                     :null => false
     t.string   "position"
@@ -476,8 +486,8 @@ ActiveRecord::Schema.define(:version => 20110701190749) do
     t.string   "last_name"
     t.string   "locale"
     t.boolean  "admin",               :default => false, :null => false
-    t.integer  "notification_flags",  :default => 0,     :null => false
     t.string   "location"
+    t.integer  "notification_flags",  :default => 0,     :null => false
     t.string   "customer_id"
     t.integer  "city_id"
   end

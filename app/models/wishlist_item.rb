@@ -13,9 +13,10 @@ class WishlistItem < ActiveRecord::Base
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}, :if => :lng
   
   after_create :update_item_wishlist_count
-  after_commit :enque_tweeting
-  after_commit :enque_propagation
+  after_commit :enque_tweeting, :if => :new_record?
+  after_commit :enque_propagation, :if => :new_record?
   
+  attr_protected :deleted_at
   cattr_accessor :per_page
   @@per_page = 20
   
@@ -56,7 +57,7 @@ class WishlistItem < ActiveRecord::Base
       @tweet << " ##{item.city.gsub(' ', '').gsub('-', '_').downcase}" if item.city.gsub(' ', '').present?
       @tweet << " via @SpotTeam"
     end
-    @tweet << ShortUrl.shorten(item_path) if item_path.present?
+    @tweet << " #{ShortUrl.shorten(item_path)}" if item_path.present?
     @tweet.length <= 150 ? @tweet : nil
   end
   

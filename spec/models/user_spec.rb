@@ -281,15 +281,15 @@ describe User do
     end
   end
 
-  describe "#admin!" do
+  describe "#adminify!" do
     it "makes the admin flag true" do
       @user.should_not be_admin
-      @user.admin!
+      @user.adminify!
       @user.should be_admin      
     end
 
     it "saves the user" do
-      @user.admin!
+      @user.adminify!
       @user.should_not be_changed      
     end
   end

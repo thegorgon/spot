@@ -42,14 +42,13 @@ describe Api::PlacesController do
     end
     
     it "passes the params onto a PlaceSearch" do
-      PlaceSearch.should_receive(:from_params!).with(hash_including(@params)).and_return(@search)
+      PlaceSearch.should_receive(:from_params).with(hash_including(@params)).and_return(@search)
       get :search, @params
     end
     
     it "should set the X-Search-ID header to the place search id" do
-      PlaceSearch.should_receive(:from_params!).and_return(@search)
       get :search, @params
-      response.headers["X-Search-ID"].should == @search.id.to_s
+      response.headers["X-Search-ID"].should == PlaceSearch.last.id.to_s
     end
     
     it "responds with an array of place json" do

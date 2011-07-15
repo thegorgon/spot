@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :subscriptions
   has_many :memberships
   has_many :codes, :foreign_key => :owner_id, :class_name => "PromotionCode"
+  has_many :notes, :class_name => "PlaceNote"
   has_one :membership_application
   has_one :business_account
   has_one :facebook_account
@@ -27,7 +28,7 @@ class User < ActiveRecord::Base
   
   def self.adminify!(email)
     if (user = where(:email => email).first)
-      user.admin!
+      user.adminify!
       true
     else
       false

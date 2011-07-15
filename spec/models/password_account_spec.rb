@@ -38,58 +38,24 @@ describe PasswordAccount do
       @account.should be_valid
       @account.login = "notanemail"
       @account.should_not be_valid
-    end
+    end  
     
-    it "must have a name" do
-      @account.should be_valid
-      @account.name = nil
-      @account.should_not be_valid
-      @account.name = ""
-      @account.should_not be_valid
-    end    
+    it "fails if the password is changed without an old password" do
+      @account.save.should == true
+      @account.password = "new_password"
+      @account.save.should == false
+      @account.errors[:current_password].should_not be_empty
+    end  
+
+    it "succeeds if the password is changed without an old password but with an override" do
+      @account.save.should == true
+      @account.password = "new_password"
+      @account.override_current_password!
+      @account.save.should == true
+      @account.errors[:current_password].should be_empty
+    end  
   end
-  
-  describe "#name" do
-    it "sets the last name to the last word" do
-      @account.name = "First Name Last"
-      @account.last_name.should == "Last"
-    end
-
-    it "sets the first name to the rest" do
-      @account.name = "First Name Last"
-      @account.first_name.should == "First Name"
-    end
-
-    it "respects hyphenated last names" do
-      @account.name = "First Word Last-Name"
-      @account.last_name.should == "Last-Name"
-      @account.first_name.should == "First Word"
-    end
-
-    it "works with crazy names" do
-      @account.name = "M El Hoy-G. Siegler"
-      @account.first_name.should == "M El Hoy-G."
-      @account.last_name.should == "Siegler"
-    end
     
-    it "returns the first name and last name with a space in between" do
-      @account.first_name = "First"
-      @account.last_name = "Last"
-      @account.name.should == "First Last"
-    end
-    
-    it "sets the name to the first name if only one word is given" do
-      @account.name = "Firstnameonly"
-      @account.first_name.should == "Firstnameonly"
-    end
-    
-    it "causes the name to have errors if set to nothing" do
-      @account.name = ""
-      @account.should_not be_valid
-      @account.errors[:name].should be_present
-    end
-  end
-  
   describe "#salt" do
     it "sets the salt on save" do
       @account.password_salt = nil
@@ -100,9 +66,11 @@ describe PasswordAccount do
     it "resets on save when the password is changed" do
       @account.password = "initialpassword"
       @account.save
-      @account.password_salt = "initialsalt"
+      initialsalt = @account.password_salt
       @account.password = "newpassword"
-      expect { @account.save }.to change(@account, :password_salt)
+      @account.current_password = "initialpassword"
+      @account.save
+      @account.password_salt.should_not == initialsalt
     end
     
     it "does not reset on save when the password is not changed" do
@@ -113,7 +81,7 @@ describe PasswordAccount do
       @account.password_salt.should == "initialsalt"
     end
   end
-  
+    
   describe "#crypted_password" do
     it "is not accessible" do
       @account.attributes = {:crypted_password => "crypted_password"}

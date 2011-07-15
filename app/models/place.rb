@@ -13,6 +13,7 @@ class Place < ActiveRecord::Base
   attr_reader :external_image_url
     
   has_many :wishlist_items, :as => :item, :conditions => { :deleted_at => nil }
+  has_many :notes, :class_name => "PlaceNote"
   has_one :business
   serialize :image_attribution, Hash
   acts_as_mappable
@@ -206,8 +207,10 @@ class Place < ActiveRecord::Base
       :image_url => image.url,
       :updated_at => updated_at,
       :path => place_path(self),
-      :short_url => ShortUrl.shorten(place_path(self))
+      :short_url => ShortUrl.shorten(place_path(self)),
+      :public_notes => notes.visible.limit(10)
     }
+    hash[:current_user_notes] = notes.by_user(options[:current_user]).undeleted.all
     if !image.file? && !options[:default_images]
       hash.merge!(:image_url_640x400 => nil, :image_url_234x168 => nil, :image_url => nil)
     end
@@ -243,7 +246,9 @@ class Place < ActiveRecord::Base
   end
   
   def enqueue_deduping
-    Resque.enqueue(Jobs::PlaceDeduper, id) if clean_address_changed? || clean_name_changed?
+    if clean_address_changed? || clean_name_changed?
+      Resque.enqueue(Jobs::PlaceDeduper, id)
+    end
   end
     
 end

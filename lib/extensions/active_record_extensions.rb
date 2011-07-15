@@ -11,16 +11,21 @@ module ActiveRecordExtensions
     def setting_flags(flags, options={})
       attribute = options[:attr] || "settings"
       field = options[:field] || "setting_flags"
+      protected_flags = options[:protected] || []
       scope :with_setting, lambda { |s| where("#{field} & #{1 << flags.index(s)} > 0") }
       scope :without_setting, lambda { |s| where("#{field} & #{1 << flags.index(s)} = 0") }
       
       
       define_method "#{attribute}=" do |value|
         (flags & value.to_a).each do |setting|
-          send("#{options[:method_prefix]}#{setting}=", true) if respond_to?("#{options[:method_prefix]}#{setting}=")
+          unless protected_flags.include?(setting)
+            send("#{options[:method_prefix]}#{setting}=", true) if respond_to?("#{options[:method_prefix]}#{setting}=")
+          end
         end
         (flags - value.to_a).each do |setting|
-          send("#{options[:method_prefix]}#{setting}=", false) if respond_to?("#{options[:method_prefix]}#{setting}=")
+          unless protected_flags.include?(setting)
+            send("#{options[:method_prefix]}#{setting}=", false) if respond_to?("#{options[:method_prefix]}#{setting}=")
+          end
         end
       end
 

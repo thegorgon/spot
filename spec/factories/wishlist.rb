@@ -1,5 +1,5 @@
 Factory.define :wishlist_item do |wi|
-  wi.association    :user
+  wi.association    :user, :factory => :user
   wi.association    :item, :factory => :place
   wi.source_type    nil
   wi.source_id      nil

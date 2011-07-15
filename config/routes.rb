@@ -8,6 +8,7 @@ Spot::Application.routes.draw do
     resources :users, :only => [:update, :show]
     resource :sessions, :only => [:new, :create, :destroy]
     resource :activity, :only => [:show], :controller => "activity"
+    resources :notes, :only => [:show, :index, :create, :update, :destroy]
     resource :wishlist, :only => [:show] do
       resources :items, :only => [:create, :destroy], :controller => :wishlist_items
     end

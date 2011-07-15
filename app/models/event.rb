@@ -9,6 +9,7 @@ class Event
   API_PLACE_LOAD            = 8
   API_PLACE_SEARCH          = 9
   API_EXCEPTION             = 10
+  API_NOTE_CREATE           = 11
   
   uniq_constants!
   

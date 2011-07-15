@@ -9,6 +9,10 @@ module Spot
       env
     end
     
+    def fake_production!
+      Rails.should_receive(:env).any_number_of_times.and_return(ActiveSupport::StringInquirer.new("production"))
+    end
+    
     def init_rails_warden!
       manager = RailsWarden::Manager.new({}) do |manager|
         manager.failure_app = Site::SessionsController

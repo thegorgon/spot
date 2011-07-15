@@ -42,8 +42,9 @@ Factory.sequence :facebook_id do |n|
 end
 
 Factory.define :user do |u|
-  u.first_name    "Tester"
-  u.last_name     "McGee"
-  u.email         { Factory.next(:email) }
-  u.locale        "en-US"
+  u.first_name          "Tester"
+  u.last_name           "McGee"
+  u.email               { Factory.next(:email) }
+  u.locale              "en-US"
+  u.notification_flags  0
 end

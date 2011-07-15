@@ -72,10 +72,10 @@ class PlaceSearch < ActiveRecord::Base
     @results.to_a
   end
   
-  def to_json(*args)
-    results.to_json(*args)
+  def as_json(*args)
+    results.as_json(*args)
   end
-  
+    
   private
   
   def load
