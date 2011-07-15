@@ -14,7 +14,7 @@
   -if @city
     =link_to @city.name.titlecase, city_path(@city)
     ⋅
-  =@promotion.business.place.name
+  =@place.name
   ⋅
   =@promotion.name
     
@@ -38,7 +38,8 @@
       =link_to "more info from google", external_place_url(@place.external_place(:google)), :class => "info google"
     -if @place.external_place(:yelp)
       =link_to "reviews on yelp", external_place_url(@place.external_place(:yelp)), :class => "info yelp"
-
+    .info
+      =sharing(request.url, "#{@promotion.name} at #{@place.name}? Sounds good to me.")
 -if current_member?
   %hr
 -else
@@ -54,32 +55,7 @@
   .dates
     .title.tf
       Reserve this experience. Click an available date : 
-    .calendar.clearfix
-      -events = @promotion.events.upcoming.hash_by { |e| e.date }          
-      -startdate = Date.today.sunday
-      -startdate = startdate > Date.today ? Date.today.sunday - 1.week : Date.today.sunday
-      -enddate = ([startdate + 2.weeks, @promotion.events.upcoming.last.date].max).saturday
-      -(startdate..enddate).each_with_index do |date, i|
-        -week = (i/7).floor
-        -lastweek = enddate.to_time - date.to_time < 1.week
-        -event = events[date]
-        .date{:class => "#{conditionally("visible", week < 2)} wday#{date.wday} wk#{week} #{conditionally("lastwk", lastweek)}"}
-          .dow.tf=date.strftime('%a').upcase
-          .doy.tf=date.day.ordinalize
-          -if event
-            .event
-              %a{:href => "#", :class => current_member?? "btnclaim" : "btnmembership"}
-                .text="#{event.count} left"
-                -if current_member?
-                  .claim claim
-                -else
-                  .join join spot
-  
-    .subtitles.clearfix
-      .left
-        -if enddate > startdate + 2.weeks
-          =link_to "more", "#", :rel => ".availability", "data-toggle-class" => "showall", :class => "show"
-          =link_to "fewer", "#", :rel => ".availability", "data-toggle-class" => "showall", :class => "hide"
+    #calendar=render :partial => "calendar", :locals => {:promotion => @promotion}
   .hours
     .clock
       .hands
@@ -92,6 +68,7 @@
   =render :partial => "/site/shared/explanations/howitworks"
   =render :partial => "/site/shared/explanations/fineprint"
   =render :partial => "/site/shared/explanations/guarantee"
-
-#applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Spot Member"}
-  =render :partial => "/shared/membership/apply"
+  
+-if current_member?
+  #claimdialog.clearfix.hidden{"data-title" => "Register for #{@event.name}"}
+    =render :partial => "claim", :locals => {:event => @event}

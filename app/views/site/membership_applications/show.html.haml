@@ -35,10 +35,7 @@
         Just share this link via Email, Facebook, or Twitter :
       
       -url = referred_application_url(@application.token)
-      %p.clearfix
-        =text_field_tag "url", url, "data-mode" => "select", :class => "select light left"
-        %a{:href => fb_share_url(url, "Join me on Spot"), :class => "fb-share-button share left"}
-        %a{:href => twitter_share_url(url, "Join me on Spot"), :class => "twitter-share-button share left last"}
+      =sharing(url, "Just applied to become a Spot member, I think it's worth checking out.", :link => true)
       
   .right.bucket.last
     %h1.tf

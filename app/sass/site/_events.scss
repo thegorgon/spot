@@ -135,6 +135,22 @@
         right: 0;
       }
     }
+    &.showall {
+      .date {
+        display: block;
+        &.wk1 {
+          border-bottom: 1px solid #808080;
+        }
+      }
+      .subtitles {
+        .show {
+          display: none;
+        }
+        .hide {
+          display: block;
+        }
+      }
+    }
   }
   .calendar {
     margin-top: 5px;;
@@ -151,22 +167,6 @@
     }
     .hide {
       display: none;
-    }
-  }
-  &.showall {
-    .date {
-      display: block;
-      &.wk1 {
-        border-bottom: 1px solid #808080;
-      }
-    }
-    .subtitles {
-      .show {
-        display: none;
-      }
-      .hide {
-        display: block;
-      }
     }
   }
   .dow {
@@ -198,33 +198,36 @@
       font-size: 15px;
     }
     .event {
-      color: #999;
       position: absolute;
       bottom: 5px;
       left: 2px;
       right: 2px;
+      text-align: center;
+      font-size: 11px;
+      color: #666;
+      code {
+        display: block;
+        color: #666;
+        font-size: 18px;
+        background: #fff;
+        padding: 3px;
+        border: 2px dashed #999;
+      }
       a {
-        font-size: 11px;
         display: block;
         padding: 2px;
         height: 13px;
         line-height: 13px;
         @include border_radius(8px);
-        text-align: center;
         text-decoration: none;
         color: #fff;
         background: #999;              
-        .join, .claim {
+        .register {
           display: none;
           padding-left: 12px;
           margin: 0 auto;
           background: transparent url(/images/icons/checkwht9x9.png) no-repeat left center;              
-        }
-        .claim {
           width: 28px;
-        }
-        .join {
-          width: 45px;
         }
         &:hover, &.hover {
           background: #ff8419;

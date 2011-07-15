@@ -1,0 +1,8 @@
+=content_for :toptitle do
+  Registration for
+  =@registration.promotion.name 
+  at
+  =@registration.place.name
+#claimdialog
+  .code.clearfix
+    =render :partial => "code"

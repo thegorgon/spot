@@ -52,8 +52,16 @@ class PromotionEvent < ActiveRecord::Base
     count - sale_count
   end
   
+  def available?
+    remaining_count > 0
+  end
+  
   def sold!
     self.class.increment_counter :sale_count, id
+  end
+
+  def unsold!
+    self.class.decrement_counter :sale_count, id
   end
   
   def remove!

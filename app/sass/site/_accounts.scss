@@ -17,8 +17,18 @@
     }
     .membership {
       margin: 10px 0;
-      .subtitle {
+      li {
         padding: 5px 0;
+      }
+      .label {
+        float: left;
+        font-weight: bold;
+        text-align: right;
+        width: 170px;
+        margin-right: 10px;       
+      }
+      .value {
+        line-height: 20px;
       }
     }
     li.text.labelled, .li.labelled {
@@ -54,7 +64,13 @@
       right: 425px;
       bottom: 0px;
     }
+    .lcol {
+      position: relative;
+      z-index: 1;
+    }
     .rcol {
+      position: relative;
+      z-index: 2;
       width: 400px;
       .applyline {
         line-height: 32px;
@@ -78,11 +94,58 @@
         }
       }
     }
+    .codes {
+      border: 1px solid #ddd;
+      @include border_radius(10px);
+      background: #fff;
+      table {
+        font-size: 12px;
+        width: 100%;
+      }
+      tr {
+        line-height: 1.5em;
+        border: none;
+        border-bottom: 1px solid #ddd;
+        &.last {
+          border-bottom: none;          
+        }
+        &.empty {
+          a {
+            color: #666;
+            &:hover {
+              color: #ff8419;
+            }
+          }
+        }
+      }
+      a {
+        text-decoration: none;
+        font-weight: bold;
+        &.cancel {
+          font-size: 11px;
+          font-weight: normal;
+          color: #999;
+        }
+      }
+      td.code {
+        position: relative;
+        width: 80px;
+        text-align: center;
+        border-right: 1px solid #ddd;
+      }
+      td {
+        vertical-align: middle;
+        padding: 7px;
+      }
+      code {
+        font-size: 25px;
+      }
+    }
     
     h2 {
       padding: 0 0 0 35px;
       background: transparent no-repeat left center;
-      margin: 20px 0 10px;
+      margin: 30px 0 10px;
       &.top {
         margin-top: 0;
       }

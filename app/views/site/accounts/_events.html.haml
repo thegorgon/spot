@@ -1,0 +1,47 @@
+%h2.myevents.tf.top My Upcoming Events
+.events
+  -if current_user.member?
+    -codes = current_user.codes.all
+    .codes
+      %table
+        -[codes.count, current_user.code_slots].max.times do |i|
+          -code = codes[i]
+          %tr{:class => "#{first_or_last(3, i)} #{conditionally("empty", code.nil?)}"}
+            -if code
+              -event = code.event
+              -place = event.business.place
+              %td.code
+                %a{:href => registration_path(code)}     
+                  %code=code.code
+              %td.summary
+                %h3=link_to event.name, place_event_path(place, event.template)
+                At
+                =link_to place.name, place_path(place) 
+                on 
+                =event.date.strftime("%A, %B %d, %Y")
+              %td
+                =link_to "cancel?", registration_path(code), "data-method" => "DELETE", "data-confirm" => "Are you sure you want to cancel?", :class => "cancel"
+            -else
+              %td.code
+                No Event
+              %td.summary{:colspan => 2}
+                -city = current_user.active_membership.city
+                =link_to "Browse in #{city.name.titlecase}.", city_path(city)
+                      
+  -elsif current_user.membership_application 
+    Spot Events are only open to Spot Members.
+    %p
+      -if current_user.membership_application.approved?
+        Congratulations! Your application has been approved.
+        =link_to "Continue the application process.", new_membership_path
+      -else
+        We've received 
+        =link_to "your application", application_path(current_user.membership_application) 
+        and it is currently under review. We'll be in touch shortly, but if you're eager, you can
+        =link_to "check the status", application_path(current_user.membership_application) 
+        at any time.          
+  -else
+    .applyline
+      Events are only open to Spot Members :
+      =button_tag :class => "btnmembership btnorg77x32 right" do
+        Apply

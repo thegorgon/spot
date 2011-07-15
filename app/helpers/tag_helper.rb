@@ -15,7 +15,18 @@ module TagHelper
     content_tag(:script, "", :src => file, :type => "text/javascript")
   end
   
-  def twitter_share_link(url, text, content, options={})
+  def sharing(url, message, options={})
+    options = {:fb => true, :twitter => true, :link => false}.merge!(options)
+    content_tag(:div, :class => "clearfix sharing") do
+      sharing = ""
+      sharing << text_field_tag("url", url, "data-mode" => "select", :class => "light") if options[:link]
+      sharing << fb_share_link(url, message) if options[:fb]
+      sharing << twitter_share_link(url, message) if options[:twitter]
+      sharing.html_safe
+    end
+  end
+  
+  def twitter_share_link(url, text, content=nil, options={})
     klass = content ? "twitter-share-link" : "twitter-share-button"
     content ||= "&nbsp;".html_safe
     options[:class] ||= klass
@@ -41,7 +52,7 @@ module TagHelper
   end
   
   def fb_share_url(url, title=nil)
-    params = {:u => url, :title => title}
+    params = {:u => url, :t => title}
     "http://www.facebook.com/sharer.php?#{params.to_query}"
   end
   

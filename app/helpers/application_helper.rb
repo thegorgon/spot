@@ -8,10 +8,14 @@ module ApplicationHelper
   end  
   
   def page_title
-    if place_page?
-      [@place.name, @place.city, "Spot"].full_compact.join(" - ")
-    elsif @page_title
+    if @page_title
       @page_title
+    elsif place_page?
+      terms = [@place.name, @place.city, "Spot"]
+      if @promotion
+        terms.unshift(@promotion.name)
+      end
+      terms.full_compact.join(" - ")
     else
       "Spot - Never Forget a Place"
     end
@@ -28,13 +32,18 @@ module ApplicationHelper
   end
   
   def page_description
-    if place_page?
-      "#{@place.name} at #{@place.address} - Spot"
-    elsif @page_description
+    if @page_description
       @page_description
+    elsif place_page?
+      if @promotion
+        "Exclusively for Spot Members. #{@promotion.name} at #{@place.name} : #{@promotion.description}"
+      else
+        "#{@place.name} at #{@place.address} - Spot"
+      end
     else
-      "Spot for iPhone lets you save and quickly recall friends' recommendations 
-       of places, like restaurants, bars, cafes, spas and other local shops."
+      "Spot members get exclusive access 
+       to VIP privileges, unique promotions, and 
+       unforgettable experiences at the best restaurants in town."      
     end
   end
   
@@ -47,11 +56,12 @@ module ApplicationHelper
   end
     
   def first_or_last(items, i)
-    if i == 0 && items.length == 1 
+    items = items.length if items.respond_to?(:length)
+    if i == 0 && items == 1 
       "first last"
     elsif i == 0
       "first"
-    elsif i == items.length - 1
+    elsif i == items - 1
       "last"
     end
   end

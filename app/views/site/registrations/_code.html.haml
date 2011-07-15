@@ -1,0 +1,32 @@
+.col.left
+  .codebox
+    %h1.tf
+      Your Code Is : 
+    %code.title=@registration.code.code
+  =link_to "cancel?", registration_path(@registration.code), "data-method" => "DELETE", "data-confirm" => "Are you sure you want to cancel?", :class => "cancel"
+.col.right
+  %h2.tf.nowwhat What's Next?
+  %hr
+  %ul
+    %li
+      ="Call #{@registration.place.name} to make a reservation"
+      -if @registration.place.phone_number.present?
+        =": #{phone_link(@registration.place.phone_number)}"
+    %li 
+      ="Come to #{@registration.place.name} on #{@registration.event.date.strftime('%A, %B %d, %Y')}"
+      between
+      =Time.twelve_hour(@registration.promotion.start_time)
+      and
+      =Time.twelve_hour(@registration.promotion.end_time)
+    %li
+      Present your 4 digit code : 
+      %code=@registration.code.code
+    %li="Enjoy your experience."
+    %li.spacing
+    %li And don't worry, we just sent you an email with all these details, so no need to pull out the pen and paper.
+    %hr
+    %li.telleveryone
+      Tell your friends : 
+      -url = place_event_url(@registration.place, @registration.promotion)
+      -msg = "I just registered for #{@registration.promotion.name} at #{@registration.place.name}. Wanna come?"
+      =sharing(url, msg)      

@@ -1,26 +1,7 @@
 #authenticate {
-  margin: 0 auto;
-  color: #f0f0f0;
-  button {
-    width: 90px;
-  }
+  width: 300px;
   ul.form {
     margin: 15px 0 0 0;
-    width: 300px;
-  }
-  hr {
-    @include divider(#999, #666);
-  }
-  li.header {
-    height: 82px;
-    h1 {
-      padding: 24px 5px 0 0;
-      float: left;
-    }
-    .image {
-      margin-top: 11px;
-      float: left;
-    }
   }
   li.section {
     padding: 1.5em 0;
@@ -57,9 +38,6 @@
         display: block;
       }
     }
-    .ie7 & #login_form {
-      margin: 1em 0;
-    }
   }
   .radio_fade {
     margin: 7px 0 0px 0;
@@ -67,7 +45,6 @@
     float: right;
     .label {
       cursor: pointer;
-      color: #AAA;
       float: left;
     }
     .choice {

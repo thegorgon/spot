@@ -163,3 +163,7 @@
   text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
 }
+@mixin titlefont {
+  font-family: museo-sans, "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+  font-weight: 500;
+}

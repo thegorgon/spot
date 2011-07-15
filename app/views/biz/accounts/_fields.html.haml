@@ -1,4 +1,4 @@
-=form.name_fields :required => true
+=form.name_fields :required => true, :value => current_user.try(:names)
 =form.email_field :email, :placeholder => "email", :required => true, :hint => "what's your email address?", :value => current_user.try(:email)
 =form.phone_field :phone, :placeholder => "phone number", :required => true, :hint => "what is your phone number?"
 =form.text_field :title, :placeholder => "title", :required => true, :hint => "what is your role?"

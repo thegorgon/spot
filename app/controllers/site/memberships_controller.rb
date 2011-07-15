@@ -41,7 +41,7 @@ class Site::MembershipsController < Site::BaseController
   end
   
   private
-  
+    
   def require_approved_application
     @application = current_user.membership_application
     unless @application.try(:approved?)

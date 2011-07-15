@@ -5,7 +5,7 @@
     .editmode
       .security
       .username=form.text_field :cardholder_name, :value => creditcard.cardholder_name, :required => true
-      =form.text_field :number, :placeholder => "number", :class => "ccnumber", :required => true, 'data-subtype' => 'creditcard', :value => creditcard.obfuscated_number, :container_class => "numcontainer"
+      =form.text_field :number, :placeholder => "number", :class => "ccnumber", :required => true, 'data-subtype' => 'creditcard', :container_class => "numcontainer"
       .clearfix
         %li.select.expiration.left
           =form.label :expiration_month, "expires :", :simple => true
@@ -15,6 +15,8 @@
       .types{:class => "#{creditcard.short_type} #{conditionally("selected", creditcard.short_type)}"}
     
   -unless creditcard.new_record?
+    .clicktoedit
+      Click to Edit
     .displaymode
       .username=creditcard.cardholder_name.upcase
       .ccnumber=creditcard.obfuscated_number

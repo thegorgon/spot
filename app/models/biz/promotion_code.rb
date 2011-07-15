@@ -1,5 +1,5 @@
 class PromotionCode < ActiveRecord::Base
-  CODE_CHARS = ['A', 'b', 'C', 'd', 'E', 'F', 'G', 'H', 'i', 'J', 'K', 'L', 'M', 'N', 'P', 'q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] + ("1".."9").to_a 
+  CODE_CHARS = ['A', 'b', 'C', 'd', 'E', 'F', 'G', 'H', 'i', 'J', 'K', 'L', 'M', 'N', 'P', 'q', 'R', 's', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] + ("1".."9").to_a 
   belongs_to :owner, :class_name => "User"
   belongs_to :business
   belongs_to :event, :class_name => "PromotionEvent"
@@ -16,6 +16,9 @@ class PromotionCode < ActiveRecord::Base
   scope :redeemed, where("redeemed_at IS NOT NULL")
   scope :available, where(:locked_at => nil, :issued_at => nil)
   scope :issued, where("issued_at IS NOT NULL")
+  scope :for_event, lambda { |id| where(:event_id => id)}
+  scope :for_business, lambda { |id| where(:business_id => id)}
+  scope :upcoming, lambda { where("date >= ?", Date.yesterday) }
   
   def self.random_code
     (0..3).collect { CODE_CHARS[rand(CODE_CHARS.length)] }.join
@@ -38,6 +41,15 @@ class PromotionCode < ActiveRecord::Base
       update_attributes!(:owner_id => user.id, :issued_at => Time.now)
       event.try(:sold!)
     end
+  end
+  
+  def unissue!
+    if issued?
+      self.class.transaction do
+        update_attributes!(:owner_id => nil, :issued_at => nil)
+        event.try(:unsold!)
+      end
+    end    
   end
   
   def issued?

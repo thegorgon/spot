@@ -1,0 +1,37 @@
+-if current_user.member?
+  -membership = current_user.active_membership
+  %h2.mymembership.tf My Spot Membership
+  %ul.membership
+    -payment = membership.payment_method
+    %li.subtitle.clearfix
+      .label
+        =membership.city.slug.upcase
+        Member since :
+      .value
+        =membership.starts_at.strftime("%B %d, %Y")
+        -if payment.respond_to?(:cancelled?) && !payment.cancelled?
+          ="( #{link_to "cancel", membership_path, "data-method" => "DELETE", "data-confirm" => "Are you sure you want to cancel your Spot Membership?"} )".html_safe
+    -if payment.respond_to?(:next_bill_date) && payment.next_bill_date
+      %li.clearfix
+        .label Next bill date : 
+        .value=payment.next_bill_date.strftime("%B %d, %Y")
+    -if payment.respond_to?(:cancelled_at) && payment.cancelled_at
+      %li.clearfix
+        .label Cancelled on :
+        .value=payment.cancelled_at.strftime("%B %d, %Y")
+    -if payment.respond_to?(:expires_at) && payment.expires_at
+      %li.clearfix
+        .label Expires on :
+        .value=payment.expires_at.strftime("%B %d, %Y")
+    %li
+      .label Payment Method :
+      .value.clear
+        -if payment.respond_to?(:credit_card) && card = payment.credit_card
+          =spot_form_for :credit_card, :url => Braintree::TransparentRedirect.url, :display => "light cc" do |f|
+            -trdata = Braintree::TransparentRedirect.update_credit_card_data(:redirect_url => endpoint_account_url, :payment_method_token => card.token)
+            =hidden_field_tag :tr_data, ERB::Util.html_escape(trdata)
+          
+            =render :partial => "/shared/payments/creditcard", :locals => {:form => f, :creditcard => card}
+            %li.button
+              =button_tag :class => "btnorg300x41 tf" do
+                save changes

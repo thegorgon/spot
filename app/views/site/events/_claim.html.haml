@@ -1,0 +1,16 @@
+.container 
+  .areyousure.section
+    %h1.tf Are you sure you want to register?
+
+    =form_for :registration, :url => registrations_path, :html => {:id => "claimform"} do |f|
+      =f.hidden_field :promotion_id, :value => @promotion.id
+      =f.hidden_field :place_id, :value => @place.id
+      =f.hidden_field :event_id, :value => "", :id => "code_event_id"
+      =button_tag :class => "btnorg200x41" do
+        yes, register
+
+    %h2.tf Please only register for events you can attend.
+    %p
+      Sometimes life gets in the way of living, we understand. If you should need to cancel your registration, please provide 24-hours notice so someone else can take your place.   
+  .processing.section
+  .code.section

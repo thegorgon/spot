@@ -87,7 +87,10 @@
     z-index: 100;
     margin: 5px 0 10px;
     background: #fff;
-    .title {
+    h1 {
+      font-size: 23px;
+    }
+    .title {      
       height: 41px;
       line-height: 41px;
     }

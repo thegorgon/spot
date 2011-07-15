@@ -25,9 +25,11 @@
   }  
 }
 .twitter-share-button {
+  text-decoration: none;
   @include bgbutton('tweet55x186', 55px, 21px)
 }
 .fb-share-button {
+  text-decoration: none;
   @include bgbutton('fbshare57x54', 57px, 18px)
 }
 
@@ -103,6 +105,7 @@ button.link {
 .btnorg77x32, a.btnorg77x32 {
   @include bgbutton('org77x32', 77px, 33px);
   @include orgbtn;
+  line-height: 28px;
   font-size: 18px;
 }
 .btnorgpill, a.btnorgpill, button.btnorgpill {

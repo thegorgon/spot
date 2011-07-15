@@ -28,5 +28,10 @@
       =link_to "Privacy Policy", privacy_path
       ⋅
       =link_to "Terms of Service", tos_path
-    
+
+
 = render :file => 'layouts/site'
+
+-unless current_member?
+  #applydialog.clearfix.hidden{"data-title" => "Become a Spot Member"}
+    =render :partial => "/shared/membership/apply"

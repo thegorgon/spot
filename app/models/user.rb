@@ -70,11 +70,19 @@ class User < ActiveRecord::Base
   end
   
   def active_membership
-    memberships.active.first
+    @membership ||= memberships.active.first
   end
     
+  def can_register?
+    member? && codes.count < code_slots
+  end
+  
+  def code_slots
+    3
+  end
+  
   def member?
-    memberships.active.exists?
+    !!active_membership
   end
   
   def wishlist(params)

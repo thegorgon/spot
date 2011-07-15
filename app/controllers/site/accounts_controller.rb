@@ -1,6 +1,7 @@
 class Site::AccountsController < Site::BaseController
   before_filter :require_user, :only => [:show, :destroy, :update]
-    
+  layout "oreo"
+
   def new
     @nonce = Nonce.new(:session => session)
   end
@@ -34,7 +35,6 @@ class Site::AccountsController < Site::BaseController
   end
   
   def show
-    render :layout => "oreo"
   end
   
   def update
@@ -44,7 +44,7 @@ class Site::AccountsController < Site::BaseController
       flash[:notice] = "Account Updated!"
       redirect_to account_path
     else
-      render :action => "show", :layout => "lightsite"
+      render :action => "show"
     end
   end
 end

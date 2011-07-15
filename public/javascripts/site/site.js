@@ -1,5 +1,8 @@
 (function(go) {
   $.provide(go, 'Views', {
+    site: function() {
+      $('#applydialog').modal({trigger: '.btnmembership', width: 875});
+    },
     site_blog: function() {
       $('#pagination a').ajaxLink({
         click: function() {
@@ -49,13 +52,23 @@
         }
       });
     },
-    site_cities_show: function() {
-      $('#applydialog').modal({trigger: '.btnmembership', width: 875});
-    },
     site_home_press: function() {
       go.AppPreview.init();
     },
     site_events_show: function() {
+      var bind = function() {
+        $('.btnclaim').unbind('click.modal').bind('click.modal', function(e) {
+          e.preventDefault();
+          $('#code_event_id').val($(this).attr('data-eid'));        
+          $('#claimdialog').dialog("open");
+        });
+      }
+      $('#claimdialog').modal({
+        width: 620, 
+        close: function() {
+          $('#claimdialog').removeClass('loading').removeClass('claimed');
+        }
+      });
       try {
         var canvas = $('canvas#timewedge'),
           context = canvas[0].getContext('2d'),
@@ -76,15 +89,33 @@
         context.fill();
       } catch(e) {
       }
-      
-      $('#applydialog').modal({trigger: '.btnmembership', width: 875});
+      $('#claimform').ajaxForm({
+        start: function(){
+          $('#claimdialog').addClass('loading');
+        },
+        success: function(data) {
+          $('#claimdialog').removeClass('loading').addClass('claimed');
+          if (data.error) {
+            $('#claimdialog').find('.code').html($("<div class='error'></div>").html(data.error));
+          } else {
+            $('#claimdialog').find('.code').html(data.code);
+            go.Behaviors.train($('#claimdialog').find('.code'));
+            $('#calendar').html(data.calendar);
+            bind();
+          }
+        },
+        error: function() {
+          $('#claimdialog').find('.code').html($("<div class='error'></div>").html("Sorry, something went wrong, please refresh this page and try again."));
+          $('#claimdialog').removeClass('loading').addClass('claimed');          
+        }
+      })
+      bind();
     },
     site_memberships_new: function() {
       go.PaymentForm.init({form: $('form')});
     },
     site_accounts_show: function() {
       go.PaymentForm.init({form: $('ul.form.cc form')});
-      $('#applydialog').modal({trigger: '.btnmembership', width: 875});
       $('.creditcard').click(function(e) {
         e.preventDefault();
         $(this).addClass('editing').parents('ul.form').addClass('editing');

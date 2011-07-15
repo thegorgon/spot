@@ -1,17 +1,13 @@
 -mode = (mode || :login).to_sym
 -@account ||= PasswordAccount.new
-%ul#authenticate.form.faded.narrow_center
-  %li.header.clearfix
-    %h1 
-      Login to
-    .image=image_tag("logos/spotwhite120x90.png", :height => 60, :width => 80)
+%ul#authenticate.form.light
   %li.section.clearfix.fb
     =form_for :credentials, :url => session_path, :html => { :id => "fbconnect_form" } do |f|
       =f.hidden_field :key, :value => nonce.digested
       =f.fields_for :facebook do |g|
         =g.hidden_field :access_token, :rel => "access_token"
         =g.hidden_field :facebook_id, :rel => "uid"
-      =button_tag :class => "fbconnect rndblk_80x30" do
+      =button_tag :class => "fbconnect btnorg77x32" do
         connect
     %h3
       .logo=image_tag("assets/general/fb_f_24x22.png", :size => "24x22")
@@ -35,7 +31,7 @@
           =p.email_field :login, :placeholder => "email", "data-validate-url" => existence_email_path, :required => true
           =p.password_field :password, :placeholder => "password", :required => true
         %li.buttons.clearfix
-          =button_tag :class => "rndblk_80x30" do
+          =button_tag :class => "btnorg77x32" do
             login
           =link_to "forgot password?", new_password_reset_path
   
@@ -44,5 +40,5 @@
         =f.email_field :login, :placeholder => "email", :required => true, :hint => "how should we reach you?", "data-validate-url" => availability_email_path, "data-invalid-msg" => "looks like you've already registered"
         =f.password_field :password, :placeholder => "password", :required => true, :hint => "4 to 25 characters please", :minlength => 4, :maxlength => 25
         %li.buttons.clearfix
-          =button_tag :class => "rndblk_80x30" do
+          =button_tag :class => "btnorg77x32" do
             register

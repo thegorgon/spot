@@ -152,7 +152,6 @@ class Place < ActiveRecord::Base
     @tweet << " to your wishlist on Spot"
     @tweet << " ##{city.gsub(' ', '').downcase}" if city
     @tweet << " ##{region_abbr.gsub(' ', '').downcase}" if region
-    @tweet << " via @SpotTeam"
   end
   
   def address_lines
@@ -215,6 +214,9 @@ class Place < ActiveRecord::Base
     hash[:phone_number] = phone_number if phone_number.present?
     if image_processing? && options[:processed_images]
       hash.merge!(:processed_image_url_640x400 => image.processed_url(:i640x400), :processed_image_url_234x168 => image.processed_url(:i234x168))
+    end
+    external_places.each do |external|
+      hash["#{external.class.to_sym}_id"] = external.source_id
     end
     hash
   end

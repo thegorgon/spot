@@ -404,7 +404,7 @@ ul.pillbox {
     
   }
 }
-.applydialog {
+#applydialog {
   background: #f0f0f0;
   padding: 20px 30px;
   h1 {
@@ -465,6 +465,135 @@ ul.pillbox {
       padding-right: 10px;
       width: 110px;
     }
+  }
+}
+.sharing {
+  .fb-share-button {
+    float: left;
+    margin: 1px 10px 0 0;
+  }
+  .twitter-share-button {
+    float: left;
+  }
+}
+#claimdialog {
+  font-size: 14px;
+  text-align: center;
+  padding: 20px 30px;
+  background: #f0f0f0;
+  .container {
+    height: 305px;
+    position: relative;
+  }
+  .section {
+    background: #f0f0f0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    width: 560px;
+    @include transition("opacity 0.5s, z-index 1s");
+  }
+  .areyousure {
+    padding: 50px 0;
+    z-index: 4;
+  }
+  .processing {
+    z-index: 3;
+    background: #f0f0f0 url("/images/assets/loading/blkgears30x40.gif") no-repeat center center;
+  }
+  .code {
+    z-index: 2;
+    .error {
+      @include titlefont;
+      color: #633;
+      text-shadow: rgba(255,255,255,0.75) 0px 1px;
+      font-size: 20px;
+      padding: 25px 0;
+    }
+    .col.right {
+      text-align: left;
+      width: 320px;
+      hr {
+        margin: 5px 0;
+        @extend hr.light;
+      }
+    }
+    .nowwhat {
+      padding-left: 35px;
+      background: transparent url("/images/icons/questioncir22x22.png") no-repeat left center;
+    }
+    .col.left {
+      margin: 8px 0;
+      width: 200px;
+      text-align: center;
+      code {
+        font-size: 50px;
+        display: block;
+        margin: 10px 0;
+        padding: 18px 10px 7px 10px;
+        @include border_radius(5px);
+        background: #fff;
+        border: 2px dashed #999;
+      }
+      .cancel {
+        text-decoration: none;
+        color: #999;
+        font-size: 11px;
+      }
+    }
+    code {
+      font-family: consolas, courier, monospace;
+      display: inline;
+    }
+    ul {
+      li {
+        padding: 5px 0;
+        &.telleveryone {
+          line-height:20px;
+        }
+      }
+      margin: 10px 0;
+    }
+    .howitworks {
+      float: none;
+      margin: 15px auto 0;
+      text-align: center;
+    }
+    .sharing {
+      float: right;
+    }
+  }
+  &.loading {
+    .areyousure {
+      z-index: 1;
+      @include opacity(0);
+    }
+  }
+  &.claimed {
+    .areyousure {
+      z-index: 1;
+      @include opacity(0);
+    }
+    .processing {
+      z-index: 1;
+      @include opacity(0);
+    }
+  }
+  h1 {
+    font-size: 25px;
+  }
+  h2 {
+    margin: 10px 0 0;
+    font-size: 18px;
+  }
+  p {
+    margin: 15px 0;
+  }
+  
+  button {
+    margin: 15px auto 25px;
   }
 }
 .evtdis {
@@ -595,19 +724,38 @@ ul.pillbox {
   height: 150px;
   padding: 24px 27px;
   font-size: 14px;
+  cursor: pointer;
+  .clicktoedit {
+    position: absolute;
+    bottom: 24px;
+    left: 27px;
+  }
   &.editable.present {
     .editmode {
       display: none;
     }
+    .clicktoedit {
+      display: none;
+    }
+    &:hover {
+      .clicktoedit {
+        display: block;
+      }
+    }
     &:hover, &.editing {
+      .logo {
+        background-image: url('/images/icons/pencil20x20.png');
+      }
+    }
+    &.editing {
       .editmode {
         display: block;
       }
-      .displaymode {
+      .clicktoedit {
         display: none;
       }
-      .logo {
-        background-image: url('/images/icons/pencil20x20.png');
+      .displaymode {
+        display: none;
       }
     }
   }

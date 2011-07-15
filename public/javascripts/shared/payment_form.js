@@ -116,7 +116,6 @@
       form.find('input.ccnumber').bind('keyup.updatecard', function(e) {
         var input = $(this), 
           type = input.ccType();
-        $.logger.debug(type);
         if (type) {
           $('.creditcard .types').addClass('selected').addClass(type);
         } else {
