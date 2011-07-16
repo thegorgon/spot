@@ -15,7 +15,7 @@ class PlaceNote < ActiveRecord::Base
 
   scope :undeleted, where(:deleted_at => nil)
   scope :deleted, where("deleted_at IS NOT NULL")
-  scope :visible, without_setting("private").without_setting("muted").undeleted
+  scope :visible, without_setting("private").without_setting("muted").undeleted.order("id DESC")
   scope :by_user, lambda { |u| where(:user_id => u.kind_of?(ActiveRecord::Base) ? u.id : u) }
 
   attr_protected :deleted_at  
