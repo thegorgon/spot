@@ -6,7 +6,7 @@ class Api::PlacesController < Api::BaseController
     @places = Place.where(:id => ids).all.hash_by { |p| p.id.to_s }
     @places = ids.collect { |id| @places[id.to_s] }
     record_user_event("api place load")
-    render :json => @places.collect { |p| p ? p.as_json(:current_user => current_user) : nil }
+    render :json => @places
   end
   
   def search
@@ -14,7 +14,7 @@ class Api::PlacesController < Api::BaseController
     if @search.save
       response.headers["X-Search-ID"] = @search.id.to_s
       record_user_event("api place search")
-      render :json => @search.as_json(:current_user => current_user)
+      render :json => @search
     else
       render :json => []
     end

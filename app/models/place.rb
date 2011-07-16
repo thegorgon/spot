@@ -210,7 +210,6 @@ class Place < ActiveRecord::Base
       :short_url => ShortUrl.shorten(place_path(self)),
       :public_notes => notes.visible.limit(10)
     }
-    hash[:current_user_notes] = notes.by_user(options[:current_user]).undeleted.all
     if !image.file? && !options[:default_images]
       hash.merge!(:image_url_640x400 => nil, :image_url_234x168 => nil, :image_url => nil)
     end
