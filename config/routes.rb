@@ -16,6 +16,7 @@ Spot::Application.routes.draw do
   
   scope :module => "site", :constraints => {:subdomain => /www|m|app|/} do
     resources :blog, :controller => "blog", :only => [:index]
+    resources :previews, :only => [:create]
     resource :session, :only => [:new, :create, :destroy]
     resource :account, :only => [:new, :create, :show, :update, :destroy] do
       get "endpoint", :action => "endpoint", :on => :collection
@@ -87,7 +88,6 @@ Spot::Application.routes.draw do
   
   namespace "biz" do
     resource :account, :only => [:new, :create, :show, :update]
-    resources :previews, :only => [:index, :create, :show]
     resources :businesses, :only => [:new, :create, :show, :edit, :update] do
       resources :promotions, :only => [:index, :create, :update, :destroy]
       resources :templates, :path => "promotions/templates", :controller => "promotion_templates", :only => [:index, :create, :update, :destroy]

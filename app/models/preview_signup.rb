@@ -1,5 +1,5 @@
 class PreviewSignup < ActiveRecord::Base
-  INTERESTS = ["iphone", "business"]
+  INTERESTS = ["iphone", "business", "city"]
   SEED_RID = 4372
   validates :email, :presence => true, :format => { :with => EMAIL_REGEX }, :uniqueness => {:scope => "interest"}
   validates :interest, :presence => true, :inclusion => INTERESTS
@@ -43,7 +43,7 @@ class PreviewSignup < ActiveRecord::Base
   end
   
   def send_thank_you
-    unless emailed? || BlockedEmail.blocked?(self.email)
+    if !emailed? && !BlockedEmail.blocked?(self.email) && false
       begin 
         TransactionMailer.preview_thanks(self).deliver! 
         update_attribute(:emailed, true)

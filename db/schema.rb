@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110715010103) do
+ActiveRecord::Schema.define(:version => 20110717013605) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20110715010103) do
     t.string   "phone",                               :null => false
     t.integer  "businesses_count",     :default => 0, :null => false
     t.integer  "max_businesses_count",                :null => false
+    t.datetime "verified_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "notification_flags",   :default => 0, :null => false
@@ -65,8 +66,10 @@ ActiveRecord::Schema.define(:version => 20110715010103) do
   add_index "business_accounts", ["user_id"], :name => "index_business_accounts_on_user_id"
 
   create_table "businesses", :force => true do |t|
-    t.integer  "place_id",            :null => false
-    t.integer  "business_account_id", :null => false
+    t.integer  "place_id",                           :null => false
+    t.integer  "business_account_id",                :null => false
+    t.integer  "average_spend",       :default => 0, :null => false
+    t.datetime "verified_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -362,6 +365,7 @@ ActiveRecord::Schema.define(:version => 20110715010103) do
     t.datetime "created_at"
     t.boolean  "emailed",        :default => false, :null => false
     t.string   "interest",                          :null => false
+    t.string   "value",          :default => "",    :null => false
   end
 
   add_index "preview_signups", ["interest", "email"], :name => "index_preview_signups_on_interest_and_email", :unique => true
@@ -486,8 +490,8 @@ ActiveRecord::Schema.define(:version => 20110715010103) do
     t.string   "last_name"
     t.string   "locale"
     t.boolean  "admin",               :default => false, :null => false
-    t.string   "location"
     t.integer  "notification_flags",  :default => 0,     :null => false
+    t.string   "location"
     t.string   "customer_id"
     t.integer  "city_id"
   end
