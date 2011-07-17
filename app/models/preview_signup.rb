@@ -14,6 +14,8 @@ class PreviewSignup < ActiveRecord::Base
     email = params[:email]
     interest = params[:interest]
     if email && preview = find_by_email_and_interest(email, interest)
+      preview.attributes = params
+      preview.save
       preview
     else
       new(params)
