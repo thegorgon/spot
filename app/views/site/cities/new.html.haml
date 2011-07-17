@@ -1,0 +1,26 @@
+=content_for :toptitle do
+  -if @city
+    ="Coming Soon to #{@city.name.titlecase}"
+  -else
+    We're Coming Soon
+    
+.coming_soon.clearfix
+  %h1.tf We're on our way...
+  %p.image.right
+    =image_tag "assets/general/washington400x300.png", :size => "400x300"
+  .form.left
+    %p
+      You know how sometimes, anticipation is better than getting there?
+    %p
+      We promise this won't be like that.
+  
+    %h2.tf Where do you live? Let us know and we'll try to come there next.
+  
+    =spot_form_for :preview, :display => "light inlinelabels" do |f|
+      =f.email_field :email, :label => "email : ", :placeholder => "email"
+      %li.note so we can let you know when we arrive.
+      =f.text_field :city, :value => @city.try(:name_and_region), :label => "city : ", :placeholder => "city"
+      %li.note where should we come?
+      %li.buttons
+        =button_tag :class => "btnorg300x41 tf" do
+          submit

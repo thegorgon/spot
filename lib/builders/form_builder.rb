@@ -116,7 +116,7 @@ module Spot
     
     def label_for(method, label)
       if label.present?
-        @template.content_tag(:div, label(:first_name, label), :class => "label")
+        @template.content_tag(:div, label(method, label), :class => "label")
       else
         "".html_safe
       end

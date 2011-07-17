@@ -21,7 +21,7 @@ Spot::Application.routes.draw do
       get "endpoint", :action => "endpoint", :on => :collection
     end
     resource :password_reset, :only => [:new, :create, :edit, :update]
-    resources :cities, :only => [:show]
+    resources :cities, :only => [:show, :new]
     resources :applications, :only => [:create, :destroy, :edit, :show, :new], :controller => "membership_applications" do
       get "referred", :on => :member, :action => "referred"
     end

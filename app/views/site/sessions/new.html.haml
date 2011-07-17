@@ -1,3 +1,4 @@
-.vcc.fullscreen
-  .vc
-    =render :partial => "/site/shared/authenticate"
+=content_for :toptitle do
+  Login to Spot
+  
+=render :partial => "/site/shared/authenticate", :locals => {:mode => :login}

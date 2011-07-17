@@ -1,4 +1,5 @@
 class Site::AccountsController < Site::BaseController
+  before_filter :require_no_user, :only => [:new]
   before_filter :require_user, :only => [:show, :destroy, :update]
   layout "oreo"
 

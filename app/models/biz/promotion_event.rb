@@ -12,7 +12,7 @@ class PromotionEvent < ActiveRecord::Base
   scope :this_month, lambda { where(:date => (Date.today..(Time.now + 1.month).to_date)) }
   scope :approved, joins(:template).where("promotion_templates.status" => PromotionTemplate::APPROVED_STATUS)
   scope :within, lambda { |radius, options| 
-    joins(:business => :place).where(["? <= ?", Place.distance_sql(options[:origin]), radius])
+    joins(:business => :place).where(["#{Place.distance_sql(options[:origin])} <= ?", radius])
   }
   
   def self.summary(timeframe=nil)

@@ -1,5 +1,6 @@
 class Site::SessionsController < Site::BaseController
   skip_before_filter :require_user, :except => [:destroy]
+  layout "oreo"
   
   def new
     with_flash_maintenance { logout }

@@ -5,7 +5,8 @@ class City < ActiveRecord::Base
   
   before_validation :set_fully_qualified_name
   scope :subscriptions_available, where("subscriptions_available > 0")
-
+  scope :visible, where("slug IS NOT NULL")
+  
   validates :slug, :presence => true
   validates :name, :presence => true
   validates :fqn, :presence => true
@@ -43,6 +44,10 @@ class City < ActiveRecord::Base
   
   def upcoming_templates
     @upcoming_templates ||= upcoming_events.group_by { |e| e.template }.keys
+  end
+  
+  def subscription_available?
+    subscriptions_available > 0
   end
     
   private

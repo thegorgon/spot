@@ -80,6 +80,18 @@
         height: 500px;
         width: 800px;
         background-image: url(/images/assets/maps/usa645x415.png);
+        .cantfind {
+          position: absolute;
+          bottom: 20px;
+          right: 20px;
+          color: #aaa;
+          a {
+            color: #aaa;
+            &:hover {
+              color: #f0f0f0;
+            }
+          }
+        }
         .city {
           position: absolute;
           height: 25px;
@@ -99,6 +111,26 @@
         #sf {
           top: 200px;
           left: 40px;
+        }
+        #la {
+          top: 270px;
+          left: 60px;
+        }
+        #nyc {
+          top: 175px;
+          right: 45px;
+        }
+        #chicago {
+          top: 185px;
+          right: 255px;
+        }
+        #nola {
+          bottom: 120px;
+          right: 230px;
+        }
+        #ismay {
+          top: 115px;
+          left: 285px;
         }
       }
     }

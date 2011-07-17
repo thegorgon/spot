@@ -1,19 +1,19 @@
-=content_for :bgimage do
-  .stretcher{'data-gravity' => "0.5x0.5"}
-    =image_tag "stretcher/cities/#{@city.slug}1.jpg", :size => "2292x1524"
-
 =content_for :toptitle do
   =@city.name.titlecase
 
 =content_for :above do
-  -unless current_member?
+  -if !current_member?
     .overlay.clearfix
       .title.clearfix
         %h1.tf.left
           Get access to all these unforgettable experiences
         =button_tag :class => "btnorg170x41 btnmembership tf right" do
           apply now
-      
+
+=content_for :bgimage do
+  .stretcher{'data-gravity' => "0.5x0.5"}
+    =image_tag "stretcher/cities/#{@city.slug}1.jpg", :size => "2292x1524"
+
 .title.clearfix
   %h1.left.tf Featured Member Benefits
   -unless current_member?
@@ -31,7 +31,7 @@
         .text
           .name.tf="\"#{featured.name}\" at #{featured.business.place.name}"
       .description= featured.description
-      
+
 .upcoming.clearfix
   -(@page.upcoming).each do |template|
     %a.evtdis.template{:class => cycle("left", "right"), :href => place_event_path(template.business.place, template)}

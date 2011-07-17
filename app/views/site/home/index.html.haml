@@ -28,8 +28,12 @@
       .vc
         .content
           %h1 Where?
-          -City.subscriptions_available.each do |city|
-            %a.city{:href => city_path(city), :id => city.slug} San Francisco
+          -City.visible.each do |city|
+            %a.city{:href => city_path(city), :id => city.slug}=city.name.titlecase
+          .cantfind
+            Don't see your city on the map? 
+            =link_to "Tell us where you live", new_city_path
+            and we'll come to you next.
   .loading.scene
     .vcc
       .vc

@@ -120,6 +120,7 @@
       if (klass) { $this.addClass(klass); }
     },
     autogeocode: function(options) {
+      options = options || {};
       var input = $(this),
         acopts = options.autocomplete || {};
       $.extend(acopts, {
@@ -147,7 +148,7 @@
           });
         },
         select: function(event, ui) {
-          options.ll.val(ui.item.ll);
+          if (options.ll) { options.ll.val(ui.item.ll); }
           input.val(ui.item.value);
           input.parent('li').setClass('valid', ['invalid', 'loading']);
           input.blur();
