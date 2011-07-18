@@ -1,18 +1,16 @@
 #authenticate {
   width: 300px;
-  ul.form {
-    margin: 15px 0 0 0;
-  }
+  height: 290px;
   li.section {
-    padding: 1.5em 0;
     h3 {
       font-size: 16px;
       font-weight: bold;
       line-height: 30px;
+      padding-left: 32px;
     }
     &.fb {
       h3 {
-        float: left;
+        background: transparent url(/images/assets/general/fb_f_24x22.png) no-repeat left center;
       }
       button {
         float: right;
@@ -24,6 +22,9 @@
     }
     &.email {
       height: 175px;
+      h3 {
+        background: transparent url(/images/icons/mail24x16.png) no-repeat left center;
+      }
     }
   }
   .form_container {

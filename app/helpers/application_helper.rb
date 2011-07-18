@@ -2,6 +2,12 @@ module ApplicationHelper
   def place_page?
     @place && !@place.new_record?
   end
+  
+  def show_login?
+    !( current_page?(account_path) && 
+        current_page?(new_account_path) &&
+        current_page?(new_sessions_path) )
+  end
       
   def w3c_date(date)
     date.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")

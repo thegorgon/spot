@@ -5,16 +5,17 @@
       .toptitle.clearfix
         %h1.tf.left=yield :toptitle
         .right
-          -if current_user && !current_page?(account_path)
-            =link_to current_user.nickname, account_path, :class => "accountlnk"
-            %span.account="(&nbsp;#{link_to "not you?", logout_path}&nbsp;)".html_safe
-          -elsif current_page?(account_path)
-            %span.account=link_to "logout?", logout_path(:return_to => login_path)
+          -if content_for?(:topright)
+            =content_for :topright
           -else
-            %span.account.accountlnk
-              %a{'data-popover' => '#login_popover', 'data-popover-title' => 'Log In', 'data-popover-orient' => 'vertical'} 
-                login?
-            =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
+            -if current_user
+              =link_to current_user.nickname, account_path, :class => "accountlnk"
+              %span.account="(&nbsp;#{link_to "not you?", logout_path}&nbsp;)".html_safe
+            -else show_login?
+              %span.account.accountlnk
+                %a{'data-popover' => '#login_popover', 'data-popover-title' => 'Log In', 'data-popover-orient' => 'vertical'} 
+                  login?
+              =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
       .main
         =content_for?(:oreo) ? yield(:oreo) : yield
     .footer

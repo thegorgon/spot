@@ -1,6 +1,10 @@
 =content_for :toptitle do
   =current_user.nickname
-  
+
+=content_for :topright do
+  %span.account=link_to "logout?", logout_path(:return_to => login_path)
+    
+
 
 .relative.clearfix
   .left.lcol
