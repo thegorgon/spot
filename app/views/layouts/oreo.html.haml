@@ -31,8 +31,8 @@
       =link_to "Terms of Service", tos_path
 
 
-= render :file => 'layouts/site'
+  -unless current_member?
+    #applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Spot Member"}
+      =render :partial => "/shared/membership/apply"
 
--unless current_member?
-  #applydialog.clearfix.hidden{"data-title" => "Become a Spot Member"}
-    =render :partial => "/shared/membership/apply"
+= render :file => 'layouts/site'

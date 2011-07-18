@@ -78,8 +78,6 @@
   margin: 0 auto;
   padding-top: 20px;
   .overlay {
-    height: 41px;
-    line-height: 42px;
     text-align: left;
     padding: 10px 30px;
     border: 1px solid #ff8419;
@@ -90,9 +88,12 @@
     h1 {
       font-size: 23px;
     }
-    .title {      
+    .title {
       height: 41px;
       line-height: 41px;
+    }
+    .content {
+      margin: 10px 0 0;
     }
   }
   .filling {

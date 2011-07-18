@@ -44,9 +44,10 @@
   %hr
 -else
   .overlay.clearfix
-    %h1.left.tf Exclusively available to Spot Members. 
-    =button_tag :class => "btnorg170x41 btnmembership tf right" do
-      apply now
+    .title.clearfix
+      %h1.left.tf Exclusively available to Spot Members. 
+      =button_tag :class => "btnorg170x41 btnmembership tf right" do
+        apply now
 
 .availability.clearfix
   -unless current_member?
