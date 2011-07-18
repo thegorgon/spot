@@ -70,14 +70,6 @@ ul.form {
       right: 0px;
     }
   }
-  .checkbox {
-    cursor: pointer;
-    height: 12px;
-    width: 12px;
-    float: left;
-    margin-right: 5px;
-    @include border_radius(3px);
-  }
   .selected .radio, .radio.checked {
     .indicator {
       margin: 2px 0 0 2px;
@@ -380,15 +372,6 @@ ul.form {
       background: transparent url(/images/icons/alertred24x20.png) no-repeat center center;        
     }
   }
-  .checkbox {
-    border: 1px solid #666;
-    background: #333;
-    @include gradient_top_down(#333333, #444444, 20%);
-    &.checked {
-      background: #fff;
-      @include gradient_top_down(#999999, #dddddd, 20%);
-    }
-  }
   .selected .radio, .radio.checked {
     background: #fff;
     @include gradient_top_down(#999999, #dddddd, 20%);
@@ -453,15 +436,6 @@ ul.form {
     label {
       color: #cc3333;
     }    
-  }
-  .checkbox {
-    border: 1px solid #808080;
-    background: #333;
-    @include gradient_top_down(#333333, #444444, 20%);
-    &.checked {
-      background: #fff;
-      @include gradient_top_down(#999999, #dddddd, 20%);
-    }
   }
   .selected .radio, .radio.checked {
     background: #fff;
