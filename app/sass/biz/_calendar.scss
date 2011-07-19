@@ -248,6 +248,16 @@
       left: 0px;
       right: 0px;
       bottom: 0px;
+      .select {
+        .input_container {
+          padding: 3px 0 0 0;
+        }
+      }
+      select {
+        width: 65px;
+        height: 20px;
+        font-size: 12px;
+      }
     }
     form {
       width: 300px;
