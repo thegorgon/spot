@@ -114,15 +114,14 @@
     site_memberships_new: function() {
       go.PaymentForm.init({form: $('form')});
     },
+    site_memberships_endpoint: function() {
+      go.PaymentForm.init({form: $('form')});      
+    },
     site_cities_new: function() {
       $('#preview_city').autogeocode();
     },
     site_accounts_show: function() {
       go.PaymentForm.init({form: $('ul.form.cc form')});
-      $('.creditcard').click(function(e) {
-        e.preventDefault();
-        $(this).addClass('editing').parents('ul.form').addClass('editing');
-      });
     }
   });
 }(Spot));

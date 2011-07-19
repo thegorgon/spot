@@ -107,10 +107,6 @@ button.link {
   @include orgbtn;
   line-height: 28px;
   font-size: 18px;
-  .btntxt {
-    position: relative;
-    top: -1px;
-  }
 }
 .btnorg100x32, a.btnorg100x32 {
   @include bgbutton('org100x32', 100px, 33px);

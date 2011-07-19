@@ -1,16 +1,12 @@
 class Site::MembershipsController < Site::BaseController
   before_filter :require_user
   before_filter :require_approved_application
+  before_filter :require_no_membership, :except => :destroy
+  before_filter :require_membership, :only => :destroy
   layout 'oreo'
   
   def new
-    @trdata = Braintree::TransparentRedirect.create_customer_data(
-      :redirect_url => endpoint_membership_url, 
-      :customer => {
-        :id => "customer_#{current_user.id}",
-        :email => current_user.email
-      }
-    )  
+    @payment ||= PaymentForm.new(:user => current_user)
     render :action => "new" # allows for just calling "new" from any action
   end
   
@@ -19,17 +15,16 @@ class Site::MembershipsController < Site::BaseController
   
   # TR Endoint
   def endpoint
-    @result = Braintree::TransparentRedirect.confirm(request.query_string)
-    @membership = Membership.register(current_user, @result)
-    if @membership.try(:save)
+    @result = Braintree::TransparentRedirect.confirm(request.query_string) rescue nil
+    @payment = PaymentForm.new(:user => current_user, :tr_result => @result)
+    if @payment.try(:save)
       respond_to do |format|
         format.html do
           flash[:notice] = "Payment Accepted! Now go forth, and explore!"
-          redirect_to city_path(@membership.city)
+          redirect_to city_path(@payment.city)
         end
       end
     else
-      flash.now[:error] = @membership.try(:errors).try(:full_messages).try(:join)
       new
     end
   end

@@ -21,4 +21,19 @@ class Site::BaseController < ApplicationController
       redirect_to new_session_path 
     end
   end  
+  
+  def require_membership
+    unless current_user.try(:active_membership)
+      flash[:error] = "Sorry, that's for members only."
+      application = current_user.membership_application
+      redirect_to application ? application_path(application) : new_application_path
+    end
+  end
+  
+  def require_no_membership
+    if current_user.try(:active_membership)
+      flash[:error] = "You're already a member, so you don't really need to go there."
+      redirect_to account_path
+    end
+  end
 end

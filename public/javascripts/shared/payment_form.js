@@ -96,23 +96,35 @@
       }
     },
     bind = function() {
-      var cc = form.find('.ccfields'), planId = $('#customer_custom_fields_subscription_plan_id');
+      var cc = form.find('.ccfields'), 
+        planId = $('#customer_custom_fields_subscription_plan_id'),
+        options = $('.paymentoptions'),
+        selectOption = function(option) {
+          if (option.length > 0) {
+            options.find('.paymentoption').removeClass('active');
+            options.addClass('selected');
+            option.addClass('active');
+            planId.val(option.attr('data-value'));
+            cc.slideDown();            
+          }
+        };
       cc.hide().removeClass('hidden');
+      
       form.find('.paymentoption').click(function(e) {
-        var self = $(this), parent = self.parent('.paymentoptions');
+        e.preventDefault();
+        var self = $(this);
         if (self.hasClass('active')) {
           self.removeClass('active');
-          parent.removeClass('selected');
+          options.removeClass('selected');
           planId.val('');
           cc.slideUp();
         } else {
-          parent.find('.paymentoption').removeClass('active');
-          parent.addClass('selected');
-          self.addClass('active');
-          planId.val(self.attr('data-value'));
-          cc.slideDown();
+          selectOption(self);
         }
       });
+      
+      selectOption(form.find('.paymentoption.active'));
+      
       form.find('input.ccnumber').bind('keyup.updatecard', function(e) {
         var input = $(this), 
           type = input.ccType();

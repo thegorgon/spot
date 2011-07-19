@@ -6,6 +6,29 @@
     }
   }
   .main {
+    .errorbox {
+      padding: 20px 0 0 14px;
+      width: 310px;
+      .errors {
+        color: #993333;
+        background: #EDD;
+        padding: 10px;
+        text-align: left;
+        margin: 0;
+        border: 1px solid #933;        
+        ul {
+          list-style: outside disc;
+          margin: 10px 20px;
+          li {
+            padding: 5px 0;
+          }
+        }
+        h2 {
+          margin: 0;
+          padding: 0;
+        }
+      }
+    }
     h2 {
       font-size: 18px;
     }
@@ -29,6 +52,11 @@
       }
       .value {
         line-height: 20px;
+      }
+      .cc {
+        li {
+          padding: 0;
+        }
       }
     }
     li.text.labelled, .li.labelled {

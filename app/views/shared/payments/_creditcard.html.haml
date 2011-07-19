@@ -1,5 +1,13 @@
 -form ||= nil
-.creditcard{:class => "#{conditionally("editable", form.present?)} #{conditionally("present", !creditcard.new_record?)}"}
+-if creditcard && creditcard.errors[:base].present?
+  .errorbox
+    .errors
+      %h2.tf There were errors with your submission : 
+      %ul
+        -creditcard.errors[:base].each do |error|
+          %li=error
+        
+.creditcard{:class => "#{conditionally("editable", form.present?)} #{conditionally("present", !creditcard.new_record?)} #{conditionally("editing", !creditcard.valid?)}"}
   .logo
   -if form
     .editmode

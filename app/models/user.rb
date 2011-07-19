@@ -71,7 +71,11 @@ class User < ActiveRecord::Base
   end
   
   def active_membership
-    @membership ||= memberships.active.first
+    @active_membership ||= memberships.active.first
+  end
+  
+  def expired_memberships
+    @expired_memberships ||= memberships.expired.all
   end
     
   def can_register?
@@ -98,13 +102,7 @@ class User < ActiveRecord::Base
   def names
     [first_name, last_name]
   end
-  
-  def add_credit_card(cc)
-    credit_cards.create do |card|
-      card.sync_with(cc)
-    end
-  end
-  
+    
   def nickname
     if @nickname.blank?
       if first_name.present? && last_name.present?

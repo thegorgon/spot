@@ -6,18 +6,25 @@
   Become a Member
   
 .titles
+  -if @payment.errors[:base].present?
+    .errors
+      %h2.tf There were errors with your submission : 
+      %ul
+        -@payment.errors[:base].each do |error|
+          %li=error
+        
   %h1.tf
     Congratulations. Your application has been accepted.
   
   %h1.tf
     Just one last question...how will you be paying?
 
-=spot_form_for :customer, :url => Braintree::TransparentRedirect.url, :display => "cc light clearfix inlinelabels", :html => {:autocomplete => "off"} do |f|
-  =hidden_field_tag :tr_data, ERB::Util.html_escape(@trdata)
+=spot_form_for @payment, :as => :customer, :url => Braintree::TransparentRedirect.url, :display => "cc light clearfix inlinelabels", :html => {:autocomplete => "off"} do |f|
+  =hidden_field_tag :tr_data, ERB::Util.html_escape(@payment.tr_data(:redirect_url => endpoint_membership_url))
   =f.fields_for :custom_fields do |cf|
     =cf.hidden_field :subscription_plan_id, :value => ""
   .paymentoptions.clearfix
-    .paymentoption.monthly.left{"data-value" => "ea_monthly"}
+    .paymentoption.monthly.left{"data-value" => "ea_monthly", :class => conditionally("active", @payment.plan_id == "ea_monthly")}
       .title.tf grande
       .description
         .mval.tf 
@@ -32,7 +39,7 @@
         %a{:class => "btnorg77x32 tf", :href => "#"}
           Select
     
-    .paymentoption.annually.right{"data-value" => "ea_annually"}
+    .paymentoption.annually.right{"data-value" => "ea_annually", :class => conditionally("active", @payment.plan_id == "ea_annually")}
       .title.tf venti
       .description
         .mval.tf
@@ -56,8 +63,7 @@
   .ccfields.hidden
     %h1.tf Imagine a credit card...
     =f.fields_for :credit_card do |ccf|
-      -cc = CreditCard.new(:cardholder_name => current_user.name, :expiration => Time.now + 1.year)
-      =render :partial => "/shared/payments/creditcard", :locals => {:form => ccf, :creditcard => cc}
+      =render :partial => "/shared/payments/creditcard", :locals => {:form => ccf, :creditcard => @payment.credit_card}
     %li.buttons
       =button_tag :class => "btnorg300x41 tf" do
         finish & pay

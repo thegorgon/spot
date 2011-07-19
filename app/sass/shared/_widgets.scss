@@ -763,17 +763,19 @@ ul.pillbox {
     .editmode {
       .username {
         margin: 8px 0;
+        li {
+          width: 246px;
+        }
         input {
           width: 230px;
           text-transform: uppercase;
         }
       }
       .numcontainer {
-        margin: 0 0 8px;
+        margin: 0 0 10px 0;
       }
       .ccnumber {
         width: 270px;
-        margin: 0;
       }
       li {
         margin: 0;
@@ -790,9 +792,7 @@ ul.pillbox {
       }
       .expiration {
         width: 203px;
-        margin: 0 0 10px;
-        padding-top: 5px;
-        width: 203px;
+        margin: 6px 0 0;
         label {
           margin-right: 5px;
           float: left;

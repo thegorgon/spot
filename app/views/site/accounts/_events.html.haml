@@ -27,7 +27,12 @@
               %td.summary{:colspan => 2}
                 -city = current_user.active_membership.city
                 =link_to "Browse in #{city.name.titlecase}.", city_path(city)
-                      
+  -elsif current_user.expired_memberships.present?
+    Spot Events are only open to Spot Members.
+    %p
+      We're very sorry that you decided to cancel your membership. 
+      If you'd like to continue receiving Spot membership benefits, please
+      ="#{link_to "renew your Spot membership", new_membership_path}.".html_safe
   -elsif current_user.membership_application 
     Spot Events are only open to Spot Members.
     %p

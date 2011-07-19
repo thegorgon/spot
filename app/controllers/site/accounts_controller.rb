@@ -20,22 +20,20 @@ class Site::AccountsController < Site::BaseController
   end  
   
   def endpoint
-    @result = Braintree::TransparentRedirect.confirm(request.query_string)
-    if @result.credit_card
-      @card = CreditCard.find_by_token(@result.credit_card.token)
-      @card.sync_with(@result.credit_card)
-    end
-    
+    @result = Braintree::TransparentRedirect.confirm(request.query_string) rescue nil
+    @card = CreditCard.find_by_token(@result.try(:success?)? @result.credit_card.token : @result.params[:payment_method_token])
+    @card.tr_update_result = @result
     if @card.try(:save)
       flash[:notice] = "Credit Card Updated!"
       redirect_to account_path
     else
-      flash[:error] = "Something Went Wrong...Try Again?"
       show
     end
   end
   
   def show
+    @page_namespace = "site_accounts_show"
+    render :action => "show"
   end
   
   def update
