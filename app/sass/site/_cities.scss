@@ -76,4 +76,15 @@
       padding: 0 10px;
     }
   }
+  .upcoming {
+    .evtdis {
+      &.even {
+        float: left;
+        clear: left;
+      }
+      &.odd {
+        float: right;
+      }
+    }
+  }
 }

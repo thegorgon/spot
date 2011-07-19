@@ -19,10 +19,6 @@
 
 .title.clearfix
   %h1.left.tf Featured Member Benefits
-  -unless current_member?
-    .right
-      =button_tag :class => "btnorg300x41 btnmembership tf" do
-        become a member
 
 .featsection{:class => "size#{@page.featured.length}"}
   -@page.featured.each_with_index do |featured, i|
@@ -37,7 +33,7 @@
 
 .upcoming.clearfix
   -(@page.upcoming).each do |template|
-    %a.evtdis.template{:class => cycle("left", "right"), :href => place_event_path(template.business.place, template)}
+    %a.evtdis.template{:class => cycle("even", "odd"), :href => place_event_path(template.business.place, template)}
       .image
         .disclosure
         =image_tag template.business.place.image.url(:i640x400), :size => "400x250"
