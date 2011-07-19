@@ -23,14 +23,15 @@ Spot::Application.routes.draw do
     end
     resource :password_reset, :only => [:new, :create, :edit, :update]
     resources :cities, :only => [:show, :new]
-    resources :applications, :only => [:create, :destroy, :edit, :show, :new], :controller => "membership_applications" do
+    resource :application, :only => [:create, :show, :new], :controller => "membership_applications" do
       get "referred", :on => :member, :action => "referred"
     end
     resources :registrations, :only => [:show, :create, :destroy]
     resources :places, :only => [:show] do
       resources :events, :only => [:show]
     end
-    resource :membership, :only => [:new, :create, :destroy] do 
+    resource :membership, :only => [:new, :create, :destroy] do
+      get "thanks", :action => "thanks", :on => :member
       get "endpoint", :action => "endpoint", :on => :collection
     end
 
@@ -48,6 +49,7 @@ Spot::Application.routes.draw do
       get "press", :action => "press"
       get "getspot", :action => "getspot"
       get "viewemail", :action => "email"
+      get "policies", :action => "policies"
     end
     get "login" => redirect("/session/new")
     get "register" => redirect("/account/new")

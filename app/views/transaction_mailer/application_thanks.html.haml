@@ -1,30 +1,33 @@
-%h1{:style => "font-size:15px;font-family:Century Gothic,Helvetica Neue,Helvetica,Arial,sans-serif;"} We'll review your responses and be in touch shortly.
-    
-.buckets.clearfix{:style => "margin-top:20px"}
-  %h1{:style => "font-size:15px;font-family:Century Gothic,Helvetica Neue,Helvetica,Arial,sans-serif;"} In the meantime...
-  %p
-    You can check the 
-    =link_to "status of your application", application_url(@application)
-    at any time. Updates will be posted as they occur.
-  .left.bucket{:style => "float:left;padding-right:5px;"}
-    %h1{:style => "font-size:15px;font-family:Century Gothic,Helvetica Neue,Helvetica,Arial,sans-serif;"}
-      We appreciate gossips...
-    .text
-      %table{:cellpadding => "0", :cellspacing => "0"}
-        %tr
-          %td
-            Get your friends to join and we'll give you both priority access. 
-            We'll even throw in a free month's subscription.
-          %td{:width => 10}
-          %td
-            %div{:style => "margin-top: 10px;width:77px;height:32px;background:transparent url(#{IMGHOST}buttons/flatgry77x32.png) no-repeat left center;text-align:center;line-height:32px;"}
-              =link_to "Share", application_url(@application), :style => "color:#333;font-weight:bold;text-decoration:none;"
+%h1{:style => "font-size:15px;"} We’ve received your application for Spot Membership…
+%p
+  And we’re grateful for your interest in our service. 
+  Soon you will receive an invitation to become one of our 10,000 founding members.
+
+%h1{:style => "font-size:15px;"} Let’s Start Something…
+%p
+  Join us on the first step of our journey, and help shape our community of food and drink enthusiasts as we establish a new way to enjoy San Francisco’s vibrant and exciting restaurant scene.
+
+%h1{:style => "font-size:15px;"} In the meantime...
+%p
+  You can check the 
+  =link_to "status of your application", application_url
+  at any time. Updates will be posted as they occur.
+
+%h1{:style => "font-size:15px;"}
+  We appreciate gossips...
+%table{:cellpadding => "0", :cellspacing => "0"}
+  %tr
+    %td
+      Do you know someone who would be a perfect fit for Spot membership? Spread the word using this personal referral link and you’ll earn a month free for each person who joins:
+
+    %td{:width => 10}
+    %td
+      %div{:style => "margin-top: 10px;width:77px;height:32px;background:transparent url(#{IMGHOST}buttons/flatgry77x32.png) no-repeat left center;text-align:center;line-height:32px;"}
+        =link_to "Share", application_url, :style => "color:#333;font-weight:bold;text-decoration:none;"
         
-  .right.bucket.last
-    %h1{:style => "font-size:15px;font-family:Century Gothic,Helvetica Neue,Helvetica,Arial,sans-serif;"}
-      Ya, there's an app for that...
-    %p{:style => "margin-top: 10px;"}
-      Use our app to remember places you want to go. We'll go to those places on your behalf to make sure your visit is unforgettable.
-      %p
-        %a{:href => getspot_url}
-          =image_tag "#{IMGHOST}assets/general/appstoregry162x56.png", :size => "162x56"
+%p Sincerely,
+%p{:style => "margin:0;padding:0;"} Julia & The Spot Team
+%br
+=mail_to "julia@spot-app.com", "julia@spot-app.com", :style => "color:#333"
+%br
+=link_to "http://www.spot-app.com", "http://www.spot-app.com", :style => "color:#333"

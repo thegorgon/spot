@@ -1,4 +1,5 @@
 class Site::MembershipApplicationsController < Site::BaseController  
+  before_filter :require_application, :only => [:show]
   layout 'oreo'
   
   def create
@@ -9,14 +10,13 @@ class Site::MembershipApplicationsController < Site::BaseController
     @user.city = @application.city
     warden.set_user @user if @user && @user.id
     if @application.save && @user.save
-      redirect_to application_path(@application)
+      redirect_to application_path
     else
       render :action => :new
     end
   end
 
   def show
-    @application = MembershipApplication.find_by_token(params[:id])
     @city = @application.city
   end
   
@@ -26,9 +26,19 @@ class Site::MembershipApplicationsController < Site::BaseController
   end
   
   def referred
-    @referrer = MembershipApplication.find_by_token(params[:id])
+    @referrer = MembershipApplication.find_by_token(params[:rid])
     @city = @referrer.city
     new
+  end
+  
+  private
+  
+  def require_application
+    @application = current_user.membership_application
+    unless @application
+      flash[:notice] = "Please complete your application first."
+      redirect_to new_application_path
+    end
   end
   
 end

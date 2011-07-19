@@ -1,5 +1,8 @@
 #site_home_index {
   padding: 0;
+  #bd {
+    overflow:hidden;
+  }
   #toplayer {
     overflow: hidden;
     position: absolute;
@@ -201,7 +204,7 @@
 
 .csstransitions #site_home_index {
   #slidetitle {
-    bottom: -60px;
+    bottom: 10px;
     @include transition('bottom 1s');
     &.visible {
       bottom: 100px;            

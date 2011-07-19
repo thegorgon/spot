@@ -17,7 +17,10 @@ class MembershipApplication < ActiveRecord::Base
   end
   
   def approve!
-    update_attribute(:approved_at, Time.now)
+    unless approved?
+      update_attribute(:approved_at, Time.now)
+      deliver_approved
+    end
   end
 
   def survey=(value)
@@ -30,6 +33,10 @@ class MembershipApplication < ActiveRecord::Base
   
   def deliver_thank_you
     TransactionMailer.application_thanks(self).deliver!
+  end
+  
+  def deliver_approved
+    TransactionMailer.application_approved(self).deliver!
   end
   
   def to_param

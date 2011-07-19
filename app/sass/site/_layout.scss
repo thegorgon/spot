@@ -1,4 +1,7 @@
 .site {
+  #flashes {
+    z-index:1000;
+  }
   background: #000;
   a.dark, a.dark:visited {
     color: #ccc;

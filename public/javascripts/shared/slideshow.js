@@ -32,7 +32,7 @@
         } else {
           current.css({zIndex: 20});
           next.css({zIndex: 10}).show();
-          title.animate({bottom: -70}, 1000, function() {
+          title.animate({bottom: 10}, 1000, function() {
             title.text(next.attr('title')).animate({bottom: 100}, 1000);
             current.fadeOut(options.fadeFor, function() {
               next.css({zIndex: 20});

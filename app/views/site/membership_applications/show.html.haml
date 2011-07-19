@@ -26,7 +26,10 @@
   .left.bucket
     %h1.tf.invitetitle
       We appreciate gossips...
-    .img=image_tag "assets/general/gossips380x200.png", :size => "380x200"
+    .image.gossip
+      =image_tag "paintings/gossip400x300.png", :size => "400x300"
+      .speechbubble
+        I just signed up for the greatest website. Cosmos anyone?
     .text
       %p
         Get your friends to join and we'll give you both priority access. 
@@ -40,7 +43,10 @@
   .right.bucket.last
     %h1.tf
       Ya, there's an app for that...
-    .img=image_tag "assets/devices/iphonecloseup380x200.png", :size => "380x200"
+    .image.alchemist
+      =image_tag "paintings/alchemist400x300.png", :size => "400x300"
+      .speechbubble.down
+        If you don't have an iPhone...
     .text
       %p Use our app to remember places you want to go. We'll go to those places on your behalf to make sure your visit is unforgettable.
       =img_link_to "assets/general/appstoregry162x56.png", getspot_path, :size => "162x56", :class => "getspot"

@@ -26,7 +26,7 @@ class Site::BaseController < ApplicationController
     unless current_user.try(:active_membership)
       flash[:error] = "Sorry, that's for members only."
       application = current_user.membership_application
-      redirect_to application ? application_path(application) : new_application_path
+      redirect_to application ? application_path : new_application_path
     end
   end
   

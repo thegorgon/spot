@@ -3,6 +3,7 @@ class Site::CitiesController < Site::BaseController
   
   def show
     @city = City.find_by_slug(params[:id])
+    raise ActiveRecord::RecordNotFound unless @city
     session[:city_id] = @city.id
     @page = CityPage.new(@city)
     new unless @city.subscription_available?

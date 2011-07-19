@@ -1,12 +1,12 @@
 class Site::MembershipsController < Site::BaseController
   before_filter :require_user
   before_filter :require_approved_application
-  before_filter :require_no_membership, :except => :destroy
-  before_filter :require_membership, :only => :destroy
+  before_filter :require_no_membership, :except => [:destroy, :thanks]
+  before_filter :require_membership, :only => [:destroy, :thanks]
   layout 'oreo'
   
   def new
-    @payment ||= PaymentForm.new(:user => current_user)
+    @payment ||= PaymentForm.new(:user => current_user, :plan_id => params[:plan_id])
     render :action => "new" # allows for just calling "new" from any action
   end
   
@@ -21,12 +21,15 @@ class Site::MembershipsController < Site::BaseController
       respond_to do |format|
         format.html do
           flash[:notice] = "Payment Accepted! Now go forth, and explore!"
-          redirect_to city_path(@payment.city)
+          redirect_to membership_thanks_path
         end
       end
     else
       new
     end
+  end
+  
+  def thanks
   end
   
   def destroy
@@ -40,7 +43,7 @@ class Site::MembershipsController < Site::BaseController
   def require_approved_application
     @application = current_user.membership_application
     unless @application.try(:approved?)
-      redirect_to @application ? application_path(@application) : new_application_path
+      redirect_to @application ? application_path : new_application_path
     end
   end
 end

@@ -380,6 +380,16 @@ ul.form {
 }
 
 /* LIGHT FORMS */
+input.text.light {
+  border: 1px solid #999;
+  @include box_shadow(rgba(0,0,0,0.5) 0px 1px 1px inset);
+  padding: 4px 8px;
+  height: 20px;
+  font-size: 14px;
+  line-height: 20px;
+  width: 282px;
+  @include border_radius(5px);
+}
 .light {
   input.text, textarea, .file_field {
     border: 1px solid #999;

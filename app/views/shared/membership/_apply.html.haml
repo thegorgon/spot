@@ -24,7 +24,7 @@
   =render :partial => "/site/shared/explanations/guarantee"
 
 .col.form.right
-  =spot_form_for :application, :url => applications_path, :display => "light inlinelabels" do |f|
+  =spot_form_for :application, :url => application_path, :display => "light inlinelabels" do |f|
     =f.fields_for :user_attributes do |uf|
       =uf.name_fields :required => true, :label => "name : ", :value => current_user.try(:names)
       -if logged_in?

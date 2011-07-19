@@ -8,6 +8,9 @@ class Site::HomeController < Site::BaseController
   def press
   end
   
+  def policies
+  end
+  
   def privacy
     render :layout => "oreo"
   end

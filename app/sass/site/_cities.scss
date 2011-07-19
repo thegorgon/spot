@@ -11,6 +11,15 @@
     p {
       margin: 10px 0;
     }
+    .image {
+      margin: 10px 0;
+      position: relative;
+      .speechbubble {
+        font-size: 12px;
+        top: -35px;
+        left: -15px;
+      }
+    }
     .image img {
       border: 1px solid #ddd;
     }

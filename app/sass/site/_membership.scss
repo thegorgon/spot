@@ -15,49 +15,69 @@
   .hd {
     margin-bottom: 15px;
   }
-  .buckets {
-    margin: 20px 0;
-  }
   .bucket {
     width: 394px;
-    padding-right: 15px;
-    .img {
-      img {
-        border: 1px solid #333;
-      }
-      margin: 15px 0;
+  }
+  .gossip {
+    .speechbubble {
+      top: 13px;
+      left: 10px;
     }
-    a.getspot {
-      display: block;
-      text-align: center;
-    }
-    .text {
-      font-size: 14px;
-      p {
-        margin: 10px 0;        
-      }
-      input {
-        font-size: 12px;
-        width: 239px;
-      }
-      .share {
-        margin: 5px;
-        &.last {
-          margin-right:0px;
-        }
-      }
-    }
-    &.last {
-      padding-left: 15px;
-      border-right: none;
+  }
+  .alchemist {
+    .speechbubble {
+      top: 150px;
+      left: 185px;
+      line-height: 40px;
     }
   }
 }
 
-.site_memberships {
+#site_memberships_new {
   .main {
     text-align: center;
   }
+}
+#site_memberships_thanks {
+  .bucket {
+    width: 394px;
+    float: left;
+    padding: 0 10px;
+    .image {
+      &.columbus {
+        .speechbubble {
+          top: 13px;
+          left: 132px;
+        }
+      }
+      &.knight {
+        .speechbubble {
+          top: 30px;
+          left: 170px;
+        }
+      }
+    }
+    &.first {
+      padding-left: 0;
+      border-left: 0;
+      width: 404px;
+    }
+    &.last {
+      width: 404px;
+      padding-right: 0;
+      border-right: 0;
+    }
+  }
+  .sharing {
+    input.text {
+      width: 245px;
+    }
+  }
+  p {
+    margin: 10px 0;
+  }
+}
+.site_memberships {
   .errors {
     color: #993333;
     background: #EDD;
