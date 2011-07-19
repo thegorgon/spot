@@ -120,7 +120,7 @@
     site_cities_new: function() {
       $('#preview_city').autogeocode();
     },
-    site_accounts_show: function() {
+    site_accounts: function() {
       go.PaymentForm.init({form: $('ul.form.cc form')});
     }
   });

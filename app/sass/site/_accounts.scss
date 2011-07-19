@@ -1,4 +1,4 @@
-#site_accounts_show {
+.site_accounts {
   .toptitle {
     h1 {
       padding: 0 0 0 35px;
@@ -94,11 +94,11 @@
     }
     .lcol {
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
     .rcol {
       position: relative;
-      z-index: 2;
+      z-index: 1;
       width: 400px;
       .applyline {
         line-height: 32px;
