@@ -12,7 +12,7 @@
 .buckets.clearfix
   .bucket.first
     -city = current_user.active_membership.city
-    %h2.tf Explore your Membership...
+    %h2.tf Explore your membership...
     .image.columbus
       =image_tag "paintings/columbus400x300.png", :size => "400x300"
       .speechbubble.tf
@@ -29,7 +29,7 @@
       =link_to city.name.titlecase, city_path(city)
       to start planning your next adventure.
   .bucket.last
-    %h2.tf Invite the Worthy...
+    %h2.tf Invite the worthy...
     .image.worthy
       =image_tag "paintings/louisxiv400x300.png", :size => "400x300"
       .speechbubble.down.tf
