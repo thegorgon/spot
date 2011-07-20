@@ -4,7 +4,7 @@
   .month_placeholder
     .month_title
       %hr
-      .month.tf=@page.calendar.keys.first.strftime('%B')
+      .month.tf=@page.calendar.keys.first.strftime('%B %Y')
       %hr
   -@page.calendar.keys.each_with_index do |date, i|
     -events = @page.calendar[date]
