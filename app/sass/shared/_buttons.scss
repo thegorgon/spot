@@ -105,18 +105,12 @@ button.link {
 .btnorg77x32, a.btnorg77x32 {
   @include bgbutton('org77x32', 77px, 33px);
   @include orgbtn;
-  line-height: 28px;
   font-size: 18px;
 }
 .btnorg100x32, a.btnorg100x32 {
   @include bgbutton('org100x32', 100px, 33px);
   @include orgbtn;
-  line-height: 28px;
   font-size: 18px;
-  .btntxt {
-    position: relative;
-    top: -1px;
-  }
 }
 .btnorgpill, a.btnorgpill, button.btnorgpill {
   display: block;

@@ -1,20 +1,53 @@
 #biz_home_index {
+  #bg {
+    background: #fff;
+  }
+  .titlebar {
+    padding: 0 35px 0 21px;
+  }
+  .tagline {
+    line-height: 32px;
+    font-size: 30px;
+    margin: 0 0 20px 0;
+  }
+  .button {
+    width: 400px;
+    background: transparent url("/images/buttons/orgrightarrow41x40.png") no-repeat right 0px;  
+    line-height: 40px;
+    height: 40px;
+    font-size: 30px;
+    margin: 20px auto;
+    position: relative;
+    z-index: 100;
+    &:hover, &.hover {
+      background-position: right -40px;
+    }
+    &:active, &.active {
+      background-position: right -80px;
+    }
+  }
   .drawing {
     .point {
-      margin: 33px 0;
+      text-align: center;
+      width: 223px;
+      margin: 33px 25px 0 0;
       &.first {
         margin-top: 0px;
       }
       &.last {
         margin-bottom: 0px;
       }
+      h2 {
+        font-size: 15px;
+      }
+      a {
+        margin: 10px 0;
+        display: block;
+      }
     }
     .content {
-      margin-top: -50px;
+      margin-top: -75px;
       text-align: center;
-      .button {
-        margin-top: 10px;
-      }
     } 
   }
 }
