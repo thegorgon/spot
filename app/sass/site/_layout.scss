@@ -80,23 +80,49 @@
   font-size: 14px;
   margin: 0 auto;
   padding-top: 20px;
+  hr {
+    @extend hr.light;
+  }
+  h1 {
+    font-size: 23px;
+  }
+  h2 {
+    font-size: 18px;
+  }
+  h1.tf, h2.tf {
+    text-shadow: #fff 0px 1px 0px;
+  }
+  em {
+    font-style: normal;
+    color: #ff8419;
+  }
+  strong {
+    font-weight: bold;
+  }
   .overlay {
     text-align: left;
-    padding: 10px 30px;
+    padding: 15px 20px;
     border: 1px solid #ff8419;
     @include border_radius(5px);
     z-index: 100;
     margin: 5px 0 10px;
     background: #fff;
-    h1 {
-      font-size: 23px;
+    h1.membership {
+      padding-left: 45px;
+      background: transparent url(/images/icons/diamondgry33x26.png) no-repeat left center;
     }
     .title {
       height: 41px;
       line-height: 41px;
     }
     .content {
-      margin: 10px 0 0;
+      margin: 20px 0 0;
+      h2 {
+        margin: 0 0 10px 0;
+      }
+    }
+    &.descriptive {
+      
     }
   }
   .filling {
@@ -137,25 +163,6 @@
       @include border_radius(5px);
       padding: 30px;
       margin: -5px 0 5px;
-      hr {
-        @extend hr.light;
-      }
-      h1 {
-        font-size: 23px;
-      }
-      h2 {
-        font-size: 18px;
-      }
-      h1.tf, h2.tf {
-        text-shadow: #fff 0px 1px 0px;
-      }
-      em {
-        font-style: normal;
-        color: #ff8419;
-      }
-      strong {
-        font-weight: bold;
-      }
     }    
   }
   .footer {

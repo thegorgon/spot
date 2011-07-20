@@ -6,7 +6,7 @@
   .stretcher{'data-gravity' => "1.0x1.0"}
     =image_tag "stretcher/cities/sf4.jpg", :size => "2292x1524"
 
-%h1.tf Welcome to Spot
+%h1.tf Pleased to Meet You
 %hr
 %h1.tf So what now?
 .buckets.clearfix
@@ -23,18 +23,17 @@
       =link_to "Register for some", city_path(city)
       of our experiences to start enjoying your membership.
     %p
-    
       Take a look at the 
       =link_to "Spot Experiences", city_path(city) 
       currently available in 
       =link_to city.name.titlecase, city_path(city)
       to start planning your next adventure.
   .bucket.last
-    %h2.tf Invite the worthy...
-    .image.knight
-      =image_tag "paintings/knighting400x300.png", :size => "400x300"
-      .speechbubble.right.tf
-        Rise good knight, thou art indeed worthy.
+    %h2.tf Invite the Worthy...
+    .image.worthy
+      =image_tag "paintings/louisxiv400x300.png", :size => "400x300"
+      .speechbubble.down.tf
+        My mommy says I'm special.
     %p Spot memberships are limited to just 10,000 per city so make sure your friends get in before it's too late!
     %p Send your friends the following URL and we'll immediately accept their application :
     -url = referred_application_url(current_user.membership_application.token)

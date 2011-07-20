@@ -1,0 +1,27 @@
+-describe = defined?(describe) ? describe : false
+-title ||= "Get access to all these unforgettable experiences"
+-unless current_member?
+  .overlay.clearfix
+    -if current_user.try(:membership_application)
+      .title.clearfix
+        -if current_user.membership_application.approved?
+          %h1.tf.left.membership
+            Congratulations! Your application has been approved.
+          =link_to "complete", new_membership_path, :class => "btnorg170x41 tf right"
+        -else
+          %h1.tf.left.membership
+            We've received your application and are reviewing it
+          =link_to "check status", application_path, :class => "btnorg170x41 tf right"           
+    -else
+      .title.clearfix
+        %h1.tf.left.membership
+          =title
+        =button_tag :class => "btnorg170x41 btnmembership tf right" do
+          apply now
+      -if describe
+        %hr
+        .content.clear
+          %h2.tf Spot is an elite, members-only community for people who are passionate about eating out.
+          %p 
+            Join Spot to unlock exclusive benefits at the best restaurants and bars in town. 
+            All of our experiences are vetted by the Spot community to ensure consistently high quality.

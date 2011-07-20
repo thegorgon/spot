@@ -20,8 +20,7 @@ class Site::MembershipsController < Site::BaseController
     if @payment.try(:save)
       respond_to do |format|
         format.html do
-          flash[:notice] = "Payment Accepted! Now go forth, and explore!"
-          redirect_to membership_thanks_path
+          redirect_to thanks_membership_path
         end
       end
     else

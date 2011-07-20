@@ -33,14 +33,19 @@
         if ($.isFunction(onclose)) { onclose.call(dialog); }
       };
       options.open = function(event, ui) {
-        var overlay = $('body').find('.ui-widget-overlay');
+        var overlay = $('body').find('.ui-widget-overlay'),
+          positionOverlay = function() {
+            overlay.css({width: $(window).width(), height: $(window).height(), zIndex: 1000});
+          };
         overlay = overlay.length > 0 ? overlay : $('<div></div>').addClass('ui-widget-overlay').appendTo('body');
-        overlay.css({width: $(window).width(), height: $(window).height(), zIndex: 1000});
+        positionOverlay();
         $(window).bind("resize.dialog", function() { 
           dialog.dialog("option", "position", position);
+          positionOverlay();
         });
         $(window).bind("scroll.dialog", function() { 
           dialog.dialog("option", "position", position);
+          positionOverlay();
         });
         $('input, button, select, textarea').blur();
         if ($.isFunction(onopen)) { onopen.call(dialog); }

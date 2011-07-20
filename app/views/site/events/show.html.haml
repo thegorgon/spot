@@ -4,11 +4,7 @@
 
 =content_for :above do
   -unless current_member?
-    .overlay.clearfix
-      .title.clearfix
-        %h1.tf.left Get unlimited access to unforgettable experiences like this
-        =button_tag :class => "btnorg170x41 btnmembership tf right" do
-          apply now
+    =render :partial => "/shared/membership/overlay", :locals => {:title => "Get access to unforgettable experiences like this"}
 
 =content_for :toptitle do
   -if @city
@@ -43,11 +39,7 @@
 -if current_member?
   %hr
 -else
-  .overlay.clearfix
-    .title.clearfix
-      %h1.left.tf Exclusively available to Spot Members. 
-      =button_tag :class => "btnorg170x41 btnmembership tf right" do
-        apply now
+  =render :partial => "/shared/membership/overlay", :locals => {:title => "Exclusively available to Spot Members."}
 
 .availability.clearfix
   -unless current_member?

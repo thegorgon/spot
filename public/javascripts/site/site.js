@@ -76,17 +76,18 @@
           endangle = canvas.attr('data-end-hour')  * 0.08333 * 2 * Math.PI  - Math.PI * 0.5,
           height = canvas.attr('height') * 1.0,
           width = canvas.attr('width') * 1.0,
-          center = [0.5 * width, 0.5 * height],
+          center = [Math.floor(0.5 * width) + 0.5, Math.floor(0.5 * height) + 0.5],
           radius = 73;
         context.beginPath();
         context.moveTo(center[0], center[1]);
-        context.strokeStyle = '#808080;';
-        context.fillStyle = 'rgba(48,200,48,0.75)';
+        context.strokeStyle = 'rgba(0,0,0,0.2);';
+        context.fillStyle = 'rgba(85,165,0,0.2)';
+        context.lineJoin = "miter";
         context.arc(center[0], center[1], radius, startangle, endangle);
         context.lineTo(center[0], center[1]);
         context.closePath();
-        context.stroke();
         context.fill();
+        context.stroke();
       } catch(e) {
       }
       $('#claimform').ajaxForm({
