@@ -1,11 +1,81 @@
 .site_cities {
   background: #000;
+  .calendar {
+    margin: 10px 0;
+    position: relative;
+    .month_placeholder {
+      height: 40px;
+      width: 835px;
+    }
+    .month_title {
+      .month {
+        text-align: center;
+        color: #999;
+        text-shadow:  rgba(255,255,255,0.75) 0px 1px 0px;
+        background: #f0f0f0;
+        padding: 5px;
+        font-size: 20px;
+      }
+      hr, .month {
+        width: 835px;
+        margin: 0 auto;
+      }
+      &.fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+    }
+    .date {
+      width: 147px;
+      float: left;
+      padding: 10px 0;
+      margin: 10px;
+      &.col1 {
+        clear: left;
+      }
+      &.today {
+        .day {
+          padding-left: 25px;
+          background: transparent url(/images/icons/grystar20x20.png) no-repeat left center;
+        }
+      }
+      &.empty {
+        .events {
+          color: #ddd;
+        }
+      }
+    }
+    .day {
+      text-shadow:  rgba(255,255,255,0.75) 0px 1px 0px;
+      font-size: 30px;
+      color: #999;
+      border-bottom: 1px solid #ddd;
+      .dow {
+        font-size: 12px;
+      }
+    }
+    .events {
+      padding: 10px 0 0;
+      border-top: 1px solid #fff;
+      font-size: 11px;
+      .event {
+        padding: 0 0 5px;
+        a {
+          text-decoration: none;
+        }
+      }
+    }
+  }
   .main {
     .title {
-      height: 40px;
-      line-height: 40px;
-      margin: 0 0 10px 0;
-    }    
+      .pillbox {
+        float: right;
+        font-weight: bold;
+        font-size: 12px;
+      }
+    }
   }
   .coming_soon {
     p {

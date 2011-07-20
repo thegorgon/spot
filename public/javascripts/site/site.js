@@ -121,6 +121,51 @@
     site_cities_new: function() {
       $('#preview_city').autogeocode();
     },
+    site_cities_calendar: function() {
+      var getDateRange = function(calendar) {
+          var allDates = [],
+            dates = {min: null, max: null},
+            scrollTop = $(window).scrollTop(),
+            scrollBottom = scrollTop + $(window).height();
+          calendar.find('.date').each(function(i) {
+            var offset = $(this).offset(),
+              visible = offset.top >= scrollTop + 20 && offset.top <= scrollBottom - 150,
+              date = Date.parse($(this).attr('data-date'));
+            if (visible) { allDates.push(date); }
+          });
+          dates.min = new Date(allDates.min());
+          dates.max = new Date(allDates.max());
+          return dates;
+        },
+        setTitle = function(title, minDate, maxDate) {
+          var text;
+          if (minDate && maxDate) {
+            text = minDate.getMonthName();
+            if (minDate.getFullYear() != maxDate.getFullYear()) {
+              text = text + " " + minDate.getFullYear();
+            }
+            if (minDate.getFullYear() != maxDate.getFullYear() || minDate.getMonth() != maxDate.getMonth()) {
+              text = text + " - ";
+              text = text + maxDate.getMonthName();
+            }
+            text = text + " " + maxDate.getFullYear();        
+            title.text(text);        
+          }
+        };
+      
+      $(window).scroll(function(e) {
+        var scroll = $(window).scrollTop(),
+          monthName = $('#calendar .month_title'),
+          dates = getDateRange($('#calendar'));
+          
+        if (scroll >= 320) {
+          monthName.addClass('fixed');
+        } else {
+          monthName.removeClass('fixed');
+        }
+        setTitle(monthName.find('.month'), dates.min, dates.max);
+      })
+    },
     site_accounts: function() {
       go.PaymentForm.init({form: $('ul.form.cc form')});
     }

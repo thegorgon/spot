@@ -22,7 +22,9 @@ Spot::Application.routes.draw do
       get "endpoint", :action => "endpoint", :on => :collection
     end
     resource :password_reset, :only => [:new, :create, :edit, :update]
-    resources :cities, :only => [:show, :new]
+    resources :cities, :only => [:show, :new] do 
+      get "calendar", :on => :member
+    end
     resource :application, :only => [:create, :show, :new], :controller => "membership_applications" do
       get "referred", :on => :member, :action => "referred"
     end

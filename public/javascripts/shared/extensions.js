@@ -1,3 +1,10 @@
+Array.prototype.max = function( ){
+  return Math.max.apply( Math, this );
+};
+Array.prototype.min = function( ){
+  return Math.min.apply( Math, this );
+};
+
 (function($) {
   $.extend($, {
     mobile: function() {

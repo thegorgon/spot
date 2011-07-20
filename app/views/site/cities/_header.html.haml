@@ -1,0 +1,15 @@
+=content_for :toptitle do
+  =@city.name.titlecase
+
+=content_for :above do
+  =render :partial => "/shared/membership/overlay", :locals => {:title => "Get access to all these unforgettable experiences", :describe => true}
+  
+=content_for :bgimage do
+  .stretcher{'data-gravity' => "0.5x0.5"}
+    =image_tag "stretcher/cities/#{@city.slug}1.jpg", :size => "2292x1524"
+
+.title.clearfix
+  %h1.left.tf=title
+  %ul.pillbox.right
+    %li.pill.first=link_to_with_current "featured", city_path(@city)
+    %li.pill.last=link_to_with_current "calendar", calendar_city_path(@city) 

@@ -2,7 +2,7 @@ namespace :db do
   task(:sync => :environment) do
     # Constants
     HOSTS       = { "production" => "masterdb.ec2" }
-    TUNNELS     = { "production" => "spot1.ec2" }
+    TUNNELS     = { "production" => "spot1.ec2", "staging" => "spotstaging.ec2" }
     PRESETS     = { "places"     => "places google_places gowalla_places facebook_places foursquare_places yelp_places",
                     "wishlists"  => "wishlist_items users devices",
                     "promotions" => "businesses business_accounts promotion_templates promotion_events promotion_codes"}
@@ -20,9 +20,9 @@ namespace :db do
     # Tell the User What You're Doing
     puts "connecting to #{tunnel} and generating dump from #{host} of tables : #{@tables}"
     # Generate The Dump
-    gen_cmd = "ssh #{tunnel} -p #{@port} \"mysqldump -u#{remote_db['username']} " + 
-                                      "-p'#{remote_db['password']}' -h#{host} --default-character-set=utf8 " +
-                                      "-r/home/pop/spotdbsync.sql #{remote_db['database']} #{@tables}\""
+    gen_cmd = "ssh #{tunnel} -p #{@port} \"mysqldump -u#{remote_db['username']} -p'#{remote_db['password']}'"
+    gen_cmd << " -h#{host}" if host
+    gen_cmd << " --default-character-set=utf8 -r/home/pop/spotdbsync.sql #{remote_db['database']} #{@tables}\""
     system gen_cmd
     puts 'downloading dump'
     # Secure Copy the Dump

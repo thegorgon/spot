@@ -1,0 +1,23 @@
+=render :partial => "header", :locals => {:title => "Member Benefit Calendar"}    
+
+#calendar.calendar.clearfix
+  .month_placeholder
+    .month_title
+      %hr
+      .month.tf=@page.calendar.keys.first.strftime('%B')
+      %hr
+  -@page.calendar.keys.each_with_index do |date, i|
+    -events = @page.calendar[date]
+    .date{:class => "col#{i.modulo(5) + 1} #{conditionally("today", date == Date.today)} #{conditionally("empty", events.empty?)}", "data-date" => date.strftime('%D')}
+      .day.tf
+        =date.day
+        %span.dow=date.strftime('%a').upcase
+      .events
+        -if events.empty?
+          no events today
+        -else
+          -events.each do |event|
+            .event
+              -template = event.template
+              -place = template.business.place
+              =link_to "#{template.name}", place_event_path(place, template)

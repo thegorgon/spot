@@ -19,4 +19,17 @@ class CityPage
   def upcoming
     @templates
   end
+  
+  def calendar
+    unless @calendar
+      events = @city.upcoming_events.group_by { |e| e.date }
+      mindate = [Date.today, events.keys.min].min
+      maxdate = [Date.today.end_of_month, events.keys.max].max
+      @calendar = {}
+      (mindate..maxdate).each do |date|
+        @calendar[date] = events[date].to_a
+      end
+    end
+    @calendar
+  end
 end
