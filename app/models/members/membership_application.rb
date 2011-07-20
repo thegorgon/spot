@@ -8,6 +8,28 @@ class MembershipApplication < ActiveRecord::Base
   validate :user_hasnt_applied
   validates :token, :presence => true, :uniqueness => true
 
+  scope :unapproved, where(:approved_at => nil)
+  scope :approved, where("approved_at IS NOT NULL")
+  scope :ready_for_approval, where(["approved_at IS NULL AND created_at < ?", Time.now - 24.hours])
+
+  def self.filter(n)
+    finder = self
+    finder = finder.unapproved if n & 1 > 0
+    finder = finder.approved if n & 2 > 0
+    finder = finder.ready_for_approval if n & 4 > 0
+    finder
+  end
+  
+  def self.approve_pending
+    self.ready_for_approval.find_each do |app|
+      app.approve!
+    end
+  end
+
+  def toggle_approval!
+    approved?? unapprove! : approve!
+  end
+  
   def status
     approved?? "approved" : "pending review"
   end
@@ -20,6 +42,12 @@ class MembershipApplication < ActiveRecord::Base
     unless approved?
       update_attribute(:approved_at, Time.now)
       deliver_approved
+    end
+  end
+
+  def unapprove!
+    if approved?
+      update_attribute(:approved_at, nil)
     end
   end
 

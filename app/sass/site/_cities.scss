@@ -25,6 +25,9 @@
         top: 0;
         left: 0;
         right: 0;
+        .month {
+          padding-left: 15px;
+        }
       }
     }
     .date {
@@ -61,10 +64,9 @@
       border-top: 1px solid #fff;
       font-size: 11px;
       .event {
+        display: block;
         padding: 0 0 5px;
-        a {
-          text-decoration: none;
-        }
+        text-decoration: none;
       }
     }
   }

@@ -26,23 +26,6 @@
     admin_places_new: function() {
       go.PlaceForm.init({mapDiv: $('.map')});
     },
-    admin_businesses_index: function() {
-      var bindRow = function(row) {
-        row.each(function(i) {
-          var $this = $(this);
-          $this.find('a.verification').ajaxLink({
-            start: function() {
-              $this.addClass('loading');
-            }, success: function(data) {
-              var html = $(data.html);
-              bindRow(html);
-              $this.replaceWith(html);
-            }
-          });
-        });
-      };
-      bindRow($('tr.business'));
-    },
     admin_promotions_index: function() {
       var bind = function() {
         $('.promotion form').ajaxForm({

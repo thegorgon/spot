@@ -1,4 +1,4 @@
--current_account.businesses.each_with_index do |biz, i|
+-current_account.businesses.includes(:place).all.each_with_index do |biz, i|
   -current = biz == @business
   %li.place.clearfix{:class => "#{first_or_last(current_account.businesses, i)} #{conditionally("current", current)}"}
     =content_tag(current ? :div : :a, :href => current ? nil : biz_business_path(biz)) do

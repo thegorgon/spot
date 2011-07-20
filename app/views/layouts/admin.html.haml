@@ -23,6 +23,10 @@
           %li=link_to "Wishlisted", admin_places_path(:filter => 1)
           %li=link_to "Dupes", admin_duplicates_path
           %li=link_to "Hydra", matches_admin_places_path
+      %li{'data-popover' => '#users_subnav', 'data-popover-orient' => 'vertical'}
+        %span.title users
+        %ul.hidden.subnav#users_subnav
+          %li=link_to "Applications" , admin_applications_path
       %li{'data-popover' => '#biz_subnav', 'data-popover-orient' => 'vertical'}
         %span.title biz
         %ul.hidden.subnav#biz_subnav

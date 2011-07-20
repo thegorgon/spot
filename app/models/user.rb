@@ -54,6 +54,10 @@ class User < ActiveRecord::Base
     user
   end
   
+  def email_with_name
+    "#{name} <#{email}>"
+  end
+  
   def merge_with!(new_user)
     new_items = new_user.wishlist_items.hash_by { |item| "#{item.item_type} #{item.item_id}" }
     current_items = wishlist_items.hash_by { |item| "#{item.item_type} #{item.item_id}" }

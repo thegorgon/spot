@@ -151,19 +151,19 @@
             text = text + " " + maxDate.getFullYear();        
             title.text(text);        
           }
-        };
+        },
+        monthTitle = $('#calendar .month_title'),
+        monthScroll = monthTitle.offset().top;
       
       $(window).scroll(function(e) {
-        var scroll = $(window).scrollTop(),
-          monthName = $('#calendar .month_title'),
-          dates = getDateRange($('#calendar'));
+        var dates = getDateRange($('#calendar'));
           
-        if (scroll >= 320) {
-          monthName.addClass('fixed');
+        if ($(window).scrollTop() >= monthScroll) {
+          monthTitle.addClass('fixed');
         } else {
-          monthName.removeClass('fixed');
+          monthTitle.removeClass('fixed');
         }
-        setTitle(monthName.find('.month'), dates.min, dates.max);
+        setTitle(monthTitle.find('.month'), dates.min, dates.max);
       })
     },
     site_accounts: function() {

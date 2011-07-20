@@ -23,7 +23,7 @@ class BusinessAccount < ActiveRecord::Base
 
   def self.register(params)
     user = User.find_by_id(params[:user_id]) if params[:user_id]
-    user ||= User.register(params)
+    user ||= User.register(params.except(:phone, :title))
     user.business_account ||= BusinessAccount.new do |ba|
       ba.first_name = params[:first_name]
       ba.last_name = params[:last_name]

@@ -1,0 +1,11 @@
+%table.data
+  %thead
+    %tr
+      %th Id
+      %th User
+      %th Received
+      %th Approved?
+      %th Actions
+  %tbody
+    -@applications.to_a.each do |app|
+      =render :partial => "row", :object => app, :as => :application

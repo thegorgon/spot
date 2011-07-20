@@ -17,7 +17,8 @@
           no events today
         -else
           -events.each do |event|
-            .event
-              -template = event.template
-              -place = template.business.place
-              =link_to "#{template.name}", place_event_path(place, template)
+            -template = event.template
+            -place = template.business.place
+            %a.event{:href => place_event_path(place, template)}
+              .timeframe="#{template.timeframe.titlecase} : "
+              .name=template.name

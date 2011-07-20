@@ -78,6 +78,7 @@ class ApplicationController < ActionController::Base
     log_error(exception)
     @exception = exception
     @controller_name = "site_errors"
+    @module_names = "site site_errors"
     @page_namespace = "site_errors_show"
   end
   

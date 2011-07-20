@@ -45,7 +45,7 @@ class PromotionEvent < ActiveRecord::Base
   end
       
   def all_day?
-    start_time == 0 && end_time == 0
+    start_time == 6 && end_time == 6
   end
   
   def remaining_count

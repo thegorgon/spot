@@ -1,0 +1,20 @@
+-filters = params.slice('filter')
+.manager
+  .top.clearfix
+    .pagination
+      -if @applications.next_page
+        .next=link_to "Next &rarr;".html_safe, admin_applications_path(filters.merge(:page => @applications.next_page))
+      -if @applications.previous_page
+        .previous=link_to "&larr; Previous".html_safe, admin_applications_path(filters.merge(:page => @applications.previous_page))
+    %h1.title="#{@applications.total_entries} Applications"
+    .links
+      =link_to "Queue", admin_applications_path(:filter => 4)
+      =link_to "Approved", admin_applications_path(:filter => 2)
+      =link_to "Pending", admin_applications_path(:filter => 1)
+      =link_to "All", admin_applications_path
+  =render :partial => "table", :object => @applications, :as => :applications
+  .pagination.bottom
+    -if @applications.next_page
+      .next=link_to "Next &rarr;".html_safe, admin_applications_path(params.slice('filter').merge(:page => @applications.next_page))
+    -if @applications.previous_page
+      .previous=link_to "&larr; Previous".html_safe, admin_applications_path(params.slice('filter').merge(:page => @applications.previous_page))

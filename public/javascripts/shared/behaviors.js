@@ -185,6 +185,23 @@
         e.preventDefault();
         $.popup(this.href || $(this).add('data-href'), options);
       });
+    },
+    rowLink: function() {
+      var bindRow = function(row) {
+        row.each(function(i) {
+          var self = $(this);
+          self.find('a.rowlink').ajaxLink({
+            start: function() {
+              self.addClass('loading');
+            }, success: function(data) {
+              var html = $(data.html);
+              bindRow(html);
+              self.replaceWith(html);
+            }
+          });
+        });
+      };
+      bindRow(this.parents('tr'));
     }
   });
 }(jQuery));
@@ -220,6 +237,7 @@
       fetch('li.invalid input, input.invalid').focus(function(e) {
         $(this).parent('li').add(this).removeClass('invalid');
       });
+      fetch('.rowlink').rowLink();
       fetch('.tabbar').tabBar();
       fetch('.twitter-share-button, .twitter-share-link').popupLink({width: 350, height: 300});
       fetch('.fb-share-button, .fb-share-link').popupLink({width: 550, height: 300});

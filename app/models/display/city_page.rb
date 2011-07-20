@@ -27,7 +27,7 @@ class CityPage
       maxdate = [Date.today.end_of_month, events.keys.max].max
       @calendar = {}
       (mindate..maxdate).each do |date|
-        @calendar[date] = events[date].to_a
+        @calendar[date] = events[date].to_a.sort { |e1, e2| e1.start_time <=> e2.start_time }
       end
     end
     @calendar
