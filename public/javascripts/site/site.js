@@ -154,7 +154,7 @@
         },
         monthTitle = $('#calendar .month_title'),
         monthScroll = monthTitle.offset().top;
-      
+        
       $(window).scroll(function(e) {
         var dates = getDateRange($('#calendar'));
           

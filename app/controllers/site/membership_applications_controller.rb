@@ -5,12 +5,18 @@ class Site::MembershipApplicationsController < Site::BaseController
   def create
     user_attributes = params[:application].delete(:user_attributes)
     @user = current_user || User.register(user_attributes)
-    @application = MembershipApplication.new(params[:application])
+    @application = @user.membership_application
+    @application ||= MembershipApplication.new
+    @application.attributes = params[:application]
     @application.user = @user
     @user.city = @application.city
-    warden.set_user @user if @user && @user.id
-    if @application.save && @user.save
-      redirect_to application_path
+    if @user.save
+      warden.set_user @user
+      if @application.save
+        redirect_to application_path
+      else 
+        render :action => :new
+      end
     else
       render :action => :new
     end
@@ -34,7 +40,7 @@ class Site::MembershipApplicationsController < Site::BaseController
   private
   
   def require_application
-    @application = current_user.membership_application
+    @application = current_user.try(:membership_application)
     unless @application
       flash[:notice] = "Please complete your application first."
       redirect_to new_application_path

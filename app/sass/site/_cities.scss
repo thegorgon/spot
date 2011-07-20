@@ -3,6 +3,11 @@
   .calendar {
     margin: 10px 0;
     position: relative;
+    &.rows {
+      .col1 {
+        clear: left;
+      }
+    }
     .month_placeholder {
       height: 40px;
       width: 835px;
@@ -35,9 +40,6 @@
       float: left;
       padding: 10px 0;
       margin: 10px;
-      &.col1 {
-        clear: left;
-      }
       &.today {
         .day {
           padding-left: 25px;
@@ -67,6 +69,11 @@
         display: block;
         padding: 0 0 5px;
         text-decoration: none;
+        .timeframe {
+          padding: 0 0 2px 0;
+          font-weight: bold;
+          color: #999;
+        }
       }
     }
   }

@@ -42,6 +42,9 @@ class Site::MembershipsController < Site::BaseController
   def require_approved_application
     @application = current_user.membership_application
     unless @application.try(:approved?)
+      flash[:error] = @application ? 
+            "Sorry, your application is still being reviewed." : 
+            "Please submit an application first."
       redirect_to @application ? application_path : new_application_path
     end
   end

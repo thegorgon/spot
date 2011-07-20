@@ -86,7 +86,6 @@ button.link {
    color: #ff8419; 
   }  
 }
-
 .btnorg300x41, a.btnorg300x41 {
   @include bgbutton('org300x41', 300px, 41px);
   @include orgbtn;

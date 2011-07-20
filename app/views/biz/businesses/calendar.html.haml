@@ -21,16 +21,16 @@
     .title.clearfix
       %h1 My Promotions
     %ul.templates.loading{"data-src" => biz_business_templates_path(@business)}
+      %a.btnorgpill.new.center{:href => "#", "data-popover" => "#newpromotiontpl", "data-popover-title" => "New Promotion", "data-popover-pos" => "right,bottom"}
+        %span.plus + 
+        New Promotion
       .empty_message
         %h3 No Promotions Yet
         %p 
-          Create a promotion using the button below. 
+          Create a promotion using the button above. 
         %p 
           Set the parameters of your promotion, then apply it to dates 
           using the calendar on the right.
-    %a.btnorgpill.new.center{:href => "#", "data-popover" => "#newpromotiontpl", "data-popover-title" => "New Promotion", "data-popover-pos" => ",top"}
-      %span.plus + 
-      New Promotion
     
   .section.right
     .title.clearfix

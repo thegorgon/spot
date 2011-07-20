@@ -18,7 +18,7 @@ class MembershipModels < ActiveRecord::Migration
     add_column :users, :customer_id, :string
     add_index :users, :customer_id, :unique => true
     add_column :users, :city_id, :integer
-    add_index :users, :city_id, :unique => true    
+    add_index :users, :city_id    
     
     create_table :memberships do |t|
       t.integer   :user_id, :null => false
