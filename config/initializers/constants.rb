@@ -6,4 +6,9 @@ S3_HOST = S3_CONFIG[Rails.env]['host']
 S3_BUCKET = S3_CONFIG[Rails.env]['bucket']
 S3_BUCKET_URL = "http://#{S3_BUCKET}.s3.amazonaws.com/"
 PHONE_NUMBER = "1-888-817-5410"
-IMGHOST = Rails.env.production?? "http://spot-app.com/images/" : "http://staging.spot-app.com/images/"
+HOSTS = {
+  "production" => "www.spot-app.com",
+  "staging" => "staging.spot-app.com",
+  "development" => "www.rails.local:3000"
+}
+IMGHOST = "http://#{HOSTS[Rails.env]}/images/"

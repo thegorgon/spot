@@ -1,6 +1,6 @@
 class BusinessMailer < ActionMailer::Base
   layout 'mailer'
-  default_url_options[:host] = Rails.env.production?? "www.spot-app.com" : "www.rails.local:3000"
+  default_url_options[:host] = HOSTS[Rails.env]
   FROM = "The Spot Team <noreply@spot-app.com>"
   REPLY_TO = "Julia Graham <julia@spot-app.com>"
   default :from => FROM, :reply_to => REPLY_TO

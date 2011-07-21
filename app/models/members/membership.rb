@@ -6,6 +6,7 @@ class Membership < ActiveRecord::Base
   validates :payment_method, :presence => true
   validates :starts_at, :presence => true
   attr_writer :tr_result
+  after_create :convert_application
   
   scope :active, lambda { where(["starts_at < ? AND expires_at IS NULL OR expires_at > ?", Time.now, Time.now]) }
   scope :expired, lambda { where(["expires_at < ?", Time.now]) }
@@ -17,4 +18,9 @@ class Membership < ActiveRecord::Base
     end
   end
   
+  private
+  
+  def convert_application
+    user.membership_application.converted!
+  end
 end

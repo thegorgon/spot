@@ -46,7 +46,7 @@
             =link_to "referral code?", "#referral_code", :class => "reveals"
         #referral_code{:class => conditionally("hidden", referrer.nil?)}
           %li.question=f.label :referral_code, "Were you given a referral code?"
-          =f.text_field :referral_code, :placeholder => "referral code", :value => referrer.try(:token)
+          =f.text_field :referral_code, :placeholder => "referral code", :value => referrer.try(:code)
 
         %li.question=f.label :favrestaurant, "What is your favorite restaurant?"
         =sf.text_field :favrestaurant, :placeholder => "demonstrate your refined taste", :required => true

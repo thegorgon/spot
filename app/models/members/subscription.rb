@@ -12,7 +12,7 @@ class Subscription < ActiveRecord::Base
         :payment_method_token => params[:payment].token
       )
       if braintree.success?
-        subscription = from_braintree(braintree.subscription)
+        subscription = synced_with(braintree.subscription)
         subscription.credit_card = params[:payment]
         subscription.user = params[:user]
         subscription
@@ -24,45 +24,34 @@ class Subscription < ActiveRecord::Base
     end
   end
   
-  def self.from_braintree(bt)
-    new do |object|
-      object.braintree_id = bt.id
-      object.status = bt.status      
-      object.plan_id = bt.plan_id
-      object.price_cents = (bt.price * 100).round
-      object.balance_cents = (bt.balance * 100).round
-      object.billing_day_of_month = bt.billing_day_of_month
-    end
+  def self.synced_with(bt)
+    new { |object| object.sync_with(bt) }
+  end
+  
+  def sync_with(bt)
+    self.braintree_id = bt.id
+    self.status = bt.status      
+    self.plan_id = bt.plan_id
+    self.price_cents = (bt.price * 100).round
+    self.balance_cents = (bt.balance * 100).round
+    self.billing_day_of_month = bt.billing_day_of_month
+    self.next_billing_date = bt.next_billing_date
+    self.billing_period_start_date = bt.billing_period_start_date
+    self.billing_period_end_date = bt.billing_period_end_date
   end
   
   def cancelled?
     !!cancelled_at && Time.now > cancelled_at
   end
   
+  def expires_at
+    cancelled?? billing_period_end_date : nil
+  end
+  
   def cancel!
     unless cancelled?
       Braintree::Subscription.cancel(braintree_id)
-      self.cancelled_at = Time.now
-      self.expires_at = next_bill_date
-      save
+      update_attribute(:cancelled_at, Time.now)
     end
-  end
-  
-  def bill_period
-    plan_id.split('_').last
-  end
-  
-  def next_bill_date
-    today = Time.now
-    if bill_period == "annually"
-      nextyear = created_at + ((today - created_at)/1.year).ceil.years
-      nextbill = Date.civil(nextyear.year, created_at.month, billing_day_of_month).to_time
-    elsif bill_period == "monthly"
-      nextmonth = (today.month + 1).modulo(12) == 0 ? 12 : (today.month + 1).modulo(12)
-      nextbill = today.day < billing_day_of_month ? 
-        Date.civil(today.year, nextmonth, billing_day_of_month).to_time : 
-        Date.civil(nextmonth < today.month ? today.year + 1 : today.year, nextmonth, billing_day_of_month).to_time
-    end
-    (expires_at.nil? || nextbill > expires_at) && nextbill
-  end
+  end  
 end

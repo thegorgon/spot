@@ -35,28 +35,28 @@ class MembershipModels < ActiveRecord::Migration
     create_table :membership_applications do |t|
       t.integer  :user_id, :null => false
       t.integer  :city_id, :null => false
-      t.string   :token, :null => false
       t.string   :referral_code, :null => false
       t.text     :survey, :null => false
       t.datetime  :approved_at
       t.timestamps
     end
     add_index :membership_applications, [:city_id, :user_id], :unique => true
-    add_index :membership_applications, :token, :unique => true
     
     create_table :promo_codes do |t|
       t.string :code, :null => false
       t.integer :duration, :null => false, :default => -1
-      t.integer :users, :null => false, :default => -1
+      t.integer :user_count, :null => false, :default => -1
       t.integer :use_count, :null => false, :default => 0
       t.timestamps
     end
     add_index :promo_codes, :code, :unique => true
     
     create_table :invitation_codes do |t|
+      t.integer :user_id
       t.string :code, :null => false
-      t.integer :invitations, :null => false, :default => -1
-      t.integer :claimed, :null => false, :default => 0
+      t.integer :invitation_count, :null => false, :default => -1
+      t.integer :claimed_count, :null => false, :default => 0
+      t.integer :signup_count, :null => false, :default => 0
     end
     add_index :invitation_codes, :code, :unique => true
     
@@ -69,9 +69,11 @@ class MembershipModels < ActiveRecord::Migration
       t.integer   :balance_cents
       t.string    :status
       t.integer   :billing_day_of_month
-      t.datetime  :created_at
-      t.datetime  :expires_at
+      t.date      :next_billing_date
+      t.date      :billing_period_start_date
+      t.date      :billing_period_end_date
       t.datetime  :cancelled_at
+      t.datetime  :created_at
     end
     add_index :subscriptions, :user_id
   end

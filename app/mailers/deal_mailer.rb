@@ -1,7 +1,7 @@
 class DealMailer < ActionMailer::Base
   layout 'mailer'
   helper 'tag'
-  default_url_options[:host] = Rails.env.production?? "www.spot-app.com" : "www.rails.local:3000"
+  default_url_options[:host] = HOSTS[Rails.env]
   default :from => "The Spot Team <noreply@spot-app.com>"
 
   def welcome(user)

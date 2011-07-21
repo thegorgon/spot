@@ -11,10 +11,10 @@
         =membership.starts_at.strftime("%B %d, %Y")
         -if payment.respond_to?(:cancelled?) && !payment.cancelled?
           ="( #{link_to "cancel", membership_path, "data-method" => "DELETE", "data-confirm" => "Are you sure you want to cancel your Spot Membership?"} )".html_safe
-    -if payment.respond_to?(:next_bill_date) && payment.next_bill_date
+    -if payment.respond_to?(:next_billing_date) && payment.next_billing_date
       %li.clearfix
         .label Next bill date : 
-        .value=payment.next_bill_date.strftime("%B %d, %Y")
+        .value=payment.next_billing_date.strftime("%B %d, %Y")
     -if payment.respond_to?(:cancelled_at) && payment.cancelled_at
       %li.clearfix
         .label Cancelled on :

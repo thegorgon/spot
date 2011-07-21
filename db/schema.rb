@@ -244,9 +244,11 @@ ActiveRecord::Schema.define(:version => 20110717013605) do
   add_index "gowalla_places", ["place_id"], :name => "index_gowalla_places_on_place_id"
 
   create_table "invitation_codes", :force => true do |t|
-    t.string  "code",                        :null => false
-    t.integer "invitations", :default => -1, :null => false
-    t.integer "claimed",     :default => 0,  :null => false
+    t.integer "user_id"
+    t.string  "code",                             :null => false
+    t.integer "invitation_count", :default => -1, :null => false
+    t.integer "claimed_count",    :default => 0,  :null => false
+    t.integer "signup_count",     :default => 0,  :null => false
   end
 
   add_index "invitation_codes", ["code"], :name => "index_invitation_codes_on_code", :unique => true
@@ -254,7 +256,6 @@ ActiveRecord::Schema.define(:version => 20110717013605) do
   create_table "membership_applications", :force => true do |t|
     t.integer  "user_id",       :null => false
     t.integer  "city_id",       :null => false
-    t.string   "token",         :null => false
     t.string   "referral_code", :null => false
     t.text     "survey",        :null => false
     t.datetime "approved_at"
@@ -263,7 +264,6 @@ ActiveRecord::Schema.define(:version => 20110717013605) do
   end
 
   add_index "membership_applications", ["city_id", "user_id"], :name => "index_membership_applications_on_city_id_and_user_id", :unique => true
-  add_index "membership_applications", ["token"], :name => "index_membership_applications_on_token", :unique => true
 
   create_table "memberships", :force => true do |t|
     t.integer  "user_id",                            :null => false
@@ -373,7 +373,7 @@ ActiveRecord::Schema.define(:version => 20110717013605) do
   create_table "promo_codes", :force => true do |t|
     t.string   "code",                       :null => false
     t.integer  "duration",   :default => -1, :null => false
-    t.integer  "users",      :default => -1, :null => false
+    t.integer  "user_count", :default => -1, :null => false
     t.integer  "use_count",  :default => 0,  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -459,9 +459,11 @@ ActiveRecord::Schema.define(:version => 20110717013605) do
     t.integer  "balance_cents"
     t.string   "status"
     t.integer  "billing_day_of_month"
-    t.datetime "created_at"
-    t.datetime "expires_at"
+    t.date     "next_billing_date"
+    t.date     "billing_period_start_date"
+    t.date     "billing_period_end_date"
     t.datetime "cancelled_at"
+    t.datetime "created_at"
   end
 
   add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"
@@ -496,7 +498,7 @@ ActiveRecord::Schema.define(:version => 20110717013605) do
     t.integer  "city_id"
   end
 
-  add_index "users", ["city_id"], :name => "index_users_on_city_id", :unique => true
+  add_index "users", ["city_id"], :name => "index_users_on_city_id"
   add_index "users", ["customer_id"], :name => "index_users_on_customer_id", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"

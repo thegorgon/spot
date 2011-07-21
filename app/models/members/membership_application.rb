@@ -3,10 +3,10 @@ class MembershipApplication < ActiveRecord::Base
   belongs_to :city
   serialize :survey
   accepts_nested_attributes_for :user
-  before_validation :set_token
   after_create :deliver_thank_you
+  after_validation :check_instant_approval
+  after_save :send_approval_email
   validate :user_hasnt_applied
-  validates :token, :presence => true, :uniqueness => true
 
   scope :unapproved, where(:approved_at => nil)
   scope :approved, where("approved_at IS NOT NULL")
@@ -40,8 +40,8 @@ class MembershipApplication < ActiveRecord::Base
   
   def approve!
     unless approved?
-      update_attribute(:approved_at, Time.now)
-      deliver_approved
+      self.approved_at = Time.now
+      save
     end
   end
 
@@ -49,6 +49,14 @@ class MembershipApplication < ActiveRecord::Base
     if approved?
       update_attribute(:approved_at, nil)
     end
+  end
+
+  def converted!
+    invitation.try(:signup!)
+  end
+  
+  def invitation
+    referral_code && InvitationCode.valid_code(referral_code)
   end
 
   def survey=(value)
@@ -67,19 +75,22 @@ class MembershipApplication < ActiveRecord::Base
     TransactionMailer.application_approved(self).deliver!
   end
   
-  def to_param
-    token
+  private
+  
+  def check_instant_approval
+    if invitation
+      self.approved_at = Time.now
+      invitation.claimed!
+    end
   end
   
-  private
+  def send_approval_email
+    deliver_approved if approved? && approved_at_was.nil?
+  end
   
   def user_hasnt_applied
     if MembershipApplication.where(:user_id => user_id).exists?
       errors.add(:base, "Looks like you've already applied. We'll get back to you shortly.")
     end
-  end
-  
-  def set_token
-    self.token = String.token(5)
-  end
+  end  
 end

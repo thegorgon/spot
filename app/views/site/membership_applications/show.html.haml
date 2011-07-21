@@ -37,7 +37,7 @@
       %p
         Just share this link via Email, Facebook, or Twitter :
       
-      -url = referred_application_url(@application.token)
+      -url = referred_application_url(:r => @application.user.invitation_code.code)
       =sharing(url, "Just applied to become a Spot member, I think it's worth checking out.", :link => true)
       
   .right.bucket.last

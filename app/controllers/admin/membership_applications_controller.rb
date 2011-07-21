@@ -5,8 +5,7 @@ class Admin::MembershipApplicationsController < Admin::BaseController
   end
   
   def toggle
-    @application = MembershipApplication.find_by_token(params[:id])
-    raise ActiveRecord::RecordNotFound unless @application
+    @application = MembershipApplication.find(params[:id])
     @application.toggle_approval!
     respond_to do |format|
       format.html { redirect_to admin_application_path }

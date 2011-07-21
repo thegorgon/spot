@@ -41,7 +41,7 @@ class PaymentForm
         params[:customer_id] = user.customer_id
       else
         method = "create_customer_data"
-        params[:customer] = { :id => "customer_#{user.id}", :email => user.email }
+        params[:customer] = { :email => user.email }
       end
       @trdata = Braintree::TransparentRedirect.send(method, params)
     end

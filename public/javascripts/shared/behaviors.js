@@ -80,10 +80,10 @@
       });
     },
     reveals: function() {
-      $($(this).attr('href')).hide().removeClass('hidden');
+      var target = $($(this).attr('href'));
+      if (target.is('.hidden')) { target.removeClass('hidden').hide(); }
       $(this).click(function(e) {
         e.preventDefault();
-        var target = $($(this).attr('href'));
         if (target.is(':visible')) {
           target.hide();          
         } else {

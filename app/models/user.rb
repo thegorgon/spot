@@ -58,6 +58,14 @@ class User < ActiveRecord::Base
     "#{name} <#{email}>"
   end
   
+  def invitation_code
+    unless @invitation_code
+      @invitation_code ||= InvitationCode.find_or_initialize_by_user_id(id)
+      @invitation_code.save if @invitation_code.new_record?
+    end
+    @invitation_code
+  end
+  
   def merge_with!(new_user)
     new_items = new_user.wishlist_items.hash_by { |item| "#{item.item_type} #{item.item_id}" }
     current_items = wishlist_items.hash_by { |item| "#{item.item_type} #{item.item_id}" }

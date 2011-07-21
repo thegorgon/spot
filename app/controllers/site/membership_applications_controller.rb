@@ -32,9 +32,13 @@ class Site::MembershipApplicationsController < Site::BaseController
   end
   
   def referred
-    @referrer = MembershipApplication.find_by_token(params[:rid])
-    @city = @referrer.city
-    new
+    @referrer = InvitationCode.valid_code(params[:r])
+    if @referrer
+      @city = @referrer.user.city
+      new
+    else
+      redirect_to new_application_path
+    end
   end
   
   private
