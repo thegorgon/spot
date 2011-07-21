@@ -1,34 +1,36 @@
+=content_for :toptitle do 
+  Press
+  
 #press
-  #logo.flips
-    =image_tag "logos/spotshimmer340x270.png", :size => "170x135", :alt => "spot"
   #content
-    %h1 Press
-    %hr
-    %h2 Spot is Coming To A City Near You
+    %h1.tf Spot is Coming To A City Near You
     %p 
-      Spot is a simple, elegant iPhone application that lets you capture local recommendations 
-      the moment you hear them and quickly recall and sort them anytime you like. 
+      Spot is a members-only dining club bringing unforgettable experiences to San Francisco’s most enthusiastic restaurant patrons. Our subscribers enjoy access to unique perks and special treatment at top eateries, in addition to surprise gifts and access to exclusive events.
+
     %p
-      Spot is being handcrafted with care by the PlacePop team in San Francisco, CA.
+      We provide easy to use, self-service online tools for restaurant owners to engage our subscriber base, and we work closely with our restaurant partners to design exciting, innovative promotions that delight customers.
+
+    %p
+      Spot for iPhone provides another tool for city dwellers to navigate the dining landscape. Available as a free download, Spot is a simple application that lets you keep a list of restaurants that you want to remember, for quick and convenient recall while you’re on the go.    
     %p
       Press contact:
       =mail_to "Julia Graham <julia@spot-app.com>".html_safe, "Julia Graham", :encode => "hex"
     %hr
-    %h2 Logos
+    %h1.tf Logos
     #logos.clearfix
       .preview.preload
-        =image_tag "logos/spotshimmer340x270.png", :width => "150"
+        =image_tag "logos/spotblk225x180.png", :width => "150"
       .download
         =link_to "Download our logo pack", "http://spot-production.s3.amazonaws.com/downloads/logo_pack.zip"
     %hr
-    %h2 Screenshots
+    %h1.tf Screenshots
     #screenshots.clearfix
       .screenshot.first=link_to_image "assets/screenshots/wishlist.png", :size => "150x225", :class => "preload"
       .screenshot=link_to_image "assets/screenshots/search.png", :size => "150x225", :class => "preload"
       .screenshot=link_to_image "assets/screenshots/place.png", :size => "150x225", :class => "preload"
       .screenshot.last=link_to_image "assets/screenshots/activity.png", :size => "150x225", :class => "preload"
     %hr
-    %h2 Spot in Action
+    %h1.tf The Spot App in Action
     #preview.clearfix
       #phone.iphone.size274x535
         .glare
@@ -54,5 +56,5 @@
             =image_tag "assets/previews/place.png", :size => "241x360"
           .screen
             =image_tag "assets/previews/wishlist.png", :size => "241x360"
-      .description
+      .description.tf
         See Spot Run :)

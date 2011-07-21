@@ -1,133 +1,94 @@
-.site_home, .site_blog {
-  background: #000000;
-  color: #f0f0f0;
-  #about {
-    margin: 0 auto;
-    @include black_radial_gradient(500);
-    width: 890px;
+#site_home_about {
+  .signature {
+    width: 300px;
+  }
+  .pictures {
     text-align: center;
-    text-shadow: #000 0px 1px 0px;
-    .info {
-      font-size: 15px;
-      width: 600px;
-      margin: 0 auto;
-    }
-    p {
-      margin: 1em auto;
-    }
-    .signature {
-      width: 300px;
-    }
-    hr {
-      @include divider(#333, #222);
-      margin: 1.5em 5em 0em;
-    }
-    .pictures {
-      margin: 40px auto;
-      text-align: center;
-      .profile {
-        float: left;
-        margin: 0px 20px;
-        .name {
-          font-size: 1em;
-          font-weight: bold;
-        }
-        .title {
-          padding: 3px 0;
-          font-size: 0.8em;
-        }
+    margin: 20px 0;
+    .profile {
+      float: left;
+      margin: 0px 15px;
+      text-decoration: none;
+      &.first {
+        margin-left: 0;
       }
-    }
-    .contact {
-      font-size: 15px;
-    }
-    .attribution {
-      font-size: 1em;
-      padding: 1em;
+      &.last {
+        margin-right: 0;
+      }
+      .title {
+        padding: 3px 0;
+        font-size: 12px;
+      }
     }
   }
-  #press {
-    color: #666;
-    width: 700px;
-    margin: 0 auto;
-    padding: 0 0 175px 0;
-    #logo {
-      height: 135px;
+  hr {
+    margin: 30px 0;
+  }
+  .small {
+    font-size: 12px;
+  }
+}
+#site_home_press {
+  #logos {
+    .preview {
+      float: left;
+      height: 122px;
+      width: 150px;
     }
-    #content {
-      padding: 25px 30px;
-      @include border_radius(20px);
-      background: #fff;
-      #logos {
-        .preview {
-          float: left;
-          height: 122px;
-          width: 150px;
-        }
-        .download {
-          float: left;
-          padding: 50px 0 0 15px;
-          font-size: 1.2em;
-        }
+    .download {
+      float: left;
+      padding: 50px 0 0 15px;
+      font-size: 1.2em;
+    }
+  }
+  #screenshots {
+    .screenshot {
+      width: 150px;
+      height: 225px;
+      float: left;
+      margin: 10px 13px 0 0;
+      &.loading {
+        background: transparent url(/images/assets/loading/org3blck16x11.gif) no-repeat center center;            
       }
-      #screenshots {
-        .screenshot {
-          width: 150px;
-          height: 225px;
-          float: left;
-          margin: 10px 13px 0 0;
-          &.loading {
-            background: transparent url(/images/assets/loading/org3blck16x11.gif) no-repeat center center;            
-          }
-          &.last {
-            margin-right: 0;
-          }
+      &.last {
+        margin-right: 0;
+      }
+    }
+  }
+  #preview {
+    margin: 1em 0;
+    #phone {
+      float: left;
+      &.loading {
+        display: none;
+      }
+      .content {
+        position: relative;
+        background: #333;
+        overflow: hidden;
+      }
+      .screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: none;
+        &.active {
+          z-index: 5;
+          display: block;
         }
-      }
-      #preview {
-        margin: 1em 0;
-        #phone {
-          float: left;
-          &.loading {
-            display: none;
-          }
-          .content {
-            position: relative;
-            background: #333;
-            overflow: hidden;
-          }
-          .screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: none;
-            &.active {
-              z-index: 5;
-              display: block;
-            }
-            &.pending {
-              z-index: 1;
-              display: block;            
-            }
-          }          
+        &.pending {
+          z-index: 1;
+          display: block;            
         }
-        .description {
-          margin-left: 274px;
-          padding: 200px 0;
-          text-align: center;
-          font-size: 1.5em;
-        }
-      }
-      p {
-        font-size: 1.2em;
-        margin: 1em 0;
-      }
-      hr {
-        @include divider(#ddd, #ededed);
-        margin: 1.5em 0em;
-      }
+      }          
+    }
+    .description {
+      margin-left: 274px;
+      padding: 200px 0;
+      text-align: center;
+      font-size: 1.5em;
     }
   }
 }

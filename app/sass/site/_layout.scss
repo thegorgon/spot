@@ -1,18 +1,7 @@
 .site {
+  background: #000;
   #flashes {
     z-index:1000;
-  }
-  background: #000;
-  a.dark, a.dark:visited {
-    color: #ccc;
-    cursor: pointer;
-    &:hover, &.hover, &:active, &.active {
-      color: #fff;
-    }
-    &.shadowed {
-      text-decoration: none;
-      text-shadow: rgba(0,0,0,0.5) 0 2px 0;
-    }
   }
   #bg {
     background: #000000 url(/images/backgrounds/paisley_dark_centerfade.jpg) no-repeat fixed center center;
@@ -91,6 +80,9 @@
   }
   h1.tf, h2.tf {
     text-shadow: #fff 0px 1px 0px;
+  }
+  p {
+    margin: 1em 0;
   }
   em {
     font-style: normal;

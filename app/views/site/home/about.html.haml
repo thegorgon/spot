@@ -1,20 +1,27 @@
-.vcc
-  .vc
-    #about
-      .info
-        %h1 Never Forget a Place
-        %p We're creating Spot to help people remember places they want to visit.
-        %p We hear about great places all the time but then we forget them. There's no great, simple app that solves this problem, so we're making one.
-        %hr
-        %p.signature Spot is being handcrafted with care in San&nbsp;Francisco.
-      .pictures.clearfix.preload
-        =profile("Kent Lindstrom", "kent@spot-app.com", "Founder & CEO", nil)
-        =profile("Jim Egbert", "jim@spot-app.com", "Business Development", nil)              
-        =profile("Julia Graham", "julia@spot-app.com", "Marketing", nil)
-        =profile("Niels Gabel", "http://www.twitter.com/noggin", "Engineering", nil)
-        =profile("Jesse Reiss", "http://www.thegorgonlab.com", "Engineering", nil)
-      .contact
-        =mail_to "Feedback <feedback@spot-app.com>".html_safe, "Contact Us", :encode => "hex", :subject => "Spot Feedback", :class => "dark"
-      .attribution
-        Drawings Courtesy of
-        =link_to "Joy Kim", "http://mumbojumbojoy.posterous.com/", :class => "dark"
+=content_for :toptitle do
+  About Spot
+
+%h1.tf We Built a Service for People Like Us
+%p We love the city. We love the sounds of buses, trains and cars; the bright night lights; the wafting smells of bread, bars and braised meats. We just love living in the heart of it all.
+%p Living in the city, we explore different places a lot. We starting thinking about how to make our explorations better. 
+%p So we made it happen: Meet Spot. 
+%p Spot is about exploring your city, about enjoying the places around you in revolutionary ways. Spot is about unforgettable experiences.
+%p 
+  We're here to recruit you. If you love your city as much as we do, if you want VIP treatment and exclusive access to special events, or if you just like what we're laying down and you want to support what we're trying to accomplish, 
+  ="#{link_to "join Spot today", new_application_path}.".html_safe
+
+%hr
+
+%h1.tf The Spot Team
+.pictures.clearfix.preload
+  =profile("Kent Lindstrom", "kent@spot-app.com", "Founder & CEO", :class => "first")
+  =profile("Jim Egbert", "jim@spot-app.com", "Business Development")
+  =profile("Julia Graham", "julia@spot-app.com", "Marketing")
+  =profile("Niels Gabel", "http://www.twitter.com/noggin", "Engineering")
+  =profile("Jesse Reiss", "http://www.thegorgonlab.com", "Engineering", :class => "last")
+%hr
+.small.center
+  %p Spot is handcrafted with care in San Francisco.
+  %p
+    Drawings Courtesy of
+    =link_to "Joy Kim", "http://mumbojumbojoy.posterous.com/"

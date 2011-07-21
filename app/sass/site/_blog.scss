@@ -1,7 +1,7 @@
 .site_blog {
   #blog {
     padding: 10px 0 150px;
-    width: 680px;
+    width: 895px;
     margin: 0 auto;
     #logo {
       height: 100px;
@@ -22,12 +22,13 @@
   }
   .post {
     margin: 0px auto 30px;
-    background: #fff;
-    color: #666;
+    background: #f0f0f0;
+    color: #333;
     padding: 40px;
     font-size: 1.2em;
     @include border_radius(20px);
     .byline {
+      float: right;
       font-size: 0.8em;
       color: #999;
     }

@@ -1,5 +1,8 @@
 class Site::HomeController < Site::BaseController
+  layout "oreo"
+  
   def index
+    render :layout => "site"
   end
   
   def about
@@ -12,11 +15,9 @@ class Site::HomeController < Site::BaseController
   end
   
   def privacy
-    render :layout => "oreo"
   end
       
   def tos
-    render :layout => "oreo"
   end
 
   def getspot
