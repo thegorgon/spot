@@ -40,6 +40,10 @@ class Subscription < ActiveRecord::Base
     self.billing_period_end_date = bt.billing_period_end_date
   end
   
+  def next_billing_date
+    cancelled?? nil : self[:next_billing_date]
+  end
+  
   def cancelled?
     !!cancelled_at && Time.now > cancelled_at
   end
