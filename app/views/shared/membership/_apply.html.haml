@@ -34,7 +34,7 @@
     -if (city ||= false)
       =f.hidden_field :city_id, @city.try(:id)
     -else
-      =f.select 'city_id', City.subscriptions_available.all.collect { |c| [c.name_and_region, c.id] }, {:validity => false, :prompt => "select your city", :selected => current_user.try(:city_id) || @city.try(:id), :label => "city : "}, :required => true
+      =f.select 'city_id', City.subscriptions_available.all.collect { |c| [c.name_and_region, c.id] }, {:validity => false, :prompt => "select your city", :selected => current_user.try(:city_id) || @city.try(:id), :label => "city : "}, :required => true, :class => "chzn-select", :title => "Select your city"
     %hr
     .survey
       =f.fields_for :survey do |sf|
@@ -49,8 +49,8 @@
 
         %li.question=f.label :favrestaurant, "What is a restaurant you enjoy?"
         =sf.text_field :favrestaurant, :placeholder => "give us a sense of your taste", :required => true
-        %li.question=f.label :favrestaurant, "How often do you dine out each month?"
-        =sf.text_field :favrestaurant, :placeholder => "demonstrate your refined taste", :required => true
+        %li.question=f.label :diningfreq, "How often do you dine out each month?"
+        =sf.text_field :diningfreq, :placeholder => "let us know how much you love restaurants", :required => true
         
     %li.buttons.clearfix
       =button_tag :class => "btnorg300x41 tf" do

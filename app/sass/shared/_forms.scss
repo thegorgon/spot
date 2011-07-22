@@ -85,6 +85,9 @@ ul.form {
   li.text {
     height: 30px;
   }
+  li.select {
+    z-index: 2;
+  }
   li.text, li.buttons, li.select {
     @extend .clearfix;
     width: 300px;

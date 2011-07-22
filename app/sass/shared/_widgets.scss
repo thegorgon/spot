@@ -412,10 +412,11 @@ ul.pillbox {
   background: #f0f0f0;
   padding: 170px 30px 30px;
   position: relative;
+  margin: 0 auto;
   width: 740px;
   .explanation {
     margin: 0 0 20px 0;
-    &.first {
+    &.last {
       margin-bottom: 0px;
     }
   }

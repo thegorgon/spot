@@ -271,6 +271,7 @@
       $(window).unbind('resize.slideshow').bind('resize.slideshow', function(e) {
         $('.stretcher').stretcher();
       });
+      fetch(".chzn-select").chosen()
     }
   });
 }(Spot));

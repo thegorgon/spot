@@ -1,13 +1,14 @@
 namespace :s3 do
   task(:sync => :connect) do
     @source_env = (ENV['REMOTE'] || "production")
+    @destination_env = (ENV['DESTINATION'] || Rails.env)
     @marker = ENV['MARKER']
     @prefix = ENV['PREFIX']
     @page_size = ENV['PAGE_SIZE'] || 1000
     page = 0
     
     source = S3_CONFIG[@source_env]['bucket']
-    destination = S3_CONFIG[Rails.env]['bucket']
+    destination = S3_CONFIG[@destination_env]['bucket']
     puts "syncing assets from #{source} to #{destination}..."
     time = Time.now.to_i
     loop do
