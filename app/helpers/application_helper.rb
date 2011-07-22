@@ -47,7 +47,7 @@ module ApplicationHelper
         "#{@place.name} at #{@place.address} - Spot"
       end
     else
-      "Spot members get exclusive access 
+      "Spot Members get exclusive access 
        to VIP privileges, unique promotions, and 
        unforgettable experiences at the best restaurants in town."      
     end

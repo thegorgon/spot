@@ -7,23 +7,22 @@
     ="#{image_tag "logos/spotblk225x180.png", :size => "55x44"}.".html_safe
     Shouldn't you?
 
-.col.descriptions.left 
-  .about
-    In order to ensure an unforgettable experience, membership is limited to 
+.about
+  .text 
+    In order to provide an unforgettable experience, membership is limited to 
     %strong
-      10,000 
-    individuals per city. 
+      10,000 individuals
+    per city. 
+    Become a
     %em
-      Apply now 
-    to be one of the 
-    %strong
-      founding members 
-    of Spot's select community of restaurant devotees.
+      founding member 
+    of Spot's community of restaurant devotees.
 
-  =render :partial => "/site/shared/explanations/pricing"
-  =render :partial => "/site/shared/explanations/guarantee"
+.col.descriptions.right 
+  =render :partial => "/site/shared/explanations/pricing", :locals => {:cssclass => "first"}
+  =render :partial => "/site/shared/explanations/guarantee", :locals => {:cssclass => "last"}
 
-.col.form.right
+.col.form.left
   =spot_form_for :application, :url => application_path, :display => "light inlinelabels" do |f|
     =f.fields_for :user_attributes do |uf|
       =uf.name_fields :required => true, :label => "name : ", :value => current_user.try(:names)
@@ -39,8 +38,8 @@
     %hr
     .survey
       =f.fields_for :survey do |sf|
-        %li.question=f.label :referred_by, "How did you hear about us?"
-        =sf.text_field :referred_by, :placeholder => "referred by", :value => referrer.try(:user).try(:name).try(:titlecase)
+        %li.question=f.label :referred_by, "Do you know any Spot Members?"
+        =sf.text_field :referred_by, :placeholder => "Spot Member friends", :value => referrer.try(:user).try(:name).try(:titlecase)
         -unless referrer
           %li.note 
             =link_to "referral code?", "#referral_code", :class => "reveals"
@@ -48,7 +47,9 @@
           %li.question=f.label :referral_code, "Were you given a referral code?"
           =f.text_field :referral_code, :placeholder => "referral code", :value => referrer.try(:code)
 
-        %li.question=f.label :favrestaurant, "What is your favorite restaurant?"
+        %li.question=f.label :favrestaurant, "What is a restaurant you enjoy?"
+        =sf.text_field :favrestaurant, :placeholder => "give us a sense of your taste", :required => true
+        %li.question=f.label :favrestaurant, "How often do you dine out each month?"
         =sf.text_field :favrestaurant, :placeholder => "demonstrate your refined taste", :required => true
         
     %li.buttons.clearfix

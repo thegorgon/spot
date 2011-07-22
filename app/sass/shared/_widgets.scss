@@ -233,16 +233,16 @@ ul.pillbox {
   position: relative;
   background: #999;
   text-align: center;
-  @include gradient_top_down(#f2f2f2, #A2A2A2); 
+  @include gradient_top_down(#333, #000); 
   @include top_border_radius(4px);
-  color: #333;
-  text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;
+  color: #ddd;
+/*  text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;*/
   height: 35px;
   line-height: 35px;
   font-size: 15px;
   font-weight: bold;
   .ui-dialog-titlebar-close {
-    background: transparent url(/images/buttons/bnwcloser15x45.png) no-repeat 0 0;
+    background: transparent url(/images/buttons/bnwcloserlt15x45.png) no-repeat 0 0;
     height: 15px;
     width: 15px;
     position: absolute;
@@ -262,7 +262,7 @@ ul.pillbox {
   left: 0px;
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: #000;
   @include opacity(0.5);
 }
 .ui-dialog {
@@ -272,6 +272,9 @@ ul.pillbox {
   @include border_radius(5px);
   background: #fff;
   @include box_shadow(rgba(0,0,0,0.5) 0 1px 5px);
+}
+.ui-dialog-content {
+  @include bottom_border_radius(5px);
 }
 #login_popover {
   width: 250px;
@@ -405,8 +408,17 @@ ul.pillbox {
   }
 }
 .applydialog {
+  font-size: 12px;
   background: #f0f0f0;
-  padding: 20px 30px;
+  padding: 170px 30px 30px;
+  position: relative;
+  width: 740px;
+  .explanation {
+    margin: 0 0 20px 0;
+    &.first {
+      margin-bottom: 0px;
+    }
+  }
   h1 {
     margin: 0 0 20px 0;
     img {
@@ -416,6 +428,18 @@ ul.pillbox {
   .about {
     padding: 10px 0 20px 0;
     font-size: 14px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: transparent url(/images/assets/general/cityscape800x150.png) no-repeat center center;
+    border-bottom: 1px solid #fff;
+    .text {
+      color: #fff;
+      padding: 15px;
+      margin-left: 15px;
+      width: 265px;
+    }
     strong, em {
       font-weight: bold;
       font-style: normal;
@@ -431,19 +455,20 @@ ul.pillbox {
   ul.form {
     margin: 10px auto 0;
     .li, li.text, li.buttons {
-      width: 420px;
-      button {
-        float: right;
-      }
+      width: 375px;
+    }
+    li.buttons {
+      margin: 0 auto;
     }
     hr {
       @extend hr.light;
-      margin: 20px 0px 20px 120px;      
+      width: 300px;
+      margin: 20px 0px 20px 75px;      
     }
     .survey {
       li.text {
         width: 300px;
-        padding-left: 120px;
+        padding-left: 75px;
       }
     }
     li.question {
@@ -454,16 +479,16 @@ ul.pillbox {
       text-align: right;
     }
     li.note, li.question {
-      padding-left: 120px;
+      padding-left: 75px;
     }
     .name {
       .first_name {
-        left: 120px;
+        left: 75px;
       }
     }
     .label {
       padding-right: 10px;
-      width: 110px;
+      width: 65px;
     }
   }
 }
@@ -654,10 +679,8 @@ ul.pillbox {
     z-index: 3;
     color: #fff;
     padding: 10px 35px 10px 8px;
-    .name {
-      font-size: 15px;        
-      text-shadow: #000 0px 1px 0x;
-    }
+    font-size: 15px;        
+    text-shadow: #000 0px 1px 0x;
   }
   .description {
     margin: 5px 0 0 0;
@@ -670,7 +693,7 @@ ul.pillbox {
   margin-top: 10px;
   text-align: left;
   .title {
-    padding: 5px 0 5px 35px;
+    padding: 5px 0 5px 30px;
     margin: 0;
     height: 27px;
     overflow: visible;
@@ -698,7 +721,7 @@ ul.pillbox {
   }
   &.pricing {    
     .title {
-      background-image: url("/images/icons/pricetag28x25.png");
+      background-image: url("/images/icons/pricing22x22.png");
     }
   }
   hr {
@@ -717,8 +740,6 @@ ul.pillbox {
     }
   }
 }
-
-
 .creditcard {
   text-align: left;
   position: relative;

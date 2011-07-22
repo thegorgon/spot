@@ -19,7 +19,7 @@
         We've arrived! 
         Now, what you got to eat in this town?
     %p
-      Now that you're subscribed, you have full access to all of the Spot member benefits. 
+      Now that you're subscribed, you have full access to all of the Spot Member experiences. 
       =link_to "Register for some", city_path(city)
       of our experiences to start enjoying your membership.
     %p
@@ -34,7 +34,7 @@
       =image_tag "paintings/louisxiv400x300.png", :size => "400x300"
       .speechbubble.down.tf
         My mommy says I'm special.
-    %p Spot memberships are limited to only 10,000 per city so make sure your friends get in before it's too late!
+    %p Spot Memberships are limited to only 10,000 per city so make sure your friends get in before it's too late!
     %p Send your friends the following URL and we'll immediately accept their application :
     -url = referred_application_url(:r => current_user.invitation_code.code)
-    =sharing(url, "Just applied to become a Spot member, I think it's worth checking out.", :link => true)
+    =sharing(url, "Just applied to become a Spot Member, I think it's worth checking out.", :link => true)

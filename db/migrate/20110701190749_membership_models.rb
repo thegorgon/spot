@@ -66,12 +66,10 @@ class MembershipModels < ActiveRecord::Migration
       t.string    :plan_id
       t.string    :braintree_id
       t.integer   :price_cents
-      t.integer   :balance_cents
       t.string    :status
       t.integer   :billing_day_of_month
-      t.date      :next_billing_date
-      t.date      :billing_period_start_date
-      t.date      :billing_period_end_date
+      t.integer   :billing_period
+      t.datetime  :billing_starts_at
       t.datetime  :cancelled_at
       t.datetime  :created_at
     end

@@ -12,6 +12,7 @@ class Subscription < ActiveRecord::Base
         :payment_method_token => params[:payment].token
       )
       if braintree.success?
+        debugger
         subscription = synced_with(braintree.subscription)
         subscription.credit_card = params[:payment]
         subscription.user = params[:user]
@@ -33,15 +34,17 @@ class Subscription < ActiveRecord::Base
     self.status = bt.status      
     self.plan_id = bt.plan_id
     self.price_cents = (bt.price * 100).round
-    self.balance_cents = (bt.balance * 100).round
     self.billing_day_of_month = bt.billing_day_of_month
-    self.next_billing_date = bt.next_billing_date
-    self.billing_period_start_date = bt.billing_period_start_date
-    self.billing_period_end_date = bt.billing_period_end_date
+    self.billing_period = ((Time.parse(bt.billing_period_end_date) - Time.parse(bt.billing_period_start_date))/1.month).ceil
+    self.billing_starts_at = Date.parse(bt.billing_period_start_date)
   end
   
   def next_billing_date
-    cancelled?? nil : self[:next_billing_date]
+    now = Time.now
+    tdelta = now.to_i - billing_starts_at.to_i
+    periods = (tdelta/billing_period.months).floor + 1
+    date = now + (periods * billing_period).months
+    Date.civil(date.year, date.month, billing_day_of_month)
   end
   
   def cancelled?
@@ -49,7 +52,7 @@ class Subscription < ActiveRecord::Base
   end
   
   def expires_at
-    cancelled?? billing_period_end_date : nil
+    cancelled?? next_billing_date : nil
   end
   
   def cancel!

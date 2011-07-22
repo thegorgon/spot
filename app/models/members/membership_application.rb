@@ -6,7 +6,7 @@ class MembershipApplication < ActiveRecord::Base
   after_create :deliver_thank_you
   after_validation :check_instant_approval
   after_save :send_approval_email
-  validate :user_hasnt_applied
+  validate :user_hasnt_applied, :on => :create
 
   scope :unapproved, where(:approved_at => nil)
   scope :approved, where("approved_at IS NOT NULL")

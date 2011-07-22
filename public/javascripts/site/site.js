@@ -1,7 +1,7 @@
 (function(go) {
   $.provide(go, 'Views', {
     site: function() {
-      $('#applydialog').modal({trigger: '.btnmembership', width: 875});
+      $('#applydialog').modal({trigger: '.btnmembership', width: 800});
     },
     site_blog: function() {
       $('#pagination a').ajaxLink({

@@ -181,14 +181,14 @@
       }
       &.monthly {
         .mval {
-          width: 75px;
+          width: 30px;
           padding-right: 25px;
         }
       }
       &.annually {
         margin-right: 0px;
         .mval {
-          width: 92px;
+          width: 42px;
         }
       }
       &:hover, &.hover {
@@ -223,7 +223,7 @@
         margin: 0 auto;
         font-size: 35px;
         position: relative;
-        padding: 0 17px 0 10px;
+        padding: 0 16px 0 10px;
         text-shadow: 0px 1px 0px rgba(255,255,255,0.75);
         .period {
           position: absolute;

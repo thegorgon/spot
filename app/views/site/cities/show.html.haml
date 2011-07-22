@@ -1,4 +1,4 @@
-=render :partial => "header", :locals => {:title => "Featured Member Benefits"}    
+=render :partial => "header", :locals => {:title => "Featured Member Experiences"}    
 
 .featsection{:class => "size#{@page.featured.length}"}
   -@page.featured.each_with_index do |featured, i|
@@ -8,7 +8,7 @@
         =image_tag featured.business.place.image.url(:i640x400)
         .fadeout
         .text
-          .name.tf="\"#{featured.name}\" at #{featured.business.place.name}"
+          .name.tf="#{featured.business.place.name} : #{featured.name}"
       .description= featured.description
 
 .upcoming.clearfix
@@ -19,5 +19,5 @@
         =image_tag template.business.place.image.url(:i640x400), :size => "400x250"
         .fadeout
         .text
-          .name.tf="\"#{template.name}\" at #{template.business.place.name}"
+          .name.tf="#{template.business.place.name} : #{template.name}"
       .description=template.description
