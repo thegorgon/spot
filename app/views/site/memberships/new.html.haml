@@ -24,41 +24,31 @@
   =f.fields_for :custom_fields do |cf|
     =cf.hidden_field :subscription_plan_id, :value => ""
   .paymentoptions.clearfix
-    .paymentoption.monthly.left{"data-value" => "ea_monthly", :class => conditionally("active", @payment.plan_id == "ea_monthly")}
-      .title.tf grande
-      .description
-        .mval.tf 
-          %span.currency $
-          5
-          .period="/mo"
-        %ul.points
-          %li Full member benefits
-          %li Payment recurs monthly
-          %li Unsubscribe at any time
-      .button
-        %a{:class => "btnorg77x32 tf", :href => "#"}
-          Select
-    
-    .paymentoption.annually.right{"data-value" => "ea_annually", :class => conditionally("active", @payment.plan_id == "ea_annually")}
-      .title.tf venti
-      .description
-        .mval.tf
-          %span.currency $
-          35
-          .period="/yr"
-        %ul.points
-          %li Full member benefits
-          %li Payment recurs annually
-          %li
-            %strong
-              Save over 40%
-      .button
-        %a{:class => "btnorg77x32 tf", :href => "#"}
-          Select
-  / .promocode
+    -Subscription::PLANS.each do |name, plan|
+      .paymentoption{"data-value" => plan.plan_id, :class => "#{name} #{conditionally("active", @payment.plan == name)}"}
+        .title.tf=name
+        .description
+          .mval.tf 
+            %span.currency $
+            =plan.cost
+            .period="/#{plan.abbrev_period}"
+          %ul.points
+            %li Full member benefits
+            %li="Payment recurs #{plan.period}"
+            %li 
+              -if plan.period == "monthly"
+                Unsubscribe at any time
+              -else
+                %strong
+                  Save over 40%
+        .button
+          %a{:class => "btnorg77x32 tf", :href => "#"}
+            Select
+                
+  / .promocode.note
   /   =link_to "Apply a Promo Code?", "#promocodefields", :class => "reveals"
-  / #promocodefields
-  /   =f.text_field :promo_code, :placeholder => "code", :label => "promo code : "
+  / #promocodefields.hidden
+  /   =f.text_field :promo_code, :placeholder => "promo code"
 
   .ccfields.hidden
     %h1.tf Imagine a credit card...
@@ -71,5 +61,4 @@
         
 .explanations.clearfix
   =render :partial => "/site/shared/explanations/howitworks"
-  / / =render :partial => "/site/shared/explanations/fineprint"
   =render :partial => "/site/shared/explanations/guarantee"

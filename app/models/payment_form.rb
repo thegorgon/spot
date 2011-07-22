@@ -3,7 +3,7 @@ class PaymentForm
   extend ActiveModel::Callbacks
   include ActiveModel::Validations::Callbacks	
   
-  attr_accessor :plan_id, :user, :tr_result, :subscription, :city
+  attr_accessor :plan, :user, :tr_result, :subscription, :city, :promo_code
   before_validation :populate_fields
   validate :valid_subscription
   validate :valid_membership

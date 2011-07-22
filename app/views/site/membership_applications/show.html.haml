@@ -10,7 +10,10 @@
 -else
   %h1.tf We'll review your responses and be in touch shortly.
 
-.appstatus
+.appstatus.clearfix
+  -if @application.approved?
+    =link_to "Complete Application", new_membership_path, :class => "btnorg300x41 tf right"
+  
   Application Status : 
   %span.statusstring{:class => @application.status.gsub(' ', '_')}
     -if @application.approved?
@@ -18,7 +21,9 @@
     -else
       =@application.status.titlecase
 
-%h1.tf In the meantime...
+
+-unless @application.approved?
+  %h1.tf In the meantime...
 
 %hr
 
@@ -33,7 +38,6 @@
     .text
       %p
         Get your friends to join and we'll give you both priority access. 
-        We'll even throw in a free month's subscription.
       %p
         Just share this link via Email, Facebook, or Twitter :
       

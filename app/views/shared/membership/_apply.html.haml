@@ -38,15 +38,15 @@
     %hr
     .survey
       =f.fields_for :survey do |sf|
+        #referral_code{:class => conditionally("hidden", referrer.nil?)}
+          %li.question=f.label :referral_code, "Were you given a referral code?"
+          =f.text_field :referral_code, :placeholder => "referral code", :value => referrer.try(:code)
         %li.question
           =f.label :referred_by, "Do you know any Spot Members?"
           -unless referrer
             .right.note
               =link_to "referral code?", "#referral_code", :class => "reveals"
         =sf.text_field :referred_by, :placeholder => "Spot Member friends", :value => referrer.try(:user).try(:name).try(:titlecase)
-        #referral_code{:class => conditionally("hidden", referrer.nil?)}
-          %li.question=f.label :referral_code, "Were you given a referral code?"
-          =f.text_field :referral_code, :placeholder => "referral code", :value => referrer.try(:code)
         %li.question=f.label :favrestaurant, "What is a restaurant you enjoy?"
         =sf.text_field :favrestaurant, :placeholder => "give us a sense of your taste", :required => true
         %li.question=f.label :diningfreq, "How often do you dine out each month?"

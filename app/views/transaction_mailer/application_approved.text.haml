@@ -4,8 +4,8 @@ To start taking advantage of the unforgettable dining experiences we have to off
 
 You have two payment options for your membership fees:
 
-Monthly at $4.99 per month
-Annually at $34.99 per year
+-Subscription::PLANS.each do |name, plan|
+  ="#{plan.period.titlecase} at $#{plan.cost} per #{plan.period_name}"
 
 Our signup process is quick and secure, and don’t forget about the Spot Guarantee.
 

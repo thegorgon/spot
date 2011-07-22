@@ -371,10 +371,13 @@ ActiveRecord::Schema.define(:version => 20110717013605) do
   add_index "preview_signups", ["interest", "email"], :name => "index_preview_signups_on_interest_and_email", :unique => true
 
   create_table "promo_codes", :force => true do |t|
-    t.string   "code",                       :null => false
-    t.integer  "duration",   :default => -1, :null => false
-    t.integer  "user_count", :default => -1, :null => false
-    t.integer  "use_count",  :default => 0,  :null => false
+    t.string   "name",                               :null => false
+    t.text     "description",                        :null => false
+    t.string   "code",                               :null => false
+    t.boolean  "acts_as_payment", :default => false, :null => false
+    t.integer  "duration",        :default => -1,    :null => false
+    t.integer  "user_count",      :default => -1,    :null => false
+    t.integer  "use_count",       :default => 0,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

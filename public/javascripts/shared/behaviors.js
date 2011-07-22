@@ -85,9 +85,9 @@
       $(this).click(function(e) {
         e.preventDefault();
         if (target.is(':visible')) {
-          target.hide();          
+          target.slideUp();          
         } else {
-          target.show();
+          target.slideDown();
         }
       });
     },

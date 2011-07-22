@@ -43,7 +43,10 @@ class MembershipModels < ActiveRecord::Migration
     add_index :membership_applications, [:city_id, :user_id], :unique => true
     
     create_table :promo_codes do |t|
+      t.string :name, :null => false
+      t.text   :description, :null => false, :default => ""
       t.string :code, :null => false
+      t.boolean :acts_as_payment, :null => false, :default => 0
       t.integer :duration, :null => false, :default => -1
       t.integer :user_count, :null => false, :default => -1
       t.integer :use_count, :null => false, :default => 0

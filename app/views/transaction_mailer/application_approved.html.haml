@@ -8,33 +8,29 @@
   You have two payment options for your membership fees:
   %table{:cellpadding => "0", :cellspacing => "0", :style => "margin:10px 0 0;"}
     %tr
-      %td
-        %a{:href => new_membership_url(:plan_id => "ea_monthly")}
-          %table{:cellpadding => "0", :cellspacing => "0", :style => "border:1px solid #999;"}
-            %tr
-              %td{:style => "text-align:center;padding:5px 0;color:#fff;background:#999"}
-                grande
-            %tr
-              %td{:style => "text-align:center;font-size:25px;padding:5px 10px;margin: 5px 0;"}
-                $4.99/mo        
-            %tr
-              %td{:style => "text-align:center; padding:5px 10px;"}
-                %p{:style => "margin: 5px 0;padding:0;"} Monthly Membership
-                %p{:style => "margin: 5px 0;padding:0;"} Cancel Anytime
-      %td{:style => "width:10px;"}
-      %td
-        %a{:href => new_membership_url(:plan_id => "ea_annually")}
-          %table{:cellpadding => "0", :cellspacing => "0", :style => "border:1px solid #999;"}
-            %tr
-              %td{:style => "text-align:center;padding:5px 0;color:#fff;background:#999"}
-                venti
-            %tr
-              %td{:style => "text-align:center;font-size:25px;padding:5px 10px;margin: 5px 0;"}
-                $34.99/yr
-            %tr
-              %td{:style => "text-align:center; padding:5px 10px;"}
-                %p{:style => "margin: 5px 0;padding:0;"} Annual Membership
-                %p{:style => "margin: 5px 0;padding:0;font-weight:bold;"} Save 40%
+      -Subscription::PLANS.each do |name, plan|
+        %td
+          %a{:href => new_membership_url(:plan => name)}
+            %table{:cellpadding => "0", :cellspacing => "0", :style => "border:1px solid #999;"}
+              %tr
+                %td{:style => "text-align:center;padding:5px 0;color:#fff;background:#999"}
+                  =name
+              %tr
+                %td{:style => "text-align:center;font-size:25px;padding:5px 10px;margin: 5px 0;"}
+                  =plan.payment_summary        
+              %tr
+                %td{:style => "text-align:center; padding:5px 10px;"}
+                  %p{:style => "margin: 5px 0;padding:0;"}
+                    -if plan.period == "monthly"
+                      ="Monthly Membership"
+                    -else
+                      ="Annual Membership"
+                  %p{:style => "margin: 5px 0;padding:0;"} 
+                    -if plan.period == "monthly"
+                      ="Cancel Anytime"
+                    -else
+                      %span{:style=>"font-weight:bold;"}="Save 40%"
+        %td{:style => "width:10px;"}
 %p
   Our signup process is quick and secure, and don’t forget about 
   ="#{link_to "the Spot Guarantee", policies_url}.".html_safe

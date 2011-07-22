@@ -6,7 +6,7 @@ class Site::MembershipsController < Site::BaseController
   layout 'oreo'
   
   def new
-    @payment ||= PaymentForm.new(:user => current_user, :plan_id => params[:plan_id])
+    @payment ||= PaymentForm.new(:user => current_user, :plan => params[:plan])
     render :action => "new" # allows for just calling "new" from any action
   end
   

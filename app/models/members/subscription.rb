@@ -3,6 +3,23 @@ class Subscription < ActiveRecord::Base
   belongs_to :credit_card
   validates :user, :presence => true
   validates :credit_card, :presence => true
+  
+  class Plan < Struct.new(:cost, :period, :plan_id)
+    def abbrev_period
+      period == "monthly" ? "mo" : "yr"
+    end
+    
+    def payment_summary
+      "$#{cost}/#{abbrev_period}"
+    end
+    
+    def period_name
+      period == "monthly" ? "month" : "year"
+    end
+  end
+  
+  PLANS = {:grande => Plan.new(5, "monthly", "ea_monthly"), :venti => Plan.new(35, "annually", "ea_annually")}
+  
   scope :active, lambda { where(["expires_at > ?", Time.now]) }
   
   def self.subscribe(params)
@@ -12,7 +29,6 @@ class Subscription < ActiveRecord::Base
         :payment_method_token => params[:payment].token
       )
       if braintree.success?
-        debugger
         subscription = synced_with(braintree.subscription)
         subscription.credit_card = params[:payment]
         subscription.user = params[:user]
@@ -45,6 +61,10 @@ class Subscription < ActiveRecord::Base
     periods = (tdelta/billing_period.months).floor + 1
     date = now + (periods * billing_period).months
     Date.civil(date.year, date.month, billing_day_of_month)
+  end
+  
+  def plan=(value)
+    self[:plan_id] = PLANS[value.to_sym].plan_id
   end
   
   def cancelled?
