@@ -192,7 +192,7 @@
     .evtdis {
       &.even {
         float: left;
-        clear: left;
+        clear: both;
       }
       &.odd {
         float: right;
