@@ -45,11 +45,12 @@
           %a{:class => "btnorg77x32 tf", :href => "#"}
             Select
                 
-  / .promocode.note
-  /   =link_to "Apply a Promo Code?", "#promocodefields", :class => "reveals"
-  / #promocodefields.hidden
-  /   =f.text_field :promo_code, :placeholder => "promo code"
-
+  .pclink.note
+    =link_to "Apply a Promo Code?", "#promocodefields", :class => "reveals"
+    #promocodefields.hidden
+      =f.fields_for :custom_fields do |cf|
+        =cf.text_field :promo_code, :placeholder => "promo code", :formnovalidate => true
+    
   .ccfields.hidden
     %h1.tf Imagine a credit card...
     =f.fields_for :credit_card do |ccf|
@@ -62,3 +63,18 @@
 .explanations.clearfix
   =render :partial => "/site/shared/explanations/howitworks"
   =render :partial => "/site/shared/explanations/guarantee"
+  
+%script{:type => "text/x-jquery-tmpl", :id => "promodescribe"}
+  .promocode
+    .promodescribe
+      .scissors=image_tag "icons/scissorsgrn41x23.png", :size => "41x23"
+      .name ${name}
+      .description ${description}
+    {{if acts_as_payment}}
+    =form_for :membership, :url => membership_path do |f|
+      =f.hidden_field :payment_type, :value => "PromoCode"
+      =f.hidden_field :payment_id, :value => "${id}"
+      =button_tag :class => "center btnorg300x41 tf" do 
+        you're  in
+    {{/if}}
+      

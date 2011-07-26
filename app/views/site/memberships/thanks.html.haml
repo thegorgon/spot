@@ -1,3 +1,5 @@
+-city = current_user.active_membership.city
+
 =content_for :toptitle do
   Welcome to Spot
 
@@ -6,12 +8,13 @@
   .stretcher{'data-gravity' => "1.0x1.0"}
     =image_tag "stretcher/cities/sf4.jpg", :size => "2292x1524"
 
-%h1.tf Pleased to Meet You
+.clearfix
+  %h1.tf So what now?
+  .right
+    =link_to "Explore Your City", city_path(city), :class => 'tf btnorg300x41'
 %hr
-%h1.tf So what now?
 .buckets.clearfix
   .bucket.first
-    -city = current_user.active_membership.city
     %h2.tf Explore your membership...
     .image.columbus
       =image_tag "paintings/columbus400x300.png", :size => "400x300"

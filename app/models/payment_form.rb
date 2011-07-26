@@ -91,7 +91,10 @@ class PaymentForm
       credit_card.user = user
       if credit_card.try(:save)
         @plan_id = custom_fields[:subscription_plan_id]
-        self.subscription = Subscription.subscribe :user => user, :plan => custom_fields[:subscription_plan_id], :payment => credit_card      
+        self.subscription = Subscription.subscribe :user => user, 
+                                                   :plan => custom_fields[:subscription_plan_id], 
+                                                   :payment => credit_card,
+                                                   :promo_code => custom_fields[:promo_code]
         if subscription.try(:save)
           user.update_attribute(:customer_id, @tr_result.customer.id)
           membership.payment_method = subscription

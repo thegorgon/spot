@@ -1,5 +1,5 @@
 class CityPage
-  MAX_FEATURE_SIZE = 1
+  MAX_FEATURE_SIZE = 0
   
   def initialize(city)
     @city = city

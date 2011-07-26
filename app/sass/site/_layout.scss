@@ -8,7 +8,7 @@
     #bgfade {
       z-index: 5;
       position: absolute;
-      bottom: 70px;
+      bottom: 0;
       left: 0px;
       right: 0px;
       top: 0px;
@@ -19,61 +19,40 @@
     padding-bottom: 150px;
   }
   footer {
-    min-width: 920px;
-    padding-top: 5px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
-    z-index: 100;
-    border-top: 1px solid #333;
-    text-shadow: rgba(0,0,0,0.5) 0 2px 0;
-    background: #000 repeat top center;
-    &.loading {
-      display: none;
-    }
-    nav.icons {
-      float: left;
-      margin: 14px 0 0 20px;
-      width: 457px;
-      a {
-        display: block;
-        float: left;
-        margin: 0 20px;
-        text-align: center;
-      }
-    }
-    nav.regular {
-      float: right;
-      padding: 0;
-      margin: 24px 40px 0 0;
-      width: 252px;
-      a {
-        color: #f0f0f0;
-        text-decoration: none;
-        display: block;
-        float: right;
-        margin-left: 11px;
-        font-size: 16px;
-        &:hover {
-          color: #fff;
-        }
-      }
-    }
-  } 
+    display: none;
+  }
 }
 .oreo {
-  color: #333;
-  width: 895px;
-  font-size: 14px;
-  margin: 0 auto;
-  padding-top: 20px;
+  .cookie {
+    color: #000;
+    width: 895px;
+    font-size: 14px;
+    margin: 0 auto;
+    padding-top: 20px;    
+  }
+  header {
+    padding: 5px;
+    height: 30px;
+    background: #000;
+    nav {
+      line-height: 30px;
+      a {
+        color: #f0f0f0;        
+        padding: 0 5px;
+        text-decoration: none;
+        font-size: 15px;
+        &:hover {
+          color: #ff8419;
+        }
+      }
+      padding: 0;
+    }
+  }
   hr {
     @extend hr.light;
   }
   h1 {
-    font-size: 23px;
+    font-size: 25px;
   }
   h2 {
     font-size: 18px;
@@ -103,18 +82,19 @@
       padding-left: 45px;
       background: transparent url(/images/icons/diamondgry33x26.png) no-repeat left center;
     }
+    .column {
+      width: 380px;
+      font-size: 14px;
+      h1 {
+        font-size: 30px;
+      }
+    }
+    .btn {
+      margin: 15px auto 0;
+    }
     .title {
       height: 41px;
       line-height: 41px;
-    }
-    .content {
-      margin: 20px 0 0;
-      h2 {
-        margin: 0 0 10px 0;
-      }
-    }
-    &.descriptive {
-      
     }
   }
   .filling {
@@ -142,7 +122,7 @@
         cursor: pointer;
         font-size: 12px;
         color: #666;
-        line-height: 15px;
+        line-height: 22px;
         &:hover {
           color: #333;
         }

@@ -3,6 +3,54 @@
   #bd {
     overflow:hidden;
   }
+  #bg {
+    bottom: 70px;
+  }
+  footer {
+    display: block;
+    min-width: 920px;
+    padding-top: 5px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    z-index: 100;
+    border-top: 1px solid #333;
+    text-shadow: rgba(0,0,0,0.5) 0 2px 0;
+    background: #000 repeat top center;
+    &.loading {
+      display: none;
+    }
+    nav.icons {
+      float: left;
+      margin: 14px 0 0 20px;
+      width: 457px;
+      a {
+        display: block;
+        float: left;
+        margin: 0 20px;
+        text-align: center;
+      }
+    }
+    nav.regular {
+      float: right;
+      padding: 0;
+      margin: 24px 40px 0 0;
+      width: 252px;
+      a {
+        color: #f0f0f0;
+        text-decoration: none;
+        display: block;
+        float: right;
+        margin-left: 11px;
+        font-size: 16px;
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  } 
   #toplayer {
     overflow: hidden;
     position: absolute;

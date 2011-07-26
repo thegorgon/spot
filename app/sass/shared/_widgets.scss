@@ -634,7 +634,7 @@ ul.pillbox {
   .disclosure {
     overflow: hidden;
     right: 10px;
-    bottom: 10px;
+    top: 5px;
     padding: 0;
     text-align: center;
     color: #fff;
@@ -675,7 +675,7 @@ ul.pillbox {
   .text {
     background: rgba(0,0,0,0.5);
     position: absolute;
-    bottom: 0px;
+    top: 0px;
     left: 0px;
     right: 0px;
     z-index: 3;

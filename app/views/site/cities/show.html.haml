@@ -1,15 +1,15 @@
-=render :partial => "header", :locals => {:title => "Featured Member Experiences"}    
+=render :partial => "header", :locals => {:title => "Featured Membership Experiences"}    
 
-.featsection{:class => "size#{@page.featured.length}"}
-  -@page.featured.each_with_index do |featured, i|
-    %a.evtdis{:class => "feat#{i}", :href => place_event_path(featured.business.place, featured)}
-      .image
-        .disclosure
-        =image_tag featured.business.place.image.url(:i640x400)
-        .fadeout
-        .text
-          .name.tf="#{featured.business.place.name} : #{featured.name}"
-      .description= featured.description
+-if @page.featured.present?
+  .featsection{:class => "size#{@page.featured.length}"}
+    -@page.featured.each_with_index do |featured, i|
+      %a.evtdis{:class => "feat#{i}", :href => place_event_path(featured.business.place, featured)}
+        .image
+          .disclosure
+          =image_tag featured.business.place.image.url(:i640x400)
+          .text
+            .name.tf="#{featured.business.place.name} : #{featured.name}"
+        .description= featured.description
 
 .upcoming.clearfix
   -(@page.upcoming).each do |template|
@@ -17,7 +17,6 @@
       .image
         .disclosure
         =image_tag template.business.place.image.url(:i640x400), :size => "400x250"
-        .fadeout
         .text
           .name.tf="#{template.business.place.name} : #{template.name}"
       .description=template.description

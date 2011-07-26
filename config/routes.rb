@@ -28,6 +28,7 @@ Spot::Application.routes.draw do
     resource :application, :only => [:create, :show, :new], :controller => "membership_applications" do
       get "referred", :on => :member, :action => "referred"
     end
+    resource :promo_code, :only => [:show]
     resources :registrations, :only => [:show, :create, :destroy]
     resources :places, :only => [:show] do
       resources :events, :only => [:show]

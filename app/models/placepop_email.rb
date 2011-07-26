@@ -13,7 +13,7 @@ class PlacepopEmail < ActiveRecord::Base
         value = nil if value == "NULL"
         hash[keys[i].downcase] = value if keys[i]
       end
-      if hash["email"].present? && hash["first_name"].present?
+      if hash["email"].present? && hash["first_name"].present? && hash["last_name"].present?
         email = find_or_initialize_by_email(hash["email"])
         email.attributes = hash
         email.save! 

@@ -11,6 +11,14 @@ class Site::MembershipsController < Site::BaseController
   end
   
   def create
+    @payment = PaymentForm.new(:user => current_user, :params => params)
+    if @payment.try(:save)
+      respond_to do |format|
+        format.html { redirect_to thanks_membership_path }
+      end
+    else
+      new
+    end    
   end
   
   # TR Endoint
@@ -19,9 +27,7 @@ class Site::MembershipsController < Site::BaseController
     @payment = PaymentForm.new(:user => current_user, :tr_result => @result)
     if @payment.try(:save)
       respond_to do |format|
-        format.html do
-          redirect_to thanks_membership_path
-        end
+        format.html { redirect_to thanks_membership_path }
       end
     else
       new

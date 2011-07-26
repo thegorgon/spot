@@ -86,6 +86,7 @@
   var viewStack = [],
     uiDialog,
     form = null,
+    promoCodeTO = null,
     developmentCC = function() {
       if (go.env('env') != 'production') {
         var devCards = [4111111111111111, 4005519200000004, 4009348888881881, 4012000033330026, 4012000077777777, 4012888888881881, 4217651111111119, 4500600000000061, 5555555555554444, 378282246310005, 371449635398431, 6011111111111117];        
@@ -134,8 +135,38 @@
           $('.creditcard .types').attr('class', 'types');
         }
       });
-      form.find('.types').unbind('click.speedup').bind('click.speedup', function(E) {
+      form.find('.types').unbind('click.speedup').bind('click.speedup', function(e) {
         developmentCC();
+      });
+      form.find('#customer_custom_fields_promo_code').unbind('change.updatecode').bind('change.updatecode', function(e) {
+        var self = $(this);
+        if (self.data('lastsent') != self.val()) {            
+          self.parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
+          self.data('lastsent', self.val());
+          $.get('/promo_code', {code: self.val()}, function(data) {
+            var html = $('#promodescribe').tmpl(data.code);
+            if (data.code && data.code.available) {
+              self.parents('li:first').removeClass('loading').removeClass('invalid').addClass('valid');
+              if (data.code.acts_as_payment) {
+                html.hide().insertAfter(form).slideDown();
+                form.slideUp();
+              } else {
+                $('.pclink').slideUp(function() {
+                  $('.pclink').replaceWith(html.hide())
+                  html.slideDown();
+                });                  
+              }
+            } else {
+              self.parents('li:first').removeClass('loading').removeClass('valid').addClass('invalid');
+            }
+          });
+        }
+      });
+      form.find('#customer_custom_fields_promo_code').unbind('keydown.updatecode').bind('keydown.updatecode', function(e) {
+        if (e.keyCode == 13) {
+          e.preventDefault();
+          $(this).change();
+        }
       });
     };
   $.provide(go, "PaymentForm", {

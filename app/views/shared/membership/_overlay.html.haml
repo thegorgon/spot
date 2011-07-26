@@ -13,15 +13,26 @@
             We've received your application and are reviewing it
           =link_to "check status", application_path, :class => "btnorg170x41 tf right"           
     -else
-      .title.clearfix
-        %h1.tf.left.membership
-          =title
-        =button_tag :class => "btnorg170x41 btnmembership tf right" do
-          apply now
       -if describe
-        %hr
-        .content.clear
-          %h2.tf Spot is an elite, members-only community for people who are passionate about eating out.
-          %p 
-            Join Spot to unlock exclusive experiences at the best restaurants and bars in town. 
-            All of our experiences are curated by the Spot community to ensure consistently high quality.
+        .content.clearfix
+          .left.column
+            %h1.tf
+              Membership.
+            %p 
+              / Membership has its privileges. Our exclusivity allows us to secure VIP experiences, available to no one else.
+              Limited to 10,000 people like you. People who restaurants want to impress.
+          
+          .right.column
+            %h1.tf
+              Experiences.
+            %p 
+              Chef’s tables, secret menus, kitchen tours, special wine pairings, private tastings&hellip;available only to Spot members.
+        .clear.btn
+          =button_tag :class => "btnorg170x41 btnmembership tf centered" do
+            apply now
+      -else
+        .title.clearfix
+          %h1.tf.left.membership
+            =title
+          =button_tag :class => "btnorg170x41 btnmembership tf right" do
+            apply now

@@ -1,5 +1,16 @@
+-module_names << " oreo"
+
+=content_for :header do
+  =image_tag "logos/spotwhite120x90.png", :size => "40x30"
+  %nav.right.clearfix
+    =link_to "press", press_path
+    =link_to "twitter", "http://www.twitter.com/spotteam", :target => "_new"
+    =link_to "blog", blog_index_path
+    =link_to "about", about_path
+    =link_to "home", root_path
+  
 =content_for :content do
-  .oreo 
+  .cookie
     =yield :above
     .filling
       .toptitle.clearfix
