@@ -3,6 +3,7 @@ class ActivityItem < ActiveRecord::Base
   belongs_to :actor, :class_name => "User"
   belongs_to :activity, :polymorphic => true
   belongs_to :item, :polymorphic => true
+  #TODO Remove source fields
   belongs_to :source, :polymorphic => true
   
   validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
@@ -41,12 +42,7 @@ class ActivityItem < ActiveRecord::Base
     {
       :_type => self.class.to_s,
       :id => id,
-      :activity => { 
-        :_type => activity_type, 
-        :id => activity_id,
-        :source_type => source_type,
-        :source_id => source_id
-      },
+      :activity => activity.as_json(args),
       :item => item.as_json(args),
       :user => actor.as_json(args),
       :created_at => created_at,

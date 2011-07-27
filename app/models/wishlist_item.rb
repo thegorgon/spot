@@ -73,7 +73,9 @@ class WishlistItem < ActiveRecord::Base
       :id => id,
       :item => item.as_json(args),
       :created_at => created_at,
-      :user => user.as_json(args)
+      :user => user.as_json(args),
+      :source_type => source_type,
+      :source_id => source_id
     }
   end
   
