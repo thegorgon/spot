@@ -13,8 +13,8 @@ class WishlistItem < ActiveRecord::Base
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}, :if => :lng
   
   after_create :update_item_wishlist_count
-  after_commit :enque_tweeting, :if => :new_record?
-  after_commit :enque_propagation, :if => :new_record?
+  after_commit :enqueue_tweeting, :if => :newly_created?
+  after_commit :enqueue_propagation, :if => :newly_created?
   
   attr_protected :deleted_at
   cattr_accessor :per_page
@@ -101,11 +101,13 @@ class WishlistItem < ActiveRecord::Base
     item_type.constantize.increment_counter(:wishlist_count, item_id)
   end
 
-  def enque_propagation
+  def enqueue_propagation
+    Rails.logger.debug("[resque] enqueue propagation from wishlist item")
     Resque.enqueue(Jobs::Propagator, self.class.to_s, id)
   end
 
-  def enque_tweeting
+  def enqueue_tweeting
+    Rails.logger.debug("[resque] enqueue tweeting from wishlist item")
     Resque.enqueue(Jobs::WishlistTweeter, id)
   end  
 end

@@ -5,6 +5,9 @@ module ActiveRecordExtensions
   end
   
   module InstanceMethods
+    def newly_created?
+      updated_at == created_at
+    end
   end
   
   module ClassMethods

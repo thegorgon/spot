@@ -11,7 +11,7 @@ class PlaceNote < ActiveRecord::Base
                               :field => "status", 
                               :protected => ["muted"]
   
-  after_commit :enque_propagation, :if => :new_record?
+  after_commit :enqueue_propagation, :if => :newly_created?
 
   scope :undeleted, where(:deleted_at => nil)
   scope :deleted, where("deleted_at IS NOT NULL")
@@ -67,7 +67,8 @@ class PlaceNote < ActiveRecord::Base
     ActivityItem.create! params
   end
   
-  def enque_propagation
-    Resque.enqueue(Jobs::Propagator, self.class.to_s, id)
+  def enqueue_propagation
+    Rails.logger.debug("[resque] enqueue propagation from place note")
+    Resque.enqueue(Jobs::Propagator, self.class.to_s, id) 
   end
 end
