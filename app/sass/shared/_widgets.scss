@@ -409,7 +409,6 @@ ul.pillbox {
 }
 .applydialog {
   font-size: 12px;
-  background: #f0f0f0;
   padding: 170px 30px 30px;
   position: relative;
   margin: 0 auto;
@@ -695,7 +694,7 @@ ul.pillbox {
   margin-top: 10px;
   text-align: left;
   .title {
-    padding: 5px 0 5px 30px;
+    padding: 5px 0 5px 0px;
     margin: 0;
     height: 27px;
     overflow: visible;
@@ -708,22 +707,22 @@ ul.pillbox {
       img {
         margin-bottom: -7px;
       }
-      background-image: url("/images/icons/starburst24x24.png");
+/*      background-image: url("/images/icons/starburst24x24.png");*/
     }
   }
   &.howitworks {
     .title {
-      background-image: url("/images/icons/questioncir22x22.png");
+/*      background-image: url("/images/icons/questioncir22x22.png");*/
     }
   }
   &.fineprint {
     .title {
-      background-image: url("/images/icons/magnifyshdw22x22.png");
+/*      background-image: url("/images/icons/magnifyshdw22x22.png");*/
     }    
   }
   &.pricing {    
     .title {
-      background-image: url("/images/icons/pricing22x22.png");
+/*      background-image: url("/images/icons/pricing22x22.png");*/
     }
   }
   hr {

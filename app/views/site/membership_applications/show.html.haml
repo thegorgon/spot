@@ -21,20 +21,14 @@
     -else
       =@application.status.titlecase
 
-
--unless @application.approved?
-  %h1.tf In the meantime...
-
-%hr
-
 .buckets.clearfix
   .left.bucket
-    %h1.tf.invitetitle
-      We appreciate gossips...
     .image.gossip
       =image_tag "paintings/gossip400x300.png", :size => "400x300"
       .speechbubble
         I just signed up for the greatest website. Cosmos anyone?
+    %h1.tf.invitetitle
+      We appreciate gossips...
     .text
       %p
         Get your friends to join and we'll give you both priority access. 
@@ -45,13 +39,13 @@
       =sharing(url, "Just applied to become a Spot Member, I think it's worth checking out.", :link => true)
       
   .right.bucket.last
-    %h1.tf
-      Ya, there's an app for that...
     .image.alchemist
       =image_tag "paintings/alchemist400x300.png", :size => "400x300"
       .speechbubble.down
         If you don't have an iPhone...
         You don't have an iPhone.
+    %h1.tf
+      Spot? Ya, there's an app for that...
     .text
       %p Use our app to remember places you want to go. We'll go to those places on your behalf to make sure your visit is unforgettable.
       =img_link_to "assets/general/appstoregry162x56.png", getspot_path, :size => "162x56", :class => "getspot"

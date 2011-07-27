@@ -21,4 +21,5 @@ staging:
   servers: "redis://:p0p3y3z!@localhost:2811"
   port: 2811
   host: localhost
+  password: p0p3y3z!
   key_prefix: "ssstaging:"
