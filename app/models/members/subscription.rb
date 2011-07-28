@@ -18,7 +18,7 @@ class Subscription < ActiveRecord::Base
     end
   end
   
-  PLANS = {:grande => Plan.new(5, "monthly", "ea_monthly"), :venti => Plan.new(35, "annually", "ea_annually")}
+  PLANS = {:venti => Plan.new(35, "annually", "ea_annually"), :grande => Plan.new(5, "monthly", "ea_monthly")}
   
   scope :active, lambda { where(["expires_at > ?", Time.now]) }
   

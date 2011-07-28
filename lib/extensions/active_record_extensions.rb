@@ -2,11 +2,21 @@ module ActiveRecordExtensions
   def self.included(base)
     base.send(:include, InstanceMethods)
     base.send(:extend, ClassMethods)
+    base.send(:before_create, :set_newly_created)
+    base.send(:after_commit, :clear_newly_created)
   end
   
   module InstanceMethods
+    def set_newly_created
+      @newly_created = true
+    end
+    
+    def clear_newly_created
+      @newly_created = false
+    end
+    
     def newly_created?
-      updated_at == created_at
+      !!@newly_created
     end
   end
   
