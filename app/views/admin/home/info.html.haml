@@ -1,6 +1,6 @@
 .manager
   .top.clearfix
-    %h1.title="Spot App Version : #{Rails.env.production?? `cat REVISION` : Rails.env}"    
+    %h1.title="Spot App Version : #{Rails.env.devlopment?? Rails.env : `cat REVISION`}"    
   .top.clearfix
     %h1.title Your Location :
   %table.data
