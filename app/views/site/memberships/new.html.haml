@@ -3,7 +3,7 @@
     =image_tag "stretcher/cities/sf3.jpg", :size => "2292x1524"
 
 =content_for :toptitle do
-  Become a Member
+  Become a Founding Spot Member
   
 .titles
   -if @payment.errors[:base].present?
@@ -14,50 +14,45 @@
           %li=error
         
   %h1.tf
-    Congratulations. Your application has been accepted.
-  
-  %h1.tf
-    Just one last question...how will you be paying?
+    Access all the Spot Experiences, anytime, anywhere.
+
+%hr
 
 =spot_form_for @payment, :as => :customer, :url => Braintree::TransparentRedirect.url, :display => "cc light clearfix inlinelabels", :html => {:autocomplete => "off"} do |f|
   =hidden_field_tag :tr_data, ERB::Util.html_escape(@payment.tr_data(:redirect_url => endpoint_membership_url))
-  =f.fields_for :custom_fields do |cf|
-    =cf.hidden_field :subscription_plan_id, :value => ""
-  .paymentoptions.clearfix
-    -Subscription::PLANS.each do |name, plan|
-      .paymentoption{"data-value" => plan.plan_id, :class => "#{name} #{conditionally("active", @payment.plan == name)}"}
-        .title.tf=name
-        .description
-          .mval.tf 
-            %span.currency $
-            =plan.cost
-            .period="/#{plan.abbrev_period}"
-          %ul.points
-            %li Full member benefits
-            %li="Payment recurs #{plan.period}"
-            %li 
-              -if plan.period == "monthly"
-                Unsubscribe at any time
-              -else
-                %strong
-                  Save over 40%
-        .button
-          %a{:class => "btnorg77x32 tf", :href => "#"}
-            Select
-                
-  .pclink.note
-    =link_to "Apply a Promo Code?", "#promocodefields", :class => "reveals"
-    #promocodefields.hidden
+  .paymentoptions
+    %h2.tf 1. Select membership type
+    =f.fields_for :custom_fields do |cf|
+      =cf.hidden_field :subscription_plan_id, :value => ""
+    -Subscription::PLANS.keys.each_with_index do |name, i|
+      -plan = Subscription::PLANS[name]
+      .paymentoption{"data-value" => plan.plan_id, :class => "#{name} #{conditionally("active", @payment.plan == name)} #{first_or_last(Subscription::PLANS.keys, i)}"}
+        .mval.tf 
+          %span.currency $
+          =plan.cost
+          .period="/#{plan.period_name}"
+        .benefits
+          -if plan.period == "annually"
+            .benefit Annual Membership
+            .benefit Save 40%
+          -else
+            .benefit Renews Monthly
+            .benefit Cancel Anytime
+        .checkbox
+          .box
+          .check              
+
+    #promocodefields.note
       =f.fields_for :custom_fields do |cf|
-        =cf.text_field :promo_code, :placeholder => "promo code", :formnovalidate => true
+        =cf.text_field :promo_code, :placeholder => "promo code", :formnovalidate => true, :label => "Apply Promo Code : "
     
-  .ccfields.hidden
-    %h1.tf Imagine a credit card...
+  .ccfields
+    %h2.tf 2. Enter your credit card information
     =f.fields_for :credit_card do |ccf|
       =render :partial => "/shared/payments/creditcard", :locals => {:form => ccf, :creditcard => @payment.credit_card}
-    %li.buttons
-      =button_tag :class => "btnorg300x41 tf" do
-        finish & pay
+  %li.buttons
+    =button_tag :class => "btnorg300x41 tf" do
+      finish & pay
         
         
 .explanations.clearfix
@@ -66,10 +61,10 @@
   
 %script{:type => "text/x-jquery-tmpl", :id => "promodescribe"}
   .promocode
-    .promodescribe
-      .scissors=image_tag "icons/scissorsgrn41x23.png", :size => "41x23"
+    %div{:class => "promodescribe {{if acts_as_payment}}aspayment{{/if}}"}
       .name ${name}
-      .description ${description}
+      .description 
+        ${description}
     {{if acts_as_payment}}
     =form_for :membership, :url => membership_path do |f|
       =f.hidden_field :payment_type, :value => "PromoCode"

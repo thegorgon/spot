@@ -83,11 +83,16 @@
         context.strokeStyle = 'rgba(0,0,0,0.2);';
         context.fillStyle = 'rgba(85,165,0,0.2)';
         context.lineJoin = "miter";
-        context.arc(center[0], center[1], radius, startangle, endangle);
-        context.lineTo(center[0], center[1]);
-        context.closePath();
-        context.fill();
-        context.stroke();
+        if (startangle == endangle) {
+          context.arc(center[0], center[1], radius, 0, Math.PI * 2);          
+          context.fill();
+        } else {
+          context.arc(center[0], center[1], radius, startangle, endangle);          
+          context.lineTo(center[0], center[1]);
+          context.closePath();
+          context.fill();
+          context.stroke();
+        }
       } catch(e) {
       }
       $('#claimform').ajaxForm({

@@ -1,6 +1,7 @@
 .error_page {
-  color: #f0f0f0;
-  .vc {
+  color: #f7f7f7;
+  .error {
+    margin-top: 10%;
     text-align: center;
     h1 {
       font-size: 24px;
@@ -13,7 +14,7 @@
       margin: 10px 0 0;
       a {
         font-size: 16px;
-        color: #f0f0f0;
+        color: #f7f7f7;
         font-weight: bold;
         &:hover, &.hover {
           color: #fff;

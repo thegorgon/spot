@@ -17,7 +17,7 @@
         text-align: center;
         color: #999;
         text-shadow:  rgba(255,255,255,0.75) 0px 1px 0px;
-        background: #f0f0f0;
+        background: #f7f7f7;
         padding: 5px;
         font-size: 20px;
       }
@@ -44,11 +44,6 @@
         .day {
           padding-left: 25px;
           background: transparent url(/images/icons/grystar20x20.png) no-repeat left center;
-        }
-      }
-      &.empty {
-        .events {
-          color: #ddd;
         }
       }
     }
@@ -184,7 +179,6 @@
     }
     .description {
       color: #000 !important;
-      padding: 0 10px;
     }
   }
   .upcoming {

@@ -6,12 +6,12 @@ class Site::MembershipsController < Site::BaseController
   layout 'oreo'
   
   def new
-    @payment ||= PaymentForm.new(:user => current_user, :plan => params[:plan])
+    @payment ||= PaymentForm.new(:user => current_user, :plan => params[:plan] || Subscription::PLANS.keys.first)
     render :action => "new" # allows for just calling "new" from any action
   end
   
   def create
-    @payment = PaymentForm.new(:user => current_user, :params => params)
+    @payment = PaymentForm.new(:user => current_user, :params => params)    
     if @payment.try(:save)
       respond_to do |format|
         format.html { redirect_to thanks_membership_path }

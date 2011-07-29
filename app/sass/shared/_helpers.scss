@@ -45,7 +45,7 @@ html {
   }
 }
 .white {
-  color: #f0f0f0;
+  color: #f7f7f7;
 }
 .clear {
   clear: both;
@@ -124,9 +124,8 @@ h1 {
   bottom: 0px;
 }
 hr.light {
-  height: 1px;
-  border-top: 1px solid #ededed;
-  background: #ddd;
+  border-top: 1px solid #ddd;
+  height: 0;
   border-bottom: 1px solid #fff;
 }
 .prose {

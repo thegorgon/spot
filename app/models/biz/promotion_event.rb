@@ -58,10 +58,12 @@ class PromotionEvent < ActiveRecord::Base
   
   def sold!
     self.class.increment_counter :sale_count, id
+    reload
   end
 
   def unsold!
     self.class.decrement_counter :sale_count, id
+    reload
   end
   
   def remove!

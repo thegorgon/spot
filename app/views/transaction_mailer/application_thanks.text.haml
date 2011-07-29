@@ -13,9 +13,9 @@ You can check the status of your application at any time by following the link h
 
 =application_url
 
-Do you know someone who would be a perfect fit for Spot Membership? Spread the word using this personal referral link and you’ll earn a month free for each person who joins:
+Do you know someone who would be a perfect fit for Spot Membership? Spread the word using this personal invitation link.
 
-=application_url
+=application_url(:r => @application.user.invitation_code.code)
 
 Sincerely,
 

@@ -21,7 +21,7 @@
     color: #fff !important;
   }
   &:active, &.active {
-    color: #f0f0f0 !important;
+    color: #f7f7f7 !important;
   }  
 }
 .twitter-share-button {
@@ -99,7 +99,12 @@ button.link {
 .btnorg170x41, a.btnorg170x41 {
   @include bgbutton('org170x41', 170px, 41px);
   @include orgbtn;
+  line-height: 38px;
   font-size: 25px;
+  .btntxt {
+    position: relative;
+    top: -2px;
+  }
 }
 .btnorg77x32, a.btnorg77x32 {
   @include bgbutton('org77x32', 77px, 33px);
@@ -118,7 +123,7 @@ button.link {
   @include gradient_top_down(#eeb96d, #ff8419); 
   text-decoration: none;
   border: 1px solid #e48737;
-  text-shadow: 0px 1px 0px #f0f0f0;
+  text-shadow: 0px 1px 0px #f7f7f7;
   color: #333 !important;
   text-align: center;
   text-decoration: none;
@@ -257,7 +262,7 @@ button.withx {
     text-shadow: 0px 1px #fff;
   }
   &:active, &.active {
-    @include gradient_top_down(#E7E8E9, #f0f0f0, 100%);
+    @include gradient_top_down(#E7E8E9, #f7f7f7, 100%);
     text-shadow: 0px -1px #fff;
   }
   .ie7 &, .ie8 & {
@@ -284,7 +289,7 @@ button.withx {
     text-shadow: 0px 1px #fff;
   }
   &:active, &.active {
-    @include gradient_top_down(#E7E8E9, #f0f0f0, 100%);
+    @include gradient_top_down(#E7E8E9, #f7f7f7, 100%);
     text-shadow: 0px -1px #fff;
   }
   .ie7 &, .ie8 & {

@@ -3,37 +3,32 @@
     =image_tag "stretcher/cities/#{@city.slug}2.jpg", :size => "2292x1524"
 
 =content_for :toptitle do
-  Thank you for applying.
+  -if @application.approved?
+    Application Approved
+  -else
+    Application Received
 
--if @application.approved?
-  %h1.tf Congratulations. Your application has been approved.
--else
-  %h1.tf We'll review your responses and be in touch shortly.
+.titlebar.clearfix
+  %h1.left.tf 
+    -if @application.approved?
+      Congratulations. You're In.
+    -else
+      %h1.tf We'll review your responses and be in touch shortly.
 
-.appstatus.clearfix
   -if @application.approved?
     =link_to "Complete Application", new_membership_path, :class => "btnorg300x41 tf right"
-  
-  Application Status : 
-  %span.statusstring{:class => @application.status.gsub(' ', '_')}
-    -if @application.approved?
-      =link_to @application.status.titlecase, new_membership_path
-    -else
-      =@application.status.titlecase
-
+%hr
 .buckets.clearfix
   .left.bucket
     .image.gossip
       =image_tag "paintings/gossip400x300.png", :size => "400x300"
       .speechbubble
-        I just signed up for the greatest website. Cosmos anyone?
-    %h1.tf.invitetitle
+        I just signed up for the greatest website. Cocktails anyone?
+    %h2.tf.invitetitle
       We appreciate gossips...
     .text
       %p
-        Get your friends to join and we'll give you both priority access. 
-      %p
-        Just share this link via Email, Facebook, or Twitter :
+        Give your friends priority access with this link :
       
       -url = referred_application_url(:r => @application.user.invitation_code.code)
       =sharing(url, "Just applied to become a Spot Member, I think it's worth checking out.", :link => true)
@@ -42,11 +37,13 @@
     .image.alchemist
       =image_tag "paintings/alchemist400x300.png", :size => "400x300"
       .speechbubble.down
-        If you don't have an iPhone...
-        You don't have an iPhone.
-    %h1.tf
+        Imagine a portable device with infinite capabilities...
+    %h2.tf
       Spot? Ya, there's an app for that...
     .text
-      %p Use our app to remember places you want to go. We'll go to those places on your behalf to make sure your visit is unforgettable.
-      =img_link_to "assets/general/appstoregry162x56.png", getspot_path, :size => "162x56", :class => "getspot"
+      %ul.appbenefits
+        %li Get the Spot App
+        %li List places you like
+        %li Get Experiences to match your taste
+      =img_link_to "assets/general/app_store_transparent116x40.png", getspot_path, :size => "116x40", :class => "getspot"
       

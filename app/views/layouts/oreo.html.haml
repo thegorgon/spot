@@ -3,11 +3,18 @@
 =content_for :header do
   =image_tag "logos/spotwhite120x90.png", :size => "40x30"
   %nav.right.clearfix
-    =link_to "press", press_path
-    =link_to "twitter", "http://www.twitter.com/spotteam", :target => "_new"
-    =link_to "blog", blog_index_path
-    =link_to "about", about_path
+    -if current_user
+      =link_to current_user.nickname, account_path, :class => "accountlnk"
+      %span.account="#{link_to "not you?", logout_path}".html_safe
+    -else show_login?
+      %span.account.accountlnk
+        %a{'data-popover' => '#login_popover', 'data-popover-title' => 'Log In', 'data-popover-orient' => 'vertical'} 
+          login
+      =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
+    ⋅
     =link_to "home", root_path
+    =link_to "about", about_path
+    =link_to "blog", blog_index_path
   
 =content_for :content do
   .cookie
@@ -15,18 +22,6 @@
     .filling
       .toptitle.clearfix
         %h1.tf.left=yield :toptitle
-        .right
-          -if content_for?(:topright)
-            =content_for :topright
-          -else
-            -if current_user
-              =link_to current_user.nickname, account_path, :class => "accountlnk"
-              %span.account="(&nbsp;#{link_to "not you?", logout_path}&nbsp;)".html_safe
-            -else show_login?
-              %span.account.accountlnk
-                %a{'data-popover' => '#login_popover', 'data-popover-title' => 'Log In', 'data-popover-orient' => 'vertical'} 
-                  login?
-              =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
       .main
         =content_for?(:oreo) ? yield(:oreo) : yield
     .footer
@@ -40,10 +35,14 @@
       =link_to "Privacy Policy", privacy_path
       ⋅
       =link_to "Terms of Service", tos_path
-
+      ⋅
+      =link_to "Press", press_path
+      ⋅
+      =link_to "Twitter", "http://www.twitter.com/spotteam", :target => "_new"
+      
 
   -unless current_member?
-    #applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Spot Member"}
+    #applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Founding Spot Member"}
       =render :partial => "/shared/membership/apply"
 
 = render :file => 'layouts/site'

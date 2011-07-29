@@ -322,7 +322,7 @@ ul.form {
 .faded {
   li.focus {
     input.text, textarea {
-      background: #f0f0f0;
+      background: #f7f7f7;
       @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px inset);
       color: #333;
       text-shadow: none;
@@ -377,7 +377,7 @@ ul.form {
   a {
     color: #aaa !important;
     &:hover, &.hover {
-      color: #f0f0f0;
+      color: #f7f7f7;
     }
   }
 }
@@ -443,7 +443,7 @@ input.text.light {
   .radio {
     border: 1px solid #808080;
     background: #ddd;
-    @include gradient_top_down(#ddd, #f0f0f0, 80%);
+    @include gradient_top_down(#ddd, #f7f7f7, 80%);
   }
   .file_field {
     .browse_button {

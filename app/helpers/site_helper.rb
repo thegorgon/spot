@@ -8,7 +8,7 @@ module SiteHelper
   end
   
   def current_member?
-    !!current_user.try(:member?)
+    @current_member ||= !!current_user.try(:member?)
   end
   
   def profile(name, email_or_url, title, options={})

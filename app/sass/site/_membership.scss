@@ -1,24 +1,20 @@
 .site_membership_applications {
   font-size: 14px;
-  .appstatus {
-    margin: 10px 0;
-    height: 41px;
-    line-height: 41px;
-    .statusstring {
-      font-weight: bold;
-    }
-    .pending_review {
-      color: #EEAD0E;
-    }
-    .approved {
-      color: #556B2F;
-    }
-  }
   .hd {
     margin-bottom: 15px;
   }
   .bucket {
     width: 394px;
+    ul.appbenefits {
+      line-height: 20px;
+      margin: 10px 0;
+      float: left;
+      list-style: inside disc;
+    }
+    a.getspot {
+      float: right;
+      margin: 15px 0;
+    }
   }
   .gossip {
     .speechbubble {
@@ -34,16 +30,14 @@
   }
 }
 
-#site_memberships_new {
-  .main {
-    text-align: center;
-  }
-}
 #site_memberships_thanks {
   .bucket {
     width: 394px;
     float: left;
     padding: 0 10px;
+    .button {
+      margin: 20px auto;
+    }
     .image {
       &.columbus {
         .speechbubble {
@@ -97,6 +91,7 @@
     }
   }
   .titles {
+    text-align: left;
     h1 {
       margin-bottom: 15px;
     }
@@ -106,8 +101,10 @@
   }
   ul.form {
     li.buttons {
+      clear: both;
       text-align: center;
-      margin: 15px auto 0;
+      margin: 0 auto;
+      padding: 20px 0;
     }    
   }
   .explanations {
@@ -129,34 +126,20 @@
       }
     }
   }
-  .ccfields {
-    margin: 20px 0 0;
-  }
-  .pclink {
-    margin: 0 0 10px 0;
-    a {
-      display: block;
-      margin-bottom: 10px;
-    }
-  }
   .promocode {
-    margin: 35px 0;
     form {
+      width: 300px;
       margin: 20px auto 0;
     }
   }
   .promodescribe {
-    width: 445px;
-    margin: 0 auto;
-    text-align: center;
-    border: 2px dashed #393;
+    width: 344px;
+    margin: 10px 0;
     padding: 10px;
-    background: #EFE;
-    position: relative;
-    .scissors {
-      position: absolute;
-      top: -25px;
-      left: 23px;
+    border: 1px solid #393;
+    background: #efe;
+    &.aspayment {
+      margin: 0 auto;
     }
     .name {
       width: auto;
@@ -165,112 +148,138 @@
     }
   }
   #promocodefields {
+    padding: 15px 0;
     li {
-      width: 170px;     
+      width: 364px;     
       margin: 0 auto;
     }
+    label {
+      float: left;
+    }
+    .input_container {
+      float: right;
+    }
     input, .input {
-      text-align: center;
-      width: 152px;
+      width: 200px;
+    }
+  }
+  .ccfields {
+    float: right;
+    h2 {
+      padding-left: 15px;
+    }
+    &.invalid {
+      h2 {
+        color: #cc3333;
+      }
     }
   }
   .paymentoptions {
-    width: 470px;
-    margin: 20px auto 10px;
-    &.selected {
-      .paymentoption {
-        opacity: 0.5;
+    float: left;
+    h2 {
+      margin: 0 0 15px 0;
+    }
+    &.invalid {
+      h2 {
+        color: #cc3333;
+      }
+      .checkbox {
+        .box {
+          border: 1px solid #cc3333;
+        }
       }
     }
-    .paymentoption {
-      @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px);
-      width: 200px;
-      height: 220px;
-      border: 1px solid #999;
-      @include border_radius(5px);
-      position: relative;
-      cursor: pointer;
-      .button {
-        position: absolute;
-        bottom: 10px;
-        left: 0;
-        right: 0;
-        a {
-          margin: 0 auto;
-        }        
-      }
-      .description {
-        padding: 10px;
-      }
-      .points {
-        text-align: center;
-        clear: both;
-        margin: 0;
-        font-size: 14px;
-      }
-      &.grande {
-        float: left;
-        .mval {
-          width: 30px;
-          padding-right: 25px;
-        }
-      }
-      &.venti {
-        float: right;
-        margin-right: 0px;
-        .mval {
-          width: 44px;
-        }
-      }
-      &:hover, &.hover {
-        @include box_shadow("none");
-        opacity: 1.0;
-        background: #fff;
-        a {
-          background-position: 0px -33px;          
-        }
-      }
-      &:active, &.active {
-        @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px inset);
-        background: #fff;
-        opacity: 1.0;
-        .title {
-          @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px inset);
-        }
-        a {
-          background-position: 0px -66px;          
-        }
-      }
-      .title {
-        font-size: 20px;
-        padding: 2px 0 4px;
-        background: #999;
-        color: #f0f0f0;
-        font-weight: bold;
-        text-shadow: 0px -1px 0px rgba(0,0,0,0.25);
-        text-align: center;
+  }
+  .paymentoption {
+    height: 50px;
+    width: 350px;
+    padding: 17px 7px;
+    background: #fff;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-bottom: 0;
+    &.last {
+      border-bottom: 1px solid #ddd;
+    }
+    &.grande {
+      .benefits {
+        margin-left: 50px;
       }
       .mval {
-        margin: 0 auto;
-        font-size: 35px;
-        position: relative;
-        padding: 0 16px 0 10px;
-        text-shadow: 0px 1px 0px rgba(255,255,255,0.75);
-        .period {
-          position: absolute;
-          bottom: 7px;
-          right: 0;
-          font-size: 14px;
-        }
-        .currency {
-          position: absolute;
-          top: 5px;
-          @include transform("rotate(7deg)");
-          left: 0;
-          font-size: 18px;
+        width: 35px;
+        padding-right: 44px;
+      }
+    }
+    .checkbox {
+      position: absolute;
+      right: 5px;
+      top: 0;
+      width: 30px;
+      bottom: 0;
+      .box {
+        height: 15px;
+        width: 15px;
+        top: 34px;
+        left: 5px;
+        position: absolute;
+        border: 1px solid #000;
+      }
+      .check {
+        display: none;
+        background: transparent url(/images/icons/check20x20.png) no-repeat center center;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        top: 28px;
+        left: 7px;
+      }
+    }
+    .benefits {
+      float: left;
+      margin-left: 40px;
+      font-size: 15px;
+      line-height: 28px;
+    }
+    &.hover, &:hover {
+      background: #ededed;
+      .check {
+        display: block;
+        background-image: url(/images/icons/checkgry20x20.png);
+      }
+      &.active {
+        .check {
+          background-image: url(/images/icons/check20x20.png);          
         }
       }
     }
+    &.active, &:active {
+      .check {
+        display: block;
+      }
+    }
+    .mval {
+      float: left;
+      text-align: center;
+      width: 60px;
+      font-size: 45px;
+      position: relative;
+      padding: 0 28px 0 10px;
+      text-shadow: 0px 1px 0px rgba(255,255,255,0.75);
+      .period {
+        position: absolute;
+        bottom: 10px;
+        right: 0;
+        font-size: 14px;
+      }
+      .currency {
+        position: absolute;
+        top: 5px;
+        @include transform("rotate(7deg)");
+        left: 0;
+        font-size: 18px;
+      }
+    }    
   }
 }
   

@@ -35,7 +35,7 @@ class MembershipModels < ActiveRecord::Migration
     create_table :membership_applications do |t|
       t.integer  :user_id, :null => false
       t.integer  :city_id, :null => false
-      t.string   :referral_code, :null => false
+      t.string   :invitation_code, :null => false
       t.text     :survey, :null => false
       t.datetime  :approved_at
       t.timestamps
@@ -67,6 +67,7 @@ class MembershipModels < ActiveRecord::Migration
       t.integer   :user_id
       t.integer   :credit_card_id
       t.string    :plan_id
+      t.string    :promo_code
       t.string    :braintree_id
       t.integer   :price_cents
       t.string    :status

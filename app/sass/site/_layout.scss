@@ -22,134 +22,126 @@
     display: none;
   }
 }
-.oreo {
-  .cookie {
-    color: #000;
-    width: 895px;
-    font-size: 14px;
-    margin: 0 auto;
-    padding-top: 20px;    
-  }
-  header {
-    padding: 5px;
-    height: 30px;
-    background: #000;
-    nav {
-      line-height: 30px;
-      a {
-        color: #f0f0f0;        
-        padding: 0 5px;
-        text-decoration: none;
-        font-size: 15px;
-        &:hover {
-          color: #ff8419;
-        }
-      }
-      padding: 0;
+html {
+  .oreo {
+    #bg {
+      @include opacity(0.5);
     }
-  }
-  hr {
-    @extend hr.light;
-  }
-  h1 {
-    font-size: 25px;
-  }
-  h2 {
-    font-size: 18px;
-  }
-  h1.tf, h2.tf {
-    text-shadow: #fff 0px 1px 0px;
-  }
-  p {
-    margin: 1em 0;
-  }
-  em {
-    font-style: normal;
-    color: #ff8419;
-  }
-  strong {
-    font-weight: bold;
-  }
-  .overlay {
-    text-align: left;
-    padding: 15px 20px;
-    border: 1px solid #ff8419;
-    @include border_radius(5px);
-    z-index: 100;
-    margin: 5px 0 10px;
-    background: #fff;
-    h1.membership {
-      padding-left: 45px;
-      background: transparent url(/images/icons/diamondgry33x26.png) no-repeat left center;
-    }
-    .column {
-      width: 380px;
-      font-size: 14px;
-      h1 {
-        font-size: 30px;
-      }
-    }
-    .btn {
-      margin: 15px auto 0;
-    }
-    .title {
-      height: 41px;
+    .titlebar {
       line-height: 41px;
     }
-  }
-  .filling {
-    @include box_shadow(rgba(0,0,0,0.75) 0px 1px 5px);
-    .toptitle { 
-      padding: 10px 20px 15px;
-      background: rgba(230,230,230, 0.75);
-      color: #333;
-      @include top_border_radius(5px);
-      line-height: 22px;
-      h1 {
-        font-size: 18px;
+    .cookie {
+      color: #000;
+      width: 895px;
+      font-size: 14px;
+      margin: 0 auto;
+      padding-top: 20px;    
+    }
+    header {
+      padding: 5px;
+      height: 30px;
+      background: #000;
+      nav {
+        line-height: 30px;
+        color: #f7f7f7;        
+        a {
+          color: #f7f7f7;        
+          padding: 0 5px;
+          text-decoration: none;
+          font-size: 15px;
+          &:hover {
+            color: #ff8419;
+          }
+        }
       }
-      a {
+    }
+    hr {
+      @extend hr.light;
+    }
+    h1 {
+      font-size: 25px;
+    }
+    h2 {
+      font-size: 18px;
+    }
+    h1.tf, h2.tf {
+      text-shadow: #fff 0px 1px 0px;
+    }
+    p {
+      margin: 1em 0;
+    }
+    em {
+      font-style: normal;
+      color: #ff8419;
+    }
+    strong {
+      font-weight: bold;
+    }
+    .overlay {
+      text-align: left;
+      padding: 15px 20px;
+      border: 1px solid #ff8419;
+      z-index: 100;
+      margin: 5px 0 10px;
+      background: #f7f7f7;
+      h1.membership {
+        padding-left: 45px;
+        background: transparent url(/images/icons/diamondgry33x26.png) no-repeat left center;
+      }
+      .column {
+        width: 380px;
+        font-size: 14px;
+        h1 {
+          font-size: 30px;
+        }
+      }
+      .btn {
+        margin: 15px auto 0;
+      }
+      .title {
+        height: 41px;
+        line-height: 41px;
+      }
+    }
+    .filling {
+      @include box_shadow(rgba(0,0,0,0.75) 0px 1px 5px);
+      .toptitle { 
+        padding: 10px 20px 15px;
+        background: rgba(230,230,230, 0.75);
         color: #333;
+        line-height: 22px;
+        h1 {
+          font-size: 18px;
+        }
+        a {
+          color: #333;
+          &:hover {
+            color: #ff8419;
+          }
+        }
+      }
+      .main {
+        position: relative;
+        background: #f0f0f0;
+        padding: 30px;
+        margin: -5px 0 5px;
+      }    
+    }
+    .footer {
+      color: #f7f7f7;
+      text-align: center;
+      margin: 0 auto 0;
+      text-shadow: #000 0px 0px 5px;
+      a {
+        color: #f7f7f7;
         &:hover {
           color: #ff8419;
         }
       }
-      .accountlnk {
-        padding-left: 23px;
-        background: transparent url("/images/icons/persongry15x14.png") no-repeat left center;
-      }
-      .account {
-        cursor: pointer;
-        font-size: 12px;
-        color: #666;
-        line-height: 22px;
-        &:hover {
-          color: #333;
-        }
+      .logo {
+        position: relative;
+        top: 13px;
       }
     }
-    .main {
-      position: relative;
-      background: #f0f0f0;
-      @include border_radius(5px);
-      padding: 30px;
-      margin: -5px 0 5px;
-    }    
-  }
-  .footer {
-    color: #f0f0f0;
-    text-align: center;
-    margin: 0 auto 0;
-    text-shadow: #000 0px 0px 5px;
-    a {
-      color: #f0f0f0;
-      &:hover {
-        color: #ff8419;
-      }
-    }
-    .logo {
-      position: relative;
-      top: 13px;
-    }
-  }
+  } 
 }

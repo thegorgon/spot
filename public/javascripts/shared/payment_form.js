@@ -75,7 +75,6 @@
       year = parseInt(yearField.val(), 10);
       month = parseInt(monthField.val(), 10);
       validity = year > Date.now().getFullYear() || (year == Date.now().getFullYear() && month > Date.now().getMonth() + 1);
-      $.validations.validity(yearField, validity, "is your card expired?")
       $.validations.validity(monthField, validity, "is your card expired?")
     }
   });
@@ -97,8 +96,7 @@
       }
     },
     bind = function() {
-      var cc = form.find('.ccfields'), 
-        planId = $('#customer_custom_fields_subscription_plan_id'),
+      var planId = $('#customer_custom_fields_subscription_plan_id'),
         options = $('.paymentoptions'),
         selectOption = function(option) {
           if (option.length > 0) {
@@ -106,10 +104,9 @@
             options.addClass('selected');
             option.addClass('active');
             planId.val(option.attr('data-value'));
-            cc.slideDown();            
+            planId.change();
           }
         };
-      cc.hide().removeClass('hidden');
       
       form.find('.paymentoption').click(function(e) {
         e.preventDefault();
@@ -118,13 +115,36 @@
           self.removeClass('active');
           options.removeClass('selected');
           planId.val('');
-          cc.slideUp();
+          planId.change();
         } else {
           selectOption(self);
         }
       });
       
       selectOption(form.find('.paymentoption.active'));
+      
+      form.find('#customer_custom_fields_subscription_plan_id').addValidation({
+        name: 'ccinlist',
+        test: function() {
+          var validValues = $('.paymentoption').map(function() { return $(this).attr('data-value'); }),
+            validity = $.inArray($(this).val(), validValues) >= 0;
+          $.validations.validity($(this), validity, "please select a payment option")
+        }
+      }).bind('validity', function(e) {
+        if (e.valid) {
+          $('.paymentoptions').removeClass('invalid').addClass('valid');
+        } else {
+          $('.paymentoptions').removeClass('valid').addClass('invalid');
+        }
+      });
+      
+      form.find('.ccfields input, .ccfields select').bind('validity', function(e) {
+        if (e.valid) {
+          $('.ccfields').removeClass('invalid').addClass('valid');
+        } else {
+          $('.ccfields').removeClass('valid').addClass('invalid');
+        }
+      })
       
       form.find('input.ccnumber').bind('keyup.updatecard', function(e) {
         var input = $(this), 
@@ -151,8 +171,8 @@
                 html.hide().insertAfter(form).slideDown();
                 form.slideUp();
               } else {
-                $('.pclink').slideUp(function() {
-                  $('.pclink').replaceWith(html.hide())
+                $('#promocodefields').slideUp(function() {
+                  $('#promocodefields').after(html.hide());
                   html.slideDown();
                 });                  
               }

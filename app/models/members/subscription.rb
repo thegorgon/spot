@@ -18,20 +18,30 @@ class Subscription < ActiveRecord::Base
     end
   end
   
-  PLANS = {:venti => Plan.new(35, "annually", "ea_annually"), :grande => Plan.new(5, "monthly", "ea_monthly")}
+  PLANS = {:venti => Plan.new(35, "annually", "ea_12"), :grande => Plan.new(5, "monthly", "ea_1")}
   
   scope :active, lambda { where(["expires_at > ?", Time.now]) }
   
   def self.subscribe(params)
+    promo_code = PromoCode.available.find_by_code(params[:promo_code]) if params[:promo_code]
     if params[:user] && params[:plan] && params[:payment]
-      braintree = Braintree::Subscription.create(
+      btparams = {
         :plan_id => params[:plan],
         :payment_method_token => params[:payment].token
-      )
+      }
+      btparams.merge!({ 
+        :trial_duration => promo_code.duration,
+        :trial_period => true,
+        :trial_duration_unit => "month"
+      }) if promo_code.try(:duration).to_i > 0
+      
+      braintree = Braintree::Subscription.create(btparams)
       if braintree.success?
         subscription = synced_with(braintree.subscription)
         subscription.credit_card = params[:payment]
+        subscription.promo_code = promo_code.try(:code)
         subscription.user = params[:user]
+        promo_code.try(:used!)
         subscription
       else
         subscription = new
@@ -51,8 +61,8 @@ class Subscription < ActiveRecord::Base
     self.plan_id = bt.plan_id
     self.price_cents = (bt.price * 100).round
     self.billing_day_of_month = bt.billing_day_of_month
-    self.billing_period = ((Time.parse(bt.billing_period_end_date) - Time.parse(bt.billing_period_start_date))/1.month).ceil
-    self.billing_starts_at = Date.parse(bt.billing_period_start_date)
+    self.billing_period = bt.plan_id.split('_').last.to_i
+    self.billing_starts_at = Date.parse(bt.next_billing_date)
   end
   
   def next_billing_date

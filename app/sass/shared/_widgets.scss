@@ -368,7 +368,7 @@ ul.pillbox {
       }
       &:hover {
         span {
-          @include triangle_right(5px, 5px, #f0f0f0);
+          @include triangle_right(5px, 5px, #f7f7f7);
         }
       }
     }
@@ -380,7 +380,7 @@ ul.pillbox {
       }
       &:hover {
         span {
-          @include triangle_left(5px, 5px, #f0f0f0);
+          @include triangle_left(5px, 5px, #f7f7f7);
         }
       }
     }
@@ -426,7 +426,6 @@ ul.pillbox {
     }
   }
   .about {
-    padding: 10px 0 20px 0;
     font-size: 14px;
     position: absolute;
     top: 0;
@@ -434,11 +433,15 @@ ul.pillbox {
     right: 0;
     background: transparent url(/images/assets/general/cityscape800x150.png) no-repeat center center;
     border-bottom: 1px solid #fff;
+    height: 150px;
     .text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-size: 16px;
       color: #fff;
       padding: 15px;
-      margin-left: 15px;
-      width: 265px;
     }
     strong, em {
       font-weight: bold;
@@ -511,13 +514,12 @@ ul.pillbox {
   font-size: 14px;
   text-align: center;
   padding: 20px 30px;
-  background: #f0f0f0;
   .container {
     height: 305px;
     position: relative;
   }
   .section {
-    background: #f0f0f0;
+    background: #fff;
     top: 0;
     left: 0;
     right: 0;
@@ -532,7 +534,7 @@ ul.pillbox {
   }
   .processing {
     z-index: 3;
-    background: #f0f0f0 url("/images/assets/loading/blkgears30x40.gif") no-repeat center center;
+    background: #fff url("/images/assets/loading/blkgears30x40.gif") no-repeat center center;
   }
   .code {
     z-index: 2;
@@ -744,14 +746,40 @@ ul.pillbox {
 .creditcard {
   text-align: left;
   position: relative;
-  background: transparent url(/images/backgrounds/card340x204.png) no-repeat 0 0;
   font-family: consolas, courier, monospace;
   text-shadow: rgba(0,0,0,0.5) 0px 1px 1px;
-  width: 286px;
-  height: 150px;
-  padding: 24px 27px;
+  width: 340px;
+  height: 204px;
   font-size: 14px;
   cursor: pointer;
+  .content {
+    padding: 24px 27px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+  }
+  .bg {
+    position: absolute;
+    z-index: 1;
+    .ie7 &, .ie & {
+      background: transparent url(/images/backgrounds/card340x204.png) no-repeat 0 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    background: #fff;
+    top: 14px;
+    left: 14px;
+    bottom: 14px;
+    right: 14px;
+    border: 1px solid #999;
+    @include border_radius(10px);
+    @include box_shadow(rgba(0,0,0,0.25) 0px 0px 2px);
+  }
   .clicktoedit {
     position: absolute;
     bottom: 24px;
@@ -846,8 +874,8 @@ ul.pillbox {
         height: 14px;
         line-height: 14px;
         @include border_radius(0px);
-        border: 1px solid #ededed;
-        @include box_shadow(rgba(0,0,0,0.5) 0px 0px 5px inset);
+        border: 1px solid #999;
+        @include box_shadow(rgba(0,0,0,0.75) 0px 0px 0px inset);
       }
       .invalid input {
         border: 1px solid #933;

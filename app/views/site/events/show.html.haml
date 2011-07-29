@@ -36,7 +36,8 @@
       =link_to "reviews on yelp", external_place_url(@place.external_place(:yelp)), :class => "info yelp"
     .info
       =sharing(request.url, "#{@promotion.name} at #{@place.name}? Sounds good to me.")
--if current_member?
+
+-if current_member? || current_user.membership_application
   %hr
 -else
   =render :partial => "/shared/membership/overlay", :locals => {:title => "Exclusively available to Spot Members."}
@@ -60,7 +61,7 @@
 .explanations.clear.clearfix
   =render :partial => "/site/shared/explanations/howitworks"
   =render :partial => "/site/shared/explanations/fineprint"
-  =render :partial => "/site/shared/explanations/guarantee"
+  =render :partial => "/site/shared/explanations/guarantee", :locals => {:cssclass => "last"}
   
 -if current_member?
   #claimdialog.clearfix.hidden{"data-title" => "Register for #{@event.name}"}

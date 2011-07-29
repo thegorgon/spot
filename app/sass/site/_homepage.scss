@@ -39,7 +39,7 @@
       margin: 24px 40px 0 0;
       width: 252px;
       a {
-        color: #f0f0f0;
+        color: #f7f7f7;
         text-decoration: none;
         display: block;
         float: right;
@@ -67,8 +67,8 @@
       right: 0;
       bottom: 0;
       .content {
-        @include border_radius(5px);
         padding: 10px;
+        @include border_radius(5px);
         background: rgba(0,0,0, 1.0) no-repeat center center;
         h1 {
           text-shadow: rgba(0,0,0,0.75) 0px 1px 0px;
@@ -101,7 +101,7 @@
             font-weight: bold;
           }
           em {
-            color: #f0f0f0;
+            color: #f7f7f7;
             font-style: normal;
             font-weight: bold;
           }
@@ -140,7 +140,7 @@
           a {
             color: #aaa;
             &:hover {
-              color: #f0f0f0;
+              color: #f7f7f7;
             }
           }
         }

@@ -1,8 +1,7 @@
 #500_error.error_page.fullscreen
-  .vcc
-    .vc
-      =image_tag "assets/general/punish520x452.png", :size => "260x226"
-      %h1 We made a mistake. Our bad.
-      %h2 Rest assured, the appropriate parties will be punished.
-      .home_link
-        =link_to "Go Home", root_path
+  .error
+    =image_tag "assets/general/punish520x452.png", :size => "260x226"
+    %h1 We made a mistake.
+    %h2 Rest assured, the appropriate parties will be punished.
+    .home_link
+      =link_to "Return to Spot", root_path

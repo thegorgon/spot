@@ -1,7 +1,6 @@
 #404_error.error_page.fullscreen
-  .vcc
-    .vc
-      =image_tag "assets/general/sherlock420x600.png", :size => "210x300"
-      %h1 We couldn't find what you asked for.
-      .home_link
-        =link_to "Go Holmes", root_path
+  .error
+    =image_tag "assets/general/sherlock420x600.png", :size => "210x300"
+    %h1 We couldn't find what you asked for.
+    .home_link
+      =link_to "Return Holmes", root_path

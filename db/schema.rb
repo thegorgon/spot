@@ -254,10 +254,10 @@ ActiveRecord::Schema.define(:version => 20110717013605) do
   add_index "invitation_codes", ["code"], :name => "index_invitation_codes_on_code", :unique => true
 
   create_table "membership_applications", :force => true do |t|
-    t.integer  "user_id",       :null => false
-    t.integer  "city_id",       :null => false
-    t.string   "referral_code", :null => false
-    t.text     "survey",        :null => false
+    t.integer  "user_id",         :null => false
+    t.integer  "city_id",         :null => false
+    t.string   "invitation_code", :null => false
+    t.text     "survey",          :null => false
     t.datetime "approved_at"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -457,6 +457,7 @@ ActiveRecord::Schema.define(:version => 20110717013605) do
     t.integer  "user_id"
     t.integer  "credit_card_id"
     t.string   "plan_id"
+    t.string   "promo_code"
     t.string   "braintree_id"
     t.integer  "price_cents"
     t.string   "status"

@@ -10,8 +10,8 @@
   }
   .explanation {
     float: left;
-    width: 264px;
-    margin-right: 14px;
+    width: 255px;
+    margin-right: 35px;
     &.last {
       margin-right: 0;
     }
@@ -82,7 +82,7 @@
     .shield {
       z-index: 100;
       @include opacity(0.6);
-      background: #f0f0f0;
+      background: #f7f7f7;
       position: absolute;
       top: 0;
       left: 0;

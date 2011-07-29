@@ -8,26 +8,28 @@
           %li=error
         
 .creditcard{:class => "#{conditionally("editable", form.present?)} #{conditionally("present", !creditcard.new_record?)} #{conditionally("editing", !creditcard.valid?)}"}
-  .logo
-  -if form
-    .editmode
-      .security
-      .username=form.text_field :cardholder_name, :value => creditcard.cardholder_name, :required => true
-      =form.text_field :number, :placeholder => "number", :class => "ccnumber", :required => true, 'data-subtype' => 'creditcard', :container_class => "numcontainer"
-      .clearfix
-        %li.select.expiration.left
-          =form.label :expiration_month, "expires :", :simple => true
-          =form.select :expiration_month, (1..12).map { |n| ["%02d" % n, n] }, {:simple => true, :selected => creditcard.expiration_month}, "data-subtype" => "ccexpiration", "data-part" => "month", :class => "month"
-          =form.select :expiration_year, (Time.now.year...(Time.now + 10.years).year), {:simple => true, :selected => creditcard.expiration_year}, "data-subtype" => "ccexpiration", "data-part" => "year", :class => "year"
-        =form.text_field :cvv, :placeholder => "CVV", :class => "cvv", :container_class => "cvvcontainer", :required => true, 'data-subtype' => 'cvv'
-      .types{:class => "#{creditcard.short_type} #{conditionally("selected", creditcard.short_type)}"}
+  .bg
+  .content
+    .logo
+    -if form
+      .editmode
+        .security
+        .username=form.text_field :cardholder_name, :value => creditcard.cardholder_name, :required => true
+        =form.text_field :number, :placeholder => "number", :class => "ccnumber", :required => true, 'data-subtype' => 'creditcard', :container_class => "numcontainer"
+        .clearfix
+          %li.select.expiration.left
+            =form.label :expiration_month, "expires :", :simple => true
+            =form.select :expiration_month, (1..12).map { |n| ["%02d" % n, n] }, {:simple => true, :selected => creditcard.expiration_month}, "data-subtype" => "ccexpiration", "data-part" => "month", :class => "month"
+            =form.select :expiration_year, (Time.now.year...(Time.now + 10.years).year), {:simple => true, :selected => creditcard.expiration_year}, "data-subtype" => "ccexpiration", "data-part" => "year", :class => "year"
+          =form.text_field :cvv, :placeholder => "CVV", :class => "cvv", :container_class => "cvvcontainer", :required => true, 'data-subtype' => 'cvv'
+        .types{:class => "#{creditcard.short_type} #{conditionally("selected", creditcard.short_type)}"}
     
-  -unless creditcard.new_record?
-    .clicktoedit
-      Click to Edit
-    .displaymode
-      .username=creditcard.cardholder_name.upcase
-      .ccnumber=creditcard.obfuscated_number
-      .clearfix
-        .expiration.left="expires : #{creditcard.expiration('/')}"
-        .types.selected{:class => creditcard.short_type}
+    -unless creditcard.new_record?
+      .clicktoedit
+        Click to Edit
+      .displaymode
+        .username=creditcard.cardholder_name.upcase
+        .ccnumber=creditcard.obfuscated_number
+        .clearfix
+          .expiration.left="expires : #{creditcard.expiration('/')}"
+          .types.selected{:class => creditcard.short_type}

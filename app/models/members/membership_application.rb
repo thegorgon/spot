@@ -56,7 +56,7 @@ class MembershipApplication < ActiveRecord::Base
   end
   
   def invitation
-    referral_code && InvitationCode.valid_code(referral_code)
+    invitation_code && InvitationCode.valid_code(invitation_code)
   end
 
   def survey=(value)

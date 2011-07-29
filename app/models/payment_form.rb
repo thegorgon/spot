@@ -34,6 +34,10 @@ class PaymentForm
     end
   end
   
+  def params=(value)
+    @directparams = value
+  end
+  
   def tr_data(params)
     unless @trdata
       if user.customer_id

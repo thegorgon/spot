@@ -1,14 +1,26 @@
 (function($) {
-  var emailRegex = /\b[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,4}\b/i;
+  var emailRegex = /\b[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,4}\b/i,
+    makeValidation = function(validation) {
+      return $.extend({
+        selector: '*',
+        test: function() { $.validations.validity(this, true, ""); },
+        onChange: 1,
+        onSubmit: 1
+      }, validation || {});
+    };
     
   $.validations = (function() {
     var invalid = function(input, message) {
+        var event = $.Event('validity', {valid: false, message: message, target: input});
         $(input).parents('li:first').removeClass('valid').removeClass('loading').addClass('invalid');
         $(input).parents('li:first').find('.validity, label').jstooltip(message, 'error');
+        $(input).trigger(event)
       },
       valid = function(input) {
+        var event = $.Event('validity', {valid: true, target: input});
         $(input).parents('li:first').removeClass('loading').removeClass('invalid').addClass('valid');
         $(input).parents('li:first').find('.validity, label').removejstooltip();
+        $(input).trigger(event)
       },
       validity = function(input, val, message) {
         if ($(input).valid() || val || $(input).parents('li:first').is('.loading')) {
@@ -17,12 +29,7 @@
         }
       },
       spliceInValidation = function(start, deleteCnt, validation) {
-        validation = $.extend({
-          selector: '*',
-          test: function() { $.validations.validity(this, true, ""); },
-          onChange: 1,
-          onSubmit: 1
-        }, validation || {});
+        validation = makeValidation(validation)
         validationNames.splice(start, deleteCnt, validation.name);
         validations.splice(start, deleteCnt, validation);
       },
@@ -78,14 +85,15 @@
           submit: false,
           change: false
         }, options || {});
-
+        var elemValidations = element.data('validate.validations') || [];
+        elemValidations = $.merge($.merge([], validations), elemValidations);
         if (element.is('form')) {
           element.find('input, textarea, select').filter(':not([formnovalidate])').each(function(e) {
             $.validations.run(this, options);
           });
         } else {
           $.validations.validity(element, true);
-          $.each(validations, function(i) {
+          $.each(elemValidations, function(i) {
             var validation = this
               runValidation = element.valid() && 
                                 element.is(validation.selector) && 
@@ -268,6 +276,12 @@
           }
         });
       });
+    },
+    addValidation: function(validation) {
+      var existing = $(this).data('validate.validations') || [];
+      existing.push(makeValidation(validation));
+      $(this).data('validate.validations', existing);
+      return this;
     },
     validate: function(options) {
       options = options || {};
