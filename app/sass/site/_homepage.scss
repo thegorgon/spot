@@ -95,7 +95,7 @@
           font-size: 18px;
           line-height: 25px;
           color: #aaa;
-          margin: 15px auto;
+          margin: 15px auto 10px;
           strong {
             color: #ff8419;
             font-weight: bold;
@@ -104,22 +104,6 @@
             color: #f7f7f7;
             font-style: normal;
             font-weight: bold;
-          }
-        }
-        a.enter {
-          display: block;
-          text-decoration: none;
-          color: #e5e5e5;
-          height: 26px;
-          line-height: 25px;
-          font-size: 20px;
-          text-align: left;
-          float: left;
-          padding-right: 20px;
-          background: transparent url(/images/icons/fwdarrowwht14x21.png) no-repeat right center;
-          &:hover {
-            background-image: url(/images/icons/fwdarrow14x21.png);
-            color: #ff8419;
           }
         }
       }
@@ -196,7 +180,7 @@
         margin: 0 auto;
         height: 200px;
         width: 200px;
-        background-image: url(/images/assets/loading/3dgears64x47.gif);
+        background-image: url(/images/assets/loading/gearswhtblkbg42x54.gif);
       }
     }
   }

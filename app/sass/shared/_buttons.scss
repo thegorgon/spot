@@ -116,6 +116,11 @@ button.link {
   @include orgbtn;
   font-size: 18px;
 }
+.btnorg115x32, a.btnorg115x32 {
+  @include bgbutton('org115x32', 115px, 33px);
+  @include orgbtn;
+  font-size: 18px;
+}
 .btnorgpill, a.btnorgpill, button.btnorgpill {
   display: block;
   @include border_radius(5px);
