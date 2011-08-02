@@ -193,8 +193,10 @@
               date = Date.parse($(this).attr('data-date'));
             if (visible) { allDates.push(date); }
           });
-          dates.min = new Date(allDates.min());
-          dates.max = new Date(allDates.max());
+          if (allDates.length > 0) {
+            dates.min = new Date(allDates.min());
+            dates.max = new Date(allDates.max());            
+          }
           return dates;
         },
         setTitle = function(title, minDate, maxDate) {
