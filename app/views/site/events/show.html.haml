@@ -19,6 +19,8 @@
 .details.clearfix
   .event
     %h1.name.tf=@promotion.name
+    -if @promotion.summary.present?
+      .bulleted.tf=@promotion.bulleted.html_safe
     .description=@promotion.description.html_safe
   .place
     .info.address.clearfix
@@ -37,7 +39,7 @@
     .info
       =sharing(request.url, "#{@promotion.name} at #{@place.name}? Sounds good to me.")
 
--if current_member? || current_user.membership_application
+-if current_member? || current_user.try(:membership_application)
   %hr
 -else
   =render :partial => "/shared/membership/overlay", :locals => {:title => "Exclusively available to Spot Members."}
@@ -45,7 +47,7 @@
 .availability.clearfix
   -unless current_member?
     .shield
-      
+    
   .dates
     .title.tf
       Reserve this experience. Click an available date : 

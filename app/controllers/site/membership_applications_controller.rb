@@ -13,7 +13,8 @@ class Site::MembershipApplicationsController < Site::BaseController
     if @user.save
       warden.set_user @user
       if @application.save
-        redirect_to application_path
+        session[:invite_code] = nil # Clear session invite code
+        redirect_to @application.approved?? new_membership_path : application_path
       else 
         render :action => :new
       end
@@ -27,18 +28,13 @@ class Site::MembershipApplicationsController < Site::BaseController
   end
   
   def new
-    @city ||= City.first
-    render :action => "new"
-  end
-  
-  def referred
-    @referrer = InvitationCode.valid_code(params[:r])
-    if @referrer
-      @city = @referrer.user.city
-      new
-    else
-      redirect_to new_application_path
+    if params[:r]
+      @referrer = InvitationCode.valid_code(params[:r] || session[:invite_code])
+      @invalid = InvitationCode.expended.find_by_code(params[:r] || session[:invite_code])
     end
+    @city = @referrer.user.city if @referrer    
+    @city ||= City.subscriptions_available.first
+    render :action => "new"
   end
   
   private

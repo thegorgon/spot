@@ -290,14 +290,14 @@ ul.pillbox {
   }
   .email {
     h3 {
-      background: transparent url("/images/icons/mail24x16.png") no-repeat 5px center;
+      background: transparent url("/images/icons/mailblk24x16.png") no-repeat 5px center;
       border-bottom: 1px solid #999;
     }
   }
   .fb {
     padding: 10px 10px 5px 0;
     h3 {
-      background: transparent url("/images/assets/general/fb_f_24x22.png") no-repeat 6px center;
+      background: transparent url("/images/assets/general/fbfbw30x30.png") no-repeat 6px center;
     }
     form {
       float: right;
@@ -413,6 +413,50 @@ ul.pillbox {
   position: relative;
   margin: 0 auto;
   width: 740px;
+  ul.form {
+    position: relative;
+    height: 225px;
+    @include transition("height 0.5s");
+    .step {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    &.unlockable {
+      .inputs {
+        width: 245px;
+      }
+    }
+    &.unlocking, &.unlocked {
+      .lock {
+        .shackle {
+          top: 0;
+        }
+      }
+    }
+    &.applying {
+      height: 400px;
+      .invitecode {
+        @include opacity(0);
+      }
+      .application {
+        @include opacity(1);
+        .survey {
+          display: block;
+        }
+      }
+    }
+    &.unlocked {
+      .application {
+        @include opacity(1);
+      }
+      .invitecode {      
+        @include opacity(0);
+      }
+    }
+  }
   .explanation {
     margin: 0 0 20px 0;
     &.last {
@@ -431,7 +475,7 @@ ul.pillbox {
     top: 0;
     left: 0;
     right: 0;
-    background: transparent url(/images/assets/general/cityscape800x150.png) no-repeat center center;
+    background: transparent url(/images/assets/general/cityscape895x150.png) no-repeat center center;
     border-bottom: 1px solid #fff;
     height: 150px;
     .text {
@@ -443,68 +487,129 @@ ul.pillbox {
       color: #fff;
       padding: 15px;
     }
-    strong, em {
-      font-weight: bold;
-      font-style: normal;
+  }
+  .inputs {
+    width: 150px;
+    margin: 0 auto;
+    position: relative;
+    height: 30px;
+    @include transition("width 1s");        
+    li.text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: 150px;
+      input, .placeholder {
+        text-align: center;
+        width: 132px;
+      }
     }
-    em {
-      color: #ff8419;
+    a.unlock {
+      z-index: 1;
+      position: absolute;
+      top: 1px;
+      right: 0;
+      font-weight: bold;
+      line-height: 25px;
+      height: 26px;
+      width: 80px;
+      color: #ddd;
+    }
+  }
+  .application {
+    @include opacity(0);
+    @include transition("opacity 0.25s");
+    .form {
+      padding: 5px 0 0;
+    }
+    .survey {
+      display: none;
+    }
+    li.labelled, .li.labelled {
+      width: 375px;
+    }
+    .label {
+      width: 65px;
+    }
+    .name li.first_name {
+      left: 74px;
+    }
+    .survey, .buttons {
+      margin-left: 75px;
+    }
+    .question {
+      font-weight: bold;
+    }
+  }
+  .invitecode {
+    padding: 20px 0 0;
+    height: 220px;
+    @include transition("opacity 0.25s");
+    .vouched {
+      text-align: center;
+      padding: 10px 0;
+      color: #999;
+    }
+    li {
+      margin: 0 auto;
+    }
+    .lock {
+      width: 45px;
+      height: 80px;
+      position: relative;
+      margin: 0 auto;
+      .bolt {        
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 40px;
+        width: 45px;
+        background: #ddd;
+      }
+      .shackle {
+        @include transition("top 0.25s");
+        position: absolute;
+        top: 10px;
+        height: 41px;
+        width: 39px;
+        background: transparent url(/images/assets/general/shackle39x41.png) no-repeat center center;
+        left: 3px;
+      }
+    }
+    .question {
+      padding: 10px 0;
+      font-size: 15px;
+      text-align: center;
+    }
+    .wanttoapply {
+      color: #AAA;
+      text-decoration: none;
+      display: block;
+      position: absolute;
+      bottom: 0px;
+      left: 200px;
+      right: 200px;
+      text-align: center;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
   .descriptions {
     width: 280px;
     padding-right: 20px;
   }
-  ul.form {
-    margin: 10px auto 0;
-    .li, li.text, li.buttons {
-      width: 375px;
-    }
-    li.buttons {
-      margin: 0 auto;
-    }
-    hr {
-      @extend hr.light;
-      width: 300px;
-      margin: 20px 0px 20px 75px;      
-    }
-    .survey {
-      li.text {
-        width: 300px;
-        padding-left: 75px;
-      }
-    }
-    li.question {
-      text-align: left;
-      margin-top: 0;
-      font-weight: bold;
-    }
-    li.note {
-      text-align: right;
-    }
-    li.note, li.question {
-      padding-left: 75px;
-    }
-    .name {
-      .first_name {
-        left: 75px;
-      }
-    }
-    .label {
-      padding-right: 10px;
-      width: 65px;
-    }
-  }
 }
 .sharing {
   margin: 5px 0 0;
   input {
     float: left;
-    margin: -4px 10px 0 0;
+    margin: 0 10px 0 0;
   }
   .fb-share-button {
     float: left;
-    margin: 1px 10px 0 0;
+    margin: 0px 10px 0 0;
   }
   .twitter-share-button {
     float: left;
@@ -584,7 +689,7 @@ ul.pillbox {
       li {
         padding: 5px 0;
         &.telleveryone {
-          line-height:20px;
+          line-height: 30px;
         }
       }
       margin: 10px 0;
@@ -595,6 +700,7 @@ ul.pillbox {
       text-align: center;
     }
     .sharing {
+      margin: 0;
       float: right;
     }
   }
@@ -945,6 +1051,7 @@ ul.pillbox {
   margin: 20px 0;
   .bucket {
     padding-right: 15px;
+    font-size: 14px;
     .image {
       position: relative;
       img {
@@ -956,20 +1063,17 @@ ul.pillbox {
       display: block;
       text-align: center;
     }
-    .text {
-      font-size: 14px;
-      p {
-        margin: 10px 0;        
-      }
-      input {
-        font-size: 12px;
-        width: 230px;
-      }
-      .share {
-        margin: 5px;
-        &.last {
-          margin-right:0px;
-        }
+    p {
+      margin: 10px 0;        
+    }
+    input.text {
+      font-size: 12px;
+      width: 230px;
+    }
+    .share {
+      margin: 5px;
+      &.last {
+        margin-right:0px;
       }
     }
     &.last {

@@ -10,10 +10,10 @@
   -if promotion.rejected? || promotion.pending? || promotion.approved?
     =spot_form_for promotion, :as => :template, :url => admin_promotion_path(promotion), :display => "light" do |f|
       =hidden_field_tag :filter, params[:filter]
-      =f.hidden_field :status, :value => PromotionTemplate::APPROVED_STATUS
-      %li.cost
-        =label_tag "template[cost_cents]", "Set Promotion Cost : "
-        =select "template", "cost_cents", {"$10" => 1000, "Free" => 0}, :selected => promotion.cost_cents
+      =f.hidden_field :status, :value => PromotionTemplate::APPROVED_STATUS        
+      %li.label
+        =f.label :bulleted, "Short Summary : "
+      =f.text_field :bulleted
       %li.label
         =f.label :description, promotion.kind_of?(DiscountTemplate) ? "Editorial Description : " : "Promotion Description : "
       =f.text_area :description
@@ -28,6 +28,9 @@
     =spot_form_for promotion, :as => :template, :url => admin_promotion_path(promotion), :display => "light reject" do |f|
       =hidden_field_tag :filter, params[:filter]
       =f.hidden_field :status, :value => PromotionTemplate::REJECTED_STATUS
+      %li.label
+        =f.label :bulleted, "Short Summary : "
+      =f.text_field :bulleted
       %li.label=f.label :rejection_reasoning, "Reason For Rejection :"
       =f.text_area :rejection_reasoning
       %li.center

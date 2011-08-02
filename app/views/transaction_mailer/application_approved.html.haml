@@ -1,39 +1,31 @@
 %p
-  We’re thrilled to invite you to join our elite group of 10,000 founding members. 
+  We’re thrilled to have you join our elite group of 10,000 founding members. 
 
 %p
   To start taking advantage of the unforgettable dining experiences we have to offer, complete your membership application now.
 
 %p
   You have two payment options for your membership fees:
-  %table{:cellpadding => "0", :cellspacing => "0", :style => "margin:10px 0 0;"}
-    %tr
-      -Subscription::PLANS.each do |name, plan|
+  %table{:cellpadding => "0", :cellspacing => "0", :style => "margin:10px 0 0;border:1px solid #999;border-top:none;"}
+    -Subscription::PLANS.each do |name, plan|
+      %tr
         %td
-          %a{:href => new_membership_url(:plan => name)}
-            %table{:cellpadding => "0", :cellspacing => "0", :style => "border:1px solid #999;"}
+          %a{:href => new_membership_url(:plan => name), :style => "width:275px; height:50px;padding:10px 0;display:block;border-top:1px solid #999;background:#fff;color:#000;"}
+            %table{:cellpadding => "0", :cellspacing => "0"}
               %tr
-                %td{:style => "text-align:center;padding:5px 0;color:#fff;background:#999"}
-                  =name
-              %tr
-                %td{:style => "text-align:center;font-size:25px;padding:5px 10px;margin: 5px 0;"}
-                  =plan.payment_summary        
-              %tr
-                %td{:style => "text-align:center; padding:5px 10px;"}
-                  %p{:style => "margin: 5px 0;padding:0;"}
-                    -if plan.period == "monthly"
-                      ="Monthly Membership"
-                    -else
-                      ="Annual Membership"
-                  %p{:style => "margin: 5px 0;padding:0;"} 
-                    -if plan.period == "monthly"
-                      ="Cancel Anytime"
-                    -else
-                      %span{:style=>"font-weight:bold;"}="Save 40%"
-        %td{:style => "width:10px;"}
+                %td{:style => "text-align:left;font-size:25px;padding:0 10px;margin:0;"}
+                  .mval.tf
+                    =image_tag "#{IMGHOST}assets/payment/#{plan.cost}per#{plan.period_name}100x50.png", :size => "100x50"
+                %td
+                  -if plan.period == "annually"
+                    .benefit{:style => "padding: 5px 0 0;"} Annual Membership
+                    .benefit{:style => "padding: 10px 0;"} Save 40%
+                  -else
+                    .benefit{:style => "padding: 5px 0 0;"} Renews Monthly
+                    .benefit{:style => "padding: 10px 0;"} Cancel Anytime
+
 %p
-  Our signup process is quick and secure, and don’t forget about 
-  ="#{link_to "the Spot Guarantee", policies_url}.".html_safe
+  Our signup process is quick, secure and satisfaction is guaranteed. If you aren't satisfied, we'll readily refund your payment.
 
 %p
   Contact us with any questions – we’re here to help!

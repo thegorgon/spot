@@ -27,6 +27,21 @@ html {
     #bg {
       @include opacity(0.5);
     }
+    #invite_popover {
+      width: 300px;
+      padding: 20px;
+      height: 80px;
+      h2 { 
+        margin: 0 0 10px 0;
+      }
+      .sharing {
+        margin: 10px 0 0 0;
+      }
+      input.text {
+        width: 200px;
+        font-size: 12px;
+      }
+    }
     .titlebar {
       line-height: 41px;
     }
@@ -87,6 +102,9 @@ html {
       h1.membership {
         padding-left: 45px;
         background: transparent url(/images/icons/diamondgry33x26.png) no-repeat left center;
+      }
+      h1.vouched {
+        margin: 0 0 20px 0;
       }
       .column {
         width: 380px;

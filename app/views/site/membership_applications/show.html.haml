@@ -26,12 +26,11 @@
         I just signed up for the greatest website. Cocktails anyone?
     %h2.tf.invitetitle
       We appreciate gossips...
-    .text
-      %p
-        Give your friends priority access with this link :
-      
-      -url = referred_application_url(:r => @application.user.invitation_code.code)
-      =sharing(url, "Just applied to become a Spot Member, I think it's worth checking out.", :link => true)
+    %p
+      Give your friends priority access with this link :
+    
+    -url = invitation_url(:ic => @application.user.invitation_code.code)
+    =sharing(url, "Just applied to become a Spot Member, I think it's worth checking out.", :link => true)
       
   .right.bucket.last
     .image.alchemist
@@ -40,10 +39,9 @@
         Imagine a portable device with infinite capabilities...
     %h2.tf
       Spot? Ya, there's an app for that...
-    .text
-      %ul.appbenefits
-        %li Get the Spot App
-        %li List places you like
-        %li Get Experiences to match your taste
-      =img_link_to "assets/general/app_store_transparent116x40.png", getspot_path, :size => "116x40", :class => "getspot"
-      
+    %ul.appbenefits
+      %li Get the Spot App
+      %li List places you like
+      %li Get Experiences to match your taste
+    =img_link_to "assets/general/app_store_transparent116x40.png", getspot_path, :size => "116x40", :class => "getspot"
+    

@@ -160,10 +160,10 @@
       });
       form.find('#customer_custom_fields_promo_code').unbind('change.updatecode').bind('change.updatecode', function(e) {
         var self = $(this);
-        if (self.data('lastsent') != self.val()) {            
+        if (self.data('lastsent') != self.val() && self.val().toString().length > 0) {            
           self.parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
           self.data('lastsent', self.val());
-          $.get('/promo_code', {code: self.val()}, function(data) {
+          $.get('/codes/promo/' + self.val(), function(data) {
             var html = $('#promodescribe').tmpl(data.code);
             if (data.code && data.code.available) {
               self.parents('li:first').removeClass('loading').removeClass('invalid').addClass('valid');

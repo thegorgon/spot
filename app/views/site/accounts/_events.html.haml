@@ -34,19 +34,18 @@
       If you'd like to continue receiving Spot Membership experiences, please
       ="#{link_to "renew your Spot Membership", new_membership_path}.".html_safe
   -elsif current_user.membership_application 
-    Spot Events are only open to Spot Members.
+    Spot Events are only available to Spot Members.
     %p
       -if current_user.membership_application.approved?
         Congratulations! Your application has been approved.
         =link_to "Continue the application process.", new_membership_path
       -else
-        We've received 
-        =link_to "your application", application_path 
-        and it is currently under review. We'll be in touch shortly, but if you're eager, you can
+        We've received your application and it is currently under review. 
+        We'll be in touch shortly, but if you're eager, you can
         =link_to "check the status", application_path 
         at any time.          
   -else
     .applyline
       Events are only open to Spot Members :
-      =button_tag :class => "btnmembership btnorg77x32 right" do
-        Apply
+      =button_tag :class => "btnmembership btnorg300x41 tf" do
+        become a member

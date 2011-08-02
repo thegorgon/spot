@@ -35,7 +35,9 @@ class PaymentForm
   end
   
   def params=(value)
-    @directparams = value
+    if value && value[:promo_code]
+      @promocode = PromoCode.find_by_code(value[:promo_code]) 
+    end
   end
   
   def tr_data(params)
@@ -117,6 +119,8 @@ class PaymentForm
       else
         add_our_errors(Braintree::BraintreeError, "Braintree", @tr_result.errors.collect { |error| error.message })
       end
+    elsif @promocode
+      membership.payment_method = @promocode
     end
   end
 end

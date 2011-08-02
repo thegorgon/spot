@@ -1,7 +1,7 @@
 -module_names << " oreo"
 
 =content_for :header do
-  =image_tag "logos/spotwhite120x90.png", :size => "40x30"
+  =img_link_to "logos/spotwhite120x90.png", root_path, :size => "40x30"
   %nav.right.clearfix
     -if current_user
       =link_to current_user.nickname, account_path, :class => "accountlnk"
@@ -12,6 +12,16 @@
           login
       =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
     ⋅
+    -if current_member? && current_user.invitation_code.invites_remaining?
+      %a{'data-popover' => '#invite_popover', 'data-popover-title' => 'Invite', 'data-popover-orient' => 'vertical'} 
+        invite
+      ⋅
+      #invite_popover
+        -url = invitation_url(:ic => current_user.invitation_code.code)
+        %h2.tf="#{current_user.invitation_code.invites_remaining} invites remaining."
+        Share this link to invite worthy friends and family : 
+        =sharing(url, "I've got 10 Spot invites to share. Foodies in SF, check it out now.", :link => true)
+        
     =link_to "home", root_path
     =link_to "about", about_path
     =link_to "blog", blog_index_path
@@ -43,6 +53,6 @@
 
   -unless current_member?
     #applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Founding Spot Member"}
-      =render :partial => "/shared/membership/apply"
+      =render :partial => "/shared/membership/apply", :locals => {:referrer => session_invite}
 
 = render :file => 'layouts/site'

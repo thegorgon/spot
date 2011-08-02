@@ -1,7 +1,62 @@
 (function(go) {
   $.provide(go, 'Views', {
     site: function() {
-      $('#applydialog').modal({trigger: '.btnmembership', width: 800});
+      $('#applydialog').modal({
+        trigger: '.btnmembership', 
+        width: 800,
+        onclose: function() {
+          $(this).find('ul.form').removeClass("unlocked").removeClass('unlocking').removeClass("applying").removeClass('unlockable');
+        }
+      });
+      var lock = $('#applicationform').find('#application_lock'),
+        invitationCode = $('#applicationform').find('#application_invitation_code');
+      lock.unbind('keydown.updatecode').bind('keydown.updatecode', function(e) {
+        if (e.keyCode == 13) {
+          e.preventDefault();
+          $(this).change();
+        }
+      });
+      $('#applicationform').find('.wanttoapply').unbind('click.apply').bind('click.apply', function(e) {
+        e.preventDefault();
+        var form = $(this).parents('ul.form:first');
+        form.addClass('applying');
+        lock.attr('disabled', 'disabled');
+      });
+      lock.unbind('change.updatecode').bind('change.updatecode', function(e) {
+        var self = $(this),
+          form = self.parents('ul.form:first'),
+          li = self.parents('li:first'), 
+          unlock = $('.unlock');
+        if (self.data('lastsent') != self.val() && self.val().toString().length > 0) {            
+          self.parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
+          self.data('lastsent', self.val());
+          $.get('/codes/invitation/' + self.val(), function(data) {
+            if (data.code && data.code.available) {
+              form.addClass('unlockable');
+              form.find('.survey input.required').removeAttr('required');
+              li.removeClass('loading').removeClass('invalid').addClass('valid');
+              form.find('.vouched').html(data.code.voucher + " has vouched for you.").slideDown();
+              unlock.unbind('click.unlock').bind('click.unlock', function(e) {
+                e.preventDefault();
+                unlock.unbind('click.unlock');
+                form.removeClass('unlockable').addClass('unlocking');
+                setTimeout(function(e) {
+                  invitationCode.val(lock.val());
+                  lock.attr('disabled', 'disabled');
+                  form.removeClass('unlocking').addClass('unlocked')
+                }, 1000);
+              });
+            } else {
+              form.find('.vouched').slideUp();
+              lock.removeAttr('disabled');
+              form.removeClass('unlockable');
+              unlock.unbind('click.unlock');
+              li.removeClass('loading').removeClass('valid').addClass('invalid');
+              form.find('.survey input.required').attr('required', 'required');
+            }
+          });
+        }
+      });
     },
     site_blog: function() {
       $('#pagination a').ajaxLink({

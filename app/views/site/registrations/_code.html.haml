@@ -11,13 +11,16 @@
     %li
       ="Call #{@registration.place.name} to make a reservation"
       -if @registration.place.phone_number.present?
-        =": #{phone_link(@registration.place.phone_number)}"
+        ="at #{phone_link(@registration.place.phone_number)}"
     %li 
       ="Come to #{@registration.place.name} on #{@registration.event.date.strftime('%A, %B %d, %Y')}"
-      between
-      =Time.twelve_hour(@registration.promotion.start_time)
-      and
-      =Time.twelve_hour(@registration.promotion.end_time)
+      -if @registration.promotion.all_day?
+        any time
+      -else
+        between
+        =Time.twelve_hour(@registration.promotion.start_time)
+        and
+        =Time.twelve_hour(@registration.promotion.end_time)
     %li
       Present your 4 digit code : 
       %code=@registration.code.code

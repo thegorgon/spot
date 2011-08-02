@@ -2,50 +2,59 @@
 
 -if referrer
   %h1.tf
-    =referrer.user.first_name.titlecase
-    applied to 
+    =referrer.voucher
+    has vouched for you.
+    Welcome to 
     ="#{image_tag "logos/spotblk225x180.png", :size => "55x44"}.".html_safe
-    Shouldn't you?
 
 .about
   .text.tf
     To ensure an unforgettable experience, membership is limited to 10,000 restaurant devotees per city.
 
-.col.descriptions.right 
-  =render :partial => "/site/shared/explanations/pricing", :locals => {:cssclass => "first"}
-  =render :partial => "/site/shared/explanations/guarantee", :locals => {:cssclass => "last"}
+=spot_form_for :application, :url => application_path, :display => "light inlinelabels#{conditionally(" unlocked", referrer)}", :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
+  =f.hidden_field :invitation_code, :value => referrer.try(:code)
+  -unless referrer
+    #invitecodesection.invitecode.step
+      -if @invalid
+        %h1.tf.empty Sorry, there are no more invitations left on that code
+      .lock
+        .shackle
+        .bolt
+      %li.question.tf=f.label :lock, "Spot Membership is currently available by invitation only"
+      .inputs
+        =f.text_field :lock, :placeholder => "invitation code", :value => referrer.try(:code), :formnovalidate => true
+        =link_to "Unlock", "#", :class => "btnorgpill unlock"
+      .vouched
+    
+      =link_to "No invitation? Discerning diner? Prove it.", "#", :class => "wanttoapply", :rel => "#appformcontainer", "data-toggle-class" => "applying"
+  .application.step
+    .col.descriptions.right 
+      =render :partial => "/site/shared/explanations/pricing", :locals => {:cssclass => "first"}
+      =render :partial => "/site/shared/explanations/guarantee", :locals => {:cssclass => "last"}
 
-.col.form.left
-  =spot_form_for :application, :url => application_path, :display => "light inlinelabels" do |f|
-    =f.fields_for :user_attributes do |uf|
-      =uf.name_fields :required => true, :label => "name : ", :value => current_user.try(:names)
-      -if logged_in?
-        =uf.email_field :email, :placeholder => "email address", :required => true, :label => "email : ", :value => current_user.email
+    .col.form.left
+      =f.fields_for :user_attributes do |uf|
+        =uf.name_fields :required => true, :label => "name : ", :value => current_user.try(:names)
+        -if logged_in?
+          =uf.email_field :email, :placeholder => "email address", :required => true, :label => "email : ", :value => current_user.email
+        -else
+          =uf.email_field :email, :placeholder => "email address", :required => true, :label => "email : ", "data-validate-url" => availability_email_path, "data-invalid-msg" => "looks like you've already registered"    
+          =uf.password_field 'password', :placeholder => "password", :label => "password : "
+      -if (city ||= false)
+        =f.hidden_field :city_id, @city.try(:id)
       -else
-        =uf.email_field :email, :placeholder => "email address", :required => true, :label => "email : ", "data-validate-url" => availability_email_path, "data-invalid-msg" => "looks like you've already registered"    
-        =uf.password_field 'password', :placeholder => "password", :label => "password : "
-    -if (city ||= false)
-      =f.hidden_field :city_id, @city.try(:id)
-    -else
-      =f.select 'city_id', City.subscriptions_available.all.collect { |c| [c.name_and_region, c.id] }, {:validity => false, :prompt => "select your city", :selected => current_user.try(:city_id) || @city.try(:id), :label => "city : "}, :required => true, :class => "chzn-select", :title => "Select your city"
-    %hr
-    .survey
-      =f.fields_for :survey do |sf|
-        #invitation_code{:class => conditionally("hidden", referrer.nil?)}
-          %li.question=f.label :invitation_code, "Were you given an invitation code?"
-          =f.text_field :invitation_code, :placeholder => "invitation code", :value => referrer.try(:code)
-        %li.question
-          =f.label :referred_by, "Do you know any Spot Members?"
-          -unless referrer
-            .right.note
-              =link_to "invitation code?", "#invitation_code", :class => "reveals"
-        =sf.text_field :referred_by, :placeholder => "Spot Member friends", :value => referrer.try(:user).try(:name).try(:titlecase)
-        %li.question=f.label :favrestaurant, "What is a restaurant you enjoy?"
-        =sf.text_field :favrestaurant, :placeholder => "give us a sense of your taste", :required => true
-        %li.question=f.label :diningfreq, "How often do you dine out each month?"
-        =sf.text_field :diningfreq, :placeholder => "do you really love restaurants?", :required => true
+        =f.select 'city_id', City.subscriptions_available.all.collect { |c| [c.name_and_region, c.id] }, {:validity => false, :prompt => "select your city", :selected => current_user.try(:city_id) || @city.try(:id), :label => "city : "}, :required => true, :class => "chzn-select", :title => "Select your city"
+      -unless referrer
+        .survey
+          %hr
+          =f.fields_for :survey do |sf|
+            %li.question=f.label :referred_by, "Do you know any Spot Members?"
+            =sf.text_field :referred_by, :placeholder => "Spot Member friends", :value => referrer.try(:user).try(:name).try(:titlecase)
+            %li.question=f.label :favrestaurant, "What is a restaurant you enjoy?"
+            =sf.text_field :favrestaurant, :placeholder => "give us a sense of your taste", :required => true, :class => "required"
+            %li.question=f.label :diningfreq, "How often do you dine out each month?"
+            =sf.text_field :diningfreq, :placeholder => "do you really love restaurants?", :required => true, :class => "required"
         
-    %li.buttons.clearfix
-      =button_tag :class => "btnorg300x41 tf" do
-        apply now
-      
+      %li.buttons.clearfix
+        =button_tag :class => "btnorg300x41 tf" do
+          submit

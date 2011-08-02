@@ -2,6 +2,9 @@
 -title ||= "Get access to all these unforgettable experiences"
 -unless current_member?
   .overlay.clearfix
+    -if session_invite
+      %h1.tf.vouched="#{session_invite.voucher} has vouched for you. We're happy to have you."
+    
     -if current_user.try(:membership_application)
       .title.clearfix
         -if current_user.membership_application.approved?
@@ -28,11 +31,11 @@
             %p 
               Chef’s tables, secret menus, kitchen tours, special wine pairings, private tastings, free corkage, and more…available only to Spot members.
         .clear.btn
-          =button_tag :class => "btnorg170x41 btnmembership tf centered" do
-            apply now
+          =button_tag :class => "btnorg300x41 btnmembership tf centered" do
+            become a member
       -else
         .title.clearfix
           %h1.tf.left.membership
             =title
           =button_tag :class => "btnorg170x41 btnmembership tf right" do
-            apply now
+            join

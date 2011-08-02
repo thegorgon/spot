@@ -179,18 +179,19 @@
       }
     }
     .aboutme {
-      background-image: url(/images/icons/contact26x17.png);
+      background-image: url(/images/icons/contactblk26x17.png);
+      background-position: 0px 1px;
     }
     .changepassword {
-      background-image: url(/images/icons/key15x20.png);
-      background-position: 4px center;
+      background-image: url(/images/icons/keyblk15x20.png);
+      background-position: 10px 0;
     }
     .mymembership {
-      background-image: url(/images/icons/diamond22x17.png);
+      background-image: url(/images/icons/diamondblk22x17.png);
     }
     .myevents {
-      background-image: url(/images/icons/calendar18x20.png);
-      background-position: 2px center;
+      background-image: url(/images/icons/calendarblk18x20.png);
+      background-position: 0px 1px;
     }    
   }
 }

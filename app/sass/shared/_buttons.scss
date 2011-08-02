@@ -26,11 +26,11 @@
 }
 .twitter-share-button {
   text-decoration: none;
-  @include bgbutton('tweet55x186', 55px, 21px)
+  @include bgbutton('tweetiebw30x30', 30px, 30px)
 }
 .fb-share-button {
   text-decoration: none;
-  @include bgbutton('fbshare57x54', 57px, 18px)
+  @include bgbutton('fbfbw30x30', 30px, 30px)
 }
 
 button, .button {
@@ -90,11 +90,19 @@ button.link {
   @include bgbutton('org300x41', 300px, 41px);
   @include orgbtn;
   font-size: 25px;
+  .btntxt {
+    position: relative;
+    top: -1px;
+  }
 }
 .btnorg200x41, a.btnorg200x41 {
   @include bgbutton('org200x41', 200px, 41px);
   @include orgbtn;
   font-size: 25px;
+  .btntxt {
+    position: relative;
+    top: -2px;
+  }
 }
 .btnorg170x41, a.btnorg170x41 {
   @include bgbutton('org170x41', 170px, 41px);
@@ -110,11 +118,19 @@ button.link {
   @include bgbutton('org77x32', 77px, 33px);
   @include orgbtn;
   font-size: 18px;
+  .btntxt {
+    position: relative;
+    top: -2px;
+  }
 }
 .btnorg100x32, a.btnorg100x32 {
   @include bgbutton('org100x32', 100px, 33px);
   @include orgbtn;
   font-size: 18px;
+  .btntxt {
+    position: relative;
+    top: -2px;
+  }
 }
 .btnorg115x32, a.btnorg115x32 {
   @include bgbutton('org115x32', 115px, 33px);

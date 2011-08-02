@@ -9,7 +9,7 @@
     =image_tag "stretcher/cities/sf4.jpg", :size => "2292x1524"
 
 .titlebar.clearfix
-  %h1.left.tf Start enjoying your membership : 
+  %h1.left.tf Start enjoying your membership
   .right
     =link_to "Browse Experiences", city_path(city), :class => 'tf btnorg300x41'
 %hr
@@ -18,19 +18,21 @@
     .image.columbus
       =image_tag "paintings/columbus400x300.png", :size => "400x300"
       .speechbubble.tf
-        We've arrived! 
+        We've arrived!
         Now, what you got to eat in this town?
     %h2.tf Explore your membership...
     %p
-      Now that you've subscribed, you have full access to all of the Spot Member Experiences. Register to start enjoying your membership.
+      Now that you've subscribed, you have full access to all of the Spot Member Experiences. Browse experiences to start enjoying your membership.
     =link_to "Browse", city_path(city), :class => "tf btnorg77x32 button"
   .bucket.last
     .image.worthy
       =image_tag "paintings/louisxiv400x300.png", :size => "400x300"
       .speechbubble.down.tf
         It's good to be the king.
-    %h2.tf Invite the worthy...
-    %p Spot Memberships are limited to only 10,000 per city so make sure your friends get in before it's too late!
-    %p Send your friends the following URL and we'll immediately accept their application :
-    -url = referred_application_url(:r => current_user.invitation_code.code)
-    =sharing(url, "Just applied to become a Spot Member, I think it's worth checking out.", :link => true)
+    %h2.clearfix
+      %span.tf Invite the worthy...
+      .invites="#{current_user.invitation_code.invites_remaining} invites remaining"
+    %p Spot is currently available by invitation only. As a Spot Member, you have 10 invitations to send to worthy friends and family.
+    %p Share the following link to grant an invitation :
+    -url = invitation_url(:ic => current_user.invitation_code.code)
+    =sharing(url, "I've got 10 Spot invites to share. Foodies in SF, check it out now.", :link => true)

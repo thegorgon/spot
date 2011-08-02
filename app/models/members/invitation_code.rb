@@ -1,15 +1,18 @@
 class InvitationCode < ActiveRecord::Base
   belongs_to :user
   before_validation :set_code
+  before_validation :set_invitation_count
   validates :code, :presence => true, :uniqueness => true
   
-  def self.valid_code(code)
-    invitation = find_by_code(code)
-    invitation && invitation.invites_remaining? ? invitation : nil
-  end
+  scope :invites_remaining, where("invitation_count < 0 || invitation_count - claimed_count > 0")
+  scope :expended, where("invitation_count > 0 && invitation_count >= claimed_count")
   
+  def self.valid_code(code)
+    invites_remaining.find_by_code(code)
+  end
+    
   def invites_remaining
-    invitation_count < 0 ? -1 : claimed_count - invitation_count
+    invitation_count < 0 ? -1 : invitation_count - claimed_count
   end
   
   def invites_remaining?
@@ -26,8 +29,41 @@ class InvitationCode < ActiveRecord::Base
     self.class.increment_counter :signup_count, id
   end
   
-  private
+  def available?
+    invitation_count < 0 || invitation_count - claimed_count > 0
+  end
   
+  def voucher
+    user.try(:first_name) || "Someone"
+  end
+  
+  def as_json(*args)
+    { 
+      :id => id,
+      :voucher => voucher,
+      :user => user.as_json(*args),
+      :available => available?
+    }
+  end
+
+  def percentage_full
+    if invites_remaining > 0 
+      (100 * invites_remaining/invitation_count.to_f).round
+    elsif invites_remaining == 0
+      invites_remaining
+    else
+      100
+    end
+  end
+  
+  def set_invitation_count
+    if user && invitation_count <= 0
+      self.invitation_count = user.active_membership ? 10 : 0 
+    end
+  end
+  
+  private
+    
   def set_code
     self.code ||= String.token(6)
   end

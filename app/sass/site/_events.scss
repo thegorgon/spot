@@ -24,7 +24,17 @@
       float: left;
       .name {
         margin-top: 5px;
-      }    
+      }
+      .bulleted {
+        margin: 0 0 20px;
+        color: #333;
+        border-bottom: 1px dotted #333;
+        float: left;
+      }
+      .description {
+        color: #333;
+        clear: both;
+      }
     }
     .place {
       width: 250px;
@@ -82,7 +92,7 @@
     .shield {
       z-index: 100;
       @include opacity(0.6);
-      background: #f7f7f7;
+      background: #f0f0f0;
       position: absolute;
       top: 0;
       left: 0;

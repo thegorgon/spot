@@ -12,3 +12,7 @@ HOSTS = {
   "development" => "www.rails.local:3000"
 }
 IMGHOST = "http://#{HOSTS[Rails.env]}/images/"
+FBAPP = {
+  :id => Rails.env.production?? 146911415372759 : 329653055238,
+  :host => HOSTS[Rails.env]
+}

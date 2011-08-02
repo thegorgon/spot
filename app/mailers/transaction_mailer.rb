@@ -6,24 +6,25 @@ class TransactionMailer < ActionMailer::Base
   def preview_thanks(signup)
     @signup = signup
     @email = signup.email
+    @title = "Thanks for Your Interest"
     mail( :to => @email,
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
-          :subject => "Thanks for your interest!" )
+          :subject => @title )
   end
   
   def application_thanks(application)
     @application = application
     @email = application.user.email
-    @title = "Thank you for applying"
+    @title = "Thank you for Applying"
     mail( :to => @email, 
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
-          :subject => "Thank you for applying" )
+          :subject => @title )
   end
 
   def application_approved(application)
     @application = application
     @email = application.user.email
-    @title = "Congratulations and welcome to Spot!"
+    @title = "Congratulations and Welcome to Spot!"
     mail( :to => @email, 
           'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
           :subject => @title )

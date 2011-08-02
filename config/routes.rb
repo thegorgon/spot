@@ -25,10 +25,7 @@ Spot::Application.routes.draw do
     resources :cities, :only => [:show, :new] do 
       get "calendar", :on => :member
     end
-    resource :application, :only => [:create, :show, :new], :controller => "membership_applications" do
-      get "referred", :on => :member, :action => "referred"
-    end
-    resource :promo_code, :only => [:show]
+    resource :application, :only => [:create, :show, :new], :controller => "membership_applications"
     resources :registrations, :only => [:show, :create, :destroy]
     resources :places, :only => [:show] do
       resources :events, :only => [:show]
@@ -54,6 +51,8 @@ Spot::Application.routes.draw do
       get "viewemail", :action => "email"
       get "policies", :action => "policies"
     end
+    get "/in", :to => "home#invited", :as => "invitation"
+    get "/codes/:type/:code", :to => "codes#show"
     get "login" => redirect("/session/new")
     get "register" => redirect("/account/new")
     get "logout", :to => "sessions#destroy"

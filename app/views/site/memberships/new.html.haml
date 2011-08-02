@@ -18,41 +18,60 @@
 
 %hr
 
-=spot_form_for @payment, :as => :customer, :url => Braintree::TransparentRedirect.url, :display => "cc light clearfix inlinelabels", :html => {:autocomplete => "off"} do |f|
-  =hidden_field_tag :tr_data, ERB::Util.html_escape(@payment.tr_data(:redirect_url => endpoint_membership_url))
-  .paymentoptions
-    %h2.tf 1. Select membership type
-    =f.fields_for :custom_fields do |cf|
-      =cf.hidden_field :subscription_plan_id, :value => ""
-    -Subscription::PLANS.keys.each_with_index do |name, i|
-      -plan = Subscription::PLANS[name]
-      .paymentoption{"data-value" => plan.plan_id, :class => "#{name} #{conditionally("active", @payment.plan == name)} #{first_or_last(Subscription::PLANS.keys, i)}"}
-        .mval.tf 
-          %span.currency $
-          =plan.cost
-          .period="/#{plan.period_name}"
-        .benefits
-          -if plan.period == "annually"
-            .benefit Annual Membership
-            .benefit Save 40%
-          -else
-            .benefit Renews Monthly
-            .benefit Cancel Anytime
-        .checkbox
-          .box
-          .check              
+-if @promo_code.try(:acts_as_payment)
+  .promocode
+    .promodescribe.aspayment
+      .name=@promo_code.name
+      .description=@promo_code.description
+    =form_for :membership, :url => membership_path do |f|
+      =f.hidden_field :payment_type, :value => "PromoCode"
+      =f.hidden_field :payment_id, :value => @promo_code.id
+      =button_tag :class => "center btnorg300x41 tf" do 
+        you're  in
 
-    #promocodefields.note
+-else
+  =spot_form_for @payment, :as => :customer, :url => Braintree::TransparentRedirect.url, :display => "cc light clearfix inlinelabels", :html => {:autocomplete => "off"} do |f|
+    =hidden_field_tag :tr_data, ERB::Util.html_escape(@payment.tr_data(:redirect_url => endpoint_membership_url))
+    .paymentoptions
+      %h2.tf 1. Select membership type
       =f.fields_for :custom_fields do |cf|
-        =cf.text_field :promo_code, :placeholder => "promo code", :formnovalidate => true, :label => "Apply Promo Code : "
+        =cf.hidden_field :subscription_plan_id, :value => ""
+      -Subscription::PLANS.keys.each_with_index do |name, i|
+        -plan = Subscription::PLANS[name]
+        .paymentoption{"data-value" => plan.plan_id, :class => "#{name} #{conditionally("active", @payment.plan == name)} #{first_or_last(Subscription::PLANS.keys, i)}"}
+          .mval.tf 
+            %span.currency $
+            =plan.cost
+            .period="/#{plan.period_name}"
+          .benefits
+            -if plan.period == "annually"
+              .benefit Annual Membership
+              .benefit Save 40%
+            -else
+              .benefit Renews Monthly
+              .benefit Cancel Anytime
+          .checkbox
+            .box
+            .check              
+
+      #promocodefields.note
+        =f.fields_for :custom_fields do |cf|
+          -if @promo_code
+            =cf.hidden_field :promo_code, :value => @promo_code.code
+            .promocode{:class => conditionally("aspayment", @promo_code.acts_as_payment)}
+              .promodescribe
+                .name=@promo_code.name
+                .description=@promo_code.description
+          -else
+            =cf.text_field :promo_code, :placeholder => "promo code", :formnovalidate => true, :label => "Apply Promo Code : "
     
-  .ccfields
-    %h2.tf 2. Enter your credit card information
-    =f.fields_for :credit_card do |ccf|
-      =render :partial => "/shared/payments/creditcard", :locals => {:form => ccf, :creditcard => @payment.credit_card}
-  %li.buttons
-    =button_tag :class => "btnorg300x41 tf" do
-      finish & pay
+    .ccfields
+      %h2.tf 2. Enter your credit card information
+      =f.fields_for :credit_card do |ccf|
+        =render :partial => "/shared/payments/creditcard", :locals => {:form => ccf, :creditcard => @payment.credit_card}
+    %li.buttons
+      =button_tag :class => "btnorg300x41 tf" do
+        finish & pay
         
         
 .explanations.clearfix
@@ -72,4 +91,3 @@
       =button_tag :class => "center btnorg300x41 tf" do 
         you're  in
     {{/if}}
-      

@@ -20,6 +20,15 @@ class Site::HomeController < Site::BaseController
   def tos
   end
 
+  def invited
+    session[:invite_code] = params[:ic] # save to session
+    session[:promo_code] = params[:pc]
+    invitation_code = InvitationCode.valid_code(params[:ic])
+    city = City.find_by_slug(params[:cid]) if params[:cid]
+    city ||= invitation_code.try(:user).try(:city)
+    redirect_to city ? city_path(city) : root_path
+  end
+
   def getspot
     store = "itunes" if request.user_agent =~ /iPhone/
     store ||= params[:store]

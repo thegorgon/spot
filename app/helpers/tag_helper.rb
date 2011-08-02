@@ -52,8 +52,8 @@ module TagHelper
   end
   
   def fb_share_url(url, title=nil)
-    params = {:u => url, :t => title}
-    "http://www.facebook.com/sharer.php?#{params.to_query}"
+    params = {:link => url, :name => title, :redirect_uri => root_url(:host => FBAPP[:host]), :display => "popup", :app_id => FBAPP[:id]}
+    "http://www.facebook.com/dialog/send?#{params.to_query}"
   end
   
   def fb_post(options, content=nil)

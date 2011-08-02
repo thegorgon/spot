@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110717013605) do
+ActiveRecord::Schema.define(:version => 20110802155630) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -429,7 +429,6 @@ ActiveRecord::Schema.define(:version => 20110717013605) do
     t.integer  "business_id",                        :null => false
     t.string   "name",                               :null => false
     t.text     "description"
-    t.integer  "cost_cents"
     t.text     "parameters"
     t.text     "rejection_reasoning"
     t.integer  "position"
@@ -439,6 +438,7 @@ ActiveRecord::Schema.define(:version => 20110717013605) do
     t.integer  "end_time",            :default => 0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "bulleted"
   end
 
   add_index "promotion_templates", ["business_id"], :name => "index_deal_templates_on_business_id"

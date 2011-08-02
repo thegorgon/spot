@@ -36,4 +36,14 @@ class Site::BaseController < ApplicationController
       redirect_to account_path
     end
   end
+  
+  def session_invite
+    @session_invite ||= (session[:invite_code] && InvitationCode.find_by_code(session[:invite_code]))
+  end
+  helper_method :session_invite
+  
+  def session_promo
+    @session_promo ||= (session[:promo_code] && PromoCode.find_by_code(session[:promo_code]))
+  end
+  helper_method :session_promo
 end

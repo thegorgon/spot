@@ -59,9 +59,10 @@ class User < ActiveRecord::Base
   end
   
   def invitation_code
-    unless @invitation_code
+    if @invitation_code.nil?
       @invitation_code ||= InvitationCode.find_or_initialize_by_user_id(id)
-      @invitation_code.save if @invitation_code.new_record?
+      @invitation_code.set_invitation_count
+      @invitation_code.save if @invitation_code.changed?
     end
     @invitation_code
   end

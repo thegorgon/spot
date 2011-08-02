@@ -3,7 +3,7 @@ class MembershipApplication < ActiveRecord::Base
   belongs_to :city
   serialize :survey
   accepts_nested_attributes_for :user
-  after_create :deliver_thank_you
+  after_create :deliver_thank_you, :unless => :approved?
   after_validation :check_instant_approval
   after_save :send_approval_email
   validate :user_hasnt_applied, :on => :create

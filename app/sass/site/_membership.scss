@@ -22,11 +22,30 @@
       left: 10px;
     }
   }
+  .sharing {
+    input.text {
+      width: 295px;
+    }
+  }
   .alchemist {
     .speechbubble {
       top: 150px;
       left: 185px;
     }
+  }
+}
+
+#site_membership_applications_new {
+  .main {
+    width: 895px;
+    padding: 0;
+  }
+  h1.empty {
+    text-align: center;
+    margin: 0 0 10px 0;
+  }
+  .applydialog {
+    width: 835px;
   }
 }
 
@@ -63,10 +82,17 @@
       padding-right: 0;
       border-right: 0;
     }
+    .invites {
+      float: right;
+      color: #999;
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: normal;
+    }
   }
   .sharing {
     input.text {
-      width: 245px;
+      width: 300px;
     }
   }
   p {
@@ -139,9 +165,11 @@
     border: 1px solid #393;
     background: #efe;
     &.aspayment {
+      text-align: center;
       margin: 0 auto;
     }
     .name {
+      margin: 0 0 5px 0;
       width: auto;
       color: #393;
       font-weight: bold;
