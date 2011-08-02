@@ -19,7 +19,7 @@
 .details.clearfix
   .event
     %h1.name.tf=@promotion.name
-    -if @promotion.summary.present?
+    -if @promotion.bulleted.present?
       .bulleted.tf=@promotion.bulleted.html_safe
     .description=@promotion.description.html_safe
   .place
