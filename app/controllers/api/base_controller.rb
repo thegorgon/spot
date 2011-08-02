@@ -5,6 +5,23 @@ class Api::BaseController < ApplicationController
   
   private
   
+  def device_specifications
+    unless @device_specifications
+      #"Spot 1.2 rv:72 (iPhone Simulator; iPhone OS 5.0; en_US)"
+      /Spot (\d+)\.(\d+) rv:(\d+) \(([^\;]+) ([^\;]+) ([^\)]+)\)/.match(request.user_agent) do |match|
+        @device_specifications = {
+          :major_revision => match[1].to_i,
+          :minor_revision => match[2].to_i,
+          :app_version => match[3].to_i,
+          :device_name => match[4].to_i,
+          :os_id => match[5].to_i,
+          :locale => match[6].to_i,
+        }
+      end
+    end
+    @device_specifications || {}
+  end
+  
   def exception_handler(exception=nil)
     Rails.logger.info("spot-app: handling exception of type : #{exception.class}")
     log_error(exception)
