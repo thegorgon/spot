@@ -17,6 +17,9 @@ window.Spot = {};
     env: function(name) {
       return _vars[name];
     },
+    setEnv: function(name, value) {
+      _vars[name] = value;
+    },
     loaded: function() {
       if (!$('html').hasClass('loaded')) {
         $('html').addClass('loaded');        

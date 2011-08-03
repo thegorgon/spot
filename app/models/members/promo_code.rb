@@ -13,6 +13,10 @@ class PromoCode < ActiveRecord::Base
     reload
   end
   
+  def expiration_if_started_now
+    duration >= 0 ? Time.now + duration.months : nil
+  end
+  
   def as_json(*args)
     { 
       :id => id,

@@ -131,7 +131,19 @@
       text-align: center;
       margin: 0 auto;
       padding: 20px 0;
-    }    
+    }
+    &.appliedpromocode {
+      #promocodefields {
+        height: 0;
+        margin: 0;
+        padding: 0;
+      }
+    }
+    &.promocodepayment {
+      form.new_membership {
+        height: 0;
+      }
+    }
   }
   .explanations {
     width: 580px;
@@ -160,15 +172,23 @@
   }
   .promodescribe {
     width: 344px;
-    margin: 10px 0;
     padding: 10px;
     border: 1px solid #393;
     background: #efe;
+    position: relative;
+    .close {
+      top: 5px;
+      right: 5px;
+      position: absolute;
+      cursor: pointer;
+      @include bgbutton('bnwcloserlt15x45', 15px, 15px);
+    }
     &.aspayment {
       text-align: center;
       margin: 0 auto;
     }
     .name {
+      height: auto;
       margin: 0 0 5px 0;
       width: auto;
       color: #393;
@@ -229,6 +249,7 @@
     border-bottom: 0;
     &.last {
       border-bottom: 1px solid #ddd;
+      margin-bottom: 10px;
     }
     &.grande {
       .benefits {

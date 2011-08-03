@@ -10,7 +10,7 @@ class PaymentForm
   
   def initialize(params={})
     params.each do |key, value|
-      send("#{key}=", value) if respond_to?(key)
+      send("#{key}=", value) if respond_to?("#{key}=")
     end
   end
   
@@ -35,8 +35,8 @@ class PaymentForm
   end
   
   def params=(value)
-    if value && value[:promo_code]
-      @promocode = PromoCode.find_by_code(value[:promo_code]) 
+    if value && value[:payment_method_type] && value[:payment_method_id]
+      @payment_method = value[:payment_method_type].constantize.find(value[:payment_method_id]) rescue nil 
     end
   end
   
@@ -68,7 +68,7 @@ class PaymentForm
   private 
   
   def valid_subscription
-    unless subscription.valid?
+    if @payment_method.nil? && !subscription.valid?
       add_our_errors(ActiveRecord::RecordInvalid, "Subscription", subscription.errors.full_messages)
     end
   end
@@ -119,8 +119,11 @@ class PaymentForm
       else
         add_our_errors(Braintree::BraintreeError, "Braintree", @tr_result.errors.collect { |error| error.message })
       end
-    elsif @promocode
-      membership.payment_method = @promocode
+    elsif @payment_method
+      membership.payment_method = @payment_method
+      membership.expires_at = @payment_method.expiration_if_started_now
+    else
+      add_our_errors(ActiveRecord::RecordInvalid, "Payment", ["Something went wrong. Please try again."])
     end
   end
 end

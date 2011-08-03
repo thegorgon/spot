@@ -1,7 +1,7 @@
 %h2.myevents.tf.top My Upcoming Events
 .events
   -if current_user.member?
-    -codes = current_user.codes.all
+    -codes = current_user.codes.upcoming.all
     .codes
       %table
         -[codes.count, current_user.code_slots].max.times do |i|
@@ -32,14 +32,14 @@
     %p
       We're very sorry that you decided to cancel your membership. 
       If you'd like to continue receiving Spot Membership experiences, please
-      ="#{link_to "renew your Spot Membership", new_membership_path}.".html_safe
+    %p="#{link_to "renew membership", new_membership_path, :class => "btnorg300x41 tf"}".html_safe
   -elsif current_user.membership_application 
     Spot Events are only available to Spot Members.
-    %p
-      -if current_user.membership_application.approved?
-        Congratulations! Your application has been approved.
-        =link_to "Continue the application process.", new_membership_path
-      -else
+    -if current_user.membership_application.approved?
+      %p Congratulations! Your application has been approved.
+      %p="#{link_to "complete application", new_membership_path, :class => "btnorg300x41 tf"}".html_safe
+    -else
+      %p
         We've received your application and it is currently under review. 
         We'll be in touch shortly, but if you're eager, you can
         =link_to "check the status", application_path 

@@ -7,12 +7,12 @@ class Site::MembershipsController < Site::BaseController
   
   def new
     @payment ||= PaymentForm.new(:user => current_user, :plan => params[:plan] || Subscription::PLANS.keys.first)
-    @promo_code = session_promo
+    @promo_code = session_promo || (params[:pc] && PromoCode.find_by_code(params[:pc]))
     render :action => "new" # allows for just calling "new" from any action
   end
   
   def create
-    @payment = PaymentForm.new(:user => current_user, :params => params)    
+    @payment = PaymentForm.new(:user => current_user, :params => params[:membership])    
     if @payment.try(:save)
       respond_to do |format|
         format.html { redirect_to thanks_membership_path }

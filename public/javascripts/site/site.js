@@ -173,10 +173,10 @@
       bind();
     },
     site_memberships_new: function() {
-      go.PaymentForm.init({form: $('form')});
+      go.PaymentForm.init({form: $('form.new_membership')});
     },
     site_memberships_endpoint: function() {
-      go.PaymentForm.init({form: $('form')});      
+      go.PaymentForm.init({form: $('form.new_membership')});      
     },
     site_cities_new: function() {
       $('#preview_city').autogeocode();

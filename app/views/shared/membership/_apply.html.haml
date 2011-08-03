@@ -22,7 +22,7 @@
         .bolt
       %li.question.tf=f.label :lock, "Spot Membership is currently available by invitation only"
       .inputs
-        =f.text_field :lock, :placeholder => "invitation code", :value => referrer.try(:code), :formnovalidate => true
+        =f.text_field :lock, :placeholder => "invitation code", :value => referrer.try(:code), :formnovalidate => true, :class => "code"
         =link_to "Unlock", "#", :class => "btnorgpill unlock"
       .vouched
     

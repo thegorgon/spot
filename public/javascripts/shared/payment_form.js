@@ -95,8 +95,60 @@
         $('.cvv').val('364').focus().blur().change();
       }
     },
+    clearInput = function(input) {
+      input.val(''); 
+      input.data('lastsent', '');
+      input.blur();
+    },
+    setPromoCode = function(input, data) {
+      if (data) {
+        var html = $('#promodescribe').tmpl(data.code);
+        if (data.code && data.code.available) {
+          input.parents('li:first').removeClass('loading').removeClass('invalid').addClass('valid');
+          if (data.code.acts_as_payment) {
+            html.hide().insertAfter(form).slideDown();
+            form.slideUp();
+            html.find('.close').bind('click.removecode', function(e) {
+              e.preventDefault();
+              form.slideDown();
+              clearInput(input);
+              html.slideUp(function() {
+                html.remove();
+              });
+            });
+          } else {
+            $('#promocodefields').slideUp();
+            $('#promocodefields').after(html.hide());
+            html.slideDown();
+            html.find('.close').bind('click.removecode', function(e) {
+              e.preventDefault();
+              clearInput(input);
+              $('#promocodefields').slideDown();
+              html.slideUp(function() {
+                html.remove();
+              });
+            });
+          }
+        } else {
+          input.parents('li:first').removeClass('loading').removeClass('valid').addClass('invalid');
+        }        
+      }
+    },
+    updatePromoCode = function(input, promoCode) {
+      input = $(input);
+      if (input.data('lastsent') != input.val()) {
+        input.data('lastsent', input.val());
+        if (input.val().toString().length > 0) {
+          input.parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
+          $.get('/codes/promo/' + input.val(), function(data) {
+            setPromoCode(input, data);
+          });
+        }
+      }
+    },
     bind = function() {
       var planId = $('#customer_custom_fields_subscription_plan_id'),
+        promocode = form.find('#customer_custom_fields_promo_code'),
         options = $('.paymentoptions'),
         selectOption = function(option) {
           if (option.length > 0) {
@@ -158,36 +210,16 @@
       form.find('.types').unbind('click.speedup').bind('click.speedup', function(e) {
         developmentCC();
       });
-      form.find('#customer_custom_fields_promo_code').unbind('change.updatecode').bind('change.updatecode', function(e) {
-        var self = $(this);
-        if (self.data('lastsent') != self.val() && self.val().toString().length > 0) {            
-          self.parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
-          self.data('lastsent', self.val());
-          $.get('/codes/promo/' + self.val(), function(data) {
-            var html = $('#promodescribe').tmpl(data.code);
-            if (data.code && data.code.available) {
-              self.parents('li:first').removeClass('loading').removeClass('invalid').addClass('valid');
-              if (data.code.acts_as_payment) {
-                html.hide().insertAfter(form).slideDown();
-                form.slideUp();
-              } else {
-                $('#promocodefields').slideUp(function() {
-                  $('#promocodefields').after(html.hide());
-                  html.slideDown();
-                });                  
-              }
-            } else {
-              self.parents('li:first').removeClass('loading').removeClass('valid').addClass('invalid');
-            }
-          });
-        }
+      promocode.unbind('change.updatecode').bind('change.updatecode', function(e) {
+        updatePromoCode(this);
       });
-      form.find('#customer_custom_fields_promo_code').unbind('keydown.updatecode').bind('keydown.updatecode', function(e) {
+      promocode.unbind('keydown.updatecode').bind('keydown.updatecode', function(e) {
         if (e.keyCode == 13) {
           e.preventDefault();
-          $(this).change();
+          updatePromoCode(this);
         }
       });
+      setPromoCode(promocode, Spot.env('promoCode'));
     };
   $.provide(go, "PaymentForm", {
     init: function(options) {

@@ -19,15 +19,18 @@
       %li.clearfix
         .label Cancelled on :
         .value=payment.cancelled_at.strftime("%B %d, %Y")
-    -if payment.respond_to?(:expires_at) && payment.expires_at
+    -if membership.expires_at
       %li.clearfix
         .label Expires on :
-        .value=payment.expires_at.strftime("%B %d, %Y")
+        .value
+          =membership.expires_at.strftime("%B %d, %Y")
+          -if membership.expired?
+            =link_to "renew", new_membership_path
     %li
       .label Payment Method :
-      .value.cc.clear
-        -@card ||= payment.credit_card if payment.respond_to?(:credit_card)
-        -if @card
+      -@card ||= payment.credit_card if payment.respond_to?(:credit_card)
+      -if @card
+        .value.cc.clear
           =spot_form_for :credit_card, :url => Braintree::TransparentRedirect.url, :display => "light cc #{conditionally("editing", !@card.valid?)}" do |f|
             -trdata = Braintree::TransparentRedirect.update_credit_card_data(:redirect_url => endpoint_account_url, :payment_method_token => @card.token)
             =hidden_field_tag :tr_data, ERB::Util.html_escape(trdata)
@@ -36,3 +39,5 @@
             %li.button
               =button_tag :class => "btnorg300x41 tf" do
                 save changes
+        -elsif payment.kind_of?(PromoCode) && payment.name.present?
+          .value=payment.name
