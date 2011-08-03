@@ -10,17 +10,17 @@
       });
       var lock = $('#applicationform').find('#application_lock'),
         invitationCode = $('#applicationform').find('#application_invitation_code');
-      lock.unbind('keydown.updatecode').bind('keydown.updatecode', function(e) {
-        if (e.keyCode == 13) {
-          e.preventDefault();
-          $(this).change();
-        }
-      });
       $('#applicationform').find('.wanttoapply').unbind('click.apply').bind('click.apply', function(e) {
         e.preventDefault();
         var form = $(this).parents('ul.form:first');
         form.addClass('applying');
         lock.attr('disabled', 'disabled');
+      });
+      lock.unbind('keydown.updatecode').bind('keydown.updatecode', function(e) {
+        if (e.keyCode == 13) {
+          e.preventDefault();
+          $(this).change();
+        }
       });
       lock.unbind('change.updatecode').bind('change.updatecode', function(e) {
         var self = $(this),
