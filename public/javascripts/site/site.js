@@ -13,6 +13,7 @@
       $('#applicationform').find('.wanttoapply').unbind('click.apply').bind('click.apply', function(e) {
         e.preventDefault();
         var form = $(this).parents('ul.form:first');
+        form.find('form').clear();
         form.addClass('applying');
         lock.attr('disabled', 'disabled');
       });
@@ -38,6 +39,7 @@
               form.find('.vouched').html(data.code.voucher + " has vouched for you.").slideDown();
               unlock.unbind('click.unlock').bind('click.unlock', function(e) {
                 e.preventDefault();
+                form.find('form').clear();
                 unlock.unbind('click.unlock');
                 form.removeClass('unlockable').addClass('unlocking');
                 setTimeout(function(e) {
