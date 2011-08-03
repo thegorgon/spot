@@ -55,7 +55,11 @@ class User < ActiveRecord::Base
   end
   
   def email_with_name
-    "#{name} <#{email}>"
+    if name.present?
+      "#{name} <#{email}>"
+    else
+      email
+    end
   end
   
   def invitation_code
@@ -92,7 +96,7 @@ class User < ActiveRecord::Base
   end
     
   def can_register?
-    member? && codes.count < code_slots
+    member? && codes.upcoming.count < code_slots
   end
   
   def code_slots

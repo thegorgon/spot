@@ -11,6 +11,11 @@ class Membership < ActiveRecord::Base
   
   scope :active, lambda { where(["starts_at < ? AND expires_at IS NULL OR expires_at > ?", Time.now, Time.now]) }
   scope :expired, lambda { where(["expires_at < ?", Time.now]) }
+  scope :expiring, lambda { where(["expires_at BETWEEN ? AND ?", Date.today, Date.tomorrow]) }
+  
+  def self.deliver_daily_updates
+    expiring.find_each { |membership| TransactionMailer.expiring_membership(membership).deliver! }
+  end
   
   def cancel!
     if payment_method.kind_of?(Subscription)

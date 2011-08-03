@@ -3,6 +3,10 @@ module ApplicationHelper
     @place && !@place.new_record?
   end
   
+  def city_page?
+    @city && !@city.new_record?
+  end
+  
   def show_login?
     !( current_page?(account_path) && 
         current_page?(new_account_path) &&
@@ -22,15 +26,19 @@ module ApplicationHelper
         terms.unshift(@promotion.name)
       end
       terms.full_compact.join(" - ")
+    elsif city_page?
+      "#{@city.name.titlecase} - Spot - Membership Experiences"
     else
-      "Spot - Never Forget a Place"
+      "Spot - Membership Experiences"
     end
   end
     
   def page_keywords
-    keywords = ["spot", "iphone", "app", "application", "place", "wishlist"]
+    keywords = ["spot", "iphone", "app", "application", "place", "wishlist", "experiences"]
     if place_page?
       keywords += [@place.name.downcase, @place.city.downcase]
+    elsif city_page?
+      keywords += [@city.name, @city.region]
     elsif @page_keywords
       keywords += @keywords
     end

@@ -1,7 +1,10 @@
 class Registration
   include ActiveModel::Validations
+  extend ActiveModel::Callbacks
   attr_accessor :code, :event, :user
+  define_model_callbacks :save
   
+  after_save :deliver_registration_email
   validates :event, :presence => true
   validates :user, :presence => true
   validate :user_can_register
@@ -23,11 +26,13 @@ class Registration
   end
   
   def save
-    if valid?
-      code.issue_to!(user)
-      true
-    else
-      false
+    _run_save_callbacks do
+      if valid?
+        code.issue_to!(user)
+        true
+      else
+        false
+      end
     end
   end
   
@@ -38,13 +43,13 @@ class Registration
   private
   
   def user_can_register
-    unless user.can_register?
+    if user && !user.can_register?
       errors.add(:base, "Sorry, you've already registered for the maximum number of events.")
     end
   end
   
   def user_hasnt_register
-    if user.codes.for_event(event.id).exists?
+    if user && user.codes.for_event(event.id).exists?
       errors.add(:base, "Sorry, you can only register for an event once.")
     end
   end  
@@ -54,5 +59,9 @@ class Registration
     if code.nil? 
       errors.add(:base, "Sorry, this event is now fully booked. Please try another date.")
     end
+  end
+  
+  def deliver_registration_email
+    TransactionMailer.registration_confirmation(user, code).deliver!
   end
 end

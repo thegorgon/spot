@@ -1,17 +1,12 @@
-class BusinessMailer < ActionMailer::Base
-  layout 'mailer'
-  default_url_options[:host] = HOSTS[Rails.env]
-  FROM = "The Spot Team <noreply@spot-app.com>"
+class BusinessMailer < ApplicationMailer
   REPLY_TO = "Julia Graham <julia@spot-app.com>"
-  default :from => FROM, :reply_to => REPLY_TO
+  default :reply_to => REPLY_TO
+  default :to => Proc.new { @account.email_with_name }
   
   def welcome(account)
     @title = "Welcome to Spot for Businesses!"
     @account = account
     @email = account.email
-    mail( :to => @account.email_with_name,
-          'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
-          :subject => @title )
   end
   
   def contact(account, parameters)
@@ -31,9 +26,7 @@ class BusinessMailer < ActionMailer::Base
     @email = @account.email
     @reply_to = "julia@spot-app.com"
     @phone_to = PHONE_NUMBER
-    mail( :to => @account.email_with_name,
-          'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
-          :subject => "Congratulations! Your business has been verified!" )  
+    mail( :subject => "Congratulations! Your business has been verified!" )  
   end
   
   def promotion_approved(promotion)
@@ -42,9 +35,7 @@ class BusinessMailer < ActionMailer::Base
     @email = @account.email
     @reply_to = "julia@spot-app.com"
     @phone_to = PHONE_NUMBER
-    mail( :to => @account.email_with_name,
-          'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
-          :subject => "Congratulations! Your promotion has been approved for distribution." )  
+    mail( :subject => "Congratulations! Your promotion has been approved for distribution." )  
   end
 
   def promotion_rejected(promotion)
@@ -53,9 +44,7 @@ class BusinessMailer < ActionMailer::Base
     @email = @account.email
     @reply_to = "julia@spot-app.com"
     @phone_to = PHONE_NUMBER
-    mail( :to => @account.email_with_name,
-          'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
-          :subject => "Sorry, your promotion was rejected" ) 
+    mail( :subject => "Sorry, your promotion was rejected" ) 
   end
   
   def promotion_codes(business, date)
@@ -65,9 +54,7 @@ class BusinessMailer < ActionMailer::Base
     @email = @account.email
     @events = business.promotion_events.on_date(date).includes(:codes => :owner).all
     @title = "Promotion Codes for #{@date.strftime('%B %d, %Y')}"
-    mail( :to => @account.email_with_name,
-          'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
-          :subject => @title) 
+    mail( :to => @account.email_with_name )
   end
   
   def weekly_digest(account, start_date=nil, end_date=nil)
@@ -82,9 +69,6 @@ class BusinessMailer < ActionMailer::Base
     @end_date ||= @start_date + 6.days
     @email = @account.email
     @title = "Your Spot Weekly Digest"
-    @events = 
-    mail( :to => @account.email_with_name,
-          'List-Unsubscribe' => "<#{email_url(:email => @email)}>",
-          :subject => @title) 
+    mail( :to => @account.email_with_name ) 
   end
 end

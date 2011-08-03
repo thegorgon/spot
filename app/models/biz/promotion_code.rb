@@ -19,9 +19,15 @@ class PromotionCode < ActiveRecord::Base
   scope :for_event, lambda { |id| where(:event_id => id)}
   scope :for_business, lambda { |id| where(:business_id => id)}
   scope :upcoming, lambda { where("date >= ?", Date.yesterday) }
-  
+  scope :in_two_days, lambda { where("date = ?", (Date.today + 2.days) }
   def self.random_code
     (0..3).collect { CODE_CHARS[rand(CODE_CHARS.length)] }.join
+  end
+  
+  def self.deliver_reminders
+    self.issued.in_two_days.find_each do |code|
+      TransactionMailer.registration_reminder(code.owner, code).deliver
+    end
   end
   
   def lock!

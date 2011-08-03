@@ -1,0 +1,30 @@
+%p
+  Just dropping a note to confirm your registration for
+  =link_to @promotion.name, place_event_url(@promotion.business.place, @promotion)
+  at 
+  =link_to @promotion.business.place.name, place_url(@promotion.business.place)
+  on
+  ="#{@event.date.strftime('%B %d, %Y')}."
+
+%div
+  %p Here's your code so you don't forget. Just present this when you show up.
+  %div{:style => "display:block;background:#fff;border:2px dashed #999;padding:5px 10px 7px 10px;margin:10px 0;font-family:monospace;font-size:50px;float:left;"}
+    =@code.code.upcase
+
+%p{:style => "clear:both;"}
+  We understand that sometimes things come up. If you don't think you'll be able to make it, please give us 24 hours notice so another member can take advantage of this experience. You can view or cancel
+  =link_to "your registration", registration_url(@code)
+  at any time.
+  
+%p 
+  If you need us, night or day, contact us with any questions – we’re here to help!
+
+%p{:style => "margin:10px 0 0;"}="Mail : #{mail_to "contact@spot-app.com"}".html_safe
+%p{:style => "margin:0 0 10px;"}="Phone: #{PHONE_NUMBER}"
+
+%p Sincerely,
+%p{:style => "margin:0;padding:0;"} Julia & The Spot Team
+%br
+=mail_to "julia@spot-app.com", "julia@spot-app.com", :style => "color:#333"
+%br
+=link_to "http://www.spot-app.com", "http://www.spot-app.com", :style => "color:#333"

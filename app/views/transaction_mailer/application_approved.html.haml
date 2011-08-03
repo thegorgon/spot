@@ -15,7 +15,7 @@
               %tr
                 %td{:style => "text-align:left;font-size:25px;padding:0 10px;margin:0;"}
                   .mval.tf
-                    =image_tag "#{IMGHOST}assets/payment/#{plan.cost}per#{plan.period_name}100x50.png", :size => "100x50"
+                    =image_tag attachments["#{plan.cost}per#{plan.period_name}.png"].url, :size => "100x50"
                 %td
                   -if plan.period == "annually"
                     .benefit{:style => "padding: 5px 0 0;"} Annual Membership
@@ -27,11 +27,10 @@
 %p
   Our signup process is quick, secure and satisfaction is guaranteed. If you aren't satisfied, we'll readily refund your payment.
 
-%p
+%div
   Contact us with any questions – we’re here to help!
-  %ul{:style => "list-style:none;margin:10px 0;padding:0;"}
-    %li="Mail : #{mail_to "contact@spot-app.com"}".html_safe
-    %li="Phone: #{PHONE_NUMBER}"
+  %p="Mail : #{mail_to "contact@spot-app.com"}".html_safe
+  %p="Phone: #{PHONE_NUMBER}"
 
 %p Sincerely,
 %p{:style => "margin:0;padding:0;"} Julia & The Spot Team

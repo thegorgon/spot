@@ -1,0 +1,19 @@
+%p Your Spot Membership is about to expire!
+
+%p 
+  To continue enjoying Spot Membership Experiences,
+  =link_to "renew your membership", new_membership_url
+  now.
+
+%p 
+  If you need us, night or day, contact us with any questions – we’re here to help!
+
+%p{:style => "margin:10px 0 0;"}="Mail : #{mail_to "contact@spot-app.com"}".html_safe
+%p{:style => "margin:0 0 10px;"}="Phone: #{PHONE_NUMBER}"
+
+%p Sincerely,
+%p{:style => "margin:0;padding:0;"} Julia & The Spot Team
+%br
+=mail_to "julia@spot-app.com", "julia@spot-app.com", :style => "color:#333"
+%br
+=link_to "http://www.spot-app.com", "http://www.spot-app.com", :style => "color:#333"

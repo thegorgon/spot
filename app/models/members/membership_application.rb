@@ -78,7 +78,7 @@ class MembershipApplication < ActiveRecord::Base
   private
   
   def check_instant_approval
-    if invitation
+    if invitation && !approved?
       self.approved_at = Time.now
       invitation.claimed!
     end
