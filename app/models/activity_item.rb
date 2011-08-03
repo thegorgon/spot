@@ -1,5 +1,6 @@
 class ActivityItem < ActiveRecord::Base
   ACTIONS = ["CREATE", "DELETE"]
+  WISHLIST_ONLY_REVISION = 72
   belongs_to :actor, :class_name => "User"
   belongs_to :activity, :polymorphic => true
   belongs_to :item, :polymorphic => true
@@ -19,10 +20,12 @@ class ActivityItem < ActiveRecord::Base
     params = params.symbolize_keys
     origin = Geo::Position.normalize(params)
     radius = params[:radius]
+    params[:device] ||= {}
     params[:page] = [1, params[:page].to_i].max
     finder = self
     finder = finder.within(radius, :origin => origin) if radius && origin
     finder = finder.where(:action => "CREATE")
+    finder = finder.where(:activity_type => "WishlistItem") if params[:device][:app_version].to_i < WISHLIST_ONLY_REVISION
     finder = finder.since(params[:since]) if params[:since]
     finder = finder.until(params[:until]) if params[:until]
     finder = finder.order("activity_items.created_at DESC")
