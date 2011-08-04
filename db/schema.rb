@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110802155630) do
+ActiveRecord::Schema.define(:version => 20110804054052) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -47,6 +47,13 @@ ActiveRecord::Schema.define(:version => 20110802155630) do
   end
 
   add_index "blocked_emails", ["address"], :name => "index_blocked_emails_on_address", :unique => true
+
+  create_table "blog_posts", :force => true do |t|
+    t.string "tumblr_id", :null => false
+    t.string "slug",      :null => false
+  end
+
+  add_index "blog_posts", ["slug"], :name => "index_blog_posts_on_slug", :unique => true
 
   create_table "business_accounts", :force => true do |t|
     t.integer  "user_id",                             :null => false

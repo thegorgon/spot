@@ -2,13 +2,7 @@ class Site::BlogController < Site::BaseController
   layout 'site/blog'
   
   def index
-    search = { :page => params[:page], :per_page => params[:per_page], :tagged => params[:tag], :search => params[:q] }
-    key = "blog/items?#{search.to_query}&v=#{AppSetting.get(:blog)}"
-    autoload_constants do
-      @posts = Rails.cache.fetch(key, :expires_in => 1.week) do 
-        Wrapr::Tumblr::Item.paginate(search)
-      end
-    end
+    @posts = BlogPost.filter(params)
     respond_to do |wants|
       wants.xml { render :layout => false }
       wants.html
@@ -16,14 +10,11 @@ class Site::BlogController < Site::BaseController
   end
   
   def show
-    autoload_constants do
-      @post = Rails.cache.fetch( "blog/items/#{params[:id]}?v=#{AppSetting.get(:blog)}", :expires_in => 1.week ) do
-        Wrapr::Tumblr::Item.find(params[:id])
-      end
-    end
+    @post = BlogPost.fetch(params[:id])
   end
   
   def refresh
+    BlogPost.refresh(:max_page => params[:max_page])
     AppSetting.set!(:blog_revision, Time.now.to_i)
     redirect_to blog_index_path
   end

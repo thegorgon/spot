@@ -24,7 +24,7 @@ module Wrapr
       end
     
       def to_param
-        id
+        slug
       end
     
       def date_string
@@ -38,7 +38,7 @@ module Wrapr
       def dom_class
         self.class.to_s.split("::").last.underscore
       end
-
+      
       private
     
       def parse_xml_node(node)
