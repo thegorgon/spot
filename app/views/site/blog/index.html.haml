@@ -70,3 +70,6 @@
           %a{:href => "http://twitter.com/spotteam", :class => "twitter-follow-button", "data-show-count" => "false"} Follow @spotteam
         %li
           %fb:like{:href => "http://www.facebook.com/JoinSpot", :send => "true", :layout => "button_count", :show_faces => "false", :font => "lucida grande"}
+        %li
+          =link_to "Subscribe", blog_index_url(:xml), :class => "rss tf"
+          

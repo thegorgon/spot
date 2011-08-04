@@ -32,6 +32,11 @@
         padding: 5px 0;
       }
     }
+    .rss {
+      @include bgbutton('rss15x15', 15px, 16px);
+      padding-left: 20px;
+      width: 75px;
+    }
   }
   #posts {
     width: 600px;

@@ -1,4 +1,3 @@
-
 class Site::BlogController < Site::BaseController   
   layout 'site/blog'
   
@@ -9,6 +8,10 @@ class Site::BlogController < Site::BaseController
       @posts = Rails.cache.fetch(key, :expires_in => 1.week) do 
         Wrapr::Tumblr::Item.paginate(search)
       end
+    end
+    respond_to do |wants|
+      wants.xml { render :layout => false }
+      wants.html
     end
   end
   
