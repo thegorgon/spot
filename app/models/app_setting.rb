@@ -3,6 +3,7 @@ class AppSetting < ActiveRecord::Base
   validates :key, :presence => true, :uniqueness => true
   validates :value, :presence => true
   validates :category, :presence => true, :inclusion => CATEGORIES
+  before_validation :set_category
 
   def self.get(key)
     where(:key => key.to_s).first.try(:value)
@@ -37,5 +38,11 @@ class AppSetting < ActiveRecord::Base
     
   def to_param
     key
+  end
+  
+  private
+  
+  def set_category
+    self.category ||= CATEGORIES.first
   end
 end
