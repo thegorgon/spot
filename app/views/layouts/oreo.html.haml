@@ -11,11 +11,11 @@
         %a{'data-popover' => '#login_popover', 'data-popover-title' => 'Log In', 'data-popover-orient' => 'vertical'} 
           login
       =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
-    ⋅
+    &middot;
     -if current_member? && current_user.invitation_code.invites_remaining?
       %a{'data-popover' => '#invite_popover', 'data-popover-title' => 'Invite', 'data-popover-orient' => 'vertical'} 
         invite
-      ⋅
+      &middot;
       #invite_popover
         -url = invitation_url(:ic => current_user.invitation_code.code)
         %h2.tf="#{current_user.invitation_code.invites_remaining} invites remaining."
@@ -36,18 +36,18 @@
         =content_for?(:oreo) ? yield(:oreo) : yield
     .footer
       =image_tag "logos/spotwhite120x90.png", :size => "40x30", :class => "logo"
-      ⋅
+      &middot;
       2601 Mission St.
       San Francisco, CA 94110
-      ⋅
+      &middot;
       =mail_to "The Spot Team <contact@spot-app.com>", "Contact Us"
-      ⋅
+      &middot;
       =link_to "Privacy Policy", privacy_path
-      ⋅
+      &middot;
       =link_to "Terms of Service", tos_path
-      ⋅
+      &middot;
       =link_to "Press", press_path
-      ⋅
+      &middot;
       =link_to "Twitter", "http://www.twitter.com/spotteam", :target => "_new"
       
 

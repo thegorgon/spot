@@ -125,7 +125,7 @@ html {
       @include box_shadow(rgba(0,0,0,0.75) 0px 1px 5px);
       .toptitle { 
         padding: 10px 20px 15px;
-        background: rgba(230,230,230, 0.75);
+        @include rgbabg(255,255,255,0.75, 'backgrounds/threefourwht1x1.png');
         color: #333;
         line-height: 22px;
         h1 {

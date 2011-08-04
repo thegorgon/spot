@@ -57,7 +57,7 @@ ul.form {
       width: 6px;
       height: 6px;
       @include border_radius(10px);
-      @include opacity(1.0);
+      opacity: 1.0;
     }
     .ie7 &, .ie8 & {
       height: 8px;
@@ -75,7 +75,7 @@ ul.form {
     margin: 1px 5px 0 0;
     @include border_radius(12px);
     .indicator {
-      @include opacity(0);
+      opacity: 0;
     }
   }
   li.note {
@@ -144,7 +144,7 @@ ul.form {
     input.file {
       width: 100%;
       height: 100%;
-      @include opacity(0);
+      opacity: 0;
       z-index: 100;
       position: absolute !important;
       top: 0px;
@@ -269,8 +269,11 @@ ul.form {
   }
   .validity {
     cursor: pointer;
-    @include opacity(0);
+    opacity: 0;
     @include transition(opacity 0.25s);
+    .ie7 &, .ie8 & {
+      display: none;
+    }
     width: 30px;
     right: 0px;
     height: 30px;
@@ -280,23 +283,31 @@ ul.form {
   }
   li.focus .validity {
     z-index: 3;
-    @include opacity(0);
-    @include transition(opacity 0.25s);
+    opacity: 0;
+    .ie7 &, .ie8 & {
+      display: none;
+    }
   }
   li.loading .validity {
     z-index: 3;
-    @include opacity(1);
-    @include transition(opacity 0.25s);
+    opacity: 1;
+    .ie7 &, .ie8 & {
+      display: block;
+    }
   }
   li.valid .validity {
     z-index: 3;
-    @include opacity(1);
-    @include transition(opacity 0.25s);
+    opacity: 1;
+    .ie7 &, .ie8 & {
+      display: block;
+    }
   }
   li.invalid .validity {
     z-index: 3;
-    @include opacity(1);
-    @include transition(opacity 0.25s);
+    opacity: 1;
+    .ie7 &, .ie8 & {
+      display: block;
+    }
   }
   .ie7 &, .ie8 & {
     .hint {
@@ -563,7 +574,6 @@ ul.form.search {
   width: 106px;
   height: 20px;
   position: relative;
-  border: 1px solid #333;
   @include border_radius(17px);
   html.loaded & {
     @include transition("width 0.5s, background 0.5s");
@@ -573,10 +583,7 @@ ul.form.search {
     margin: 0;
   }
   &.focus {
-    width: 176px;
-    .search_icon {
-      background: transparent url(/images/assets/general/search13x14.png) no-repeat left center;
-    }
+    width: 145px;
   }
   li.search_icon {
     z-index: 10;
@@ -586,7 +593,6 @@ ul.form.search {
     bottom: 0;
     left: 7px;
     width: 18px;
-    background: transparent url(/images/assets/general/search_light13x14.png) no-repeat left center;
   }
   li.search {
     position: absolute;
@@ -594,14 +600,11 @@ ul.form.search {
     left: 0;
     right: 0;
     bottom: 0;
-    background: #fff;
     padding: 0 0 0 26px;
-    background: #444;
     @include border_radius(15px);
     @include transition(all 0.5s);
     @include box_shadow("rgba(0, 0, 0, 0.6) 0px 2px 1px inset, rgba(255, 255, 255, 0.2) 0 1px 0");
     input {
-      color: #fff;
       position: absolute;
       top: 4px;
       bottom: 3px;
@@ -617,11 +620,54 @@ ul.form.search {
       background: transparent;
     }
     &.focus {
-      @include transition(all 0.5s);
-      background: #fff;
       input {
         width: 140px;
-        color: #000000;
+      }
+    }
+  }
+  &.faded {
+    border: 1px solid #333;
+    li.search_icon {
+      background: transparent url(/images/assets/general/search_light13x14.png) no-repeat left center;
+    }
+    &.focus {
+      .search_icon {
+        background: transparent url(/images/assets/general/search13x14.png) no-repeat left center;
+      }
+    }
+    li.search {
+      background: #444;
+      input {
+        color: #fff;
+      }
+      &.focus {
+        background: #fff;
+        input {
+          color: #000;
+        }
+      }
+    }
+  }
+  &.light {
+    border: 1px solid #fff;
+    li.search_icon {
+      background: transparent url(/images/assets/general/search_light13x14.png) no-repeat left center;
+    }
+    &.focus {
+      .search_icon {
+        background: transparent url(/images/assets/general/search13x14.png) no-repeat left center;
+      }
+    }
+    li.search {
+      background: #AAA;
+      input {
+        color: #666;
+      }
+      &.focus {
+        background: #fff;
+        input {
+          color: #000;
+        }
       }
     }
   }

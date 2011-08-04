@@ -5,7 +5,7 @@
   #logo
     =image_tag "logos/spotadminwhite158x86.png", :height => "86", :alt => "spot"
   #place_search
-    %ul.form.search.accept_focus
+    %ul.form.search.faded.accept_focus
       =form_tag admin_places_path, :method => :get, :autocomplete => "off" do
         %label{:for => "search_query_text"}
           %li.search_icon

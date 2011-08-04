@@ -1,14 +1,72 @@
--cache(AppSetting.cache_path(:blog, controller), :expires => 1.week) do
-  #blog
-    #logo.flips
-      =image_tag "logos/spotwhite120x90.png", :size => "120x90", :alt => "spot"
-    #posts
-      -@posts.each_with_index do |post, i|
-        =render :partial => "post", :object => post, :locals => {:first_or_last => first_or_last(@posts, i)}
-      #pagination
-        -if @posts.previous_page
-          .last
-            =link_to "< Newer Items", blog_index_path(:page => @posts.previous_page, :per_page => params[:per_page])
-        -if @posts.next_page
-          .next
-            =link_to "Older Items >", blog_index_path(:page => @posts.next_page, :per_page => params[:per_page])
+=content_for :toptitle do
+  Spot Blog
+  -if params[:q] || params[:tag]
+    =" - "
+  -if params[:q]
+    =" containing \"#{params[:q]}\""
+  -if params[:tag]
+    =" filed under \"#{params[:tag]}\""
+
+#blog.clearfix
+  #posts
+    -if @posts.length == 0
+      %h1.tf.center No Posts Found
+    
+    -@posts.each_with_index do |post, i|
+      .post.preview{:id => "post_#{post.id}", :class => "#{post.dom_class} #{first_or_last(@posts, i)}"}
+        -if post.kind_of?(Wrapr::Tumblr::Regular)
+          %h1.tf=link_to post.title.html_safe, blog_path(post)
+          .byline=byline(post)
+          .body.clearfix=post.body.html_safe
+        -elsif post.kind_of?(Wrapr::Tumblr::Photo)
+          .image=image_tag post.max_size.url, :width => [post.max_size.max_width, 600].min
+          .caption=post.caption.html_safe
+          %p.byline="Uploaded #{byline(post)}"
+        
+        .clearfix
+          .left
+            %a.comment_count{:href => blog_path(post)}
+              %span.count="<fb:comments-count href=\"#{post_url(post)}\"/></fb:comments-count>".html_safe 
+              comments
+            .twits.left
+              %a{:href => "http://twitter.com/share", :class => "twitter-share-button", "data-url" => post_url(post), "data-text" => post_tweet(post), "data-count" => "horizontal"} Tweet
+            .gplus.left
+              %g:plusone{:size => "medium", :href => post_url(post)}
+
+            .face.left
+              %fb:like{:href => post_url(post), :send => "true", :layout => "button_count", :show_faces => "false", :font => "lucida grande"}
+
+        %hr
+    #pagination.clearfix
+      -if @posts.previous_page
+        .last.left
+          =link_to "< Newer Items", blog_index_path(params.slice("q", "tag", "per_page").merge("page" => @posts.previous_page))
+      -if @posts.next_page
+        .next.right
+          =link_to "Older Items >", blog_index_path(params.slice("q", "tag", "per_page").merge("page" => @posts.next_page))
+          
+  #rightrail.right
+    .about.section.first
+      .image=image_tag "logos/appicon57x57.png", :size => "57x57"
+    .tags.section
+      %h3.tf Tags
+      %ul
+        -["Events", "Guest Posts", "Hot on Spot", "News", "Press", "Spot Team", "Wishlist Wednesdays", "App", "Blogs We Love"].each do |tag|
+          %li.tag=link_to tag, blog_index_path(:tag => tag)
+        %li.tag=link_to "All", blog_index_path
+    .search.section
+      %h3.tf Search
+      %ul.form.search.light.accept_focus
+        =form_tag blog_index_path, :method => :get, :autocomplete => "off" do
+          %label{:for => "search_query_text"}
+            %li.search_icon
+            %li.search.accept_focus=text_field_tag :q, "", :id => "search_query_text"
+    .all_entries.section
+      =link_to "All Entries", blog_index_path
+    .engage.section
+      %h3.tf Engage!
+      %ul
+        %li
+          %a{:href => "http://twitter.com/spotteam", :class => "twitter-follow-button", "data-show-count" => "false"} Follow @spotteam
+        %li
+          %fb:like{:href => "http://www.facebook.com/JoinSpot", :send => "true", :layout => "button_count", :show_faces => "false", :font => "lucida grande"}

@@ -2,7 +2,11 @@
   border-radius: unquote($n);
   -moz-border-radius: unquote($n);
   -webkit-border-radius: unquote($n); 
-  behavior: url(/stylesheets/PIE.htc);
+}
+
+@mixin rgbabg($r,$g,$b,$a, $fallback) {
+  background: transparent url(/images/unquote($fallback)) repeat top left;
+  background: rgba($r, $g, $b, $a);
 }
 
 @mixin top_right_border_radius($n) {
@@ -96,7 +100,6 @@
   background: -moz-linear-gradient(top, $from, $to $point);
   -pie-background: linear-gradient(top, $from, $to $point);
   background: linear-gradient(top, $from, $to $point);
-  behavior: url(/stylesheets/PIE.htc);
 }
 
 @mixin black_radial_gradient($radius) {
@@ -111,7 +114,6 @@
   -moz-box-shadow: unquote($shadow);
   -webkit-box-shadow: unquote($shadow);
   box-shadow: unquote($shadow);
-  behavior: url(/stylesheets/PIE.htc);
 }
 
 @mixin opacity($opacity) {

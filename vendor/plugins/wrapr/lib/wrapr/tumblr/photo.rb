@@ -8,6 +8,10 @@ module Wrapr
       def max_size
         sizes.last
       end
+      
+      def min_size
+        sizes.first
+      end
 
       private
     

@@ -27,7 +27,7 @@ module TagHelper
   end
   
   def twitter_share_link(url, text, content=nil, options={})
-    klass = content ? "twitter-share-link" : "twitter-share-button"
+    klass = content ? "twit-share-lnk" : "twit-share-btn"
     content ||= "&nbsp;".html_safe
     options[:class] ||= klass
     options[:target] ||= "_blank"

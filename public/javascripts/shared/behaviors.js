@@ -239,7 +239,7 @@
       });
       fetch('.rowlink').rowLink();
       fetch('.tabbar').tabBar();
-      fetch('.twitter-share-button, .twitter-share-link').popupLink({width: 350, height: 300});
+      fetch('.twit-share-btn, .twitter-share-link').popupLink({width: 350, height: 300});
       fetch('.fb-share-button, .fb-share-link').popupLink({width: 550, height: 300});
       fetch('.fb-post-button, .fb-post-link').click(function(e) {
         e.preventDefault();

@@ -1,0 +1,10 @@
+=content_for :scripts do
+  %script{:type => "text/javascript", :src => "http://platform.twitter.com/widgets.js"}
+  :javascript
+    (function() {
+      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+      po.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+
+= render :file => 'layouts/oreo'

@@ -165,6 +165,7 @@
     }
   }
   .promocode {
+    padding: 10px 0 0;
     form {
       width: 300px;
       margin: 20px auto 0;
@@ -249,7 +250,6 @@
     border-bottom: 0;
     &.last {
       border-bottom: 1px solid #ddd;
-      margin-bottom: 10px;
     }
     &.grande {
       .benefits {

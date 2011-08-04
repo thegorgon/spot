@@ -1,53 +1,116 @@
 .site_blog {
-  #blog {
-    padding: 10px 0 150px;
-    width: 895px;
-    margin: 0 auto;
-    #logo {
-      height: 100px;
+  #rightrail {
+    width: 150px;
+    .dotted {
+      border-bottom: 1px dotted #666;
     }
-  }
-  #pagination {
-    font-size: 1.2em;
-    padding: 10px 0;
-    .last {
-      float: left;
-    }
-    .next {
-      float: right;
+    .section {
+      margin: 20px 0;
+      color: #666;
+      &.first {
+        margin-top: 0;
+      }
+      h3 {
+        font-size: 16px;
+        color: #999;
+        margin: 0 0 10px 0;
+      }
     }
     a {
-      color: #999;
+      text-decoration: none;
+      color: #666;
+      &:hover {
+        color: #ff8419;
+      }      
+    }
+    .tag {
+      padding: 3px 0;
+      font-size: 12px;
+    }
+    .engage {
+      li {
+        padding: 5px 0;
+      }
+    }
+  }
+  #posts {
+    width: 600px;
+    float: left;
+  }
+  #pagination {
+    a {
+      color: #666;
+      &:hover {
+        color: #ff8419;
+      }
+      text-decoration: none;
     }
   }
   .post {
-    margin: 0px auto 30px;
-    background: #f7f7f7;
-    color: #333;
-    padding: 40px;
-    font-size: 1.2em;
-    @include border_radius(20px);
+    .comment_count {
+      padding: 3px 5px;
+      font-size: 12px;
+      float: left;
+      display: block;
+      color: #666;
+      text-decoration: none;
+      background: #ddd;
+      @include border_radius(3px);
+      border: 1px solid #999;
+      &:hover {
+        background: #ff8419;
+        color: #fff;
+      }
+      .count {
+        font-weight: bold;
+      }
+    }
+    .face {
+      padding: 1px 0px 0px 0px;
+    }
+    .twits {
+      padding: 1px 0px 1px 10px;
+    }
+    .gplus {
+      padding: 1px 10px 0 0;
+    }
     .byline {
-      float: right;
-      font-size: 0.8em;
+      margin: 5px 0;
+      font-size: 1.2em;
       color: #999;
+    }
+    hr {
+      margin: 20px 0 40px;
     }
     &.last {
       margin: 0 auto;
     }
     a {
-      color: #FF8419;
+      color: #666;
+      &:hover {
+        color: #FF8419;        
+      }
     }
   }
   .photo {
-    text-align: center;
+    text-align: left;
     .caption {
       margin: 1em 0 0.5em;
+    }
+    .byline {
+      margin: 0 0 1em;
     }
   }
   .regular {
     h1 {
       text-align: left;
+      a {
+        color: #000;
+        text-decoration: none;
+        &:hover {
+          color: #ff8419;
+        }
+      }
     }
     p {
       padding: 0.5em 0;

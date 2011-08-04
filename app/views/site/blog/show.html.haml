@@ -1,0 +1,42 @@
+=content_for :toptitle do
+  Spot Blog
+  -if @post.respond_to?(:title) 
+    =" - #{@post.title}"
+
+.clearfix
+  #posts
+    .post{:id => "post_#{@post.id}", :class => "#{@post.dom_class}"}
+      -if @post.kind_of?(Wrapr::Tumblr::Regular)
+        %h1.tf=@post.title.html_safe
+        .body=@post.body.html_safe
+      -elsif @post.kind_of?(Wrapr::Tumblr::Photo)
+        .image=image_tag @post.max_size.url, :width => [@post.max_size.max_width, 600].min
+        .caption=@post.caption.html_safe
+
+      .clearfix
+        .left
+          .twits.left
+            %a{:href => "http://twitter.com/share", :class => "twitter-share-button", "data-url" => post_url(@post), "data-text" => post_tweet(@post), "data-count" => "horizontal"} Tweet
+          .gplus.left
+            %g:plusone{:size => "medium", :href => post_url(@post)}
+
+          .face.left
+            %fb:like{:href => post_url(@post), :send => "true", :layout => "button_count", :show_faces => "false", :font => "lucida grande"}
+  
+      %hr
+      %fb:comments{:href => post_url(@post), :num_posts => "10", :width => "600"}
+
+  #rightrail.right
+    .section
+      -if @post.kind_of?(Wrapr::Tumblr::Regular)
+        .byline="Posted #{byline(@post)}"
+      -elsif @post.kind_of?(Wrapr::Tumblr::Photo)
+        .byline="Uploaded #{byline(@post)}"
+    .section
+      %h3.tf Filed Under
+      %ul
+        -@post.tags.each do |tag|
+          %li.tag=link_to tag.titlecase, blog_index_path(:tag => tag)
+    %hr
+    .section.tf
+      =link_to "More Entries".html_safe, blog_index_path, :class => "dotted"

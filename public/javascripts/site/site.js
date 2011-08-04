@@ -5,6 +5,7 @@
         trigger: '.btnmembership', 
         width: 800,
         onclose: function() {
+          alert("ON CLOSE");
           $(this).find('ul.form').removeClass("unlocked").removeClass('unlocking').removeClass("applying").removeClass('unlockable');
         }
       });
@@ -13,7 +14,6 @@
       $('#applicationform').find('.wanttoapply').unbind('click.apply').bind('click.apply', function(e) {
         e.preventDefault();
         var form = $(this).parents('ul.form:first');
-        form.find('form').clear();
         form.addClass('applying');
         lock.attr('disabled', 'disabled');
       });
@@ -39,7 +39,6 @@
               form.find('.vouched').html(data.code.voucher + " has vouched for you.").slideDown();
               unlock.unbind('click.unlock').bind('click.unlock', function(e) {
                 e.preventDefault();
-                form.find('form').clear();
                 unlock.unbind('click.unlock');
                 form.removeClass('unlockable').addClass('unlocking');
                 setTimeout(function(e) {
@@ -57,28 +56,6 @@
               form.find('.survey input.required').attr('required', 'required');
             }
           });
-        }
-      });
-    },
-    site_blog: function() {
-      $('#pagination a').ajaxLink({
-        click: function() {
-          var posts = $('#posts');
-          posts.fadeOut(function() {
-            posts.trigger('faded');
-          });
-        },
-        success: function(data) {
-          var html = $(data.html).find("#posts"), posts = $('#posts');
-          posts.bind("faded", function() {
-            posts.html(html.html()).unbind("faded");
-            posts.fadeIn(function() {
-              go.Views.run();
-            });
-          });
-          if (!posts.is(":animated")) {
-            posts.trigger("faded");            
-          }
         }
       });
     },

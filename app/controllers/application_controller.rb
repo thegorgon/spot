@@ -12,6 +12,17 @@ class ApplicationController < ActionController::Base
   
   private
 
+  def autoload_constants
+    begin
+      yield
+    rescue ArgumentError => e
+      raise unless e.to_s =~ /undefined class/ # unexpected error message, re-raise
+      e.to_s.split.last.constantize            # raises NameError if it can't find the constant
+      retry
+    end
+  end
+  
+
   def default_render(*args)
     respond_to do |format|
       format.html { render(*args) }

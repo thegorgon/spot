@@ -15,7 +15,9 @@ Spot::Application.routes.draw do
   end
   
   scope :module => "site", :constraints => {:subdomain => /www|m|app|/} do
-    resources :blog, :controller => "blog", :only => [:index]
+    resources :blog, :controller => "blog", :only => [:index, :show] do
+      get :refresh, :on => :collection, :action => "refresh"
+    end
     resources :previews, :only => [:create]
     resource :session, :only => [:new, :create, :destroy]
     resource :account, :only => [:new, :create, :show, :update, :destroy] do

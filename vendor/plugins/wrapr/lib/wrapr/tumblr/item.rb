@@ -3,9 +3,10 @@ module Wrapr
     class Item
       attr_accessor :id, :slug, :type, :date, :format
       attr_accessor :tags
+      PAGE_SIZE = 5
     
       def self.paginate(params={})
-        params[:num] = params[:per_page].to_i > 0 ? params[:per_page].to_i : (Tumblr.config[:page_size] || 20)
+        params[:num] = params[:per_page].to_i > 0 ? params[:per_page].to_i : (Tumblr.config[:page_size] || PAGE_SIZE)
         params[:start] = ([params[:page].to_i, 1].max - 1) * params[:num]
         params.delete(:limit)
         params.delete(:page)
@@ -23,7 +24,7 @@ module Wrapr
       end
     
       def to_param
-        slug
+        id
       end
     
       def date_string
