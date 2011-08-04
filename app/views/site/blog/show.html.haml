@@ -1,7 +1,8 @@
 =content_for :toptitle do
-  Spot Blog
+  =link_to "Spot Blog", blog_index_path
   -if @post.respond_to?(:title) 
-    =" - #{@post.title}"
+    &middot;
+    =@post.title.html_safe
 
 .clearfix
   #posts
