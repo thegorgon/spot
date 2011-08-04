@@ -6,7 +6,7 @@ module ApplicationHelper
   def city_page?
     @city && !@city.new_record?
   end
-  
+    
   def show_login?
     !( current_page?(account_path) && 
         current_page?(new_account_path) &&
@@ -40,9 +40,9 @@ module ApplicationHelper
     elsif city_page?
       keywords += [@city.name, @city.region]
     elsif @page_keywords
-      keywords += @keywords
+      keywords += @page_keywords
     end
-    keywords.join(", ")
+    keywords.uniq.join(", ")
   end
   
   def page_description

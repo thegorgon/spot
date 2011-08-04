@@ -12,6 +12,19 @@ module Wrapr
       def min_size
         sizes.first
       end
+      
+      def title
+        unless @title
+          @title = ""
+          words = caption.gsub(/\<[^\>]+?\>/, "").split(' ')
+          words.each do |word|
+            break if @title.length + word.length > 25
+            @title << " #{word}"
+          end
+          @title = "#{@title.strip}..."
+        end
+        @title
+      end
 
       private
     

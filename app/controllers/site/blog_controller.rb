@@ -7,10 +7,14 @@ class Site::BlogController < Site::BaseController
       wants.xml { render :layout => false }
       wants.html
     end
+    @page_keywords = "blog"
+    @page_title = "The Spot Blog - Spot Membership Experiences"
   end
   
   def show
     @post = BlogPost.fetch(params[:id])
+    @page_keywords = @post.tags
+    @page_title = "#{@post.title} - The Spot Blog"
   end
   
   def refresh
