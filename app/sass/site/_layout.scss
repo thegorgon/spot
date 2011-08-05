@@ -28,9 +28,11 @@ html {
       @include opacity(0.5);
     }
     #invite_popover {
-      width: 300px;
       padding: 20px;
       height: 80px;
+    }
+    .member_invite {
+      width: 315px;
       h2 { 
         margin: 0 0 10px 0;
       }
@@ -71,6 +73,7 @@ html {
       }
     }
     hr {
+      margin: 20px 0;
       @extend hr.light;
     }
     h1 {
@@ -88,6 +91,7 @@ html {
     em {
       font-style: normal;
       color: #ff8419;
+      font-weight: bold;
     }
     strong {
       font-weight: bold;
@@ -109,22 +113,57 @@ html {
       .column {
         width: 380px;
         font-size: 14px;
-        h1 {
-          font-size: 30px;
+        span.tf {
+          font-size: 18px;
         }
       }
-      .btn {
-        margin: 15px auto 0;
+      h1.huge {
+        font-size: 35px;
       }
       .title {
         height: 41px;
         line-height: 41px;
       }
+      .actions {
+        width: 300px;
+        height: 41px;
+        position: relative;
+        margin: 15px auto 0;
+        .readmore {
+          font-weight: normal;
+          font-weight: normal;
+          font-size: 12px;
+          padding: 25px 0 0 0;
+          width: 75px;
+          position: absolute;
+          right: -100px;
+          a {
+            text-decoration: none;
+            color: #999;
+            &:hover {
+              color: #ff8419;
+            }
+          }
+        }
+        .pricing {
+          font-weight: normal;
+          position: absolute;
+          left: -120px;
+          width: 80px;
+          color: #999;
+          font-size: 12px;
+          text-align: right;
+          padding: 5px 10px;
+          strong {
+            display: block;
+          }
+        }
+      }
     }
     .filling {
       @include box_shadow(rgba(0,0,0,0.75) 0px 1px 5px);
-      .toptitle { 
-        padding: 10px 20px 15px;
+      .toptitle {
+        padding: 10px 30px 15px;
         @include rgbabg(255,255,255,0.75, 'backgrounds/threefourwht1x1.png');
         color: #333;
         line-height: 22px;

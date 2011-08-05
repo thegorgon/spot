@@ -14,6 +14,9 @@
       %li.label
         =f.label :bulleted, "Short Summary : "
       =f.text_field :bulleted
+      %li.labelled
+        =f.check_box :designed_by_spot
+        =f.label :designed_by_spot, "Designed By Spot?"
       %li.label
         =f.label :description, promotion.kind_of?(DiscountTemplate) ? "Editorial Description : " : "Promotion Description : "
       =f.text_area :description
@@ -28,9 +31,6 @@
     =spot_form_for promotion, :as => :template, :url => admin_promotion_path(promotion), :display => "light reject" do |f|
       =hidden_field_tag :filter, params[:filter]
       =f.hidden_field :status, :value => PromotionTemplate::REJECTED_STATUS
-      %li.label
-        =f.label :bulleted, "Short Summary : "
-      =f.text_field :bulleted
       %li.label=f.label :rejection_reasoning, "Reason For Rejection :"
       =f.text_area :rejection_reasoning
       %li.center

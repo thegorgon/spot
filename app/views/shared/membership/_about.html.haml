@@ -1,0 +1,48 @@
+.about_membership
+  .clearfix
+    .left.reasons
+      %h1.tf 5 Reasons to Join Spot Today
+
+      %ul
+        %li 
+          %h2.tf Get In Before Its Gone :
+          ="Spot Membership is limited to just 10,000 members per city."
+        %li 
+          %h2.tf We Keep It Fresh :
+          ="Enjoy new events and experiences every month at the best spots in town."
+        %li 
+          %h2.tf Members-Only Pricing :
+          ="Exclusive prices means Spot Membership quickly pays for itself."
+        %li 
+          %h2.tf Experiences, Not Deals :
+          ="Get treated like a VIP, not a coupon clipper."
+        %li 
+          %h2.tf The Spot Guarantee :
+          ="Not happy? Get your money back, no questions asked."
+  
+    .right.pricing
+      %h1.tf Spot Pricing
+      .paymentoptions
+        -Subscription::PLANS.keys.each_with_index do |name, i|
+          -plan = Subscription::PLANS[name]
+          .paymentoption{:class => "#{name} #{first_or_last(Subscription::PLANS.keys, i)}"}
+            .mval.tf 
+              %span.currency $
+              =plan.cost
+              .period="/#{plan.period_name}"
+            .benefits
+              -if plan.period == "annually"
+                .benefit Annual Membership
+                .benefit Save 40%
+              -else
+                .benefit Renews Monthly
+                .benefit Cancel Anytime
+    
+  -if current_member? && current_user.invitation_code.invites_remaining?
+    %hr
+    .centered.center
+      %h1.tf Invite Your Friends
+      =render :partial => "shared/membership/invite"
+  
+  -elsif ! current_member?
+    =link_to "become a member", new_application_path, :class => 'btnmembership btnorg300x41 tf button'

@@ -1,22 +1,27 @@
 =render :partial => "header", :locals => {:title => "Featured Membership Experiences"}    
 
--if @page.featured.present?
-  .featsection{:class => "size#{@page.featured.length}"}
-    -@page.featured.each_with_index do |featured, i|
-      %a.evtdis{:class => "feat#{i}", :href => place_event_path(featured.business.place, featured)}
-        .image
-          .disclosure
-          =image_tag featured.business.place.image.url(:i640x400)
-          .text
-            .name.tf="#{featured.business.place.name} : #{featured.name}"
-        .description= featured.description
-
 .upcoming.clearfix
   -(@page.upcoming).each do |template|
     %a.evtdis.template{:class => cycle("even", "odd"), :href => place_event_path(template.business.place, template)}
       .image
-        .disclosure
         =image_tag template.business.place.image.url(:i640x400), :size => "400x250"
         .text
           .name.tf="#{template.business.place.name} : #{template.name}"
-      .description=template.description
+      -if template.bulleted.present?
+        .bulleted.tf
+          =template.bulleted
+          .disclosure
+  .evtdis.updates.template{:class => cycle("even", "odd")}
+    .image
+      =image_tag "backgrounds/newupdates400x250.png", :size => "400x250"
+      .text
+        .name.tf="And Many More..."
+      .content
+        -if current_user
+          We'll send you emails as new Experiences are added.
+        -else
+          =link_to "Join our mailing list", new_application_path, :class => "btnmembership"
+          to get updates when new Experiences are added.
+    .bulleted.tf
+      New Experiences Added Daily
+      

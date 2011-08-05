@@ -16,9 +16,6 @@
     = yield :head
     -if Rails.env.production?
       = google_analytics_tag(:account_id => 'UA-21193799-1')
-    %script{:src => "http://use.typekit.com/eqy7aff.js", :type => "text/javascript"}
-    :javascript
-      try{Typekit.load();}catch(e){}
   %body{:id => page_namespace, :class => "#{module_names} #{controller_name}"}
     #bg.preload_bg
       =yield :bg
@@ -35,3 +32,7 @@
     = yield :scripts
     :javascript
       Spot.init(#{js_vars});
+    %script{:src => "http://use.typekit.com/eqy7aff.js", :type => "text/javascript"}
+    :javascript
+      try{Typekit.load();}catch(e){}
+    

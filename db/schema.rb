@@ -432,20 +432,21 @@ ActiveRecord::Schema.define(:version => 20110804054052) do
   add_index "promotion_events", ["business_id", "date"], :name => "index_deal_events_on_business_id_and_date"
 
   create_table "promotion_templates", :force => true do |t|
-    t.string   "type",                               :null => false
-    t.integer  "business_id",                        :null => false
-    t.string   "name",                               :null => false
+    t.string   "type",                                   :null => false
+    t.integer  "business_id",                            :null => false
+    t.string   "name",                                   :null => false
     t.text     "description"
     t.text     "parameters"
     t.text     "rejection_reasoning"
     t.integer  "position"
-    t.integer  "status",              :default => 0, :null => false
-    t.integer  "count",               :default => 0, :null => false
-    t.integer  "start_time",          :default => 0, :null => false
-    t.integer  "end_time",            :default => 0, :null => false
+    t.integer  "status",              :default => 0,     :null => false
+    t.integer  "count",               :default => 0,     :null => false
+    t.integer  "start_time",          :default => 0,     :null => false
+    t.integer  "end_time",            :default => 0,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "bulleted"
+    t.boolean  "designed_by_spot",    :default => false, :null => false
   end
 
   add_index "promotion_templates", ["business_id"], :name => "index_deal_templates_on_business_id"

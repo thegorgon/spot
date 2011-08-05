@@ -13,26 +13,28 @@
   .right
     =link_to "Browse Experiences", city_path(city), :class => 'tf btnorg300x41'
 %hr
-.buckets.clearfix
-  .bucket.first
-    .image.columbus
-      =image_tag "paintings/columbus400x300.png", :size => "400x300"
-      .speechbubble.tf
-        We've arrived!
-        Now, what you got to eat in this town?
+.bucket.first.clearfix
+  .image.worthy.left
+    =image_tag "paintings/louisxiv400x300.png", :size => "400x300"
+    .speechbubble.down.tf
+      It's good to be the king.
+  .text.right
+    %h2.clearfix
+      .left.tf Invite the worthy...
+      .invites="#{current_user.invitation_code.invites_remaining} invites remaining"
+    %p Spot is currently available by invitation only. As a Spot Member, you have 10 invitations to send to worthy friends and family.
+    %p Use the following link to share an invitation :
+    -url = invitation_url(:ic => current_user.invitation_code.code)
+    =sharing(url, "I've got 10 Spot invites to share. Foodies in SF, check it out now.", :link => true)
+%hr
+.bucket.last.clearfix
+  .image.columbus.right
+    =image_tag "paintings/columbus400x300.png", :size => "400x300"
+    .speechbubble.tf
+      We've arrived!
+      Now, what you got to eat in this town?
+  .text.left
     %h2.tf Explore your membership...
     %p
       Now that you've subscribed, you have full access to all of the Spot Member Experiences. Browse experiences to start enjoying your membership.
     =link_to "Browse", city_path(city), :class => "tf btnorg77x32 button"
-  .bucket.last
-    .image.worthy
-      =image_tag "paintings/louisxiv400x300.png", :size => "400x300"
-      .speechbubble.down.tf
-        It's good to be the king.
-    %h2.clearfix
-      %span.tf Invite the worthy...
-      .invites="#{current_user.invitation_code.invites_remaining} invites remaining"
-    %p Spot is currently available by invitation only. As a Spot Member, you have 10 invitations to send to worthy friends and family.
-    %p Share the following link to grant an invitation :
-    -url = invitation_url(:ic => current_user.invitation_code.code)
-    =sharing(url, "I've got 10 Spot invites to share. Foodies in SF, check it out now.", :link => true)

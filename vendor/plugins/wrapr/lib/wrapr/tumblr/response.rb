@@ -20,7 +20,7 @@ module Wrapr
       end
       
       def page
-        (start / page_size).floor + 1      
+        page_size > 0 ? (start / page_size).floor + 1 : 1
       end
     
       def next_page

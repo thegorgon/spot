@@ -219,6 +219,10 @@
         fetch('.preload_bg').preloadBg();
         fetch('.preload').preloadImgs();
       }
+      fetch('.pillbox .pill a').unbind('click.activate').bind('click.activate', function(e) {
+        $(this).parents('.pillbox:first').find('.pill a').removeClass('active');
+        $(this).addClass('active');
+      });
       fetch('[data-toggle-class]').toggleClass();
       fetch('[placeholder]').placeholder();
       fetch('[data-mode=select]').selectOnly();

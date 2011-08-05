@@ -1,4 +1,5 @@
 class BlogPost < ActiveRecord::Base
+  TOPICS = ["Events", "Guest Posts", "Hot on Spot", "News", "Press", "Spot Team", "Wishlist Wednesdays", "App", "Blogs We Love"]
   validates :slug, :presence => true
   validates :tumblr_id, :presence => true
   

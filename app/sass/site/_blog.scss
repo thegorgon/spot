@@ -31,11 +31,20 @@
       li {
         padding: 5px 0;
       }
+      .facebook {
+        height: 21px;
+      }
     }
     .rss {
       @include bgbutton('rss15x15', 15px, 16px);
       padding-left: 20px;
       width: 75px;
+    }
+    .contact {
+      font-size: 12px;
+      a {
+        text-decoration: underline;
+      }
     }
   }
   #posts {

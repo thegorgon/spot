@@ -26,12 +26,12 @@
     .info.address.clearfix
       %h1.tf=@place.name
       -@place.address_lines.each_with_index do |line, i|
-        %p.line.clearfix
-          .left=line
-          -if @place.address_lines.length - 1 == i
-            .left.mapit="( #{link_to "map it", gmap_url(@place)} )".html_safe
+        -if line.present?
+          %p.line.clearfix
+            .left=line
+            -if @place.address_lines.length - 1 == i
+              .left.mapit="( #{link_to "map it", gmap_url(@place)} )".html_safe
     .info.phone=phone_link(@place.phone_number)
-    .info.wishlists="#{@place.wishlist_count} Wishlists"
     -if @place.external_place(:google)
       =link_to "more info from google", external_place_url(@place.external_place(:google)), :class => "info google"
     -if @place.external_place(:yelp)

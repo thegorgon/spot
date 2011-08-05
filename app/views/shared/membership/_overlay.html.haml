@@ -18,24 +18,29 @@
     -else
       -if describe
         .content.clearfix
+          %h1.huge.tf 
+            A Private Membership Club for 
+            =@city.name.titlecase
+            Diners
           .left.column
-            %h1.tf
-              Membership.
             %p 
-              Spot is a members-only club, limited to 10,000 tastemakers. To connect with our influential members, 
-              restaurants offer VIP status and access to special experiences.
+              %span.tf Membership.
+              A members-only club, limited to 10,000 tastemakers. 
+              Restaurants offer VIP status and access to special experiences to connect with our influential members.
           
           .right.column
-            %h1.tf
-              Experiences.
             %p 
-              Chef’s tables, secret menus, kitchen tours, special wine pairings, private tastings, free corkage, and more…available only to Spot members.
-        .clear.btn
-          =button_tag :class => "btnorg300x41 btnmembership tf centered" do
-            become a member
+              %span.tf Experiences.
+              Secret menus, chef’s tables, kitchen tours, special wine pairings, private tastings, free corkage, and more&hellip;membership entitles you to unlimited access to all of these.
+        .clear.actions
+          .readmore
+            =link_to "Read more&hellip;".html_safe, membership_about_path, :class => "btnmemabout"
+          .pricing
+            Launch price : 
+            %strong $5 per month            
+          =link_to "become a member", new_application_path, :class => "btnorg300x41 btnmembership tf centered"
       -else
         .title.clearfix
           %h1.tf.left.membership
             =title
-          =button_tag :class => "btnorg170x41 btnmembership tf right" do
-            join
+          =link_to "join", new_application_path, :class => "btnorg170x41 btnmembership tf centered"

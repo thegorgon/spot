@@ -11,7 +11,7 @@ class Site::HomeController < Site::BaseController
   def press
   end
   
-  def policies
+  def about_membership
   end
   
   def privacy

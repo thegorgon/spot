@@ -4,9 +4,17 @@
       $('#applydialog').modal({
         trigger: '.btnmembership', 
         width: 800,
-        onclose: function() {
+        onClose: function() {
           alert("ON CLOSE");
           $(this).find('ul.form').removeClass("unlocked").removeClass('unlocking').removeClass("applying").removeClass('unlockable');
+        }
+      });
+      $('#aboutmembership').modal({
+        trigger: '.btnmemabout', 
+        width: 840,
+        
+        onClose: function() {
+          alert("ON CLOSE");
         }
       });
       var lock = $('#applicationform').find('#application_lock'),

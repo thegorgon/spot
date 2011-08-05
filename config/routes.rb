@@ -32,7 +32,7 @@ Spot::Application.routes.draw do
     resources :places, :only => [:show] do
       resources :events, :only => [:show]
     end
-    resource :membership, :only => [:new, :create, :destroy] do
+    resource :membership, :only => [:new, :create, :destroy] do 
       get "thanks", :action => "thanks", :on => :member
       get "endpoint", :action => "endpoint", :on => :collection
     end
@@ -50,8 +50,8 @@ Spot::Application.routes.draw do
       get "tos", :action => "tos"
       get "press", :action => "press"
       get "getspot", :action => "getspot"
+      get "membership/about", :action => "about_membership", :as => "membership_about"
       get "viewemail", :action => "email"
-      get "policies", :action => "policies"
     end
     get "/in", :to => "home#invited", :as => "invitation"
     get "/codes/:type/:code", :to => "codes#show"

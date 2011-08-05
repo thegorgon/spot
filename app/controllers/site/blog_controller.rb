@@ -7,7 +7,7 @@ class Site::BlogController < Site::BaseController
       wants.xml { render :layout => false }
       wants.html
     end
-    @page_keywords = "blog"
+    @page_keywords = BlogPost::TOPICS
     @page_title = "The Spot Blog - Spot Membership Experiences"
   end
   

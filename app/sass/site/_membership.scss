@@ -51,13 +51,16 @@
 
 #site_memberships_thanks {
   .bucket {
-    width: 394px;
-    float: left;
-    padding: 0 10px;
+    float: none;
+    padding: 0;
+    .text {
+      width: 390px
+    }
     .button {
       margin: 20px auto;
     }
     .image {
+      position: relative;
       &.columbus {
         .speechbubble {
           top: 13px;
@@ -72,16 +75,6 @@
         }
       }
     }
-    &.first {
-      padding-left: 0;
-      border-left: 0;
-      width: 404px;
-    }
-    &.last {
-      width: 404px;
-      padding-right: 0;
-      border-right: 0;
-    }
     .invites {
       float: right;
       color: #999;
@@ -92,7 +85,7 @@
   }
   .sharing {
     input.text {
-      width: 300px;
+      width: 280px;
     }
   }
   p {
@@ -144,6 +137,9 @@
         height: 0;
       }
     }
+  }
+  .paymentoptions {
+    float: left;
   }
   .explanations {
     width: 580px;
@@ -222,113 +218,6 @@
         color: #cc3333;
       }
     }
-  }
-  .paymentoptions {
-    float: left;
-    h2 {
-      margin: 0 0 15px 0;
-    }
-    &.invalid {
-      h2 {
-        color: #cc3333;
-      }
-      .checkbox {
-        .box {
-          border: 1px solid #cc3333;
-        }
-      }
-    }
-  }
-  .paymentoption {
-    height: 50px;
-    width: 350px;
-    padding: 17px 7px;
-    background: #fff;
-    position: relative;
-    cursor: pointer;
-    border: 1px solid #ddd;
-    border-bottom: 0;
-    &.last {
-      border-bottom: 1px solid #ddd;
-    }
-    &.grande {
-      .benefits {
-        margin-left: 50px;
-      }
-      .mval {
-        width: 35px;
-        padding-right: 44px;
-      }
-    }
-    .checkbox {
-      position: absolute;
-      right: 5px;
-      top: 0;
-      width: 30px;
-      bottom: 0;
-      .box {
-        height: 15px;
-        width: 15px;
-        top: 34px;
-        left: 5px;
-        position: absolute;
-        border: 1px solid #000;
-      }
-      .check {
-        display: none;
-        background: transparent url(/images/icons/check20x20.png) no-repeat center center;
-        width: 20px;
-        height: 20px;
-        position: absolute;
-        top: 28px;
-        left: 7px;
-      }
-    }
-    .benefits {
-      float: left;
-      margin-left: 40px;
-      font-size: 15px;
-      line-height: 28px;
-    }
-    &.hover, &:hover {
-      background: #ededed;
-      .check {
-        display: block;
-        background-image: url(/images/icons/checkgry20x20.png);
-      }
-      &.active {
-        .check {
-          background-image: url(/images/icons/check20x20.png);          
-        }
-      }
-    }
-    &.active, &:active {
-      .check {
-        display: block;
-      }
-    }
-    .mval {
-      float: left;
-      text-align: center;
-      width: 60px;
-      font-size: 45px;
-      position: relative;
-      padding: 0 28px 0 10px;
-      text-shadow: 0px 1px 0px rgba(255,255,255,0.75);
-      .period {
-        position: absolute;
-        bottom: 10px;
-        right: 0;
-        font-size: 14px;
-      }
-      .currency {
-        position: absolute;
-        top: 5px;
-        @include transform("rotate(7deg)");
-        left: 0;
-        font-size: 18px;
-      }
-    }    
   }
 }
   

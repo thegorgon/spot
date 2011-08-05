@@ -1,12 +1,13 @@
 =content_for :toptitle do
-  Spot Blog
   -if params[:q] || params[:tag]
+    =link_to "Spot Blog", blog_index_path
     &middot;
-  -if params[:q]
-    =" containing \"#{params[:q]}\""
-  -if params[:tag]
-    =" filed under \"#{params[:tag]}\""
-
+    -if params[:q]
+      =" containing \"#{params[:q]}\""
+    -if params[:tag]
+      =" filed under \"#{params[:tag]}\""
+  -else
+    Spot Blog
 #blog.clearfix
   #posts
     -if @posts.length == 0
@@ -50,15 +51,17 @@
     .about.section.first
       .image=image_tag "logos/appicon57x57.png", :size => "57x57"
     .tags.section
-      %h3.tf Tags
+      %h3.tf Topics
       %ul
-        -["Events", "Guest Posts", "Hot on Spot", "News", "Press", "Spot Team", "Wishlist Wednesdays", "App", "Blogs We Love"].each do |tag|
+        -BlogPost::TOPICS.each do |tag|
           %li.tag=link_to tag, blog_index_path(:tag => tag)
         %li.tag=link_to "All", blog_index_path
     .search.section
       %h3.tf Search
       %ul.form.search.light.accept_focus
         =form_tag blog_index_path, :method => :get, :autocomplete => "off" do
+          -if params[:tag]
+            =hidden_tag :tag, params[:tag]
           %label{:for => "search_query_text"}
             %li.search_icon
             %li.search.accept_focus=text_field_tag :q, "", :id => "search_query_text"
@@ -69,8 +72,14 @@
       %ul
         %li
           %a{:href => "http://twitter.com/spotteam", :class => "twitter-follow-button", "data-show-count" => "false"} Follow @spotteam
-        %li
+        %li.facebook
           %fb:like{:href => "http://www.facebook.com/JoinSpot", :send => "true", :layout => "button_count", :show_faces => "false", :font => "lucida grande"}
         %li
           =link_to "Subscribe", blog_index_url(:xml), :class => "rss tf"
-          
+    %hr
+    .section.contact
+      %p Want to share your wishlist? Got a guest post you'd love to write? 
+      %p 
+        We're looking for food bloggers and restaurant mavens to feature - 
+        =mail_to "jgraham@spot-app.com", "send us an email"
+        to learn more.

@@ -25,7 +25,7 @@
 
 =spot_form_for @payment, :as => :customer, :url => Braintree::TransparentRedirect.url, :display => "cc light clearfix inlinelabels", :html => {:autocomplete => "off", :class => "new_membership"} do |f|
   =hidden_field_tag :tr_data, ERB::Util.html_escape(@payment.tr_data(:redirect_url => endpoint_membership_url))
-  .paymentoptions
+  .paymentoptions.selectable
     %h2.tf 1. Select membership type
     =f.fields_for :custom_fields do |cf|
       =cf.hidden_field :subscription_plan_id, :value => ""
