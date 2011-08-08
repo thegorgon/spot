@@ -61,7 +61,7 @@
       %ul.form.search.light.accept_focus
         =form_tag blog_index_path, :method => :get, :autocomplete => "off" do
           -if params[:tag]
-            =hidden_tag :tag, params[:tag]
+            =hidden_field_tag :tag, params[:tag]
           %label{:for => "search_query_text"}
             %li.search_icon
             %li.search.accept_focus=text_field_tag :q, "", :id => "search_query_text"

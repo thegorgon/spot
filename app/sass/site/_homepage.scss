@@ -174,15 +174,6 @@
         }
       }
     }
-    .loading {
-      left: 200%;
-      .content {
-        margin: 0 auto;
-        height: 200px;
-        width: 200px;
-        background-image: url(/images/assets/loading/gearswhtblkbg42x54.gif);
-      }
-    }
   }
   
   #spotlogo {
@@ -267,20 +258,6 @@
       }
       .map {
         left: 0%;
-      }
-      .loading {
-        left: 100%;
-      }
-    }
-    &.scene3 {
-      .intro {
-        left: -200%;
-      }
-      .map {
-        left: -100%;
-      }
-      .loading {
-        left: 0;
       }
     }
   }

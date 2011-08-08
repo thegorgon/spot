@@ -867,7 +867,7 @@ ul.pillbox {
   .disclosure {
     overflow: hidden;
     right: 10px;
-    top: 9px;
+    top: 5px;
     padding: 0;
     text-align: center;
     color: #fff;
@@ -974,7 +974,7 @@ ul.pillbox {
   }
   hr {
     @extend hr.light;
-    margin: 0;
+    margin: 0 !important;
   }
   .content {
     li {

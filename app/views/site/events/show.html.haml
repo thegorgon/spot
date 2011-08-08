@@ -27,7 +27,7 @@
       %h1.tf=@place.name
       -@place.address_lines.each_with_index do |line, i|
         -if line.present?
-          %p.line.clearfix
+          .line.clearfix
             .left=line
             -if @place.address_lines.length - 1 == i
               .left.mapit="( #{link_to "map it", gmap_url(@place)} )".html_safe

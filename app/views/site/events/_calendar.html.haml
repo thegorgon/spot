@@ -21,7 +21,7 @@
       -elsif event
         .event
           -if event.available?
-            %a{:href => new_application_path, :class => current_member?? "btnclaim" : "btnmembership", "data-eid" => event.id}
+            %a{:href => "#", :class => current_member?? "btnclaim" : "", "data-eid" => event.id}
               .text="#{event.remaining_count} left"
               -if current_member?
                 .register register

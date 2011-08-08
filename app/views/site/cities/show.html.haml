@@ -7,10 +7,10 @@
         =image_tag template.business.place.image.url(:i640x400), :size => "400x250"
         .text
           .name.tf="#{template.business.place.name} : #{template.name}"
+          .disclosure
       -if template.bulleted.present?
         .bulleted.tf
           =template.bulleted
-          .disclosure
   .evtdis.updates.template{:class => cycle("even", "odd")}
     .image
       =image_tag "backgrounds/newupdates400x250.png", :size => "400x250"

@@ -79,19 +79,10 @@
         if (Modernizr.cssTransitions) { top.addClass('scene2'); }
         else { 
           top.addClass('jsanimation');
-          scenes.eq(0).animate({left: '-100%'});
-          scenes.eq(1).animate({left: '0%'});
-          scenes.eq(2).animate({left: '100%'});
+          scenes.eq(0).animate({left: '-100%'}, 1000);
+          scenes.eq(1).animate({left: '0%'}, 500);
         }
         slideshow.stop();
-      });
-      $('.map .city').click(function(e) {
-        if (Modernizr.cssTransitions) { top.addClass('scene3'); }
-        else { 
-          scenes.eq(0).animate({left: '-200%'});
-          scenes.eq(1).animate({left: '-100%'});
-          scenes.eq(2).animate({left: '0%'});
-        }
       });
     },
     site_home_press: function() {
