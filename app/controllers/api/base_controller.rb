@@ -8,7 +8,7 @@ class Api::BaseController < ApplicationController
   def device_specifications
     unless @device_specifications
       #"Spot 1.2 rv:72 (iPhone Simulator; iPhone OS 5.0; en_US)"
-      /Spot (\d+)\.(\d+) rv:(\d+) \(([^\;]+) ([^\;]+) ([^\)]+)\)/.match(request.user_agent) do |match|
+      /Spot (\d+)\.(\d+) rv:(\d+) \(([^\;]+); ([^\;]+); ([^\)]+)\)/.match(request.user_agent) do |match|
         @device_specifications = {
           :major_revision => match[1].to_i,
           :minor_revision => match[2].to_i,
