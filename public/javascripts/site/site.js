@@ -39,8 +39,11 @@
           $('#applicationform').find('.wanttoapply').unbind('click.apply').bind('click.apply', function(e) {
             e.preventDefault();
             var form = $(this).parents('ul.form:first');
-            form.addClass('applying');
+            form.removeClass('unlocking').removeClass('unlocked').removeClass('unlockable').addClass('applying');
             lock.attr('disabled', 'disabled');
+            lock.val('');
+            form.find('.vouched').html('');
+            form.find('.survey input.required').attr('required', 'required');
           });
           lock.unbind('keyup.updatecode').bind('keyup.updatecode', function(e) {
             var self = this, 
