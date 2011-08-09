@@ -2,18 +2,19 @@
   %ul#slidedeck
     %li#slide1.slide.stretcher{"data-gravity" => "0.5x0.5", :title => "Chef's Table Exclusive Seating at Credo"}
       =image_tag "assets/slideshow/slide1.jpg", :size => "2292x1524"
-    / %li#slide2.slide.stretcher{"data-gravity" => "0.5x0.5", :title => "Napa Wine Tasting at Foreign Cinema"}
-    /   =image_tag "assets/slideshow/slide2.jpg", :size => "2292x1524"
-    %li#slide3.slide.stretcher{"data-gravity" => "0.5x0.5", :title => "Beer and Sausage Pairing at Schmidt's"}
-      =image_tag "assets/slideshow/slide3.jpg", :size => "2292x1524"
-      
+    %li#slide2.slide.stretcher{"data-gravity" => "0.5x0.5", :title => "Napa Wine Tasting at Foreign Cinema"}
+      =image_tag "assets/slideshow/slide2.jpg", :size => "2292x1524"
+
 =content_for :footer do
   %nav.regular.clearfix
     =link_to "press", press_path
     =link_to "twitter", "http://www.twitter.com/spotteam", :target => "_new"
     =link_to "blog", blog_index_path
     =link_to "about", about_path
-    =link_to "sign in", new_session_path
+    -if logged_in?
+      =link_to current_user.nickname.downcase, account_path
+    -else
+      =link_to "sign in", new_session_path
   %nav.icons.clearfix
     =img_link_to "assets/general/appstore140x40.png", getspot_path, :size => "140x40", :class => "getspot"
     =img_link_to "assets/general/bizlink160x40.png", biz_root_path, :size => "160x40", :class => "bizlink"

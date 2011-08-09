@@ -84,35 +84,23 @@ ActiveRecord::Schema.define(:version => 20110804054052) do
   add_index "businesses", ["business_account_id", "place_id"], :name => "index_businesses_on_business_account_id_and_place_id", :unique => true
 
   create_table "cities", :force => true do |t|
-    t.string   "name",                                                                               :null => false
-    t.string   "fully_qualified_name",                                                               :null => false
-    t.decimal  "lat",                                  :precision => 11, :scale => 9,                :null => false
-    t.decimal  "lng",                                  :precision => 12, :scale => 9,                :null => false
+    t.string   "name",                                                                  :null => false
+    t.string   "fqn",                                                                   :null => false
+    t.string   "slug",                                                                  :null => false
+    t.decimal  "lat",                     :precision => 11, :scale => 9,                :null => false
+    t.decimal  "lng",                     :precision => 12, :scale => 9,                :null => false
     t.integer  "radius"
-    t.string   "country_code",            :limit => 2,                                               :null => false
-    t.string   "region",                                                                             :null => false
-    t.integer  "population",                                                                         :null => false
-    t.integer  "subscriptions_available",                                             :default => 0, :null => false
-    t.integer  "subscription_count",                                                  :default => 0, :null => false
+    t.integer  "population",                                             :default => 0, :null => false
+    t.string   "region",                                                                :null => false
+    t.string   "region_code",                                                           :null => false
+    t.string   "country_code",                                                          :null => false
+    t.integer  "subscriptions_available",                                :default => 0, :null => false
+    t.integer  "subscription_count",                                     :default => 0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "credit_cards", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "token"
-    t.string   "card_type"
-    t.string   "bin"
-    t.string   "last_4"
-    t.integer  "position"
-    t.integer  "expiration_month"
-    t.integer  "expiration_year"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "credit_cards", ["token"], :name => "index_credit_cards_on_token", :unique => true
-  add_index "credit_cards", ["user_id"], :name => "index_credit_cards_on_user_id"
+  add_index "cities", ["slug"], :name => "index_cities_on_slug", :unique => true
 
   create_table "credit_cards", :force => true do |t|
     t.integer  "user_id"
