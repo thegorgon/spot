@@ -176,6 +176,11 @@
             color: #ff3333;
           }
         }
+        .description {
+          padding: 5px 0;
+          color: #999;
+          display: none;
+        }
         h3 {
           width: 170px;
         }
@@ -192,10 +197,20 @@
           height: auto;
           @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px inset);
           h3, h2 {
+            text-shadow: 0px -1px 0px #333;
+            color: #ededed;
+          }
+        }
+        &.active {
+          h3, h2 {
             overflow: visible;
             white-space: normal;
             text-shadow: 0px -1px 0px #333;
             color: #ededed;
+          }
+          .description {
+            display: block;
+            color: #ddd;
           }
           .controls {
             display: block;

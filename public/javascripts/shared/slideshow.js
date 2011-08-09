@@ -41,6 +41,9 @@
             });          
           });
         }
+        $('.slidenav').removeClass('selected');
+        $('.slidenav').eq(i).addClass('selected');
+        slidereel.animate({left : -1 * currentSlide * viewport.width()}, 1500);
       }, 
       nextSlide = function() {
         var next = currentIdx < slides.length - 1 ? currentIdx + 1 : 0;
@@ -79,16 +82,19 @@
       }, 100);
     });
     
-    // $(window).click(function(e) {
-    //   e.preventDefault();
-    //   nextSlide();
-    // });
+    nextControl.click(nextSlide);
+    lastControl.click(lastSlide);
+    viewport.swipe({
+      threshold: { x: 25, y: 100},
+      swipeLeft: function() { nextSlide(); },
+      swipeRight: function() { lastSlide(); },
+      swipeDown: function(y) { window.scrollTo(0, 1000); },
+      swipeUp: function(y) { window.scrollTo(0, -60); }
+    });
     return {
       nextSlide: nextSlide,
       lastSlide: lastSlide,
-      jumpTo: jumpTo,
-      start: start,
-      stop: stop
+      jumpTo: jumpTo
     };
   };
 }(jQuery));

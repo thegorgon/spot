@@ -86,10 +86,10 @@ class PlaceSearch < ActiveRecord::Base
         load_local_places
         load_google_places if @position
         @results = @results.values.sort do |r1, r2| 
-          if r2.relevance == r1.relevance && r1.wishlist_count == r2.wishlist_count 
+          if r2.relevance == r1.relevance #&& r1.wishlist_count == r2.wishlist_count 
             r1.distance <=> r2.distance
-          elsif r2.relevance == r1.relevance
-            r2.wishlist_count <=> r1.wishlist_count
+          # elsif r2.relevance == r1.relevance
+          #   r2.wishlist_count <=> r1.wishlist_count
           else
             r2.relevance <=> r1.relevance
           end

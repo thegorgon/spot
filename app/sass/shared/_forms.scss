@@ -234,8 +234,8 @@ ul.form {
     }
   }
   .hint {
-    opacity: 0;
-    @include transition("opacity 0.25s");
+    opacity : 0;
+    @include transition("all 0.25s");
     z-index: 0;
     background: transparent url(/images/assets/general/blkhntrt220x64.png) no-repeat left top;
     position: absolute;

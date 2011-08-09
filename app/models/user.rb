@@ -15,10 +15,10 @@ class User < ActiveRecord::Base
   has_many :codes, :foreign_key => :owner_id, :class_name => "PromotionCode"
   has_many :notes, :class_name => "PlaceNote"
   has_one :membership_application
+
   has_one :business_account
   has_one :facebook_account
   has_one :password_account
-  belongs_to :city
   
   validates :email, :format => EMAIL_REGEX, :uniqueness => true, :if => :email?
   name_attribute :name
@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
       false
     end
   end
-
+  
   def self.find_using_perishable_token(token, age=1.day) 
     if token.present?
       finder = self
@@ -137,7 +137,7 @@ class User < ActiveRecord::Base
     @nickname
   end
 
-  def adminify!
+  def admin!
     update_attribute(:admin, true)
   end
       
