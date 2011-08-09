@@ -24,7 +24,8 @@ class Api::BaseController < ApplicationController
   
   def log_device_specs
     description = device_specifications.map { |key, value|  "#{key.to_s.humanize.titlecase}: #{value}" }.join(", ")
-    Rails.logger.info("spot-app: handling request from : #{description}")
+    Rails.logger.info("spot-app: handling request from user-agent: #{request.user_agent}")
+    Rails.logger.info("spot-app: parsed user agent into device : #{description}")
   end
   
   def exception_handler(exception=nil)
