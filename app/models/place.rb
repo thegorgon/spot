@@ -207,8 +207,7 @@ class Place < ActiveRecord::Base
       :image_url => image.url,
       :updated_at => updated_at,
       :path => place_path(self),
-      :short_url => ShortUrl.shorten(place_path(self)),
-      :public_notes => notes.visible.limit(10)
+      :short_url => ShortUrl.shorten(place_path(self))
     }
     if !image.file? && !options[:default_images]
       hash.merge!(:image_url_640x400 => nil, :image_url_234x168 => nil, :image_url => nil)

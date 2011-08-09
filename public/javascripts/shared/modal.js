@@ -55,6 +55,7 @@
     }
   };
   $.fn.modal = function(options) {
+    options = options || {};
     var self = this;
     $.modal.init(self, options);
     

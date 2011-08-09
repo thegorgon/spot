@@ -32,7 +32,7 @@
         var form = $(this).parents('form'),
           place = $('#place_' + form.attr('data-place-id')),
           image = place.find('.place_image');
-        $.lightbox.close();
+        $('#imagesearch').dialog("close");
         killConnections();
         image.addClass('loading');
         form.ajaxSubmit({
@@ -72,8 +72,13 @@
       setUpdateInterval();
       $(selector).bind('click', function(e) {
         var place = $(this).parents('.place'),
-          id = place.attr('id').split('_').pop();
-        $.lightbox.loading();
+          id = place.attr('id').split('_').pop(),
+          modal = $('#imagesearch').length > 0 ? $('#imagesearch') : $('<div id="imagesearch"></div>').appendTo('body');
+        modal.html('<div class="loading">&nbsp;</div>').modal({
+          action: "open",
+          title: "Select an Image",
+          width: 620
+        });
         $(window).bind('closeLightbox', function(e) {
           killConnections();
         });
@@ -90,9 +95,11 @@
                 section = html.find('.section');
                 scrollTop = results.scrollTop();
                 results.append(section).scrollTop(scrollTop);
+                modal.dialog("option", "position", ["center", "center"]);                
               } else {
-                $.lightbox.show(html);
+                modal.html(html);
                 bindCustomForm(html);
+                modal.dialog("option", "position", ["center", "center"]);
               }
               bindPotentials(results);
             }
