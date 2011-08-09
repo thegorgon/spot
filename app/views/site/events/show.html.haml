@@ -4,7 +4,7 @@
 
 =content_for :above do
   -unless current_member?
-    =render :partial => "/shared/membership/overlay", :locals => {:title => "Get access to unforgettable experiences like this"}
+    =render :partial => "/shared/membership/overlay", :locals => {:describe => true}
 
 =content_for :toptitle do
   -if @city
@@ -19,6 +19,7 @@
 .details.clearfix
   .event
     %h1.name.tf=@promotion.name
+
     -if @promotion.bulleted.present?
       .bulleted.tf=@promotion.bulleted.html_safe
     .description=@promotion.description.html_safe
@@ -38,6 +39,8 @@
       =link_to "reviews on yelp", external_place_url(@place.external_place(:yelp)), :class => "info yelp"
     .info
       =sharing(request.url, "#{@promotion.name} at #{@place.name}? Sounds good to me.")
+  -if @promotion.designed_by_spot?
+    .designed_by_spot Designed By Spot
 
 -if current_member? || current_user.try(:membership_application)
   %hr

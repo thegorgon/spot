@@ -87,8 +87,12 @@ class User < ActiveRecord::Base
     self
   end
   
-  def active_membership
-    @active_membership ||= memberships.active.first
+  def active_membership(force=false)
+    if @active_membership.nil? && (force || !@_fetched_active_membership)
+      @active_membership = memberships.active.first
+      @_fetched_active_membership = true
+    end
+    @active_membership
   end
   
   def expired_memberships
@@ -104,7 +108,7 @@ class User < ActiveRecord::Base
   end
   
   def member?
-    !!active_membership
+    active_membership
   end
   
   def wishlist(params)

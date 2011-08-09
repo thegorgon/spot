@@ -14,7 +14,7 @@ class Membership < ActiveRecord::Base
   scope :expiring, lambda { where(["expires_at BETWEEN ? AND ?", Date.today, Date.tomorrow]) }
   
   def self.deliver_daily_updates
-    expiring.find_each { |membership| TransactionMailer.expiring_membership(membership).deliver! }
+    expiring.find_each { |membership| TransactionMailer.expiring_membership(membership).deliver! rescue nil }
   end
   
   def cancel!

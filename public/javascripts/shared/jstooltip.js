@@ -1,7 +1,9 @@
 (function($){
   var bind = function(container) {
     $('[data-jstooltip]', container).each(function(i) {
-      $(this).jstooltip($(this).attr('data-jstooltip'), $(this).attr('data-jstooltip-class'));
+      var msgSelector = $(this).attr('data-jstooltip'),
+        msg = $(msgSelector).length > 0 ? $(msgSelector): msgSelector;
+      $(this).jstooltip(msg, $(this).attr('data-jstooltip-class'));
     })
   }
   $.extend($, {

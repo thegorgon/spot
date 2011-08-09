@@ -11,22 +11,21 @@
   .text.tf
     To ensure an unforgettable experience, membership is limited to 10,000 restaurant devotees per city.
 
-=spot_form_for :application, :url => application_path, :display => "light inlinelabels#{conditionally(" unlocked", referrer)}", :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
+=spot_form_for :application, :url => application_path, :display => "light inlinelabels#{conditionally(" unlockable", referrer)}", :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
   =f.hidden_field :invitation_code, :value => referrer.try(:code)
-  -unless referrer
-    #invitecodesection.invitecode.step
-      -if @invalid
-        %h1.tf.empty Sorry, there are no more invitations left on that code
-      .lock
-        .shackle
-        .bolt
-      %li.question.tf=f.label :lock, "Spot Membership is currently available by invitation only"
-      .inputs
-        =f.text_field :lock, :placeholder => "invitation code", :value => referrer.try(:code), :formnovalidate => true, :class => "code"
-        =link_to "Unlock", "#", :class => "btnorgpill unlock"
-      .vouched
+  #invitecodesection.invitecode.step
+    -if @invalid
+      %h1.tf.empty Sorry, there are no more invitations left on that code
+    .lock
+      .shackle
+      .bolt
+    %li.question.tf=f.label :lock, "Spot Membership is currently available by invitation only"
+    .inputs
+      =f.text_field :lock, :placeholder => "invitation code", :value => referrer.try(:code), :formnovalidate => true, :class => "code", :autocomplete => "off"
+      =link_to "Unlock", "#", :class => "btnorgpill unlock"
+    .vouched
     
-      =link_to "No invitation? Discerning diner? Prove it.", "#", :class => "wanttoapply", :rel => "#appformcontainer", "data-toggle-class" => "applying"
+    =link_to "No invitation? Discerning diner? Prove it.", "#", :class => "wanttoapply", :rel => "#appformcontainer", "data-toggle-class" => "applying"
   .application.step
     .col.descriptions.right 
       =render :partial => "/site/shared/explanations/pricing", :locals => {:cssclass => "first"}

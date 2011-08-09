@@ -8,9 +8,11 @@
         .text
           .name.tf="#{template.business.place.name} : #{template.name}"
           .disclosure
-      -if template.bulleted.present?
-        .bulleted.tf
-          =template.bulleted
+      .bulleted.tf
+        =template.bulleted.to_s
+        -if template.designed_by_spot?
+          .designed_by_spot
+      
   .evtdis.updates.template{:class => cycle("even", "odd")}
     .image
       =image_tag "backgrounds/newupdates400x250.png", :size => "400x250"
@@ -24,4 +26,3 @@
           to get updates when new Experiences are added.
     .bulleted.tf
       New Experiences Added Daily
-      

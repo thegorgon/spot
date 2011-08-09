@@ -25,6 +25,7 @@
       #bd= content_for?(:content) ? yield(:content) : yield
       %footer= yield :footer
     #fb-root
+    = yield :bottom
     = yield :libraries
     / = google_maps_api_include
     = include_javascripts :vendor

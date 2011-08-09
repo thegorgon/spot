@@ -42,8 +42,6 @@
 }
 
 @mixin triangle_up($w, $h, $color) {
-  bottom: 0;
-  left: 0;
   height: 0;
   width: 0;
   border-bottom: $h solid $color;
@@ -52,8 +50,6 @@
 }
 
 @mixin triangle_down($w, $h, $color) {
-  bottom: 0;
-  left: 0;
   height: 0;
   width: 0;
   border-top: $h solid $color;
@@ -62,8 +58,6 @@
 }
 
 @mixin triangle_right($w, $h, $color) {
-  bottom: 0;
-  left: 0;
   height: 0;
   width: 0;
   border-left: $w solid $color;
@@ -72,8 +66,6 @@
 }
 
 @mixin triangle_left($w, $h, $color) {
-  bottom: 0;
-  left: 0;
   height: 0;
   width: 0;
   border-right: $w solid $color;

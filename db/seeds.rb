@@ -18,7 +18,7 @@ sf ||= City.create({ "country_code" => "US",
   "region_code" => "ca", 
   "slug" => "sf", 
   "subscription_count" => 0, 
-  "subscriptions_available" => 10000 
+  "subscriptions_available" => 0 
 })
 
 chitown = City.find_by_slug("chicago")
@@ -77,21 +77,6 @@ nola ||= City.create({ "country_code" => "US",
   "region" => "louisiana", 
   "region_code" => "la", 
   "slug" => "nola", 
-  "subscription_count" => 0, 
-  "subscriptions_available" => 0
-})
-
-ismay = City.find_by_slug("ismay")
-ismay ||= City.create({ "country_code" => "US", 
-  "fqn" =>"ismay, montana, us", 
-  "lat" => 46.499444,
-  "lng" => -104.793611,
-  "name" => "ismay", 
-  "population" => 25, 
-  "radius" => nil, 
-  "region" => "montana", 
-  "region_code" => "mn", 
-  "slug" => "ismay", 
   "subscription_count" => 0, 
   "subscriptions_available" => 0
 })

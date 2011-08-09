@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
     handle_error(exception)
     render :template => "/site/errors/500.html.haml", :status => 500, :layout => "site"
   end
-  
+    
   def clean_backtrace(exception, *args)
     Rails.backtrace_cleaner.clean(exception.backtrace, *args)
   end

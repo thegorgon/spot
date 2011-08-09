@@ -18,27 +18,45 @@
   }
   .details {
     font-size: 18px;
-    margin-bottom: 30px;
+    padding-bottom: 30px;
+    position: relative;
     .event {
-      width: 556px;
+      width: 540px;
       float: left;
       .name {
+        float: left;
+        padding-right: 45px;
         margin-top: 5px;
+        .designed_by_spot {
+          top: 4px;
+        }
       }
       .bulleted {
-        margin: 0 0 20px;
+        margin: 0 0 25px;
         color: #333;
         padding-left: 45px;
         background: transparent url(/images/icons/hand34x16.png) no-repeat left center;
-        float: left;
+        clear: left;
       }
       .description {
         color: #333;
         clear: both;
       }
     }
+    .designed_by_spot {
+      bottom: 5px;
+      left: 0;
+      background: transparent url(/images/logos/sgray12x12.png) no-repeat left center;
+      width: auto;
+      height: 12px;
+      font-size: 12px;
+      padding-left: 20px;
+      top: auto;
+      right: auto;
+      color: #999;
+    }
     .place {
-      width: 250px;
+      width: 260px;
       float: right;
       .mapit {
         color: #808080;          
@@ -256,9 +274,13 @@
     position: relative;
     width: 855px;
     height: 400px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    .designed_by_spot {
+      top: auto;
+      bottom: 9px;
+    }
     .image {
-      top: -62px;
+      position: relative;
       width: 835px;
       height: 400px;
       overflow: hidden;

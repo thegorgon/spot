@@ -47,9 +47,22 @@
       &middot;
       =link_to "Twitter", "http://www.twitter.com/spotteam", :target => "_new"
       
+  =yield :outside
 
+=content_for :bottom do
   -unless current_member?
     #applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Founding Spot Member"}
       =render :partial => "/shared/membership/apply", :locals => {:referrer => session_invite}
   #aboutmembership.hidden{"data-title" => "About Spot Membership"}=render :partial => "shared/membership/about"
-= render :file => 'layouts/site'
+  
+  #explain_designed_by_spot.hidden
+    .explain_designed_by_spot
+      .arrow
+      .arrowborder
+      %h2.tf Designed By Spot
+      .content
+        Presented by The Spot Team as a thank you for being a member.
+
+  =yield :oreo_bottom
+
+=render :file => 'layouts/site'

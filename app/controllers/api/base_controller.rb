@@ -1,6 +1,6 @@
 class Api::BaseController < ApplicationController
   before_filter :require_user
-  
+  before_filter :log_device_specs
   rescue_from Exception, :with => :exception_handler
   
   private
@@ -20,6 +20,11 @@ class Api::BaseController < ApplicationController
       end
     end
     @device_specifications || {}
+  end
+  
+  def log_device_specs
+    description = device_specifications.map { |key, value|  "#{key.to_s.humanize.titlecase}: #{value}" }.join(", ")
+    Rails.logger.info("spot-app: handling request from : #{description}")
   end
   
   def exception_handler(exception=nil)

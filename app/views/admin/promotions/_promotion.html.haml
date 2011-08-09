@@ -12,6 +12,9 @@
       =hidden_field_tag :filter, params[:filter]
       =f.hidden_field :status, :value => PromotionTemplate::APPROVED_STATUS        
       %li.label
+        =f.label :name, "Name : "
+      =f.text_field :name
+      %li.label
         =f.label :bulleted, "Short Summary : "
       =f.text_field :bulleted
       %li.labelled

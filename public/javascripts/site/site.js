@@ -1,70 +1,109 @@
 (function(go) {
   $.provide(go, 'Views', {
     site: function() {
+      var explain = $('#explain_designed_by_spot').hide().removeClass('hidden'),
+        showDesignedBySpot = function(self) {
+          clearTimeout(self.data('popover-timeout'));
+          explain.css({left: 1000}).show()
+          var offset = self.offset(),
+            left = offset.left - explain.outerWidth() * 0.5 + self.outerWidth() * 0.5,
+            top = offset.top - explain.outerHeight();
+          explain.css({left: left, top: top});          
+          
+        };
+                
+      $('.designed_by_spot').unbind('mouseenter.show-explain').bind('mouseenter.show-explain', function(e) {
+        var self = $(this);
+        self.data('popover-timeout', setTimeout(function() { showDesignedBySpot(self) }, 500));
+      }).unbind('mouseleave.hide-expain').bind('mouseleave.hide-explain', function(e) {
+        clearTimeout($(this).data('popover-timeout'));
+        explain.hide();
+      });
+      $('.designed_by_spot').unbind('click.show-explain').bind('click.show-explain', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        showDesignedBySpot($(this));
+      });
       $('#applydialog').modal({
         trigger: '.btnmembership', 
         width: 800,
-        onClose: function() {
-          alert("ON CLOSE");
-          $(this).find('ul.form').removeClass("unlocked").removeClass('unlocking').removeClass("applying").removeClass('unlockable');
+        close: function() {
+          $(this).find('ul.form').removeClass("unlocked").removeClass('unlocking').removeClass("applying");
+          $('#applicationform').find('#application_lock').removeAttr('disabled');
+        },
+        open: function() {
+          var lock = $('#applicationform').find('#application_lock'),
+            invitationCode = $('#applicationform').find('#application_invitation_code'),
+            unlock = $('#applicationform').find('.unlock');
+          
+          $('#applicationform').find('.wanttoapply').unbind('click.apply').bind('click.apply', function(e) {
+            e.preventDefault();
+            var form = $(this).parents('ul.form:first');
+            form.addClass('applying');
+            lock.attr('disabled', 'disabled');
+          });
+          lock.unbind('keyup.updatecode').bind('keyup.updatecode', function(e) {
+            var self = this, 
+              timeout = $(self).data('change-timeout'),
+              li = $(self).parents('li:first');
+            if (e.keyCode == 13) {
+              e.preventDefault();
+              $(self).change();
+            } else {
+              li.removeClass('valid').removeClass('invalid');
+              if ($(self).val() == '') {
+                li.removeClass('loading');
+              } else {
+                li.addClass('loading');
+              }
+              clearTimeout(timeout);
+              $(self).data('change-timeout', setTimeout(function() {
+                $(self).change();
+              }, 1000));
+            }
+          });
+          unlock.unbind('click.unlock').bind('click.unlock', function(e) {
+            e.preventDefault();
+            form = $(this).parents('ul.form:first');
+            if (invitationCode.val() != '') {
+              unlock.unbind('click.unlock');
+              form.addClass('unlocking');
+              setTimeout(function(e) {
+                lock.attr('disabled', 'disabled');
+                form.removeClass('unlocking').addClass('unlocked')
+              }, 1000);          
+            }
+          });
+          lock.unbind('change.updatecode').bind('change.updatecode', function(e) {
+            var self = $(this),
+              form = self.parents('ul.form:first'),
+              li = self.parents('li:first'); 
+            if (self.data('lastsent') != self.val() && self.val().toString().length > 0) {            
+              self.parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
+              self.data('lastsent', self.val());
+              $.get('/codes/invitation/' + self.val(), function(data) {
+                if (data.code && data.code.available) {
+                  form.addClass('unlockable');
+                  form.find('.survey input.required').removeAttr('required');
+                  li.removeClass('loading').removeClass('invalid').addClass('valid');
+                  invitationCode.val(lock.val());
+                  form.find('.vouched').html(data.code.voucher + " has vouched for you.").slideDown();
+                } else {
+                  form.find('.vouched').slideUp();
+                  lock.removeAttr('disabled');
+                  form.removeClass('unlockable');
+                  unlock.unbind('click.unlock');
+                  li.removeClass('loading').removeClass('valid').addClass('invalid');
+                  form.find('.survey input.required').attr('required', 'required');
+                }
+              });
+            }
+          });
         }
       });
       $('#aboutmembership').modal({
         trigger: '.btnmemabout', 
-        width: 840,
-        
-        onClose: function() {
-          alert("ON CLOSE");
-        }
-      });
-      var lock = $('#applicationform').find('#application_lock'),
-        invitationCode = $('#applicationform').find('#application_invitation_code');
-      $('#applicationform').find('.wanttoapply').unbind('click.apply').bind('click.apply', function(e) {
-        e.preventDefault();
-        var form = $(this).parents('ul.form:first');
-        form.addClass('applying');
-        lock.attr('disabled', 'disabled');
-      });
-      lock.unbind('keydown.updatecode').bind('keydown.updatecode', function(e) {
-        if (e.keyCode == 13) {
-          e.preventDefault();
-          $(this).change();
-        }
-      });
-      lock.unbind('change.updatecode').bind('change.updatecode', function(e) {
-        var self = $(this),
-          form = self.parents('ul.form:first'),
-          li = self.parents('li:first'), 
-          unlock = $('.unlock');
-        if (self.data('lastsent') != self.val() && self.val().toString().length > 0) {            
-          self.parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
-          self.data('lastsent', self.val());
-          $.get('/codes/invitation/' + self.val(), function(data) {
-            if (data.code && data.code.available) {
-              form.addClass('unlockable');
-              form.find('.survey input.required').removeAttr('required');
-              li.removeClass('loading').removeClass('invalid').addClass('valid');
-              form.find('.vouched').html(data.code.voucher + " has vouched for you.").slideDown();
-              unlock.unbind('click.unlock').bind('click.unlock', function(e) {
-                e.preventDefault();
-                unlock.unbind('click.unlock');
-                form.removeClass('unlockable').addClass('unlocking');
-                setTimeout(function(e) {
-                  invitationCode.val(lock.val());
-                  lock.attr('disabled', 'disabled');
-                  form.removeClass('unlocking').addClass('unlocked')
-                }, 1000);
-              });
-            } else {
-              form.find('.vouched').slideUp();
-              lock.removeAttr('disabled');
-              form.removeClass('unlockable');
-              unlock.unbind('click.unlock');
-              li.removeClass('loading').removeClass('valid').addClass('invalid');
-              form.find('.survey input.required').attr('required', 'required');
-            }
-          });
-        }
+        width: 840
       });
     },
     site_home_index: function() {
