@@ -29,7 +29,13 @@ html {
     }
     #invite_popover {
       padding: 20px;
-      height: 80px;
+      height: 85px;
+      width: 300px;
+      .member_invite {
+        margin: 0;
+        padding: 0;
+        width: 300px;
+      }
     }
     .member_invite {
       width: 315px;
