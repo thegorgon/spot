@@ -20,8 +20,25 @@
   =profile("Niels Gabel", "http://www.twitter.com/noggin", "Engineering")
   =profile("Jesse Reiss", "http://www.thegorgonlab.com", "Engineering", :class => "last")
 %hr
+
+%h1.tf Want More?
+
+%ul.links
+  %li=link_to "Read about our Membership", membership_about_path
+  %li=link_to "Visit our Press Page", press_path
+  %li=link_to "Follow us on Twitter", "http://www.twitter.com/#!spotteam"
+  %li=link_to "Like us on Facebook", "http://www.facebook.com/joinspot"
+  %li=mail_to "The Spot Team <contact@spot-app.com>", "Contact Us Directly"
+
+%hr
 .small.center
   %p Spot is handcrafted with care in San Francisco.
   %p
     Drawings Courtesy of
-    =link_to "Joy Kim", "http://mumbojumbojoy.posterous.com/"
+    ="#{link_to "Joy Kim", "http://mumbojumbojoy.posterous.com/"}.".html_safe
+    Icons developed from
+    =link_to "Glyphish", "http://glyphish.com/"
+    and
+    ="#{link_to "The Noun Project", "http://thenounproject.com/"}.".html_safe
+    
+
