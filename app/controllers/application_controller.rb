@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
     authenticate
     unless current_user && current_user.admin?
       store_location
-      flash[:error] = "Sorry, that's for Spot administrators only. <a href=\"#{new_session_path}\">Login?</a>"
+      flash[:error] = "Sorry, that's for Spot administrators only. <a href=\"#{new_session_path}\">Sign in?</a>"
       redirect_to root_path
     end
   end  

@@ -18,8 +18,8 @@
       %span.account="#{link_to "not you?", logout_path}".html_safe
     -else show_login?
       %span.account.accountlnk
-        %a{'data-popover' => '#login_popover', 'data-popover-title' => 'Log In', 'data-popover-orient' => 'vertical'} 
-          login
+        %a{'data-popover' => '#login_popover', 'data-popover-title' => 'Sign In', 'data-popover-orient' => 'vertical'} 
+          sign in
       =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
         
   

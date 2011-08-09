@@ -17,7 +17,7 @@ class Site::BaseController < ApplicationController
     authenticate
     unless logged_in?
       store_location
-      flash[:error] = "Sorry, can you login first?"
+      flash[:error] = "Sorry, can you sign in first?"
       redirect_to new_session_path 
     end
   end  

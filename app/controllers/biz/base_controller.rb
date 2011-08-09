@@ -13,7 +13,7 @@ class Biz::BaseController < ApplicationController
     authenticate
     unless current_account
       store_location
-      flash[:error] = current_user ? "Tell us about your business." : "Please login first."
+      flash[:error] = current_user ? "Tell us about your business." : "Please sign in first."
       url = current_user ? new_biz_account_path : new_session_path
       Rails.logger.info "spot-app: redirecting from require_account to #{url}"
       redirect_to url
