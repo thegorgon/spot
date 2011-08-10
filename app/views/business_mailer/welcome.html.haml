@@ -14,6 +14,11 @@
 
 %p Have a great time promoting your business!
 
-=render :partial => "shared/mailers/signature"
+%p Sincerely,
+%p Julia & The Spot Team
+%br
+=mail_to "julia@spotmembers.com", "julia@spotmembers.com", :style => "color:#333"
+%br
+=link_to "http://www.spot-app.com", "http://www.spot-app.com", :style => "color:#333"
 %br
 1-888-817-5410

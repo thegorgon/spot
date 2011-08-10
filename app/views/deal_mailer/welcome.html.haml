@@ -26,16 +26,23 @@
   In the meantime, keep adding places and follow us on Twitter to stay in the loop about launch promotions and giveaways in your city.
 
 %p
-  If you have any questions, you can contact me, Julia, at julia@spot-app.com. 
+  If you have any questions, you can contact me, Julia, at julia@spotmembers.com. 
 
-=render :partial => "shared/mailers/signature"
+%p
+  Sincerely,
+%p
+  Julia Graham
+  %br
+  =mail_to "julia@spotmembers.com", "julia@spotmembers.com", :style => "color:#333"
+  %br
+  =link_to "http://www.spot-app.com", "http://www.spot-app.com", :style => "color:#333"
 
 %p
   Tell a friend
   through
-  =link_to "Facebook", fb_share_url(root_url, "Signed up for new Spot Deals!"), :style => "color:#333"
+  =link_to "Facebook", fb_share_url("http://www.spot-app.com", "Signed up for new Spot Deals!"), :style => "color:#333"
   or
-  =link_to "Twitter", twitter_share_url(root_url, "Signed up for new Spot Deals, I choose places, they get me deals @spotteam"), :style => "color:#333"
+  =link_to "Twitter", twitter_share_url("http://www.spot-app.com", "Signed up for new Spot Deals, I choose places, they get me deals @spotteam"), :style => "color:#333"
 
 =content_for :ft do
   %p{:style => "color:#999;font-size:8px;text-align:center;margin:10px 20px;"}

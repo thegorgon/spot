@@ -6,7 +6,7 @@ class DealMailer < ApplicationMailer
     @user = user
     @email = user.email
     @title = "Welcome to Spot Deals!"
-    mail( :reply_to => "julia@spot-app.com",
+    mail( :reply_to => "julia@spotmembers.com",
           :subject => "You're Subscribed To Spot Deals" )
   end
 end

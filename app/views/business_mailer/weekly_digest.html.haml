@@ -44,4 +44,9 @@
   to schedule more promotions, see more dates, and get more details about your business on 
   ="#{link_to "Spot", root_url, :style => "color:#333;"}.".html_safe
 
-=render :partial => "shared/mailers/signature"
+%p Sincerely,
+%p Julia & The Spot Team
+%br
+=mail_to "julia@spotmembers.com", "julia@spotmembers.com", :style => "color:#333"
+%br
+=link_to "http://www.spot-app.com", "http://www.spot-app.com", :style => "color:#333"

@@ -15,7 +15,7 @@
                 %p=line
             .message.clear
               Claimed. Contact
-              =mail_to "julia@spot-app.com"
+              =mail_to "julia@spotmembers.com"
               to resolve.
         -else
           =form_for :business, :url => biz_businesses_path do |f|
@@ -33,5 +33,5 @@
     %h2 Can't find your business?
     %p 
       Try being more specific with your search, or 
-      =mail_to "support@spot-app.com", "submit a request"
+      =mail_to "support@spotmembers.com", "submit a request"
       to add your business.

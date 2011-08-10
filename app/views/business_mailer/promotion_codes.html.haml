@@ -13,5 +13,9 @@
         %td{:style => "font-weight: bold;width:50px"}=code.code
         %td=code.issued?? "issued to #{code.owner.name}" : "not yet issued"
         
-
-=render :partial => "shared/mailers/signature"
+%p Sincerely,
+%p Julia & The Spot Team
+%br
+=mail_to "julia@spotmembers.com", "julia@spotmembers.com", :style => "color:#333"
+%br
+=link_to "http://www.spot-app.com", "http://www.spot-app.com", :style => "color:#333"

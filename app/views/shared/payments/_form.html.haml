@@ -9,7 +9,7 @@
       =ccf.select 'city_id', City.subscriptions_available.all.collect { |c| [c.name_and_region, c.id] }, {:validity => false, :prompt => "select your city", :value => @city.try(:id)}, :required => true
     %li.note
       Don't see your city? 
-      =mail_to "julia@spot-app.com", "Contact us" 
+      =mail_to "julia@spotmembers.com", "Contact us" 
       to let us know where we should launch next.
   .ccfields
     %h2 How will you be paying...

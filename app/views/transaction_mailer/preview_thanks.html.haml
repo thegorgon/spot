@@ -5,4 +5,9 @@
 
   %p We'll let you know as soon as it's ready.
 
-  =render :partial => "shared/mailers/signature"
+  %p Sincerely,
+  %p Julia & The Spot Team
+  %br
+  =mail_to "julia@spotmembers.com", "julia@spotmembers.com", :style => "color:#333"
+  %br
+  =link_to "http://www.spot-app.com", "http://www.spot-app.com", :style => "color:#333"
