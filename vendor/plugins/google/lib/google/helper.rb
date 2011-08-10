@@ -29,7 +29,7 @@ module Google
       content_tag(:script, :type => Mime::JS) do
         "var _gaq = _gaq || [];
         _gaq.push(['_setAccount', '#{account_id}']);
-        _gaq.push(['_setDomainName', '.spotmembers.com']);
+        _gaq.push(['_setDomainName', 'spotmembers.com']);
         _gaq.push(['_trackPageview']);
 
         (function() {
