@@ -10,7 +10,7 @@
     %table{:width => 600, :style => "border-spacing:0;border-collapse:collapse;width:600px;margin:0 auto;font-family: 'Helvetica Neue', 'Helvetica', 'Lucida Grande', 'Arial', sans-serif;font-size:14px;color:#333;", :cellpadding => 0, :cellspacing => 0}
       %tr
         %td
-          %table{:width => 598, :bgcolor => "#f7f7f7", :style => "border-spacing:0;border-collapse:collapse;border: 1px solid #999;padding:0;margin:0;background:#f7f7f7 url(https://www.spot-app.com/images/backgrounds/emailhd598x150.jpg?1) no-repeat no-repeat top left;", :cellpadding => 0, :cellspacing => 0}
+          %table{:width => 598, :bgcolor => "#f7f7f7", :style => "border-spacing:0;border-collapse:collapse;border: 1px solid #999;padding:0;margin:0;background:#f7f7f7 url(#{IMGHOST}backgrounds/emailhd598x150.jpg?1) no-repeat no-repeat top left;", :cellpadding => 0, :cellspacing => 0}
             %tr
               %td{:colspan => 5,:height => 10}
             %tr
@@ -40,9 +40,9 @@
       %tr
         %td{:style => "text-align: center;font-size:10px;line-height:12px;color:#333;"}
           Spot · 2601 Mission Street, Suite 403 · San Francisco, CA ·
-          =link_to "www.spot-app.com", "www.spot-app.com", :style => "color:#333;"
+          =link_to root_url, HOSTS[Rails.env], :style => "color:#333;"
           ·
-          =mail_to "feedback@spotmembers.com", "feedback@spotmembers.com", :style => "color:#333;"
+          =mail_to "feedback@spot-app.com", "feedback@spot-app.com", :style => "color:#333;"
       -if @email
         %tr{:style => "line-height:12px;"}
           %td{:style => "text-align:center;font-size:10px;line-height:12px;color:#333;"}
