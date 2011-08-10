@@ -30,7 +30,7 @@
         =pf.text_field 'address_lines[1]', :value => @business.place.address_lines[1], :label => "Address (line 2) :", :hint => "and your city, region, zip?", :required => true, :class => "address_field"
         =pf.text_field :city, :label => "City :", :hint => "what city is your business in?", :required => true
         =pf.phone_field :phone_number, :label => "Phone Number :", :hint => "where can our users call you?"
-        =f.file_field :image, :label => "Choose an Image :"        
+        =pf.file_field :image, :label => "Choose an Image :"        
         %li.buttons
           =button_tag :class => "btngrypill300x30" do
             Save Changes

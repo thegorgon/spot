@@ -1,5 +1,11 @@
 #page {
   padding: 135px 0 0 0;
+  #flashes {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
   header {
     min-width: 500px;
     position: absolute;
