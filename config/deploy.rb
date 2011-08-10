@@ -25,6 +25,7 @@ task :production do
   set :branch, :master
 
   app_servers = (1..app_server_n).collect { |num| "spot#{num}.ec2" }
+  app_servers << "spotapi.ec2"
   role :web, *app_servers
   role :app, *app_servers
   
