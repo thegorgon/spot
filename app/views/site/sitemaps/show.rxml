@@ -5,16 +5,26 @@ xml.urlset "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9", "xmlns:imag
     xml.url do
       xml.loc        place_event_url(promo.business.place, promo)
       xml.lastmod    w3c_date(promo.created_at)
-      xml.changefreq "weekly"
-      xml.priority   1
-      if place.image.file? && !place.image_processing?
-        xml.image :image do
-          xml.image :loc, place.image.url(:i640x400)
-          xml.image :caption, promo.description
-          xml.image :title, [promo.name, place.name, place.city, "Spot"].compact.join(' - ')
-          xml.image :geo_location, place.city_and_region
-        end 
-      end
+      xml.changefreq "WEEKLY"
+      xml.priority   0.5
+    end
+  end
+
+  @cities.each do |city|
+    xml.url do
+      xml.loc        city_url(city)
+      xml.lastmod    w3c_date(Time.now)
+      xml.changefreq "DAILY"
+      xml.priority   0.5
+    end
+  end
+  
+  @blog_entries.each do |entry|
+    xml.url do
+      xml.loc        blog_path(entry)
+      xml.lastmod    w3c_date(entry.date)
+      xml.changefreq "WEEKLY"
+      xml.priority   0.5
     end
   end
 end

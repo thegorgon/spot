@@ -6,6 +6,7 @@ module BlogHelper
       post.date_string
     end
   end
+  
   def truncate_string(string, length)
     words = string.split(' ')
     result = ""

@@ -5,6 +5,9 @@ class Site::SitemapsController < Site::BaseController
   
   def show
     @promotions = PromotionTemplate.approved.includes(:business => :place).all
+    @cities = City.visible.all
+    @blog_entries = BlogPost.filter(:per_page => 1000)
+    
     render :layout => false
   end
 end
