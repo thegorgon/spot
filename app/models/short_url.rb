@@ -1,14 +1,13 @@
 class ShortUrl < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   EXPANDER = 1234567890
-  DEFAULT_HOST = Rails.env.production?? "www.spot-app.com" : "www.rails.local"
   validates :url, :presence => true
   validate :url_validity
   
   def self.shorten(url)
     uri = URI.parse(url) rescue nil
     raise ArgumentError "Invalid URI." unless uri
-    uri.host ||= DEFAULT_HOST
+    uri.host ||= HOSTS[Rails.env]
     uri.scheme ||= "http"
     uri.port ||= 3000 if Rails.env.development?
     short = find_by_url(uri.to_s)
@@ -31,7 +30,7 @@ class ShortUrl < ActiveRecord::Base
   end
   
   def shortened(options={})
-    options[:host] ||= DEFAULT_HOST
+    options[:host] ||= HOSTS[Rails.env]
     options[:port] ||= 3000 if Rails.env.development?
     options[:protocol] ||= "https" if Rails.env.production?
     short_url(key, options)

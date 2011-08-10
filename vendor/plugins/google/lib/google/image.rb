@@ -1,7 +1,7 @@
 module Google
   class Image
     ENDPOINT = "https://ajax.googleapis.com/ajax/services/search/images"
-    REFERRER = Rails.env.production?? "www.spot-app.com" : "www.rails.local:3000"
+    REFERRER = Rails.env.production?? "www.spotmembers.com" : "www.rails.local:3000"
     INSTANCE_KEYS = [:height, :width, :id, :tb_width, :tb_height, :url, :tb_url]
     attr_accessor *INSTANCE_KEYS
     attr_accessor :id, :context

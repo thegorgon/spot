@@ -1,10 +1,10 @@
 twitter:
   api_key: OlsxhzeGzSaDvRPTDQcAFw
-  callback_url: 'http://www.spot-app.com'
+  callback_url: 'http://www.spotmembers.com'
   consumer_key: OlsxhzeGzSaDvRPTDQcAFw
   consumer_secret: FHjKXmwGNoGWSuxiu5wR348NW4OQSLohAU3nEsfBsDo
   oauth_token_secret: FHqb2ppxVUf9KbshZAE3IEyHTCNX184oe6Rf89ltjo
-  site: "http://www.spot-app.com"
+  site: "http://www.spotmembers.com"
   accounts:
     spotteam:
       oauth_token: 242458950-BEqB9qLKzkbjQUJx0LqTZPlBJcwxwIEVfIZT2azs

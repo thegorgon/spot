@@ -1,20 +1,17 @@
 ="Hello #{@account.first_name},"
 
-We’re writing to let you know that PlacePop’s new iPhone app, Spot (http://www.spot-app.com), is now available in the App Store!
+="We’re writing to let you know that PlacePop’s new iPhone app, Spot (#{root_url}), is now available in the App Store!"
 
 We created Spot because we wanted a simple yet stylish app that would help us remember all the restaurants we've been meaning to try. 
 
 Every day we're inundated with amazing restaurant and bar recommendations from friends, blogs, and magazines. Keeping track of all the places worth checking out has become a problem, and Spot is the solution we came up with: it's a simple, elegant "wishlisting" app packed with 100% utility and no fluff. Save places that you want to remember in your Spot wishlist, then use the app to recall these places when you're making plans to go out. Share places off your wishlist via email or SMS, and get directions right within the app.
 
-You can find Spot in the app store, available as a free download: http://itunes.apple.com/app/spot/id414793658 plus screenshots and other goodies on our website: http://www.spot-app.com/#/press
+="You can find Spot in the app store, available as a free download: http://itunes.apple.com/app/spot/id414793658 plus screenshots and other goodies on our website: #{press_url}"
+
 If you have a moment to try out the app, we'd love to know what you think of it. We created Spot for food and dining enthusiasts everywhere, and our goal is to make it the ultimate, indispensable app for people who enjoy eating out and sharing local recommendations.
 
 If you have feedback to share, you can reply to this email or reach me directly at julia@spot-app.com. If you like the app, please help us succeed by giving Spot a positive rating.
 
 We hope you enjoy using Spot as much as we enjoyed making it!
 
-Cheers,
-
-Julia & The Spot Team    
-http://www.spot-app.com    
-http://www.twitter.com/spotteam
+=render :partial => "shared/mailers/signature"

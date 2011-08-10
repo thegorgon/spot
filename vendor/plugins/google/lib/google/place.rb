@@ -1,7 +1,7 @@
 module Google
   class Place
     ENDPOINT = "http://ajax.googleapis.com/ajax/services/search/local"
-    REFERRER = Rails.env.production?? "www.spot-app.com" : "www.rails.local:3000"
+    REFERRER = Rails.env.production?? "www.spotmembers.com" : "www.rails.local:3000"
     attr_accessor :cit, :name, :street_address, :listing_type, :city, :region, :country, :address_lines, :phone_number, :lat, :lng
     attr_accessor :cid
     

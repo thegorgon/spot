@@ -9,8 +9,4 @@
   -event.codes.each_with_index do |code, i|
     ="#{i + 1}. #{code.code} - #{code.issued?? "issued to #{code.owner.name}" : "not yet issued"}"
 
-Sincerely,
-
-Julia & The Spot Team
-julia@spot-app.com
-http://www.spot-app.com
+=render :partial => "shared/mailers/signature"

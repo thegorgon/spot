@@ -4,7 +4,7 @@ SEARCHES = [{:position => Geo::Position.new(:lat => 37.768186, :lng => -122.4291
 module Api
   class TestSuite
     include Rails.application.routes.url_helpers
-    default_url_options[:host] = Rails.env.production?? "api.spot-app.com" : "api.rails.local:3000"
+    default_url_options[:host] = Rails.env.production?? "api.spotmembers.com" : "api.rails.local:3000"
     
     def initialize(arguments=[])
       @arguments = {}

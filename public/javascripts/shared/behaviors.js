@@ -251,8 +251,8 @@
           {
             method: 'feed',
             name: $(this).attr('data-fb-name'),
-            link: $(this).attr('data-fb-url') || 'http://www.spot-app.com',
-            picture: $(this).attr('data-fb-image') || 'http://www.spot-app.com/images/logos/og_image.png',
+            link: $(this).attr('data-fb-url') || 'http://www.spotmembers.com',
+            picture: $(this).attr('data-fb-image') || 'http://www.spotmembers.com/images/logos/og_image.png',
             caption: $(this).attr('data-fb-caption'),
             description: $(this).attr('data-fb-description')
           },

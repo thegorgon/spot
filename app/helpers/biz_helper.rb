@@ -12,7 +12,7 @@ module BizHelper
                     and start attracting Spot Members to your business during slower times."
     elsif biz.promotion_codes.issued.count == 0
       nextstep = "None of your promotions have been issued to Spot Members. Try 
-                    #{twitter_share_link "http://www.spot-app.com", "Wishlist #{@business.place.name} on Spot to get updates about promotions.", "tweeting"} 
+                    #{twitter_share_link root_url, "Wishlist #{@business.place.name} on Spot to get updates about promotions.", "tweeting"} 
                     about your spot, 
                     #{fb_post({:name => "Wishlist #{@business.place.name} on Spot!", :caption => "Add #{@business.place.name} to your wishlist on Spot to get updates about promotions.", :url => root_url}, "posting")} 
                     about your spot on Facebook,

@@ -28,7 +28,7 @@
     .content
       %strong Want more Spot Members to Wishlist your spot?
       %ul
-        %li="#{twitter_share_link "http://www.spot-app.com", "Wishlist #{@business.place.name} on Spot to get updates about promotions.", "Tweet"} about your spot.".html_safe
+        %li="#{twitter_share_link root_url, "Wishlist #{@business.place.name} on Spot to get updates about promotions.", "Tweet"} about your spot.".html_safe
         %li="#{fb_post({:name => "Wishlist #{@business.place.name} on Spot!", :caption => "Add #{@business.place.name} to your wishlist on Spot to get updates about promotions.", :url => root_url}, "Post")} about your spot on Facebook.".html_safe
         %li="Add a #{link_to "Spot widget", biz_widgets_path} to your website.".html_safe
         %li="Use #{link_to "promotions", calendar_biz_business_path(@business)} to encourage members to come to your business.".html_safe

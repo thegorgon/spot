@@ -24,12 +24,12 @@ class Api::BaseController < ApplicationController
   
   def log_device_specs
     description = device_specifications.map { |key, value|  "#{key.to_s.humanize.titlecase}: #{value}" }.join(", ")
-    Rails.logger.info("spot-app: handling request from user-agent: #{request.user_agent}")
-    Rails.logger.info("spot-app: parsed user agent into device : #{description}")
+    Rails.logger.info("spot: handling request from user-agent: #{request.user_agent}")
+    Rails.logger.info("spot: parsed user agent into device : #{description}")
   end
   
   def exception_handler(exception=nil)
-    Rails.logger.info("spot-app: handling exception of type : #{exception.class}")
+    Rails.logger.info("spot: handling exception of type : #{exception.class}")
     log_error(exception)
     record_user_event("api exception", exception.class.to_s)
     
@@ -51,7 +51,7 @@ class Api::BaseController < ApplicationController
   
   def basic_exception(status, exception=nil, headers={})
     headers = {:exception_body => exception.try(:message), :exception_type => exception.class.to_s}.merge!(headers)
-    Rails.logger.info("spot-app: rendering error : #{status}, #{headers.inspect}")
+    Rails.logger.info("spot: rendering error : #{status}, #{headers.inspect}")
     head(status, headers)
   end
   
@@ -86,7 +86,7 @@ class Api::BaseController < ApplicationController
   
   def require_user    
     authenticate
-    Rails.logger.info("spot-app: requiring user, current user id : #{current_user.try(:id)}")
+    Rails.logger.info("spot: requiring user, current user id : #{current_user.try(:id)}")
     raise UnauthorizedAccessError, "An active user session is required to access this resource." unless logged_in?
   end
 end

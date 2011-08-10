@@ -1,5 +1,5 @@
 class BusinessMailer < ApplicationMailer
-  REPLY_TO = "Julia Graham <julia@spot-app.com>"
+  REPLY_TO = "Julia Graham <julia@members.com>"
   default :reply_to => REPLY_TO
   default :to => Proc.new { @account.email_with_name }
   
@@ -15,7 +15,7 @@ class BusinessMailer < ApplicationMailer
     @subject = parameters[:subject]
     @message = parameters[:message]
     @title = @subject
-    mail( :to => Rails.env.production?? "contact@spot-app.com" : "jreiss@spot-app.com",
+    mail( :to => Rails.env.production?? "contact@spotmembers.com" : "jreiss@oogalabs.com",
           :reply_to => @contact,
           :subject => "New business message : #{@subject}")
   end
