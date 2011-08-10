@@ -21,7 +21,7 @@ xml.urlset "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9", "xmlns:imag
   
   @blog_entries.each do |entry|
     xml.url do
-      xml.loc        blog_path(entry)
+      xml.loc        blog_url(entry)
       xml.lastmod    w3c_date(entry.date)
       xml.changefreq "WEEKLY"
       xml.priority   0.5

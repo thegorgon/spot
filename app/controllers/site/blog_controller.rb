@@ -3,12 +3,12 @@ class Site::BlogController < Site::BaseController
   
   def index
     @posts = BlogPost.filter(params)
+    @page_keywords = BlogPost::TOPICS
+    @page_title = "The Spot Blog - Spot Membership Experiences"
     respond_to do |wants|
       wants.xml { render :layout => false }
       wants.html
     end
-    @page_keywords = BlogPost::TOPICS
-    @page_title = "The Spot Blog - Spot Membership Experiences"
   end
   
   def show

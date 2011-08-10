@@ -5,7 +5,7 @@ class BlogPost < ActiveRecord::Base
   
   def self.filter(params={})
     search = { :page => params[:page], :per_page => params[:per_page], :tagged => params[:tag], :search => params[:q] }
-    key = "blog/items?#{search.to_query}&v=#{AppSetting.get(:blog)}"
+    key = "blog/items?#{search.to_query}&v=#{AppSetting.get(:blog_revision)}"
     posts = nil
     AutoloadMissingConstants.protect do
       posts = Rails.cache.fetch(key, :expires_in => 1.week) do 
@@ -20,7 +20,7 @@ class BlogPost < ActiveRecord::Base
     record = BlogPost.find_by_slug(slug)
     if (record)
       AutoloadMissingConstants.protect do
-        post = Rails.cache.fetch( "blog/items/#{record.tumblr_id}?v=#{AppSetting.get(:blog)}", :expires_in => 1.week ) do
+        post = Rails.cache.fetch( "blog/items/#{record.tumblr_id}?v=#{AppSetting.get(:blog_revision)}", :expires_in => 1.week ) do
           Wrapr::Tumblr::Item.find(record.tumblr_id)
         end
       end
