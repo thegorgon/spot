@@ -15,7 +15,7 @@ class Biz::BaseController < ApplicationController
       store_location
       flash[:error] = current_user ? "Tell us about your business." : "Please sign in first."
       url = current_user ? new_biz_account_path : new_session_path
-      Rails.logger.info("spot: redirecting from require_account to #{url}"
+      Rails.logger.info("spot: redirecting from require_account to #{url}")
       redirect_to url
     end
   end
@@ -24,7 +24,7 @@ class Biz::BaseController < ApplicationController
     if current_account
       authenticate
       url = biz_account_path
-      Rails.logger.info("spot: redirecting from require_no_account to #{url}"
+      Rails.logger.info("spot: redirecting from require_no_account to #{url}")
       redirect_to url 
     end
   end
