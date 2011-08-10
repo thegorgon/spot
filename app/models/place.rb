@@ -216,9 +216,9 @@ class Place < ActiveRecord::Base
     if image_processing? && options[:processed_images]
       hash.merge!(:processed_image_url_640x400 => image.processed_url(:i640x400), :processed_image_url_234x168 => image.processed_url(:i234x168))
     end
-    external_places.each do |external|
-      hash["#{external.class.to_sym}_id"] = external.source_id
-    end
+    # external_places.each do |external|
+    #   hash["#{external.class.to_sym}_id"] = external.source_id
+    # end
     hash
   end
 
