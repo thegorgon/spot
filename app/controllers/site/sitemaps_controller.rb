@@ -4,7 +4,7 @@ class Site::SitemapsController < Site::BaseController
     :expires_in => 1.week
   
   def show
-    @places = Place.order("id DESC").limit(1000).all
+    @promotions = PromotionTemplate.approved.includes(:business => :place).all
     render :layout => false
   end
 end
