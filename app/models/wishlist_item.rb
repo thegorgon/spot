@@ -55,7 +55,6 @@ class WishlistItem < ActiveRecord::Base
       @tweet = "Hot on Spot: #{item.name} was just wishlisted"
       @tweet << " in" if item.city.present?
       @tweet << " ##{item.city.gsub(' ', '').gsub('-', '_').downcase}" if item.city.gsub(' ', '').present?
-      @tweet << " via @SpotTeam"
     end
     @tweet << " #{ShortUrl.shorten(item_path)}" if item_path.present?
     @tweet.length <= 150 ? @tweet : nil
