@@ -27,6 +27,7 @@
   =hidden_field_tag :tr_data, ERB::Util.html_escape(@payment.tr_data(:redirect_url => endpoint_membership_url))
   .paymentoptions.selectable
     %h2.tf 1. Select membership type
+    .launchpricing
     =f.fields_for :custom_fields do |cf|
       =cf.hidden_field :subscription_plan_id, :value => ""
     -Subscription::PLANS.keys.each_with_index do |name, i|
@@ -34,7 +35,7 @@
       .paymentoption{"data-value" => plan.plan_id, :class => "#{name} #{conditionally("active", @payment.plan == name)} #{first_or_last(Subscription::PLANS.keys, i)}"}
         .mval.tf 
           %span.currency $
-          =plan.cost
+          =plan.launch_cost
           .period="/#{plan.period_name}"
         .benefits
           -if plan.period == "annually"
@@ -46,6 +47,8 @@
         .checkbox
           .box
           .check              
+    .explain
+      Join now and your membership fees will never increase.
 
     #promocodefields.note
       =f.fields_for :custom_fields do |cf|

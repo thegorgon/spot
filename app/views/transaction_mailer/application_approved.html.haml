@@ -15,7 +15,7 @@
               %tr
                 %td{:style => "text-align:left;font-size:25px;padding:0 10px;margin:0;"}
                   .mval.tf
-                    =image_tag attachments["#{plan.cost}per#{plan.period_name}.png"].url, :size => "100x50"
+                    =image_tag attachments["#{plan.launch_cost}per#{plan.period_name}.png"].url, :size => "100x50"
                 %td
                   -if plan.period == "annually"
                     .benefit{:style => "padding: 5px 0 0;"} Annual Membership

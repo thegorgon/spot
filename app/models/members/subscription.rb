@@ -4,13 +4,9 @@ class Subscription < ActiveRecord::Base
   validates :user, :presence => true
   validates :credit_card, :presence => true
   
-  class Plan < Struct.new(:cost, :period, :plan_id)
+  class Plan < Struct.new(:launch_cost, :full_price, :period, :plan_id)
     def abbrev_period
       period == "monthly" ? "mo" : "yr"
-    end
-    
-    def payment_summary
-      "$#{cost}/#{abbrev_period}"
     end
     
     def period_name
@@ -18,7 +14,7 @@ class Subscription < ActiveRecord::Base
     end
   end
   
-  PLANS = {:venti => Plan.new(35, "annually", "ea_12"), :grande => Plan.new(5, "monthly", "ea_1")}
+  PLANS = {:venti => Plan.new(35, 90, "annually", "ea_12"), :grande => Plan.new(5, 10, "monthly", "ea_1")}
   
   scope :active, lambda { where(["expires_at > ?", Time.now]) }
   

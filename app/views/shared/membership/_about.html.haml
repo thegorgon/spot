@@ -25,11 +25,13 @@
       .paymentoptions
         -Subscription::PLANS.keys.each_with_index do |name, i|
           -plan = Subscription::PLANS[name]
+          .launchpricing
           .paymentoption{:class => "#{name} #{first_or_last(Subscription::PLANS.keys, i)}"}
             .mval.tf 
               %span.currency $
-              =plan.cost
+              =plan.launch_cost
               .period="/#{plan.period_name}"
+              
             .benefits
               -if plan.period == "annually"
                 .benefit Annual Membership
@@ -37,7 +39,8 @@
               -else
                 .benefit Renews Monthly
                 .benefit Cancel Anytime
-    
+        .explain
+          Join now and your membership fees will never increase.
   -if current_member? && current_user.invitation_code.invites_remaining?
     %hr
     .centered.center

@@ -22,7 +22,7 @@ class TransactionMailer < ApplicationMailer
     @email = application.user.email
     @title = "Congratulations and Welcome to Spot!"
     Subscription::PLANS.each do |name, plan|
-      attachments.inline["#{plan.cost}per#{plan.period_name}.png"] = File.read("#{Rails.root}/public/images/assets/payment/#{plan.cost}per#{plan.period_name}100x50.png")
+      attachments.inline["#{plan.launch_cost}per#{plan.period_name}.png"] = File.read("#{Rails.root}/public/images/assets/payment/#{plan.launch_cost}per#{plan.period_name}100x50.png")
     end
     mail
   end
