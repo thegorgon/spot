@@ -31,7 +31,6 @@ class ShortUrl < ActiveRecord::Base
   
   def shortened(options={})
     options[:host] ||= HOSTS[Rails.env]
-    options[:port] ||= 3000 if Rails.env.development?
     options[:protocol] ||= "https" if Rails.env.production?
     short_url(key, options)
   end

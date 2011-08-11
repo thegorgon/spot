@@ -44,7 +44,7 @@ class WishlistItem < ActiveRecord::Base
   def item_path
     case item
     when Place
-      place_path(item)
+      place_url(item, :host => HOSTS['production'])
     else
       nil
     end      
