@@ -1,6 +1,6 @@
 class ShortUrl < ActiveRecord::Base
   include Rails.application.routes.url_helpers
-  EXPANDER = 1234567890
+  EXPANDER = 3026823010
   validates :url, :presence => true
   validate :url_validity
   
@@ -22,7 +22,7 @@ class ShortUrl < ActiveRecord::Base
   end
   
   def self.expand(key)
-    shortened = find_by_id(key.base62_decode/EXPANDER)
+    shortened = find_by_id(key.base62_decode ^ EXPANDER)
     if shortened
       shortened.increment(:visits)    
       shortened.url
@@ -36,7 +36,7 @@ class ShortUrl < ActiveRecord::Base
   end
   
   def key
-    (id * EXPANDER).base62_encode
+    (id ^ EXPANDER).base62_encode
   end
     
   private
