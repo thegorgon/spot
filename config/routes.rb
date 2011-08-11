@@ -65,13 +65,14 @@ Spot::Application.routes.draw do
   namespace "admin" do
     resources :places do
       resources :matches, :only => [:index, :create]
+      put "dedupe", :on => :member
       get "matches", :on => :collection
       get "images", :on => :member
     end
     resources :applications, :only => [:index], :controller => "membership_applications" do
       put "toggle", :on => :member
     end
-    resources :duplicates, :only => [:index] do
+    resources :duplicates, :only => [:index, :create] do
       member do 
         put "resolve"
         put "ignore"

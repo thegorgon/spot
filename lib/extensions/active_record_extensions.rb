@@ -2,21 +2,27 @@ module ActiveRecordExtensions
   def self.included(base)
     base.send(:include, InstanceMethods)
     base.send(:extend, ClassMethods)
-    base.send(:before_create, :set_newly_created)
-    base.send(:after_commit, :clear_newly_created)
+    base.send(:before_save, :set_commit_flags)
+    base.send(:after_commit, :clear_commit_flags)
   end
   
   module InstanceMethods
-    def set_newly_created
-      @newly_created = true
+    def set_commit_flags
+      @_new_commit = new_record?
+      @_commits = changes
     end
     
-    def clear_newly_created
-      @newly_created = false
+    def clear_commit_flags
+      @_new_commit = false
+      @_commits = HashWithIndifferentAccess.new
     end
     
-    def newly_created?
-      !!@newly_created
+    def attribute_commited?(a)
+      @_commits.has_key?(a)
+    end
+    
+    def new_commit?
+      !!@_new_commit
     end
   end
   

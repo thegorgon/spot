@@ -7,6 +7,14 @@ class Admin::DuplicatesController < Admin::BaseController
     @duplicates = @duplicates.paginate(:page => [1, params[:page].to_i].max, :per_page => params[:per_page])
   end
   
+  def create
+    # @place1 = Place.find(params[:duplicate][:place_1_id])
+    # @place2 = Place.find(params[:duplicate][:place_2_id])
+    # @duplicate = DuplicatePlace.duplicate_for(@place1, @place2)
+    # @duplicate.resolve!
+    redirect_back_or_default(edit_admin_place_path(@place1))
+  end
+  
   def ignore
     @duplicate = DuplicatePlace.find(params[:id])
     @duplicate.ignore!

@@ -11,7 +11,7 @@ class PlaceNote < ActiveRecord::Base
                               :field => "status", 
                               :protected => ["muted"]
   
-  after_commit :enqueue_propagation, :if => :newly_created?
+  after_commit :enqueue_propagation, :if => :new_commit?
 
   scope :undeleted, where(:deleted_at => nil)
   scope :deleted, where("deleted_at IS NOT NULL")

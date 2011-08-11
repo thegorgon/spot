@@ -244,7 +244,7 @@ class Place < ActiveRecord::Base
   end
   
   def enqueue_deduping
-    if clean_address_changed? || clean_name_changed?
+    if attribute_commited?(:clean_name) || attribute_commited?(:clean_address)
       Resque.enqueue(Jobs::PlaceDeduper, id)
     end
   end

@@ -202,7 +202,20 @@
         });
       };
       bindRow(this.parents('tr'));
-    }
+    },
+    confirmSubmission: function() {
+      $(this).unbind('submit.confirm').bind('submit.confirm', function(e) {
+        if ($(this).data('confirmed') || $(this).attr('data-confirm').toString().length == 0 || confirm($(this).attr('data-confirm'))) {
+          $(this).data('confirmed', true);
+          return true;
+        } else {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          $(this).data('confirmed', false);
+          return false;
+        }
+      });
+    }  
   });
 }(jQuery));
 
@@ -227,6 +240,7 @@
       fetch('[placeholder]').placeholder();
       fetch('[data-mode=select]').selectOnly();
       fetch('.file_field input').fileField();
+      fetch('form[data-confirm]:not(.ajax)').confirmSubmission();
       fetch('a[data-method]:not(.ajax)').actionLink();
       fetch('a[data-confirm][data-method]:not(.ajax)').actionLink();
       fetch('.fbconnect').fbconnect();

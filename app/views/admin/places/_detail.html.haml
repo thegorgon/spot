@@ -35,3 +35,10 @@
         %p.duplicate
           =link_to(dupe.id, admin_place_path(dupe)) + '.'
           ="#{dupe.name} #{dupe.address}"
+    
+    -unless @place.new_record?
+      =link_to "Run Deduping", dedupe_admin_place_path(@place), "data-method" => "put"
+      =spot_form_for :duplicate, :url => admin_duplicates_path, :display => "light", :html => {"data-confirm" => "Are you sure? This is not reversible"} do |f|
+        =f.hidden_field :place_1_id, :value => @place.id
+        =f.number_field :place_2_id, :label => "Mark Duplicate : ", :placeholder => "duplicate place id", :required => true
+      

@@ -97,10 +97,31 @@
     }
   }
   .duplication {
+    width: 370px;
+    float: left;
+    text-align: center;
     clear: both;
     font-size: 0.9em;
     p {
       padding: 5px 0;      
+    }
+    form {
+      width: 268px;
+      margin: 0 auto;
+      text-align: left;
+      .label {
+        float: left;
+        width: 100px;
+        line-height: 30px;
+        font-weight: bold;
+      }
+      .input_container {
+        float: right;
+        width: 200px;
+        input {
+          width: 150px;
+        }
+      }
     }
   }
   .latlng {

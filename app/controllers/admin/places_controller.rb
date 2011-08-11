@@ -1,5 +1,5 @@
 class Admin::PlacesController < Admin::BaseController
-  before_filter :require_place, :only => [:edit, :update, :destroy, :images]
+  before_filter :require_place, :only => [:edit, :update, :destroy, :images, :dedupe]
   respond_to :html
   
   def index
@@ -15,6 +15,12 @@ class Admin::PlacesController < Admin::BaseController
   def new
     @place = Place.new
     respond_with(@place)
+  end
+
+  def dedupe
+    flash[:notice] = "Deduping #{@place.name}"
+    Resque.enqueue(Jobs::PlaceDeduper, @place.id)
+    redirect_to edit_admin_place_path(@place)
   end
 
   def create

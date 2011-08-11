@@ -13,8 +13,8 @@ class WishlistItem < ActiveRecord::Base
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}, :if => :lng
   
   after_create :update_item_wishlist_count
-  after_commit :enqueue_tweeting, :if => :newly_created?
-  after_commit :enqueue_propagation, :if => :newly_created?
+  after_commit :enqueue_tweeting, :if => :new_commit?
+  after_commit :enqueue_propagation, :if => :new_commit?
   
   attr_protected :deleted_at
   cattr_accessor :per_page

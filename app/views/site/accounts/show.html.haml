@@ -13,7 +13,7 @@
     -if password = current_user.password_account
       %h2.changepassword.tf Change Password
       =spot_form_for password, :as => :password_account, :url => account_path, :display => "light inlinelabels insetvalidity clearfix" do |f|
-        =f.password_field :current_password, :placeholder => "current password", :label => "current : ", :required => true, :hint => "for sercurity's sake", :minlength => 4, :maxlength => 25
+        =f.password_field :current_password, :placeholder => "current password", :label => "current : ", :required => true, :hint => "for security's sake", :minlength => 4, :maxlength => 25
         =f.password_field :password, :placeholder => "new password", :label => "new : ", :required => true, :hint => "4 to 25 characters please", :minlength => 4, :maxlength => 25
         =button_tag :class => "btngrypill300x30 right" do
           Change Password

@@ -78,6 +78,21 @@ class DuplicatePlace < ActiveRecord::Base
     potentials
   end
   
+  def self.duplicate_for(place1, place2)
+    match_name = Geo::Cleaner.remove_extraneous_words(place1.clean_name)
+    name_matcher = Amatch::Sellers.new(match_name)
+    addr_matcher = Amatch::Sellers.new(place1.clean_address)
+    name_dist = name_matcher.match(Geo::Cleaner.remove_extraneous_words(place2.clean_name))
+    addr_dist = addr_matcher.match(place2.clean_address)
+    geo_dist = place1.distance_to(place2)
+    dupe = DuplicatePlace.new( :place_1 => place1, 
+                               :place_2 => place2,
+                               :name_distance => name_dist, 
+                               :address_distance => addr_dist, 
+                               :geo_distance => geo_dist )
+    ensure(dupe)
+  end
+  
   # When auto resolving, we want to know which one is preferred so we can pick that one.
   # Auto resolving only happens with identical names, addresses and locations, so we'll look
   # at other fields.
@@ -100,13 +115,15 @@ class DuplicatePlace < ActiveRecord::Base
   # Resolve this dupe. Update 
   # THIS IS WHERE THE UPDATES HAPPEN. WHEN NEW ASSOCIATIONS ARE ADDED TO PLACE
   # THEY MUST BE EXPLICITLY ADDED HERE. DYNAMIC PROGRAMMING BE DAMNED! THIS IS DELICATE!
-  def resolve!(canonical, options={})
+  def resolve!(canonical=nil, options={})
+    canonical ||= preferred_canonical
     duplicate = place_1_id == canonical.id ? place_2 : place_1
     duplicate.canonical_id = canonical.id
     duplicate.wishlist_count = 0
     duplicate.save
     WishlistItem.where(:item_type => duplicate.class.to_s, :item_id => duplicate.id).update_all(:item_type => canonical.class.to_s, :item_id => canonical.id)
     ActivityItem.where(:item_type => duplicate.class.to_s, :item_id => duplicate.id).update_all(:item_type => canonical.class.to_s, :item_id => canonical.id)
+    PlaceNote.where(:place_id => duplicate.id).update_all(:place_id => canonical.id)
     ExternalPlace.sources.each do |source|
       source.where(:place_id => duplicate.id).update_all(:place_id => canonical.id)
     end

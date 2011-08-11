@@ -7,7 +7,7 @@ class ShortUrl < ActiveRecord::Base
   def self.shorten(url)
     uri = URI.parse(url) rescue nil
     raise ArgumentError "Invalid URI." unless uri
-    uri.host ||= HOSTS[Rails.env]
+    uri.host ||= HOSTS[Rails.env].split(':').first
     uri.scheme ||= "http"
     uri.port ||= 3000 if Rails.env.development?
     short = find_by_url(uri.to_s)

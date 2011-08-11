@@ -1,6 +1,6 @@
 class Membership < ActiveRecord::Base
   belongs_to :user
-  belongs_to :city
+  belongs_to :city, :counter_cache => "subscription_count"
   belongs_to :payment_method, :polymorphic => true
   validates :city, :presence => true
   validates :payment_method, :presence => true
