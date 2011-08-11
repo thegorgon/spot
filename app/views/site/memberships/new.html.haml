@@ -55,12 +55,18 @@
     %h2.tf 2. Enter your credit card information
     =f.fields_for :credit_card do |ccf|
       =render :partial => "/shared/payments/creditcard", :locals => {:form => ccf, :creditcard => @payment.credit_card}
+    .seals
+      %a.seal.braintree{:href => "https://www.braintreegateway.com/merchants/#{Braintree::Configuration.merchant_id}/verified", :target => "_blank"}
+        %img{:src => "https://braintree-badges.s3.amazonaws.com/12.png", :border => "0"}
+      %span.seal.godaddy{:id => "siteseal"}
+        %script{:type => "text/javascript", :src => "https://seal.godaddy.com/getSeal?sealID=FGmzAUxury3XWFvKZkrnhfdw2COyMYjkMpFfst7VdykpmJiH29rQ"}
+  
   %li.buttons
     =button_tag :class => "btnorg300x41 tf" do
       finish & pay
         
         
-.explanations.clearfix
+.explanations.clearfix      
   =render :partial => "/site/shared/explanations/howitworks"
   =render :partial => "/site/shared/explanations/guarantee"
   

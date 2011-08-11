@@ -93,6 +93,13 @@
   }
 }
 .site_memberships {
+  .seals {
+    line-height: 31px;
+    text-align: center;
+    .seal {
+      text-decoration: none;
+    }    
+  }
   .errors {
     color: #993333;
     background: #EDD;
