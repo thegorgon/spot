@@ -26,7 +26,7 @@ class BusinessMailer < ApplicationMailer
     @email = @account.email
     @reply_to = "julia@spotmembers.com"
     @phone_to = PHONE_NUMBER
-    mail( :subject => "Congratulations! Your business has been verified!" )  
+    mail( :subject => "Congratulations, You Account is Approved!" )  
   end
   
   def promotion_approved(promotion)
@@ -44,7 +44,7 @@ class BusinessMailer < ApplicationMailer
     @email = @account.email
     @reply_to = "julia@spotmembers.com"
     @phone_to = PHONE_NUMBER
-    mail( :subject => "Sorry, your promotion was rejected" ) 
+    mail( :subject => "Important information from Spot about your upcoming promotion" ) 
   end
   
   def promotion_codes(business, date)

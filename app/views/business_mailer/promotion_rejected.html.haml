@@ -1,10 +1,13 @@
 %p="Hello #{@account.first_name},"
 
-%p="I'm very sorry, but your promotion, '#{@promotion.name}' has been rejected for the following reasons : "
+%p="We are sorry to inform you that the promotion \"#{@promotion.name}\" has not been posted for the following reasons: "
 
 %p{:style => "padding: 20px;"}
   =@promotion.rejection_reasoning
 
-%p="Please contact me directly by email at #{mail_to @reply_to}, or by phone at #{@phone_to} at any time of day to discuss rectifying these issues.".html_safe
+%p
+  We are committed to helping our partners be successful with their promotions and have a dedicated support team ready to assist you.  You can reach our team at 1-888-817-5410 any time of day to discuss this promotion as well as ideas for other promotions. Additionally, you can email our team at
+  ="#{mail_to "contact@spotmembers.com"}.".html_safe
+  We value your partnership and want to ensure the best experience possible for your business.  Please contact us at your earliest convenience so we can get the promotion posted.
 
 =render :partial => "shared/mailers/signature"

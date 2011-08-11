@@ -1,16 +1,15 @@
 ="Hello #{@account.first_name},"
 
-="Congratulations! Your business, '#{@biz.place.name}' has been verified!"
+="Your registration with Spot is now complete."
 
-%p What does this mean? You now have full access to all of Spot's tools for businesses! 
+You can now begin creating and scheduling promotions for the days, times and quantities using your promotion calendar here :
 
-You can now :
+=biz_calendar_path(@biz)
 
-="Update your business details here : #{edit_biz_business_path(@biz)}."
-="Create promotions for your businesshere : #{calendar_biz_business_path(@biz)}."
-="Schedule promotions for distribution here : #{calendar_biz_business_path(@biz)}."
-="Manage promotion codes for all your running promotions here : #{biz_business_codes_path(@biz)}."
+If you have questions or would prefer our team help you to create, post and manage your promotions, please contact us at 1-888-817-5410 or contact@spotmembers.com.
 
-="If you need any assistance, please feel free to contact me by email at #{@reply_to} or by phone at #{@phone_to} anytime of day."
+Remember, you can have multiple promotions in the same day or the same promotion on multiple days.  We are always available to help so feel free to contact us.
+
+Have a great time promoting your business!
 
 =render :partial => "shared/mailers/signature"

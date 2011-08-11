@@ -1,17 +1,17 @@
 %p="Hello #{@account.first_name},"
 
-%p="Congratulations! Your business, '#{@biz.place.name}' has been verified!"
+%p="Your registration with Spot is now complete."
 
-%p What does this mean? You now have full access to all of Spot's tools for businesses! 
+%p
+  You can now begin creating and scheduling promotions for the days, times and quantities using your 
+  ="#{link_to "promotion calendar", biz_calendar_path(@biz)}.".html_safe
+  If you have questions or would prefer our team help you to create, post and manage your promotions, please contact us at 1-888-817-5410 or 
+  ="#{mail_to "contact@spotmembers.com"}."
 
 %p 
-  You can now :
-  %ul
-    %li="Update your #{link_to "business details", edit_biz_business_path(@biz)}.".html_safe
-    %li="#{link_to "Create promotions", calendar_biz_business_path(@biz)} for your business.".html_safe
-    %li="#{link_to "Schedule promotions", calendar_biz_business_path(@biz)} for distribution.".html_safe
-    %li="#{link_to "Manage promotion codes", biz_business_codes_path(@biz)} for all your running promotions.".html_safe
+  Remember, you can have multiple promotions in the same day or the same promotion on multiple days.  We are always available to help so feel free to contact us.
 
-%p="If you need any assistance, please feel free to contact me by email at #{mail_to @reply_to} or by phone at #{@phone_to} anytime of day.".html_safe
+%p 
+  Have a great time promoting your business!
 
 =render :partial => "shared/mailers/signature"
