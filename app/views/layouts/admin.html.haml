@@ -1,6 +1,9 @@
 =content_for :head do
   = include_stylesheets :admin, :media => 'all'
 
+=content_for :libraries do 
+  = google_maps_api_include
+
 =content_for :header do
   #logo
     =image_tag "logos/spotadminwhite158x86.png", :height => "86", :alt => "spot"
