@@ -76,6 +76,10 @@ module ActiveRecordExtensions
         define_method("was_#{options[:method_prefix]}#{flag}?") do
           send("#{field}_was") & (1 << i) > 0
         end
+
+        define_method("#{options[:method_prefix]}#{flag}_changed?") do
+          send("#{field}_was") & (1 << i) != send("#{field}") & (1 << i)
+        end
       end
     end
   

@@ -12,6 +12,7 @@ class PlaceNote < ActiveRecord::Base
                               :protected => ["muted"]
   
   after_commit :enqueue_propagation, :if => :new_commit?
+  after_save :switch_activity_item_visibility
 
   scope :undeleted, where(:deleted_at => nil)
   scope :deleted, where("deleted_at IS NOT NULL")
@@ -31,7 +32,7 @@ class PlaceNote < ActiveRecord::Base
   end
   
   def propagate!
-    generate_activity! :action => "CREATE", :public => !private?
+    generate_activity! :action => "CREATE", :public => !private? && !muted?
   end
 
   def destroy
@@ -43,6 +44,10 @@ class PlaceNote < ActiveRecord::Base
 
   def deleted?
     !!deleted_at
+  end
+  
+  def visible?
+    !private? && !muted?
   end
 
   def as_json(*args)
@@ -60,6 +65,12 @@ class PlaceNote < ActiveRecord::Base
   end
   
   private
+  
+  def switch_activity_item_visibility
+    if private_changed? || muted_changed?
+      ActivityItem.where(:activity_type => self.class.to_s, :activity_id => self.id).update_all("public = #{visible?}")
+    end
+  end
   
   def generate_activity!(extra={})
     params = {:actor => user, :activity => self, :item => place, :lat => place.lat, :lng => place.lng}
