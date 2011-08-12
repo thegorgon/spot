@@ -26,7 +26,7 @@ class PlaceNote < ActiveRecord::Base
     finder = finder.where(:user_id => params[:user_id]) if params[:user_id]
     page = [1, params[:page].to_i].max 
     per_page = params[:per_page] && params[:per_page].to_i > 1 ? params[:per_page].to_i : PAGE_SIZE
-    finder = finder.visible
+    finder = finder.visible if params[:user_id].nil? || params[:user_id] != params[:viewer].try(:id)
     finder.paginate(:page => 1, :per_page => PAGE_SIZE)
   end
   

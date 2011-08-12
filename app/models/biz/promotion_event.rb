@@ -40,10 +40,6 @@ class PromotionEvent < ActiveRecord::Base
     end
   end
   
-  def dollar_cost
-    cost_cents.to_i/100.0
-  end
-      
   def all_day?
     start_time == 6 && end_time == 6
   end
@@ -114,7 +110,6 @@ class PromotionEvent < ActiveRecord::Base
     self.count = template.count if count.to_i <= 0
     self.description ||= template.description
     self.name ||= template.name
-    self.cost_cents = template.cost_cents if cost_cents.to_i <= 0
     self.approved_at = Time.now if template.approved?
     self.start_time ||= template.start_time
     self.end_time ||= template.end_time

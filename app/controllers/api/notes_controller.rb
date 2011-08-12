@@ -1,5 +1,6 @@
 class Api::NotesController < Api::BaseController
   def index
+    params[:viewer] = current_user
     @notes = PlaceNote.filter(params)
     render :json => @notes
   end
