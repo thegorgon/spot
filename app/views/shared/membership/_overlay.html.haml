@@ -20,7 +20,7 @@
         .content.clearfix
           %h1.huge.tf 
             A Private Membership Club for 
-            =@city.name.titlecase
+            =@city ? @city.name.titlecase : "Discerning"
             Diners
           .left.column
             %p 
