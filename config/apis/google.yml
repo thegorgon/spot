@@ -5,3 +5,5 @@ google:
     www.rails.local:3000: "ABQIAAAAzgjbevMRcpm5BXIEj488HBTeGK9jxe-wcMjHONDpAmUmUiJhqxTUIhljm2AxLeEtBrr29GSr5Vr8vQ"
     m.rails.local:3000: "ABQIAAAAzgjbevMRcpm5BXIEj488HBTs7iQ7QxVm48tT9NOxjuILOpYD5RSQDt7de5B9Q_3hXqywoMl6o2dlKQ"
     localhost:3000: "ABQIAAAAzgjbevMRcpm5BXIEj488HBTJQa0g3IQ9GZqIMmInSLzwtGDKaBTpCFtzaqcncVOljUfBNkGxk5xEEQ"
+    www.spotmembers.com: "ABQIAAAAzgjbevMRcpm5BXIEj488HBSQ0rcIdHFCLtJDblJMFiukVP5hbxS4h7CJXj8X2L0-x2B8kDTcjuzQrA"
+    spotmembers.com: "ABQIAAAAzgjbevMRcpm5BXIEj488HBSQ0rcIdHFCLtJDblJMFiukVP5hbxS4h7CJXj8X2L0-x2B8kDTcjuzQrA"
