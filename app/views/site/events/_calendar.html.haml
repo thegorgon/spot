@@ -6,7 +6,7 @@
     -codes = {}
   -startdate = Date.today.sunday
   -startdate = startdate > Date.today ? Date.today.sunday - 1.week : Date.today.sunday
-  -enddate = ([startdate + 2.weeks, promotion.events.upcoming.last.date].max).saturday
+  -enddate = ([startdate + 2.weeks, promotion.events.upcoming.last.try(:date) || Time.now].max).saturday
   -(startdate..enddate).each_with_index do |date, i|
     -week = (i/7).floor
     -lastweek = enddate.to_time - date.to_time < 1.week
