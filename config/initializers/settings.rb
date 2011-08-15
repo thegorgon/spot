@@ -26,6 +26,6 @@ Twitter.oauth = OAuth::Consumer.new(
 
 ActionMailer::Base.add_delivery_method :ses, AWS::SES::Base, S3_CONFIG[Rails.env].symbolize_keys
 
-ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
+Time::DATE_FORMATS.merge!(
   :w3c => '%Y-%m-%dT%H:%M:%S+00:00'
 )
