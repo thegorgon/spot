@@ -14,7 +14,7 @@ module ApplicationHelper
   end
       
   def w3c_date(date)
-    date.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")
+    date.utc.to_s(:w3c)
   end  
   
   def page_title

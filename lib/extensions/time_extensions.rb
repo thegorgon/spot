@@ -21,8 +21,12 @@ module TimeExtensions
         text = "#{value == 12 ? 12 : (value / 12 == 1 ? value % 12 : value)}#{value <= 11 ? 'am' : 'pm'}"
       end
     end
-  end  
+  end
 end
 
 
 Time.send(:include, TimeExtensions)
+
+ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
+  :w3c => '%Y-%m-%dT%H:%M:%S+00:00'
+)
