@@ -7,6 +7,7 @@ class BusinessMailer < ApplicationMailer
     @title = "Welcome to Spot for Businesses!"
     @account = account
     @email = account.email
+    mail
   end
   
   def contact(account, parameters)
