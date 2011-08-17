@@ -37,10 +37,10 @@
       .request.half
         -if current_member?
           %h2.center.tf="Welcome Back #{current_user.first_name}"
-          =link_to "explore your city", city_path(current_user.city), :class => "btnorg175x32 action"
+          =link_to "explore your city", city_path(current_user.city || City.first), :class => "btnorg175x32 action"
         -elsif current_user.try(:membership_application)
           %h2.center.tf We've Received Your Application
-          =link_to "explore your city", city_path(current_user.city), :class => "btnorg175x32 action"
+          =link_to "explore your city", city_path(current_user.city || City.first), :class => "btnorg175x32 action"
         -else
           %h2.tf Request An Invitation
           =spot_form_for :email, :url => '#', :display => "faded clearfix", :html => {:id => "email_form"} do |f|
