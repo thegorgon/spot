@@ -13,30 +13,30 @@
     -if @application.approved?
       Congratulations. You're In.
     -else
-      %h1.tf We'll review your responses and be in touch shortly.
+      %h1.tf We'll be in touch shortly.
 
   -if @application.approved?
     =link_to "Complete Application", new_membership_path, :class => "btnorg300x41 tf right"
 %hr
-.buckets.clearfix
-  .left.bucket
-    .image.gossip
-      =image_tag "paintings/gossip400x300.png", :size => "400x300"
-      .speechbubble
-        I just signed up for the greatest website. Cocktails anyone?
+.bucket.first.clearfix
+  .image.gossip.left
+    =image_tag "paintings/gossip400x300.png", :size => "400x300"
+    .speechbubble
+      I just signed up for the greatest website. Cocktails anyone?
+  .text.right
     %h2.tf.invitetitle
-      We appreciate gossips...
+      Don't Wait Alone...
     %p
-      Give your friends priority access with this link :
-    
-    -url = invitation_url(:ic => @application.user.invitation_code.code)
-    =sharing(url, "Just applied to become a Spot Member, I think it's worth checking out.", :link => true)
-      
-  .right.bucket.last
-    .image.alchemist
-      =image_tag "paintings/alchemist400x300.png", :size => "400x300"
-      .speechbubble.down
-        Imagine a portable device with infinite capabilities...
+      It's never fun to to wait in line alone. Share this link with some friends and we'll love you forever :
+      -url = invitation_url(:ic => @application.user.invitation_code.code)
+      =sharing(url, "Just applied to become a Spot Member, I think it's worth checking out.", :link => true)
+%hr    
+.bucket.last.clearfix
+  .image.alchemist.right
+    =image_tag "paintings/alchemist400x300.png", :size => "400x300"
+    .speechbubble.down
+      Imagine a portable device with infinite capabilities...
+  .text.left
     %h2.tf
       Spot? Ya, there's an app for that...
     %ul.appbenefits
@@ -44,4 +44,4 @@
       %li List places you like
       %li Get Experiences to match your taste
     =img_link_to "assets/general/app_store_transparent116x40.png", getspot_path, :size => "116x40", :class => "getspot"
-    
+  

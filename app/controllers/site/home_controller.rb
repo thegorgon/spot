@@ -2,7 +2,12 @@ class Site::HomeController < Site::BaseController
   layout "oreo"
   
   def index
-    render :layout => "site"
+    clear_partial_application
+    if current_user.try(:member?)
+      redirect_to city_path(current_user.city)
+    else
+      render :layout => "site"
+    end
   end
   
   def about
@@ -16,7 +21,7 @@ class Site::HomeController < Site::BaseController
   
   def privacy
   end
-      
+  
   def tos
   end
 

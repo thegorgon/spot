@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :stash_controller
   before_filter :localize
+  before_filter :reject_certain_spiders
   helper :application, :place
   
   rescue_from Exception, :with => :render_error
@@ -11,6 +12,34 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   
   private
+  
+  def reject_certain_spiders
+    [/^Sogou Pic Spider/].each do |agent|
+      if request.env['HTTP_USER_AGENT'] =~ agent
+        render :text => "" 
+        return false
+      end
+    end      
+  end  
+  
+  def partial_application
+    app = session[:partial_application]
+    if app && app.kind_of?(Hash) && app[:email]
+      app
+    else
+      {}
+    end
+  end
+  helper_method :partial_application
+
+  def set_partial_application(value)
+    value.symbolize_keys!
+    session[:partial_application] = value if value.kind_of?(Hash) && value[:email]
+  end
+
+  def clear_partial_application
+    session[:partial_application] = nil
+  end
 
   def default_render(*args)
     respond_to do |format|

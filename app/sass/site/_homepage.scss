@@ -85,18 +85,11 @@
         position: absolute;
         top: 15%;
         right: 10%;
-        width: 275px;
+        width: 350px;
         padding: 20px;
         text-shadow: #000 0px 1px;
-        h1 {
-          font-size: 22px;
-          text-align: left;
-        }
-        p {
-          font-size: 18px;
-          line-height: 25px;
-          color: #aaa;
-          margin: 15px auto 10px;
+        .half {
+          color: #bbb;
           strong {
             color: #ff8419;
             font-weight: bold;
@@ -105,6 +98,46 @@
             color: #f7f7f7;
             font-style: normal;
             font-weight: bold;
+          }
+          &.describe {
+            font-size: 21px;
+            border-bottom: 1px solid #ddd;
+            padding: 0 0 20px 0;
+            p {
+              line-height: 26px;
+            }
+          }
+          &.request {
+            font-size: 14px;
+            padding: 20px 0 0 0;
+            h2 {
+              font-size: 21px;
+            }
+            .action {
+              margin: 10px auto 0;
+              text-align: center;
+            }
+            form {
+              width: 350px;
+              margin: 5px auto 0;
+              input {
+                width: 200px;
+              }
+              li {
+                width: 220px;
+              }
+              text-align: left;
+              button {
+                margin: 9px 0;
+              }
+            }
+            .links {
+              margin: 10px 0 0 0;
+              a {
+                display: block;
+                color: #f7f7f7;
+              }
+            }
           }
         }
       }

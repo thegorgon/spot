@@ -10,8 +10,83 @@
             top = offset.top - explain.outerHeight();
           explain.css({left: left, top: top});          
           
-        };
-                
+        },
+        lock = $('#applicationform').find('#application_lock'),
+        invitationCode = $('#applicationform').find('#application_invitation_code'),
+        unlock = $('#applicationform').find('.unlock');
+      $('#applicationform').find('.wanttoapply').unbind('click.apply').bind('click.apply', function(e) {
+        e.preventDefault();
+        var form = $(this).parents('ul.form:first');
+        form.removeClass('unlocking').removeClass('unlocked').removeClass('unlockable').addClass('applying');
+        lock.attr('disabled', 'disabled').val('');
+        form.find('.vouched').html('');
+      });
+      $('#applicationform').find('.haveaninvite').unbind('click.apply').bind('click.apply', function(e) {
+        e.preventDefault();
+        var form = $(this).parents('ul.form:first');
+        form.removeClass('applying').removeClass('unlocked').removeClass('unlockable');
+        lock.removeAttr('disabled').val('')
+        form.find('.vouched').html('');
+      });
+      
+      lock.unbind('keyup.updatecode').bind('keyup.updatecode', function(e) {
+        var self = this, 
+          timeout = $(self).data('change-timeout'),
+          li = $(self).parents('li:first');
+        if (e.keyCode == 13) {
+          e.preventDefault();
+          $(self).change();
+        } else {
+          li.removeClass('valid').removeClass('invalid');
+          if ($(self).val() == '') {
+            li.removeClass('loading');
+          } else {
+            li.addClass('loading');
+          }
+          clearTimeout(timeout);
+          $(self).data('change-timeout', setTimeout(function() {
+            $(self).change();
+          }, 1000));
+        }
+      });
+      unlock.unbind('click.unlock').bind('click.unlock', function(e) {
+        e.preventDefault();
+        var form = $(this).parents('ul.form:first');
+        if (invitationCode.val() != '') {
+          form.addClass('unlocking');
+          setTimeout(function(e) {
+            lock.attr('disabled', 'disabled');
+            form.removeClass('unlocking').addClass('unlocked')
+          }, 1000);          
+        }
+      });
+      lock.unbind('change.updatecode').bind('change.updatecode', function(e) {
+        var self = $(this),
+          form = self.parents('ul.form:first'),
+          li = self.parents('li:first'); 
+        if (self.data('lastsent') != self.val() && self.val().toString().length > 0) {            
+          self.parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
+          self.data('lastsent', self.val());
+          $.get('/codes/invitation/' + self.val(), function(data) {
+            if (data.code && data.code.available) {
+              form.addClass('unlockable');
+              li.removeClass('loading').removeClass('invalid').addClass('valid');
+              invitationCode.val(lock.val());
+              form.find('.vouched').html(data.code.voucher + " has vouched for you.").slideDown();
+            } else {
+              form.find('.vouched').slideUp();
+              lock.removeAttr('disabled');
+              form.removeClass('unlockable');
+              unlock.unbind('click.unlock');
+              li.removeClass('loading').removeClass('valid').addClass('invalid');
+            }
+          });
+        }
+      });
+      $('#aboutmembership').modal({
+        trigger: '.btnmemabout', 
+        width: 840
+      });   
       $('.designed_by_spot').unbind('mouseenter.show-explain').bind('mouseenter.show-explain', function(e) {
         var self = $(this);
         self.data('popover-timeout', setTimeout(function() { showDesignedBySpot(self) }, 500));
@@ -26,105 +101,37 @@
       });
       $('#applydialog').modal({
         trigger: '.btnmembership', 
-        width: 800,
-        close: function() {
-          $(this).find('ul.form').removeClass("unlocked").removeClass('unlocking').removeClass("applying");
-          $('#applicationform').find('#application_lock').removeAttr('disabled');
-        },
-        open: function() {
-          var lock = $('#applicationform').find('#application_lock'),
-            invitationCode = $('#applicationform').find('#application_invitation_code'),
-            unlock = $('#applicationform').find('.unlock');
-          
-          $('#applicationform').find('.wanttoapply').unbind('click.apply').bind('click.apply', function(e) {
-            e.preventDefault();
-            var form = $(this).parents('ul.form:first');
-            form.removeClass('unlocking').removeClass('unlocked').removeClass('unlockable').addClass('applying');
-            lock.attr('disabled', 'disabled');
-            lock.val('');
-            form.find('.vouched').html('');
-            form.find('.survey input.required').attr('required', 'required');
-          });
-          lock.unbind('keyup.updatecode').bind('keyup.updatecode', function(e) {
-            var self = this, 
-              timeout = $(self).data('change-timeout'),
-              li = $(self).parents('li:first');
-            if (e.keyCode == 13) {
-              e.preventDefault();
-              $(self).change();
-            } else {
-              li.removeClass('valid').removeClass('invalid');
-              if ($(self).val() == '') {
-                li.removeClass('loading');
-              } else {
-                li.addClass('loading');
-              }
-              clearTimeout(timeout);
-              $(self).data('change-timeout', setTimeout(function() {
-                $(self).change();
-              }, 1000));
-            }
-          });
-          unlock.unbind('click.unlock').bind('click.unlock', function(e) {
-            e.preventDefault();
-            form = $(this).parents('ul.form:first');
-            if (invitationCode.val() != '') {
-              unlock.unbind('click.unlock');
-              form.addClass('unlocking');
-              setTimeout(function(e) {
-                lock.attr('disabled', 'disabled');
-                form.removeClass('unlocking').addClass('unlocked')
-              }, 1000);          
-            }
-          });
-          lock.unbind('change.updatecode').bind('change.updatecode', function(e) {
-            var self = $(this),
-              form = self.parents('ul.form:first'),
-              li = self.parents('li:first'); 
-            if (self.data('lastsent') != self.val() && self.val().toString().length > 0) {            
-              self.parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
-              self.data('lastsent', self.val());
-              $.get('/codes/invitation/' + self.val(), function(data) {
-                if (data.code && data.code.available) {
-                  form.addClass('unlockable');
-                  form.find('.survey input.required').removeAttr('required');
-                  li.removeClass('loading').removeClass('invalid').addClass('valid');
-                  invitationCode.val(lock.val());
-                  form.find('.vouched').html(data.code.voucher + " has vouched for you.").slideDown();
-                } else {
-                  form.find('.vouched').slideUp();
-                  lock.removeAttr('disabled');
-                  form.removeClass('unlockable');
-                  unlock.unbind('click.unlock');
-                  li.removeClass('loading').removeClass('valid').addClass('invalid');
-                  form.find('.survey input.required').attr('required', 'required');
-                }
-              });
-            }
-          });
-        }
+        width: 800
       });
-      $('#aboutmembership').modal({
-        trigger: '.btnmemabout', 
-        width: 840
-      });
+      if ($('#applydialog').hasClass('autoopen')) {
+        $('#applydialog').dialog("open");
+      }      
     },
     site_home_index: function() {
       var slideshow = $("#slidedeck").slideshow({
           title: '#slidetitle',
           start: Math.floor(Math.random()* $("#slidedeck").find('.slide').length)
-        }), top = $('#toplayer'), scenes = top.find('.scene');
+        }), 
+        top = $('#toplayer'), 
+        scenes = top.find('.scene'),
+        sxnForm = $('#subscription_form');
       
       slideshow.start();
-      $('.enter').click(function(e) {
+      $('#email_form').unbind('submit.continue').bind('submit.continue', function(e) {
         e.preventDefault();
-        if (Modernizr.cssTransitions) { top.addClass('scene2'); }
+        if (Modernizr.csstransitions) { top.addClass('scene2'); }
         else { 
           top.addClass('jsanimation');
           scenes.eq(0).animate({left: '-100%'}, 1000);
-          scenes.eq(1).animate({left: '0%'}, 500);
+          scenes.eq(1).animate({left: '0%'}, 750);
         }
         slideshow.stop();
+        sxnForm.find('#email_subscription_email').val($(this).find('#email_email').val());
+      });
+      $('.city').unbind('click.submit').bind('click.submit', function(e) {
+        e.preventDefault();
+        sxnForm.find('#email_subscription_city_id').val($(this).attr('data-id'));
+        sxnForm.submit();
       });
     },
     site_home_press: function() {

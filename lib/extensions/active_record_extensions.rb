@@ -29,6 +29,7 @@ module ActiveRecordExtensions
   module ClassMethods
     def setting_flags(flags, options={})
       attribute = options[:attr] || "settings"
+      inverse_attr = options[:inverse_attr]
       field = options[:field] || "setting_flags"
       protected_flags = options[:protected] || []
       scope :with_setting, lambda { |s| where("#{field} & #{1 << flags.index(s)} > 0") }
@@ -55,6 +56,29 @@ module ActiveRecordExtensions
         end
         settings
       end
+      
+      if inverse_attr
+        define_method "#{inverse_attr}=" do |value|
+          (flags & value.to_a).each do |setting|
+            unless protected_flags.include?(setting)
+              send("#{options[:method_prefix]}#{setting}=", false) if respond_to?("#{options[:method_prefix]}#{setting}=")
+            end
+          end
+          (flags - value.to_a).each do |setting|
+            unless protected_flags.include?(setting)
+              send("#{options[:method_prefix]}#{setting}=", true) if respond_to?("#{options[:method_prefix]}#{setting}=")
+            end
+          end
+        end
+        
+        define_method "#{inverse_attr}" do
+          settings = []
+          flags.each do |flag|
+            settings << flag unless send("#{options[:method_prefix]}#{flag}?")
+          end
+          settings
+        end
+      end
 
       flags.each_with_index do |flag, i|
         define_method("#{options[:method_prefix]}#{flag}=") do |value|
@@ -79,6 +103,32 @@ module ActiveRecordExtensions
 
         define_method("#{options[:method_prefix]}#{flag}_changed?") do
           send("#{field}_was") & (1 << i) != send("#{field}") & (1 << i)
+        end
+        
+        define_method("#{options[:method_prefix]}#{flag}=") do |value|
+          if (value && (!value.respond_to?(:to_i) || value.to_i > 0))
+            send("#{field}=", send(field) | (1 << i))
+          else
+            send("#{field}=", send(field) & ~(1 << i))
+          end
+        end
+        
+        if options[:inverse_method_prefix]
+          define_method("#{options[:inverse_method_prefix]}#{flag}?") do
+            send(field) & (1 << i) == 0
+          end
+
+          define_method("#{options[:inverse_method_prefix]}#{flag}") do
+            send(field) & (1 << i) == 0
+          end
+
+          define_method("was_#{options[:inverse_method_prefix]}#{flag}?") do
+            send("#{field}_was") & (1 << i) == 0
+          end
+
+          define_method("#{options[:inverse_method_prefix]}#{flag}_changed?") do
+            send("#{field}_was") & (1 << i) != send("#{field}") & (1 << i)
+          end
         end
       end
     end

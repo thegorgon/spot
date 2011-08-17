@@ -32,7 +32,8 @@ class Site::MembershipApplicationsController < Site::BaseController
       @referrer = InvitationCode.valid_code(params[:r] || session[:invite_code])
       @invalid = InvitationCode.expended.find_by_code(params[:r] || session[:invite_code])
     end
-    @city = @referrer.user.city if @referrer    
+    @city = @referrer.user.city if @referrer
+    @city ||= City.find_by_id(partial_application[:city_id]) if partial_application[:city_id]
     @city ||= City.subscriptions_available.first
     render :action => "new"
   end

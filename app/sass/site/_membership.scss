@@ -4,7 +4,17 @@
     margin-bottom: 15px;
   }
   .bucket {
-    width: 394px;
+    float: none;
+    padding: 0;
+    .text {
+      width: 390px
+    }
+    .button {
+      margin: 20px auto;
+    }
+    .image {
+      position: relative;
+    }
     ul.appbenefits {
       line-height: 20px;
       margin: 10px 0;
@@ -24,7 +34,7 @@
   }
   .sharing {
     input.text {
-      width: 295px;
+      width: 280px;
     }
   }
   .alchemist {

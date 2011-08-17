@@ -1,11 +1,9 @@
 class User < ActiveRecord::Base
-  NOTIFICATION_FLAGS = ["deal_emails"]
-
   attr_protected :admin
   before_validation :reset_persistence_token, :if => :reset_persistence_token?
   before_validation :reset_single_access_token, :if => :reset_single_access_token?
   before_save :reset_perishable_token
-  after_save :send_deals_welcome_email
+  after_save :save_email_subscriptions
   has_many :devices, :dependent => :destroy
   has_many :wishlist_items, :dependent => :delete_all
   has_many :activity_items, :foreign_key => :actor_id, :dependent => :destroy
@@ -22,10 +20,7 @@ class User < ActiveRecord::Base
   
   validates :email, :format => EMAIL_REGEX, :uniqueness => true, :if => :email?
   name_attribute :name
-  setting_flags NOTIFICATION_FLAGS, :attr => "requested_notifications", 
-                                    :field => "notification_flags", 
-                                    :method_prefix => "notify_"
-  
+
   def self.adminify!(email)
     if (user = where(:email => email).first)
       user.adminify!
@@ -151,6 +146,24 @@ class User < ActiveRecord::Base
     save!
   end
 
+  def requested_notifications
+    email_subscriptions.subscriptions
+  end
+  
+  def requested_notifications=(value)
+    email_subscriptions.subscriptions = value
+  end
+  
+  def email_subscriptions
+    @email_subscriptions ||= 
+      EmailSubscriptions.ensure( :email => email, 
+                                 :first_name => first_name, 
+                                 :last_name => last_name, 
+                                 :city_id => city_id, 
+                                 :user_id => id )
+    
+  end
+
   def as_json(*args)
     options = args.extract_options!
     hash = {
@@ -166,12 +179,10 @@ class User < ActiveRecord::Base
     
   private
   
-  def send_deals_welcome_email
-    if (email.present? && !was_notify_deal_emails? && notify_deal_emails?)
-      DealMailer.welcome(self).deliver!
-    end
+  def save_email_subscriptions
+    email_subscriptions.save
   end
-  
+    
   def reset_persistence_token
     self.persistence_token = Nonce.hex_token
   end

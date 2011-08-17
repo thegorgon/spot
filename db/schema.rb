@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110804054052) do
+ActiveRecord::Schema.define(:version => 20110816004814) do
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -38,15 +38,6 @@ ActiveRecord::Schema.define(:version => 20110804054052) do
   end
 
   add_index "app_settings", ["key"], :name => "index_app_settings_on_key"
-
-  create_table "blocked_emails", :force => true do |t|
-    t.string   "address",                         :null => false
-    t.string   "source",     :default => "other", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "blocked_emails", ["address"], :name => "index_blocked_emails_on_address", :unique => true
 
   create_table "blog_posts", :force => true do |t|
     t.string "tumblr_id", :null => false
@@ -147,6 +138,19 @@ ActiveRecord::Schema.define(:version => 20110804054052) do
   end
 
   add_index "duplicate_places", ["place_1_id", "place_2_id"], :name => "index_duplicate_places_on_place_1_id_and_place_2_id", :unique => true
+
+  create_table "email_subscriptions", :force => true do |t|
+    t.string   "email",                               :null => false
+    t.integer  "city_id"
+    t.integer  "user_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "unsubscription_flags", :default => 0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "email_subscriptions", ["email"], :name => "index_email_subscriptions_on_email", :unique => true
 
   create_table "facebook_accounts", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8, :null => false
@@ -331,12 +335,6 @@ ActiveRecord::Schema.define(:version => 20110804054052) do
     t.datetime "updated_at"
   end
 
-  create_table "placepop_emails", :force => true do |t|
-    t.string "email",                      :null => false
-    t.string "first_name",                 :null => false
-    t.string "last_name",  :default => "", :null => false
-  end
-
   create_table "places", :force => true do |t|
     t.string   "full_name",                                                           :null => false
     t.string   "full_address"
@@ -502,7 +500,6 @@ ActiveRecord::Schema.define(:version => 20110804054052) do
     t.string   "last_name"
     t.string   "locale"
     t.boolean  "admin",               :default => false, :null => false
-    t.integer  "notification_flags",  :default => 0,     :null => false
     t.string   "location"
     t.string   "customer_id"
     t.integer  "city_id"

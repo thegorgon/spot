@@ -58,7 +58,7 @@ class InvitationCode < ActiveRecord::Base
   
   def set_invitation_count
     if user && invitation_count <= 0
-      self.invitation_count = user.active_membership ? 10 : 0 
+      self.invitation_count = user.active_membership ? 100 : 0 
     end
   end
   

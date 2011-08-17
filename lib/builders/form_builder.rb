@@ -19,7 +19,7 @@ module Spot
         else
           li_wrap(method, selector, options) do |method, options|
             @template.send(selector, @object_name, method, objectify_options(options))
-          end                    
+          end
         end
       end
     end
@@ -65,10 +65,8 @@ module Spot
         end
       end
     end
-    
-    private
-    
-    def li_wrap(method, tag, options, &block)
+        
+    def li_wrap(method, tag, options={}, &block)
       ignore_validity = (options.delete(:validity) == false)
       
       @template.content_tag(:li, :class => container_class_for(method, type_class(tag), options), :id => container_id_for(method)) do
@@ -82,6 +80,8 @@ module Spot
         extra_content(options, :append)
       end
     end
+    
+    private
 
     def sanitize_options!(tag, options)
       ((options[:class] ||= "") << " #{type_class(tag)}").strip!

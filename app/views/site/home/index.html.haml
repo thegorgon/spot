@@ -2,7 +2,7 @@
   %ul#slidedeck
     %li#slide1.slide.stretcher{"data-gravity" => "0.5x0.5", :title => "Chef's Table Exclusive Seating at Credo"}
       =image_tag "assets/slideshow/slide1.jpg", :size => "2292x1524"
-    %li#slide2.slide.stretcher{"data-gravity" => "0.5x0.5", :title => "Napa Wine Tasting at Foreign Cinema"}
+    %li#slide2.slide.stretcher{"data-gravity" => "0.5x0.5", :title => "Beer & Sausage Tasting Menu"}
       =image_tag "assets/slideshow/slide2.jpg", :size => "2292x1524"
 
 =content_for :footer do
@@ -27,24 +27,45 @@
 #toplayer.tf
   .intro.scene
     .content.clearfix
-      %h1 Raise Your Expectations
-      %p
-        Spot Members get
-        %br
+      .describe.half
+        Spot Members receive
         %em exclusive access 
         to VIP privileges, unique promotions, and 
         %strong unforgettable experiences 
         at the 
         %em best restaurants in town.
-      =link_to "join now", "#enter", :id => "enter", :class => "enter tf btnorg115x32"
+      .request.half
+        -if current_member?
+          %h2.center.tf="Welcome Back #{current_user.first_name}"
+          =link_to "explore your city", city_path(current_user.city), :class => "btnorg175x32 action"
+        -elsif current_user.try(:membership_application)
+          %h2.center.tf We've Received Your Application
+          =link_to "explore your city", city_path(current_user.city), :class => "btnorg175x32 action"
+        -else
+          %h2.tf Request An Invitation
+          =spot_form_for :email, :url => '#', :display => "faded clearfix", :html => {:id => "email_form"} do |f|
+            =f.text_field :email, :placeholder => "enter your email", :value => current_user.try(:email), :container_class => "left"
+            =button_tag :class => "btnorg115x32 right tf" do
+              request
+          .links.clearfix
+            =link_to "I have an invitation", new_application_path, :class => "left"
+            =link_to "I'm already a member", new_session_path, :class => "right"
+          
   .map.scene
     .vcc
       .vc
         .content
           %h1 Where?
           -City.visible.each do |city|
-            %a.city{:href => city_path(city), :id => city.slug, :class => conditionally("active", city.subscription_available?)}=city.name.titlecase
+            %a.city{:href => city_path(city), :id => city.slug, :class => conditionally("active", city.subscription_available?), 'data-id' => city.id}
+              =city.name.titlecase
           .cantfind
             Don't see your city on the map? 
             =link_to "Tell us where you live", new_city_path
             and we'll come to you next.
+            
+            
+.hidden
+  =form_for :email_subscription, :url => subscribe_email_path, :html => {:id => "subscription_form"} do |f|
+    =f.hidden_field :email
+    =f.hidden_field :city_id
