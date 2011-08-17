@@ -171,13 +171,13 @@
       tabs.click(function(e) {
         e.preventDefault();
         var $this = $(this),
-          current = tabs.filter('.active'),
-          curcontent = $(current.attr('href')),
           rel = $($this.attr('href'));
-        curcontent.fadeOut();
         tabs.removeClass('active');
+        tabs.each(function(i) {
+          $($(this).attr('href')).hide();
+        });
         $this.addClass('active');
-        rel.hide().removeClass('hidden').fadeIn();
+        rel.hide().removeClass('hidden').show();
       });
     },
     popupLink: function(options) {
