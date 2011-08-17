@@ -45,7 +45,7 @@ class PreviewSignup < ActiveRecord::Base
   end
   
   def send_thank_you
-    if !emailed? && !BlockedEmail.blocked?(self.email) && false
+    if false
       begin 
         TransactionMailer.preview_thanks(self).deliver! 
         update_attribute(:emailed, true)

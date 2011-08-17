@@ -20,7 +20,6 @@ class Site::EmailsController < Site::BaseController
   end
   
   def unsubscribe
-    BlockedEmail.block!(params[:email])
     redirect_to goodbye_email_path
   end
   
