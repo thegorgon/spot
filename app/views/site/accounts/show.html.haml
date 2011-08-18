@@ -7,16 +7,18 @@
     =spot_form_for current_user, :as => :account, :url => account_path, :display => "light inlinelabels insetvalidity clearfix" do |f|
       =f.name_fields :label => "name : ", :value => current_user.names
       =f.text_field :email, :placeholder => "email", :label => "email : "
-      =f.select 'city_id', City.subscriptions_available.all.collect { |c| [c.name_and_region, c.id] }, {:validity => false, :prompt => "select your city", :label => "city : "}, :required => true, :class => "chzn-select", :title => "Select your city"
-      =button_tag :class => "btngrypill300x30 right" do
-        Save Changes
+      =f.city_select 'city_id', current_user.city_id, :prepend_values => [["Other", ""]]
+      %li.button
+        =button_tag :class => "btngrypill300x30 right" do
+          Save Changes
     -if password = current_user.password_account
       %h2.changepassword.tf Change Password
       =spot_form_for password, :as => :password_account, :url => account_path, :display => "light inlinelabels insetvalidity clearfix" do |f|
         =f.password_field :current_password, :placeholder => "current password", :label => "current : ", :required => true, :hint => "for security's sake", :minlength => 4, :maxlength => 25
         =f.password_field :password, :placeholder => "new password", :label => "new : ", :required => true, :hint => "4 to 25 characters please", :minlength => 4, :maxlength => 25
-        =button_tag :class => "btngrypill300x30 right" do
-          Change Password
+        %li.button
+          =button_tag :class => "btngrypill300x30 right" do
+            Change Password
   .separator
   .right.rcol
     =render :partial => "events"
