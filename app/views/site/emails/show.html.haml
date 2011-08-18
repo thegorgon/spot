@@ -1,16 +1,18 @@
-.vcc
-  .vc
-    #unsubscribe
-      %h1 Ruh Roh...
-      .image
-        =image_tag "joke/sad_kitty200x200.png", :size => '200x200'
-      %h2
-        We're sorry to hear that you didn't like our emails. 
-        Are you sure you want to stop hearing from us?
-      =form_tag unsubscribe_email_path, :method => "delete" do
-        =hidden_field_tag :email, params[:email]
-        =hidden_field_tag :source, params[:source] || "other"
-        .buttons
-          =button_tag :class => "link left" do
-            Yes, Unsubscribe
-          =link_to "No, Forget It", root_path, :class => "link right"
+=content_for :toptitle do
+  Update Email Notification Settings
+
+%h1.tf="Notifications for #{@subscription.email}"
+.clearfix
+  =spot_form_for @subscription, :as => :email_subscription, :url => email_path(:email => @subscription.email, :key => @subscription.passkey), :display => "light" do |f|
+    =render :partial => "/site/accounts/contact", :locals => {:form => f}
+    %li.buttons
+      =button_tag :class => "btngrypill300x30" do
+        Update
+        
+  -if @bizaccount
+    =spot_form_for @bizaccount, :url => biz_account_path, :display => "light" do |f|
+      %h2.tf Business Account Notifications
+      =render :partial => "/biz/accounts/contact", :locals => {:form => f}
+      %li.buttons
+        =button_tag :class => "btngrypill300x30" do
+          Update

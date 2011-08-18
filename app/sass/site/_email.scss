@@ -1,39 +1,10 @@
 .site_emails {
-  #unsubscribe, #goodbye {
-    text-align: center;
-    width: 500px;
-    margin: 0 auto ;
-    .image {
-      height: 200px;
-      width: 200px;
-      text-align: center;
-      margin: 0 auto;
-    }
-    h1 {
-      margin: 0 0 1em 0;
-    }
+  ul.form {
+    margin: 20px 0 30px;
+    width: 300px;
+  
     h2 {
-      margin: 1em 0 2em;
-    }
-    .buttons {
-      width: 300px;
-      margin: 0 auto;
-      button, a {
-        font-weight: bold;
-        padding: 0px;
-        margin: 0;
-        font-size: 1.2em;
-        color: #ccc;
-        &:hover, &.hover {
-         color: #ff8419;
-        }
-      }
-      .left {
-        float: left;
-      }
-      .right {
-        float: right;
-      }
+      margin: 0 0 10px 0;
     }
   }
 }

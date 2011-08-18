@@ -16,3 +16,4 @@ FBAPP = {
   :id => Rails.env.production?? 146911415372759 : 329653055238,
   :host => HOSTS[Rails.env]
 }
+MAILCHIMP = YAML.load_file(File.join(Rails.root, 'config', 'apis', 'mailchimp.yml'))

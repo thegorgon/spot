@@ -85,6 +85,31 @@
     p {
       margin: 10px 0;
     }
+    &.applied {
+      #city_preview {
+        display: none;
+      }
+      .thankyou {
+        display: block;
+        position: relative;
+        a {
+          position: static;
+          float: none;
+          line-height: 18px;
+          color: #AAA;
+          font-size: 12px;
+          padding: 0 5px;
+        }
+      }
+    }
+    &.updating {
+      #city_preview {
+        display: block;
+      }
+      .thankyou {
+        display: none;
+      }
+    }
     .image {
       margin: 10px 0;
       position: relative;
@@ -103,6 +128,15 @@
         margin: 30px 0 20px;
       }
       form, ul.form {
+        #othercityfields {
+          padding: 0 0 20px;
+          li.text {
+            margin: 0;
+          }
+          li.note {
+            margin: 7px 0 0;
+          }
+        }
         li.text {
           width: 380px;
         }

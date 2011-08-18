@@ -38,10 +38,9 @@ Spot::Application.routes.draw do
     end
 
     resource :widget, :only => [:show]
-    resource :email, :only => [:show] do
+    resource :email, :only => [:show, :update] do
       delete "unsubscribe"
       post "subscribe"
-      get "goodbye"
       get "availability"
       get "existence"
     end

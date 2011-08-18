@@ -19,10 +19,7 @@
       =spot_form_for current_account, :url => biz_account_path, :display => "light" do |f|
         =render :partial => "/biz/accounts/fields", :locals => {:form => f}
         %h2.email Email Communications
-        .emailsettings
-          %li.checkbox.setting.last
-            =f.label :send_weekly_digest, "Receive Weekly Digest Emails?"
-            =f.check_box :send_weekly_digest
+        =render :partial => "/biz/accounts/contact", :locals => {:form => f}
         %li.buttons.left.clearfix
           =button_tag :class => "btngrypill300x30" do
             Update

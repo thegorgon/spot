@@ -205,8 +205,15 @@
     site_memberships_endpoint: function() {
       go.PaymentForm.init({form: $('form.new_membership')});      
     },
-    site_cities_new: function() {
-      $('#preview_city').autogeocode();
+    site_cities: function() {
+      $('form#city_preview').find('#email_subscription_city_id').unbind('change.showother').bind('change.showother', function(e) {
+        if ($(this).val().toString() == "-1") {
+          $('#othercityfields').hide().removeClass('hidden').slideDown();
+        } else {
+          $('#preview_city').val('');
+          $('#othercityfields').slideUp();
+        }
+      });
     },
     site_cities_calendar: function() {
       var getDateRange = function(calendar) {

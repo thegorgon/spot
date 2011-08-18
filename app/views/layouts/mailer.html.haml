@@ -47,6 +47,6 @@
         %tr{:style => "line-height:12px;"}
           %td{:style => "text-align:center;font-size:10px;line-height:12px;color:#333;"}
             To unsubscribe from further emails,
-            =link_to "click here", email_url(:email => @email), :style => "color:#333;"
+            =link_to "click here", email_url(:email => @email, :key => EmailSubscriptions.passkey(@email)), :style => "color:#333;"
       %tr
         %td=yield :ft

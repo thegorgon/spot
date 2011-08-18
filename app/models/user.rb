@@ -132,7 +132,7 @@ class User < ActiveRecord::Base
     @nickname
   end
 
-  def admin!
+  def adminify!
     update_attribute(:admin, true)
   end
       
@@ -156,7 +156,7 @@ class User < ActiveRecord::Base
   
   def email_subscriptions
     @email_subscriptions ||= 
-      EmailSubscriptions.ensure( :email => email, 
+      EmailSubscriptions.ensure( :email => email_was, 
                                  :first_name => first_name, 
                                  :last_name => last_name, 
                                  :city_id => city_id, 
@@ -180,7 +180,11 @@ class User < ActiveRecord::Base
   private
   
   def save_email_subscriptions
-    email_subscriptions.save
+    email_subscriptions.email = email
+    email_subscriptions.first_name = first_name
+    email_subscriptions.last_name = last_name
+    email_subscriptions.city_id = city_id
+    email_subscriptions.save if email_subscriptions.changed?
   end
     
   def reset_persistence_token

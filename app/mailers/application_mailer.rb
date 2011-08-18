@@ -2,7 +2,7 @@ class ApplicationMailer < ActionMailer::Base
   layout 'mailer'
   default_url_options[:host] = HOSTS[Rails.env]
   default :from => "The Spot Team <spot@spotmembers.com>",
-          'List-Unsubscribe' => Proc.new {  "<#{email_url(:email => @email)}>" },
+          'List-Unsubscribe' => Proc.new {  "<#{email_url(:email => @email, :key => EmailSubscriptions.passkey(@email))}>" },
           :to => Proc.new { @email },
           "X-Sent" => Proc.new { set_x_sent },
           :subject => Proc.new { @title }

@@ -154,6 +154,24 @@
         setFilename();
       });
     },
+    masterControl: function() {
+      $(this).each(function(i) {
+        var control = $(this),
+          cascades = $(control.attr('data-master-control'));
+        control.unbind('click.mastercontrol').bind('click.mastercontrol', function(e) {
+          if (control.is(':checked')) {
+            cascades.removeAttr('checked');
+          } else {
+            cascades.attr('checked', 'checked');
+          }
+        });
+        cascades.unbind('click.mastercontrol').bind('click.mastercontrol', function(e) {
+          if ($(this).is(':checked')) {
+            control.removeAttr('checked');
+          }
+        });
+      });
+    },
     toggleClass: function() {
       $(this).each(function(e) {
         var self = $(this),
@@ -255,6 +273,7 @@
       fetch('li.invalid input, input.invalid').focus(function(e) {
         $(this).parent('li').add(this).removeClass('invalid');
       });
+      fetch('[data-master-control]').masterControl();
       fetch('.rowlink').rowLink();
       fetch('.tabbar').tabBar();
       fetch('.twit-share-btn, .twitter-share-link').popupLink({width: 350, height: 300});

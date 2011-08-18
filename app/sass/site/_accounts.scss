@@ -75,9 +75,14 @@
       padding-left: 220px;
       .first_name {
         left: 220px;
+        .validity {
+          right: 150px;
+        }
       }
       .last_name {
-        right: 0px;
+        .validity {
+          right: 150px;
+        }
       }
       .first_name, .last_name {
         width: 151px;

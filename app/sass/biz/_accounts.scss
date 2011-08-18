@@ -72,26 +72,6 @@
       .buttons {
         margin: 10px 0;
       }
-      .contact {
-        .emailsettings {
-          padding: 5px 0;
-          border: 1px solid #999;
-          @include border_radius(5px);
-          background: #fff;
-          .setting {
-            margin: 0;
-            padding: 5px 10px;
-            border-bottom: 1px solid #999;
-            &.last {
-              border: none;
-            }
-            input {
-              margin-top: 2px;
-              float: right;
-            }
-          }
-        }
-      }
       &.bizs {
         display: block;
         .bizlist {

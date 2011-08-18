@@ -21,6 +21,10 @@ module ActiveRecordExtensions
       @_commits.has_key?(a)
     end
     
+    def attribute_before_commit(a)
+      attribute_commited?(a) ? @_commits[a].first : nil
+    end
+    
     def new_commit?
       !!@_new_commit
     end
@@ -128,6 +132,14 @@ module ActiveRecordExtensions
 
           define_method("#{options[:inverse_method_prefix]}#{flag}_changed?") do
             send("#{field}_was") & (1 << i) != send("#{field}") & (1 << i)
+          end
+          
+          define_method("#{options[:inverse_method_prefix]}#{flag}=") do |value|
+            if (!value || value.respond_to?(:to_i) && value.to_i <= 0)
+              send("#{field}=", send(field) | (1 << i))
+            else
+              send("#{field}=", send(field) & ~(1 << i))
+            end
           end
         end
       end

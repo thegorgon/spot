@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'linecache19'
-gem 'rails', '3.0.3'
+gem 'rails', '3.0.10'
 gem 'capistrano'
 gem 'haml'
 gem 'sass'
@@ -10,7 +10,6 @@ gem "paperclip", "~> 2.3"
 gem "curb"
 gem "nokogiri"
 gem 'mysql2', '0.2.7'
-gem 'mail', '2.2.14'
 gem 'will_paginate', "~> 3.0.pre2"
 gem 'aws-s3', :require => "aws/s3"
 gem 'aws-ses', '~> 0.4.1', :require => 'aws/ses'
@@ -20,8 +19,8 @@ gem 'warden'
 gem 'rails_warden'
 gem 'yajl-ruby'
 gem 'thinking-sphinx', '2.0.0', :require => 'thinking_sphinx'
-gem 'ts-resque-delta', '0.0.4', :require => 'thinking_sphinx/deltas/resque_delta'
-gem 'resque'
+gem 'ts-resque-delta', :require => 'thinking_sphinx/deltas/resque_delta'
+gem 'resque', '~> 1.17.1'
 gem 'amatch'
 gem 'twitter'
 gem 'typhoeus'
@@ -36,6 +35,7 @@ gem 'hoptoad_notifier'
 gem "acts_as_list"
 gem "rack-noie", :require => "noie"
 gem "braintree"
+gem "hominid"
 
 group :production do
   gem 'unicorn'

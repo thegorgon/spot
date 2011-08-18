@@ -24,6 +24,29 @@ module Spot
       end
     end
     
+    def city_select(method, value, options={})
+      subscribeable = options.delete(:subscribeable)
+      prepend_values = options.delete(:prepend_values)
+      append_values = options.delete(:append_values)
+      html_options = {
+        :class => "chzn-select", 
+        :title => "Select your city"
+      }.merge!(options.delete(:html) || {})
+      options = {
+        :validity => false, 
+        :prompt => "select your city", 
+        :selected => value, 
+        :label => "city : "
+      }.merge!(options)
+      values = City.visible
+      values = values.subscriptions_available if subscribeable
+      values = values.all.collect { |c| [c.name_and_region, c.id] }
+      values = prepend_values + values if prepend_values
+      values += append_values if append_values
+      
+      select(method, values, options, html_options)
+    end
+    
     def file_field(method, options={})
       sanitize_options!("file_field", options)
       button_class = options.delete(:button_class) || ""
