@@ -93,6 +93,7 @@ Spot::Application.routes.draw do
       get "info"
       get "analysis"
     end
+    resource :session_test, :only => [:new, :show], :controller => "session_test"
     root :to => "home#index"
   end
   
