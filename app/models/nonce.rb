@@ -33,6 +33,7 @@ class Nonce
   def generate!
     @token ||= @session[SESSION_KEY] if @session
     @token ||= self.class.friendly_token
+    Rails.logger.info "[spot] SETTING SESSION NONCE TO : #{@token}"
     @session[SESSION_KEY] = @token if @session
   end
 
@@ -46,6 +47,7 @@ class Nonce
   end
     
   def clear
+    Rails.logger.info "[spot] CLEARING SESSION NONCE"
     @token = nil
     @session[SESSION_KEY] = nil if @session
   end        
