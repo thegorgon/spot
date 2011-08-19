@@ -15,7 +15,7 @@ gem 'will_paginate', "~> 3.0.pre2"
 gem 'aws-s3', :require => "aws/s3"
 gem 'aws-ses', '~> 0.4.1', :require => 'aws/ses'
 gem 'redis'
-gem 'redis-store', '1.0.0.beta4'
+gem 'redis-store', '1.0.0.rc1'
 gem 'warden'
 gem 'rails_warden'
 gem 'yajl-ruby'

@@ -156,9 +156,8 @@ GEM
     redis (2.2.2)
     redis-namespace (1.0.3)
       redis (< 3.0.0)
-    redis-store (1.0.0.beta4)
-      redis (>= 2.0.0)
-      redis (>= 2.0.0)
+    redis-store (1.0.0.rc1)
+      redis (~> 2.2.0)
     resque (1.17.1)
       json (< 1.6, >= 1.4.6)
       redis-namespace (~> 1.0.2)
@@ -273,7 +272,7 @@ DEPENDENCIES
   rails_warden
   rake (= 0.8.7)
   redis
-  redis-store (= 1.0.0.beta4)
+  redis-store (= 1.0.0.rc1)
   resque (~> 1.17.1)
   resque_spec
   rspec-rails (~> 2.4)
