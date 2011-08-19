@@ -20,7 +20,7 @@ module Jobs
     
       if oldemail.present?
         Rails.logger.debug("[spot] unsubscribing #{oldemail} from mailchimp")
-        client.list_unsubscribe(MAILCHIMP["lists"]["subscriptions"]["id"], oldemail, true, false, false)
+        client.list_unsubscribe(MAILCHIMP["lists"]["subscriptions"]["id"], oldemail, true, false, false) rescue nil
       end
     
       Rails.logger.debug("[spot] subscribing #{email.email} to mailchimp with params #{merge.inspect}")

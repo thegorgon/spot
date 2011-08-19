@@ -23,7 +23,7 @@ class DuplicatePlace < ActiveRecord::Base
   
   
   def self.dedupe(place)
-    if dupe = duplicate_for(place)
+    if dupe = best_duplicate_for(place)
       dupe = DuplicatePlace.ensure(dupe)
       dupe.resolve!(dupe.preferred_canonical, :status => AUTORESOLVED) if dupe && dupe.name_distance == 0 && dupe.address_distance == 0 && dupe.geo_distance <= 0.01
     end
@@ -44,7 +44,7 @@ class DuplicatePlace < ActiveRecord::Base
     end
   end
   
-  def self.duplicate_for(place)
+  def self.best_duplicate_for(place)
     dupe = potential_duplicates_for(place).sort! { |d1, d2| d1.total_distance <=> d2.total_distance }.first 
     if dupe && dupe.normalized_name_distance <= MAX_NAME_DISTANCE && dupe.normalized_address_distance <= MAX_ADDRESS_DISTANCE && dupe.normalized_geo_distance <= 1
       dupe
