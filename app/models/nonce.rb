@@ -19,7 +19,7 @@ class Nonce
   def self.valid?(params, session)
     nonce = Nonce.new(:session => session)
     result = params && params[:credentials] && params[:credentials][:key] == nonce.digested
-    Rails.logger.info("[spot] received credentials : #{params[:credentials].inspect} with session #{nonce.digested}")
+    Rails.logger.info("[spot] received credentials : #{params[:credentials][:key] rescue "NONE"} with nonce key : #{nonce.key} digested to : #{nonce.digested}")
     nonce.clear
     !!result
   end
