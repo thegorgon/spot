@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  prepend_before_filter :log_session
   before_filter :stash_controller
   before_filter :localize
   before_filter :reject_certain_spiders
@@ -15,14 +14,12 @@ class ApplicationController < ActionController::Base
   private
   
   def reject_certain_spiders
-    log_session("BEFORE reject_certain_spiders : ")
     [/^Sogou Pic Spider/].each do |agent|
       if request.env['HTTP_USER_AGENT'] =~ agent
         render :text => "" 
         return false
       end
     end
-    log_session("AFTER reject_certain_spiders : ")
   end  
   
   def partial_application
@@ -208,13 +205,10 @@ class ApplicationController < ActionController::Base
   end
   
   def stash_controller
-    log_session("BEFORE stash_controller : ")
     Thread.current[:controller] = self
-    log_session("AFTER stash_controller : ")
   end
   
   def localize
-    log_session("BEFORE localize : ")
     I18n.locale = current_user.try(:locale) || request.compatible_language_from(I18n.available_locales) || I18n.default_locale
     if logged_in?
       attributes = {}
@@ -222,7 +216,6 @@ class ApplicationController < ActionController::Base
       attributes[:location] = request_location if current_user.location != request_location
       current_user.update_attributes(attributes) if logged_in? && attributes.present?
     end
-    log_session("AFTER localize : ")
   end
   
   def record_user_event(event, value=nil)

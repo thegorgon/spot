@@ -1,4 +1,5 @@
 class Api::BaseController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   before_filter :require_user
   before_filter :log_device_specs
   rescue_from Exception, :with => :exception_handler
