@@ -1,5 +1,4 @@
 class Api::BaseController < ApplicationController
-  before_filter :log_session
   before_filter :require_user
   before_filter :log_device_specs
   rescue_from Exception, :with => :exception_handler
@@ -27,11 +26,7 @@ class Api::BaseController < ApplicationController
     Rails.logger.info("spot: handling request from user-agent: #{request.user_agent}")
     Rails.logger.info("spot: parsed user agent into device : #{description}")
   end
-  
-  def log_session
-    Rails.logger.info("spot: session = #{session.inspect} and cookies = #{request.cookies.inspect}")
-  end
-  
+    
   def exception_handler(exception=nil)
     Rails.logger.info("spot: handling exception of type : #{exception.class}")
     log_error(exception)
