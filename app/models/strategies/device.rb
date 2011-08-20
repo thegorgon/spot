@@ -8,7 +8,7 @@ class Strategies::Device < Warden::Strategies::Base
 
   def authenticate!
     Rails.logger.info("warden: attempting authentication with device strategy")
-    device = ::Device.authenticate(params[:credentials]) if Rails.env.production? || Nonce.valid?(params, session)
+    device = ::Device.authenticate(params[:credentials]) if Nonce.valid?(params, session)
     device && device.user ? success!(device.user) : fail!("Inalid device parameters")
   end
 end
