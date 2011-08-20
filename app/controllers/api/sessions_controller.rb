@@ -3,8 +3,6 @@ class Api::SessionsController < Api::BaseController
   
   def new
     record_user_event("api nonce fetch")
-    Rails.logger.info("[spot] rendering nonce token #{nonce.token}")
-    log_session
     render :json => { :nonce => nonce.token }
   end
   

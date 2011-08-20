@@ -19,7 +19,6 @@ class Nonce
   def self.valid?(params, session)
     nonce = Nonce.new(:session => session)
     result = params && params[:credentials] && params[:credentials][:key] == nonce.digested
-    Rails.logger.info("[spot] received credentials : #{params[:credentials][:key] rescue "NONE"} with nonce token : #{nonce.token} digested to : #{nonce.digested}")
     nonce.clear
     !!result
   end
@@ -33,7 +32,6 @@ class Nonce
   def generate!
     @token ||= @session[SESSION_KEY] if @session
     @token ||= self.class.friendly_token
-    Rails.logger.info "[spot] SETTING SESSION NONCE TO : #{@token}"
     @session[SESSION_KEY] = @token if @session
   end
 
@@ -47,7 +45,6 @@ class Nonce
   end
     
   def clear
-    Rails.logger.info "[spot] CLEARING SESSION NONCE"
     @token = nil
     @session[SESSION_KEY] = nil if @session
   end        

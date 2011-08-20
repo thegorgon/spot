@@ -39,7 +39,7 @@ module Google
     
     def self.raw(params={})
       fetch_url = url(params)
-      Rails.logger.info "[Google Photo] Performing GET request to url : #{fetch_url}"
+      Rails.logger.info "google-photo : performing GET request to url : #{fetch_url}"
       curl = Curl::Easy.http_get(fetch_url) do |curl|
         curl.headers["Referer"] = "http://#{REFERRER}"
       end

@@ -1,7 +1,7 @@
 class Api::BaseController < ApplicationController
+  before_filter :log_session
   before_filter :require_user
   before_filter :log_device_specs
-  before_filter :log_session
   rescue_from Exception, :with => :exception_handler
   
   private
@@ -29,7 +29,7 @@ class Api::BaseController < ApplicationController
   end
   
   def log_session
-    Rails.logger.info("spot: session < dump = #{session.inspect}, id = #{session[:session_id]}, cookies = #{request.cookies.inspect} >")
+    Rails.logger.info("spot: session = #{session.inspect} and cookies = #{request.cookies.inspect}")
   end
   
   def exception_handler(exception=nil)
