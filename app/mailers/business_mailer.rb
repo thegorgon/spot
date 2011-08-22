@@ -1,7 +1,7 @@
 class BusinessMailer < ApplicationMailer
   REPLY_TO = "Julia Graham <julia@members.com>"
   default :reply_to => REPLY_TO
-  default :to => Proc.new { @account.email_with_name }
+  default :to => Proc.new { Rails.env.production?? @account.email_with_name : "jesse@spotmembers.com" }
   
   def welcome(account)
     @title = "Welcome to Spot for Businesses!"
@@ -55,7 +55,7 @@ class BusinessMailer < ApplicationMailer
     @email = @account.email
     @events = business.promotion_events.on_date(date).includes(:codes => :owner).all
     @title = "Promotion Codes for #{@date.strftime('%B %d, %Y')}"
-    mail( :to => @account.email_with_name )
+    mail
   end
   
   def weekly_digest(account, start_date=nil, end_date=nil)
@@ -70,6 +70,6 @@ class BusinessMailer < ApplicationMailer
     @end_date ||= @start_date + 6.days
     @email = @account.email
     @title = "Your Spot Weekly Digest"
-    mail( :to => @account.email_with_name ) 
+    mail
   end
 end

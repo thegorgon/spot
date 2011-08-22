@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/fedegl/aws-ses.git
+  revision: deb3aa89572b80f52d1954ef8aa27bef04b75bb2
+  specs:
+    aws-ses (0.4.3)
+      builder
+      mail (> 2.2.5)
+      mime-types
+      xml-simple
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -46,14 +56,6 @@ GEM
     aws-s3 (0.6.2)
       builder
       mime-types
-      xml-simple
-    aws-ses (0.4.2)
-      builder
-      builder
-      mail (~> 2.2.5)
-      mime-types
-      mime-types
-      xml-simple
       xml-simple
     base62 (0.1.4)
     braintree (2.10.1)
@@ -233,7 +235,7 @@ GEM
     warden (1.0.3)
       rack (>= 1.0.0)
     will_paginate (3.0.pre2)
-    xml-simple (1.0.15)
+    xml-simple (1.1.0)
     yajl-ruby (0.8.2)
     yui-compressor (0.9.6)
       POpen4 (>= 0.1.4)
@@ -248,7 +250,7 @@ DEPENDENCIES
   autotest-fsevent
   autotest-growl
   aws-s3
-  aws-ses (~> 0.4.1)
+  aws-ses (~> 0.4.1)!
   base62
   braintree
   capistrano
