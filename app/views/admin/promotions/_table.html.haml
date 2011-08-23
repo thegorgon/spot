@@ -1,2 +1,14 @@
 -@promotions.to_a.each do |promotion|
   =render :partial => "promotion", :object => promotion
+  
+%script#rejection_dialog{:type => "text/x-jquery-tmpl"}
+  =spot_form_for :template, :url => "${url}", :display => "light reject", :html => {:method => :put} do |f|
+    -if params[:filter].present?
+      =hidden_field_tag :filter, params[:filter]
+    =f.hidden_field :status, :value => PromotionTemplate::REJECTED_STATUS
+    %h1.tf ${name}
+    %h2.tf Why Are You Rejecting Me?
+    =f.text_area :rejection_reasoning
+    %li.center
+      =button_tag :class => "btngrypill" do
+        Reject

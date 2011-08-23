@@ -212,9 +212,18 @@
             start: function() {
               self.addClass('loading');
             }, success: function(data) {
-              var html = $(data.html);
-              bindRow(html);
-              self.replaceWith(html);
+              var html = data.html;
+              if (html) {
+                html = $(html);
+                bindRow(html);
+                self.replaceWith(html);                
+              } else {
+                $.logger.debug("DELETING!");
+                self.slideUp(function() {
+                  $.logger.debug("DELETED!");
+                  self.remove();
+                });
+              }
             }
           });
         });

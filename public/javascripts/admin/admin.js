@@ -28,7 +28,27 @@
     },
     admin_promotions_index: function() {
       var bind = function() {
-        $('.promotion form').ajaxForm({
+        $('.promotion .reject').unbind('click.rejection').bind('click.rejection', function(e) {
+          e.preventDefault();
+          $('#rejection_dialog').tmpl({url: $(this).attr('href'), name: $(this).attr('data-name')}).dialog({
+            width: 400,
+            closeText: '',
+            title: "But Why?"
+          });
+        });
+        $('.promotion .submit').unbind('click.rejection').bind('click.rejection', function(e) {
+          e.preventDefault();
+          var status = $(this).attr('data-status'),
+            form = $(this).parents('form'),
+            confirmMsg = $(this).attr('data-confirm');
+          if (status) {
+            form.find('input.promo_status').val(status);
+          }
+          if ((!confirmMsg || confirm(confirmMsg)) && form.validate()) {
+            form.submit();            
+          }
+        });
+        $('.promotion form, ul.reject form').ajaxForm({
           start: function() {
             $(this).parents('.promotion').addClass('loading');
           }, success: function(data) {

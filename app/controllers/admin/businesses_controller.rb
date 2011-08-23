@@ -6,11 +6,20 @@ class Admin::BusinessesController < Admin::BaseController
     @businesses = @businesses.all
   end
   
+  def destroy
+    @business = Business.find(params[:id])
+    @business.destroy
+    respond_to do |format|
+      format.html { redirect_to admin_businesses_path }
+      format.js { render :json => { :success => true, :html => nil } }
+    end
+  end
+  
   def toggle
     @business = Business.find(params[:id])
     @business.toggle_verification!
     respond_to do |format|
-      format.html { redirect_to admin_business_path }
+      format.html { redirect_to admin_businesses_path }
       format.js { render :json => { :success => true, :html => render_to_string(:partial => "row", :object => @business.reload, :as => :business) } }
     end
   end
@@ -19,7 +28,7 @@ class Admin::BusinessesController < Admin::BaseController
     @business = Business.find(params[:id])
     @business.business_account.toggle_verification!
     respond_to do |format|
-      format.html { redirect_to admin_business_path }
+      format.html { redirect_to admin_businesses_path }
       format.js { render :json => { :success => true, :html => render_to_string(:partial => "row", :object => @business.reload, :as => :business) } }
     end
   end

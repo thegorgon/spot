@@ -1,9 +1,9 @@
 class Business < ActiveRecord::Base
   belongs_to :business_account, :counter_cache => true
   belongs_to :place
-  has_many :promotion_templates
-  has_many :promotion_events
-  has_many :promotion_codes
+  has_many :promotion_templates, :dependent => :destroy
+  has_many :promotion_events, :dependent => :destroy
+  has_many :promotion_codes, :dependent => :destroy
   validate :account_can_claim, :on => :create
   before_validation :autoverify, :on => :create
   accepts_nested_attributes_for :place

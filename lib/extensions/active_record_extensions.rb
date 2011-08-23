@@ -55,9 +55,18 @@ module ActiveRecordExtensions
       inverse_attr = options[:inverse_attr]
       field = options[:field] || "setting_flags"
       protected_flags = options[:protected] || []
-      scope :with_setting, lambda { |s| where("#{field} & #{1 << flags.index(s)} > 0") }
-      scope :without_setting, lambda { |s| where("#{field} & #{1 << flags.index(s)} = 0") }
+      scope :with_setting, lambda { |s| where(PlaceNote.with_setting_sql(s)) }
+      scope :without_setting, lambda { |s| where(PlaceNote.without_setting_sql(s)) }
       
+      singleton_class.instance_eval do
+        define_method(:with_setting_sql) do |s|
+          "(#{field} & #{1 << flags.index(s)}) > 0"
+        end
+
+        define_method(:without_setting_sql) do |s|
+          "(#{field} & #{1 << flags.index(s)}) = 0"
+        end
+      end
       
       define_method "#{attribute}=" do |value|
         (flags & value.to_a).each do |setting|

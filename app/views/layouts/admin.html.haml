@@ -35,11 +35,10 @@
         %ul.hidden.subnav#biz_subnav
           %li=link_to "All Biz", admin_businesses_path
           %li=link_to "Pending Biz", admin_businesses_path(:filter => 1)
-          %li=link_to "Approved Biz", admin_businesses_path(:filter => 2)
           %li=link_to "All Promotions", admin_promotions_path
           %li=link_to "Pending Promotions", admin_promotions_path(:filter => 1)
-          %li=link_to "Approved Promotions", admin_promotions_path(:filter => 2)
-          %li=link_to "Rejected Promotions", admin_promotions_path(:filter => 4)
+          %li=link_to "All Accounts", admin_business_accounts_path
+          %li=link_to "Pending Accounts", admin_business_accounts_path(:filter => 1)
       %li{'data-popover' => '#acq_subnav', 'data-popover-orient' => 'vertical'}
         %span.title acquisition
         %ul.hidden.subnav#acq_subnav

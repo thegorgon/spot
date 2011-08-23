@@ -1,0 +1,14 @@
+%tr.center.account{:id => dom_id(account)}
+  %td= account.id
+  %td= account.name
+  %td= mail_to account.email
+  %td= account.title
+  %td= account.phone
+  %td= account.businesses_count
+  %td= link_to yes_no(account.verified?).titlecase, toggle_admin_business_account_path(account), "data-method" => "put", :class => "rowlink ajax"
+  %td
+    -if account.verified?
+      None
+    -else
+      =link_to "Delete", admin_business_account_path(account), "data-method" => "delete", :class => "rowlink ajax", "data-confirm" => "Are you sure? This will delete the account forever. This is for serious!"    
+    

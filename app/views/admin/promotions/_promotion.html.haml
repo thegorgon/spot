@@ -10,7 +10,7 @@
   -if promotion.rejected? || promotion.pending? || promotion.approved?
     =spot_form_for promotion, :as => :template, :url => admin_promotion_path(promotion), :display => "light" do |f|
       =hidden_field_tag :filter, params[:filter]
-      =f.hidden_field :status, :value => PromotionTemplate::APPROVED_STATUS        
+      =f.hidden_field :status, :class => "promo_status"
       %li.label
         =f.label :name, "Name : "
       =f.text_field :name
@@ -23,20 +23,9 @@
       %li.label
         =f.label :description, promotion.kind_of?(DiscountTemplate) ? "Editorial Description : " : "Promotion Description : "
       =f.text_area :description
-      %li.center
-        =button_tag :class => "btngrypill center" do
-          =promotion.approved?? "Update" : "Approve With Edits"
-
-  -if promotion.pending?
-    %ul
-      %li.vcenter or
-
-    =spot_form_for promotion, :as => :template, :url => admin_promotion_path(promotion), :display => "light reject" do |f|
-      =hidden_field_tag :filter, params[:filter]
-      =f.hidden_field :status, :value => PromotionTemplate::REJECTED_STATUS
-      %li.label=f.label :rejection_reasoning, "Reason For Rejection :"
-      =f.text_area :rejection_reasoning
-      %li.center
-        =button_tag :class => "btngrypill center" do
-          Reject
-    
+      %li.buttons
+        -unless promotion.approved?
+          =link_to "Approve", admin_promotion_path(promotion), :class => "btngrypill center submit", "data-status" => PromotionTemplate::APPROVED_STATUS, "data-confirm" => "Really? Are you sure you want to approve '#{promotion.name}'"
+        =link_to "Update", admin_promotion_path(promotion), :class => "btngrypill center submit", "data-status" => promotion.status
+        =link_to "Reject", admin_promotion_path(promotion), :class => "btngrypill center reject", "data-name" => promotion.name
+        =link_to "Delete", admin_promotion_path(promotion), :class => "btngrypill center", "data-confirm" => "Really? Are you sure you want to delete '#{promotion.name}'?", "data-method" => "DELETE"

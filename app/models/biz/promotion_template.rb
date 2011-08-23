@@ -1,5 +1,5 @@
 class PromotionTemplate < ActiveRecord::Base
-  has_many :events, :class_name => "PromotionEvent", :foreign_key => "template_id"
+  has_many :events, :class_name => "PromotionEvent", :foreign_key => "template_id", :dependent => :destroy
   belongs_to :business
   attr_protected :approved_at
   
@@ -30,7 +30,7 @@ class PromotionTemplate < ActiveRecord::Base
     finder = finder.rejected if n & (1 << 2) > 0
     finder = finder.active
     finder = finder.order("id DESC")
-    finder = finder.includes(:business)
+    finder = finder.includes({:business => [:business_account, :place]})
     finder
   end
   

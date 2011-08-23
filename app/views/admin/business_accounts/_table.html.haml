@@ -1,0 +1,14 @@
+%table.data
+  %thead
+    %tr
+      %th ID
+      %th Name
+      %th Email
+      %th Title
+      %th Phone
+      %th Businesses
+      %th Verified
+      %th Actions
+  %tbody
+    -@accounts.to_a.each do |account|
+      =render :partial => "row", :object => account, :as => :account

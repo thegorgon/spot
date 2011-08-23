@@ -4,12 +4,10 @@
   %td= link_to business.place.name, edit_admin_place_path(business.place)
   %td= "#{mail_to account.email_with_name, account.name} (#{account.title.titlecase})".html_safe
   %td= account.phone
-  %td= yes_no(business.verified?).titlecase
+  %td=link_to yes_no(business.verified?).titlecase, toggle_admin_business_path(business), "data-method" => "put", :class => "rowlink ajax"
   %td= business.created_at.strftime('%m-%d-%Y')
   %td
-    =link_to business.verified?? "Revoke" : "Verify", toggle_admin_business_path(business), "data-method" => "put", :class => "rowlink ajax"
-    \/
-    =link_to account.verified?? "Account Revoke" : "Account Verify", toggle_account_admin_business_path(business), "data-method" => "put", :class => "rowlink ajax"
-    
-    
-    
+    -if business.verified?
+      None
+    -else
+      =link_to "Delete", admin_business_path(business), "data-method" => "delete", :class => "rowlink ajax", "data-confirm" => "Are you sure? This will delete the business."

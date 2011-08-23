@@ -1,4 +1,20 @@
 .admin_promotions {
+  ul.form.reject {
+    padding: 20px 0;
+    h1 {
+      margin-bottom: 20px;
+    }
+    form {
+      width: 300px;
+      margin: 0 auto;
+    }
+    h2 {
+      font-size: 16px;
+    }
+    button {
+      width: 300px;
+    }
+  }
   .promotion {
     margin: 1em 0 2em;
     .cost {
@@ -27,6 +43,13 @@
     }
     label {
       font-weight: bold;
+    }
+    .buttons {
+      a {
+        float: left;
+        width: 60px;
+        margin-right: 10px;
+      }
     }
     ul {
       margin-right: 1em;

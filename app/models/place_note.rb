@@ -18,6 +18,18 @@ class PlaceNote < ActiveRecord::Base
   scope :deleted, where("deleted_at IS NOT NULL")
   scope :visible, without_setting("private").without_setting("muted").undeleted.order("id DESC")
   scope :by_user, lambda { |u| where(:user_id => u.kind_of?(ActiveRecord::Base) ? u.id : u) }
+  scope :visible_to, lambda { |u|
+    if u
+      where([
+        "user_id = ? OR (? AND ?)", 
+          u.kind_of?(ActiveRecord::Base) ? u.id : u, 
+          without_setting_sql("private"), 
+          without_setting_sql("muted")
+      ]).undeleted.order("id DESC")
+    else
+      visible
+    end
+  }
 
   attr_protected :deleted_at  
   
@@ -25,11 +37,9 @@ class PlaceNote < ActiveRecord::Base
     finder = self
     finder = finder.where(:place_id => params[:place_id]) if params[:place_id]
     finder = finder.where(:user_id => params[:user_id]) if params[:user_id]
-    page = [1, params[:page].to_i].max 
-    per_page = params[:per_page] && params[:per_page].to_i > 1 ? params[:per_page].to_i : PAGE_SIZE
-    finder = finder.visible if params[:user_id].nil? || params[:user_id] != params[:viewer].try(:id)
-    finder.page(1)
-    finder.per_page(PAGE_SIZE)
+    finder = finder.visible_to(params[:viewer]) 
+    finder.page([1, params[:page].to_i].max )
+    finder.per_page(params[:per_page] && params[:per_page].to_i > 1 ? params[:per_page].to_i : PAGE_SIZE)
     finder.all
   end
   

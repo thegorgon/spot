@@ -21,6 +21,14 @@ class BusinessAccount < ActiveRecord::Base
                                     :field => "notification_flags", 
                                     :method_prefix => "send_"
 
+  def self.filter(n)
+    finder = self
+    finder = finder.where(:verified_at => nil) if n & 1 > 0
+    finder = finder.where("verified_at IS NOT NULL") if n & 2 > 0
+    finder = finder.order("id DESC")
+    finder
+  end
+  
   def self.register(params)
     user = User.find_by_id(params[:user_id]) if params[:user_id]
     user ||= User.register(params.except(:phone, :title))

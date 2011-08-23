@@ -77,12 +77,12 @@ Spot::Application.routes.draw do
         put "ignore"
       end
     end
-    resources :promotions, :only => [:index, :edit, :update] do 
-      put "reject", :on => :member
-    end
-    resources :businesses, :only => [:index] do 
+    resources :promotions, :only => [:index, :update, :destroy]
+    resources :business_accounts, :only => [:index, :destroy] do 
       put "toggle", :on => :member
-      put "toggle_account", :on => :member
+    end
+    resources :businesses, :only => [:index, :destroy] do 
+      put "toggle", :on => :member
     end
     resource :search, :only => [:new, :show], :controller => "search"
     resources :settings, :only => [:index, :create, :update, :destroy] do

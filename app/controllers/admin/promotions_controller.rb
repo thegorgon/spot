@@ -5,9 +5,12 @@ class Admin::PromotionsController < Admin::BaseController
     @promotions = @promotions.per_page(params[:per_page]) if params[:per_page]
     @promotions = @promotions.all
   end
-  
-  def edit
+    
+  def destroy
     @promotion = PromotionTemplate.find(params[:id])
+    @promotion.destroy
+    flash[:notice] = "#{@promotion.name} Deleted!"
+    redirect_to admin_promotions_path(params.slice("filter"))
   end
   
   def update
@@ -18,7 +21,7 @@ class Admin::PromotionsController < Admin::BaseController
         @message = "#{@promotion.name} Saved!"
         format.html do
           flash[:notice] = @message
-          redirect_to(edit_admin_promotion_path(@promotion))
+          redirect_to admin_promotions_path(params.slice("filter"))
         end
         format.js do
           index

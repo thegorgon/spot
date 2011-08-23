@@ -24,7 +24,7 @@ class ActivityItem < ActiveRecord::Base
     params[:page] = [1, params[:page].to_i].max
     finder = self
     finder = finder.within(radius, :origin => origin) if radius && origin
-    finder = finder.where(:action => "CREATE")
+    finder = finder.where("public")
     finder = finder.where(:activity_type => "WishlistItem") if params[:device][:app_version].to_i < WISHLIST_ONLY_REVISION
     finder = finder.since(params[:since]) if params[:since]
     finder = finder.until(params[:until]) if params[:until]
