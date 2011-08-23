@@ -46,6 +46,7 @@ class Place < ActiveRecord::Base
   scope :canonical, where("canonical_id = id")
   scope :with_canonical, joins("INNER JOIN places canonical ON canonical.id = places.canonical_id").select("canonical.*")
   scope :with_image, where("image_file_name IS NOT NULL")
+  
   def self.filter(params={})
     finder = self
     if params[:query]
@@ -56,7 +57,9 @@ class Place < ActiveRecord::Base
       finder = finder.where("image_processing") if params[:filter].to_i & 4 > 0
       finder = finder.order("id DESC")
       finder = finder.canonical
-      finder = finder.paginate(:page => params[:page], :per_page => params[:per_page])
+      finder = finder.page(params[:page])
+      finder = finder.per_page(params[:per_page]) if params[:per_page]
+      finder = finder.all
     end
     finder
   end

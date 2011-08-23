@@ -48,7 +48,7 @@
           positionOverlay();
         });
         $('input, button, select, textarea').blur();
-        if ($.isFunction(onopen)) { onopen.call(dialog); }
+        if ($.isFunction(onopen)) { onopen.call(dialog, dialog.data('open-target')); }
       };
       
       dialog.removeClass('hidden').dialog(options);
@@ -62,6 +62,7 @@
     if (options.trigger) {
       $(options.trigger).unbind('click.modal-trigger').bind('click.modal-trigger', function(e) {
         e.preventDefault();
+        self.data('open-target', this);
         $.modal.open(self);
       });
     }

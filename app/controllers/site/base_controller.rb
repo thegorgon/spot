@@ -3,7 +3,26 @@ class Site::BaseController < ApplicationController
   helper 'site'
   
   protected
-    
+  
+  def partial_application
+    app = session[:partial_application]
+    if app && app.kind_of?(Hash) && app[:email]
+      app
+    else
+      {}
+    end
+  end
+  helper_method :partial_application
+
+  def set_partial_application(value)
+    value.symbolize_keys!
+    session[:partial_application] = value if value.kind_of?(Hash) && value[:email]
+  end
+
+  def clear_partial_application
+    session[:partial_application] = nil
+  end
+  
   def require_no_user
     authenticate
     if logged_in?

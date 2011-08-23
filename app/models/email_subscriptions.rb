@@ -1,13 +1,15 @@
 class EmailSubscriptions < ActiveRecord::Base
   SUBSCRIPTION_FLAGS = ["deal_emails"]
   MAX_UNSUBSCRIPTIONS = 2**31 - 1
-  
   SECRET = "h0rs3s ar3 t3rr1bl3 p30pl3"
   belongs_to :user
   belongs_to :city
+  
   validates :email, :presence => true, :format => EMAIL_REGEX
   name_attribute :name
   after_commit :enqueue_list_subscription
+  
+  has_acquisition_source :count => :email_acquired
   nested_attributes({:other_city => :string}, {:in => :data})
   setting_flags SUBSCRIPTION_FLAGS, :attr => "unsubscriptions", 
                                     :inverse_attr => "subscriptions",
@@ -90,7 +92,7 @@ class EmailSubscriptions < ActiveRecord::Base
   end
 
   private
-  
+    
   def enqueue_list_subscription
     Rails.logger.debug("[resque] enqueue list subscription")
     Resque.enqueue(Jobs::EmailListSubscribe, id, attribute_commited?(:email) && !new_commit? ? attribute_before_commit(:email) : nil)

@@ -1,7 +1,9 @@
 class Admin::BusinessesController < Admin::BaseController
   def index
     @businesses = Business.filter(params[:filter].to_i)
-    @businesses = @businesses.paginate(:page => params[:page], :per_page => params[:per_page])
+    @businesses = @businesses.page(params[:page])
+    @businesses = @businesses.per_page(params[:per_page]) if params[:per_page]
+    @businesses = @businesses.all
   end
   
   def toggle

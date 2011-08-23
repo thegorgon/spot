@@ -5,6 +5,7 @@ class Registration
   define_model_callbacks :save
   
   after_save :deliver_registration_email
+  after_save :count_acquisition
   validates :event, :presence => true
   validates :user, :presence => true
   validate :user_can_register
@@ -59,6 +60,10 @@ class Registration
     if code.nil? 
       errors.add(:base, "Sorry, this event is now fully booked. Please try another date.")
     end
+  end
+  
+  def count_acquisition
+    user.active_membership.acquisition_source.try(:registration!)
   end
   
   def deliver_registration_email

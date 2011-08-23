@@ -8,6 +8,8 @@ class MembershipApplication < ActiveRecord::Base
   after_save :send_approval_email
   validate :user_hasnt_applied, :on => :create
 
+  has_acquisition_source :count => :applied
+
   scope :unapproved, where(:approved_at => nil)
   scope :approved, where("approved_at IS NOT NULL")
   scope :ready_for_approval, where(["approved_at IS NULL AND created_at < ?", Time.now - 24.hours])
@@ -83,7 +85,7 @@ class MembershipApplication < ActiveRecord::Base
       invitation.claimed!
     end
   end
-  
+
   def send_approval_email
     deliver_approved if approved? && approved_at_was.nil?
   end

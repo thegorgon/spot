@@ -14,6 +14,7 @@ class Site::MembershipsController < Site::BaseController
   def create
     @payment = PaymentForm.new(:user => current_user, :params => params[:membership])    
     if @payment.try(:save)
+      record_acquisition_event("membership")
       respond_to do |format|
         format.html { redirect_to thanks_membership_path }
       end
@@ -41,6 +42,7 @@ class Site::MembershipsController < Site::BaseController
   def destroy
     @membership = current_user.active_membership
     @membership.cancel!
+    record_acquisition_event("unsubscribed")
     redirect_to account_path
   end
   

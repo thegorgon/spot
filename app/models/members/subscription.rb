@@ -1,4 +1,5 @@
 class Subscription < ActiveRecord::Base
+  has_acquisition_source
   belongs_to :user
   belongs_to :credit_card
   validates :user, :presence => true
@@ -86,5 +87,6 @@ class Subscription < ActiveRecord::Base
       Braintree::Subscription.cancel(braintree_id)
       update_attribute(:cancelled_at, Time.now)
     end
-  end  
+  end
+    
 end

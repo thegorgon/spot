@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
   before_validation :reset_persistence_token, :if => :reset_persistence_token?
   before_validation :reset_single_access_token, :if => :reset_single_access_token?
   before_save :reset_perishable_token
-  after_save :save_email_subscriptions
+  after_validation :save_email_subscriptions
+  
   has_many :devices, :dependent => :destroy
   has_many :wishlist_items, :dependent => :delete_all
   has_many :activity_items, :foreign_key => :actor_id, :dependent => :destroy
@@ -19,6 +20,7 @@ class User < ActiveRecord::Base
   belongs_to :city
   
   validates :email, :format => EMAIL_REGEX, :uniqueness => true, :if => :email?
+  has_acquisition_source :count => :signup
   name_attribute :name
 
   def self.adminify!(email)
@@ -155,13 +157,13 @@ class User < ActiveRecord::Base
   end
   
   def email_subscriptions
+    @email_subscriptions ||= EmailSubscriptions.where(:user_id => id).first if id
     @email_subscriptions ||= 
-      EmailSubscriptions.ensure( :email => email_was, 
+      EmailSubscriptions.ensure( :email => email_was || email, 
                                  :first_name => first_name, 
                                  :last_name => last_name, 
                                  :city_id => city_id, 
                                  :user_id => id )
-    
   end
 
   def as_json(*args)
@@ -178,7 +180,7 @@ class User < ActiveRecord::Base
   end
     
   private
-  
+    
   def save_email_subscriptions
     email_subscriptions.email = email
     email_subscriptions.first_name = first_name

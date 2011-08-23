@@ -51,9 +51,8 @@ Spot::Application.routes.draw do
       get "press", :action => "press"
       get "getspot", :action => "getspot"
       get "membership/about", :action => "about_membership", :as => "membership_about"
-      get "viewemail", :action => "email"
     end
-    get "/in", :to => "home#invited", :as => "invitation"
+    get "/in", :to => "home#portal", :as => "portal"
     get "/codes/:type/:code", :to => "codes#show"
     get "login" => redirect("/session/new")
     get "register" => redirect("/account/new")
@@ -88,6 +87,12 @@ Spot::Application.routes.draw do
     resource :search, :only => [:new, :show], :controller => "search"
     resources :settings, :only => [:index, :create, :update, :destroy] do
       get "available", :on => :collection
+    end
+    namespace "acquisition" do
+      resources :sources, :only => [:index, :create]
+      resources :cohorts, :only => [:index]
+      resources :campaigns, :only => [:index, :create]
+      root :to => "cohorts#index"
     end
     controller "home" do
       get "info"

@@ -29,6 +29,7 @@ class Site::EmailsController < Site::BaseController
     @subscription.email = object_params[:email]
     if @subscription.save
       set_partial_application @subscription.application_params
+      record_acquisition_event("email acquired")
       if @subscription.city
         flash[:applying] = @subscription.city.subscription_available?
         redirect_to city_path(@subscription.city)

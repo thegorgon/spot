@@ -5,13 +5,13 @@
     %code.title=@registration.code.code
   =link_to "cancel?", registration_path(@registration.code), "data-method" => "DELETE", "data-confirm" => "Are you sure you want to cancel?", :class => "cancel"
 .col.right
-  %h2.tf.nowwhat What's Next?
+  %h2.tf What's Next?
   %hr
   %ul
     %li
       ="Call #{@registration.place.name} to make a reservation"
       -if @registration.place.phone_number.present?
-        ="at #{phone_link(@registration.place.phone_number)}"
+        ="at #{phone_link(@registration.place.phone_number.gsub(' ', '&nbsp;')).html_safe}"
     %li 
       ="Come to #{@registration.place.name} on #{@registration.event.date.strftime('%A, %B %d, %Y')}"
       -if @registration.promotion.all_day?

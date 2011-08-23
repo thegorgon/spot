@@ -9,6 +9,8 @@ class Membership < ActiveRecord::Base
   
   after_create :convert_application
   
+  has_acquisition_source :count => Proc.new { |obj| obj.acquisition_source.try(:member!, obj) }
+    
   scope :active, lambda { where(["starts_at < ? AND expires_at IS NULL OR expires_at > ?", Time.now, Time.now]) }
   scope :expired, lambda { where(["expires_at < ?", Time.now]) }
   scope :expiring, lambda { where(["expires_at BETWEEN ? AND ?", Date.today, Date.tomorrow]) }
@@ -18,6 +20,8 @@ class Membership < ActiveRecord::Base
   end
   
   def cancel!
+    acquisition_source.try(:unsubscribed!, self)
+    
     if payment_method.kind_of?(Subscription)
       payment_method.cancel!
       update_attribute(:expires_at, payment_method.expires_at)
@@ -29,8 +33,8 @@ class Membership < ActiveRecord::Base
   end
   
   private
-  
+    
   def convert_application
     user.membership_application.converted!
-  end
+  end  
 end

@@ -11,7 +11,68 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110817220926) do
+ActiveRecord::Schema.define(:version => 20110818174436) do
+
+  create_table "acquisition_campaigns", :force => true do |t|
+    t.string   "name"
+    t.string   "category"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "acquisition_cohorts", :force => true do |t|
+    t.integer  "acquisition_source_id"
+    t.string   "acquisition_campaign_id",                :null => false
+    t.integer  "member_clicks",           :default => 0, :null => false
+    t.integer  "nonmember_clicks",        :default => 0, :null => false
+    t.integer  "emails",                  :default => 0, :null => false
+    t.integer  "applications",            :default => 0, :null => false
+    t.integer  "signups",                 :default => 0, :null => false
+    t.integer  "memberships",             :default => 0, :null => false
+    t.integer  "annual_subscribers",      :default => 0, :null => false
+    t.integer  "monthly_subscribers",     :default => 0, :null => false
+    t.integer  "registrations",           :default => 0, :null => false
+    t.integer  "unsubscriptions",         :default => 0, :null => false
+    t.date     "date",                                   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "acquisition_cohorts", ["acquisition_source_id", "date", "acquisition_campaign_id"], :name => "index_ac_on_source_date_and_campaign"
+
+  create_table "acquisition_events", :force => true do |t|
+    t.integer  "email_subscriptions_id"
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.integer  "acquisition_source_id"
+    t.integer  "original_acquisition_source_id"
+    t.string   "locale"
+    t.string   "value"
+    t.integer  "ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "acquisition_events", ["event_id", "created_at"], :name => "index_acquisition_events_on_event_id_and_created_at"
+
+  create_table "acquisition_sources", :force => true do |t|
+    t.string   "name"
+    t.string   "acquisition_campaign_id",                :null => false
+    t.integer  "member_clicks",           :default => 0, :null => false
+    t.integer  "nonmember_clicks",        :default => 0, :null => false
+    t.integer  "emails",                  :default => 0, :null => false
+    t.integer  "applications",            :default => 0, :null => false
+    t.integer  "signups",                 :default => 0, :null => false
+    t.integer  "memberships",             :default => 0, :null => false
+    t.integer  "annual_subscribers",      :default => 0, :null => false
+    t.integer  "monthly_subscribers",     :default => 0, :null => false
+    t.integer  "registrations",           :default => 0, :null => false
+    t.integer  "unsubscriptions",         :default => 0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "acquisition_sources", ["acquisition_campaign_id"], :name => "index_acquisition_sources_on_acquisition_campaign_id"
 
   create_table "activity_items", :force => true do |t|
     t.integer  "actor_id"
@@ -141,15 +202,16 @@ ActiveRecord::Schema.define(:version => 20110817220926) do
   add_index "duplicate_places", ["place_1_id", "place_2_id"], :name => "index_duplicate_places_on_place_1_id_and_place_2_id", :unique => true
 
   create_table "email_subscriptions", :force => true do |t|
-    t.string   "email",                               :null => false
+    t.string   "email",                                :null => false
     t.integer  "city_id"
     t.integer  "user_id"
     t.string   "first_name"
     t.string   "last_name"
-    t.integer  "unsubscription_flags", :default => 0, :null => false
+    t.integer  "unsubscription_flags",  :default => 0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "data"
+    t.integer  "acquisition_source_id"
   end
 
   add_index "email_subscriptions", ["email"], :name => "index_email_subscriptions_on_email", :unique => true
@@ -267,26 +329,28 @@ ActiveRecord::Schema.define(:version => 20110817220926) do
   add_index "invitation_codes", ["code"], :name => "index_invitation_codes_on_code", :unique => true
 
   create_table "membership_applications", :force => true do |t|
-    t.integer  "user_id",         :null => false
-    t.integer  "city_id",         :null => false
-    t.string   "invitation_code", :null => false
-    t.text     "survey",          :null => false
+    t.integer  "user_id",               :null => false
+    t.integer  "city_id",               :null => false
+    t.string   "invitation_code",       :null => false
+    t.text     "survey",                :null => false
     t.datetime "approved_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "acquisition_source_id"
   end
 
   add_index "membership_applications", ["city_id", "user_id"], :name => "index_membership_applications_on_city_id_and_user_id", :unique => true
 
   create_table "memberships", :force => true do |t|
-    t.integer  "user_id",                            :null => false
-    t.string   "payment_method_type",                :null => false
-    t.integer  "payment_method_id",                  :null => false
-    t.integer  "city_id",                            :null => false
-    t.integer  "status",              :default => 0, :null => false
+    t.integer  "user_id",                              :null => false
+    t.string   "payment_method_type",                  :null => false
+    t.integer  "payment_method_id",                    :null => false
+    t.integer  "city_id",                              :null => false
+    t.integer  "status",                :default => 0, :null => false
     t.datetime "expires_at"
-    t.datetime "starts_at",                          :null => false
-    t.datetime "created_at",                         :null => false
+    t.datetime "starts_at",                            :null => false
+    t.datetime "created_at",                           :null => false
+    t.integer  "acquisition_source_id"
   end
 
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
@@ -474,6 +538,7 @@ ActiveRecord::Schema.define(:version => 20110817220926) do
     t.datetime "billing_starts_at"
     t.datetime "cancelled_at"
     t.datetime "created_at"
+    t.integer  "acquisition_source_id"
   end
 
   add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"
@@ -491,7 +556,7 @@ ActiveRecord::Schema.define(:version => 20110817220926) do
 
   create_table "users", :force => true do |t|
     t.datetime "current_login_at"
-    t.integer  "login_count",         :default => 0,     :null => false
+    t.integer  "login_count",           :default => 0,     :null => false
     t.string   "persistence_token"
     t.string   "single_access_token"
     t.string   "perishable_token"
@@ -501,10 +566,11 @@ ActiveRecord::Schema.define(:version => 20110817220926) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "locale"
-    t.boolean  "admin",               :default => false, :null => false
+    t.boolean  "admin",                 :default => false, :null => false
     t.string   "location"
     t.string   "customer_id"
     t.integer  "city_id"
+    t.integer  "acquisition_source_id"
   end
 
   add_index "users", ["city_id"], :name => "index_users_on_city_id"

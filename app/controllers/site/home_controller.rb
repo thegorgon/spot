@@ -25,9 +25,17 @@ class Site::HomeController < Site::BaseController
   def tos
   end
 
-  def invited
+  def portal
     session[:invite_code] = params[:ic] # save to session
     session[:promo_code] = params[:pc]
+    if params[:asrc].present?
+      source = AcquisitionSource.find_by_id(params[:asrc])
+      source_id = source.try(:id)
+      session[:original_acquisition_source_id] ||= source_id # or equal, only set if not yet set
+      session[:acquisition_source_id] = source_id # resets, always store
+      source.clicked!(current_user)
+      record_acquisition_event("click")
+    end
     invitation_code = InvitationCode.valid_code(params[:ic])
     city = City.find_by_slug(params[:cid]) if params[:cid]
     city ||= invitation_code.try(:user).try(:city)
@@ -40,14 +48,5 @@ class Site::HomeController < Site::BaseController
     url = MobileApp.url_for(request_location, store)
     flash[:error] = "Hold Tight. Spot is Coming Soon to an App Store Near You." unless url
     redirect_to  url || root_path
-  end
-  
-  def email
-    @template = params[:tpl]
-    @email = params[:e]
-    @title = params[:t]
-    @user = current_user
-    redirect_to root_url unless @template && @email && @title
-    render :template => params[:tpl], :layout => "mailer.html"
   end  
 end

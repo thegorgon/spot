@@ -1,7 +1,9 @@
 class Admin::PromotionsController < Admin::BaseController
   def index
     @promotions = PromotionTemplate.filter(params[:filter].to_i)
-    @promotions = @promotions.paginate(:page => params[:page], :per_page => params[:per_page])
+    @promotions = @promotions.page(params[:page])
+    @promotions = @promotions.per_page(params[:per_page]) if params[:per_page]
+    @promotions.all
   end
   
   def edit

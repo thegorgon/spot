@@ -1,5 +1,5 @@
 .member_invite
-  -url = invitation_url(:ic => current_user.invitation_code.code)
+  -url = portal_url(:ic => current_user.invitation_code.code)
   %h2.tf="#{current_user.invitation_code.invites_remaining} invites remaining."
   Share this link to invite worthy friends and family : 
   =sharing(url, "I've got 10 Spot invites to share. Foodies in SF, check it out now.", :link => true)

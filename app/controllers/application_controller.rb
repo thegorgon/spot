@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :stash_controller
+  before_filter :stash_thread_parameters
   before_filter :localize
   before_filter :reject_certain_spiders
   helper :application, :place
@@ -13,6 +13,11 @@ class ApplicationController < ActionController::Base
   
   private
   
+  def stash_thread_parameters
+    Thread.current[:controller] = self
+    Thread.current[:acquisition_source_id] = session[:acquisition_source_id]
+  end
+  
   def reject_certain_spiders
     [/^Sogou Pic Spider/].each do |agent|
       if request.env['HTTP_USER_AGENT'] =~ agent
@@ -22,25 +27,6 @@ class ApplicationController < ActionController::Base
     end
   end  
   
-  def partial_application
-    app = session[:partial_application]
-    if app && app.kind_of?(Hash) && app[:email]
-      app
-    else
-      {}
-    end
-  end
-  helper_method :partial_application
-
-  def set_partial_application(value)
-    value.symbolize_keys!
-    session[:partial_application] = value if value.kind_of?(Hash) && value[:email]
-  end
-
-  def clear_partial_application
-    session[:partial_application] = nil
-  end
-
   def default_render(*args)
     respond_to do |format|
       format.html { render(*args) }
@@ -84,7 +70,7 @@ class ApplicationController < ActionController::Base
   def log_error(exception)
     message = "\n#{exception.class} (#{exception.message}):\n"
     message << exception.annoted_source_code.to_s if exception.respond_to?(:annoted_source_code)
-    message << "  " << clean_backtrace(exception, :silent).join("\n  ")
+    message << "  " << Rails.backtrace_cleaner.clean(exception.backtrace, :silent).join("\n  ")
     Rails.logger.fatal("#{message}\n\n") if Rails.logger
     notify_hoptoad(exception) if exception.notifiable?
   end
@@ -93,11 +79,7 @@ class ApplicationController < ActionController::Base
     handle_error(exception)
     render :template => "/site/errors/500.html.haml", :status => 500, :layout => "site"
   end
-    
-  def clean_backtrace(exception, *args)
-    Rails.backtrace_cleaner.clean(exception.backtrace, *args)
-  end
-  
+      
   def render_404(exception=nil)
     handle_error(exception)
     render :template => "/site/errors/404.html.haml", :status => 404, :layout => "site"
@@ -203,11 +185,7 @@ class ApplicationController < ActionController::Base
   def log_session(prepend="")
     Rails.logger.info("#{prepend}spot: session = #{session.inspect} and cookies = #{request.cookies.inspect}")
   end
-  
-  def stash_controller
-    Thread.current[:controller] = self
-  end
-  
+      
   def localize
     I18n.locale = current_user.try(:locale) || request.compatible_language_from(I18n.available_locales) || I18n.default_locale
     if logged_in?
@@ -215,6 +193,23 @@ class ApplicationController < ActionController::Base
       attributes[:locale] = I18n.locale if current_user.locale.nil?
       attributes[:location] = request_location if current_user.location != request_location
       current_user.update_attributes(attributes) if logged_in? && attributes.present?
+    end
+  end
+        
+  def record_acquisition_event(event, value=nil)
+    event = AcquisitionEvent.lookup(event) if event.kind_of?(String)
+    email = current_user.try(:email_subscriptions)
+    email ||= EmailSubscriptions.find_by_email(partial_application[:email]) if partial_application[:email].present?
+    
+    AcquisitionEvent.create! do |ae|
+      ae.user_id = current_user.try(:id) || -1
+      ae.email_subscriptions_id = email.try(:id) || -1
+      ae.event_id = event
+      ae.original_acquisition_source_id = email.try(:acquisition_source_id) || session[:original_acquisition_source_id] || -1
+      ae.acquisition_source_id = session[:acquisition_source_id]
+      ae.value = value.to_s
+      ae.locale = I18n.locale
+      ae.ip = request_ip.split(/\./).map{|c| c.to_i}.pack("C*").unpack("N").first
     end
   end
   

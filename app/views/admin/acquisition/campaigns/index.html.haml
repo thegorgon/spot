@@ -1,0 +1,38 @@
+.manager
+  .top.clearfix
+    .pagination
+      -if @campaigns.next_page
+        .next=link_to "Next &rarr;".html_safe, admin_acquisition_campaigns_path(filters.merge(:page => @campaigns.next_page))
+      -if @campaigns.previous_page
+        .previous=link_to "&larr; Previous".html_safe, admin_acquisition_campaigns_path(filters.merge(:page => @campaigns.previous_page))
+    %h1.title="#{pluralize( @campaigns.total_entries, "Campaign")}"
+
+  %table.data
+    %thead
+      %tr
+        %th Id
+        %th Name
+        %th Category
+        %th Sources
+    %tbody
+      -@campaigns.to_a.each do |cmp|
+        %tr.center.source{:id => dom_id(cmp), :class => cycle("even", "odd")}
+          %td= cmp.id
+          %td= cmp.name
+          %td= cmp.category
+          %td= link_to "#{cmp.acquisition_sources.count} Sources", admin_acquisition_sources_path(:cmp => cmp.id)
+
+  .pagination.bottom
+    -if @campaigns.next_page
+      .next=link_to "Next &rarr;".html_safe, admin_acquisition_campaigns_path(params.slice('filter').merge(:page => @campaigns.next_page))
+    -if @campaigns.previous_page
+      .previous=link_to "&larr; Previous".html_safe, admin_acquisition_campaigns_path(params.slice('filter').merge(:page => @campaigns.previous_page))
+
+  .form.new.clearfix
+    %h2 New Acquisition Campaign
+    =spot_form_for @new_campaign, :url => admin_acquisition_campaigns_path, :display => "light oneline clearfix" do |f|
+      =f.text_field :name, :placeholder => "name", :required => true
+      =f.text_field :category, :placeholder => "category", :required => true
+      %li.buttons
+        =button_tag :class => 'blackimg_77x32' do
+          save

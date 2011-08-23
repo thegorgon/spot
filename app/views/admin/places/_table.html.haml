@@ -10,7 +10,7 @@
       %th Actions
   %tbody
     -@places.to_a.each do |place|
-      %tr.center.place{:id => dom_id(place)}
+      %tr.center.place{:id => dom_id(place), :class => cycle("even", "odd")}
         %td= image_tag place.image.url(:i234x168), :size => "58x42", :class => "place_image clickable", :alt => "", :title => "Click to Change", 'data-img-src' => place.image.processed_url(:i234x168)
         %td= place.id
         %td= place.full_name

@@ -31,6 +31,25 @@ module ActiveRecordExtensions
   end
   
   module ClassMethods
+    def has_acquisition_source(options={})
+      belongs_to :acquisition_source
+      before_create :set_acquisition_source
+      define_method :set_acquisition_source do
+        self.acquisition_source_id ||= Thread.current[:acquisition_source_id]
+      end
+
+      if options[:count].present?
+        after_create :count_acquisition
+        define_method :count_acquisition do
+          if options[:count].kind_of?(Proc)
+            options[:count].call(self)
+          else
+            acquisition_source.try("#{options[:count]}!")
+          end
+        end
+      end      
+    end
+    
     def setting_flags(flags, options={})
       attribute = options[:attr] || "settings"
       inverse_attr = options[:inverse_attr]

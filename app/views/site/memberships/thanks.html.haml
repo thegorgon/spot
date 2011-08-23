@@ -24,7 +24,7 @@
       .invites="#{current_user.invitation_code.invites_remaining} invites remaining"
     %p Spot is currently available by invitation only. As a Spot Member, you have 10 invitations to send to worthy friends and family.
     %p Use the following link to share an invitation :
-    -url = invitation_url(:ic => current_user.invitation_code.code)
+    -url = portal_url(:ic => current_user.invitation_code.code)
     =sharing(url, "I've got 10 Spot invites to share. Foodies in SF, check it out now.", :link => true)
 %hr
 .bucket.last.clearfix

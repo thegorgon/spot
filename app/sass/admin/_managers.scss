@@ -33,14 +33,29 @@
       padding: 0 1em 0 0;
     }
   }
+  .new.form {
+    h2 {
+      font-size: 18px;
+    }
+    background: #ededed;
+    border-top: 1px solid #bbb;
+    padding: 20px;
+  }
   table.data {
     clear: both;
     width: 100%;
+    font-size: 14px;
     tbody {      
       tr {
         border-bottom: 1px solid #bbb;
         &.loading {
           @include opacity(0.5);
+        }
+        &.odd {
+          background: #ededed;
+        }
+        &.even {
+          background: #FFF;
         }
       }
     }

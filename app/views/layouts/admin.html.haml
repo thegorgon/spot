@@ -40,6 +40,11 @@
           %li=link_to "Pending Promotions", admin_promotions_path(:filter => 1)
           %li=link_to "Approved Promotions", admin_promotions_path(:filter => 2)
           %li=link_to "Rejected Promotions", admin_promotions_path(:filter => 4)
+      %li{'data-popover' => '#acq_subnav', 'data-popover-orient' => 'vertical'}
+        %span.title acquisition
+        %ul.hidden.subnav#acq_subnav
+          %li=link_to "Sources", admin_acquisition_sources_path
+          %li=link_to "Campaigns", admin_acquisition_campaigns_path
       %li{'data-popover' => '#tools_subnav', 'data-popover-orient' => 'vertical'}
         %span.title tools
         %ul.hidden.subnav#tools_subnav

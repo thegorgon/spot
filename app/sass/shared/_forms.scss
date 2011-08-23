@@ -527,14 +527,7 @@ ul.form.oneline {
   @extend .clearfix;
   li {
     float: left;
-    margin: 0 10px 0 0;
-  }
-  li.text {
-    width: 195px;
-    input, textarea {
-      padding: 4px 35px 4px 8px;
-      width: 150px;
-    }
+    margin-right: 20px;
   }
   li.middle {
     line-height: 30px;
@@ -542,16 +535,16 @@ ul.form.oneline {
     text-align: center;
   }
   li.select {
-    padding: 5px 30px 0 0;
+    padding: 0px 30px 0 0;
   }
   li.buttons {
     z-index: 2;
     width: auto;
-    margin: 0;
+    margin: 9px 20px 10px 0;
     float: left;
-    .blackimg_77x32 {
-      margin-top: -2px;
-    }
+  }
+  li.links {
+    line-height: 30px;
   }
 }
 

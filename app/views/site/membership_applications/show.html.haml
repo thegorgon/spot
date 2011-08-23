@@ -7,16 +7,18 @@
     Application Approved
   -else
     Application Received
-
+    
 .titlebar.clearfix
   %h1.left.tf 
     -if @application.approved?
       Congratulations. You're In.
     -else
-      %h1.tf We'll be in touch shortly.
+      We'll be in touch shortly.
 
   -if @application.approved?
     =link_to "Complete Application", new_membership_path, :class => "btnorg300x41 tf right"
+  -else
+    =link_to "Browse Experiences", city_path(@application.city), :class => "btnorg300x41 tf right"
 %hr
 .bucket.first.clearfix
   .image.gossip.left
@@ -28,7 +30,7 @@
       Don't Wait Alone...
     %p
       It's never fun to to wait in line alone. Share this link with some friends and we'll love you forever :
-      -url = invitation_url(:ic => @application.user.invitation_code.code)
+      -url = portal_url(:ic => @application.user.invitation_code.code)
       =sharing(url, "Just applied to become a Spot Member, I think it's worth checking out.", :link => true)
 %hr    
 .bucket.last.clearfix

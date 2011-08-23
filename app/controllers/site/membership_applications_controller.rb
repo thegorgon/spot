@@ -14,6 +14,7 @@ class Site::MembershipApplicationsController < Site::BaseController
       warden.set_user @user
       if @application.save
         session[:invite_code] = nil # Clear session invite code
+        record_acquisition_event("applied")
         redirect_to @application.approved?? new_membership_path : application_path
       else 
         render :action => :new

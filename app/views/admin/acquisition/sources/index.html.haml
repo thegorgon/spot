@@ -1,0 +1,62 @@
+.manager
+  .top.clearfix
+    .pagination
+      -if @sources.next_page
+        .next=link_to "Next &rarr;".html_safe, admin_acquisition_sources_path(filters.merge(:page => @sources.next_page))
+      -if @sources.previous_page
+        .previous=link_to "&larr; Previous".html_safe, admin_acquisition_sources_path(filters.merge(:page => @sources.previous_page))
+    %h1.title="#{@sources.total_entries} Places"
+
+  %table.data
+    %thead
+      %tr
+        %th Id
+        %th Name
+        %th Campaign
+        %th Clicks
+        %th Emails
+        %th Applications
+        %th Members
+        %th Registrations
+        %th Unsubscriptions
+        %th Actions
+    %tbody
+      -@sources.to_a.each do |src|
+        %tr.center.source{:id => dom_id(src), :class => cycle("even", "odd")}
+          %td= src.id
+          %td= src.name
+          %td= src.acquisition_campaign.name
+          %td= src.total_clicks
+          %td= src.emails
+          %td= src.applications
+          %td= src.memberships
+          %td= src.registrations
+          %td= src.unsubscriptions
+          %td
+            =link_to "Traffic URL", portal_url(:asrc => src.id), :class => "urllink"
+            
+  .pagination.bottom
+    -if @sources.next_page
+      .next=link_to "Next &rarr;".html_safe, admin_acquisition_sources_path(params.slice('filter').merge(:page => @sources.next_page))
+    -if @sources.previous_page
+      .previous=link_to "&larr; Previous".html_safe, admin_acquisition_sources_path(params.slice('filter').merge(:page => @sources.previous_page))
+
+  .form.new.clearfix
+    %h2 New Acquisition Source
+    =spot_form_for @new_source, :url => admin_acquisition_sources_path, :display => "light oneline clearfix" do |f|
+      =f.text_field :name, :placeholder => "name", :required => true
+      =f.select :acquisition_campaign_id, @campaigns.collect { |c| [c.name, c.id] }, :prompt => "select a campaign", :required => true
+      %li.buttons
+        =button_tag :class => 'blackimg_77x32' do
+          save
+      %li.links
+        =link_to "New Campaign", admin_acquisition_campaigns_path
+        
+#urlbuilder.urlbuilder.hidden
+  =spot_form_for :nothing, :url => "#", :display => "light online clearfix" do |f|
+    %h2 Set Codes :
+    =f.hidden_field :base, :value => "${base}", :id => "url_builder_base_url"
+    =f.text_field :promo_code, :placeholder => "Promo Code", "data-q-value" => "pc", :class => 'url_builder_param'
+    =f.text_field :invite_code, :placeholder => "Invite Code", "data-q-value" => "ic", :class => 'url_builder_param'
+  #url_builder_value.value
+    ${url}

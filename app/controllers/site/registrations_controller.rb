@@ -8,6 +8,7 @@ class Site::RegistrationsController < Site::BaseController
     @registration.user = current_user
     respond_to do |format|
       if @registration.save
+        record_acquisition_event("registration")
         format.html { redirect_to registration_path(@registration) }
         format.js do
           render :json => { :code => render_to_string(:partial => "code"), 

@@ -1,7 +1,9 @@
 class Admin::MembershipApplicationsController < Admin::BaseController
   def index
     @applications = MembershipApplication.filter(params[:filter].to_i)
-    @applications = @applications.paginate(:page => params[:page], :per_page => params[:per_page])
+    @applications = @applications.page(params[:page])
+    @applications = @applications.per_page(params[:per_page]).all if params[:per_page]
+    @applications = @applications.all
   end
   
   def toggle

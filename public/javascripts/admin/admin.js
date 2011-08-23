@@ -49,6 +49,27 @@
       };
       bind();
     },
+    admin_acquisition_sources_index: function() {
+      $('#urlbuilder').modal({
+        title: "Use This URL For Tracking",
+        trigger: '.urllink',
+        width: 500,
+        open: function(target) {
+          var url = $(target).attr('href');
+          $('#url_builder_base_url').val(url);
+          $('#url_builder_value').html(url);
+          $(this).find('input.text').unbind('keyup').bind('keyup', function(e) {
+            var url = $('#url_builder_base_url').val();
+            $('.url_builder_param').each(function(i) {
+              if ($(this).val().toString().length > 0) {
+                url = url + '&' + $(this).attr('data-q-value') + '=' + $(this).val();                
+              }
+            });
+            $('#url_builder_value').html(url);
+          });
+        }
+      });
+    },
     admin_home_analysis: function() {
       google.load("visualization", "1", {packages:["corechart"]});
       $('.dateinput').datepicker({dateFormat: 'DD, MM d, yy'});
