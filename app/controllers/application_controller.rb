@@ -60,6 +60,7 @@ class ApplicationController < ActionController::Base
   def iphone_browser?
     request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][/(Mobile\/.+Safari)/]
   end
+  helper_method :iphone_browser?
 
   def android_browser?
     !!(request.user_agent.to_s.downcase =~ /android/)
