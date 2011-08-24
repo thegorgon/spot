@@ -51,7 +51,7 @@
           bd.css({position: "absolute", left: "-1000px"}).appendTo(contents).show();
           height = bd.outerHeight();
           contents.css({height: results.height()});
-          bd.removeAttr("style");
+          bd.attr("style", "");
           contents.animate({height: height});
         }, error: function() {
           results.setClass('error', ['empty', 'loading']);
