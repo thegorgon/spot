@@ -5,7 +5,7 @@ class AcquisitionSource < ActiveRecord::Base
     finder = self
     finder = finder.where(:acquisition_campaign_id => params[:cmp]) if params[:cmp]
     finder = finder.page(params[:page])
-    finder = finder.per_page(params[:per_page]) if params[:per_page]
+    finder = finder.per_page = params[:per_page] if params[:per_page]
     finder.all
   end
   

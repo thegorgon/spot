@@ -58,7 +58,7 @@ class Place < ActiveRecord::Base
       finder = finder.order("id DESC")
       finder = finder.canonical
       finder = finder.page(params[:page])
-      finder = finder.per_page(params[:per_page]) if params[:per_page]
+      finder = finder.per_page = params[:per_page] if params[:per_page]
       finder = finder.all
     end
     finder

@@ -13,6 +13,7 @@ class CityPage
         @featured << @templates.shift
       end
     end
+    @featured.sort! { |f| f.place_id * rand }
     @featured
   end
   

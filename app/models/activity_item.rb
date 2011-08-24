@@ -30,7 +30,7 @@ class ActivityItem < ActiveRecord::Base
     finder = finder.until(params[:until]) if params[:until]
     finder = finder.order("activity_items.created_at DESC")
     finder = finder.page(params[:page])
-    finder = finder.per_page(params[:per_page]) if params[:per_page]
+    finder = finder.per_page = params[:per_page] if params[:per_page]
     finder.all(:include => [:actor, :activity, :item])
   end  
     

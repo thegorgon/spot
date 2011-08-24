@@ -5,7 +5,7 @@ class Admin::DuplicatesController < Admin::BaseController
     order = status == DuplicatePlace::UNRESOLVED ? 'total_distance ASC' : 'id DESC'
     @duplicates = DuplicatePlace.where(:status => status).includes(:place_1, :place_2).order(order)
     @duplicates = @duplicates.page([1, params[:page].to_i].max)
-    @duplicates = @duplicates.per_page(params[:per_page]) if params[:per_page]
+    @duplicates = @duplicates.per_page = params[:per_page] if params[:per_page]
     @duplicates = @duplicates.all
   end
   
