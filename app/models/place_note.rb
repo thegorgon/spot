@@ -21,11 +21,9 @@ class PlaceNote < ActiveRecord::Base
   scope :visible_to, lambda { |u|
     if u
       where([
-        "user_id = ? OR (? AND ?)", 
-          u.kind_of?(ActiveRecord::Base) ? u.id : u, 
-          without_setting_sql("private"), 
-          without_setting_sql("muted")
-      ]).undeleted.order("id DESC")
+        "user_id = ? OR (#{without_setting_sql("private")} AND #{without_setting_sql("muted")})", 
+          u.kind_of?(ActiveRecord::Base) ? u.id : u
+        ]).undeleted.order("id DESC")
     else
       visible
     end
