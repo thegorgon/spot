@@ -4,7 +4,7 @@ class Site::BlogController < Site::BaseController
   def index
     @posts = BlogPost.filter(params)
     @page_keywords = BlogPost::TOPICS
-    @page_title = "The Spot Blog - Spot Membership Experiences"
+    @page_title = "The Spotlight - A blog from the Spot Team covering first-rate food and drink in San Francisco and beyond."
     respond_to do |wants|
       wants.xml { render :layout => false }
       wants.html

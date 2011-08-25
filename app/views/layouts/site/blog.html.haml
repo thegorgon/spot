@@ -1,5 +1,5 @@
 =content_for :scripts do
-  %script{:type => "text/javascript", :src => "http://platform.twitter.com/widgets.js"}
+  %script{:type => "text/javascript", :src => "http://platform.twitter.com/widgets.js", :async => true}
   :javascript
     (function() {
       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;

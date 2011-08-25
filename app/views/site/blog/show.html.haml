@@ -27,13 +27,18 @@
       %hr
       %fb:comments{:href => post_url(@post), :num_posts => "10", :width => "600"}
 
-  #rightrail.right
+  #rightrailcontainer.right
+    #rightrail
+      .about.section.first
+        .image=image_tag "logos/appicon57x57.png", :size => "57x57"
+        Spot is a private membership club for people who love to dine out. Spot Members receive exclusive access to VIP privileges, unique promotions and unforgettable experiences at the best restaurants in town. Want in? 
+        =link_to "Join Spot Now", root_url, :class => "tf btnorg175x32"
     .section
       -if @post.kind_of?(Wrapr::Tumblr::Regular)
         .byline="Posted #{byline(@post)}"
       -elsif @post.kind_of?(Wrapr::Tumblr::Photo)
         .byline="Uploaded #{byline(@post)}"
-    .section
+    .section.clearfix
       %h3.tf Filed Under
       %ul
         -@post.tags.each do |tag|

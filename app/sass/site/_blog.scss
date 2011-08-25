@@ -1,6 +1,30 @@
 .site_blog {
-  #rightrail {
-    width: 150px;
+  #rightrailcontainer {
+    width: 225px;
+    #rightrail {
+      &.fixed {
+        .about {
+          width: 203px;
+          position: fixed;
+          top: 20px;
+        }
+      }
+    }
+    .about {
+      position: relative;
+      z-index: 10000;
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #aaa;
+      .image {
+        float: left;
+        margin: 0px 14px 0px 0;
+      }
+      a {
+        clear: both;
+        margin: 10px auto 0;
+      }
+    }
     .dotted {
       border-bottom: 1px dotted #666;
     }
@@ -24,7 +48,8 @@
       }      
     }
     .tag {
-      padding: 3px 0;
+      padding: 3px 5px 3px 0;
+      float: left;
       font-size: 12px;
     }
     .engage {
@@ -48,7 +73,7 @@
     }
   }
   #posts {
-    width: 600px;
+    width: 500px;
     float: left;
   }
   #pagination {
