@@ -5,28 +5,30 @@
     =@post.title.html_safe
 
 .clearfix
-  #posts
-    .post{:id => "post_#{@post.id}", :class => "#{@post.dom_class}"}
-      -if @post.kind_of?(Wrapr::Tumblr::Regular)
-        %h1.tf=@post.title.html_safe
-        .body=@post.body.html_safe
-      -elsif @post.kind_of?(Wrapr::Tumblr::Photo)
-        .image=image_tag @post.max_size.url, :width => [@post.max_size.max_width, 600].min
-        .caption=@post.caption.html_safe
+  -if @post
+    #posts
+      .post{:id => "post_#{@post.id}", :class => "#{@post.dom_class}"}
+        -if @post.kind_of?(Wrapr::Tumblr::Regular)
+          %h1.tf=@post.title.html_safe
+          .body=@post.body.html_safe
+        -elsif @post.kind_of?(Wrapr::Tumblr::Photo)
+          .image=image_tag @post.max_size.url, :width => [@post.max_size.max_width, 600].min
+          .caption=@post.caption.html_safe
+      
+        .clearfix
+          .left
+            .twits.left
+              %a{:href => "http://twitter.com/share", :class => "twitter-share-button", "data-url" => post_url(@post), "data-text" => post_tweet(@post), "data-count" => "horizontal"} Tweet
+            .gplus.left
+              %g:plusone{:size => "medium", :href => post_url(@post)}
 
-      .clearfix
-        .left
-          .twits.left
-            %a{:href => "http://twitter.com/share", :class => "twitter-share-button", "data-url" => post_url(@post), "data-text" => post_tweet(@post), "data-count" => "horizontal"} Tweet
-          .gplus.left
-            %g:plusone{:size => "medium", :href => post_url(@post)}
-
-          .face.left
-            %fb:like{:href => post_url(@post), :send => "true", :layout => "button_count", :show_faces => "false", :font => "lucida grande"}
+            .face.left
+              %fb:like{:href => post_url(@post), :send => "true", :layout => "button_count", :show_faces => "false", :font => "lucida grande"}
   
-      %hr
-      %fb:comments{:href => post_url(@post), :num_posts => "10", :width => "600"}
-
+        %hr
+        %fb:comments{:href => post_url(@post), :num_posts => "10", :width => "600"}
+  -else
+    %h1.tf We had difficulty finding that. Please try again.
   #rightrailcontainer.right
     #rightrail
       .about.section.first

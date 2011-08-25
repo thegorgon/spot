@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   before_validation :reset_persistence_token, :if => :reset_persistence_token?
   before_validation :reset_single_access_token, :if => :reset_single_access_token?
   before_save :reset_perishable_token
-  after_validation :save_email_subscriptions
+  after_validation :save_associations
   
   has_many :devices, :dependent => :destroy
   has_many :wishlist_items, :dependent => :delete_all
@@ -181,7 +181,13 @@ class User < ActiveRecord::Base
     
   private
     
-  def save_email_subscriptions
+  def save_associations
+    if password_account
+      password_account.email = email
+      password_account.first_name = first_name
+      password_account.last_name = last_name
+      password_account.save if password_account.changed?
+    end
     email_subscriptions.email = email
     email_subscriptions.first_name = first_name
     email_subscriptions.last_name = last_name

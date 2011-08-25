@@ -11,6 +11,10 @@ class BlogPost < ActiveRecord::Base
       posts = Rails.cache.fetch(key, :expires_in => 1.week) do 
         Wrapr::Tumblr::Item.paginate(search)
       end
+      if posts.error?
+        Rails.cache.delete(key)
+        posts = nil
+      end
     end
     posts
   end
@@ -20,8 +24,13 @@ class BlogPost < ActiveRecord::Base
     record = BlogPost.find_by_slug(slug)
     if (record)
       AutoloadMissingConstants.protect do
-        post = Rails.cache.fetch( "blog/items/#{record.tumblr_id}?v=#{AppSetting.get(:blog_revision)}", :expires_in => 1.week ) do
+        key = "blog/items/#{record.tumblr_id}?v=#{AppSetting.get(:blog_revision)}"
+        post = Rails.cache.fetch(key, :expires_in => 1.week ) do
           Wrapr::Tumblr::Item.find(record.tumblr_id)
+        end
+        if post.nil?
+          Rails.cache.delete(key)
+          post = nil
         end
       end
     end
@@ -34,13 +43,15 @@ class BlogPost < ActiveRecord::Base
     max_page = options[:max_page]
     loop do
       items = Wrapr::Tumblr::Item.paginate(:page => page, :per_page => per_page)
-      page = items.next_page
-      items.each do |item|
-        record = BlogPost.find_or_initialize_by_slug(item.slug)
-        record.tumblr_id = item.id
-        record.save
+      if items && items.success?
+        page = items.next_page
+        items.each do |item|
+          record = BlogPost.find_or_initialize_by_slug(item.slug)
+          record.tumblr_id = item.id
+          record.save
+        end
+        break if page.nil? || (max_page && page > max_page)
       end
-      break if page.nil? || (max_page && page > max_page)
     end
   end
 end
