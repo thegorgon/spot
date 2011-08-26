@@ -117,11 +117,7 @@ h1 {
   width: 500px;
 }
 .fullscreen {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
+  @include fullscreen;
 }
 hr.light {
   border-top: 1px solid #ddd;

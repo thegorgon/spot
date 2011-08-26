@@ -49,6 +49,22 @@ class City < ActiveRecord::Base
   def subscription_available?
     subscriptions_available > 0
   end
+  
+  def as_json(*args)
+    {
+      :_type => self.class.to_s,
+      :id => id,
+      :name => name.titlecase,
+      :region => region.titlecase,
+      :region_code => region_code.upcase,
+      :country_code => country_code.upcase,
+      :lat => lat,
+      :lng => lng,
+      :population => population,
+      :subscriptions_available => subscriptions_available,
+      :subscription_count => subscription_count
+    }
+  end
     
   private
   

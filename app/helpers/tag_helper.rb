@@ -142,7 +142,7 @@ module TagHelper
     current_class = options.delete(:current_class) || "active"
     options[:class] ||= ""
     options[:class] << " " if options[:class].present?
-    options[:class] << current_class if request.path == args.last
+    options[:class] << current_class if request.path == args.last || options[:current]
     args << options
     link_to *args
   end

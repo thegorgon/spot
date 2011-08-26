@@ -112,6 +112,77 @@ html {
       z-index: 100;
       margin: 5px 0 10px;
       background: #f7f7f7;
+      position: relative;
+      overflow: hidden;
+      &.member {
+        padding: 0;
+        background: transparent;
+        border: none;
+        .quote {
+          position: relative;
+          padding: 5px 20px;
+          overflow: hidden;
+          .bg {
+            background: #000;
+            @include fullscreen();
+            @include opacity(0.3);
+          }
+          .content {
+            position: relative;
+            z-index: 2;
+            padding: 10px;
+            .text {
+              font-size: 18px;
+              margin: 0 70px;
+              color: #fff;
+              text-shadow: none;
+            }
+            .byline {
+              font-size: 12px;
+              color: #fff;
+              position: absolute;
+              bottom: 0px;
+              right: 55px;
+            }
+          }
+        }
+        .welcome {
+          border-top: 1px solid #808080;
+          padding: 10px;
+          text-align: right;
+          color: #fff;
+          font-size: 18px;
+          position: relative;
+          h3 {
+            color: #fff;
+          }
+          .content {
+            position: relative;
+            z-index: 2;
+          }
+          .bg {
+            background: #000;
+            @include fullscreen();
+            @include opacity(0.6);
+          }
+        }
+      }
+      .lquo {
+        position: absolute;
+        top: -25px;
+        left: -25px;
+        width: 70px;
+        height: 62px;
+        background: transparent url(/images/assets/general/quotes70x129.png) no-repeat 0 0;
+      }
+      .rquo {
+        position: absolute;
+        bottom: -25px;
+        right: -25px;
+        width: 70px;
+        height: 62px;
+        background: transparent url(/images/assets/general/quotes70x129.png) no-repeat 0 -65px;
+      }
       h1.membership {
         padding-left: 45px;
         background: transparent url(/images/icons/diamondgry33x26.png) no-repeat left center;

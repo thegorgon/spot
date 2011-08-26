@@ -42,7 +42,7 @@ class Site::AccountsController < Site::BaseController
     current_user.attributes = params[:account]
     if (current_user.password_account.nil? || current_user.password_account.save) && current_user.save
       flash[:notice] = "Account Updated!"
-      redirect_to account_path
+      redirect_to params[:redirect_to] || account_path
     else
       render :action => "show"
     end

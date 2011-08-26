@@ -6,4 +6,4 @@ if Rails.env.production?
     :force_secure_cookies => false
 end
 
-Rails.configuration.middleware.use Rack::NoIE, :redirect => "/upgrade", :minimum => 8.0
+Rails.configuration.middleware.use Rack::NoIE, :redirect => "/upgrade", :minimum => 7.0

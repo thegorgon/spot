@@ -47,7 +47,7 @@
 
 =content_for :bottom do
   -unless current_member?
-    #applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Founding Spot Member", :class => conditionally("autoopen", flash[:applying])}
+    #applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Founding Spot Member"}
       =render :partial => "/shared/membership/apply", :locals => {:referrer => session_invite}
   #aboutmembership.hidden{"data-title" => "About Spot Membership"}=render :partial => "shared/membership/about"
   

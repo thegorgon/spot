@@ -13,7 +13,11 @@ module ArrayExtensions
     
     def full_compact
       select { |x| x.present? }
-    end    
+    end
+    
+    def random
+      self[rand(length)]
+    end
   end
   
   module ClassMethods

@@ -3,7 +3,7 @@ class Site::CitiesController < Site::BaseController
   layout 'oreo'
   
   def show
-    new unless @city.subscription_available?
+    @city.subscription_available?? calendar : new
   end
   
   def new
@@ -12,12 +12,20 @@ class Site::CitiesController < Site::BaseController
   end
 
   def calendar
+    @view = "calendar"
+    render :action => "calendar"
+  end
+  
+  def experiences
+    @view = "experiences"
+    render :action => "experiences"
   end
   
   private
   
   def require_city
     @city = City.find_by_slug(params[:id])
+    @views = ["calendar", "experiences"]
     raise ActiveRecord::RecordNotFound unless @city
     session[:city_id] = @city.id
     @page = CityPage.new(@city)

@@ -113,6 +113,15 @@ button.link {
     top: -2px;
   }
 }
+.btnorg250x32, a.btnorg250x32 {
+  @include bgbutton('org250x32', 250px, 33px);
+  @include orgbtn;
+  font-size: 18px;
+  .btntxt {
+    position: relative;
+    top: -2px;
+  }
+}
 .btnorg200x41, a.btnorg200x41 {
   @include bgbutton('org200x41', 200px, 41px);
   @include orgbtn;

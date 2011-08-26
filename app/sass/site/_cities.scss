@@ -16,6 +16,9 @@
       .month {
         text-align: center;
         color: #999;
+        border: 1px solid #ddd;
+        border-right: 0;
+        border-left: 0;
         text-shadow:  rgba(255,255,255,0.75) 0px 1px 0px;
         background: #f7f7f7;
         padding: 5px 0;
@@ -26,6 +29,7 @@
         margin: 0 auto;
       }
       &.fixed {
+        z-index: 10;
         position: fixed;
         top: 0;
         left: 0;
@@ -37,6 +41,21 @@
       float: left;
       padding: 10px 0;
       margin: 10px;
+      .imageshield {
+        margin: 0 auto 10px 0;
+        width: 145px;
+        height: 70px;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #aaa;
+        img {
+          width: 234px;
+          height: 168px;
+          top: -39px;
+          left: -43px;
+          position: absolute;
+        }
+      }
       &.today {
         .day {
           padding-left: 25px;
@@ -210,6 +229,9 @@
       height: 250px;
       width: 400px;
       position: relative;
+    }
+    .designed_by_spot {
+      
     }
   }
   .updates {

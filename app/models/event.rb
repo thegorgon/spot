@@ -10,6 +10,11 @@ class Event
   API_PLACE_SEARCH          = 9
   API_EXCEPTION             = 10
   API_NOTE_CREATE           = 11
+  WELCOME_SCREEN_VIEW       = 12
+  SUBSCRIBE_SCREEN_VIEW     = 13
+  CONTINUE_SCREEN_VIEW      = 14
+  GO_TO_WISHLIST_SELECT     = 15
+  GO_TO_ACTIVITY_SELECT     = 16
   
   uniq_constants!
   

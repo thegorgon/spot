@@ -1,11 +1,9 @@
-=render :partial => "header", :locals => {:title => "Membership Experiences Calendar"}    
+=render :partial => "header", :locals => {:title => "Membership Experiences Calendar"}  
 
 #calendar.calendar.clearfix.rows
   .month_placeholder
     .month_title
-      %hr
       .month.tf=@page.calendar.keys.first.strftime('%B %Y')
-      %hr
   .dates.clearfix
     -@page.calendar.keys.each_with_index do |date, i|
       -events = @page.calendar[date]
@@ -17,6 +15,8 @@
           -if events.empty?
             no events today
           -else
+            -if @page.images[date]
+              .imageshield=image_tag @page.images[date].url(:i234x168), :size => "234x168"
             -events.each do |event|
               -template = event.template
               -place = template.business.place

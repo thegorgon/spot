@@ -3,6 +3,13 @@
   -moz-border-radius: unquote($n);
   -webkit-border-radius: unquote($n); 
 }
+@mixin fullscreen() {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
 
 @mixin rgbabg($r,$g,$b,$a, $fallback) {
   background: transparent url(/images/unquote($fallback)) repeat top left;

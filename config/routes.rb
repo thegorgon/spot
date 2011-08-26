@@ -5,6 +5,8 @@ Spot::Application.routes.draw do
     resources :places, :only => [:index] do
       get "search", :on => :collection
     end
+    resources :events, :only => [:create]
+    resources :cities, :only => [:index]
     resources :users, :only => [:update, :show]
     resource :sessions, :only => [:new, :create, :destroy]
     resource :activity, :only => [:show], :controller => "activity"
@@ -26,6 +28,7 @@ Spot::Application.routes.draw do
     resource :password_reset, :only => [:new, :create, :edit, :update]
     resources :cities, :only => [:show, :new] do 
       get "calendar", :on => :member
+      get "experiences", :on => :member
     end
     resource :application, :only => [:create, :show, :new], :controller => "membership_applications"
     resources :registrations, :only => [:show, :create, :destroy]

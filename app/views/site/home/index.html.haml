@@ -1,8 +1,8 @@
 =content_for :bg do
   %ul#slidedeck
-    %li#slide1.slide.stretcher{"data-gravity" => "0.5x0.5", :title => "Chef's Table Exclusive Seating at Credo"}
+    %li#slide1.slide.stretcher{"data-gravity" => "0.5x0.5", :title => "Sommelier Wine Pairing at Credo"}
       =image_tag "assets/slideshow/slide1.jpg", :size => "2292x1524"
-    %li#slide2.slide.stretcher{"data-gravity" => "0.5x0.5", :title => "Free Mimosa with Brunch"}
+    %li#slide2.slide.stretcher{"data-gravity" => "0.5x0.5", :title => "Complimentary Beer with Sausage"}
       =image_tag "assets/slideshow/slide2.jpg", :size => "2292x1524"
 
 =content_for :footer do
@@ -35,12 +35,12 @@
         at the 
         %em best restaurants in town.
       .request.half
-        -if current_member?
+        -if current_user && current_user.city
           %h2.center.tf="Welcome Back #{current_user.first_name}"
-          =link_to "explore your city", city_path(current_user.city || City.first), :class => "btnorg175x32 action"
-        -elsif current_user.try(:membership_application)
-          %h2.center.tf We've Received Your Application
-          =link_to "explore your city", city_path(current_user.city || City.first), :class => "btnorg175x32 action"
+          =link_to "Explore #{city.name.titlecase}", city_path(city), :class => "btnorg250x32 action"
+        -elsif current_user
+          %h2.center.tf="Welcome Back #{current_user.first_name}"
+          =link_to "Select Your City", account_path, :class => "btnorg175x32 action", :id => "select_city_link"
         -else
           %h2.tf Request An Invitation
           =spot_form_for :email, :url => '#', :display => "faded clearfix", :html => {:id => "email_form"} do |f|
@@ -69,3 +69,9 @@
   =form_for :email_subscription, :url => subscribe_email_path, :html => {:id => "subscription_form"} do |f|
     =f.hidden_field :email
     =f.hidden_field :city_id
+  
+  -if current_user
+    =form_for :account, :url => account_path, :html => {:id => "account_update_form", :method => :put} do |f|
+      =hidden_field_tag :redirect_to, root_url, :id => "account_redirect_to"
+      =f.hidden_field :city_id
+    
