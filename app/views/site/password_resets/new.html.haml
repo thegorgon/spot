@@ -1,13 +1,11 @@
-.vcc
-  .vc
-    #password_reset.narrow_center
-      %h1
-        Forgot Password
-      %h3.instructions
-        Enter your email and we'll send you instructions to reset your password.
-      =spot_form_for :reset, :url => password_reset_path, :html => { :class => "faded" } do |f|
-        %ul.form
-          %li=f.text_field :login, :class => "text", :placeholder => "email address"
-          %li.buttons
-            =button_tag :class => "blackimg_77x32" do
-              submit
+=content_for :toptitle do
+  Forgot Password
+
+#password_reset
+  %h2.tf.instructions
+    Enter your email and we'll send you instructions to reset your password.
+  =spot_form_for :reset, :url => password_reset_path,  :display => "light clearfix" do |f|
+    %li=f.text_field :login, :class => "text", :placeholder => "email address"
+    %li.buttons
+      =button_tag :class => "blackimg_77x32" do
+        submit

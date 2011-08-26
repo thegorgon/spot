@@ -1,4 +1,5 @@
 class Site::PasswordResetsController < Site::BaseController
+  layout 'oreo'
   before_filter :require_user, :only => [:edit, :update]
   
   def new

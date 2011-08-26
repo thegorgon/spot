@@ -44,9 +44,9 @@
         -else
           %h2.tf Request An Invitation
           =spot_form_for :email, :url => '#', :display => "faded clearfix", :html => {:id => "email_form"} do |f|
-            =f.text_field :email, :placeholder => "enter your email", :value => current_user.try(:email), :container_class => "left"
             =button_tag :class => "btnorg115x32 right tf" do
               request
+            =f.text_field :email, :placeholder => "enter your email", :value => current_user.try(:email), :container_class => "left"
           .links.clearfix
             =link_to "I have an invitation", new_application_path, :class => "left"
             =link_to "I'm already a member", new_session_path, :class => "right"

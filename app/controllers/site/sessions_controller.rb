@@ -3,7 +3,6 @@ class Site::SessionsController < Site::BaseController
   layout "oreo"
   
   def new
-    with_flash_maintenance { logout }
   end
   
   def create
