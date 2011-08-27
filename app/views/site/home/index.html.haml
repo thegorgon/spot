@@ -1,9 +1,8 @@
 =content_for :bg do
   %ul#slidedeck
-    %li#slide1.slide.stretcher{"data-gravity" => "0.5x0.5", :title => "Sommelier Wine Pairing at Credo"}
-      =image_tag "assets/slideshow/slide1.jpg", :size => "2292x1524"
-    %li#slide2.slide.stretcher{"data-gravity" => "0.5x0.5", :title => "Complimentary Beer with Sausage"}
-      =image_tag "assets/slideshow/slide2.jpg", :size => "2292x1524"
+    %script#slidetpl{:type => "x-jquery-tmpl"}
+      %li.slide.stretcher{"data-gravity" => "${gravity}", "title" => "${title}"}
+        =image_tag "${slide}", :size => "${size}"
 
 =content_for :footer do
   %nav.regular.clearfix

@@ -110,7 +110,14 @@
     site_home_index: function() {
       var slideshow = $("#slidedeck").slideshow({
           title: '#slidetitle',
-          start: Math.floor(Math.random()* $("#slidedeck").find('.slide').length)
+          start: Math.floor(Math.random()* $("#slidedeck").find('.slide').length),
+          slides: [
+            {slide: 'assets/slideshow/slide1.jpg', size: '2292x1524', title: 'Sommelier Wine Pairing at Credo', gravity: '0.5x0.5'},
+            {slide: 'assets/slideshow/slide2.jpg', size: '2292x1524', title: 'Complimentary Beer with Lunch at Schmidt\'s', gravity: '1.0x1.0'},
+            {slide: 'assets/slideshow/slide3.jpg', size: '2292x1524', title: 'Six Course Tasting Menu & VIP Kitchen Tour at Spruce', gravity: '0.5x0.5'},
+            {slide: 'assets/slideshow/slide4.jpg', size: '2292x1524', title: "Chef's Evening at Epic Roasthouse", gravity: '0.5x0.5'},
+            {slide: 'assets/slideshow/slide5.jpg', size: '2292x1524', title: "Free Bonus Cupcake at Mission Mini's", gravity: '0.5x0.5'}
+          ]
         }), 
         top = $('#toplayer'), 
         scenes = top.find('.scene'),

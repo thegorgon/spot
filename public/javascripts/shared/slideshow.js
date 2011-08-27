@@ -1,6 +1,7 @@
 (function($) {
   $.fn.slideshow = function(opts) {
     var element = $(this),
+      slideTpl = element.find('#slidetpl'),
       settings = {
         title: null,
         start: 0,
@@ -10,6 +11,7 @@
       }, i = 0, runningInterval,
       options = $.extend(settings, opts || {}),
       title = $(options.title),
+      slideData = options.slides,
       slides = element.find('.slide'),
       currentIdx = options.start,
       jumpTo = function(i, wait) {
@@ -55,12 +57,19 @@
           nextSlide();
         }, options.waitFor);
       },
+      build = function() {
+        $.each(slideData, function(i) {
+          var slide = slideTpl.tmpl(this).appendTo(element);
+        });
+        slides = element.find('.slide');
+      },
       stop = function() {
         clearInterval(runningInterval);
       };
     $('.slide img', element).unbind("contextmenu.cancel").bind("contextmenu.cancel", function() { return false; });
     $('.slide img', element).unbind("mousedown.cancel").bind("mousedown.cancel", function() { return false; });
     element.hide();
+    build();
     $(window).load(function() {
       setTimeout(function() {
         var current = slides.eq(currentIdx);
