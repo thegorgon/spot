@@ -7,7 +7,7 @@
   .dates.clearfix
     -@page.calendar.keys.each_with_index do |date, i|
       -events = @page.calendar[date]
-      .date{:class => "col#{i.modulo(5) + 1} #{conditionally("today", date == Date.today)} #{conditionally("empty", events.empty?)}", "data-date" => date.strftime('%D')}
+      .date{:class => "col#{i.modulo(5) + 1} #{conditionally("today", date == Date.today)} #{conditionally("empty", events.empty?)}", "data-date" => date.strftime('%m/%d/%Y')}
         .day.tf
           =date.day
           %span.dow=date.strftime('%a').upcase

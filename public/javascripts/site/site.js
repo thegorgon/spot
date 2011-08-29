@@ -115,7 +115,7 @@
             {slide: 'assets/slideshow/slide1.jpg', size: '2292x1524', title: 'Sommelier Wine Pairing at Credo', gravity: '0.5x0.5'},
             {slide: 'assets/slideshow/slide2.jpg', size: '2292x1524', title: 'Complimentary Beer with Lunch at Schmidt\'s', gravity: '1.0x1.0'},
             {slide: 'assets/slideshow/slide3.jpg', size: '2292x1524', title: 'Six Course Tasting Menu & VIP Kitchen Tour at Spruce', gravity: '0.5x0.5'},
-            {slide: 'assets/slideshow/slide4.jpg', size: '2292x1524', title: "Chef's Evening at Epic Roasthouse", gravity: '0.5x0.5'},
+            {slide: 'assets/slideshow/slide4.jpg', size: '2292x1524', title: "Chef's Evening at Epic Roasthouse", gravity: '1.0x1.0'},
             {slide: 'assets/slideshow/slide5.jpg', size: '2292x1524', title: "Free Bonus Cupcake at Mission Mini's", gravity: '0.5x0.5'}
           ]
         }), 
@@ -138,12 +138,14 @@
       slideshow.start();
       $('#email_form').unbind('submit.continue').bind('submit.continue', function(e) {
         e.preventDefault();
-        var sxnForm = $('#subscription_form');
-        sxnForm.find('#email_subscription_email').val($(this).find('#email_email').val());
-        initMap(function() {
-          sxnForm.find('#email_subscription_city_id').val($(this).attr('data-id'));
-          sxnForm.submit();
-        });
+        if ($(this).validate()) {
+          var sxnForm = $('#subscription_form');
+          sxnForm.find('#email_subscription_email').val($(this).find('#email_email').val());
+          initMap(function() {
+            sxnForm.find('#email_subscription_city_id').val($(this).attr('data-id'));
+            sxnForm.submit();
+          });          
+        }
       });
       
       $('#select_city_link').unbind('click').bind('click', function(e) {
@@ -245,7 +247,9 @@
             var offset = $(this).offset(),
               visible = offset.top >= scrollTop + 20 && offset.top <= scrollBottom - 150,
               date = Date.parse($(this).attr('data-date'));
-            if (visible) { allDates.push(date); }
+            if (visible) { 
+              $.logger.debug($(this).attr('data-date'), " IS VISIBLE!");
+              allDates.push(date); }
           });
           if (allDates.length > 0) {
             dates.min = new Date(allDates.min());
