@@ -1,13 +1,14 @@
 -referrer ||= nil        
 
--if referrer
+-if referrer && @city.nil? || @city.subscriptions_available?
+
   %h1.tf
     =referrer.voucher
     has vouched for you.
     Welcome to 
     ="#{image_tag "logos/spotblk225x180.png", :size => "55x44"}.".html_safe
 
--elsif partial_application[:email]
+-elsif partial_application[:email] && @city.nil? || @city.subscriptions_available?
   %h1.tf
     Finish Your Application...
 

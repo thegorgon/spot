@@ -15,7 +15,7 @@
       .content
         %h3.tf="Welcome back #{current_user.first_name}"
   -else
-    -if session_invite
+    -if session_invite && @city.nil? || @city.subscriptions_available?
       %h1.tf.vouched="#{session_invite.voucher} has vouched for you. We're happy to have you."
   
     -if current_user.try(:membership_application)
