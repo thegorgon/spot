@@ -129,10 +129,12 @@
             scenes.eq(1).animate({left: '0%'}, 750);
           }
           slideshow.stop();
-          $('.city').unbind('click.submit').bind('click.submit', function(e) {
-            e.preventDefault();
-            fn.call(this);
-          });
+          if (fn) {
+            $('.city').unbind('click.submit').bind('click.submit', function(e) {
+              e.preventDefault();
+              fn.call(this);
+            });
+          }
         };
       
       slideshow.start();
@@ -156,6 +158,11 @@
           accountForm.find('#account_redirect_to').val($(this).attr('href'));
           accountForm.submit();          
         });
+      });
+      
+      $('#invited_city_link').unbind('click').bind('click', function(e) {
+        e.preventDefault();
+        initMap();
       });
     },
     site_home_press: function() {

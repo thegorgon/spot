@@ -40,6 +40,9 @@
         -elsif current_user
           %h2.center.tf="Welcome Back #{current_user.first_name}"
           =link_to "Select Your City", account_path, :class => "btnorg175x32 action", :id => "select_city_link"
+        -elsif session_invite
+          %h2.center.tf You're Invited
+          =link_to "Select Your City", '#enter', :class => "btnorg175x32 action", :id => "invited_city_link"
         -else
           %h2.tf Request An Invitation
           =spot_form_for :email, :url => '#', :display => "faded clearfix", :html => {:id => "email_form"} do |f|
