@@ -37,7 +37,7 @@
         options.gravity = options.gravity || self.attr('data-gravity');
         self.find('img').sizeToFit(self, options);
       });
-    },
+    }
   });
   $.stretcher = {
     init: function(selector) {
