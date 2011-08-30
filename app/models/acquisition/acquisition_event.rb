@@ -10,7 +10,12 @@ class AcquisitionEvent < ActiveRecord::Base
   MEMBERSHIP                = 5
   REGISTRATION              = 6
   UNSUBSCRIBED              = 7
-
+  ABOUT_MEMBERSHIP_VIEW     = 8
+  APPLICATION_VIEW          = 9
+  CITY_MAP_VIEW             = 10
+  HOME_PAGE_VIEW            = 11
+  MEMBERSHIP_FORM_VIEW      = 12
+  
   uniq_constants!
   
   def self.lookup(string)

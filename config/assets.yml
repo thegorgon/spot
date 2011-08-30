@@ -18,6 +18,7 @@ javascripts:
     - public/javascripts/shared/extensions.js
     - public/javascripts/shared/spot.js
     - public/javascripts/shared/behaviors.js
+    - public/javascripts/shared/events.js
     - public/javascripts/shared/navigator.js
     - public/javascripts/shared/konami.js
     - public/javascripts/shared/gmap.js

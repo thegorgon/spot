@@ -85,7 +85,10 @@
       });
       $('#aboutmembership').modal({
         trigger: '.btnmemabout', 
-        width: 840
+        width: 840,
+        open: function() {
+          go.Events.acquireRecord('about membership view');
+        }
       });   
       $('.designed_by_spot').unbind('mouseenter.show-explain').bind('mouseenter.show-explain', function(e) {
         var self = $(this);
@@ -101,7 +104,10 @@
       });
       $('#applydialog').modal({
         trigger: '.btnmembership', 
-        width: 800
+        width: 800,
+        open: function() {
+          go.Events.acquireRecord('application view');          
+        }
       });
       if ($('#applydialog').hasClass('autoopen')) {
         $('#applydialog').dialog("open");
@@ -143,6 +149,7 @@
         if ($(this).validate()) {
           var sxnForm = $('#subscription_form');
           sxnForm.find('#email_subscription_email').val($(this).find('#email_email').val());
+          go.Events.acquireRecord('city map view');
           initMap(function() {
             sxnForm.find('#email_subscription_city_id').val($(this).attr('data-id'));
             sxnForm.submit();
@@ -159,7 +166,7 @@
           accountForm.submit();          
         });
       });
-      
+      go.Events.acquireRecord('home page view');
     },
     site_home_press: function() {
       go.AppPreview.init();
@@ -251,7 +258,6 @@
               visible = offset.top >= scrollTop + 20 && offset.top <= scrollBottom - 150,
               date = Date.parse($(this).attr('data-date'));
             if (visible) { 
-              $.logger.debug($(this).attr('data-date'), " IS VISIBLE!");
               allDates.push(date); }
           });
           if (allDates.length > 0) {

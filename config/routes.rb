@@ -55,7 +55,11 @@ Spot::Application.routes.draw do
       get "getspot", :action => "getspot"
       get "membership/about", :action => "about_membership", :as => "membership_about"
     end
-    get "/in", :to => "home#portal", :as => "portal"
+    controller "tracking" do
+      get "/in", :action => "portal", :as => "portal"
+      post "/uevent.:format", :action => "user_event", :as => "user_event"
+      post "/aevent.:format", :action => "acquisition_event", :as => "acquisition_event"
+    end
     get "/codes/:type/:code", :to => "codes#show"
     get "login" => redirect("/session/new")
     get "register" => redirect("/account/new")

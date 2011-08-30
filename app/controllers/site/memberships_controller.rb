@@ -6,6 +6,7 @@ class Site::MembershipsController < Site::BaseController
   layout 'oreo'
   
   def new
+    record_acquisition_event("membership form view", params[:value])
     @payment ||= PaymentForm.new(:user => current_user, :plan => params[:plan] || Subscription::PLANS.keys.first)
     @promo_code = session_promo || (params[:pc] && PromoCode.find_by_code(params[:pc]))
     render :action => "new" # allows for just calling "new" from any action

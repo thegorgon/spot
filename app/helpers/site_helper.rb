@@ -3,7 +3,9 @@ module SiteHelper
     {
       :env => Rails.env,
       :preload => [ ],
-      :member => current_member?
+      :member => current_member?,
+      :host => HOSTS[Rails.env],
+      :api_host => API_HOSTS[Rails.env]
     }.to_json
   end
   

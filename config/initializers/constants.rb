@@ -11,6 +11,11 @@ HOSTS = {
   "staging" => "staging.spotmembers.com",
   "development" => "www.rails.local:3000"
 }
+API_HOSTS = {
+  "production" => "api.spotmembers.com",
+  "staging" => "api.staging.spotmembers.com",
+  "development" => "api.rails.local:3000"
+}
 IMGHOST = "http://#{HOSTS[Rails.env]}/images/"
 FBAPP = {
   :id => Rails.env.production?? 146911415372759 : 329653055238,
