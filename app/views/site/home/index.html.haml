@@ -40,17 +40,15 @@
         -elsif current_user
           %h2.center.tf="Welcome Back #{current_user.first_name}"
           =link_to "Select Your City", account_path, :class => "btnorg175x32 action", :id => "select_city_link"
-        -elsif session_invite
-          %h2.center.tf You're Invited
-          =link_to "Select Your City", '#enter', :class => "btnorg175x32 action", :id => "invited_city_link"
         -else
-          %h2.tf Request An Invitation
+          %h2.tf=session_invite ? "You're Invited" : "Request An Invitation"
           =spot_form_for :email, :url => '#', :display => "faded clearfix", :html => {:id => "email_form"} do |f|
             =button_tag :class => "btnorg115x32 right tf" do
-              request
+              =session_invite ? "continue" : "request"
             =f.email_field :email, :placeholder => "enter your email", :value => current_user.try(:email), :container_class => "left", :required => true
           .links.clearfix
-            =link_to "I have an invitation", new_application_path, :class => "left"
+            -unless session_invite
+              =link_to "I have an invitation", new_application_path, :class => "left"
             =link_to "I'm already a member", new_session_path, :class => "right"
           
   .map.scene

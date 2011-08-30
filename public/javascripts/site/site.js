@@ -160,10 +160,6 @@
         });
       });
       
-      $('#invited_city_link').unbind('click').bind('click', function(e) {
-        e.preventDefault();
-        initMap();
-      });
     },
     site_home_press: function() {
       go.AppPreview.init();
