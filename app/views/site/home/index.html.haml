@@ -2,7 +2,7 @@
   %ul#slidedeck
     %script#slidetpl{:type => "x-jquery-tmpl"}
       %li.slide.stretcher{"data-gravity" => "${gravity}", "title" => "${title}"}
-        =image_tag "${slide}", :size => "${size}"
+        %img{:src => "${slide}", :size => "${size}"}
 
 =content_for :footer do
   %nav.regular.clearfix

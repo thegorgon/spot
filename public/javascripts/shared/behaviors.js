@@ -312,11 +312,7 @@
         e.preventDefault();
         $(this).addClass('editing').parents('ul.form').addClass('editing');
       });
-      $('.stretcher').stretcher();
-      $('.stretcher').load(function() { $(this).stretcher(); });
-      $(window).unbind('resize.slideshow').bind('resize.slideshow', function(e) {
-        $('.stretcher').stretcher();
-      });
+      $.stretcher.init();
       fetch(".chzn-select").chosen()
     }
   });

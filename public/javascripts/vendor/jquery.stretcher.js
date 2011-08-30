@@ -17,6 +17,8 @@
         dims.w = cW;
         dims.h = (cW * rRatio);
       }
+      $.logger.debug("cW : ", cW, "cH : ", cH, "rW : ", rW, "rH : ", rH);
+      
       if (dims.w > 0 && dims.h > 0) {
         resize.width(dims.w);
         resize.height(dims.h);
@@ -35,6 +37,16 @@
         options.gravity = options.gravity || self.attr('data-gravity');
         self.find('img').sizeToFit(self, options);
       });
-    }
+    },
   });
+  $.stretcher = {
+    init: function(selector) {
+      selector = selector || '.stretcher';
+      $(selector).stretcher();      
+      $(selector).load(function() { $(this).stretcher(); });
+      $(window).unbind('resize.stretcher').bind('resize.stretcher', function(e) {
+        $(selector).stretcher();
+      });
+    }
+  };
 }(jQuery));

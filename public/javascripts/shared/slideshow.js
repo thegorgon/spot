@@ -85,6 +85,7 @@
           current.css({zIndex: 20}).show();          
         }
         element.show();
+        $(window).resize();
       }, 100);
     });
     
