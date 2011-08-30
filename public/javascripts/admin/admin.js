@@ -77,7 +77,7 @@
         open: function(target) {
           var url = $(target).attr('href');
           $('#url_builder_base_url').val(url);
-          $('#url_builder_value').html(url);
+          $('#url_builder_value').val(url);
           $(this).find('input.text').unbind('keyup').bind('keyup', function(e) {
             var url = $('#url_builder_base_url').val();
             $('.url_builder_param').each(function(i) {

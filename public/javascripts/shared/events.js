@@ -13,6 +13,16 @@
         value: value
       });
       return true;
+    },
+    analytics: function(category, event, label, value) {
+      if (window['_gaq']) {
+        _gaq.push(['_trackEvent', category, event, label, value]);
+      }
+    },
+    pageView: function(path) {
+      if (window['_gaq']) {
+        _gaq.push(['_trackPageview', path]);
+      }
     }
   })
 }(Spot));

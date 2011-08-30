@@ -87,7 +87,8 @@
         trigger: '.btnmemabout', 
         width: 840,
         open: function() {
-          go.Events.acquireRecord('about membership view');
+          go.Events.pageView('/membership/about')
+          go.Events.analytics('Acquisition', 'Membership Dialog Launch')
         }
       });   
       $('.designed_by_spot').unbind('mouseenter.show-explain').bind('mouseenter.show-explain', function(e) {
@@ -106,7 +107,8 @@
         trigger: '.btnmembership', 
         width: 800,
         open: function() {
-          go.Events.acquireRecord('application view');          
+          go.Events.pageView('/application/new')
+          go.Events.analytics('Acquisition', 'Apply Dialog Launch')
         }
       });
       if ($('#applydialog').hasClass('autoopen')) {
@@ -149,9 +151,10 @@
         if ($(this).validate()) {
           var sxnForm = $('#subscription_form');
           sxnForm.find('#email_subscription_email').val($(this).find('#email_email').val());
-          go.Events.acquireRecord('city map view');
+          go.Events.analytics('Acquisition', 'Email Entered')
           initMap(function() {
             sxnForm.find('#email_subscription_city_id').val($(this).attr('data-id'));
+            go.Events.analytics('Acquisition', 'City Selected')
             sxnForm.submit();
           });          
         }
@@ -166,7 +169,6 @@
           accountForm.submit();          
         });
       });
-      go.Events.acquireRecord('home page view');
     },
     site_home_press: function() {
       go.AppPreview.init();
