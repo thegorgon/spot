@@ -3,7 +3,7 @@ class Site::CitiesController < Site::BaseController
   layout 'oreo'
   
   def show
-    @city.subscription_available?? calendar : new
+    @city.subscription_available? || @city.has_events? ? calendar : new
   end
   
   def new

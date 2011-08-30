@@ -43,10 +43,6 @@
           dialog.dialog("option", "position", position);
           positionOverlay();
         });
-        $(window).bind("scroll.dialog", function() { 
-          dialog.dialog("option", "position", position);
-          positionOverlay();
-        });
         $('input, button, select, textarea').blur();
         if ($.isFunction(onopen)) { onopen.call(dialog, dialog.data('open-target')); }
       };

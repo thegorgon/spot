@@ -47,7 +47,11 @@ class City < ActiveRecord::Base
   end
   
   def subscription_available?
-    subscriptions_available > 0
+    subscriptions_available - subscription_count > 0
+  end
+  
+  def has_events?
+    upcoming_events.present?
   end
   
   def as_json(*args)
