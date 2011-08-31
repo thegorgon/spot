@@ -51,7 +51,7 @@ class Subscription < ActiveRecord::Base
   def self.synced_with(bt)
     new { |object| object.sync_with(bt) }
   end
-  
+    
   def sync_with(bt)
     self.braintree_id = bt.id
     self.status = bt.status      
@@ -59,7 +59,7 @@ class Subscription < ActiveRecord::Base
     self.price_cents = (bt.price * 100).round
     self.billing_day_of_month = bt.billing_day_of_month
     self.billing_period = bt.plan_id.split('_').last.to_i
-    self.billing_starts_at = Date.parse(bt.next_billing_date)
+    self.billing_starts_at = Date.parse(bt.first_billing_date)
   end
   
   def next_billing_date
@@ -67,7 +67,7 @@ class Subscription < ActiveRecord::Base
     tdelta = now.to_i - billing_starts_at.to_i
     periods = (tdelta/billing_period.months).floor + 1
     date = now + (periods * billing_period).months
-    Date.civil(date.year, date.month, billing_day_of_month)
+    Date.civil(date.year, date.month, [billing_day_of_month, Time.days_in_month(date.month, date.year)].min)
   end
   
   def plan=(value)
