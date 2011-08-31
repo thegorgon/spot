@@ -86,7 +86,7 @@ class PaymentForm
       end
     else
       errors.add(:base, "We messed up. We've been notified and will try to get the problem fixed as soon as possible.")
-      HoptoadNotifier.notify(klass.new, { :errors => errorlist, :prefix => prefix })
+      HoptoadNotifier.notify(Exception.new, { :errors => errorlist, :prefix => prefix, :type => klass.to_s })
     end
   end
   
