@@ -24,12 +24,12 @@
   .image.gossip.left
     =image_tag "paintings/gossip400x300.png", :size => "400x300"
     .speechbubble
-      I just signed up for the greatest website. Cocktails anyone?
+      I just signed up for the greatest service. Cocktails anyone?
   .text.right
     %h2.tf.invitetitle
       Don't Wait Alone...
     %p
-      It's never fun to to wait in line alone. Share this link with some friends and we'll love you forever :
+      It's never fun to to wait in line alone. Share this link with some friends and they'll love you forever :
       -url = portal_url(:ic => @application.user.invitation_code.code)
       =sharing(url, "Just applied to become a Spot Member, I think it's worth checking out.", :link => true)
 %hr    
