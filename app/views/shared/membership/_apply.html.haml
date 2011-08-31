@@ -1,6 +1,6 @@
 -referrer ||= nil        
 
--if referrer && @city.nil? || @city.subscriptions_available?
+-if referrer && (@city.nil? || @city.subscriptions_available?)
 
   %h1.tf
     =referrer.voucher
