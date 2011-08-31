@@ -1,4 +1,5 @@
 class InvitationCode < ActiveRecord::Base
+  INITIAL_COUNT = 10
   belongs_to :user
   before_validation :set_code
   before_validation :set_invitation_count
@@ -58,7 +59,7 @@ class InvitationCode < ActiveRecord::Base
   
   def set_invitation_count
     if user && invitation_count <= 0
-      self.invitation_count = user.active_membership ? 100 : 0 
+      self.invitation_count = user.active_membership ? INITIAL_COUNT : 0 
     end
   end
   
