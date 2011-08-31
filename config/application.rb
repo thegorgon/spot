@@ -19,5 +19,6 @@ module Spot
     config.active_record.observers = [:place_sweeper]
     
     config.autoload_paths += Dir[Rails.root.join('app', 'models', 'biz')]
+    config.action_mailer.template_root = Rails.root.join('app', 'views', 'mailers')
   end
 end

@@ -43,6 +43,7 @@
             });          
           });
         }
+        $(window).resize();
       }, 
       nextSlide = function() {
         var next = currentIdx < slides.length - 1 ? currentIdx + 1 : 0;
