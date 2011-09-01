@@ -47,7 +47,7 @@
           =uf.email_field :email, :placeholder => "email address", :required => true, :label => "email : ", :value => current_user.try(:email)
         -else
           =uf.email_field :email, :placeholder => "email address", :required => true, :label => "email : ", "data-validate-url" => availability_email_path, "data-invalid-msg" => "looks like you've already registered", :value => partial_application[:email]
-          =uf.password_field 'password', :placeholder => "password", :label => "password : "
+          =uf.password_field 'password', :placeholder => "password", :label => "password : ", :required => true, :minlength => 4, :maxlength => 25
       =f.city_select 'city_id', current_user.try(:city_id) || @city.try(:id), :html => { :required => true }
         
       %li.buttons.clearfix
