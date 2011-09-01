@@ -16,17 +16,5 @@ describe Site::EmailsController do
       get :show, :email => @email
       response.should_not be_redirect
     end
-  end
-  
-  describe "#unsubscribe" do
-    it "should block the email param" do
-      get :unsubscribe, :email => @email
-      BlockedEmail.blocked?(@email).should == true
-    end
-
-    it "should redirect to goodbye" do
-      get :unsubscribe, :email => @email
-      response.should redirect_to(goodbye_email_path)
-    end
-  end
+  end  
 end

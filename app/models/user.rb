@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
   validates :email, :format => EMAIL_REGEX, :uniqueness => true, :if => :email?
   has_acquisition_source :count => :signup
   name_attribute :name
+  attr_accessor :email_source
 
   def self.adminify!(email)
     if (user = where(:email => email).first)
@@ -162,8 +163,9 @@ class User < ActiveRecord::Base
       EmailSubscriptions.ensure( :email => email_was || email, 
                                  :first_name => first_name, 
                                  :last_name => last_name, 
-                                 :city_id => city_id, 
-                                 :user_id => id )
+                                 :city_id => city_id,
+                                 :source => email_source,
+                                 :user_id => id ) if email
   end
 
   def as_json(*args)
@@ -192,6 +194,7 @@ class User < ActiveRecord::Base
     email_subscriptions.first_name = first_name
     email_subscriptions.last_name = last_name
     email_subscriptions.city_id = city_id
+    email_subscriptions.source = email_source if email_source.present?
     email_subscriptions.save if email_subscriptions.changed?
   end
     

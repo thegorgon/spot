@@ -10,6 +10,7 @@ module Jobs
         "LNAME" => email.last_name, 
         "CITYSLUG" => email.city.try(:slug),
         "OTHERCITY" => email.other_city,
+        "SOURCE" => email.source,
         "GROUPINGS" => [ {'name' => "Subscriptions", 'groups' => email.subscriptions.map { |sxn| sxn.humanize.titlecase }.join(',')},
                          {'name' => 'Cities', 'groups' => email.city.try(:name).to_s.titlecase }
                        ] 

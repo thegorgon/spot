@@ -79,9 +79,9 @@ class PasswordAccount < ActiveRecord::Base
   def update_user
     self.user ||= User.find_by_email(login)
     self.user ||= User.new
-    user.email ||= login
-    user.first_name ||= first_name
-    user.last_name ||= last_name
+    user.email = login if login.present? && user.email.blank?
+    user.first_name = first_name if first_name.present? && user.first_name.blank?
+    user.last_name = last_name if last_name.present? && user.last_name.blank?
     errors.add(:base, "User is invalid") if user.changed? && !user.save
   end
 end
