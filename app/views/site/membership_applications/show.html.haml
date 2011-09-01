@@ -30,7 +30,7 @@
       Don't Wait Alone...
     %p
       It's never fun to to wait in line alone. Share this link with some friends and they'll love you forever :
-      -url = portal_url(:ic => @application.user.invitation_code.code)
+      -url = portal_url(:mc => @application.user.invitation_code.code)
       =sharing(url, "Just applied to become a Spot Member, I think it's worth checking out.", :link => true)
 %hr    
 .bucket.last.clearfix

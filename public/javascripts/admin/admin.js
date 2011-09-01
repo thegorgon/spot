@@ -107,7 +107,7 @@
                 url = url + '&' + $(this).attr('data-q-value') + '=' + $(this).val();                
               }
             });
-            $('#url_builder_value').html(url);
+            $('#url_builder_value').val(url);
           });
         }
       });

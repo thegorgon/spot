@@ -57,6 +57,5 @@
   =spot_form_for :nothing, :url => "#", :display => "light online clearfix" do |f|
     %h2 Set Codes :
     =f.hidden_field :base, :value => "${base}", :id => "url_builder_base_url"
-    =f.text_field :promo_code, :placeholder => "Promo Code", "data-q-value" => "pc", :class => 'url_builder_param'
-    =f.text_field :invite_code, :placeholder => "Invite Code", "data-q-value" => "ic", :class => 'url_builder_param'
+    =f.text_field :membership_code, :placeholder => "Membership Code", "data-q-value" => "mc", :class => 'url_builder_param'
     =f.text_area :value, :id => "url_builder_value", :class => "value", :value => "${url}", "data-mode" => "select"

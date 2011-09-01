@@ -10,8 +10,11 @@ class Site::TrackingController < Site::BaseController
   end
   
   def portal
-    session[:invite_code] = params[:ic] # save to session
-    session[:promo_code] = params[:pc]
+    if params[:mc] && mc = MembershipCode.find_by_code(params[:mc])
+      session[:invite_code] = mc.invite.try(:code)
+      session[:promo_code] = mc.promo.try(:code)
+    end
+    
     if params[:asrc].present?
       source = AcquisitionSource.find_by_id(params[:asrc])
       source_id = source.try(:id)
@@ -20,9 +23,6 @@ class Site::TrackingController < Site::BaseController
       source.clicked!(current_user)
       record_acquisition_event("click")
     end
-    invitation_code = InvitationCode.valid_code(params[:ic])
-    city = City.find_by_slug(params[:cid]) if params[:cid]
-    city ||= invitation_code.try(:user).try(:city)
-    redirect_to city ? city_path(city) : root_path
+    redirect_to params[:dest] ? CGI.unescape(params[:dest]) : root_path
   end
 end
