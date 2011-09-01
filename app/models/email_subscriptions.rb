@@ -18,6 +18,18 @@ class EmailSubscriptions < ActiveRecord::Base
                                     :inverse_method_prefix => "send_"
   
 
+  def self.export(file)
+    require 'csv'
+    CSV.open(file, 'wb') do |csv|
+      csv << ["email address", "first name", "last name", "city slug", "subscriptions", "cities", "other city", "source"]
+      find_each(:include => :city) do |record|
+        csv << [record.email, record.first_name, record.last_name, 
+                  record.city.try(:slug), record.subscriptions.collect { |s| s.humanize.titlecase }.join(','), 
+                  record.city.try(:name), record.other_city, record.source]
+      end
+    end
+  end
+  
   def self.ensure(params)
     value = find_by_email(params[:email])
     params.delete(:city_id) if params[:city_id].to_i <= 0    
