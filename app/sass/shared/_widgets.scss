@@ -453,14 +453,14 @@ ul.pillbox {
         }
       }
       .application {
-        opacity: 1;
+        opacity: 1;        
         z-index: 10;
         .capacity {
           font-size: 18px;
           margin-bottom: 10px;
         }
         .ie7 &, .ie8 & {
-          display: none;
+          display: block;
         }
         .survey {
           display: block;
