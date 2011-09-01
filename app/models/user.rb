@@ -150,11 +150,13 @@ class User < ActiveRecord::Base
   end
 
   def requested_notifications
-    email_subscriptions.subscriptions
+    email_subscriptions.try(:subscriptions) || []
   end
   
   def requested_notifications=(value)
-    email_subscriptions.subscriptions = value
+    if email.present?
+      email_subscriptions.subscriptions = value
+    end
   end
   
   def email_subscriptions
@@ -190,12 +192,14 @@ class User < ActiveRecord::Base
       password_account.last_name = last_name
       password_account.save if password_account.changed?
     end
-    email_subscriptions.email = email
-    email_subscriptions.first_name = first_name
-    email_subscriptions.last_name = last_name
-    email_subscriptions.city_id = city_id
-    email_subscriptions.source = email_source if email_source.present?
-    email_subscriptions.save if email_subscriptions.changed?
+    if email.present?
+      email_subscriptions.email = email
+      email_subscriptions.first_name = first_name
+      email_subscriptions.last_name = last_name
+      email_subscriptions.city_id = city_id
+      email_subscriptions.source = email_source if email_source.present?
+      email_subscriptions.save if email_subscriptions.changed?
+    end
   end
     
   def reset_persistence_token
