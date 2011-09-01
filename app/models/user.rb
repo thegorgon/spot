@@ -166,7 +166,7 @@ class User < ActiveRecord::Base
                                  :first_name => first_name, 
                                  :last_name => last_name, 
                                  :city_id => city_id,
-                                 :source => email_source,
+                                 :source => email_source || 'website',
                                  :user_id => id ) if email
   end
 
