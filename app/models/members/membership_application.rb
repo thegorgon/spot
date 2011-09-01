@@ -60,6 +60,14 @@ class MembershipApplication < ActiveRecord::Base
   def invitation
     invitation_code && InvitationCode.valid_code(invitation_code)
   end
+  
+  def promo_code
+    if invitation_code && pc = PromoCode.valid_code(invitation_code)
+      pc.code
+    else
+      nil
+    end
+  end
 
   def survey=(value)
     self[:survey] = value

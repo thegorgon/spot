@@ -218,9 +218,7 @@
                 bindRow(html);
                 self.replaceWith(html);                
               } else {
-                $.logger.debug("DELETING!");
                 self.slideUp(function() {
-                  $.logger.debug("DELETED!");
                   self.remove();
                 });
               }

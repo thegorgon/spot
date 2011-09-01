@@ -88,7 +88,7 @@
         var elemValidations = element.data('validate.validations') || [];
         elemValidations = $.merge($.merge([], validations), elemValidations);
         if (element.is('form')) {
-          element.find('input, textarea, select').filter(':not([formnovalidate])').each(function(e) {
+          element.find('input, textarea, select').filter(':not([formnovalidate]):not([disabled])').each(function(e) {
             $.validations.run(this, options);
           });
         } else {
@@ -260,7 +260,7 @@
         
         form.attr('novalidate', 'novalidate');
         
-        form.find('input, textarea, select').filter(':not([formnovalidate])').valid(true).bind('change', function(e) {
+        form.find('input, textarea, select').filter(':not([formnovalidate]):not([disabled])').valid(true).bind('change', function(e) {
           $.validations.run(this, {change: true});
         });
 

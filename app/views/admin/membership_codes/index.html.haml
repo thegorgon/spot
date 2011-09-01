@@ -1,0 +1,56 @@
+.manager
+  .top.clearfix
+    %h1.title="#{pluralize( @codes.length, "Codes")}"
+
+  %table.data
+    %thead
+      %tr
+        %th Code
+        %th Invites
+        %th Invites Used
+        %th Promo Name
+        %th Promos
+        %th Promos Used
+        %th Promo Dur.
+        %th CC Req?
+        %th Actions
+    %tbody
+      -@codes.each do |code, mc|
+        %tr.center.source{:id => dom_id(mc), :class => cycle("even", "odd")}
+          %td.code= code.upcase
+          %td= mc.invite.try(:invitation_count) || '-'
+          %td= mc.invite.try(:claimed_count) || '-'
+          %td= mc.promo.try(:name) || '-'
+          %td= mc.promo.try(:user_count) || '-'
+          %td= mc.promo.try(:use_count) || '-'
+          %td= mc.promo ? "#{mc.promo.try(:duration)} months" : '-'
+          %td= mc.promo ? yes_no(!mc.promo.acts_as_payment) : '-'
+          %td= link_to "Delete", admin_membership_code_path(mc), "data-method" => "delete"
+
+  .form.new.clearfix
+    %h2 New Membership Code
+    =spot_form_for @new_code, :url => admin_membership_codes_path, :display => "light clearfix inlinelabels", :html => {:id => "code_form"} do |f|
+      =f.text_field :code, :placeholder => "code", :required => true, :label => "code : "
+      %hr.light
+      #invite_code_fields.left.col.first
+        %li.text.labelled.check_box
+          .input_container=f.check_box :invite_code
+          .label=f.label :invite_code, "invite?"
+        =f.fields_for :invite, @new_code.invite do |ifo|
+          =ifo.number_field :invitation_count, :placeholder => "invitations", :required => true, :label => "invitations : ", :min => -1
+      #promo_code_fields.left.col.last
+        %li.text.labelled.check_box
+          .input_container=f.check_box :promo_code
+          .label=f.label :promo_code, "promo?"
+        =f.fields_for :promo, @new_code.promo do |pfo|
+          =pfo.text_field :name, :placeholder => "name", :required => true, :label => "name : "
+          .clearfix
+            =pfo.number_field :user_count, :placeholder => "promo uses", :required => true, :label => "promo uses : ", :min => -1
+            =pfo.number_field :duration, :placeholder => "duration", :required => true, :label => "duration (months) : ", :min => 0
+          =pfo.text_area :description, :placeholder => "description", :required => true, :label => "description : "
+          %li.text.labelled.check_box
+            .label=pfo.label :require_credit_card, "cc required?"
+            .input_container=pfo.check_box :require_credit_card
+      %li.clear.buttons
+        =button_tag :class => 'blackimg_77x32' do
+          save

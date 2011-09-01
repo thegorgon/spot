@@ -20,6 +20,28 @@
         }
       });
     },
+    admin_membership_codes: function() {
+      $('#code_form').find('#membership_code_promo_code').bind('click', function(e) {
+        var inputs = $('#promo_code_fields').find('input, textarea');
+        if ($(this).is(':checked')) {
+          inputs.removeAttr('disabled')
+        } else {
+          inputs.attr('disabled', 'disabled');
+          inputs.removeAttr('aria-invalid');
+          $(this).removeAttr('disabled');
+        }
+      });
+      $('#code_form').find('#membership_code_invite_code').bind('click', function(e) {
+        var inputs = $('#invite_code_fields').find('input, textarea');
+        if ($(this).is(':checked')) {
+          inputs.removeAttr('disabled')
+        } else {
+          inputs.attr('disabled', 'disabled');
+          inputs.removeAttr('aria-invalid');
+          $(this).removeAttr('disabled');
+        }
+      });
+    },
     admin_places_edit: function() {
       go.PlaceForm.init({mapDiv: $('.map')});
     },

@@ -8,6 +8,10 @@ class PromoCode < ActiveRecord::Base
   
   scope :available, where("user_count < 0 OR user_count - use_count > 0")
   
+  def self.valid_code(code)
+    available.find_by_code(code)
+  end
+  
   def used!
     self.class.increment_counter(:use_count, id)
     reload
@@ -15,6 +19,14 @@ class PromoCode < ActiveRecord::Base
   
   def expiration_if_started_now
     duration >= 0 ? Time.now + duration.months : nil
+  end
+  
+  def require_credit_card
+    !acts_as_payment
+  end
+
+  def require_credit_card=(value)
+    self.acts_as_payment = !value
   end
   
   def as_json(*args)

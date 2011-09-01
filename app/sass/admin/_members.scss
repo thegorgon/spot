@@ -1,0 +1,64 @@
+.admin_membership_codes {
+  .form.new {
+    #membership_code_code {
+      text-transform: uppercase;
+    }
+    #membership_code_code_container {
+      width: 345px;
+    }
+    .buttons {
+      width: 577px;
+    }
+    .col.first {
+      margin-right: 20px;
+      li.check_box {
+        .input_container {
+          width: 218px;          
+        }
+      }
+    }
+    .col.last {
+      padding-left: 20px;
+      .label {
+        width: 72px;
+      }
+      li {
+        width: 380px;
+      }
+      li.number {
+        width: 150px;
+        float: left;
+        margin-right: 20px;
+      }
+    }
+    #membership_code_promo_name_container {
+      input {
+        width: 280px;
+      }
+    }
+    #membership_code_promo_duration_container {
+      width: 211px;
+      .label {
+        width: 130px;
+      }
+    }
+    li.text_area {
+      .input_container {
+        float: left;
+        margin-left: 11px;
+      }
+    }
+    li.check_box {
+      .input_container {
+        line-height: 22px;
+        width: 297px;
+      }
+    }
+    li.number {
+      width: 150px;
+      input {
+        width: 50px;
+      }
+    }
+  }
+}

@@ -6,8 +6,9 @@ class InvitationCode < ActiveRecord::Base
   validates :code, :presence => true, :uniqueness => true
   
   scope :invites_remaining, where("invitation_count < 0 || invitation_count - claimed_count > 0")
+  scope :system_codes, where("user_id IS NULL OR user_id <= 0")
   scope :expended, where("invitation_count > 0 && invitation_count >= claimed_count")
-  
+
   def self.valid_code(code)
     invites_remaining.find_by_code(code)
   end

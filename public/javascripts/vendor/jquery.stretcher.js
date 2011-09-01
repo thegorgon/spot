@@ -17,7 +17,6 @@
         dims.w = cW;
         dims.h = (cW * rRatio);
       }
-      $.logger.debug("cW : ", cW, "cH : ", cH, "rW : ", rW, "rH : ", rH);
       
       if (dims.w > 0 && dims.h > 0) {
         resize.width(dims.w);

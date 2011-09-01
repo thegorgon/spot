@@ -95,6 +95,7 @@ Spot::Application.routes.draw do
     resources :settings, :only => [:index, :create, :update, :destroy] do
       get "available", :on => :collection
     end
+    resources :membership_codes, :only => [:index, :create, :destroy]
     namespace "acquisition" do
       resources :sources, :only => [:index, :create]
       resources :cohorts, :only => [:index]
