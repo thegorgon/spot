@@ -40,7 +40,6 @@ class TransactionMailer < ApplicationMailer
     @user = user
     @code = code
     @event = code.event
-    @promotion = @event.template
     @title = "Spot - Event Registration"
     mail
   end
@@ -50,7 +49,6 @@ class TransactionMailer < ApplicationMailer
     @user = user
     @code = code
     @event = code.event
-    @promotion = @event.template
     @title = "Spot - Event Reminder"
     mail
   end

@@ -1,8 +1,8 @@
 %p
   Just dropping a note to confirm your registration for
-  =link_to @promotion.name, place_event_url(@promotion.business.place, @promotion)
+  =link_to @event.name, place_event_url(@event.place, @event.template)
   at 
-  =link_to @promotion.business.place.name, place_url(@promotion.business.place)
+  =link_to @event.place.name, place_url(@event.place)
   on
   ="#{@event.date.strftime('%B %d, %Y')}."
 
