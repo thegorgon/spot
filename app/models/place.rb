@@ -204,14 +204,18 @@ class Place < ActiveRecord::Base
       :lat => lat.to_f,
       :lng => lng.to_f,
       :id => id,
-      :thumbnail_data => image_thumbnail,
-      :image_url_640x400 => image.url(:i640x400),
-      :image_url_234x168 => image.url(:i234x168),
-      :image_url => image.url,
       :updated_at => updated_at,
       :path => place_path(self),
-      :short_url => ShortUrl.shorten(place_path(self))
+      :short_url => place_url(self, :host => HOSTS[Rails.env])
     }
+    unless options[:skip_images]
+      hash.merge!(
+        :thumbnail_data => image_thumbnail,
+        :image_url_640x400 => image.url(:i640x400),
+        :image_url_234x168 => image.url(:i234x168),
+        :image_url => image.url
+      )
+    end
     if !image.file? && !options[:default_images]
       hash.merge!(:image_url_640x400 => nil, :image_url_234x168 => nil, :image_url => nil)
     end

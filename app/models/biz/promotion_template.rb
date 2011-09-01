@@ -1,6 +1,7 @@
 class PromotionTemplate < ActiveRecord::Base
   has_many :events, :class_name => "PromotionEvent", :foreign_key => "template_id", :dependent => :destroy
   belongs_to :business
+  belongs_to :place
   attr_protected :approved_at
   
   DISCOUNTS = [25, 30, 40, 50]
@@ -14,6 +15,7 @@ class PromotionTemplate < ActiveRecord::Base
   validates :count, :presence => true, :numericality => {:greater_than => 0, :less_than => 101}
   validates :status, :inclusion => STATUSES
   validates :business, :presence => true
+  validates :place, :presence => true
   acts_as_list :scope => 'business_id = #{business_id} AND status >= 0'
 
   scope :active, where("status >= 0")
@@ -21,6 +23,7 @@ class PromotionTemplate < ActiveRecord::Base
   scope :approved, where(:status => APPROVED_STATUS)
   scope :pending, where(:status => PENDING_STATUS)
 
+  before_validation :set_place
   after_validation :determine_status_change
 
   def self.filter(n)
@@ -106,6 +109,10 @@ class PromotionTemplate < ActiveRecord::Base
   end
   
   private
+  
+  def set_place
+    self.place ||= business.place
+  end
   
   def determine_status_change
     if status_changed?

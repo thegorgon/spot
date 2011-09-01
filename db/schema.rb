@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110831173507) do
+ActiveRecord::Schema.define(:version => 20110901200531) do
 
   create_table "acquisition_campaigns", :force => true do |t|
     t.string   "name"
@@ -476,22 +476,26 @@ ActiveRecord::Schema.define(:version => 20110831173507) do
   add_index "promotion_codes", ["owner_id", "date"], :name => "index_deal_codes_on_owner_id_and_date"
 
   create_table "promotion_events", :force => true do |t|
-    t.string   "type",                       :null => false
+    t.string   "type",                                                        :null => false
     t.integer  "template_id"
-    t.integer  "business_id",                :null => false
-    t.string   "name",                       :null => false
+    t.integer  "business_id",                                                 :null => false
+    t.string   "name",                                                        :null => false
     t.text     "description"
-    t.integer  "count",       :default => 0, :null => false
-    t.integer  "sale_count",  :default => 0, :null => false
+    t.integer  "count",                                        :default => 0, :null => false
+    t.integer  "sale_count",                                   :default => 0, :null => false
     t.integer  "cost_cents"
     t.text     "parameters"
-    t.date     "date",                       :null => false
-    t.integer  "start_time",                 :null => false
-    t.integer  "end_time",                   :null => false
+    t.date     "date",                                                        :null => false
+    t.integer  "start_time",                                                  :null => false
+    t.integer  "end_time",                                                    :null => false
     t.datetime "removed_at"
     t.datetime "approved_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "lat",           :precision => 11, :scale => 9,                :null => false
+    t.decimal  "lng",           :precision => 12, :scale => 9,                :null => false
+    t.integer  "place_id",                                                    :null => false
+    t.string   "short_summary"
   end
 
   add_index "promotion_events", ["business_id", "date"], :name => "index_deal_events_on_business_id_and_date"
@@ -510,8 +514,9 @@ ActiveRecord::Schema.define(:version => 20110831173507) do
     t.integer  "end_time",            :default => 0,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "bulleted"
+    t.text     "short_summary"
     t.boolean  "designed_by_spot",    :default => false, :null => false
+    t.integer  "place_id",                               :null => false
   end
 
   add_index "promotion_templates", ["business_id"], :name => "index_deal_templates_on_business_id"

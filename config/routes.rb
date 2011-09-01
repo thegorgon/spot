@@ -5,6 +5,7 @@ Spot::Application.routes.draw do
     resources :places, :only => [:index] do
       get "search", :on => :collection
     end
+    resources :experiences, :only => [:index]
     resources :events, :only => [:create]
     resources :cities, :only => [:index]
     resources :users, :only => [:update, :show]

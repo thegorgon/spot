@@ -23,7 +23,7 @@ class Registration
   end
   
   def place
-    @place ||= event.business.place
+    @place ||= event.place
   end
   
   def save

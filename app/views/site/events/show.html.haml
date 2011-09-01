@@ -20,8 +20,8 @@
   .event
     %h1.name.tf=@promotion.name
 
-    -if @promotion.bulleted.present?
-      .bulleted.tf=@promotion.bulleted.html_safe
+    -if @promotion.short_summary.present?
+      .short_summary.tf=@promotion.short_summary.html_safe
     .description=@promotion.description.html_safe
   .place
     .info.address.clearfix

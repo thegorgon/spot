@@ -996,7 +996,7 @@ ul.pillbox {
     font-size: 14px;
     line-height: 15px;
   }
-  .bulleted {
+  .short_summary {
     min-height: 22px;
     background: #000;
     color: #fff !important;
@@ -1005,7 +1005,7 @@ ul.pillbox {
     position: relative;
   }
   &:hover {
-    .bulleted {
+    .short_summary {
       display: block;
     }
   }

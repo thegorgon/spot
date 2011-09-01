@@ -2,14 +2,14 @@
 
 .upcoming.clearfix
   -(@page.upcoming).each do |template|
-    %a.evtdis.template{:class => cycle("even", "odd"), :href => place_event_path(template.business.place, template)}
+    %a.evtdis.template{:class => cycle("even", "odd"), :href => place_event_path(template.place, template)}
       .image
-        =image_tag template.business.place.image.url(:i640x400), :size => "400x250"
+        =image_tag template.place.image.url(:i640x400), :size => "400x250"
         .text
-          .name.tf="#{template.business.place.name} : #{template.name}"
+          .name.tf="#{template.place.name} : #{template.name}"
           .disclosure
-      .bulleted.tf
-        =template.bulleted.to_s
+      .short_summary.tf
+        =template.short_summary.to_s
       
   .evtdis.updates.template{:class => cycle("even", "odd")}
     .image
@@ -22,5 +22,5 @@
         -else
           =link_to "Join our mailing list", new_application_path, :class => "btnmembership"
           to get updates when new Experiences are added.
-    .bulleted.tf
+    .short_summary.tf
       New Experiences Added Daily

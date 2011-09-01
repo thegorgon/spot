@@ -19,10 +19,10 @@
               .imageshield=image_tag @page.images[date].url(:i234x168), :size => "234x168"
             -events.each do |event|
               -template = event.template
-              -place = template.business.place
+              -place = event.place
               %a.event{:href => place_event_path(place, template)}
                 .timeframe="#{template.timeframe.titlecase} : "
                 .name
-                  %span.place="#{template.business.place.name}"
+                  %span.place="#{place.name}"
                   =":"
                   %span.experience=template.name

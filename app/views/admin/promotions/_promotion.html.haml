@@ -1,4 +1,4 @@
--place = promotion.business.place
+-place = promotion.place
 -account = promotion.business.business_account
 .promotion.clearfix
   %h1="#{promotion.id}. #{link_to(place.name, edit_admin_place_path(place))} - #{promotion.name}".html_safe
@@ -15,8 +15,8 @@
         =f.label :name, "Name : "
       =f.text_field :name
       %li.label
-        =f.label :bulleted, "Short Summary : "
-      =f.text_field :bulleted
+        =f.label :short_summary, "Short Summary : "
+      =f.text_field :short_summary
       %li.labelled
         =f.check_box :designed_by_spot
         =f.label :designed_by_spot, "Designed By Spot?"

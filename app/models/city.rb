@@ -39,7 +39,7 @@ class City < ActiveRecord::Base
   end
     
   def upcoming_events
-    @upcoming_events ||= PromotionEvent.approved.this_month.within(DEFAULT_RADIUS, :origin => self).includes(:template => {:business => :place})
+    @upcoming_events ||= PromotionEvent.approved.this_month.within(DEFAULT_RADIUS, :origin => self).includes(:template, :place)
   end
   
   def upcoming_templates

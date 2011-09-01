@@ -9,7 +9,7 @@
           %tr{:class => "#{first_or_last(3, i)} #{conditionally("empty", code.nil?)}"}
             -if code
               -event = code.event
-              -place = event.business.place
+              -place = event.place
               %td.code
                 %a{:href => registration_path(code)}     
                   %code=code.code

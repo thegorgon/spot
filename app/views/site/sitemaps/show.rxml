@@ -1,9 +1,8 @@
 xml.instruct!
 xml.urlset "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9", "xmlns:image" => "http://www.google.com/schemas/sitemap-image/1.1", "xmlns:mobile" => "http://www.google.com/schemas/sitemap-mobile/1.0" do
   @promotions.each do |promo|
-    place = promo.business.place
     xml.url do
-      xml.loc        place_event_url(promo.business.place, promo)
+      xml.loc        place_event_url(promo.place, promo)
       xml.lastmod    w3c_date(promo.created_at)
       xml.changefreq "WEEKLY"
       xml.priority   0.5

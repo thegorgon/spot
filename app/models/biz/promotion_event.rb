@@ -1,36 +1,23 @@
 class PromotionEvent < ActiveRecord::Base
   belongs_to :template, :class_name => "PromotionTemplate"
   belongs_to :business
+  belongs_to :place
   has_many :codes, :class_name => "PromotionCode", :foreign_key => "event_id", :dependent => :delete_all
   before_validation :set_attributes_from_template, :if => Proc.new { |e| e.template.present? }
   after_create :generate_codes
   validate :one_template_event_per_date, :on => :create, :if => Proc.new { |e| e.template.present? }
+  validates :name, :presence => true
+  validates :description, :presence => true
+  validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
+  validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
   
   scope :on_date, lambda { |date| where(:date => date.to_date)}
   scope :upcoming, lambda { where(["date >= ?", Date.today]).order("date ASC") }
   scope :this_week, lambda { where(:date => (Date.today..(Time.now + 7.days).to_date)) }
   scope :this_month, lambda { where(:date => (Date.today..(Time.now + 1.month).to_date)) }
   scope :approved, joins(:template).where("promotion_templates.status" => PromotionTemplate::APPROVED_STATUS)
-  scope :within, lambda { |radius, options| 
-    joins(:business => :place).where(["#{Place.distance_sql(options[:origin])} <= ?", radius])
-  }
-  
-  def self.summary(timeframe=nil)
-    timeframe ||= (Date.today..(Time.now + 2.weeks).to_date)
-    strings = []
-    timeframe.each do |date|
-      strings << "\n#{date.strftime('%A, %B %d, %Y')} : \n"
-      approved.on_date(date).each do |event|
-        strings << "#{event.business.place.name}, #{event.timeframe} : "
-        strings << "  #{event.description}"
-        event.codes.each do |code|
-          strings << "         CODE : #{code.code}"
-        end
-        strings << "\n"
-      end
-    end
-    puts strings.join("\n")
-  end
+
+  acts_as_mappable
   
   def timeframe(use_all_day=true)
     if use_all_day && all_day?
@@ -86,12 +73,30 @@ class PromotionEvent < ActiveRecord::Base
   end
   
   def as_json(*args)
-    hash = super(*args)
-    hash['color'] = color
-    hash['timeframe'] = timeframe
-    hash['summary'] = summary
-    hash['remaining_count'] = remaining_count
-    hash
+    options = args.extract_options!
+    if options[:api]
+      {
+        :place => place.as_json,
+        :thumbnail_data => place.image_thumbnail,
+        :image_url_640x400 => place.image.url(:i640x400),
+        :image_url_234x168 => place.image.url(:i234x168),
+        :image_url => place.image.url,
+        :date => date,
+        :name => name,
+        :description => description,
+        :short_summary => short_summary,
+        :start_time => start_time,
+        :end_time => end_time,
+        :remaining_count => remaining_count
+      }
+    else
+      hash = super(*args)
+      hash['color'] = color
+      hash['timeframe'] = timeframe
+      hash['summary'] = summary
+      hash['remaining_count'] = remaining_count
+      hash
+    end
   end
   
   def code_class
@@ -109,9 +114,14 @@ class PromotionEvent < ActiveRecord::Base
   def set_attributes_from_template
     self.count = template.count if count.to_i <= 0
     self.description ||= template.description
+    self.short_summary ||= template.short_summary
     self.name ||= template.name
     self.approved_at = Time.now if template.approved?
     self.start_time ||= template.start_time
+    self.business ||= template.business
+    self.place ||= template.business.place
+    self.lat ||= template.business.place.lat
+    self.lng ||= template.business.place.lng
     self.end_time ||= template.end_time
   end
   

@@ -41,7 +41,7 @@ class CityPage
       (mindate..maxdate).each_with_index do |date, i|
         @calendar[date] = events[date].to_a.sort { |e1, e2| e1.start_time <=> e2.start_time }
         events[date].each do |e| 
-          place = e.template.business.place
+          place = e.place
           if @images[date].nil? && (@places[place.id].nil? || date.to_time - @places[place.id].to_time > 2.weeks) && (date.to_time - lastdate.to_time > 2.days)
             lastdate = date
             @places[place.id] = date
