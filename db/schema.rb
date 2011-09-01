@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110818174436) do
+ActiveRecord::Schema.define(:version => 20110831173507) do
 
   create_table "acquisition_campaigns", :force => true do |t|
     t.string   "name"
@@ -202,16 +202,17 @@ ActiveRecord::Schema.define(:version => 20110818174436) do
   add_index "duplicate_places", ["place_1_id", "place_2_id"], :name => "index_duplicate_places_on_place_1_id_and_place_2_id", :unique => true
 
   create_table "email_subscriptions", :force => true do |t|
-    t.string   "email",                                :null => false
+    t.string   "email",                                        :null => false
     t.integer  "city_id"
     t.integer  "user_id"
     t.string   "first_name"
     t.string   "last_name"
-    t.integer  "unsubscription_flags",  :default => 0, :null => false
+    t.integer  "unsubscription_flags",  :default => 0,         :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "data"
     t.integer  "acquisition_source_id"
+    t.string   "source",                :default => "website", :null => false
   end
 
   add_index "email_subscriptions", ["email"], :name => "index_email_subscriptions_on_email", :unique => true
