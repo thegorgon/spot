@@ -42,7 +42,7 @@
           =link_to "Select Your City", account_path, :class => "btnorg175x32 action", :id => "select_city_link"
         -else
           -if session_invite
-            %h2.tf You're Invited
+            %h2.tf.registration You're Invited
           -else
             %h2.tf.registration Available By Invitation Only
             %ul.tabs.clearfix.registration
@@ -75,7 +75,7 @@
                 login
               =link_to "forgot password?", new_password_reset_path
             .memberswitch
-              =link_to "I need to join", '#', :class => "tab", "data-class" => "request", :rel => "#request_tab"
+              =link_to "I need to join", '#', :class => "tab", "data-class" => session_invite ? "invitation" : "request", :rel => "#request_tab"
           
           .memberswitch.registration
             =link_to "I'm already a member", new_session_path, :class => "tab", "data-class" => "member", :id => "member_tab"
