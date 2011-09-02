@@ -34,6 +34,17 @@
             form.addClass('unlockable');
             self.blur();
             li.removeClass('loading').removeClass('invalid').addClass('valid');
+            unlock.unbind('click.unlock').bind('click.unlock', function(e) {
+              e.preventDefault();
+              var form = $(this).parents('ul.form:first');
+              if (invitationCode.val() != '') {
+                form.addClass('unlocking');
+                setTimeout(function(e) {
+                  lock.attr('disabled', 'disabled');
+                  onUnlock.call(form, invitationCode.val());
+                }, 1000);          
+              }
+            });
           } else {
             form.find('.vouched').slideUp();
             lock.removeAttr('disabled');
@@ -42,17 +53,6 @@
             li.removeClass('loading').removeClass('valid').addClass('invalid');
           }
         });
-      }
-    });
-    unlock.unbind('click.unlock').bind('click.unlock', function(e) {
-      e.preventDefault();
-      var form = $(this).parents('ul.form:first');
-      if (invitationCode.val() != '') {
-        form.addClass('unlocking');
-        setTimeout(function(e) {
-          lock.attr('disabled', 'disabled');
-          onUnlock.call(form, invitationCode.val());
-        }, 1000);          
       }
     });
   }
