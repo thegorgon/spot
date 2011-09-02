@@ -46,8 +46,8 @@
           -else
             %h2.tf.registration Available By Invitation Only
             %ul.tabs.clearfix.registration
-              %li.tab.tf.active#request_tab{"data-class" => "request"} Request an Invitation
-              %li.tab.tf#invitation_tab{"data-class" => "invitation"} I have an Invitation
+              %li.tab.tf.active#request_tab{"data-class" => "request"} Request an invitation
+              %li.tab.tf#invitation_tab{"data-class" => "invitation"} I have an invitation
           
           =spot_form_for :email, :url => '#', :display => "faded clearfix", :ul_id => "email_form" do |f|
             =button_tag :class => "btnorg115x32 right tf" do
@@ -59,7 +59,7 @@
               .lock.left
                 .shackle
                 .bolt
-              =link_to "Unlock", '#', :class => "btnorgpill unlock tf"
+              =link_to "Unlock", '#', :class => "btnorg77x28 unlock tf"
               =f.text_field :code, :placeholder => "invitation code", :container_class => "left", :required => true
           
           =spot_form_for :credentials, :url => session_path, :ul_id => "member_form", :display => "faded clearfix" do |f|

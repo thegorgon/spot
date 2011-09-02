@@ -184,6 +184,7 @@
                 @include transition("width 0.5s");
               }
               input {
+                font-family: monospace;
                 @include transition("width 0.5s");
                 text-transform: uppercase;
                 width: 230px;
@@ -197,7 +198,10 @@
                 height: 28px;
                 top: 10px;
                 right: 85px;
-                color: #333 !important;
+                color: #fff !important;
+                &:active, &.active {
+                  color: #f7f7f7 !important;
+                }
               }
               &.unlockable {
                 .unlock {
