@@ -33,6 +33,8 @@ class BlogPost < ActiveRecord::Base
           post = nil
         end
       end
+    else
+      raise ActiveRecord::RecordNotFound
     end
     post
   end
