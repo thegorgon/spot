@@ -33,7 +33,7 @@
         %strong unforgettable experiences 
         at the 
         %em best restaurants in town.
-      .request.half
+      .entrance.request.half
         -if current_user && current_user.city
           %h2.center.tf="Welcome Back #{current_user.first_name}"
           =link_to "Explore #{city.name.titlecase}", city_path(city), :class => "btnorg250x32 action"
@@ -41,15 +41,42 @@
           %h2.center.tf="Welcome Back #{current_user.first_name}"
           =link_to "Select Your City", account_path, :class => "btnorg175x32 action", :id => "select_city_link"
         -else
-          %h2.tf=session_invite ? "You're Invited" : "Request An Invitation"
-          =spot_form_for :email, :url => '#', :display => "faded clearfix", :html => {:id => "email_form"} do |f|
+          -if session_invite
+            %h2.tf You're Invited
+          -else
+            %h2.tf.registration Available By Invitation Only
+            %ul.tabs.clearfix.registration
+              %li.tab.tf.active#request_tab{"data-class" => "request"} Request an Invitation
+              %li.tab.tf#invitation_tab{"data-class" => "invitation"} I have an Invitation
+          
+          =spot_form_for :email, :url => '#', :display => "faded clearfix", :ul_id => "email_form" do |f|
             =button_tag :class => "btnorg115x32 right tf" do
               =session_invite ? "continue" : "request"
             =f.email_field :email, :placeholder => "enter your email", :value => current_user.try(:email), :container_class => "left", :required => true
-          .links.clearfix
-            -unless session_invite
-              =link_to "I have an invitation", new_application_path, :class => "left"
-            =link_to "I'm already a member", new_session_path, :class => "right"
+          
+          =spot_form_for :invitation, :url => '#', :display => "faded clearfix", :ul_id => "invite_form" do |f|
+            .clearfix
+              .lock.left
+                .shackle
+                .bolt
+              =link_to "Unlock", '#', :class => "btnorgpill unlock tf"
+              =f.text_field :code, :placeholder => "invitation code", :container_class => "left", :required => true
+          
+          =spot_form_for :credentials, :url => session_path, :ul_id => "member_form", :display => "faded clearfix" do |f|
+            %h2.tf Member Login
+            =f.hidden_field :key, :value => nonce.digested
+            =f.fields_for :password do |p|
+              =p.email_field :login, :placeholder => "email", "data-validate-url" => existence_email_path, :required => true
+              =p.password_field :password, :placeholder => "password", :required => true
+            %li.buttons.clearfix
+              =button_tag :class => "btnorg100x32" do
+                login
+              =link_to "forgot password?", new_password_reset_path
+            .memberswitch
+              =link_to "I'm not a member", '#', :class => "tab", "data-class" => "request", :rel => "#request_tab"
+          
+          .memberswitch.registration
+            =link_to "I'm already a member", new_session_path, :class => "tab", "data-class" => "member", :id => "member_tab"
           
   .map.scene
     .vcc
@@ -66,6 +93,10 @@
             
             
 .hidden
+  =form_tag portal_url, :method => :get, :id => "invitation_submit_form" do
+    =hidden_field_tag :mc, '', :id => "invitation_code_value"
+    =hidden_field_tag :cid, '', :id => "invitation_city_id"
+    
   =form_for :email_subscription, :url => subscribe_email_path, :html => {:id => "subscription_form"} do |f|
     =f.hidden_field :email
     =f.hidden_field :city_id

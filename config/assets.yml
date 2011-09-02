@@ -20,6 +20,7 @@ javascripts:
     - public/javascripts/shared/behaviors.js
     - public/javascripts/shared/events.js
     - public/javascripts/shared/navigator.js
+    - public/javascripts/shared/lock.js
     - public/javascripts/shared/konami.js
     - public/javascripts/shared/gmap.js
     - public/javascripts/shared/app_preview.js

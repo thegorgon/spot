@@ -28,60 +28,16 @@
         lock.removeAttr('disabled').val('')
         form.find('.vouched').html('');
       });
-      lock.unbind('keyup.updatecode').bind('keyup.updatecode', function(e) {
-        var self = this, 
-          timeout = $(self).data('change-timeout'),
-          li = $(self).parents('li:first');
-        if (e.keyCode == 13) {
-          e.preventDefault();
-          $(self).change();
-        } else {
-          li.removeClass('valid').removeClass('invalid');
-          if ($(self).val() == '') {
-            li.removeClass('loading');
-          } else {
-            li.addClass('loading');
+      // Initialize Apply Form Lock
+      go.Lock.init({ 
+          lock: $('#applicationform').find('#application_lock'),
+          invitationCode: $('#applicationform').find('#application_invitation_code'),
+          unlock: $('#applicationform').find('.unlock'),
+          onUnlock: function(code) {
+            $(this).removeClass('unlocking').addClass('unlocked');
           }
-          clearTimeout(timeout);
-          $(self).data('change-timeout', setTimeout(function() {
-            $(self).change();
-          }, 1000));
-        }
       });
-      unlock.unbind('click.unlock').bind('click.unlock', function(e) {
-        e.preventDefault();
-        var form = $(this).parents('ul.form:first');
-        if (invitationCode.val() != '') {
-          form.addClass('unlocking');
-          setTimeout(function(e) {
-            lock.attr('disabled', 'disabled');
-            form.removeClass('unlocking').addClass('unlocked')
-          }, 1000);          
-        }
-      });
-      lock.unbind('change.updatecode').bind('change.updatecode', function(e) {
-        var self = $(this),
-          form = self.parents('ul.form:first'),
-          li = self.parents('li:first'); 
-        if (self.data('lastsent') != self.val() && self.val().toString().length > 0) {            
-          self.parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
-          self.data('lastsent', self.val());
-          $.get('/codes/invitation/' + self.val(), function(data) {
-            if (data.code && data.code.available) {
-              form.addClass('unlockable');
-              li.removeClass('loading').removeClass('invalid').addClass('valid');
-              invitationCode.val(lock.val());
-              form.find('.vouched').html(data.code.voucher + " has vouched for you.").slideDown();
-            } else {
-              form.find('.vouched').slideUp();
-              lock.removeAttr('disabled');
-              form.removeClass('unlockable');
-              unlock.unbind('click.unlock');
-              li.removeClass('loading').removeClass('valid').addClass('invalid');
-            }
-          });
-        }
-      });
+      
       $('#aboutmembership').modal({
         trigger: '.btnmemabout', 
         width: 840,
@@ -125,7 +81,7 @@
             {slide: '/images/assets/slideshow/slide4.jpg', size: '2292x1524', title: "Chef's Evening at Epic Roasthouse", gravity: '1.0x1.0'},
             {slide: '/images/assets/slideshow/slide5.jpg', size: '2292x1524', title: "Free Bonus Cupcake at Mission Mini's", gravity: '0.5x0.5'}
           ]
-        }), 
+        }),
         top = $('#toplayer'), 
         scenes = top.find('.scene'),
         initMap = function(fn) {
@@ -142,9 +98,18 @@
               fn.call(this);
             });
           }
-        };
-      
+        }, tabs = $('.entrance').find('.tab');
       slideshow.start();
+      tabs.unbind('click.tabs').bind('click.tabs', function(e) {
+        var rel = $(this).attr('rel') ? $(this).attr('rel') : this;
+        e.preventDefault();
+        tabs.each(function(i) {
+          $(this).removeClass('active');
+          $('.entrance').removeClass($(this).attr('data-class'))
+        });
+        $(rel).addClass('active');
+        $('.entrance').addClass($(this).attr('data-class'));
+      });
       $('#email_form').unbind('submit.continue').bind('submit.continue', function(e) {
         e.preventDefault();
         if ($(this).validate()) {
@@ -158,7 +123,19 @@
           });          
         }
       });
-      
+      // Initialize Invitation Lock
+      go.Lock.init({ 
+          lock: $('#invitation_code'),
+          invitationCode: $('#invitation_code_value'),
+          unlock: $('#invite_form').find('.unlock'),
+          onUnlock: function(code) {
+            initMap(function() {
+              var form = $('#invitation_submit_form');
+              $('#invitation_city_id').val($(this).attr('data-id'));
+              form.submit();
+            });
+          }
+      });
       $('#select_city_link').unbind('click').bind('click', function(e) {
         e.preventDefault();
         var accountForm = $('#account_update_form');
@@ -168,6 +145,7 @@
           accountForm.submit();          
         });
       });
+      $('')
     },
     site_home_press: function() {
       go.AppPreview.init();

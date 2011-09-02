@@ -352,6 +352,9 @@ ul.form {
     text-shadow: #333 0px 0px 3px;
     @include transition(all 0.25s);
   }
+  li.loading.focus .validity {
+    background: transparent url(/images/assets/loading/black-chasing30x30.gif?1) no-repeat center center;    
+  }
   li.loading .validity {
     background: transparent url(/images/assets/loading/white-chasing30x30.gif?1) no-repeat center center;    
   }

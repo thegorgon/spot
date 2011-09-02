@@ -10,6 +10,7 @@ class Site::TrackingController < Site::BaseController
   end
   
   def portal
+    session[:invite_code] = session[:promo_code] = nil
     if params[:mc] && mc = MembershipCode.find_by_code(params[:mc])
       session[:invite_code] = mc.invite.try(:code)
       session[:promo_code] = mc.promo.try(:code)
@@ -23,6 +24,10 @@ class Site::TrackingController < Site::BaseController
       source.clicked!(current_user)
       record_acquisition_event("click")
     end
-    redirect_to params[:dest] ? CGI.unescape(params[:dest]) : root_path
+    @city = City.find_by_id(params[:cid]) if params[:cid]
+    destination   =  CGI.unescape(params[:dest]) if params[:dest]
+    destination ||= city_path(@city) if @city
+    destination ||= root_path
+    redirect_to destination
   end
 end

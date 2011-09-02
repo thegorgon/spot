@@ -88,6 +88,22 @@
         width: 350px;
         padding: 20px;
         text-shadow: #000 0px 1px;
+        .tabs {
+          margin-top: 15px;
+          .tab {
+            float: left;
+            margin-right: 35px;
+            padding-bottom: 2px;
+            cursor: pointer;
+            &:hover, &.hover {
+              color: #fff;
+            }
+            &:active, &.active {
+              color: #fff;
+              border-bottom: 1px solid #fff;
+            }
+          }
+        }
         .half {
           color: #bbb;
           strong {
@@ -107,19 +123,101 @@
               line-height: 26px;
             }
           }
-          &.request {
+          &.entrance {
             font-size: 14px;
             padding: 20px 0 0 0;
-            h2 {
-              font-size: 21px;
+            &.request {
+              #email_form {
+                display: block;
+              }
             }
-            .action {
-              margin: 10px auto 0;
-              text-align: center;
+            &.invitation {
+              #invite_form {
+                display: block;
+              }
             }
-            form {
-              width: 350px;
-              margin: 5px auto 0;
+            &.member {
+              .registration {
+                display: none;
+              }
+              #member_form {
+                display: block;
+              }
+            }
+            #member_form {
+              display: none;
+              form {
+                width: 300px;
+                margin: 0 auto;
+              }
+            }
+            #invite_form {
+              display: none;
+              position: relative;
+              margin: 5px auto;
+              .lock {
+                float: left;
+                width: 22px;
+                height: 37px;
+                position: relative;
+                margin: 4px 20px 0 0;
+                .bolt {        
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  height: 18px;
+                  width: 23px;
+                  background: #333;
+                }
+                .shackle {
+                  @include transition("top 0.25s");
+                  position: absolute;
+                  top: 5px;
+                  height: 19px;
+                  width: 19px;
+                  background: transparent url(/images/assets/general/shackle18x19.png) no-repeat center center;
+                  left: 2px;
+                }
+              }
+              .input_container, li {
+                width: 250px;
+                @include transition("width 0.5s");
+              }
+              input {
+                @include transition("width 0.5s");
+                text-transform: uppercase;
+                width: 230px;
+                float: left;
+              }
+              a.unlock {
+                @include transition("right 0.5s");
+                position: absolute;
+                width: 77px;
+                line-height: 28px;
+                height: 28px;
+                top: 10px;
+                right: 85px;
+                color: #333 !important;
+              }
+              &.unlockable {
+                .unlock {
+                  right: 60px;
+                }
+                .input_container, li {
+                  width: 150px;
+                }
+                input {
+                  width: 130px;
+                }
+              }
+              &.unlocking {
+                .shackle {
+                  top: 0px;
+                }
+              }
+            }
+            #email_form {
+              display: none;
               input {
                 width: 200px;
               }
@@ -133,11 +231,23 @@
                 margin: 9px 0;
               }
             }
-            .links {
-              margin: 10px 0 0 0;
+            h2 {
+              font-size: 21px;
+            }
+            .action {
+              margin: 10px auto 0;
+              text-align: center;
+            }
+            form {
+              width: 350px;
+              margin: 5px auto 0;
+            }
+            .memberswitch {
+              text-align: center;
+              margin: 10px auto 0;
+              width: 300px;
               a {
-                display: block;
-                color: #f7f7f7;
+                color: #808080 !important;
               }
             }
           }

@@ -1,7 +1,7 @@
 -module_names << " oreo"
 
 =content_for :header do
-  =img_link_to "logos/spotwhite120x90.png", root_path, :size => "40x30", :class => "left"
+  =img_link_to "logos/spotwhite120x90.png", root_path(:stay => 1), :size => "40x30", :class => "left"
   %nav.right.clearfix
     =link_to "home", root_path
     =link_to "membership", membership_about_path, :class => "btnmemabout"
