@@ -2,11 +2,6 @@
   .stretcher{'data-gravity' => "1.0x1.0"}
     =image_tag "stretcher/cities/sf3.jpg", :size => "2292x1524"
 
--if @promo_code
-  =content_for :scripts do
-    %script{:type => "text/javascript"}
-      Spot.setEnv('promoCode', #{{:code => @promo_code.as_json}.to_json.html_safe});
-
 =content_for :toptitle do
   Become a Founding Spot Member
   
@@ -21,9 +16,22 @@
   %h1.tf
     Access all the Spot Experiences, anytime, anywhere.
 
-%hr
+-if @promo_code  
+  .promo_congrats
+    %h2.tf 
+      Congratulations! You've received
+      -if @promo_code.acts_as_payment?
+        a gift of free Spot Membership.
+      -else
+        a free Spot Membership trial period.
+      
+      =link_to "Apply!", '#', :class => 'apply btnorg77x32 right', :id => "apply_code_btn", 'data-value' => @promo_code.code
+      =link_to "Applying...", '#', :class => 'applying btnorg115x32 right', 'data-value' => @promo_code.code
+-else
+  %hr
 
 =spot_form_for @payment, :as => :customer, :url => Braintree::TransparentRedirect.url, :display => "cc light clearfix inlinelabels", :html => {:autocomplete => "off", :class => "new_membership"} do |f|
+  .spinner
   =hidden_field_tag :tr_data, ERB::Util.html_escape(@payment.tr_data(:redirect_url => endpoint_membership_url))
   .paymentoptions.selectable
     %h2.tf 1. Select membership type
@@ -52,7 +60,7 @@
 
     #promocodefields.note
       =f.fields_for :custom_fields do |cf|
-        =cf.text_field :promo_code, :placeholder => "promo code", :formnovalidate => true, :label => "Apply Promo Code : ", :class => "code", :value => @promo_code.try(:code)
+        =cf.text_field :promo_code, :placeholder => "promo code", :formnovalidate => true, :label => "Apply Promo Code : ", :class => "code"
   
   .ccfields
     %h2.tf 2. Enter your credit card information

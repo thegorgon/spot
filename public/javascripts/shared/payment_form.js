@@ -129,6 +129,8 @@
               });
             });
           }
+          $('.promo_congrats').slideUp();
+          form.removeClass('loading');
         } else {
           input.parents('li:first').removeClass('loading').removeClass('valid').addClass('invalid');
         }        
@@ -159,7 +161,16 @@
             planId.change();
           }
         };
-      
+      $('#apply_code_btn').unbind('click').bind('click', function(e) {
+        e.preventDefault();
+        $('.promo_congrats').addClass('loading');
+        form.addClass('loading');
+        $("#customer_custom_fields_promo_code").focus();
+        $("#customer_custom_fields_promo_code").val($(this).attr('data-value'));
+        $("#customer_custom_fields_promo_code").blur();
+        $("#customer_custom_fields_promo_code").change();
+      });
+    
       form.find('.paymentoption').click(function(e) {
         e.preventDefault();
         var self = $(this);
@@ -214,12 +225,25 @@
         updatePromoCode(this);
       });
       promocode.unbind('keydown.updatecode').bind('keydown.updatecode', function(e) {
+        var self = this,
+          timeout = $(self).data('change-timeout'),
+          li = $(self).parents('li:first');
         if (e.keyCode == 13) {
           e.preventDefault();
           updatePromoCode(this);
+        } else {
+          li.removeClass('valid').removeClass('invalid');
+          if ($(self).val() == '') {
+            li.removeClass('loading');
+          } else {
+            li.addClass('loading');
+          }
+          clearTimeout(timeout);
+          $(self).data('change-timeout', setTimeout(function() {
+            $(self).change();
+          }, 1000));
         }
       });
-      setPromoCode(promocode, Spot.env('promoCode'));
     };
   $.provide(go, "PaymentForm", {
     init: function(options) {

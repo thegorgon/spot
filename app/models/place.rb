@@ -203,19 +203,15 @@ class Place < ActiveRecord::Base
       :bitch_dis_where_it_be => {:lines => address_lines, :city => city, :region => region},
       :lat => lat.to_f,
       :lng => lng.to_f,
+      :image_url_640x400 => image.url(:i640x400),
+      :image_url_234x168 => image.url(:i234x168),
+      :image_url => image.url,
       :id => id,
       :updated_at => updated_at,
       :path => place_path(self),
       :short_url => place_url(self, :host => HOSTS[Rails.env])
     }
-    unless options[:skip_images]
-      hash.merge!(
-        :thumbnail_data => image_thumbnail,
-        :image_url_640x400 => image.url(:i640x400),
-        :image_url_234x168 => image.url(:i234x168),
-        :image_url => image.url
-      )
-    end
+    hash[:thumbnail_data] = image_thumbnail unless options[:skip_thumbnail]
     if !image.file? && !options[:default_images]
       hash.merge!(:image_url_640x400 => nil, :image_url_234x168 => nil, :image_url => nil)
     end

@@ -7,7 +7,7 @@ class Site::MembershipsController < Site::BaseController
   
   def new
     @payment ||= PaymentForm.new(:user => current_user, :plan => params[:plan] || Subscription::PLANS.keys.first)
-    @promo_code = session_promo || (params[:pc] && PromoCode.find_by_code(params[:pc]))
+    @promo_code = (params[:pc] && PromoCode.find_by_code(params[:pc])) || session_promo
     render :action => "new" # allows for just calling "new" from any action
   end
   

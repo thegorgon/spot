@@ -160,7 +160,6 @@ class User < ActiveRecord::Base
   end
   
   def email_subscriptions
-    @email_subscriptions ||= EmailSubscriptions.where(:user_id => id).first if id
     @email_subscriptions ||= 
       EmailSubscriptions.ensure( :email => email_was || email, 
                                  :first_name => first_name, 

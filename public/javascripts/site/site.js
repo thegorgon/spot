@@ -28,7 +28,6 @@
         lock.removeAttr('disabled').val('')
         form.find('.vouched').html('');
       });
-      
       lock.unbind('keyup.updatecode').bind('keyup.updatecode', function(e) {
         var self = this, 
           timeout = $(self).data('change-timeout'),

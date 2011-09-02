@@ -77,7 +77,6 @@ class PromotionEvent < ActiveRecord::Base
     if options[:api]
       {
         :place => place.as_json,
-        :thumbnail_data => place.image_thumbnail,
         :image_url_640x400 => place.image.url(:i640x400),
         :image_url_234x168 => place.image.url(:i234x168),
         :image_url => place.image.url,

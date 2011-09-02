@@ -110,6 +110,25 @@
       text-decoration: none;
     }    
   }
+  .promo_congrats {
+    background: #efe;
+    padding: 10px 20px;
+    color: #393;
+    margin: 20px 0;
+    border: 1px solid #393;
+    line-height: 32px;
+    .applying {
+      display: none;
+    }
+    &.loading {
+      .apply {
+        display: none;
+      }
+      .applying {
+        display: block;
+      }
+    }
+  }
   .launchpricing {
     top: 10px;
     right: -25px;
@@ -157,6 +176,21 @@
     &.promocodepayment {
       form.new_membership {
         height: 0;
+      }
+    }
+    form.new_membership {
+      position: relative;
+      &.loading {
+        .spinner {
+          display: block;
+        }
+      }
+      .spinner {
+        @include fullscreen();
+        z-index: 10000;
+        display: none;
+        background: #fff url(/images/assets/loading/blkgears30x40.gif) no-repeat center center;
+        background-color: rgba(240,240,240,0.75);
       }
     }
   }
