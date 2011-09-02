@@ -76,9 +76,12 @@
       padding: 10px 0 0;
       border-top: 1px solid #fff;
       font-size: 11px;
+      .remaining {
+        text-align: center;  
+      }
       .event {
         display: block;
-        padding: 0 0 5px;
+        padding: 0 0 10px;
         text-decoration: none;
         .place {
           text-decoration: underline;
