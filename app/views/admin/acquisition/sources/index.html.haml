@@ -58,4 +58,5 @@
     %h2 Set Codes :
     =f.hidden_field :base, :value => "${base}", :id => "url_builder_base_url"
     =f.text_field :membership_code, :placeholder => "Membership Code", "data-q-value" => "mc", :class => 'url_builder_param'
+    =f.text_field :destination, :placeholder => "Destination", "data-q-value" => "dest", :class => 'url_builder_param'
     =f.text_area :value, :id => "url_builder_value", :class => "value", :value => "${url}", "data-mode" => "select"

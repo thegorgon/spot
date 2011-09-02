@@ -104,7 +104,7 @@
             var url = $('#url_builder_base_url').val();
             $('.url_builder_param').each(function(i) {
               if ($(this).val().toString().length > 0) {
-                url = url + '&' + $(this).attr('data-q-value') + '=' + $(this).val();                
+                url = url + '&' + $(this).attr('data-q-value') + '=' + encodeURIComponent($(this).val());
               }
             });
             $('#url_builder_value').val(url);
