@@ -19,7 +19,7 @@ class Nonce
   def self.valid?(params, session)
     nonce = Nonce.new(:session => session)
     result = params && params[:credentials] && params[:credentials][:key] == nonce.digested
-    nonce.clear if result
+    nonce.clear
     !!result
   end
   
