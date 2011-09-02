@@ -19,6 +19,7 @@ class MembershipApplication < ActiveRecord::Base
     finder = finder.unapproved if n & 1 > 0
     finder = finder.approved if n & 2 > 0
     finder = finder.ready_for_approval if n & 4 > 0
+    finder = finder.includes(:user)
     finder
   end
   

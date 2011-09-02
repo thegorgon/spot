@@ -76,7 +76,7 @@ Spot::Application.routes.draw do
       get "matches", :on => :collection
       get "images", :on => :member
     end
-    resources :applications, :only => [:index], :controller => "membership_applications" do
+    resources :applications, :only => [:index, :destroy], :controller => "membership_applications" do
       put "toggle", :on => :member
     end
     resources :duplicates, :only => [:index, :create] do

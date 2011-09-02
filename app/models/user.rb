@@ -4,19 +4,21 @@ class User < ActiveRecord::Base
   before_validation :reset_single_access_token, :if => :reset_single_access_token?
   before_save :reset_perishable_token
   after_validation :save_associations
+  after_destroy :cleanup
   
   has_many :devices, :dependent => :destroy
   has_many :wishlist_items, :dependent => :delete_all
   has_many :activity_items, :foreign_key => :actor_id, :dependent => :destroy
-  has_many :credit_cards
-  has_many :subscriptions
-  has_many :memberships
+  has_many :credit_cards, :dependent => :destroy
+  has_many :subscriptions, :dependent => :destroy
+  has_many :memberships, :dependent => :destroy
   has_many :codes, :foreign_key => :owner_id, :class_name => "PromotionCode"
-  has_many :notes, :class_name => "PlaceNote"
-  has_one :membership_application
-  has_one :business_account
-  has_one :facebook_account
-  has_one :password_account
+  has_many :notes, :class_name => "PlaceNote", :dependent => :delete_all
+  has_many :actions, :class_name => "ActivityItem", :foreign_key => "actor_id"
+  has_one :membership_application, :dependent => :destroy
+  has_one :business_account, :dependent => :destroy
+  has_one :facebook_account, :dependent => :destroy
+  has_one :password_account, :dependent => :destroy
   belongs_to :city
   
   validates :email, :format => EMAIL_REGEX, :uniqueness => true, :if => :email?
@@ -183,7 +185,12 @@ class User < ActiveRecord::Base
   end
     
   private
-    
+  
+  def cleanup
+    codes.update_all(:owner_id => nil)
+    email_subscriptions.destroy
+  end
+  
   def save_associations
     if password_account
       password_account.email = email

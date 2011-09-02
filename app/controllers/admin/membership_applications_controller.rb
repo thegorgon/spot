@@ -6,6 +6,15 @@ class Admin::MembershipApplicationsController < Admin::BaseController
     @applications = @applications.all
   end
   
+  def destroy
+    @application = MembershipApplication.find(params[:id])
+    @application.user.destroy
+    respond_to do |format|
+      format.html { redirect_to admin_application_path }
+      format.js { render :json => { :success => true, :html => nil } }
+    end
+  end
+  
   def toggle
     @application = MembershipApplication.find(params[:id])
     @application.toggle_approval!

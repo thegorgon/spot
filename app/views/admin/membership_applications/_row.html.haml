@@ -5,3 +5,5 @@
   %td= yes_no(application.approved?).titlecase
   %td
     =link_to application.approved?? "Reject" : "Approve", toggle_admin_application_path(application), "data-method" => "put", :class => "rowlink ajax"
+    \|
+    =link_to "Delete", admin_application_path(application), "data-method" => "delete", :class => "rowlink ajax", "data-confirm" => "Are you sure? This action is irreversible!"

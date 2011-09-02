@@ -3,9 +3,10 @@ namespace :db do
     # Constants
     HOSTS       = { "production" => "masterdb.ec2" }
     TUNNELS     = { "production" => "spot1.ec2", "staging" => "spotstaging.ec2" }
-    PRESETS     = { "places"     => "places google_places gowalla_places facebook_places foursquare_places yelp_places",
-                    "wishlists"  => "wishlist_items users devices",
-                    "promotions" => "businesses business_accounts promotion_templates promotion_events promotion_codes"}
+    PRESETS     = { "places"     => "cities places google_places gowalla_places facebook_places foursquare_places yelp_places",
+                    "members"    => "invitation_codes promotion_codes membership_applications users facebook_accounts password_accounts memberships subscriptions credit_cards",
+                    "app"        => "wishlist_items users devices place_notes activity_items",
+                    "promotions" => "businesses business_accounts promotion_templates promotion_events promotion_codes" }
     # Configuration Variables
     @port       = "7768"
     @remote_env ||= (ENV['REMOTE'] || "production")
