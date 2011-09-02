@@ -33,7 +33,7 @@
         %strong unforgettable experiences 
         at the 
         %em best restaurants in town.
-      .entrance.request.half
+      .entrance.half{:class => session_invite ? "invitation" : "request"}
         -if current_user && current_user.city
           %h2.center.tf="Welcome Back #{current_user.first_name}"
           =link_to "Explore #{city.name.titlecase}", city_path(city), :class => "btnorg250x32 action"
@@ -46,21 +46,23 @@
           -else
             %h2.tf.registration Available By Invitation Only
             %ul.tabs.clearfix.registration
-              %li.tab.tf.active#request_tab{"data-class" => "request"} Request an invitation
-              %li.tab.tf#invitation_tab{"data-class" => "invitation"} I have an invitation
+              %li.tab.tf#request_tab{"data-class" => "request", :class => conditionally("active", session_invite.nil?)} 
+                Request an invitation
+              %li.tab.tf#invitation_tab{"data-class" => "invitation", :class => conditionally("active", session_invite)} 
+                I have an invitation
           
           =spot_form_for :email, :url => '#', :display => "faded clearfix", :ul_id => "email_form" do |f|
             =button_tag :class => "btnorg115x32 right tf" do
               =session_invite ? "continue" : "request"
             =f.email_field :email, :placeholder => "enter your email", :value => current_user.try(:email), :container_class => "left", :required => true
           
-          =spot_form_for :invitation, :url => '#', :display => "faded clearfix", :ul_id => "invite_form" do |f|
+          =spot_form_for :invitation, :url => '#', :display => "faded clearfix #{conditionally('unlockable', session_invite)}", :ul_id => "invite_form" do |f|
             .clearfix
               .lock.left
                 .shackle
                 .bolt
               =link_to "Unlock", '#', :class => "btnorg77x28 unlock tf"
-              =f.text_field :code, :placeholder => "invitation code", :container_class => "left", :required => true
+              =f.text_field :code, :placeholder => "invitation code", :container_class => "left", :required => true, :value => session_invite.try(:code)
           
           =spot_form_for :credentials, :url => session_path, :ul_id => "member_form", :display => "faded clearfix" do |f|
             %h2.tf Member Login
@@ -94,7 +96,7 @@
             
 .hidden
   =form_tag portal_url, :method => :get, :id => "invitation_submit_form" do
-    =hidden_field_tag :mc, '', :id => "invitation_code_value"
+    =hidden_field_tag :mc, '', :id => "invitation_code_value", :value => session_invite.try(:code)
     =hidden_field_tag :cid, '', :id => "invitation_city_id"
     
   =form_for :email_subscription, :url => subscribe_email_path, :html => {:id => "subscription_form"} do |f|
