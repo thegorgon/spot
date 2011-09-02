@@ -1,8 +1,8 @@
 xml.instruct! :xml, :version => "1.0"
 xml.rss :version => "2.0" do
   xml.channel do
-    xml.title "The Spot Blog"
-    xml.description "Blog for http://#{HOSTS['production']}"
+    xml.title "The Spotlight"
+    xml.description "Covering first-rate food and drink in San Francisco and beyond"
     xml.link blog_index_url
 
      @posts.each do |post|
