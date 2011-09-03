@@ -33,7 +33,7 @@ class PromotionTemplate < ActiveRecord::Base
     finder = finder.rejected if n & (1 << 2) > 0
     finder = finder.active
     finder = finder.order("id DESC")
-    finder = finder.includes({:business => [:business_account, :place]})
+    finder = finder.includes({:business => :business_account, :place => nil})
     finder
   end
   
