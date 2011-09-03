@@ -158,6 +158,9 @@ ul.form {
   }
   li.text_area {
     height: 110px;
+    &.tinymce {
+      height: 130px;
+    }
   }
   li.buttons {
     margin: 20px 0 0 0;

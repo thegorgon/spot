@@ -10,7 +10,14 @@ class GenericTemplate < PromotionTemplate
   end
   
   def summary
-    summary = "#{count} : #{description.length > 25 ? description.slice(0, 22) + '...' : description}"
+    summary = "#{count} : "
+    if short_summary.present?
+      summary << short_summary 
+    else
+      stripped_description = description.gsub(/<[^\>]+\>/, '')
+      summary <<"#{stripped_description.length > 25 ? stripped_description.slice(0, 22) + '...' : stripped_description}"
+    end
+    
     if value.to_i > 0 || cost.to_i > 0
       summary << " ("
       summary << "value : $#{value}" if value.to_i > 0

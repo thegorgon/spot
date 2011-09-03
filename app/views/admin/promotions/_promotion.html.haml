@@ -9,7 +9,8 @@
     
   -if promotion.rejected? || promotion.pending? || promotion.approved?
     =spot_form_for promotion, :as => :template, :url => admin_promotion_path(promotion), :display => "light" do |f|
-      =hidden_field_tag :filter, params[:filter]
+      -if params[:filter].present?
+        =hidden_field_tag :filter, params[:filter]
       =f.hidden_field :status, :class => "promo_status"
       %li.label
         =f.label :name, "Name : "
@@ -22,7 +23,7 @@
         =f.label :designed_by_spot, "Designed By Spot?"
       %li.label
         =f.label :description, promotion.kind_of?(DiscountTemplate) ? "Editorial Description : " : "Promotion Description : "
-      =f.text_area :description
+      =f.text_area :description, :container_class => "tinymce", :id => "template_description_#{promotion.try(:id) || "new"}"
       %li.buttons
         -unless promotion.approved?
           =link_to "Approve", admin_promotion_path(promotion), :class => "btngrypill center submit", "data-status" => PromotionTemplate::APPROVED_STATUS, "data-confirm" => "Really? Are you sure you want to approve '#{promotion.name}'"

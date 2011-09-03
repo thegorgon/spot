@@ -18,3 +18,6 @@
       .next=link_to "Next &rarr;".html_safe, admin_promotions_path(:page => @promotions.next_page, :filter => params[:filter])
     -if @promotions.previous_page
       .previous=link_to "&larr; Previous".html_safe, admin_promotions_path(:page => @promotions.previous_page, :filter => params[:filter])
+
+=content_for :scripts do
+  =javascript_include_tag 'vendor/tiny_mce/jquery.tinymce.js'
