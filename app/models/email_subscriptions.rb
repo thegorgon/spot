@@ -1,13 +1,15 @@
 class EmailSubscriptions < ActiveRecord::Base
   SUBSCRIPTION_FLAGS = ["deal_emails"]
   MAX_UNSUBSCRIPTIONS = 2**31 - 1
+  DEFAULT_SOURCE = "website"
   SECRET = "h0rs3s ar3 t3rr1bl3 p30pl3"
   belongs_to :user
   belongs_to :city
+  after_destroy :enqueue_list_unsubscription
+  after_commit :enqueue_list_subscription
   
   validates :email, :presence => true, :format => EMAIL_REGEX
   name_attribute :name
-  after_commit :enqueue_list_subscription
   
   has_acquisition_source :count => :email_acquired
   nested_attributes({:other_city => :string}, {:in => :data})
@@ -44,6 +46,27 @@ class EmailSubscriptions < ActiveRecord::Base
     value
   end
   
+  def self.change(email, params)
+    new_email = params[:email] if params[:email] && params[:email] != email
+    puts "Changing : #{email} to #{new_email}"
+    record_with_new_email = find_by_email(new_email) if new_email
+    record_with_email = find_by_email(email)
+    if record_with_new_email && record_with_email
+      puts "Records exist for both emails" 
+      puts "destroying #{record_with_email.email}"
+      record_with_email.destroy
+      puts "Updating emails #{record_with_new_email.email} to match #{params.inspect}"
+      record_with_new_email.update_to_match(params)
+    elsif record_with_email
+      puts "Record exists for #{record_with_email.email}, updating to match #{params.inspect}" 
+      record_with_email.update_to_match(params)
+    else
+      puts "No records exist, creating with #{params}" 
+      self.ensure(params)
+    end
+    true
+  end
+  
   def self.passkey(email)
     digest = Digest::SHA512.hexdigest("--#{SECRET}-#{email}")
     digest[0..5]
@@ -71,6 +94,10 @@ class EmailSubscriptions < ActiveRecord::Base
   
   def passkey
     self.class.passkey(email)
+  end
+  
+  def source=(value)
+    self[:source] = value ? value : DEFAULT_SOURCE
   end
 
   def application_params
@@ -104,7 +131,12 @@ class EmailSubscriptions < ActiveRecord::Base
   end
 
   private
-    
+
+  def enqueue_list_unsubscription
+    Rails.logger.debug("[resque] enqueue list unsubscription")
+    Resque.enqueue(Jobs::EmailListUnsubscribe, email)
+  end
+  
   def enqueue_list_subscription
     Rails.logger.debug("[resque] enqueue list subscription")
     Resque.enqueue(Jobs::EmailListSubscribe, id, attribute_commited?(:email) && !new_commit? ? attribute_before_commit(:email) : nil)

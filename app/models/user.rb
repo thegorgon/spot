@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   before_validation :reset_persistence_token, :if => :reset_persistence_token?
   before_validation :reset_single_access_token, :if => :reset_single_access_token?
   before_save :reset_perishable_token
-  after_validation :save_associations
+  after_save :save_associations
   after_destroy :cleanup
   
   has_many :devices, :dependent => :destroy
@@ -199,12 +199,13 @@ class User < ActiveRecord::Base
       password_account.save if password_account.changed?
     end
     if email.present?
-      email_subscriptions.email = email
-      email_subscriptions.first_name = first_name
-      email_subscriptions.last_name = last_name
-      email_subscriptions.city_id = city_id
-      email_subscriptions.source = email_source if email_source.present?
-      email_subscriptions.save if email_subscriptions.changed?
+      EmailSubscriptions.change(email_was, {
+        :email => email,
+        :first_name => first_name,
+        :last_name => last_name,
+        :city_id => city_id,
+        :source => email_source,
+      })
     end
   end
     
