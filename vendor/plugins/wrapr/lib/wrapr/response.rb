@@ -40,7 +40,7 @@ module Wrapr
     
     def content_type
       @content_type ||= self.class.instance_variable_get('@_content_type')
-      @content_type ||= Mime::Type.lookup(headers['Content-Type'].split(';')[0])
+      @content_type ||= Mime::Type.lookup(headers['Content-Type'].to_s.split(';')[0])
     end
     
     def content_type=(value)
