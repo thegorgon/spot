@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :stash_thread_parameters
   before_filter :localize
-  before_filter :reject_certain_spiders
+  before_filter :reject_certain_agents
   helper :application, :place
   
   rescue_from Exception, :with => :render_error
@@ -18,8 +18,8 @@ class ApplicationController < ActionController::Base
     Thread.current[:acquisition_source_id] = session[:acquisition_source_id]
   end
   
-  def reject_certain_spiders
-    [/^Sogou Pic Spider/].each do |agent|
+  def reject_certain_agents
+    [/^Sogou Pic Spider/, /^PlacePop/].each do |agent|
       if request.env['HTTP_USER_AGENT'] =~ agent
         render :text => "" 
         return false
