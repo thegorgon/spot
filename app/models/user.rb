@@ -199,7 +199,7 @@ class User < ActiveRecord::Base
       password_account.save if password_account.changed?
     end
     if email.present?
-      EmailSubscriptions.change(email_was, {
+      @email_subscriptions = EmailSubscriptions.change(email_was, {
         :email => email,
         :first_name => first_name,
         :last_name => last_name,

@@ -48,23 +48,17 @@ class EmailSubscriptions < ActiveRecord::Base
   
   def self.change(email, params)
     new_email = params[:email] if params[:email] && params[:email] != email
-    puts "Changing : #{email} to #{new_email}"
     record_with_new_email = find_by_email(new_email) if new_email
     record_with_email = find_by_email(email)
     if record_with_new_email && record_with_email
-      puts "Records exist for both emails" 
-      puts "destroying #{record_with_email.email}"
       record_with_email.destroy
-      puts "Updating emails #{record_with_new_email.email} to match #{params.inspect}"
       record_with_new_email.update_to_match(params)
     elsif record_with_email
-      puts "Record exists for #{record_with_email.email}, updating to match #{params.inspect}" 
       record_with_email.update_to_match(params)
     else
-      puts "No records exist, creating with #{params}" 
-      self.ensure(params)
+      record_with_email = self.ensure(params)
     end
-    true
+    record_with_email
   end
   
   def self.passkey(email)
