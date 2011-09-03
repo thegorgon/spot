@@ -129,8 +129,12 @@ class User < ActiveRecord::Base
       if first_name.present? && last_name.present?
         @nickname = [first_name, last_name.to_s.first].compact.join(" ")
         @nickname << "."
-      else
+      elsif first_name.present? || last_name.present?
         @nickname = [first_name, last_name].compact.join
+      elsif email.present?
+        @nickname = email.split('@').first
+      else
+        @nickname = "noname"
       end
       @nickname.downcase!
     end
