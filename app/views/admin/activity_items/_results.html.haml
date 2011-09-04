@@ -1,21 +1,26 @@
 %ul.activity_items
-  -@items.to_a.each do |item|
-    %li.activity_item.clearfix.place{:id => dom_id(item.item), :class => cycle("even", "odd")}
-      -place = item.item
-      -actor = item.actor
-      -activity = item.activity
-      .image= image_tag place.image.url(:i117x84), :size => "117x84", :class => "place_image clickable", :alt => "", :title => "Click to Change", 'data-img-src' => place.image.processed_url(:i117x84)
-      .content
-        %span.actor=actor.name.present?? actor.name : "Someone"
-        -if activity.kind_of?(PlaceNote)
-          wrote a note about
-        -elsif activity.kind_of?(WishlistItem)
-          wishlisted
-        %span.place=place.name
-        in
-        %span.city=place.address_lines.last
-        .timestamp
-          ="#{time_ago_in_words(item.created_at)} ago"
-        -if activity.kind_of?(PlaceNote)
-          .note
-            ="&ldquo;#{CGI.escapeHTML(activity.content.strip)}&rdquo;".html_safe
+  -if @items.to_a.length > 0
+    -@items.to_a.each do |item|
+      %li.activity_item.clearfix.place{:id => dom_id(item.item), :class => cycle("even", "odd")}
+        -place = item.item
+        -actor = item.actor
+        -activity = item.activity
+        .image= image_tag place.image.url(:i117x84), :size => "117x84", :class => "place_image clickable", :alt => "", :title => "Click to Change", 'data-img-src' => place.image.processed_url(:i117x84)
+        .content
+          %span.actor=actor.name.present?? actor.name : "Someone"
+          -if activity.kind_of?(PlaceNote)
+            wrote a note about
+          -elsif activity.kind_of?(WishlistItem)
+            wishlisted
+          %span.place=place.name
+          in
+          %span.city=place.address_lines.last
+          .timestamp
+            ="#{time_ago_in_words(item.created_at)} ago"
+          -if activity.kind_of?(PlaceNote)
+            .note
+              ="&ldquo;#{CGI.escapeHTML(activity.content.strip)}&rdquo;".html_safe
+  -else
+    %li.empty
+      %h3 No activity found.
+      %p Try the global feed.

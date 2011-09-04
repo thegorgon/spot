@@ -34,8 +34,14 @@
       }
     }
   }
+  .empty {
+    text-align: center;
+    background: #fff;
+    padding: 50px 0 70px;
+  }
   .activity_item {
     padding: 5px;
+    background: #fff;
     .image {
       z-index: 2;
       position: relative;
