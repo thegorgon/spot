@@ -37,6 +37,8 @@
   .activity_item {
     padding: 5px;
     .image {
+      z-index: 2;
+      position: relative;
       float: left;
       margin-right: 10px;
     }
@@ -44,6 +46,7 @@
       min-height: 70px;
       padding-bottom: 14px;
       position: relative;
+      z-index: 1;
       .actor, .place, .city {
         font-weight: bold;
       }
