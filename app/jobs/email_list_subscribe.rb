@@ -25,7 +25,7 @@ module Jobs
       end
   
       Rails.logger.debug("[spot] subscribing #{email.email} to mailchimp with params #{merge.inspect}")
-      client.list_subscribe(MAILCHIMP["lists"]["subscriptions"]["id"], email.email, merge, 'html', false, true, true, false)
+      client.list_subscribe(MAILCHIMP["lists"]["subscriptions"]["id"], email.email, merge, 'html', false, true, true, false) rescue nil
     end    
   end
 end
