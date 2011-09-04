@@ -3,7 +3,8 @@
   
 =content_for :bg do
   = yield :bgimage
-  #bgfade
+  -if content_for?(:bgimage)
+    #bgfade
       
       
 = render :file => 'layouts/application'
