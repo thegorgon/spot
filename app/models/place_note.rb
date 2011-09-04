@@ -37,7 +37,7 @@ class PlaceNote < ActiveRecord::Base
     finder = finder.where(:place_id => params[:place_id]) if params[:place_id]
     finder = finder.where(:user_id => params[:user_id]) if params[:user_id]
     finder = finder.visible_to(params[:viewer]) 
-    finder.page([1, params[:page].to_i].max).per(params[:per_page])
+    finder = finder.page([1, params[:page].to_i].max).per(params[:per_page])
     finder
   end
   
