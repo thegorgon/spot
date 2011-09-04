@@ -3,8 +3,12 @@
     admin_places: function() {
       go.ImageSelector.init('.place_image');
     },
+    admin_activity_items: function() {
+      go.ImageSelector.init('.place_image');
+      go.EmulatorForm.init();
+    },
     admin_search: function() {
-      go.SearchEmulator.init();
+      go.EmulatorForm.init();
     },
     admin_duplicates: function() {
       $('.ignore a.ajax').ajaxLink({

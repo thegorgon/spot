@@ -35,10 +35,10 @@
 
         %hr
     #pagination.clearfix
-      -if @posts.previous_page
+      -unless @posts.first_page?
         .last.left
           =link_to "< Newer Items", blog_index_path(params.slice("q", "tag", "per_page").merge("page" => @posts.previous_page))
-      -if @posts.next_page
+      -unless @posts.last_page?
         .next.right
           =link_to "Older Items >", blog_index_path(params.slice("q", "tag", "per_page").merge("page" => @posts.next_page))
           

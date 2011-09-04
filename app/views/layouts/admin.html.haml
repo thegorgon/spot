@@ -15,7 +15,12 @@
           %li.search.accept_focus=text_field_tag :query, "", :id => "search_query_text"
   %nav
     %ul
-      %li.first=link_to_with_current "search", new_admin_search_path
+      %li.first{'data-popover' => '#emulate_subnav', 'data-popover-orient' => 'vertical'}
+        %span.title emulate
+        %ul.hidden.subnav#emulate_subnav
+          %li=link_to "Search", new_admin_search_path
+          %li=link_to "Activity", admin_activity_items_path
+      
       %li{'data-popover' => '#places_subnav', 'data-popover-orient' => 'vertical'}
         %span.title places
         %ul.hidden.subnav#places_subnav

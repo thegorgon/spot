@@ -8,8 +8,7 @@ class Place < ActiveRecord::Base
   after_commit :enqueue_image_processing
   after_commit :enqueue_deduping
 
-  cattr_accessor :per_page
-  @@per_page = 15
+  paginates_per 15
   attr_reader :external_image_url
     
   has_many :wishlist_items, :as => :item, :conditions => { :deleted_at => nil }
@@ -57,9 +56,7 @@ class Place < ActiveRecord::Base
       finder = finder.where("image_processing") if params[:filter].to_i & 4 > 0
       finder = finder.order("id DESC")
       finder = finder.canonical
-      finder = finder.page(params[:page])
-      finder = finder.per_page = params[:per_page] if params[:per_page]
-      finder = finder.all
+      finder = finder.page(params[:page]).per(params[:per_page])
     end
     finder
   end

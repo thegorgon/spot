@@ -1,9 +1,7 @@
 class Admin::BusinessesController < Admin::BaseController
   def index
     @businesses = Business.filter(params[:filter].to_i)
-    @businesses = @businesses.page(params[:page])
-    @businesses.per_page = params[:per_page] if params[:per_page]
-    @businesses = @businesses.all
+    @businesses = @businesses.page(params[:page]).per(params[:per_page])
   end
   
   def destroy

@@ -1,9 +1,7 @@
 class Admin::MembershipApplicationsController < Admin::BaseController
   def index
     @applications = MembershipApplication.filter(params[:filter].to_i)
-    @applications = @applications.page(params[:page])
-    @applications.per_page = params[:per_page].all if params[:per_page]
-    @applications = @applications.all
+    @applications = @applications.page(params[:page]).per(params[:per_page])
   end
   
   def destroy

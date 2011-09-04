@@ -27,7 +27,7 @@ javascripts:
     - public/javascripts/shared/place_form.js
     - public/javascripts/shared/popover.js
     - public/javascripts/shared/jstooltip.js
-    - public/javascripts/shared/search_emulator.js
+    - public/javascripts/shared/emulator.js
     - public/javascripts/shared/modal.js
     - public/javascripts/shared/image_selector.js
     - public/javascripts/shared/slideshow.js

@@ -1,11 +1,11 @@
 .manager
   .top.clearfix
     .pagination
-      -if @sources.next_page
-        .next=link_to "Next &rarr;".html_safe, admin_acquisition_sources_path(filters.merge(:page => @sources.next_page))
-      -if @sources.previous_page
+      -unless @sources.last_page?
+        .next=link_to "Next &rarr;".html_safe, admin_acquisition_sources_path(filters.merge(:page => @sources.current_page + 1))
+      -unless @sources.first_page?
         .previous=link_to "&larr; Previous".html_safe, admin_acquisition_sources_path(filters.merge(:page => @sources.previous_page))
-    %h1.title="#{@sources.total_entries} Places"
+    %h1.title="#{@sources.total_count} Places"
 
   %table.data
     %thead
@@ -37,9 +37,9 @@
             =link_to "Traffic URL", portal_url(:asrc => src.id, :utm_source => campaign.name.parameterize, :utm_medium => campaign.category.parameterize, :utm_campaign => "#{src.id}-#{src.name.parameterize}"), :class => "urllink"
             
   .pagination.bottom
-    -if @sources.next_page
-      .next=link_to "Next &rarr;".html_safe, admin_acquisition_sources_path(params.slice('filter').merge(:page => @sources.next_page))
-    -if @sources.previous_page
+    -unless @sources.last_page?
+      .next=link_to "Next &rarr;".html_safe, admin_acquisition_sources_path(params.slice('filter').merge(:page => @sources.current_page + 1))
+    -unless @sources.first_page?
       .previous=link_to "&larr; Previous".html_safe, admin_acquisition_sources_path(params.slice('filter').merge(:page => @sources.previous_page))
 
   .form.new.clearfix

@@ -1,0 +1,65 @@
+.admin_activity_items {
+  .activity_items {
+    width: 350px;
+    border: 1px solid #ddd;
+  }
+  .form_wrapper {
+    clear: both;
+    margin: 0 0 20px 0;
+    width: auto;
+    form.loading {
+      padding: 0 0 16px 0;
+      background: url(/images/assets/loading/orange-chasing16x16.gif) no-repeat bottom center;
+    }
+  }
+  .actions {
+    line-height: 26px;
+  }
+  .map {
+    float: right;
+    height: 200px;
+    width: 500px;
+  }
+  .field {
+    margin: 0 1em 0 0;
+    float: left;
+    label {
+      width: auto;
+      margin: 0 1em 0 0;
+    }
+    &.checkbox {
+      line-height: 20px;
+      input {
+        width: 50px;        
+      }
+    }
+  }
+  .activity_item {
+    padding: 5px;
+    .image {
+      float: left;
+      margin-right: 10px;
+    }
+    .content {
+      min-height: 70px;
+      padding-bottom: 14px;
+      position: relative;
+      .actor, .place, .city {
+        font-weight: bold;
+      }
+    }
+    .timestamp {
+      position: absolute;
+      bottom: 0px;
+      left: 127px;
+      color: #ff8419;
+    }
+    .note {
+      font-style: italic;
+      margin: 10px 10px 10px 127px;
+    }
+    &.even {
+      background: #ededed;
+    }
+  }
+}

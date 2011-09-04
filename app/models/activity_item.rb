@@ -1,6 +1,7 @@
 class ActivityItem < ActiveRecord::Base
   ACTIONS = ["CREATE", "DELETE"]
   WISHLIST_ONLY_REVISION = 72
+  DEFAULT_RADIUS = 80
   belongs_to :actor, :class_name => "User"
   belongs_to :activity, :polymorphic => true
   belongs_to :item, :polymorphic => true
@@ -21,7 +22,6 @@ class ActivityItem < ActiveRecord::Base
     origin = Geo::Position.normalize(params)
     radius = params[:radius]
     params[:device] ||= {}
-    params[:page] = [1, params[:page].to_i].max
     finder = self
     finder = finder.within(radius, :origin => origin) if radius && origin
     finder = finder.where("public")
@@ -29,9 +29,8 @@ class ActivityItem < ActiveRecord::Base
     finder = finder.since(params[:since]) if params[:since]
     finder = finder.until(params[:until]) if params[:until]
     finder = finder.order("activity_items.created_at DESC")
-    finder = finder.page(params[:page])
-    finder = finder.per_page = params[:per_page] if params[:per_page]
-    finder.all(:include => [:actor, :activity, :item])
+    finder = finder.page(params[:page]).per(params[:per_page])
+    finder.includes([:actor, :activity, :item])
   end  
     
   def action=(value)

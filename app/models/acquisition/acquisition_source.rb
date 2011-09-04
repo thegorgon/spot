@@ -4,9 +4,7 @@ class AcquisitionSource < ActiveRecord::Base
   def self.filter(params)
     finder = self
     finder = finder.where(:acquisition_campaign_id => params[:cmp]) if params[:cmp]
-    finder = finder.page(params[:page])
-    finder = finder.per_page = params[:per_page] if params[:per_page]
-    finder.all
+    finder.page(params[:page]).per(params[:per_page])
   end
   
   def clicked!(user)

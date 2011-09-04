@@ -2,11 +2,11 @@
 .manager
   .top.clearfix
     .pagination
-      -if @places.next_page
-        .next=link_to "Next &rarr;".html_safe, admin_places_path(filters.merge(:page => @places.next_page))
-      -if @places.previous_page
+      -unless @places.last_page?
+        .next=link_to "Next &rarr;".html_safe, admin_places_path(filters.merge(:page => @places.current_page + 1))
+      -unless @places.first_page?
         .previous=link_to "&larr; Previous".html_safe, admin_places_path(filters.merge(:page => @places.previous_page))
-    %h1.title="#{@places.total_entries} Places"
+    %h1.title="#{@places.total_count} Places"
     .links
       =link_to "Image Queue", admin_places_path(filters.merge(:filter => 3))
       =link_to "Imageless", admin_places_path(filters.merge(:filter => 2))
@@ -16,7 +16,7 @@
       =link_to "New", new_admin_place_path
   =render :partial => "table", :object => @places, :as => :places
   .pagination.bottom
-    -if @places.next_page
-      .next=link_to "Next &rarr;".html_safe, admin_places_path(params.slice('filter').merge(:page => @places.next_page))
-    -if @places.previous_page
+    -unless @places.last_page?
+      .next=link_to "Next &rarr;".html_safe, admin_places_path(params.slice('filter').merge(:page => @places.current_page + 1))
+    -unless @places.first_page?
       .previous=link_to "&larr; Previous".html_safe, admin_places_path(params.slice('filter').merge(:page => @places.previous_page))

@@ -1,11 +1,11 @@
 .manager
   .top.clearfix
     .pagination
-      -if @places.next_page
-        .next=link_to "Next &rarr;".html_safe, matches_admin_places_path(:filter => params[:filter], :page => @places.next_page)
-      -if @places.previous_page
+      -unless @places.last_page?
+        .next=link_to "Next &rarr;".html_safe, matches_admin_places_path(:filter => params[:filter], :page => @places.current_page + 1)
+      -unless @places.first_page?
         .previous=link_to "&larr; Previous".html_safe, matches_admin_places_path(:filter => params[:filter], :page => @places.previous_page)
-    %h1.title="#{@places.total_entries} Places"
+    %h1.title="#{@places.total_count} Places"
     .links
       =link_to "Image Queue", matches_admin_places_path(:filter => 3)
       =link_to "Imageless", matches_admin_places_path(:filter => 2)
@@ -37,7 +37,7 @@
               -elsif src.to_sym != :google
                 =link_to "match #{src.to_sym}", admin_place_matches_path(place, :src => src.to_sym)
   .pagination
-    -if @places.next_page
-      .next=link_to "Next &rarr;".html_safe, matches_admin_places_path(:filter => params[:filter], :page => @places.next_page)
-    -if @places.previous_page
+    -unless @places.last_page?
+      .next=link_to "Next &rarr;".html_safe, matches_admin_places_path(:filter => params[:filter], :page => @places.current_page + 1)
+    -unless @places.first_page?
       .previous=link_to "&larr; Previous".html_safe, matches_admin_places_path(:filter => params[:filter], :page => @places.previous_page)

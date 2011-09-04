@@ -1,0 +1,24 @@
+-filters = params.slice('filter')
+.manager.clearfix
+  .top.clearfix
+    %h1.title="#{@items.total_count} Items"
+    %ul.form_wrapper.clear
+      =form_tag admin_activity_items_path, :method => :get, :id => "emulation_form" do
+        %li.field.checkbox
+          =label_tag :local, "Local : "
+          =check_box_tag :local, 1, params[:local] == "1" && params[:ll].present?, :id => "emulation_local"
+        %li.field
+          =label_tag :ll, "Location : "
+          =text_field_tag :ll, nil, :id => "emulation_ll", :value => params[:ll]
+        %li.field
+          =button_tag :class => "rndblk_80x26" do
+            Render
+        %li.actions
+          =link_to "PlacePop HQ", "javascript:;", :class => "location action", "data-ll" => "37.7553975,-122.4187679"
+          =link_to "Geocode", "javascript:;", :class => "geocode action"
+          =link_to "Locate", "javascript:;", :class => "geolocate action"
+  .right
+    .map
+      =image_tag(google_static_map_url(@position, :size => "500x200", :zoom => 13))
+  .results.left
+    =render :partial => "results"

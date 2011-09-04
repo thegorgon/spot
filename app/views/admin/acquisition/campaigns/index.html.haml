@@ -1,11 +1,11 @@
 .manager
   .top.clearfix
     .pagination
-      -if @campaigns.next_page
-        .next=link_to "Next &rarr;".html_safe, admin_acquisition_campaigns_path(filters.merge(:page => @campaigns.next_page))
-      -if @campaigns.previous_page
+      -unless @campaigns.last_page?
+        .next=link_to "Next &rarr;".html_safe, admin_acquisition_campaigns_path(filters.merge(:page => @campaigns.current_page + 1))
+      -unless @campaigns.first_page?
         .previous=link_to "&larr; Previous".html_safe, admin_acquisition_campaigns_path(filters.merge(:page => @campaigns.previous_page))
-    %h1.title="#{pluralize( @campaigns.total_entries, "Campaign")}"
+    %h1.title="#{pluralize( @campaigns.total_count, "Campaign")}"
 
   %table.data
     %thead
@@ -23,9 +23,9 @@
           %td= link_to "#{cmp.acquisition_sources.count} Sources", admin_acquisition_sources_path(:cmp => cmp.id)
 
   .pagination.bottom
-    -if @campaigns.next_page
-      .next=link_to "Next &rarr;".html_safe, admin_acquisition_campaigns_path(params.slice('filter').merge(:page => @campaigns.next_page))
-    -if @campaigns.previous_page
+    -unless @campaigns.last_page?
+      .next=link_to "Next &rarr;".html_safe, admin_acquisition_campaigns_path(params.slice('filter').merge(:page => @campaigns.current_page + 1))
+    -unless @campaigns.first_page?
       .previous=link_to "&larr; Previous".html_safe, admin_acquisition_campaigns_path(params.slice('filter').merge(:page => @campaigns.previous_page))
 
   .form.new.clearfix

@@ -1,9 +1,7 @@
 class Admin::BusinessAccountsController < Admin::BaseController  
   def index
     @accounts = BusinessAccount.filter(params[:filter].to_i)
-    @accounts = @accounts.page(params[:page])
-    @accounts.per_page = params[:per_page] if params[:per_page]
-    @accounts = @accounts.all
+    @accounts = @accounts.page(params[:page]).per(params[:per_page])
   end
   
   def destroy

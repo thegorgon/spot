@@ -1,12 +1,9 @@
 class Admin::DuplicatesController < Admin::BaseController
   def index
     status = (params[:status] || DuplicatePlace::UNRESOLVED).to_i
-    params[:per_page] = params[:per_page].to_i > 0 ? params[:per_page] : DuplicatePlace.per_page
     order = status == DuplicatePlace::UNRESOLVED ? 'total_distance ASC' : 'id DESC'
     @duplicates = DuplicatePlace.where(:status => status).includes(:place_1, :place_2).order(order)
-    @duplicates = @duplicates.page([1, params[:page].to_i].max)
-    @duplicates.per_page = params[:per_page] if params[:per_page]
-    @duplicates = @duplicates.all
+    @duplicates = @duplicates.page([1, params[:page].to_i].max).per(params[:per_page])
   end
   
   def create

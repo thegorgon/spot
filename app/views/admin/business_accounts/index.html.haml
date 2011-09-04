@@ -1,18 +1,18 @@
 .manager
   .top.clearfix
     .pagination
-      -if @accounts.next_page
-        .next=link_to "Next &rarr;".html_safe, admin_business_accounts_path(:page => @accounts.next_page, :filter => params[:filter])
-      -if @accounts.previous_page
+      -unless @accounts.last_page?
+        .next=link_to "Next &rarr;".html_safe, admin_business_accounts_path(:page => @accounts.current_page + 1, :filter => params[:filter])
+      -unless @accounts.first_page?
         .previous=link_to "&larr; Previous".html_safe, admin_business_accounts_path(:page => @accounts.previous_page, :filter => params[:filter])
-    %h1.title=pluralize(@accounts.total_entries, "Account")
+    %h1.title=pluralize(@accounts.total_count, "Account")
     .links
       =link_to "Pending Approval", admin_business_accounts_path(:filter => 1)
       =link_to "Approved", admin_business_accounts_path(:filter => 2)
       =link_to "All", admin_business_accounts_path
   =render :partial => "table", :object => @accounts, :as => :accounts
   .pagination.bottom
-    -if @accounts.next_page
-      .next=link_to "Next &rarr;".html_safe, admin_business_accounts_path(:page => @accounts.next_page, :filter => params[:filter])
-    -if @accounts.previous_page
+    -unless @accounts.last_page?
+      .next=link_to "Next &rarr;".html_safe, admin_business_accounts_path(:page => @accounts.current_page + 1, :filter => params[:filter])
+    -unless @accounts.first_page?
       .previous=link_to "&larr; Previous".html_safe, admin_business_accounts_path(:page => @accounts.previous_page, :filter => params[:filter])

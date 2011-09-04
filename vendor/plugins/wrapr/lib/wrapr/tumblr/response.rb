@@ -31,6 +31,18 @@ module Wrapr
         page > 1 ? page - 1 : nil
       end
     
+      def current_page
+        page
+      end
+      
+      def first_page?
+        current_page == 1
+      end
+      
+      def last_page?
+        total - start <= page_size
+      end
+    
       [:size, :count, :length].each do |m|
         define_method m do
           @items.send(m)

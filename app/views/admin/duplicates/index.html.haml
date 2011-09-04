@@ -1,11 +1,11 @@
 .manager
   .top.clearfix
     .pagination
-      -if @duplicates.next_page
-        .next=link_to "Next &rarr;".html_safe, admin_duplicates_path(params.slice('status').merge(:page => @duplicates.next_page))
-      -if @duplicates.previous_page
+      -unless @duplicates.last_page?
+        .next=link_to "Next &rarr;".html_safe, admin_duplicates_path(params.slice('status').merge(:page => @duplicates.current_page + 1))
+      -unless @duplicates.first_page?
         .previous=link_to "&larr; Previous".html_safe, admin_duplicates_path(params.slice('status').merge(:page => @duplicates.previous_page))
-    %h1.title="#{@duplicates.total_entries} Duplicate Places"
+    %h1.title="#{@duplicates.total_count} Duplicate Places"
     .links
       =link_to "Unresolved", admin_duplicates_path
       =link_to "Ignored", admin_duplicates_path(:status => DuplicatePlace::IGNORED)
@@ -13,7 +13,7 @@
       =link_to "Auto Resolved", admin_duplicates_path(:status => DuplicatePlace::AUTORESOLVED)
   =render :partial => "table", :object => @duplicates, :as => :places
   .pagination.bottom
-    -if @duplicates.next_page
-      .next=link_to "Next &rarr;".html_safe, admin_duplicates_path(params.slice('status').merge(:page => @duplicates.next_page))
-    -if @duplicates.previous_page
+    -unless @duplicates.last_page?
+      .next=link_to "Next &rarr;".html_safe, admin_duplicates_path(params.slice('status').merge(:page => @duplicates.current_page + 1))
+    -unless @duplicates.first_page?
       .previous=link_to "&larr; Previous".html_safe, admin_duplicates_path(params.slice('status').merge(:page => @duplicates.previous_page))

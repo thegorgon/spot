@@ -3,8 +3,7 @@ class DuplicatePlace < ActiveRecord::Base
   MAX_NAME_DISTANCE = 0.5
   MAX_ADDRESS_DISTANCE = 0.5
   
-  cattr_accessor :per_page  
-  @@per_page = 15
+  paginates_per 15
   
   # Statuses
   UNRESOLVED = 0

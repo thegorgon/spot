@@ -17,8 +17,7 @@ class WishlistItem < ActiveRecord::Base
   after_commit :enqueue_propagation, :if => :new_commit?
   
   attr_protected :deleted_at
-  cattr_accessor :per_page
-  @@per_page = 20
+  paginates_per 20
   
   scope :active, where(:deleted_at => nil)
     
