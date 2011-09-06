@@ -24,7 +24,7 @@
           %td= mc.promo.try(:user_count) || '-'
           %td= mc.promo.try(:use_count) || '-'
           %td= mc.promo ? "#{mc.promo.try(:duration)} months" : '-'
-          %td= mc.promo ? yes_no(!mc.promo.acts_as_payment) : '-'
+          %td= mc.promo ? yes_no(mc.promo.require_credit_card) : '-'
           %td= link_to "Delete", admin_membership_code_path(mc), "data-method" => "delete"
 
   .form.new.clearfix
@@ -46,7 +46,7 @@
           =pfo.text_field :name, :placeholder => "name", :required => true, :label => "name : "
           .clearfix
             =pfo.number_field :user_count, :placeholder => "promo uses", :required => true, :label => "promo uses : ", :min => -1
-            =pfo.number_field :duration, :placeholder => "duration", :required => true, :label => "duration (months) : ", :min => 0
+            =pfo.number_field :duration, :placeholder => "duration", :required => true, :label => "duration (months) : ", :min => -1
           =pfo.text_area :description, :placeholder => "description", :required => true, :label => "description : "
           %li.text.labelled.check_box
             .label=pfo.label :require_credit_card, "cc required?"

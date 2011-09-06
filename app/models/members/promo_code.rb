@@ -26,7 +26,7 @@ class PromoCode < ActiveRecord::Base
   end
 
   def require_credit_card=(value)
-    self.acts_as_payment = !value
+    self.acts_as_payment = value.respond_to?(:to_i) ? value.to_i == 0 : !value
   end
   
   def as_json(*args)

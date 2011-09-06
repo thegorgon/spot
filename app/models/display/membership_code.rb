@@ -20,20 +20,18 @@ class MembershipCode
   end
   
   def self.by_code
-    if @codes.nil?
-      @codes = {}
-      InvitationCode.system_codes.all.each do |invite|
-        @codes[invite.code] ||= MembershipCode.new
-        @codes[invite.code].invite = invite
-        @codes[invite.code].code = invite.code
-      end
-      PromoCode.all.each do |promo|
-        @codes[promo.code] ||= MembershipCode.new
-        @codes[promo.code].promo = promo
-        @codes[promo.code].code = promo.code
-      end
+    codes = {}
+    InvitationCode.system_codes.all.each do |invite|
+      codes[invite.code] ||= MembershipCode.new
+      codes[invite.code].invite = invite
+      codes[invite.code].code = invite.code
     end
-    @codes
+    PromoCode.all.each do |promo|
+      codes[promo.code] ||= MembershipCode.new
+      codes[promo.code].promo = promo
+      codes[promo.code].code = promo.code
+    end
+    codes
   end
   
   def self.find_by_code(code)
