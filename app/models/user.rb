@@ -55,7 +55,12 @@ class User < ActiveRecord::Base
   end
   
   def wishlist
-    WishlistItem.prepare_for_nesting(wishlist_items.active.includes(:item))
+    if @wishlist.nil?
+      @wishlist = wishlist_items.active.includes(:item)
+      WishlistItem.prepare_for_nesting(@wishlist)
+      @wishlist
+    end
+    @wishlist
   end
   
   def email_with_name
@@ -186,7 +191,7 @@ class User < ActiveRecord::Base
       :id => id,
       :first_name => first_name,
       :last_name => last_name,
-      :name => name,
+      :name => name
     }
     if options[:current_viewer]
       hash.merge!(
