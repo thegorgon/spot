@@ -12,7 +12,7 @@ class Api::UsersController < Api::BaseController
     @user.attributes = params[:user]
     @user.email_source = 'api' if @user.email_changed?
     @user.save!
-    render :json => @user
+    render :json => @user.as_json(:current_viewer => true)
   end
   
   private 

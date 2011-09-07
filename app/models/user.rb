@@ -182,10 +182,16 @@ class User < ActiveRecord::Base
       :id => id,
       :first_name => first_name,
       :last_name => last_name,
-      :email => email,
       :name => name,
-      :requested_notifications => requested_notifications
     }
+    if options[:current_viewer]
+      hash.merge!(
+        :city_id => city_id,
+        :other_city => email_subscriptions.try(:other_city),
+        :email => email,
+        :requested_notifications => requested_notifications
+      )
+    end
   end
     
   private

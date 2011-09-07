@@ -47,7 +47,7 @@ class ActivityItem < ActiveRecord::Base
       :id => id,
       :activity => activity.as_json(args),
       :item => item.as_json(args),
-      :user => actor.as_json(args),
+      :user => actor.as_json,
       :created_at => created_at,
     }
   end
