@@ -192,6 +192,7 @@ class User < ActiveRecord::Base
         :requested_notifications => requested_notifications
       )
     end
+    hash
   end
     
   private
