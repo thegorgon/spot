@@ -22,7 +22,7 @@
           ="We'll send an email to #{invite_request.email} when we're close to #{(invite_request.city_name.try(:titlecase) || 'your city')}."
           =link_to "change?", root_path, :rel => ".coming_soon", 'data-toggle-class' => "updating"
     
-    =spot_form_for invite_request, :as => :request, :display => "light inlinelabels", :html => {:id => "city_preview"} do |f|
+    =spot_form_for invite_request || InviteRequest.new, :as => :request, :display => "light inlinelabels", :html => {:id => "city_preview"} do |f|
       %h2.tf Where do you live? Let us know and we'll try to come there next.  
       =f.email_field :email, :label => "email : ", :placeholder => "email", :value => invite_request.try(:email)
       %li.note so we can let you know when we arrive.
