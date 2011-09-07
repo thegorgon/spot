@@ -1,6 +1,6 @@
 class Place < ActiveRecord::Base
   include Rails.application.routes.url_helpers
-  validates :full_name, :presence => true
+  validates :name, :presence => true
   validates :lat, :numericality => {:greater_than => -90, :less_than => 90}
   validates :lng, :numericality => {:greater_than => -180, :less_than => 180}
   before_validation :clean
@@ -14,11 +14,14 @@ class Place < ActiveRecord::Base
   has_many :wishlist_items, :as => :item, :conditions => { :deleted_at => nil }
   has_many :notes, :class_name => "PlaceNote"
   has_one :business
+  ExternalPlace.sources.each do |source|
+    has_one "#{source.to_sym}_place", :class_name => source
+  end
   serialize :image_attribution, Hash
   acts_as_mappable
   
   define_index do
-    indexes :clean_name, :sortable => true
+    indexes :name, :sortable => true
     indexes :city
     indexes :country
     has "RADIANS(lat)", :as => :latitude, :type => :float
@@ -81,6 +84,10 @@ class Place < ActiveRecord::Base
     all.each { |p| p.reclean! }
   end
   
+  def self.prepare_for_nesting(records)
+    ExternalPlace.add_to(records)
+  end
+  
   def canonical?
     new_record? || canonical_id == id
   end
@@ -123,14 +130,6 @@ class Place < ActiveRecord::Base
     end
   end
     
-  def name
-    full_name
-  end
-  
-  def name=(value)
-    self.full_name = value
-  end
-  
   def name_with_city
     string = name.clone
     string << " in #{city.titlecase}" if city.present?
@@ -156,18 +155,18 @@ class Place < ActiveRecord::Base
   end
   
   def address_lines
-    full_address.to_s.split("\n")
+    address.to_s.split("\n")
   end
   
   def address_lines=(value)
     value = [value["0"], value["1"]] if value.kind_of?(Hash)
-    self.full_address = value.join("\n")
+    self.address = value.join("\n")
   end
   
-  def address
+  def flat_address
     address_lines.join(', ')
   end
-    
+  
   def region_abbr
     inverted = Geo::STATES.invert
     inverted[region.downcase] || region
@@ -175,11 +174,31 @@ class Place < ActiveRecord::Base
     
   def external_place(source)
     source = ExternalPlace.lookup(source) unless source.kind_of?(Class)
-    (@external_places ||= {})[source.to_sym] ||= source.where(:place_id => id).order("id ASC").first
+    @external_places ||= {}
+    @external_places[source.to_sym] ||= {}
+    if !@external_places[source.to_sym][:fetched]
+      @external_places[source.to_sym][:object] = source.where(:place_id => id).order("id ASC").first
+      @external_places[source.to_sym][:fetched] = true
+    end
+    @external_places[source.to_sym][:object]
   end
   
   def external_places
     ExternalPlace.sources.collect { |src| external_place(src) }.compact
+  end
+  
+  def set_external_place(source, object)
+    (@external_places ||= {})[source.to_sym] = {:object => object, :fetched => true}
+  end
+  
+  def clean_name(options={})
+    options[:name] = name
+    Geo::Cleaner.clean(options)
+  end
+  
+  def clean_address(options={})
+    options[:address] = address
+    Geo::Cleaner.clean(options)
   end
         
   def reclean!
@@ -195,11 +214,14 @@ class Place < ActiveRecord::Base
     options = args.extract_options!
     hash = {
       :_type => self.class.to_s,
-      :name => full_name,
+      :name => name,
       :address => address_lines,
       :bitch_dis_where_it_be => {:lines => address_lines, :city => city, :region => region},
       :lat => lat.to_f,
       :lng => lng.to_f,
+      :twitter => twitter,
+      :website => website,
+      :note_count => note_count,
       :image_url_640x400 => image.url(:i640x400),
       :image_url_234x168 => image.url(:i234x168),
       :image_url => image.url,
@@ -216,17 +238,17 @@ class Place < ActiveRecord::Base
     if image_processing? && options[:processed_images]
       hash.merge!(:processed_image_url_640x400 => image.processed_url(:i640x400), :processed_image_url_234x168 => image.processed_url(:i234x168))
     end
-    # external_places.each do |external|
-    #   hash["#{external.class.to_sym}_id"] = external.source_id
-    # end
+    if options[:external_places]
+      external_places.each do |external|
+        hash["#{external.class.to_sym}_id"] = external.source_id
+      end
+    end
     hash
   end
 
   private
     
   def clean
-    self.clean_name = Geo::Cleaner.clean(:name => full_name)
-    self.clean_address = Geo::Cleaner.clean(:address => address)
     self.canonical_id = id if id.to_i > 0 && canonical_id.to_i <= 0
     self.canonical_id = 0 if canonical_id.nil?
   end
@@ -244,7 +266,7 @@ class Place < ActiveRecord::Base
   end
   
   def enqueue_deduping
-    if attribute_commited?(:clean_name) || attribute_commited?(:clean_address)
+    if attribute_commited?(:name) || attribute_commited?(:address)
       Resque.enqueue(Jobs::PlaceDeduper, id)
     end
   end

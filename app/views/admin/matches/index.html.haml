@@ -1,7 +1,7 @@
 .manager
   .top.clearfix
     %h1.title="#{@source.to_s.titlecase}s For :"
-    %h2.clear.title="#{@place.name} #{@place.full_address}"
+    %h2.clear.title="#{@place.name} #{@place.flat_address}"
   %table.data
     %thead
       %tr
@@ -16,7 +16,7 @@
       -@matches.each do |match|
         %tr.center{:class => match.proximity.close?? "match" : nil}
           %td=match.candidate.name
-          %td=match.candidate.full_address
+          %td=match.candidate.flat_address
           %td="#{match.proximity.geo_distance.round} m"
           %td="#{(match.proximity.name_match * 100).round}%"
           %td="#{(match.proximity.address_match * 100).round}%"

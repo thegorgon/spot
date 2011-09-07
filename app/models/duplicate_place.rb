@@ -60,12 +60,11 @@ class DuplicatePlace < ActiveRecord::Base
     options[:with] = {"@geodist" => 0.0..SEARCH_RADIUS}
     options[:without] = {"sphinx_internal_id" => place.id}
     options.merge!(:match_mode => :any)
-    match_name = Geo::Cleaner.remove_extraneous_words(place.clean_name)
-    name_matcher = Amatch::Sellers.new(match_name)
+    name_matcher = Amatch::Sellers.new(place.clean_name(:extraneous => true))
     addr_matcher = Amatch::Sellers.new(place.clean_address)
     potentials = []
     Place.search(place.clean_name, options).each_with_geodist do |dupe, geo_dist|
-      n = Geo::Cleaner.remove_extraneous_words(dupe.clean_name)
+      n = dupe.clean_name(:extraneous => true)
       name_dist = name_matcher.match(n)
       addr_dist = addr_matcher.match(dupe.clean_address)
       potentials << DuplicatePlace.new( :place_1 => place, 
@@ -78,10 +77,10 @@ class DuplicatePlace < ActiveRecord::Base
   end
   
   def self.duplicate_for(place1, place2)
-    match_name = Geo::Cleaner.remove_extraneous_words(place1.clean_name)
+    match_name = place1.clean_name(:extraneous => true)
     name_matcher = Amatch::Sellers.new(match_name)
     addr_matcher = Amatch::Sellers.new(place1.clean_address)
-    name_dist = name_matcher.match(Geo::Cleaner.remove_extraneous_words(place2.clean_name))
+    name_dist = name_matcher.match(place2.clean_name(:extraneous => true))
     addr_dist = addr_matcher.match(place2.clean_address)
     geo_dist = place1.distance_to(place2)
     dupe = DuplicatePlace.new( :place_1 => place1, 

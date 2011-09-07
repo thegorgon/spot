@@ -79,7 +79,7 @@ class PromotionEvent < ActiveRecord::Base
     options = args.extract_options!
     if options[:api]
       {
-        :place => place.as_json,
+        :place => place.as_json(:skip_thumbnail => true),
         :image_url_640x400 => place.image.url(:i640x400),
         :image_url_234x168 => place.image.url(:i234x168),
         :image_url => place.image.url,

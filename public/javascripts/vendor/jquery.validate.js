@@ -129,9 +129,18 @@
   // Register Email Validation
   $.validations.register({
     name: 'email',
-    selector: '[type=email], [pattern]',
+    selector: '[type=email]',
     test: function() {
       $.validations.validity(this, $(this).pattern().test($(this).val()), "that doesn't look like an email address");
+    }
+  });
+
+  // Register Pattern Validation
+  $.validations.register({
+    name: 'pattern',
+    selector: '[pattern]',
+    test: function() {
+      $.validations.validity(this, $(this).pattern().test($(this).val()), "that doesn't look right");
     }
   });
 

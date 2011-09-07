@@ -1,10 +1,12 @@
 =spot_form_for [:admin, @place], :display => "light inlinelabels", :html => {:multipart => true} do |f|
-  =f.text_field :full_name, :label => "Name :", :required => true, :class => "name_field", :hint => "what is the place name?"
+  =f.text_field :name, :label => "Name :", :required => true, :class => "name_field", :hint => "what is the place name?"
   =f.text_field 'address_lines[0]', :value => @place.address_lines[0], :label => "Address (line 1) :", :hint => "what's the street address?", :required => true, :class => "address_field"
   =f.text_field 'address_lines[1]', :value => @place.address_lines[1], :label => "Address (line 2) :", :hint => "and the city, region, zip?", :required => true, :class => "address_field"
-  =f.text_field :city, :label => "City :", :hint => "what city is the place in?", :required => true
-  =f.text_field :region, :label => "Region :", :hint => "what state is the place in?", :required => true
-  =f.text_field :country, :label => "Country :", :hint => "what country is the place in?", :required => true
+  =f.text_field :twitter, :label => "Twitter :", :hint => "what is the twitter handle?", :pattern => "^@\\w+$"
+  =f.text_field :website, :label => "Website :", :hint => "what is the place's website?"
+  =f.text_field :city, :label => "City :", :hint => "what city is the place in?"
+  =f.text_field :region, :label => "Region :", :hint => "what state is the place in?"
+  =f.text_field :country, :label => "Country :", :hint => "what country is the place in?"
   =f.phone_field :phone_number, :label => "Phone Number :", :hint => "what is the place's number?"
   =f.text_field :lat, :min => -90, :max => 90, :label => "Lat :", :hint => "do you really know the lat?"
   =f.text_field :lng, :min => -180, :max => 180, :label => "Lng :", :hint => "do you really know the lng?"

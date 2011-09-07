@@ -29,7 +29,7 @@ describe Place do
     
     it "has a full name" do
       @place.should be_valid
-      @place.full_name = nil
+      @place.name = nil
       @place.should_not be_valid
     end
   end
@@ -50,27 +50,7 @@ describe Place do
       @place.wishlist_items.should_not include @deleted
     end
   end
-  
-  describe "#clean" do
-    before { @place = Factory.build(:place, :clean_name => nil, :clean_address => nil) }
-   
-    it "autogenerates clean names and addresses on save" do
-      @place.clean_name.should_not be_present
-      @place.clean_address.should_not be_present
-      @place.save
-      @place.clean_name.should be_present
-      @place.clean_address.should be_present
-    end
-
-    it "uses geo cleaning to generate clean names and address" do
-      @place.clean_name.should_not be_present
-      @place.clean_address.should_not be_present
-      @place.save
-      @place.clean_name.should == Geo::Cleaner.clean(:name => @place.full_name)
-      @place.clean_address.should == Geo::Cleaner.clean(:address => @place.address)
-    end    
-  end
-  
+    
   describe "#canonical" do
     it "defaults to itself" do 
       @place = Factory.create(:place, :canonical_id => nil)
@@ -138,7 +118,7 @@ describe Place do
     it "enqueues a deduping job on update if the name or address have changed" do
       @place = Factory.create(:place)
       ResqueSpec.reset!
-      @place.attributes = {:full_name => "New Name", :full_address => "Another address"}
+      @place.attributes = {:name => "New Name", :address => "Another address"}
       @place.run_callbacks(:validation) # need to generate "clean"
       @place.run_callbacks(:commit) # run the callback (needed in test)
       Jobs::PlaceDeduper.should have_queued(@place.id).in(:processing)
@@ -154,7 +134,7 @@ describe Place do
 
   describe "#filter" do
     it "accepts a query it uses to search places" do
-      @place = Factory.create(:place, :full_name => "queryable name")
+      @place = Factory.create(:place, :name => "queryable name")
       Place.should_receive(:search).with(@place.name, an_instance_of(Hash)).and_return([@place])
       Place.filter(:query => @place.name).should include @place
     end
@@ -245,37 +225,37 @@ describe Place do
 
     it "returns a higher number for a place whose name equals the query" do
       query = "query place name"
-      @place1 = Factory.build(:place, :full_name => query)
-      @place2 = Factory.build(:place, :full_name => "Something Else")
+      @place1 = Factory.build(:place, :name => query)
+      @place2 = Factory.build(:place, :name => "Something Else")
       @place1.relevance_against(query).should > @place2.relevance_against(query)
     end
 
     it "returns a higher number for the place who's city is in the query if two places have the same name" do
       query = "starbucks san francisco"
-      @place1 = Factory.build(:place, :full_name => "Starbucks", :city => "San Francisco")
-      @place2 = Factory.build(:place, :full_name => "Starbucks", :city => "Atlanta")
+      @place1 = Factory.build(:place, :name => "Starbucks", :city => "San Francisco")
+      @place2 = Factory.build(:place, :name => "Starbucks", :city => "Atlanta")
       @place1.relevance_against(query).should > @place2.relevance_against(query)
     end
 
     it "ignores query word order" do
-      @place = Factory.build(:place, :full_name => "Ron Burgundy", :city => "San Francisco")
+      @place = Factory.build(:place, :name => "Ron Burgundy", :city => "San Francisco")
       relevance1 = @place.relevance_against("ron burgundy san francisco")
       relevance2 = @place.relevance_against("burgundy francisco san ron")
       relevance2.should == relevance1
     end
 
     it "returns 100 for a perfect match of '\#{name} \#{city}' downcased" do
-      @place = Factory.build(:place, :full_name => "Altena", :city => "San Francisco")
+      @place = Factory.build(:place, :name => "Altena", :city => "San Francisco")
       @place.relevance_against("altena san francisco").should == 100
     end
     
     it "ignores special characters" do
-      @place = Factory.build(:place, :full_name => "John's & Joe's", :city => "München")
+      @place = Factory.build(:place, :name => "John's & Joe's", :city => "München")
       @place.relevance_against("johns joes munchen").should == 100
     end
     
     it "matches lowercase capitalization" do
-      @place = Factory.build(:place, :full_name => "JOHNATHAN", :city => "SF")
+      @place = Factory.build(:place, :name => "JOHNATHAN", :city => "SF")
       @place.relevance_against("johnathan sf").should == 100
     end    
   end
@@ -305,31 +285,31 @@ describe Place do
   end
   
   describe "#aliases" do
-    it "aliases name to full_name" do
-      @place = Factory.build(:place, :full_name => "Old Name")
-      @place.name.should == @place.full_name
+    it "aliases name to name" do
+      @place = Factory.build(:place, :name => "Old Name")
+      @place.name.should == @place.name
       @place.name = "New Name"
-      @place.full_name.should == "New Name"
-      @place.name.should == @place.full_name
+      @place.name.should == "New Name"
+      @place.name.should == @place.name
     end    
   end
   
   describe "#address_lines" do
     it "returns an array of the full address lines" do
-      @place = Factory.build(:place, :full_address => "1 Street\nCity, State Zip")
+      @place = Factory.build(:place, :address => "1 Street\nCity, State Zip")
       @place.address_lines.should == ["1 Street", "City, State Zip"]
     end
     
     it "sets the full address to the string version of the array when given an array" do
       @place = Factory.build(:place)
       @place.address_lines = ["1 Street", "City, State Zip"]
-      @place.full_address.should == "1 Street\nCity, State Zip"
+      @place.address.should == "1 Street\nCity, State Zip"
     end
     
     it "handles a hash with integer like keys as though it were an array" do
       @place = Factory.build(:place)
       @place.address_lines = {"0" => "1 Street", "1" => "City, State Zip"}
-      @place.full_address.should == "1 Street\nCity, State Zip"
+      @place.address.should == "1 Street\nCity, State Zip"
     end
     
     it "can be displayed as 'address' which joins the lines with a ," do

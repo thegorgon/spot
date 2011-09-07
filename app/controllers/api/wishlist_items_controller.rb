@@ -1,6 +1,6 @@
 class Api::WishlistItemsController < Api::BaseController
   def create
-    @item = current_user.wishlist(params[:item])
+    @item = current_user.add_to_wishlist(params[:item])
     @status = @item.new_record?? 200 : 409
     @item.save!
     record_user_event("api wishlist create", "#{@item.item_type} #{@item.item_id}")

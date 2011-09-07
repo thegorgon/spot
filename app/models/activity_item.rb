@@ -30,8 +30,19 @@ class ActivityItem < ActiveRecord::Base
     finder = finder.until(params[:until]) if params[:until]
     finder = finder.order("activity_items.created_at DESC")
     finder = finder.page(params[:page]).per(params[:per_page])
-    finder.includes([:actor, :activity, :item])
-  end  
+    feed = finder.includes(:actor, :activity, :item)
+
+    by_activity_class = {}
+    by_item_class = {}
+    feed.map! do |ai| 
+      (by_activity_class[ai.activity.class] ||= []) << ai.activity
+      (by_item_class[ai.item.class] ||= []) << ai.item
+      ai
+    end
+    by_activity_class.keys.map! { |klass| klass.prepare_for_nesting(by_activity_class[klass]) }
+    by_item_class.keys.map! { |klass| klass.prepare_for_nesting(by_item_class[klass]) }
+    feed
+  end
     
   def action=(value)
     if value.respond_to?(:upcase)
@@ -46,7 +57,7 @@ class ActivityItem < ActiveRecord::Base
       :_type => self.class.to_s,
       :id => id,
       :activity => activity.as_json(args),
-      :item => item.as_json(args),
+      :item => item.as_json(:external_places => true),
       :user => actor.as_json,
       :created_at => created_at,
     }

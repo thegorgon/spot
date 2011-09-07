@@ -25,7 +25,7 @@
       =f.fields_for :place_attributes, @business.place do |pf|
         =pf.hidden_field :lat, :id => "place_lat"
         =pf.hidden_field :lng, :id => "place_lng"
-        =pf.text_field :full_name, :label => "Name :", :required => true, :hint => "what should we call you?", :class => "name_field"
+        =pf.text_field :name, :label => "Name :", :required => true, :hint => "what should we call you?", :class => "name_field"
         =pf.text_field 'address_lines[0]', :value => @business.place.address_lines[0], :label => "Address (line 1) :", :hint => "what's your street address?", :required => true, :class => "address_field"
         =pf.text_field 'address_lines[1]', :value => @business.place.address_lines[1], :label => "Address (line 2) :", :hint => "and your city, region, zip?", :required => true, :class => "address_field"
         =pf.text_field :city, :label => "City :", :hint => "what city is your business in?", :required => true

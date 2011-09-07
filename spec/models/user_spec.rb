@@ -61,44 +61,44 @@ describe User do
 
     it "returns a wishlist item to the item params provided" do
       item = Factory.create(:place)
-      @wi = @user.wishlist(:item_type => item.class.to_s, :item_id => item.id)
+      @wi = @user.add_to_wishlist(:item_type => item.class.to_s, :item_id => item.id)
       @wi.class.should == WishlistItem
       @wi.item.should == item
     end
     
     it "returns a new wishlist item if one does not exist for the item provided" do
       item = Factory.create(:place)
-      @wi = @user.wishlist(:item_type => item.class.to_s, :item_id => item.id)
+      @wi = @user.add_to_wishlist(:item_type => item.class.to_s, :item_id => item.id)
       @wi.should be_new_record
     end
     
     it "returns an existing wishlist item if one already exists for the item provided" do
       item = Factory.create(:place)
-      @wi = @user.wishlist(:item_type => item.class.to_s, :item_id => item.id)
-      @dupe = @user.wishlist(:item_type => item.class.to_s, :item_id => item.id)
+      @wi = @user.add_to_wishlist(:item_type => item.class.to_s, :item_id => item.id)
+      @dupe = @user.add_to_wishlist(:item_type => item.class.to_s, :item_id => item.id)
       @dupe.id.should == @wi.id
     end
     
     it "returns a new wishlist item if one exists with the item provided but was destroyed" do
       item = Factory.create(:place)
-      @wi = @user.wishlist(:item_type => item.class.to_s, :item_id => item.id)
+      @wi = @user.add_to_wishlist(:item_type => item.class.to_s, :item_id => item.id)
       @wi.destroy
-      @dupe = @user.wishlist(:item_type => item.class.to_s, :item_id => item.id)
+      @dupe = @user.add_to_wishlist(:item_type => item.class.to_s, :item_id => item.id)
       @dupe.should be_new_record
     end
 
     it "returns a valid wishlist item if one exists with the item provided but was destroyed" do
       item = Factory.create(:place)
-      @wi = @user.wishlist(:item_type => item.class.to_s, :item_id => item.id)
+      @wi = @user.add_to_wishlist(:item_type => item.class.to_s, :item_id => item.id)
       @wi.destroy
-      @dupe = @user.wishlist(:item_type => item.class.to_s, :item_id => item.id)
+      @dupe = @user.add_to_wishlist(:item_type => item.class.to_s, :item_id => item.id)
       expect { @dupe.save! }.to_not raise_error
     end
     
     it "returns a wishlist item with teh given source attributes if it is a new record" do
       item = Factory.create(:place)
       source = Factory.create(:wishlist_item, :item => item)
-      @wi = @user.wishlist(:item_type => item.class.to_s, :item_id => item.id, :source_type => source.class.to_s, :source_id => source.id)
+      @wi = @user.add_to_wishlist(:item_type => item.class.to_s, :item_id => item.id, :source_type => source.class.to_s, :source_id => source.id)
       @wi.should be_new_record
       @wi.source.should == source
     end

@@ -11,6 +11,12 @@ module ArrayExtensions
       hash
     end
     
+    def hash_by!
+      hash = {}
+      map! { |p| hash[yield(p)] = p }
+      hash
+    end
+    
     def full_compact
       select { |x| x.present? }
     end

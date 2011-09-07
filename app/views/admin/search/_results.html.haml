@@ -28,7 +28,7 @@
           %td= image_tag result.image.url(:i234x168), :size => "58x42", :class => "place_image clickable", :alt => "", :title => "Click to Change", 'data-img-src' => result.image.processed_url(:i234x168)
           %td= result.place_id
           %td= result.name
-          %td= result.full_address
+          %td= result.flat_address
           %td= result.wishlist_count.to_i
           %td= "#{(result.distance * 100).round/100.0} miles" if result.distance 
           %td= result.relevance

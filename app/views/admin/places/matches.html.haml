@@ -22,7 +22,7 @@
         %tr
           %td.place
             .name=link_to place.name, admin_place_path(place)
-            .address=place.address
+            .address=place.flat_address
             .position=place.to_lat_lng.to_s
           -ExternalPlace.sources.each do |src|
             -ep = @externals[place.id][src.to_sym]
@@ -30,7 +30,7 @@
               -if ep
                 -proximity = PlaceMatch.proximity(place, ep)
                 .name=link_to "#{ep.name}", external_place_url(ep), :target => "_new"
-                .address=place.address
+                .address=place.flat_address
                 .distance="#{proximity.geo_distance.round} m"
                 -if src.to_sym != :google
                   .links=link_to "edit", admin_place_matches_path(place, :src => src.to_sym)

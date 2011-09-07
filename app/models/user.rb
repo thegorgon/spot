@@ -54,6 +54,10 @@ class User < ActiveRecord::Base
     user
   end
   
+  def wishlist
+    WishlistItem.prepare_for_nesting(wishlist_items.active.includes(:item))
+  end
+  
   def email_with_name
     if name.present?
       "#{name} <#{email}>"
@@ -111,7 +115,7 @@ class User < ActiveRecord::Base
     active_membership
   end
   
-  def wishlist(params)
+  def add_to_wishlist(params)
     item = wishlist_items.active.where(:item_type => params[:item_type], :item_id => params[:item_id]).first
     item || wishlist_items.new(params)
   end
@@ -186,6 +190,7 @@ class User < ActiveRecord::Base
     }
     if options[:current_viewer]
       hash.merge!(
+        :wishlist_count => wishlist_count,
         :city_id => city_id,
         :other_city => email_subscriptions.try(:other_city),
         :email => email,

@@ -1,4 +1,20 @@
 module ExternalPlace
+  def self.add_to(places)
+    by_id = places.hash_by { |p| p.id }
+    external = {}
+    sources.each do |source|
+      source.where(:place_id => by_id.keys).all.each do |extplace|
+        (external[extplace.id] ||= {})[source] = extplace
+      end
+    end
+    by_id.values.map! do |place|
+      sources.each do |source|
+        place.set_external_place(source, (external[place.id] || {})[source])
+      end
+      place
+    end
+  end
+  
   def self.included(base)
     base.send(:extend, Macros)
   end
@@ -14,7 +30,7 @@ module ExternalPlace
       "ExternalPlace::#{symbol.to_s.classify}Place".constantize
     end
   end
-  
+    
   def self.associated_with(place_ids)
     associated = {}
     sources.each do |source| 
@@ -127,7 +143,7 @@ module ExternalPlace
       p      
     end
     
-    def full_address
+    def address
       address_lines.join("\n")
     end
   end

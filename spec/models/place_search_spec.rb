@@ -180,7 +180,7 @@ describe PlaceSearch do
       @result.lat.should == @place.lat
       @result.lng.should == @place.lng
       @result.address_lines.should == @place.address_lines
-      @result.full_address.should == @place.full_address
+      @result.address.should == @place.address
       @result.wishlist_count.should == @place.wishlist_count
       @result.name.should == @place.name
       @result.image_thumbnail.should == @place.image_thumbnail

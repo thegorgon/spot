@@ -136,7 +136,7 @@ module Api
       log "Initial wishlist length : #{json.length} should == 0", 1
       test_item = Place.first
       test_params = {:item => {:item_type => test_item.class.to_s, :item_id => test_item.id, :location => "37.768186;-122.429124;120 epu=50 hdn=45 spd=15", :source_type => "PlaceSearch", :source_id => "1"}}
-      log "Adding #{test_item.full_name} to wishlist"
+      log "Adding #{test_item.name} to wishlist"
       curb = request(api_wishlist_items_url(:format => :json))
       curb.post_body = test_params.to_json
       curb.http_post
@@ -150,14 +150,14 @@ module Api
       json = JSON.parse(curb.body_str)
       log "Wishlist length : #{json.length} should == 1", 1
       log "Wishlist : #{json.inspect}", 1      
-      log "Attempting duplicate addition of #{test_item.full_name} to wishlist"
+      log "Attempting duplicate addition of #{test_item.name} to wishlist"
       curb = request(api_wishlist_items_url(:format => :json))
       curb.post_body = test_params.to_json
       curb.http_post
       json = JSON.parse(curb.body_str)
       log "Duplicate response code : #{curb.response_code} should == 409", 1
       log "Response : #{json}", 1
-      log "Deleting #{test_item.full_name} from wishlist"
+      log "Deleting #{test_item.name} from wishlist"
       curb = request(api_wishlist_item_url(test_delete_id, :format => :json))
       curb.http_delete
       log "Deleting Response code : #{curb.response_code} should == 200", 1

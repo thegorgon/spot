@@ -28,10 +28,10 @@ class PlaceMatch
   end
 
   def self.proximity(place1, place2)
-    clean_name1 = Geo::Cleaner.clean(:name => place1.name, :extraneous => true)
-    clean_address1 = Geo::Cleaner.clean(:address => place1.full_address)
-    clean_name2 = Geo::Cleaner.clean(:name => place2.name, :extraneous => true)
-    clean_address2 = Geo::Cleaner.clean(:address => place2.full_address)
+    clean_name1 = place1.clean_name(:extraneous => true)
+    clean_address1 = place1.clean_address
+    clean_name2 = p1ace2.clean_name(:extraneous => true)
+    clean_address2 = place2.clean_address
     name_matcher = Amatch::JaroWinkler.new(clean_name1)
     addr_matcher = Amatch::JaroWinkler.new(clean_address1)
     name_match = name_matcher.match(clean_name2)

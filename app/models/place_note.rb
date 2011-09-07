@@ -4,7 +4,7 @@ class PlaceNote < ActiveRecord::Base
   paginates_per PAGE_SIZE
   
   belongs_to :user
-  belongs_to :place
+  belongs_to :place, :counter_cache => "note_count"
   validates :user, :presence => true
   validates :place, :presence => true
   
@@ -41,6 +41,13 @@ class PlaceNote < ActiveRecord::Base
     finder
   end
   
+  def self.prepare_for_nesting(records)
+    preload_associations(records, [:place, :user])
+    places = []
+    records.map! { |r| places << r.place; r }
+    ExternalPlace.add_to(places)
+  end
+    
   def propagate!
     generate_activity! :action => "CREATE", :public => !private? && !muted?
   end

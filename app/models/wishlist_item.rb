@@ -20,7 +20,14 @@ class WishlistItem < ActiveRecord::Base
   paginates_per 20
   
   scope :active, where(:deleted_at => nil)
-    
+  
+  def self.prepare_for_nesting(records)
+    preload_associations(records, [:item, :user])
+    places = []
+    records.map! { |r| places << r.item if r.item.kind_of?(Place); r }
+    ExternalPlace.add_to(places)
+  end
+  
   def location=(value)
     if value = Geo::Position.from_http_header(value)
       self.lat = value.lat
@@ -57,7 +64,7 @@ class WishlistItem < ActiveRecord::Base
     {
       :_type => self.class.to_s,
       :id => id,
-      :item => item.as_json(args),
+      :item => item.as_json(:external_places => true),
       :created_at => created_at,
       :user => user.as_json(args),
       :source_type => source_type,
@@ -72,6 +79,7 @@ class WishlistItem < ActiveRecord::Base
   def destroy
     unless deleted?
       touch :deleted_at
+      User.decrement_counter(:wishlist_count, user_id)
       item_type.constantize.decrement_counter(:wishlist_count, item_id)
       generate_activity! :action => "DELETE", :public => false
     end
@@ -87,6 +95,7 @@ class WishlistItem < ActiveRecord::Base
 
   def update_item_wishlist_count
     item_type.constantize.increment_counter(:wishlist_count, item_id)
+    User.increment_counter(:wishlist_count, user_id)
   end
 
   def enqueue_propagation

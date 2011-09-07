@@ -84,8 +84,8 @@ Factory.sequence :google_cid do |n|
 end
 
 Factory.define :place do |p|
-  p.full_name     'Place Name'
-  p.full_address  "1 Test Lane\nTestville California USA"
+  p.name          'Place Name'
+  p.address       "1 Test Lane\nTestville California USA"
   p.city          "Testville"  
   p.region        "California"
   p.country       "USA"

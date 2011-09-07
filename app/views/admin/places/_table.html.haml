@@ -13,8 +13,8 @@
       %tr.center.place{:id => dom_id(place), :class => cycle("even", "odd")}
         %td= image_tag place.image.url(:i234x168), :size => "58x42", :class => "place_image clickable", :alt => "", :title => "Click to Change", 'data-img-src' => place.image.processed_url(:i234x168)
         %td= place.id
-        %td= place.full_name
-        %td= place.full_address
+        %td= place.name
+        %td= place.flat_address
         %td= place.wishlist_count.to_i
         %td= place.to_lat_lng
         %td

@@ -15,8 +15,6 @@
           e.preventDefault();
           $input.focus();
         });
-        $input.bind('focus.placeholder', function(e) {
-        });
         $input.bind('blur.placeholder', function(e) {
           if ($input.val() === '') {
             placeholder.css('display', '');

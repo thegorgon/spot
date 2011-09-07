@@ -7,7 +7,7 @@
         -activity = item.activity
         .image= image_tag place.image.url(:i117x84), :size => "117x84", :class => "place_image clickable", :alt => "", :title => "Click to Change", 'data-img-src' => place.image.processed_url(:i117x84)
         .content
-          %span.actor=actor.name.present?? actor.name : "Someone"
+          %span.actor=actor && actor.name.present?? actor.name : "Someone"
           -if activity.kind_of?(PlaceNote)
             wrote a note about
           -elsif activity.kind_of?(WishlistItem)
@@ -20,6 +20,8 @@
           -if activity.kind_of?(PlaceNote)
             .note
               ="&ldquo;#{CGI.escapeHTML(activity.content.strip)}&rdquo;".html_safe
+        %a.follow{:href => admin_place_url(place)}
+          &nbsp;
   -else
     %li.empty
       %h3 No activity found.

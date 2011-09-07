@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110906181240) do
+ActiveRecord::Schema.define(:version => 20110907175234) do
 
   create_table "acquisition_campaigns", :force => true do |t|
     t.string   "name"
@@ -415,10 +415,8 @@ ActiveRecord::Schema.define(:version => 20110906181240) do
   end
 
   create_table "places", :force => true do |t|
-    t.string   "full_name",                                                           :null => false
-    t.string   "full_address"
-    t.string   "clean_name",                                                          :null => false
-    t.string   "clean_address"
+    t.string   "name",                                                                :null => false
+    t.string   "address"
     t.string   "city"
     t.string   "region"
     t.string   "country"
@@ -436,6 +434,9 @@ ActiveRecord::Schema.define(:version => 20110906181240) do
     t.boolean  "image_processing",                                 :default => false, :null => false
     t.boolean  "delta",                                            :default => true,  :null => false
     t.integer  "canonical_id",                                     :default => 0,     :null => false
+    t.string   "twitter"
+    t.string   "website"
+    t.integer  "note_count",                                       :default => 0,     :null => false
   end
 
   add_index "places", ["canonical_id"], :name => "index_places_on_canonical_id"
@@ -589,6 +590,7 @@ ActiveRecord::Schema.define(:version => 20110906181240) do
     t.string   "customer_id"
     t.integer  "city_id"
     t.integer  "acquisition_source_id"
+    t.integer  "wishlist_count",        :default => 0,     :null => false
   end
 
   add_index "users", ["city_id"], :name => "index_users_on_city_id"

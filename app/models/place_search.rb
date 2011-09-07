@@ -9,7 +9,7 @@ class PlaceSearch < ActiveRecord::Base
       
   class Result
     attr_reader :place, :distance, :relevance, :source
-    delegate :image, :lat, :lng, :address_lines, :full_address, :wishlist_count, :name, :image_thumbnail, :to_lat_lng, :to => :place
+    delegate :image, :lat, :lng, :address_lines, :address, :flat_address, :wishlist_count, :name, :image_thumbnail, :to_lat_lng, :to => :place
     
     def initialize(params={})
       @place = params[:place]
@@ -104,13 +104,13 @@ class PlaceSearch < ActiveRecord::Base
     @benchmarks[:local] = Benchmark.measure do 
       options = {:page => page, :per_page => per_page}
       options[:order] = "@relevance DESC, wishlist_count DESC"
-      options[:field_weights] = {:clean_name => 5, :city => 2, :country => 1}
+      options[:field_weights] = {:name => 5, :city => 2, :country => 1}
       if @position
         options[:geo] = @position.ts_geo
         options[:order] << ", @geodist ASC"
       end
       options.merge!(:match_mode => :any)
-      local = Place.search(@cleanq, options).compact
+      local = Place.prepare_for_nesting(Place.search(@cleanq, options).compact)
     end
     local.each do |lp|
       @results[lp.canonical_id] ||= Result.new(:place => lp, :position => @position, :query => @cleanq, :source => "local")

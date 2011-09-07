@@ -40,8 +40,19 @@
     padding: 50px 0 70px;
   }
   .activity_item {
-    padding: 5px;
+    padding: 5px 30px 5px 5px;
+    position: relative;
     background: #fff;
+    .follow {
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 30px;
+      text-decoration: none;
+      background: transparent url(/images/icons/fwdarrow14x21.png) no-repeat center center;      
+    }
     .image {
       z-index: 2;
       position: relative;
