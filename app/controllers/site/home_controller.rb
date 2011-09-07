@@ -2,7 +2,6 @@ class Site::HomeController < Site::BaseController
   layout "oreo"
   
   def index
-    clear_partial_application
     if current_user.try(:city) && !params[:stay]
       redirect_to city_path(current_user.city)
     else

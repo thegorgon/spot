@@ -1,9 +1,0 @@
-%tr.center.application{:id => dom_id(application)}
-  %td= application.id
-  %td= mail_to application.user.email_with_name
-  %td= "#{time_ago_in_words(application.created_at)} ago"
-  %td= yes_no(application.approved?).titlecase
-  %td
-    =link_to application.approved?? "Reject" : "Approve", toggle_admin_application_path(application), "data-method" => "put", :class => "rowlink ajax"
-    \|
-    =link_to "Delete", admin_application_path(application), "data-method" => "delete", :class => "rowlink ajax", "data-confirm" => "Are you sure? This action is irreversible!"

@@ -3,9 +3,7 @@ class MembershipApplication < ActiveRecord::Base
   belongs_to :city
   serialize :survey
   accepts_nested_attributes_for :user
-  after_create :deliver_thank_you, :unless => :approved?
   after_validation :check_instant_approval
-  after_save :send_approval_email
   validate :user_hasnt_applied, :on => :create
 
   has_acquisition_source :count => :applied
@@ -78,14 +76,6 @@ class MembershipApplication < ActiveRecord::Base
     self[:survey] ||= {}
   end
   
-  def deliver_thank_you
-    TransactionMailer.application_thanks(self).deliver!
-  end
-  
-  def deliver_approved
-    TransactionMailer.application_approved(self).deliver!
-  end
-  
   private
   
   def check_instant_approval
@@ -93,10 +83,6 @@ class MembershipApplication < ActiveRecord::Base
       self.approved_at = Time.now
       invitation.claimed!
     end
-  end
-
-  def send_approval_email
-    deliver_approved if approved? && approved_at_was.nil?
   end
   
   def user_hasnt_applied

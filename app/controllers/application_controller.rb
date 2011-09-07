@@ -199,7 +199,7 @@ class ApplicationController < ActionController::Base
   def record_acquisition_event(event, value=nil)
     event = AcquisitionEvent.lookup(event) if event.kind_of?(String)
     email = current_user.try(:email_subscriptions)
-    email ||= EmailSubscriptions.find_by_email(partial_application[:email]) if partial_application[:email].present?
+    email ||= EmailSubscriptions.find_by_email(invite_request.email) if invite_request.try(:email).present?
     
     AcquisitionEvent.create! do |ae|
       ae.user_id = current_user.try(:id) || -1

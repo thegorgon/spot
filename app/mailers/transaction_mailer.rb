@@ -1,29 +1,28 @@
 class TransactionMailer < ApplicationMailer
   default :to => Proc.new { @user.try(:email_with_name) || @email }
 
+  def invite_coming_soon(request)
+    @title = "Patience is a Virtue Worth Rewarding"
+    @email = request.email
+    @city_name = request.city_name
+    @promo_code = "REQUEST30"
+    mail
+  end
+  
+  def invitation(request, invite)
+    @email = request.email
+    @city = request.city
+    @title = "Lucky You. You're Invited."
+    @invite = invite
+    @invite_url = portal_url(:mc => invite.code, :cid => @city.id, :ir => request.id)
+    attachments.inline["invitation.png"] = File.read(Rails.root.join('public', 'images', 'email', 'invitation', 'youreinvited367x345.png'))
+    mail
+  end
+
   def preview_thanks(signup)
     @signup = signup
     @email = signup.email
     @title = "Thanks for Your Interest"
-    mail
-  end
-  
-  def application_thanks(application)
-    @application = application
-    @user = application.user
-    @email = application.user.email
-    @title = "Thank you for Applying"
-    mail
-  end
-
-  def application_approved(application)
-    @application = application
-    @user = application.user
-    @email = application.user.email
-    @title = "Congratulations and Welcome to Spot!"
-    Subscription::PLANS.each do |name, plan|
-      attachments.inline["#{plan.launch_cost}per#{plan.period_name}.png"] = File.read("#{Rails.root}/public/images/assets/payment/#{plan.launch_cost}per#{plan.period_name}100x50.png")
-    end
     mail
   end
   

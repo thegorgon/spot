@@ -15,6 +15,7 @@ class Site::MembershipApplicationsController < Site::BaseController
       if @application.save
         session[:invite_code] = nil # Clear session invite code
         session[:promo_code] = @application.promo_code if @application.promo_code
+        set_invite_request nil
         record_acquisition_event("applied")
         redirect_to @application.approved?? new_membership_path : application_path
       else 
@@ -35,7 +36,7 @@ class Site::MembershipApplicationsController < Site::BaseController
       @invalid = InvitationCode.expended.find_by_code(params[:r] || session[:invite_code])
     end
     @city = @referrer.user.city if @referrer
-    @city ||= City.find_by_id(partial_application[:city_id]) if partial_application[:city_id]
+    @city ||= invite_request.try(:city)
     @city ||= City.subscriptions_available.first
     render :action => "new"
   end

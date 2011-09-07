@@ -1,22 +1,18 @@
 -referrer ||= nil        
-
--if referrer && (@city.nil? || @city.subscriptions_available?)
-
+-unlocked = referrer
+-city_full = @city && !@city.subscriptions_available?
+-invited = referrer && (@city.nil? || @city.subscriptions_available?) 
+-if invited
   %h1.tf
-    =referrer.voucher
-    has vouched for you.
+    You're invited.
     Welcome to 
-    ="#{image_tag "logos/spotblk225x180.png", :size => "55x44"}.".html_safe
-
--elsif partial_application[:email] && (@city.nil? || @city.subscriptions_available?)
-  %h1.tf
-    Finish Your Application...
+    ="#{image_tag "logos/spotblk225x180.png", :size => "63x50"}.".html_safe
 
 .about
   .text.tf
     To ensure an unforgettable experience, membership is limited to 10,000 restaurant devotees per city.
 
-=spot_form_for :application, :url => application_path, :display => "light inlinelabels#{conditionally(" unlocked", referrer)}#{conditionally(" applying", partial_application[:email] || (@city && !@city.subscriptions_available?))}", :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
+=spot_form_for :application, :url => application_path, :display => "light inlinelabels#{conditionally(" unlocked", unlocked)}#{conditionally(" applying", city_full)}", :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
   =f.hidden_field :invitation_code, :value => referrer.try(:code)
   #invitecodesection.invitecode.step
     -if @invalid
@@ -31,8 +27,7 @@
         
       =link_to "Unlock", "#", :class => "btnorg77x28 unlock"
     .vouched
-    
-    =link_to "No invitation? Request access.", "#", :class => "wanttoapply switchmode"
+        
   .application.step
     -if @city && !@city.subscriptions_available?
       %h2.tf.capacity We're at capacity. Apply to be notified when space opens up.
@@ -46,11 +41,10 @@
         -if logged_in?
           =uf.email_field :email, :placeholder => "email address", :required => true, :label => "email : ", :value => current_user.try(:email)
         -else
-          =uf.email_field :email, :placeholder => "email address", :required => true, :label => "email : ", "data-validate-url" => availability_email_path, "data-invalid-msg" => "looks like you've already registered", :value => partial_application[:email]
+          =uf.email_field :email, :placeholder => "email address", :required => true, :label => "email : ", "data-validate-url" => availability_email_path, "data-invalid-msg" => "looks like you've already registered", :value => invite_request.try(:email)
           =uf.password_field 'password', :placeholder => "password", :label => "password : ", :required => true, :minlength => 4, :maxlength => 25
       =f.city_select 'city_id', current_user.try(:city_id) || @city.try(:id), :html => { :required => true }
         
       %li.buttons.clearfix
         =button_tag :class => "btnorg300x41 tf" do
           submit
-    =link_to "Have an invitation?", "#", :class => "haveaninvite switchmode"

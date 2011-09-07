@@ -54,7 +54,7 @@
           =spot_form_for :email, :url => '#', :display => "faded clearfix", :ul_id => "email_form" do |f|
             =button_tag :class => "btnorg115x32 right tf" do
               =session_invite ? "continue" : "request"
-            =f.email_field :email, :placeholder => "enter your email", :value => current_user.try(:email), :container_class => "left", :required => true
+            =f.email_field :email, :placeholder => "enter your email", :value => invite_request.try(:email), :container_class => "left", :required => true
           
           =spot_form_for :invitation, :url => '#', :display => "faded clearfix #{conditionally('unlockable', session_invite)}", :ul_id => "invite_form" do |f|
             .clearfix
@@ -99,9 +99,9 @@
     =hidden_field_tag :mc, '', :id => "invitation_code_value", :value => session_invite.try(:code)
     =hidden_field_tag :cid, '', :id => "invitation_city_id"
     
-  =form_for :email_subscription, :url => subscribe_email_path, :html => {:id => "subscription_form"} do |f|
-    =f.hidden_field :email
-    =f.hidden_field :city_id
+  =form_for invite_request || InviteRequest.new, :as => :request, :html => {:id => "invite_request_form"} do |f|
+    =f.hidden_field :email, :id => "invite_request_email"
+    =f.hidden_field :city_id, :id => "invite_request_city_id"
   
   -if current_user
     =form_for :account, :url => account_path, :html => {:id => "account_update_form", :method => :put} do |f|

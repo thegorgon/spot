@@ -44,10 +44,10 @@ Spot::Application.routes.draw do
     resource :widget, :only => [:show]
     resource :email, :only => [:show, :update] do
       delete "unsubscribe"
-      post "subscribe"
       get "availability"
       get "existence"
     end
+    resources :invite_requests, :only => [:create, :update]
     controller "home" do
       get "about", :action => "about"
       get "privacy", :action => "privacy"
@@ -77,8 +77,8 @@ Spot::Application.routes.draw do
       get "images", :on => :member
     end
     resources :activity_items, :only => [:index]
-    resources :applications, :only => [:index, :destroy], :controller => "membership_applications" do
-      put "toggle", :on => :member
+    resources :invite_requests, :only => [:index, :destroy] do
+      put "trigger", :on => :member
     end
     resources :duplicates, :only => [:index, :create] do
       member do 

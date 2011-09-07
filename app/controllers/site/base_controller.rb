@@ -4,24 +4,14 @@ class Site::BaseController < ApplicationController
   
   protected
   
-  def partial_application
-    app = session[:partial_application]
-    if app && app.kind_of?(Hash) && app[:email]
-      app
-    else
-      {}
-    end
+  def set_invite_request(request)
+    session[:invite_request_id] = request.try(:id)
   end
-  helper_method :partial_application
-
-  def set_partial_application(value)
-    value.symbolize_keys!
-    session[:partial_application] = value if value.kind_of?(Hash) && value[:email]
+  
+  def invite_request
+    @invite_request ||= InviteRequest.find_by_id(session[:invite_request_id]) if session[:invite_request_id]
   end
-
-  def clear_partial_application
-    session[:partial_application] = nil
-  end
+  helper_method :invite_request
   
   def require_no_user
     authenticate

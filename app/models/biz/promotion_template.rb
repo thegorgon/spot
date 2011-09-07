@@ -4,6 +4,8 @@ class PromotionTemplate < ActiveRecord::Base
   belongs_to :place
   attr_protected :approved_at
   
+  after_save :update_events
+  
   DISCOUNTS = [25, 30, 40, 50]
   APPROVED_STATUS = 2
   REJECTED_STATUS = 1
@@ -109,6 +111,13 @@ class PromotionTemplate < ActiveRecord::Base
   end
   
   private
+  
+  def update_events
+    events.all.each do |event|
+      event.set_attributes_from_template
+      event.save
+    end
+  end
   
   def set_place
     self.place ||= business.place

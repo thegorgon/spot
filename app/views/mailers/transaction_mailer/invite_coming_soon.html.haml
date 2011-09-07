@@ -1,0 +1,14 @@
+%p
+  We're moving as fast as we can, but we're not quite ready to make it to
+  ="#{@city_name}."
+  
+%p
+  We do appreciate your patience! As soon as we arrive, we'd like to offer you your first 3 months free. That's $30.
+  
+%p
+  Just use this code when you sign up. It'll be our little secret.
+  %code{:style => "display:block;font-family:monospace;font-size:25px;display:block;text-align:center;"}=@promo_code
+%p
+  Feels good, doesn't it?  
+    
+=render :partial => "shared/mailers/signature"

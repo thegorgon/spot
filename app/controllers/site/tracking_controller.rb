@@ -16,6 +16,10 @@ class Site::TrackingController < Site::BaseController
       session[:promo_code] = mc.promo.try(:code)
     end
     
+    if params[:ir] && ir = InviteRequest.find_by_id(params[:ir])
+      set_invite_request(ir)
+    end
+    
     if params[:asrc].present?
       source = AcquisitionSource.find_by_id(params[:asrc])
       source_id = source.try(:id)

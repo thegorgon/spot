@@ -5,6 +5,9 @@ class PromotionEvent < ActiveRecord::Base
   has_many :codes, :class_name => "PromotionCode", :foreign_key => "event_id", :dependent => :delete_all
   before_validation :set_attributes_from_template, :if => Proc.new { |e| e.template.present? }
   after_create :generate_codes
+  
+  after_save :update_codes
+  
   validate :one_template_event_per_date, :on => :create, :if => Proc.new { |e| e.template.present? }
   validates :name, :presence => true
   validates :description, :presence => true
@@ -102,14 +105,6 @@ class PromotionEvent < ActiveRecord::Base
     PromotionCode
   end
   
-  private
-  
-  def generate_codes
-    count.times do |i|
-      code_class.create!(:event => self)
-    end
-  end
-  
   def set_attributes_from_template
     self.count = template.count if count.to_i <= 0
     self.description ||= template.description
@@ -124,6 +119,21 @@ class PromotionEvent < ActiveRecord::Base
     self.end_time ||= template.end_time
   end
   
+  private
+  
+  def update_codes
+    codes.all.each do |code|
+      code.set_attributes_from_event
+      code.save
+    end
+  end
+  
+  def generate_codes
+    count.times do |i|
+      code_class.create!(:event => self)
+    end
+  end
+    
   def one_template_event_per_date    
     if business.promotion_events.where(:template_id => template_id, :date => date).count > 0
       errors.add(:base, "this promotion is already active on that date")

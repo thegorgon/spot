@@ -445,28 +445,6 @@ ul.pillbox {
         display: none;
       }
     }
-    &.applying {
-      .invitecode {
-        opacity: 0;
-        .ie7 &, .ie8 & {
-          display: none;
-        }
-      }
-      .application {
-        opacity: 1;        
-        z-index: 10;
-        .capacity {
-          font-size: 18px;
-          margin-bottom: 10px;
-        }
-        .ie7 &, .ie8 & {
-          display: block;
-        }
-        .survey {
-          display: block;
-        }
-      }
-    }
     &.unlocked {
       .application {
         opacity: 1;
@@ -492,7 +470,7 @@ ul.pillbox {
   h1 {
     margin: 0 0 20px 0;
     img {
-      margin-bottom: -17px;
+      margin-bottom: -19px;
     }
   }
   .about {

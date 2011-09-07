@@ -2,6 +2,7 @@ class ApplicationMailer < ActionMailer::Base
   include AbstractController::Callbacks
   layout 'mailer'
   before_filter :set_inline_attachments
+  
   default_url_options[:host] = HOSTS[Rails.env]
   default :from => "The Spot Team <spot@spotmembers.com>",
           'List-Unsubscribe' => Proc.new {  "<#{email_url(:email => @email, :key => EmailSubscriptions.passkey(@email))}>" },

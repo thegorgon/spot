@@ -1,0 +1,13 @@
+%table.data
+  %thead
+    %tr
+      %th Id
+      %th Email
+      %th Received
+      %th Invite Sent?
+      %th Joined?
+      %th City Name
+      %th Actions
+  %tbody
+    -@requests.to_a.each do |req|
+      =render :partial => "row", :object => req, :as => :request

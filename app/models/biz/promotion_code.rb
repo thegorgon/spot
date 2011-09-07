@@ -77,17 +77,17 @@ class PromotionCode < ActiveRecord::Base
     end
   end
   
-  private
-  
-  def assign_code
-    self.code ||= self.class.random_code
-    assign_code if PromotionCode.where(:business_id => business_id, :code => code, :date => (date - 90.days..date + 90.days)).exists?
-  end
-  
   def set_attributes_from_event
     self.start_time = event.start_time
     self.end_time = event.end_time
     self.date = event.date
     self.business = event.business
+  end  
+  
+  private
+  
+  def assign_code
+    self.code ||= self.class.random_code
+    assign_code if PromotionCode.where(:business_id => business_id, :code => code, :date => (date - 90.days..date + 90.days)).exists?
   end  
 end

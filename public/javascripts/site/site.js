@@ -14,20 +14,6 @@
         lock = $('#applicationform').find('#application_lock'),
         invitationCode = $('#applicationform').find('#application_invitation_code'),
         unlock = $('#applicationform').find('.unlock');
-      $('#applicationform').find('.wanttoapply').unbind('click.apply').bind('click.apply', function(e) {
-        e.preventDefault();
-        var form = $(this).parents('ul.form:first');
-        form.removeClass('unlocking').removeClass('unlocked').removeClass('unlockable').addClass('applying');
-        lock.attr('disabled', 'disabled').val('');
-        form.find('.vouched').html('');
-      });
-      $('#applicationform').find('.haveaninvite').unbind('click.apply').bind('click.apply', function(e) {
-        e.preventDefault();
-        var form = $(this).parents('ul.form:first');
-        form.removeClass('applying').removeClass('unlocked').removeClass('unlockable');
-        lock.removeAttr('disabled').val('')
-        form.find('.vouched').html('');
-      });
       // Initialize Apply Form Lock
       go.Lock.init({ 
           lock: $('#applicationform').find('#application_lock'),
@@ -113,13 +99,13 @@
       $('#email_form').unbind('submit.continue').bind('submit.continue', function(e) {
         e.preventDefault();
         if ($(this).validate()) {
-          var sxnForm = $('#subscription_form');
-          sxnForm.find('#email_subscription_email').val($(this).find('#email_email').val());
+          var rForm = $('#invite_request_form');
+          rForm.find('#invite_request_email').val($(this).find('#email_email').val());
           go.Events.analytics('Acquisition', 'Email Entered')
           initMap(function() {
-            sxnForm.find('#email_subscription_city_id').val($(this).attr('data-id'));
+            rForm.find('#invite_request_city_id').val($(this).attr('data-id'));
             go.Events.analytics('Acquisition', 'City Selected')
-            sxnForm.submit();
+            rForm.submit();
           });          
         }
       });

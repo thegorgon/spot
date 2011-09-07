@@ -35,6 +35,7 @@ class Membership < ActiveRecord::Base
   private
     
   def convert_application
+    InviteRequest.accounting!(self)
     user.membership_application.converted!
   end  
 end

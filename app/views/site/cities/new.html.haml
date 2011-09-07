@@ -4,7 +4,7 @@
   -else
     We're Coming Soon
     
-.coming_soon.clearfix{:class => conditionally("applied", partial_application[:email])}
+.coming_soon.clearfix{:class => conditionally("requested", invite_request)}
   %h1.tf We're on our way...
   .image.right
     .speechbubble.upright.tf
@@ -16,23 +16,20 @@
     %p
       We promise this won't be like that.
   
-    -if partial_application[:email]
+    -if invite_request
       .thankyou
         %h2.tf
-          ="We'll send an email to #{partial_application[:email]} when we're close to #{(partial_application[:city_name].try(:titlecase) || 'your city')}."
+          ="We'll send an email to #{invite_request.email} when we're close to #{(invite_request.city_name.try(:titlecase) || 'your city')}."
           =link_to "change?", root_path, :rel => ".coming_soon", 'data-toggle-class' => "updating"
     
-    =spot_form_for :email_subscription, :url => subscribe_email_path, :display => "light inlinelabels", :html => {:id => "city_preview"} do |f|
-      -if partial_application[:email]
-        =f.hidden_field :existing, :value => partial_application[:email]
-        =f.hidden_field :passkey, :value => EmailSubscriptions.passkey(partial_application[:email])
+    =spot_form_for invite_request, :as => :request, :display => "light inlinelabels", :html => {:id => "city_preview"} do |f|
       %h2.tf Where do you live? Let us know and we'll try to come there next.  
-      =f.email_field :email, :label => "email : ", :placeholder => "email", :value => partial_application[:email]
+      =f.email_field :email, :label => "email : ", :placeholder => "email", :value => invite_request.try(:email)
       %li.note so we can let you know when we arrive.
       =f.city_select 'city_id', @city.try(:id) || -1, :html => { :required => true }, :prepend_values => [["Other", -1]]      
       %li.note where do you live?
       #othercityfields{:class => conditionally("hidden", @city.present?)}
-        =f.text_field :other_city, :label => "where? ", :placeholder => "your city", :id => "preview_city", :value => @city ? "" : partial_application[:city_name]
+        =f.text_field :requested_city_name, :label => "where? ", :placeholder => "your city", :id => "preview_city"
         %li.note we don't have an extensive list. help us grow it?
       %li.buttons
         =button_tag :class => "btnorg300x41 tf" do

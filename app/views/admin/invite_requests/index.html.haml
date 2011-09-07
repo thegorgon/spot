@@ -1,0 +1,20 @@
+-filters = params.slice('filter')
+.manager
+  .top.clearfix
+    .pagination
+      -unless @requests.last_page?
+        .next=link_to "Next &rarr;".html_safe, admin_invite_requests_path(filters.merge(:page => @requests.current_page + 1))
+      -unless @requests.first_page?
+        .previous=link_to "&larr; Previous".html_safe, admin_invite_requests_path(filters.merge(:page => @requests.previous_page))
+    %h1.title="#{@requests.total_count} Applications"
+    .links
+      =link_to "Queue", admin_invite_requests_path(:filter => 4)
+      =link_to "Sent", admin_invite_requests_path(:filter => 2)
+      =link_to "Unsent", admin_invite_requests_path(:filter => 1)
+      =link_to "All", admin_invite_requests_path
+  =render :partial => "table", :object => @requests, :as => :requests
+  .pagination.bottom
+    -unless @requests.last_page?
+      .next=link_to "Next &rarr;".html_safe, admin_invite_requests_path(params.slice('filter').merge(:page => @requests.current_page + 1))
+    -unless @requests.first_page?
+      .previous=link_to "&larr; Previous".html_safe, admin_invite_requests_path(params.slice('filter').merge(:page => @requests.previous_page))
