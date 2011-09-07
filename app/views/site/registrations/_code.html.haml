@@ -11,7 +11,7 @@
     %li
       ="Call #{@registration.place.name} to make a reservation"
       -if @registration.place.phone_number.present?
-        ="at #{phone_link(@registration.place.phone_number.gsub(' ', '&nbsp;')).html_safe}"
+        ="at #{phone_link(@registration.place.phone_number.gsub(' ', '&nbsp;'))}".html_safe
     %li 
       ="Come to #{@registration.place.name} on #{@registration.event.date.strftime('%A, %B %d, %Y')}"
       -if @registration.promotion.all_day?
