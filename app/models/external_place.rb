@@ -4,7 +4,7 @@ module ExternalPlace
     external = {}
     sources.each do |source|
       source.where(:place_id => by_id.keys).all.each do |extplace|
-        (external[extplace.id] ||= {})[source] = extplace
+        (external[extplace.place_id] ||= {})[source] = extplace
       end
     end
     by_id.values.map! do |place|
