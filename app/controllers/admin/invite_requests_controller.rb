@@ -6,7 +6,7 @@ class Admin::InviteRequestsController < Admin::BaseController
   
   def destroy
     @request = InviteRequest.find(params[:id])
-    @request.user.destroy
+    @request.destroy
     respond_to do |format|
       format.html { redirect_to admin_invite_requests_path }
       format.js { render :json => { :success => true, :html => nil } }
