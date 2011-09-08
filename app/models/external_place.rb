@@ -143,7 +143,7 @@ module ExternalPlace
       p      
     end
     
-    def address
+    def full_address
       address_lines.join("\n")
     end
   end

@@ -154,6 +154,10 @@ class Place < ActiveRecord::Base
     @tweet << " ##{region_abbr.gsub(' ', '').downcase}" if region
   end
   
+  def full_address
+    address
+  end
+  
   def address_lines
     address.to_s.split("\n")
   end
