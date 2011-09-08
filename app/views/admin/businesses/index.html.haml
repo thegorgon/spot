@@ -4,7 +4,7 @@
       -unless @businesses.last_page?
         .next=link_to "Next &rarr;".html_safe, admin_businesses_path(:page => @businesses.current_page + 1, :filter => params[:filter])
       -unless @businesses.first_page?
-        .previous=link_to "&larr; Previous".html_safe, admin_businesses_path(:page => @businesses.previous_page, :filter => params[:filter])
+        .previous=link_to "&larr; Previous".html_safe, admin_businesses_path(:page => @businesses.current_page - 1, :filter => params[:filter])
     %h1.title="#{@businesses.total_count} Businesses"
     .links
       =link_to "Pending Approval", admin_businesses_path(:filter => 1)
@@ -15,4 +15,4 @@
     -unless @businesses.last_page?
       .next=link_to "Next &rarr;".html_safe, admin_businesses_path(:page => @businesses.current_page + 1, :filter => params[:filter])
     -unless @businesses.first_page?
-      .previous=link_to "&larr; Previous".html_safe, admin_businesses_path(:page => @businesses.previous_page, :filter => params[:filter])
+      .previous=link_to "&larr; Previous".html_safe, admin_businesses_path(:page => @businesses.current_page - 1, :filter => params[:filter])

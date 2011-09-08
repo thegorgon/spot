@@ -6,7 +6,7 @@
   %td= yes_no(request.membership.present?)
   %td= request.city_name
   %td
-    -if request.membership.nil? && request.city.try(:subscriptions_available?) 
+    -if request.membership.nil? && request.city_id > 0 && request.city.try(:subscriptions_available?) 
       =link_to request.invite_sent?? "Resend Invite" : "Send Invite", trigger_admin_invite_request_path(request), "data-method" => "put", :class => "rowlink ajax"
       \|
     =link_to "Delete", admin_invite_request_path(request), "data-method" => "delete", :class => "rowlink ajax", "data-confirm" => "Are you sure? This action is irreversible!"

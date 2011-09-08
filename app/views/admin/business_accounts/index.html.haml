@@ -4,7 +4,7 @@
       -unless @accounts.last_page?
         .next=link_to "Next &rarr;".html_safe, admin_business_accounts_path(:page => @accounts.current_page + 1, :filter => params[:filter])
       -unless @accounts.first_page?
-        .previous=link_to "&larr; Previous".html_safe, admin_business_accounts_path(:page => @accounts.previous_page, :filter => params[:filter])
+        .previous=link_to "&larr; Previous".html_safe, admin_business_accounts_path(:page => @accounts.current_page - 1, :filter => params[:filter])
     %h1.title=pluralize(@accounts.total_count, "Account")
     .links
       =link_to "Pending Approval", admin_business_accounts_path(:filter => 1)
@@ -15,4 +15,4 @@
     -unless @accounts.last_page?
       .next=link_to "Next &rarr;".html_safe, admin_business_accounts_path(:page => @accounts.current_page + 1, :filter => params[:filter])
     -unless @accounts.first_page?
-      .previous=link_to "&larr; Previous".html_safe, admin_business_accounts_path(:page => @accounts.previous_page, :filter => params[:filter])
+      .previous=link_to "&larr; Previous".html_safe, admin_business_accounts_path(:page => @accounts.current_page - 1, :filter => params[:filter])

@@ -5,7 +5,7 @@
       -unless @promotions.last_page?
         .next=link_to "Next &rarr;".html_safe, admin_promotions_path(:page => @promotions.current_page + 1, :filter => params[:filter])
       -unless @promotions.first_page?
-        .previous=link_to "&larr; Previous".html_safe, admin_promotions_path(:page => @promotions.previous_page, :filter => params[:filter])
+        .previous=link_to "&larr; Previous".html_safe, admin_promotions_path(:page => @promotions.current_page - 1, :filter => params[:filter])
     %h1.title="#{@promotions.total_count} Promotions"
     .links
       =link_to "Pending Approval", admin_promotions_path(:filter => 1)
@@ -17,7 +17,7 @@
     -unless @promotions.last_page?
       .next=link_to "Next &rarr;".html_safe, admin_promotions_path(:page => @promotions.current_page + 1, :filter => params[:filter])
     -unless @promotions.first_page?
-      .previous=link_to "&larr; Previous".html_safe, admin_promotions_path(:page => @promotions.previous_page, :filter => params[:filter])
+      .previous=link_to "&larr; Previous".html_safe, admin_promotions_path(:page => @promotions.current_page - 1, :filter => params[:filter])
 
 =content_for :scripts do
   =javascript_include_tag 'vendor/tiny_mce/jquery.tinymce.js'

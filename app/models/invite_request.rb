@@ -15,7 +15,7 @@ class InviteRequest < ActiveRecord::Base
     finder = finder.unsent_invites if n & 1 > 0
     finder = finder.sent_invites if n & 2 > 0
     finder = finder.ready_for_sending if n & 4 > 0
-    finder = finder.includes(:city, :membership)
+    finder = finder.order("id DESC").includes(:city, :membership)
     finder
   end
   
@@ -24,7 +24,11 @@ class InviteRequest < ActiveRecord::Base
   end
 
   def city_name
-    city.try(:name) || requested_city_name
+    if city_id > 0 && city
+      city.name
+    else
+      requested_city_name
+    end
   end
   
   def invite_sent?

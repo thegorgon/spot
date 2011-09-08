@@ -4,7 +4,7 @@
       -unless @duplicates.last_page?
         .next=link_to "Next &rarr;".html_safe, admin_duplicates_path(params.slice('status').merge(:page => @duplicates.current_page + 1))
       -unless @duplicates.first_page?
-        .previous=link_to "&larr; Previous".html_safe, admin_duplicates_path(params.slice('status').merge(:page => @duplicates.previous_page))
+        .previous=link_to "&larr; Previous".html_safe, admin_duplicates_path(params.slice('status').merge(:page => @duplicates.current_page - 1))
     %h1.title="#{@duplicates.total_count} Duplicate Places"
     .links
       =link_to "Unresolved", admin_duplicates_path
@@ -16,4 +16,4 @@
     -unless @duplicates.last_page?
       .next=link_to "Next &rarr;".html_safe, admin_duplicates_path(params.slice('status').merge(:page => @duplicates.current_page + 1))
     -unless @duplicates.first_page?
-      .previous=link_to "&larr; Previous".html_safe, admin_duplicates_path(params.slice('status').merge(:page => @duplicates.previous_page))
+      .previous=link_to "&larr; Previous".html_safe, admin_duplicates_path(params.slice('status').merge(:page => @duplicates.current_page - 1))

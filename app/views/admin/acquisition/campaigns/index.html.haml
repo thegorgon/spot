@@ -4,7 +4,7 @@
       -unless @campaigns.last_page?
         .next=link_to "Next &rarr;".html_safe, admin_acquisition_campaigns_path(filters.merge(:page => @campaigns.current_page + 1))
       -unless @campaigns.first_page?
-        .previous=link_to "&larr; Previous".html_safe, admin_acquisition_campaigns_path(filters.merge(:page => @campaigns.previous_page))
+        .previous=link_to "&larr; Previous".html_safe, admin_acquisition_campaigns_path(filters.merge(:page => @campaigns.current_page - 1))
     %h1.title="#{pluralize( @campaigns.total_count, "Campaign")}"
 
   %table.data
@@ -26,7 +26,7 @@
     -unless @campaigns.last_page?
       .next=link_to "Next &rarr;".html_safe, admin_acquisition_campaigns_path(params.slice('filter').merge(:page => @campaigns.current_page + 1))
     -unless @campaigns.first_page?
-      .previous=link_to "&larr; Previous".html_safe, admin_acquisition_campaigns_path(params.slice('filter').merge(:page => @campaigns.previous_page))
+      .previous=link_to "&larr; Previous".html_safe, admin_acquisition_campaigns_path(params.slice('filter').merge(:page => @campaigns.current_page - 1))
 
   .form.new.clearfix
     %h2 New Acquisition Campaign

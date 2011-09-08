@@ -4,7 +4,7 @@
       -unless @places.last_page?
         .next=link_to "Next &rarr;".html_safe, matches_admin_places_path(:filter => params[:filter], :page => @places.current_page + 1)
       -unless @places.first_page?
-        .previous=link_to "&larr; Previous".html_safe, matches_admin_places_path(:filter => params[:filter], :page => @places.previous_page)
+        .previous=link_to "&larr; Previous".html_safe, matches_admin_places_path(:filter => params[:filter], :page => @places.current_page - 1)
     %h1.title="#{@places.total_count} Places"
     .links
       =link_to "Image Queue", matches_admin_places_path(:filter => 3)
@@ -40,4 +40,4 @@
     -unless @places.last_page?
       .next=link_to "Next &rarr;".html_safe, matches_admin_places_path(:filter => params[:filter], :page => @places.current_page + 1)
     -unless @places.first_page?
-      .previous=link_to "&larr; Previous".html_safe, matches_admin_places_path(:filter => params[:filter], :page => @places.previous_page)
+      .previous=link_to "&larr; Previous".html_safe, matches_admin_places_path(:filter => params[:filter], :page => @places.current_page - 1)

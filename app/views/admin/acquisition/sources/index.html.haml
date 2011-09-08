@@ -4,7 +4,7 @@
       -unless @sources.last_page?
         .next=link_to "Next &rarr;".html_safe, admin_acquisition_sources_path(filters.merge(:page => @sources.current_page + 1))
       -unless @sources.first_page?
-        .previous=link_to "&larr; Previous".html_safe, admin_acquisition_sources_path(filters.merge(:page => @sources.previous_page))
+        .previous=link_to "&larr; Previous".html_safe, admin_acquisition_sources_path(filters.merge(:page => @sources.current_page - 1))
     %h1.title="#{@sources.total_count} Places"
 
   %table.data
@@ -40,7 +40,7 @@
     -unless @sources.last_page?
       .next=link_to "Next &rarr;".html_safe, admin_acquisition_sources_path(params.slice('filter').merge(:page => @sources.current_page + 1))
     -unless @sources.first_page?
-      .previous=link_to "&larr; Previous".html_safe, admin_acquisition_sources_path(params.slice('filter').merge(:page => @sources.previous_page))
+      .previous=link_to "&larr; Previous".html_safe, admin_acquisition_sources_path(params.slice('filter').merge(:page => @sources.current_page - 1))
 
   .form.new.clearfix
     %h2 New Acquisition Source
