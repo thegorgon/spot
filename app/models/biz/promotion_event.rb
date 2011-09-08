@@ -107,16 +107,16 @@ class PromotionEvent < ActiveRecord::Base
   
   def set_attributes_from_template
     self.count = template.count if count.to_i <= 0
-    self.description ||= template.description
-    self.short_summary ||= template.short_summary
-    self.name ||= template.name
+    self.description = template.description
+    self.short_summary = template.short_summary
+    self.name = template.name
     self.approved_at = Time.now if template.approved?
-    self.start_time ||= template.start_time
-    self.business ||= template.business
-    self.place ||= template.business.place
-    self.lat ||= template.business.place.lat
-    self.lng ||= template.business.place.lng
-    self.end_time ||= template.end_time
+    self.start_time = template.start_time
+    self.business = template.business
+    self.place = template.business.place
+    self.lat = template.business.place.lat
+    self.lng = template.business.place.lng
+    self.end_time = template.end_time
   end
   
   private
