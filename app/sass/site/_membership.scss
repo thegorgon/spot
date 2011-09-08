@@ -93,6 +93,13 @@
       font-weight: normal;
     }
   }
+  #invite_popover {
+    .sharing {
+      input.text {
+        width: 200px;
+      }
+    }
+  }
   .sharing {
     input.text {
       width: 280px;
