@@ -1,30 +1,8 @@
 @media only screen and (max-device-width:480px)  {
-  #site_home_index {
-    #bd {
-      #slideshow {
-        #nextslide {
-          height: 0;
-          width: 0;
-          display: none;
-        }
-        #lastslide {
-          height: 0;
-          width: 0;
-          display: none;
-        }
-      }
-    }
-  }
 }
 
 @media only screen and (max-device-width:480px) and (orientation: portrait) {
-  #site_home_index {
-    height: 415px
-  }
 }
 
 @media only screen and (max-device-width:480px) and (orientation: landscape) {
-  #site_home_index {
-    height: 265px
-  }
 }
