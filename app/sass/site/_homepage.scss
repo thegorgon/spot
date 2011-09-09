@@ -23,8 +23,9 @@
       display: none;
     }
     .icons {
-      float: left;
-      margin: 14px 0 0 20px;
+      position: absolute;
+      top: 14px;
+      left: 20px;
       width: 457px;
       a {
         display: block;

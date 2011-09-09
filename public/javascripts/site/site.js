@@ -23,15 +23,6 @@
             $(this).removeClass('unlocking').addClass('unlocked');
           }
       });
-      
-      $('#aboutmembership').modal({
-        trigger: '.btnmemabout', 
-        width: 840,
-        open: function() {
-          go.Events.pageView('/membership/about')
-          go.Events.analytics('Acquisition', 'Membership Dialog Launch')
-        }
-      });   
       $('.designed_by_spot').unbind('mouseenter.show-explain').bind('mouseenter.show-explain', function(e) {
         var self = $(this);
         self.data('popover-timeout', setTimeout(function() { showDesignedBySpot(self) }, 500));
@@ -44,17 +35,27 @@
         e.stopPropagation();
         showDesignedBySpot($(this));
       });
-      $('#applydialog').modal({
-        trigger: '.btnmembership', 
-        width: 800,
-        open: function() {
-          go.Events.pageView('/application/new')
-          go.Events.analytics('Acquisition', 'Apply Dialog Launch')
-        }
-      });
-      if ($('#applydialog').hasClass('autoopen')) {
-        $('#applydialog').dialog("open");
-      }      
+      if (!$.mobile()) {
+        $('#aboutmembership').modal({
+          trigger: '.btnmemabout', 
+          width: 840,
+          open: function() {
+            go.Events.pageView('/membership/about')
+            go.Events.analytics('Acquisition', 'Membership Dialog Launch')
+          }
+        });
+        $('#applydialog').modal({
+          trigger: '.btnmembership', 
+          width: 800,
+          open: function() {
+            go.Events.pageView('/application/new')
+            go.Events.analytics('Acquisition', 'Apply Dialog Launch')
+          }
+        });
+        if ($('#applydialog').hasClass('autoopen')) {
+          $('#applydialog').dialog("open");
+        }      
+      }
     },
     site_home_index: function() {
       var slideshow = $("#slidedeck").slideshow({
@@ -85,7 +86,7 @@
             });
           }
         }, tabs = $('.entrance').find('.tab');
-      slideshow.start();
+      if (!$.mobile()) { slideshow.start(); }
       tabs.unbind('click.tabs').bind('click.tabs', function(e) {
         var rel = $(this).attr('rel') ? $(this).attr('rel') : this;
         e.preventDefault();
