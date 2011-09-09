@@ -58,6 +58,7 @@ class City < ActiveRecord::Base
     {
       :_type => self.class.to_s,
       :id => id,
+      :slug => slug,
       :name => name.titlecase,
       :region => region.titlecase,
       :region_code => region_code.upcase,
