@@ -30,6 +30,16 @@ class BusinessMailer < ApplicationMailer
     mail( :subject => "Congratulations, You Account is Approved!" )  
   end
   
+  def code_claimed(code)
+    @code = code
+    @biz = code.business
+    @account = @biz.business_account
+    @event = code.event
+    @owner = @code.owner
+    @email = @account.email
+    mail( :subject => "Congratulations! Your promotion has been claimed." )  
+  end
+  
   def promotion_approved(promotion)
     @promotion = promotion
     @account = promotion.business.business_account
@@ -45,7 +55,7 @@ class BusinessMailer < ApplicationMailer
     @email = @account.email
     @reply_to = "julia@spotmembers.com"
     @phone_to = PHONE_NUMBER
-    mail( :subject => "Important information from Spot about your upcoming promotion" ) 
+    mail( :subject => "Important information from Spot about your upcoming promotion." ) 
   end
   
   def promotion_codes(business, date)

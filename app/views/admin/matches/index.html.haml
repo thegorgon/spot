@@ -16,7 +16,7 @@
       -@matches.each do |match|
         %tr.center{:class => match.proximity.close?? "match" : nil}
           %td=match.candidate.name
-          %td=match.candidate.flat_address
+          %td=match.candidate.full_address
           %td="#{match.proximity.geo_distance.round} m"
           %td="#{(match.proximity.name_match * 100).round}%"
           %td="#{(match.proximity.address_match * 100).round}%"

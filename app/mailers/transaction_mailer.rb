@@ -18,6 +18,13 @@ class TransactionMailer < ApplicationMailer
     attachments.inline["invitation.png"] = File.read(Rails.root.join('public', 'images', 'email', 'invitation', 'youreinvited367x345.png'))
     mail
   end
+  
+  def notify_invites_sent(count)
+    @count = count
+    @email = "contact@spotmembers.com"
+    @title = "Just Sent #{count} Requested Invitations Automatically"
+    mail
+  end
 
   def preview_thanks(signup)
     @signup = signup

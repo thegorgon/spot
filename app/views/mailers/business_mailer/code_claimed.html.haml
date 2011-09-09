@@ -1,24 +1,20 @@
 %p
-  Just dropping a note to confirm your registration for
+  ="Congratulations, #{@owner.name}, a Spot Member"
+  claimed a code for
+  your promotion, 
   =link_to @event.name, place_event_url(@event.place, @event.template)
-  at 
-  =link_to @event.place.name, place_url(@event.place)
   on
-  ="#{@event.date.strftime('%B %d, %Y')}."
+  ="#{@event.date.strftime('%B %d, %Y')}"
+  ="between #{@event.timeframe_array.join(' and ')}."
 
 %div
-  %p Here's your code so you don't forget. Just present this when you show up.
+  %p="#{@owner.first_name}'s code is :"
   %div{:style => "display:block;background:#fff;border:2px dashed #999;padding:5px 10px 7px 10px;margin:10px 0;font-family:monospace;font-size:50px;float:left;"}
     =@code.code
-
-%p{:style => "clear:both;"}
-  We understand that sometimes things come up. If you don't think you'll be able to make it, please give us 24 hours notice so another member can take advantage of this experience. You can view or cancel
-  =link_to "your registration", registration_url(@code)
-  at any time.
   
-%p 
+%p{:style => "clear:both;padding-top:10px;"}
   If you need us, night or day, contact us with any questions – we’re here to help!
-
+  
 %p{:style => "margin:10px 0 0;"}="Mail : #{mail_to "contact@spotmembers.com"}".html_safe
 %p{:style => "margin:0 0 10px;"}="Phone: #{PHONE_NUMBER}"
 

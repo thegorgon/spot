@@ -17,7 +17,7 @@
     %tbody
       -@codes.each do |code, mc|
         %tr.center.source{:id => dom_id(mc), :class => cycle("even", "odd")}
-          %td.code= code.upcase
+          %td.code= code
           %td= mc.invite.try(:invitation_count) || '-'
           %td= mc.invite.try(:claimed_count) || '-'
           %td= mc.promo.try(:name) || '-'

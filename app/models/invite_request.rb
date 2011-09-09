@@ -8,7 +8,7 @@ class InviteRequest < ActiveRecord::Base
   
   scope :unsent_invites, where(:invite_sent_at => nil)
   scope :sent_invites, where("invite_sent_at IS NOT NULL")
-  scope :ready_for_sending, where(["invite_sent_at IS NULL AND created_at < ?", Time.now - 24.hours])
+  scope :ready_for_sending, joins(:city).where(["invite_requests.invite_sent_at IS NULL AND invite_requests.created_at < ? AND cities.subscriptions_available > cities.subscription_count", Time.now - 1.hours])
   
   def self.filter(n)
     finder = self
@@ -21,6 +21,15 @@ class InviteRequest < ActiveRecord::Base
   
   def self.accounting!(membership)
     where(:email => membership.user.email).update_all(:membership_id => membership.id)
+  end
+  
+  def self.autosend
+    count = 0
+    InviteRequest.ready_for_sending.find_each do |request|
+      count += 1
+      request.send_invite!
+    end
+    TransactionMailer.notify_invites_sent(count).deliver!
   end
 
   def city_name

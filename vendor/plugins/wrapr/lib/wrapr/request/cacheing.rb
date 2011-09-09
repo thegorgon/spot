@@ -13,7 +13,7 @@ module Wrapr
       end
 
       def cache_string
-        string = "#{self.class.to_s.underscore}/v1/#{request_path}"
+        string = "#{self.class.to_s.underscore}/v1#{request_path}"
         string << (string.index('?') ? "&#{@body}" : "?#{@body}") if @body.present?
         string
       end

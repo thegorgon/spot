@@ -51,10 +51,14 @@ class PromotionTemplate < ActiveRecord::Base
     if use_all_day && all_day?
       "all day"
     else
-      "#{Time.twelve_hour(start_time, :midnight => true, :noon => true)} to #{Time.twelve_hour(end_time, :midnight => true, :noon => true)}"
+      timeframe_array.join ' to '
     end
   end
 
+  def timeframe_array
+    [Time.twelve_hour(start_time, :midnight => true, :noon => true), Time.twelve_hour(end_time, :midnight => true, :noon => true)]
+  end
+  
   def all_day?
     start_time == 6 && end_time == 6
   end

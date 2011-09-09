@@ -1,0 +1,10 @@
+="Congratulations, #{@owner.name}, a Spot Member claimed a code for your promotion, #{@event.name} on #{@event.date.strftime('%B %d, %Y')} between #{@event.timeframe(false)}."
+
+="#{@owner.first_name}'s code is #{@code.code}"
+  
+If you need us, night or day, contact us with any questions – we’re here to help!
+  
+%p{:style => "margin:10px 0 0;"}="Mail : #{mail_to "contact@spotmembers.com"}".html_safe
+%p{:style => "margin:0 0 10px;"}="Phone: #{PHONE_NUMBER}"
+
+=render :partial => "shared/mailers/signature"
