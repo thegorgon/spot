@@ -31,11 +31,11 @@ class Site::MembershipApplicationsController < Site::BaseController
   end
   
   def new
-    if params[:r]
+    if params[:r] || session[:invite_code]
       @referrer = InvitationCode.valid_code(params[:r] || session[:invite_code])
       @invalid = InvitationCode.expended.find_by_code(params[:r] || session[:invite_code])
     end
-    @city = @referrer.user.city if @referrer
+    @city = @referrer.user.city if @referrer && @referrer.user
     @city ||= invite_request.try(:city)
     @city ||= City.subscriptions_available.first
     render :action => "new"
