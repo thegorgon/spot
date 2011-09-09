@@ -3,7 +3,7 @@ class Api::UsersController < Api::BaseController
   before_filter :require_self, :only => [:update]
   
   def show
-    render :json => @user
+    render :json => @user.as_json(:current_viewer => @user == current_user)
   end
   
   def update
