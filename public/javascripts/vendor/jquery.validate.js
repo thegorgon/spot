@@ -140,7 +140,7 @@
     name: 'pattern',
     selector: '[pattern]',
     test: function() {
-      $.validations.validity(this, $(this).pattern().test($(this).val()), "that doesn't look right");
+      $.validations.validity(this, $(this).val().length == 0 || $(this).pattern().test($(this).val()), "that doesn't look right");
     }
   });
 
