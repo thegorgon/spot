@@ -46,10 +46,10 @@
           -else
             %h2.tf.registration Available By Invitation Only
             %ul.tabs.clearfix.registration
-              %li.tab.tf#request_tab{"data-class" => "request", :class => conditionally("active", session_invite.nil?)} 
+              %li.tab.first.tf#request_tab{"data-class" => "request", :class => conditionally("active", session_invite.nil?)} 
                 Request an invitation
-              %li.tab.tf#invitation_tab{"data-class" => "invitation", :class => conditionally("active", session_invite)} 
-                I have an invitation
+              %li.tab.last.tf#invitation_tab{"data-class" => "invitation", :class => conditionally("active", session_invite)} 
+                I have an invitation code
           
           =spot_form_for :email, :url => '#', :display => "faded clearfix", :ul_id => "email_form" do |f|
             =button_tag :class => "btnorg115x32 right tf" do
