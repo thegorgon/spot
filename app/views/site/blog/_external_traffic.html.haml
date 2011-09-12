@@ -11,8 +11,8 @@
  
   %p
     Spot is a members-only club that gives you access to exclusive deals, special treatment and unique experiences at San Francisco restaurants. Join Spot today or sign up for emails to keep up with our latest member benefits.  
-  %hr
   -if !current_member? && !invite_request
+    %hr
     .clearix.request
       %h2.tf Available by Invitation Only
       =spot_form_for invite_request || InviteRequest.new, :as => :request, :html => {:id => "invite_request_form"}, :display => "light" do |f|
