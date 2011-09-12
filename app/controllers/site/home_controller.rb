@@ -23,7 +23,7 @@ class Site::HomeController < Site::BaseController
   
   def tos
   end
-
+  
   def getspot
     store = "itunes" if request.user_agent =~ /iPhone/
     store ||= params[:store]

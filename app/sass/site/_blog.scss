@@ -1,4 +1,53 @@
 .site_blog {
+  .overlay.trafficsrc {
+    margin: 0 0 20px 0;
+    &.received {
+      .receipt {
+        display: block;
+        height: 32px;
+      }
+      .request {
+        height: 0;
+        overflow: hidden;
+      }
+    }
+    .receipt {
+      overflow: hidden;
+      height: 0;
+      line-height: 32px;
+      @include transition('height 0.25s');
+    }
+    .request {
+      overflow: visible;
+      height: 50px;
+      @include transition('height 0.25s');
+    }
+    #invite_request_form {
+      .chzn-single {
+        height: 29px;
+        line-height: 29px;
+      }
+      li.buttons {
+        width: 175px;
+        margin: 10px 0 0 0;
+      }
+      li.email {
+        width: 255px;
+        margin-right: 10px;
+        input{
+          width: 235px; 
+        }
+      }
+      li.select {
+        width: 255px;
+        margin-top: 8px;
+        select {
+          height: 30px;
+          width: 235px;
+        }
+      }
+    }
+  }
   #rightrailcontainer {
     width: 225px;
     #rightrail {

@@ -1,5 +1,5 @@
 class Site::CitiesController < Site::BaseController
-  before_filter :require_city, :except => :new
+  before_filter :require_city, :except => [:new, :redirect]
   layout 'oreo'
   
   def show
@@ -21,6 +21,11 @@ class Site::CitiesController < Site::BaseController
     @view = "experiences"
     @launch_apply = invite_request.try(:invite_sent?)
     render :action => "experiences"
+  end
+  
+  def redirect
+    @city = City.find_by_id(params[:id])
+    redirect_to @city ? city_path(@city) : new_city_path
   end
   
   private

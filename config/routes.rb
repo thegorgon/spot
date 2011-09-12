@@ -27,9 +27,10 @@ Spot::Application.routes.draw do
       get "endpoint", :action => "endpoint", :on => :collection
     end
     resource :password_reset, :only => [:new, :create, :edit, :update]
-    resources :cities, :only => [:show, :new] do 
+    resources :cities, :only => [:show, :new] do
       get "calendar", :on => :member
       get "experiences", :on => :member
+      get "redirect", :on => :collection
     end
     resource :application, :only => [:create, :show, :new], :controller => "membership_applications"
     resources :registrations, :only => [:show, :create, :destroy]
@@ -57,6 +58,7 @@ Spot::Application.routes.draw do
       get "membership/about", :action => "about_membership", :as => "membership_about"
     end
     controller "tracking" do
+      get "/tracking/clear", :action => "clear", :as => "clear_tracking"
       get "/in", :action => "portal", :as => "portal"
       post "/uevent.:format", :action => "user_event", :as => "user_event"
       post "/aevent.:format", :action => "acquisition_event", :as => "acquisition_event"

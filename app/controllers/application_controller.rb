@@ -13,6 +13,19 @@ class ApplicationController < ActionController::Base
   
   private
   
+  def traffic_source
+    href = request.env['HTTP_REFERRER']
+    source = :direct
+    {:twitter => /twitter\.com/, :stumbleupon => /stumbleupon\.com/, :google => /google\..+/}.each do |src, match|
+      if href =~ match
+        source = src
+        break
+      end
+    end
+    source
+  end
+  helper_method :traffic_source
+  
   def stash_thread_parameters
     Thread.current[:controller] = self
     Thread.current[:acquisition_source_id] = session[:acquisition_source_id]

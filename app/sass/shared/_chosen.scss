@@ -50,6 +50,12 @@ div.chzn-container-single div.chzn-drop {
   border-radius: 0 0 4px 4px;
 }
 
+li.invalid {
+  a.chzn-single {
+    border: 1px solid #f00;
+    
+  }
+}
 
 /* SINGLE */
 div.chzn-container a.chzn-single {
@@ -127,6 +133,7 @@ div.chzn-container div.chzn-search input {
   border-radius: 0px;
   margin: 1px 0;
   outline: 0;
+  position: static !important;
 }
 
 

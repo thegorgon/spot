@@ -4,7 +4,7 @@
       var explain = $('#explain_designed_by_spot').hide().removeClass('hidden'),
         showDesignedBySpot = function(self) {
           clearTimeout(self.data('popover-timeout'));
-          explain.css({left: 1000}).show()
+          explain.css({left: 1000}).show();
           var offset = self.offset(),
             left = offset.left - explain.outerWidth() * 0.5 + self.outerWidth() * 0.5,
             top = offset.top - explain.outerHeight();
@@ -25,7 +25,7 @@
       });
       $('.designed_by_spot').unbind('mouseenter.show-explain').bind('mouseenter.show-explain', function(e) {
         var self = $(this);
-        self.data('popover-timeout', setTimeout(function() { showDesignedBySpot(self) }, 500));
+        self.data('popover-timeout', setTimeout(function() { showDesignedBySpot(self); }, 500));
       }).unbind('mouseleave.hide-expain').bind('mouseleave.hide-explain', function(e) {
         clearTimeout($(this).data('popover-timeout'));
         explain.hide();
@@ -40,22 +40,35 @@
           trigger: '.btnmemabout', 
           width: 840,
           open: function() {
-            go.Events.pageView('/membership/about')
-            go.Events.analytics('Acquisition', 'Membership Dialog Launch')
+            go.Events.pageView('/membership/about');
+            go.Events.analytics('Acquisition', 'Membership Dialog Launch');
           }
         });
         $('#applydialog').modal({
           trigger: '.btnmembership', 
           width: 800,
           open: function() {
-            go.Events.pageView('/application/new')
-            go.Events.analytics('Acquisition', 'Apply Dialog Launch')
+            go.Events.pageView('/application/new');
+            go.Events.analytics('Acquisition', 'Apply Dialog Launch');
           }
         });
         if ($('#applydialog').hasClass('autoopen')) {
           $('#applydialog').dialog("open");
         }      
       }
+    },
+    site_blog: function() {
+      $('#invite_request_form').ajaxForm({
+        start: function() {
+          if ($(this).validate()) {
+            $(this).parents('.overlay').addClass('received');
+            $('#explore_city_link').attr('href', '/cities/redirect?id=' + $(this).find('#request_city_id').val());            
+            return true;
+          } else {
+            return false;
+          }
+        }
+      });
     },
     site_home_index: function() {
       var slideshow = $("#slidedeck").slideshow({
@@ -92,7 +105,7 @@
         e.preventDefault();
         tabs.each(function(i) {
           $(this).removeClass('active');
-          $('.entrance').removeClass($(this).attr('data-class'))
+          $('.entrance').removeClass($(this).attr('data-class'));
         });
         $(rel).addClass('active');
         $('.entrance').addClass($(this).attr('data-class'));
@@ -102,10 +115,10 @@
         if ($(this).validate()) {
           var rForm = $('#invite_request_form');
           rForm.find('#invite_request_email').val($(this).find('#email_email').val());
-          go.Events.analytics('Acquisition', 'Email Entered')
+          go.Events.analytics('Acquisition', 'Email Entered');
           initMap(function() {
             rForm.find('#invite_request_city_id').val($(this).attr('data-id'));
-            go.Events.analytics('Acquisition', 'City Selected')
+            go.Events.analytics('Acquisition', 'City Selected');
             rForm.submit();
           });          
         }
@@ -132,7 +145,6 @@
           accountForm.submit();          
         });
       });
-      $('')
     },
     site_home_press: function() {
       go.AppPreview.init();

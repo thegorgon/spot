@@ -89,7 +89,7 @@ class PromotionEvent < ActiveRecord::Base
         :image_url_640x400 => place.image.url(:i640x400),
         :image_url_234x168 => place.image.url(:i234x168),
         :image_url => place.image.url,
-        :url => place_event_url(place, self),
+        :url => place_event_url(place, self, :host => HOSTS[Rails.env]),
         :date => date,
         :name => name,
         :description => description,

@@ -9,6 +9,15 @@ class Site::TrackingController < Site::BaseController
     head :ok
   end
   
+  def clear
+    session[:invite_code] = nil
+    session[:promo_code] = nil
+    session[:acquisition_source_id] = nil
+    session[:original_acquisition_source_id] = nil
+    set_invite_request nil
+    redirect_to root_path
+  end
+  
   def portal
     session[:invite_code] = session[:promo_code] = nil
     if params[:mc] && mc = MembershipCode.find_by_code(params[:mc])
