@@ -14,9 +14,9 @@ class ApplicationController < ActionController::Base
   private
   
   def traffic_source
-    href = request.env['HTTP_REFERRER']
+    href = request.referer
     source = :direct
-    {:stumbleupon => /stumbleupon\.com/, :google => /google\..+/}.each do |src, match|
+    {:stumbleupon => /stumbleupon\.com/, :google => /google\./}.each do |src, match|
       if href =~ match
         source = src
         break
