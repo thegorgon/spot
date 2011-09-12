@@ -1,4 +1,5 @@
 class PromotionEvent < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
   belongs_to :template, :class_name => "PromotionTemplate"
   belongs_to :business
   belongs_to :place
@@ -87,6 +88,7 @@ class PromotionEvent < ActiveRecord::Base
         :image_url_640x400 => place.image.url(:i640x400),
         :image_url_234x168 => place.image.url(:i234x168),
         :image_url => place.image.url,
+        :url => place_event_url(place, self),
         :date => date,
         :name => name,
         :description => description,
