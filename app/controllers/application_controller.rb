@@ -16,12 +16,13 @@ class ApplicationController < ActionController::Base
   def traffic_source
     href = request.env['HTTP_REFERRER']
     source = :direct
-    {:twitter => /twitter\.com|http:\/\/t\.co\//, :stumbleupon => /stumbleupon\.com/, :google => /google\..+/}.each do |src, match|
+    {:stumbleupon => /stumbleupon\.com/, :google => /google\..+/}.each do |src, match|
       if href =~ match
         source = src
         break
       end
     end
+    source = params[:tsrc].to_sym if params[:tsrc]
     source
   end
   helper_method :traffic_source
