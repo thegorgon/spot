@@ -1,0 +1,27 @@
+.overlay.clearfix.trafficsrc{:class => conditionally("received", invite_request.present?)}
+  %h2.tf.hello
+    Hello 
+    -if traffic_source == :stumbleupon
+      Stumbler,
+    -elsif traffic_source == :google
+      Googler,
+    -elsif traffic_source == :twitter
+      Twitter-er,
+    You've reached The Spotlight, the official Spot Member blog.
+ 
+  %p
+    Spot is a members-only club that gives you access to exclusive deals, special treatment and unique experiences at San Francisco restaurants. Join Spot today or sign up for emails to keep up with our latest member benefits.  
+  %hr
+  -if !current_member? && !invite_request
+    .clearix.request
+      %h2.tf Available by Invitation Only
+      =spot_form_for invite_request || InviteRequest.new, :as => :request, :html => {:id => "invite_request_form"}, :display => "light" do |f|
+        =f.email_field :email, :placeholder => "enter your email", :container_class => "left", :required => true
+        =f.city_select 'city_id', nil, :html => { :required => true }, :label => false, :container_class => "left"
+        %li.buttons.left
+          =button_tag :class => "btnorg175x32 tf" do
+            ="request an invite"
+  -if !current_member?
+    .clearfix.receipt
+      %h2.left.tf We've received your request. Your invitation should arrive shortly.
+      =link_to "Explore Your City", invite_request.try(:city) ? city_path(invite_request.city) : new_city_path, :class => "btnorg200x32 tf right", :id => "explore_city_link"

@@ -4,6 +4,9 @@
     &middot;
     =@post.title.html_safe
 
+-if traffic_source != :direct
+  =render :partial => "external_traffic"
+
 .clearfix
   -if @post
     #posts
