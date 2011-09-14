@@ -17,6 +17,12 @@ module EmailHelper
     content_tag :h3, content, options
   end
   
+  def bold(content, options={})
+    style = options[:style] || ""
+    options[:style] = "#{font_style}font-weight:bold;#{style}"    
+    content_tag :span, content, options
+  end
+  
   def hr
     tag :hr, :style => "height:1px;background:#ddd;width:450px;margin:20px auto;border:0;"
   end

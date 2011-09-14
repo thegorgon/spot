@@ -19,6 +19,10 @@ class InviteRequest < ActiveRecord::Base
     finder
   end
   
+  def self.random_code
+    InvitationCode.find_or_create_by_code(CODES.random)
+  end
+  
   def self.blitz!
   end
   
@@ -48,7 +52,7 @@ class InviteRequest < ActiveRecord::Base
   end
   
   def send_invite!
-    invite_code = InvitationCode.find_or_create_by_code(CODES.random)
+    invite_code = self.class.random_code
     TransactionMailer.invitation(self, invite_code).deliver!
     update_attribute(:invite_sent_at, Time.now)
   end
