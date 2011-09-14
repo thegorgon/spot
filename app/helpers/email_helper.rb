@@ -2,19 +2,19 @@ module EmailHelper
   def h1(content, options={})
     style = options[:style] || ""
     options[:style] = "#{font_style}font-size:22px;font-weight:bold;margin:5px 0;#{style}"    
-    content_tag :h1, content, options
+    content_tag :div, content, options
   end
 
   def h2(content, options={})
     style = options[:style] || ""
     options[:style] = "#{font_style}font-size:18px;font-weight:bold;margin:5px 0;#{style}"    
-    content_tag :h2, content, options
+    content_tag :div, content, options
   end
 
   def h3(content, options={})
     style = options[:style] || ""
     options[:style] = "#{font_style}font-weight:bold;margin:5px 0;#{style}"    
-    content_tag :h3, content, options
+    content_tag :div, content, options
   end
   
   def bold(content, options={})
@@ -23,8 +23,10 @@ module EmailHelper
     content_tag :span, content, options
   end
   
-  def hr
-    tag :hr, :style => "height:1px;background:#ddd;width:450px;margin:20px auto;border:0;"
+  def hr(options={})
+    style = options[:style] || ""
+    options[:style] = "height:1px;background:#ddd;width:450px;margin:20px auto;border:0;#{style}"    
+    content_tag :div, "&nbsp;".html_safe, options
   end
   
   def font_style

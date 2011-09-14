@@ -1,4 +1,4 @@
-=table_tag(:style => "margin:20px 0;") do
+=table_tag do
   %tr
     %td{:colspan => 3}=h2 "Some Upcoming Experiences..."
   %tr
@@ -19,3 +19,5 @@
                 =link_to "Buy Now", place_event_url(exp.place, exp.template), :style => "color:#fff;background:#000;font-weight:bold;display:block;padding:10px;margin:10px 0 0 0;"
       -if i < @experiences.length - 1
         %td{:width => "15"}
+  %tr
+    %td{:colspan => 3, :height => 15}

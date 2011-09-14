@@ -7,19 +7,12 @@
     =table_tag(:width => "100%", :bgcolor => "#ddd") do
       %tr
         %td{:colspan => 5, :height => 10}
-      / %tr
-      /   %td
-      /   %td{:width => 15, :height => 14}=attached_img "topleft.png", :size => "15x14"
-      /   %td{:height => 14}=attached_img "top.png", :height => "14", :style => "display:block;width:100%;"
-      /   %td{:width => 15, :height => 14}=attached_img "topright.png", :size => "15x14"
-      /   %td
       %tr
         %td{:colspan => 2}
-        / %td{:width => 15}=attached_img "left.png", :width => "15", :style => "height:100%;"
         %td{:width => 600}
           =table_tag(:width => 600, :bgcolor => "white", :style => "margin:0 auto;") do
             %tr
-              %td{:colspan => 3,:bgcolor => "black"}=attached_img "header.png", :size => "600x200", :alt => ""
+              %td{:colspan => 3, :bgcolor => "black", :style => "line-height:0;"}=attached_img "header.png", :size => "600x200", :alt => ""
             -if attachments["quote.png"].present?
               %tr
                 %td{:height => 1, :bgcolor => "white",:colspan => 3}
@@ -31,30 +24,41 @@
             %tr
               %td{:width => 20}
               =table_cell do
-                %div{:style => "height:100px;margin:10px 0 15px 0;"}
-                  %div{:style => "float:left;height:100px;width:100px;margin-right:20px;"}
-                    =attached_img "daynumber.png", :size => "100x100"  
-                  %div{:style => "float:left;padding:15px 0 0 0;"}
-                    =h1 "10 Reasons You'll Love Spot"
-                    =h2 @reason
-                =yield
-                =h2 "Membership is limited to 10,000 - #{mlink_to "Join Now", @portal_url}".html_safe, :style => "text-align:center;margin:20px 0 0;"
-                =hr
-                =render :partial => "experiences"
+                =table_tag(:height => 100, :width => 560, :bgcolor => "white", :style => "margin:0;") do
+                  %tr
+                    %td{:height => 10, :colspan => 3}
+                  %tr
+                    %td{:width => 100}=attached_img "daynumber.png", :size => "100x100" 
+                    %td{:width => 20}
+                    %td{:style => "padding:10px 0 0 0;"}
+                      =h1 "10 Reasons You'll Love Spot"
+                      =h2 @reason
+                  %tr
+                    %td{:height => 10, :colspan => 3}
+                =table_tag(:width => 560,:bgcolor => "white") do
+                  %tr
+                    =table_cell do
+                      =yield
+                  %tr
+                    %td{:height => 20}
+                  %tr
+                    %td=h2 "Membership is limited to 10,000 - #{mlink_to "Join Now", @portal_url}".html_safe, :style => "text-align:center;margin:0;"
+                  %tr
+                    %td{:height => 20}
+                  %tr
+                    %td=hr(:style => "margin:0 auto;")
+                  %tr
+                    %td{:height => 20}
+                  %tr
+                    =table_cell do
+                      =render :partial => "experiences"
               %td{:width => 20}
             %tr
               %td{:colspan => 3, :height => 20}
             %tr
-              %td{:colspan => 3}
+              %td{:colspan => 3, :style => "line-height:0;"}
                 =attach_link_to "footer.png", @portal_url, :size => "600x85", :alt => ""
-        / %td{:width => 15}=attached_img "right.png", :width => "15", :size => "height:100%;"
         %td{:colspan => 2}
-      / %tr
-      /   %td
-      /   %td{:width => 15, :height => 16}=attached_img "bottomleft.png", :size => "15x16"
-      /   %td{:height => 16}=attached_img "bottom.png", :height => 16, :style => "width:100%;"
-      /   %td{:width => 15, :height => 16}=attached_img "bottomright.png", :size => "15x16"
-      /   %td
       %tr
         %td{:colspan => 5, :height => 10}
       %tr
