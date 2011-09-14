@@ -11,8 +11,8 @@ class EmailSubscriptions < ActiveRecord::Base
   validates :email, :presence => true, :format => EMAIL_REGEX
   name_attribute :name
   
+  serialize :data, Hash
   has_acquisition_source :count => :email_acquired
-  nested_attributes({:other_city => :string}, {:in => :data})
   setting_flags SUBSCRIPTION_FLAGS, :attr => "unsubscriptions", 
                                     :inverse_attr => "subscriptions",
                                     :field => "unsubscription_flags", 
@@ -107,8 +107,18 @@ class EmailSubscriptions < ActiveRecord::Base
     self.data.delete(:other_city) if value.present? && value.to_i > 0
   end
   
+  def data
+    self[:data] ||= {}
+  end
+  
+  def other_city
+    self.data[:other_city]
+  end
+  
   def other_city=(value)
+    self.data ||= {}
     self.data[:other_city] = value
+    self.data_will_change!
     self.city_id = nil if value.present?
   end
 
@@ -119,7 +129,9 @@ class EmailSubscriptions < ActiveRecord::Base
 
   def update_to_match(params)
     params.each do |method, value|
-      send("#{method}=", value) if respond_to?("#{method}=") && value
+      if respond_to?("#{method}=") && value
+        send("#{method}=", value) 
+      end
     end
     save if changed?
   end

@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   validates :email, :format => EMAIL_REGEX, :uniqueness => true, :if => :email?
   has_acquisition_source :count => :signup
   name_attribute :name
-  attr_accessor :email_source
+  attr_accessor :email_source, :other_city
 
   def self.adminify!(email)
     if (user = where(:email => email).first)
@@ -61,6 +61,11 @@ class User < ActiveRecord::Base
       @wishlist
     end
     @wishlist
+  end
+  
+  def other_city=(value)
+    @other_city = value
+    self.city_id = nil if value.present?
   end
   
   def email_with_name
@@ -224,6 +229,7 @@ class User < ActiveRecord::Base
         :email => email,
         :first_name => first_name,
         :last_name => last_name,
+        :other_city => other_city,
         :city_id => city_id,
         :source => email_source,
       })

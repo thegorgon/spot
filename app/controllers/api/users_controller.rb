@@ -7,8 +7,6 @@ class Api::UsersController < Api::BaseController
   end
   
   def update
-    other_city = params[:user].delete(:other_city) if params[:user]
-    @user.email_subscriptions.other_city = other_city if other_city
     @user.attributes = params[:user]
     @user.email_source = 'api' if @user.email_changed?
     @user.save!
