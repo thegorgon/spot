@@ -25,7 +25,7 @@ module EmailHelper
   
   def hr(options={})
     style = options[:style] || ""
-    options[:style] = "height:1px;background:#ddd;width:450px;margin:20px auto;border:0;#{style}"    
+    options[:style] = "line-height:1px;font-size:1px;height:1px;background:#ddd;width:450px;margin:20px auto;border:0;#{style}"    
     content_tag :div, "&nbsp;".html_safe, options
   end
   
