@@ -1,6 +1,5 @@
 -referrer ||= nil        
 -unlocked = referrer
--city_full = @city && !@city.subscriptions_available?
 -invited = referrer && (@city.nil? || @city.subscriptions_available?) 
 -if invited
   %h1.tf
@@ -12,7 +11,7 @@
   .text.tf
     To ensure an unforgettable experience, membership is limited to 10,000 restaurant devotees per city.
 
-=spot_form_for :application, :url => application_path, :display => "light inlinelabels#{conditionally(" unlocked", unlocked)}#{conditionally(" applying", city_full)}", :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
+=spot_form_for :application, :url => application_path, :display => "light inlinelabels#{conditionally(" unlocked", unlocked)}#{conditionally(" applying", @city.try(:at_capacity?))}", :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
   =f.hidden_field :invitation_code, :value => referrer.try(:code)
   #invitecodesection.invitecode.step
     -if @invalid
@@ -29,7 +28,7 @@
     .vouched
         
   .application.step
-    -if @city && !@city.subscriptions_available?
+    -if @city.try(:at_capacity?)
       %h2.tf.capacity We're at capacity. Apply to be notified when space opens up.
     .col.descriptions.right 
       =render :partial => "/site/shared/explanations/pricing", :locals => {:cssclass => "first"}

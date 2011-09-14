@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110907175234) do
+ActiveRecord::Schema.define(:version => 20110914194520) do
 
   create_table "acquisition_campaigns", :force => true do |t|
     t.string   "name"
@@ -330,13 +330,15 @@ ActiveRecord::Schema.define(:version => 20110907175234) do
   add_index "invitation_codes", ["code"], :name => "index_invitation_codes_on_code", :unique => true
 
   create_table "invite_requests", :force => true do |t|
-    t.string   "email",               :null => false
+    t.string   "email",                              :null => false
     t.integer  "city_id"
     t.string   "requested_city_name"
     t.integer  "membership_id"
     t.datetime "invite_sent_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "blitz_count",         :default => 0, :null => false
+    t.datetime "last_blitz_at"
   end
 
   add_index "invite_requests", ["email"], :name => "index_invite_requests_on_email", :unique => true
@@ -590,7 +592,6 @@ ActiveRecord::Schema.define(:version => 20110907175234) do
     t.string   "customer_id"
     t.integer  "city_id"
     t.integer  "acquisition_source_id"
-    t.integer  "wishlist_count",        :default => 0,     :null => false
   end
 
   add_index "users", ["city_id"], :name => "index_users_on_city_id"

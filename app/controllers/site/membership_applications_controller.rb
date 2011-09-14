@@ -3,6 +3,7 @@ class Site::MembershipApplicationsController < Site::BaseController
   layout 'oreo'
   
   def create
+    # TODO This action is very large
     user_attributes = params[:application].delete(:user_attributes)
     @user = current_user || User.register(user_attributes)
     @application = @user.membership_application
@@ -15,9 +16,17 @@ class Site::MembershipApplicationsController < Site::BaseController
       if @application.save
         session[:invite_code] = nil # Clear session invite code
         session[:promo_code] = @application.promo_code if @application.promo_code
-        set_invite_request nil
-        record_acquisition_event("applied")
-        redirect_to @application.approved?? new_membership_path : application_path
+        if @application.approved? && @application.city.subscriptions_available?
+          set_invite_request nil
+          record_acquisition_event("applied")
+          redirect_to new_membership_path
+        elsif !@application.approved?
+          set_invite_request nil
+          redirect_to application_path
+        else
+          set_invite_request @application.invite_request
+          redirect_to city_path(@application.city)
+        end
       else 
         render :action => :new
       end

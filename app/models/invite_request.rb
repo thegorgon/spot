@@ -1,5 +1,6 @@
 class InviteRequest < ActiveRecord::Base
   CODES = ["SUSHI17", "CABERNET12", "CAVIAR29", "OYSTER42", "CANOLI77", "PASTRY98", "CHEF18", "WINE56", "DINE18", "FORK52"]
+  MAX_BLITZ = 10
   belongs_to :city
   belongs_to :membership
   validates :email, :presence => true, :format => EMAIL_REGEX, :uniqueness => true
@@ -8,7 +9,9 @@ class InviteRequest < ActiveRecord::Base
   
   scope :unsent_invites, where(:invite_sent_at => nil)
   scope :sent_invites, where("invite_sent_at IS NOT NULL")
-  scope :ready_for_sending, joins(:city).where(["invite_requests.invite_sent_at IS NULL AND invite_requests.created_at < ? AND cities.subscriptions_available > cities.subscription_count", Time.now - 1.hours])
+  scope :city_available, joins(:city).where("cities.subscriptions_available > cities.subscription_count")
+  scope :ready_for_sending, lambda { city_available.where(["invite_requests.invite_sent_at IS NULL AND invite_requests.created_at < ?", Time.now - 1.hours]) }
+  scope :need_blitzing, lambda { includes(:city).city_available.where(["invite_requests.invite_sent_at < ? AND blitz_count < ? AND (last_blitz_at IS NULL OR last_blitz_at < ?)", Time.now - 1.day, MAX_BLITZ, Time.now - 1.day]) }
   
   def self.filter(n)
     finder = self
@@ -20,10 +23,37 @@ class InviteRequest < ActiveRecord::Base
   end
   
   def self.random_code
-    InvitationCode.find_or_create_by_code(CODES.random)
+    @random_code ||= InvitationCode.find_or_create_by_code(CODES.random)
+  end
+  
+  def self.blitz_experiences(city)
+    @experiences ||= {}
+    if @experiences[city.id].nil?
+      @experiences[city.id] = []
+      templates = city.upcoming_events.group(:template_id)
+      3.times do |i|
+        @experiences[city.id] << templates.delete_at(rand(templates.length))
+      end
+    end
+    @experiences[city.id]
   end
   
   def self.blitz!
+    need_blitzing.find_each do |request|
+      BlitzMailer.email(request, :invite_code => random_code, :experiences => blitz_experiences(request.city)).deliver!
+    end
+    
+    sent = need_blitzing.update_all("blitz_count = COALESCE(blitz_count, 0) + 1, last_blitz_at = '#{Time.now.to_s(:db)}'")
+
+    NotifyMailer.msg("We Just Sent Blitz Emails #{sent} Times.").deliver! if sent > 0
+  end
+  
+  def self.with_attributes(params={})
+    params ||= {}
+    request = self.class.where(:email => params[:email]).first
+    request ||= self.class.new
+    request.attributes = params
+    request
   end
   
   def self.accounting!(membership)
@@ -36,7 +66,7 @@ class InviteRequest < ActiveRecord::Base
       count += 1
       request.send_invite!
     end
-    TransactionMailer.notify_invites_sent(count).deliver!
+    NotifyMailer.msg("We just sent out #{@count} automatically requested invitations.").deliver!
   end
 
   def city_name
@@ -52,9 +82,12 @@ class InviteRequest < ActiveRecord::Base
   end
   
   def send_invite!
-    invite_code = self.class.random_code
-    TransactionMailer.invitation(self, invite_code).deliver!
+    TransactionMailer.invitation(self).deliver!
     update_attribute(:invite_sent_at, Time.now)
+  end
+  
+  def invite
+    self.class.random_code
   end
   
   private

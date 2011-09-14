@@ -9,23 +9,16 @@ class TransactionMailer < ApplicationMailer
     mail
   end
   
-  def invitation(request, invite)
+  def invitation(request)
     @email = request.email
     @city = request.city
     @title = "Lucky You. You're Invited."
-    @invite = invite
+    @invite = request.invite
     @invite_url = portal_url(:mc => invite.code, :cid => @city.id, :ir => request.id)
     attachments.inline["invitation.png"] = File.read(Rails.root.join('public', 'images', 'email', 'invitation', 'youreinvited367x345.png'))
     mail
   end
   
-  def notify_invites_sent(count)
-    @count = count
-    @email = "contact@spotmembers.com"
-    @title = "Just Sent #{count} Requested Invitations Automatically"
-    mail
-  end
-
   def preview_thanks(signup)
     @signup = signup
     @email = signup.email

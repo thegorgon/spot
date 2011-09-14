@@ -54,6 +54,10 @@ class City < ActiveRecord::Base
     upcoming_events.present?
   end
   
+  def at_capacity?
+    has_events? && !subscriptions_available?
+  end
+  
   def as_json(*args)
     {
       :_type => self.class.to_s,

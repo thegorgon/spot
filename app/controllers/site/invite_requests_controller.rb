@@ -10,9 +10,7 @@ class Site::InviteRequestsController < Site::BaseController
   end
   
   def create
-    @request = InviteRequest.where(:email => params[:request][:email]).first if params[:request]
-    @request ||= InviteRequest.new
-    @request.attributes = params[:request]
+    @request = InviteRequest.with_attributes(params[:request])
     if @request.save
       record_acquisition_event("email acquired")
       set_invite_request @request

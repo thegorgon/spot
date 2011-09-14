@@ -51,6 +51,12 @@ class MembershipApplication < ActiveRecord::Base
       update_attribute(:approved_at, nil)
     end
   end
+  
+  def invite_request
+    @invite_request ||= InviteRequest.with_attributes(:email => user.email, :city_id => city_id)
+    @invite_request.save if @invite_request.changed?
+    @invite_request
+  end
 
   def converted!
     invitation.try(:signup!)

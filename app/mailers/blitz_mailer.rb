@@ -1,24 +1,23 @@
 class BlitzMailer < ApplicationMailer
   layout 'blitz'
   
-  def email(recipient, day, invite_code=nil)
-    invite_code ||= InviteRequest.random_code.code
-    @portal_url = portal_url(:mc => invite_code)
-    @email = recipient.email
-    @reason = "#{schedule[:subject][day - 1]}"
-    if schedule[:quotes].include?(day)
+  def email(request, options={})
+    @portal_url = portal_url(:mc => options[:invite] || request.invite)
+    @email = request.email
+    @day = request.blitz_count + 1
+    @reason = "#{schedule[:subject][@day - 1]}"
+    
+    if schedule[:quotes].include?(@day)
       add_attachment "header.png", ["email", "blitz", "quoteheader.png"]
-      add_attachment "quote.png", ["email", "blitz", "day#{day}quote.png"]
+      add_attachment "quote.png", ["email", "blitz", "day#{@day}quote.png"]
     else
-      add_attachment "header.png", ["email", "blitz", "day#{day}header.png"]
+      add_attachment "header.png", ["email", "blitz", "day#{@day}header.png"]
     end
-    add_attachment "daynumber.png", ["email", "blitz", "day#{day}.png"]
-    @experiences = [nil, nil, nil]
-    templates = recipient.city.upcoming_events.group(:template_id)
-    @experiences.each_with_index do |value, i|
-      @experiences[i] = templates.delete_at(rand(templates.length))
-    end
-    mail(:template_name => "email#{day}", :subject => "Spot : #{@reason}")
+    add_attachment "daynumber.png", ["email", "blitz", "day#{@day}.png"]
+
+    @experiences = options[:experiences] || InviteRequest.blitz_experiences
+
+    mail(:template_name => "email#{@day}", :subject => "Spot : #{@reason}")
   end
     
   private
