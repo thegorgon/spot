@@ -50,8 +50,8 @@ class InviteRequest < ActiveRecord::Base
   
   def self.with_attributes(params={})
     params ||= {}
-    request = self.class.where(:email => params[:email]).first
-    request ||= self.class.new
+    request = where(:email => params[:email]).first
+    request ||= new
     request.attributes = params
     request
   end
