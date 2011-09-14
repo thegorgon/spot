@@ -67,7 +67,7 @@ class Registration
   end
   
   def deliver_registration_email
-    BusinessMailer.
+    BusinessMailer.code_claimed(code).deliver!
     TransactionMailer.registration_confirmation(user, code).deliver!
   end
 end
