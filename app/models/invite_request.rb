@@ -19,6 +19,9 @@ class InviteRequest < ActiveRecord::Base
     finder
   end
   
+  def self.blitz!
+  end
+  
   def self.accounting!(membership)
     where(:email => membership.user.email).update_all(:membership_id => membership.id)
   end

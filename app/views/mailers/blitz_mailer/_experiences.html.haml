@@ -1,0 +1,21 @@
+=table_tag(:style => "margin:20px 0;") do
+  %tr
+    %td{:colspan => 3}=h2 "Some Upcoming Experiences..."
+  %tr
+    %td{:colspan => 3, :height => 15}
+  %tr
+    -@experiences.each_with_index do |exp, i|
+      %td{:width => "190", :style => conditionally("padding-right:15px;border-right:1px solid #ededed;", i < @experiences.length - 1)}
+        =table_tag do
+          %tr
+            %td{:style => "text-align:center;"}=image_tag exp.place.image.url(:i117x84), :size => "117x84", :alt => ""
+          %tr
+            =table_cell(:style => "text-align:center;") do
+              =h3(exp.name, :style => "height: 2.4em;")
+              =line_tag do
+                =exp.short_summary
+              =line_tag do
+                =h3 "Only #{exp.remaining_count} Left"
+                =link_to "Buy Now", place_event_url(exp.place, exp.template), :style => "color:#fff;background:#000;font-weight:bold;display:block;padding:10px;margin:10px 0 0 0;"
+      -if i < @experiences.length - 1
+        %td{:width => "15"}

@@ -1,5 +1,7 @@
 class ApplicationMailer < ActionMailer::Base
   include AbstractController::Callbacks
+  helper 'email'
+  helper 'application'
   layout 'mailer'
   before_filter :set_inline_attachments
   
@@ -13,8 +15,23 @@ class ApplicationMailer < ActionMailer::Base
   private
   
   def set_inline_attachments
-    attachments.inline["logo.png"] = File.read("#{Rails.root}/public/images/logos/shdwapp80x140.png")
-    attachments.inline["footer.jpg"] = File.read("#{Rails.root}/public/images/backgrounds/emailft598x110.jpg")
+    add_attachment "logo.png", "logos/shdwapp80x140.png"
+    add_attachment "footer.jpg", "backgrounds/emailft598x110.jpg"
+  end
+  
+  def add_attachment(name, path)
+    full_path = case path
+    when String
+      "#{Rails.root}/public/images/#{path}"
+    when Array
+      path.unshift "images"
+      path.unshift "public"
+      Rails.root.join(*path)
+    else
+      raise ArgumentError, "Invalid File Path"
+    end
+    
+    attachments.inline[name] = File.read(full_path)    
   end
   
 end
