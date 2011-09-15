@@ -1,4 +1,7 @@
 .settings
-  %li.checkbox.setting.last.first
-    =form.label :send_weekly_digest, "Receive Weekly Digest Emails?"
+  %li.checkbox.setting.first
+    =form.label :send_weekly_digest, "Weekly Digest Emails?"
     =form.check_box :send_weekly_digest
+  %li.checkbox.setting.last
+    =form.label :send_on_code_claim, "Email When Codes Are Claimed?"
+    =form.check_box :send_on_code_claim

@@ -67,7 +67,8 @@ class Registration
   end
   
   def deliver_registration_email
-    BusinessMailer.code_claimed(code).deliver!
+    BusinessMailer.code_claimed(code).deliver! if code.business.business_account.send_on_code_claim?
+    NotifyMailer.msg("#{code.owner.name} at #{code.owner.email} just claimed #{code.event.name} at #{code.event.place.name} on #{code.date} : #{code.code}").deliver!
     TransactionMailer.registration_confirmation(user, code).deliver!
   end
 end

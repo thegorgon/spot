@@ -3,9 +3,9 @@ class NotifyMailer < ApplicationMailer
   default :from => "Spot Servers <spot@spotmembers.com>",
           :to => "jesse@spotmembers.com"
          
-  def msg(msg)
+  def msg(msg, to=nil)
     @msg = msg
-    mail(:subject => "New Message from Spot")
+    mail(:to => to || "jesse@spotmembers.com", :subject => "New Message from Spot")
   end
   
   def data_msg(title, data)

@@ -1,5 +1,5 @@
 class BusinessAccount < ActiveRecord::Base
-  NOTIFICATION_FLAGS = ["weekly_digest"]
+  NOTIFICATION_FLAGS = ["weekly_digest", "on_code_claim"]
   DEFAULT_MAX_BUSINESSES = 3
   
   belongs_to :user
