@@ -12,25 +12,26 @@
         %td{:width => 600}
           =table_tag(:width => 600, :bgcolor => "white", :style => "margin:0 auto;") do
             %tr
-              %td{:colspan => 3, :bgcolor => "black", :style => "line-height:0;"}=attached_img "header.png", :size => "600x200", :alt => ""
+              %td{:colspan => 3, :bgcolor => "black", :style => "line-height:0;"}
+                =attach_link_to "header.png", @portal_url, :size => "600x200", :alt => ""
             -if attachments["quote.png"].present?
               %tr
                 %td{:height => 1, :bgcolor => "white",:colspan => 3}
               %tr
                 %td{:bgcolor => "black",:colspan => 3}
-                  =attached_img "quote.png", :size => "600x80", :alt => ""
+                  =attach_link_to "quote.png", @portal_url, :size => "600x80", :alt => ""
             %tr
               %td{:colspan => 3, :height => 10}
             %tr
               %td{:width => 20}
               =table_cell do
-                =table_tag(:height => 100, :width => 560, :bgcolor => "white", :style => "margin:0;") do
+                =table_tag(:width => 560, :bgcolor => "white", :style => "margin:0;") do
                   %tr
                     %td{:height => 10, :colspan => 3}
                   %tr
-                    %td{:width => 100}=attached_img "daynumber.png", :size => "100x100" 
+                    %td{:width => 100, :height => 100}=attach_link_to "daynumber.png",  @portal_url, :size => "100x100", :alt => @day
                     %td{:width => 20}
-                    %td{:style => "padding:10px 0 0 0;"}
+                    %td{:valign => "middle"}
                       =h1 "10 Reasons You'll Love Spot"
                       =h2 @reason
                   %tr

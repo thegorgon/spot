@@ -40,7 +40,7 @@ class InviteRequest < ActiveRecord::Base
   
   def self.blitz!
     need_blitzing.find_each do |request|
-      BlitzMailer.email(request, :invite_code => random_code, :experiences => blitz_experiences(request.city)).deliver!
+      BlitzMailer.email(request, :invite_code => random_code.code, :experiences => blitz_experiences(request.city)).deliver!
     end
     
     sent = need_blitzing.update_all("blitz_count = COALESCE(blitz_count, 0) + 1, last_blitz_at = '#{Time.now.to_s(:db)}'")

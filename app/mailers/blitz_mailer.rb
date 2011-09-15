@@ -2,9 +2,10 @@ class BlitzMailer < ApplicationMailer
   layout 'blitz'
   
   def email(request, options={})
+    @day = options[:day] || request.blitz_count + 1
+    options[:invite] = "INVITE3FREE" if @day == 10
     @portal_url = portal_url(:mc => options[:invite] || request.invite.code)
     @email = request.email
-    @day = options[:day] || request.blitz_count + 1
     @reason = "#{schedule[:subject][@day - 1]}"
     
     if schedule[:quotes].include?(@day)
