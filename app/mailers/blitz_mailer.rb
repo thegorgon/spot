@@ -2,9 +2,9 @@ class BlitzMailer < ApplicationMailer
   layout 'blitz'
   
   def email(request, options={})
-    @portal_url = portal_url(:mc => options[:invite] || request.invite)
+    @portal_url = portal_url(:mc => options[:invite] || request.invite.code)
     @email = request.email
-    @day = request.blitz_count + 1
+    @day = options[:day] || request.blitz_count + 1
     @reason = "#{schedule[:subject][@day - 1]}"
     
     if schedule[:quotes].include?(@day)
@@ -15,7 +15,7 @@ class BlitzMailer < ApplicationMailer
     end
     add_attachment "daynumber.png", ["email", "blitz", "day#{@day}.png"]
 
-    @experiences = options[:experiences] || InviteRequest.blitz_experiences
+    @experiences = options[:experiences] || InviteRequest.blitz_experiences(request.city)
 
     mail(:template_name => "email#{@day}", :subject => "Spot : #{@reason}")
   end
