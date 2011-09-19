@@ -5,33 +5,45 @@
     .enter
       enter to win a
       %h2.tf=@sweepstake.short_summary
-    =spot_form_for @entry, :as => :entry, :url => enter_sweepstake_path(@sweepstake), :display => "light tf clearfix", :ul_id => "entry_form", :html => {:method => :post} do |f|
-      =f.hidden_field :referred_by_id, :value => @referrer.try(:id)
-      =f.name_fields :required => true, :value => invite_request.try(:names)
-      =f.email_field :email, :required => true, :placeholder => "enter your email"
-      =f.city_select :city_id, invite_request.try(:city_id), :label => ""
-      %li.buttons
-        =button_tag :class => "btnorg300x41 tf", :loading => true do
-          enter now
-    #entry_description
-      -if @entry
-        =render :partial => "entry"
-    .smallprint
-      Enter and receive exclusive offers from Spot. 
-      Unsubscribe anytime.
-      =link_to "Read official rules.", rules_sweepstake_path(@sweepstake), :target => "_new"
+    -if @sweepstake.active?
+      =spot_form_for @entry, :as => :entry, :url => enter_sweepstake_path(@sweepstake), :display => "light tf clearfix", :ul_id => "entry_form", :html => {:method => :post} do |f|
+        =f.hidden_field :referred_by_id, :value => @referrer.try(:id)
+        =f.name_fields :required => true, :value => invite_request.try(:names)
+        =f.email_field :email, :required => true, :placeholder => "enter your email"
+        =f.city_select :city_id, invite_request.try(:city_id), :label => ""
+        %li.buttons
+          =button_tag :class => "btnorg300x41 tf", :loading => true do
+            enter now
+        %li.errors=@entry.errors[:base].join(", ")
+      #entry_description
+        -if @entry
+          =render :partial => "entry"
+      .smallprint
+        Enter and receive exclusive offers from Spot. 
+        Unsubscribe anytime.
+        =link_to "Read official rules.", rules_sweepstake_path(@sweepstake), :target => "_new"
+    -elsif @sweepstake.pending?
+      .pending.tf
+        ="Submissions will be accepted starting #{@sweepstake.starts_on.strftime("%B %d, %Y")} at 1:00 a.m. Pacific Time."
+    -elsif @sweepstake.closed?
+      .closed.tf
+        Submissions are currently closed for this 
+        =img_link_to "logos/spotwhite120x90.png", root_url, :size => "40x30", :alt => "spot", :class => "logo"
+        %span.smallcaps On The House 
+        Sweepstakes.
+      
   .meta
     .image=image_tag @sweepstake.place.image.url(:i640x400), :size => "416x260", :alt => @sweepstake.place.name
     .description= @sweepstake.description.html_safe
   .footer
     %hr.clear
     %h3.tf
-      Spot 
+      =img_link_to "logos/spotwhite120x90.png", root_url, :size => "40x30", :alt => "spot", :class => "logo"
       %span.smallcaps On The House 
       is brought to you by
       
     %h2.tf
-      =img_link_to "logos/spotwhite120x90.png", root_url, :size => "80x60", :alt => "spot"
+      =img_link_to "logos/spotwhite120x90.png", root_url, :size => "80x60", :alt => "spot", :class => "logo"
       A Private Membership Club for Discerning Diners    
     %nav
       =link_to "home", root_path

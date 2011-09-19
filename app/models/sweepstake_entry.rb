@@ -8,6 +8,8 @@ class SweepstakeEntry < ActiveRecord::Base
   validates :invite_request_id, :uniqueness => { :scope => :sweepstake_id }
   validates :referral_code, :presence => true, :uniqueness => { :scope => :sweepstake_id }
   
+  validate :in_valid_date_range
+  
   before_validation :set_referral_code
   before_validation :set_min_submissions
   after_create :credit_referrer, :if => :referred?
@@ -37,6 +39,14 @@ class SweepstakeEntry < ActiveRecord::Base
   end
       
   private
+  
+  def in_valid_date_range
+    if sweepstake.pending?
+      errors.add(:base, "Submissions will open #{sweepstake.starts_on.strftime("%B %d, %Y")} at 1:00 a.m. Pacific Time.")
+    elsif sweepstake.closed?
+      errors.add(:base, "Sorry, submissions are closed.")
+    end
+  end
   
   def credit_referrer
     self.class.increment_counter(:submissions, referred_by_id)

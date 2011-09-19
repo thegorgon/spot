@@ -14,18 +14,18 @@ class Sweepstake < ActiveRecord::Base
   
   scope :pending, lambda { where(["starts_on > ?", Time.now]) }
   scope :active, lambda { where(["starts_on < ? AND ends_on > ?", Time.now, Time.now]) }
-  scope :ended, lambda { where(["ends_on < ?", Time.now]) }
+  scope :closed, lambda { where(["ends_on < ?", Time.now]) }
   scope :without_winner, where("winning_entry_id IS NULL")
   scope :with_winner, where("winning_entry_id IS NOT NULL")
-  scope :ready_for_winner, ended.without_winner
-  scope :complete, ended.with_winner
+  scope :ready_for_winner, closed.without_winner
+  scope :complete, closed.with_winner
   
   def self.filter(params)
     finder = self
     n = params[:filter].to_i
     finder = finder.pending           if n & (1 << 0) > 0
     finder = finder.active            if n & (1 << 1) > 0
-    finder = finder.ended             if n & (1 << 2) > 0
+    finder = finder.closed            if n & (1 << 2) > 0
     finder = finder.complete          if n & (1 << 3) > 0
     finder = finder.ready_for_winner  if n & (1 << 4) > 0
     finder = finder.includes(:place)
@@ -47,7 +47,7 @@ class Sweepstake < ActiveRecord::Base
     starts_on.to_time.utc < Time.now.utc && ends_on.to_time.utc > Time.now.utc
    end
   
-  def ended?
+  def closed?
     (ends_on.to_time + 1.hour).utc < Time.now.utc && winning_entry_id.nil?
   end
   
@@ -64,8 +64,8 @@ class Sweepstake < ActiveRecord::Base
       "Pending"
     elsif active?
       "Active"
-    elsif ended?
-      "Ended"
+    elsif closed?
+      "Closed"
     elsif complete?
       "Complete"
     else

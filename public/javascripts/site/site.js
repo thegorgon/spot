@@ -289,18 +289,22 @@
         },
         success: function(data) {
           $(this).removeClass('loading');
-          $('#entry_description').html(data.html);
-          go.Behaviors.train('#entry_description');
-          $('.apply').addClass('applied');
-          $('#entered_dialog').tmpl(data.entry).modal({
-            autoOpen: true,
-            width: 340
-          });
-          addthis.toolbox('.addthis_toolbox')
+          if (data.success) {
+            $('#entry_description').html(data.html);
+            go.Behaviors.train('#entry_description');
+            $('.apply').addClass('applied');
+            $('#entered_dialog').tmpl(data.entry).modal({
+              autoOpen: true,
+              width: 340
+            });
+            addthis.toolbox('.addthis_toolbox');
+          } else {
+            $(this).find('.errors').text(data.errors.join(', '))
+          }
         },
         error: function() {
           $(this).removeClass('loading');
-          
+          $(this).find('.errors').text("Something went wrong. Please try again.")
         }
       });
     }

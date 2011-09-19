@@ -28,7 +28,7 @@ class Site::SweepstakesController < Site::BaseController
         format.js { render :json => { :success => true, :entry => @entry, :html => render_to_string(:partial => "entry") } }
       else
         format.html { redirect_to sweepstake_path(@sweepstake) }
-        format.js { render :json => { :success => false, :errors => @entry.errors} }
+        format.js { render :json => { :success => false, :errors => @entry.errors.full_messages} }
       end
     end
   end
