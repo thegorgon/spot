@@ -24,7 +24,7 @@
         =link_to "Read official rules.", rules_sweepstake_path(@sweepstake), :target => "_new"
     -elsif @sweepstake.pending?
       .pending.tf
-        ="Submissions will be accepted starting #{@sweepstake.starts_on.strftime("%B %d, %Y")} at 1:00 a.m. Pacific Time."
+        ="Submissions will be accepted starting #{@sweepstake.starts_on.strftime("%B %d, %Y")} at&nbsp;1:00&nbsp;a.m.&nbsp;Pacific&nbsp;Time.".html_safe
     -elsif @sweepstake.closed?
       .closed.tf
         Submissions are currently closed for this 
