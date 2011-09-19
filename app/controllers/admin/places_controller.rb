@@ -7,6 +7,15 @@ class Admin::PlacesController < Admin::BaseController
     respond_with(@places)
   end
   
+  def search
+    params[:per_page] ||= 10 if request.xhr?
+    @places = Place.search(params[:term], :star => true, :match_mode => :any, :page => params[:page], :per_page => params[:per_page])
+    respond_to do |format|
+      format.js { render :json => @places }
+      format.html
+    end
+  end
+  
   def matches
     @places = Place.filter(params)
     @externals = ExternalPlace.associated_with(@places.collect { |p| p.id })

@@ -1,0 +1,16 @@
+=@entry.try(:email) 
+is entered to win a 
+%h2.tf=@sweepstake.short_summary
+%p.small=link_to "not you?", '#', "data-toggle-class" => "applied", :rel => '.apply'
+.chances
+  %h2.tf Improve Your Chances
+  %p Get an additional entry for every friend you invite.
+  .buttons              
+    -title = "#{@sweepstake.name} - Win an unforgettable #{@sweepstake.short_summary}"
+    -url = sweepstake_url(@sweepstake, :ref => @entry.referral_code)                
+    .addthis_toolbox.addthis_default_style.addthis_32x32_style{"addthis:url" => url, "addthis:title" => title}
+      %a.addthis_button_facebook
+      %a.addthis_button_twitter
+      %a.addthis_button_email
+      %a.addthis_button_compact
+  =text_field_tag("url", url, "data-mode" => "select", :class => "text light")

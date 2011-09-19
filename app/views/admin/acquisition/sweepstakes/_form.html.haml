@@ -1,0 +1,13 @@
+=spot_form_for [:admin, :acquisition, sweepstake], :display => "light clearfix inlinelabels" do |f|
+  =f.hidden_field :place_id
+  =f.text_field :name, :placeholder => "sweepstake name", :required => true, :label => "Name : ", :maxlength => 30
+  =f.text_field :place_name, :placeholder => "place name", :required => true, :label => "Place Name : "
+  =f.text_field :short_summary, :placeholder => "short summary", :required => true, :label => "Short Summary : ", :maxlength => 30
+  =f.text_field :grand_prize, :placeholder => "grand prize", :required => true, :label => "Grand Prize : "
+  =f.text_field :prize_value, :placeholder => "prize value", :required => true, :label => "Prize Value : ", :min => 0
+  =f.text_area  :description, :required => true, :container_class => "tinymce", :label => "Full Desc. : "
+  =f.text_field :starts_on, :placeholder => "start date", :required => true, :container_class => "dateinput", :value => sweepstake.starts_on.try(:strftime, '%A, %B %d, %Y'), :label => "Start Date : "
+  =f.text_field :ends_on, :placeholder => "end date", :required => true, :container_class => "dateinput", :value => sweepstake.ends_on.try(:strftime, '%A, %B %d, %Y'), :label => "End Date : "
+  %li.buttons
+    =button_tag :class => 'tf btnorg300x41' do
+      submit

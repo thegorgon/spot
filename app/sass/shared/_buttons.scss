@@ -22,7 +22,12 @@
   }
   &:active, &.active {
     color: #f7f7f7 !important;
-  }  
+  }
+  .loading {
+    width: 100%;
+    height: 100%;
+    background: transparent url(/images/assets/loading/whtorg3blck16x11.gif) no-repeat center center;
+  }
 }
 .twit-share-btn {
   text-decoration: none;
@@ -43,6 +48,9 @@ button, .button {
   width: auto;
   overflow: visible;
   @extend .no_select;
+  .loading {
+    display: none;
+  }
 }
 .button {
   padding: 0;
@@ -50,6 +58,16 @@ button, .button {
 button[type]{
   padding: 5px 5px; /* Firefox */
   line-height: 17px; /* Safari */
+}
+form.loading {
+  button {
+    .btntxt {
+      display: none;
+    }
+    .loading {
+      display: block;
+    }
+  }
 }
 .rndblk_80x26 {
   font-size: 12px;

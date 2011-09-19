@@ -1,11 +1,14 @@
 module TagHelper
   def button_tag(options={}, &block)
     options[:type] ||= 'submit'
+    show_loading = !!options.delete(:loading)
     button = "<button"
     options.each do |k, v|
       button << " #{k}=\"#{v}\""
     end
-    button << "><div class=\"btntxt\">"
+    button << ">"
+    button << "<div class=\"loading\"></div>" if show_loading
+    button << "<div class=\"btntxt\">" 
     button << capture(&block) if block
     button << "</div></button>"
     button.html_safe

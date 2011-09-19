@@ -9,7 +9,7 @@ Rails.configuration.middleware.use RailsWarden::Manager do |manager|
 end
 
 Warden::Strategies.add(:cookie, Strategies::Cookie)
-Warden::Strategies.add(:device, Strategies::Device)
+Warden::Strategies.add(:device, Strategies::DeviceID)
 Warden::Strategies.add(:facebook, Strategies::Facebook)
 Warden::Strategies.add(:password, Strategies::Password)
 Warden::Strategies.add(:perishable_token, Strategies::PerishableToken)

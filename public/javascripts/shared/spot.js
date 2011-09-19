@@ -41,3 +41,9 @@ window.fbAsyncInit = function() {
 $.ajaxSetup({
   'beforeSend': function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name=csrf-token]').attr('content')); }
 });
+
+window.addthis_share = {
+  templates: { twitter: '{{title}} {{lurl}} via @spotteam' },
+  email_template: "glasses_tpl"
+};
+

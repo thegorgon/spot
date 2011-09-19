@@ -1,4 +1,4 @@
-class Strategies::Device < Warden::Strategies::Base
+class Strategies::DeviceID < Warden::Strategies::Base
   def valid?
     Rails.logger.info("warden: testing validity of device strategy")
     params[:credentials] && 

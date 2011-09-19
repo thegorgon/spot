@@ -44,7 +44,7 @@ module Spot
       values = values.all.collect { |c| [c.name_and_region, c.id] }
       values = prepend_values + values if prepend_values
       values += append_values if append_values
-      
+
       select(method, values, options, html_options)
     end
     

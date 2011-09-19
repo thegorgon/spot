@@ -276,6 +276,33 @@
     },
     site_accounts: function() {
       go.PaymentForm.init({form: $('ul.form.cc form')});
+    },
+    site_sweepstakes_show: function() {
+      $('#entry_form form').ajaxForm({
+        start: function() {
+          if ($(this).validate()) {
+            $(this).addClass('loading');
+            return true;
+          } else {
+            return false;
+          }
+        },
+        success: function(data) {
+          $(this).removeClass('loading');
+          $('#entry_description').html(data.html);
+          go.Behaviors.train('#entry_description');
+          $('.apply').addClass('applied');
+          $('#entered_dialog').tmpl(data.entry).modal({
+            autoOpen: true,
+            width: 340
+          });
+          addthis.toolbox('.addthis_toolbox')
+        },
+        error: function() {
+          $(this).removeClass('loading');
+          
+        }
+      });
     }
   });
 }(Spot));

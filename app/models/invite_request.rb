@@ -13,6 +13,8 @@ class InviteRequest < ActiveRecord::Base
   scope :ready_for_sending, lambda { city_available.where(["invite_requests.invite_sent_at IS NULL AND invite_requests.created_at < ?", Time.now - 1.hours]) }
   scope :need_blitzing, lambda { includes(:city).city_available.where(["invite_requests.invite_sent_at < ? AND blitz_count < ? AND (last_blitz_at IS NULL OR last_blitz_at < ?)", Time.now - 1.day, MAX_BLITZ, Time.now - 1.day]) }
   
+  name_attribute :name
+  
   def self.filter(n)
     finder = self
     finder = finder.unsent_invites if n & 1 > 0
