@@ -7,6 +7,7 @@ class Site::SitemapsController < Site::BaseController
     @promotions = PromotionTemplate.approved.includes(:business => :place).all
     @cities = City.visible.all
     @blog_entries = BlogPost.filter(:per_page => 1000)
+    @sweepstakes = Sweepstake.order("starts_on DESC").limit(1000)
     
     render :layout => false
   end

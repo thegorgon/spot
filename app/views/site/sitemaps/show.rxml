@@ -26,4 +26,13 @@ xml.urlset "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9", "xmlns:imag
       xml.priority   0.5
     end
   end
+  
+  @sweepstakes.each do |swpstk|
+    xml.url do
+      xml.loc        sweepstake_url(swpstk)
+      xml.lastmod    w3c_date(swpstk.created_at)
+      xml.changefreq "MONTHLY"
+      xml.priority   0.5
+    end
+  end
 end
