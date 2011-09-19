@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110914194520) do
+ActiveRecord::Schema.define(:version => 20110914230828) do
 
   create_table "acquisition_campaigns", :force => true do |t|
     t.string   "name"
@@ -339,6 +339,8 @@ ActiveRecord::Schema.define(:version => 20110914194520) do
     t.datetime "updated_at"
     t.integer  "blitz_count",         :default => 0, :null => false
     t.datetime "last_blitz_at"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "invite_requests", ["email"], :name => "index_invite_requests_on_email", :unique => true
@@ -563,6 +565,34 @@ ActiveRecord::Schema.define(:version => 20110914194520) do
   end
 
   add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"
+
+  create_table "sweepstake_entries", :force => true do |t|
+    t.integer  "sweepstake_id",                    :null => false
+    t.integer  "invite_request_id",                :null => false
+    t.integer  "submissions",       :default => 1, :null => false
+    t.string   "referral_code",                    :null => false
+    t.string   "referred_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sweepstake_entries", ["referral_code"], :name => "index_sweepstake_entries_on_referral_code", :unique => true
+  add_index "sweepstake_entries", ["sweepstake_id", "invite_request_id"], :name => "index_sweepstake_entries_on_sweepstake_and_request", :unique => true
+
+  create_table "sweepstakes", :force => true do |t|
+    t.integer  "place_id",                        :null => false
+    t.integer  "entries_count",    :default => 0, :null => false
+    t.string   "name",                            :null => false
+    t.string   "short_summary",                   :null => false
+    t.string   "grand_prize",                     :null => false
+    t.integer  "prize_value",                     :null => false
+    t.text     "description",                     :null => false
+    t.datetime "starts_on",                       :null => false
+    t.datetime "ends_on",                         :null => false
+    t.integer  "winning_entry_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "user_events", :force => true do |t|
     t.integer  "user_id",    :default => -1, :null => false

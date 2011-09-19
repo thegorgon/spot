@@ -134,27 +134,6 @@ class User < ActiveRecord::Base
     self.class.where(:id => id).update_all(["login_count = COALESCE(login_count, 0) + 1, current_login_at = ?, updated_at = ?", Time.now.utc, Time.now.utc])    
   end
   
-  def names
-    [first_name, last_name]
-  end
-    
-  def nickname
-    if @nickname.blank?
-      if first_name.present? && last_name.present?
-        @nickname = [first_name, last_name.to_s.first].compact.join(" ")
-        @nickname << "."
-      elsif first_name.present? || last_name.present?
-        @nickname = [first_name, last_name].compact.join
-      elsif email.present?
-        @nickname = email.split('@').first
-      else
-        @nickname = "noname"
-      end
-      @nickname.downcase!
-    end
-    @nickname
-  end
-
   def adminify!
     update_attribute(:admin, true)
   end

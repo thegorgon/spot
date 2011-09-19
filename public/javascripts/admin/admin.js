@@ -1,5 +1,42 @@
 (function(go) {
   $.provide(go, 'Views', {
+    admin: function() {
+      $('#search_query_text').autocomplete({
+        source: $('#places_search_form').attr('action'),
+        minLength: 2,
+        focus: function(event, ui) {  
+          if (ui.item) {
+            $('#search_query_text').val(ui.item.name);
+            return false;
+          }
+          return true;
+        },
+        search: function(event, ui) {
+          $('#search_query_text').parents('.accept_focus').addClass('loading');
+        },
+        open: function(event, ui) {
+          $('#search_query_text').parents('.accept_focus').removeClass('loading');          
+        },
+        select: function( event, ui ) {
+          if (ui.item) {
+            window.location = "/admin" + ui.item.path;
+            return false;
+          }
+          return true;
+        },
+        position: {of: "#places_search_form", my: "left top", at: "left bottom"}
+      });
+      $('#search_query_text').data( "autocomplete" )._renderItem = function( ul, item ) {
+        return $( "<li></li>" )
+          .data( "item.autocomplete", item )
+          .append( "<a>" + item.name  + "</a>" )
+          .appendTo( ul );
+      };
+      $('#search_query_text').data( "autocomplete" )._resizeMenu = function() {
+        var ul = this.menu.element;
+        ul.css({width: this.element.outerWidth()});
+      };
+    },
     admin_places: function() {
       go.ImageSelector.init('.place_image');
     },
@@ -110,6 +147,55 @@
           });
         }
       });
+    },
+    admin_acquisition_sweepstakes: function() {
+      $('li.dateinput input').datepicker({dateFormat: 'DD, MM d, yy'});
+      $('.tinymce textarea').tinymce({
+        script_url : '/javascripts/vendor/tiny_mce/tiny_mce.js',
+        theme: "advanced",
+        plugins : "autolink,lists,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
+        theme_advanced_buttons1 : "bold,bullist,numlist,link,unlink",
+        theme_advanced_buttons2 : "",
+        theme_advanced_buttons3 : "",
+        theme_advanced_buttons4 : "",
+        theme_advanced_toolbar_location : "top",
+        theme_advanced_toolbar_align : "left",
+        theme_advanced_statusbar_location : "none",
+        theme_advanced_resizing : true
+      });
+      $('#sweepstake_place_name').autocomplete({
+        source: '/admin/places/search',
+        minLength: 2,
+        focus: function(event, ui) {  
+          if (ui.item) {
+            $('#sweepstake_place_name').val(ui.item.name);
+            return false;
+          }
+          return true;
+        },
+        search: function(event, ui) {
+          $('#sweepstake_place_name').parents('.accept_focus').addClass('loading');
+        },
+        open: function(event, ui) {
+          $('#sweepstake_place_name').parents('.accept_focus').removeClass('loading');          
+        },
+        select: function( event, ui ) {
+          if (ui.item) {
+            $('#sweepstake_place_id').val(ui.item.id)
+            $('#sweepstake_place_name').val(ui.item.name)
+            $.validations.validity($('#sweepstake_place_name'), true, "");
+          } else {
+            $.validations.validity($('#sweepstake_place_name'), false, "is not a valid place");
+          }
+          return false;
+        }
+      });
+      $('#sweepstake_place_name').data( "autocomplete" )._renderItem = function( ul, item ) {
+        return $( "<li></li>" )
+          .data( "item.autocomplete", item )
+          .append( "<a>" + item.name  + "</a>" )
+          .appendTo( ul );
+      };
     },
     admin_home_analysis: function() {
       google.load("visualization", "1", {packages:["corechart"]});

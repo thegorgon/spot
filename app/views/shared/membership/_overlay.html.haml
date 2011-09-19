@@ -20,8 +20,8 @@
       .title.clearfix
         -if current_user.membership_application.approved?
           %h1.tf.left.membership
-            Congratulations! Your application has been approved.
-          =link_to "complete", new_membership_path, :class => "btnorg170x41 tf right"
+            Congratulations! You're invited.
+          =link_to "join now", new_membership_path, :class => "btnorg170x41 tf right"
         -else
           %h1.tf.left.membership
             We've received your application.

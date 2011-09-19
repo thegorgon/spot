@@ -42,6 +42,10 @@ Spot::Application.routes.draw do
       get "endpoint", :action => "endpoint", :on => :collection
     end
 
+    resources :onthehouse, :only => [:show], :as => :sweepstakes, :controller => :sweepstakes do
+      get "rules", :on => :member
+      post "enter", :on => :member
+    end
     resource :widget, :only => [:show]
     resource :email, :only => [:show, :update] do
       delete "unsubscribe"
@@ -74,6 +78,7 @@ Spot::Application.routes.draw do
   namespace "admin" do
     resources :places do
       resources :matches, :only => [:index, :create]
+      get "search", :on => :collection
       put "dedupe", :on => :member
       get "matches", :on => :collection
       get "images", :on => :member
@@ -103,6 +108,7 @@ Spot::Application.routes.draw do
     namespace "acquisition" do
       resources :sources, :only => [:index, :create]
       resources :cohorts, :only => [:index]
+      resources :sweepstakes
       resources :campaigns, :only => [:index, :create]
       root :to => "cohorts#index"
     end

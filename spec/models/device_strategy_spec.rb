@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Strategies::Device do
+describe Strategies::DeviceID do
   before :each do 
     @nonce = Nonce.new
     @device = Factory.create(:device)
@@ -19,20 +19,20 @@ describe Strategies::Device do
   describe "#valid" do
     before { stub_nonce!(@nonce, true) }
     it "returns true if the params include the device params" do
-      Strategies::Device.new(@env).should be_valid
+      Strategies::DeviceID.new(@env).should be_valid
     end
 
     it "returns true if the params include the device id" do
       @params[:credentials][:device][:os_id] = nil
       @params[:credentials][:device][:platform] = nil
       env = rack_env("/", @params)
-      Strategies::Device.new(env).should be_valid
+      Strategies::DeviceID.new(env).should be_valid
     end
 
     it "returns false if the params do not include a device id" do
       @params[:credentials][:device][:id] = nil
       env = rack_env("/", @params)
-      Strategies::Device.new(env).should_not be_valid
+      Strategies::DeviceID.new(env).should_not be_valid
     end
 
     it "returns false if the params are improperly formatted" do
@@ -52,7 +52,7 @@ describe Strategies::Device do
     it "succeeds if the params include a valid nonce and valid device params" do
       stub_nonce!(@nonce, true)
       env = rack_env("/", @params)
-      strategy = Strategies::Device.new(env)
+      strategy = Strategies::DeviceID.new(env)
       strategy.authenticate!
       strategy.result.should == :success
     end
@@ -61,7 +61,7 @@ describe Strategies::Device do
       stub_nonce!(@nonce, true)
       @params[:credentials][:device] = nil
       env = rack_env("/", @params)
-      strategy = Strategies::Device.new(env)
+      strategy = Strategies::DeviceID.new(env)
       strategy.authenticate!
       strategy.result.should == :failure
     end
@@ -69,7 +69,7 @@ describe Strategies::Device do
     it "fails without a valid nonce token" do
       stub_nonce!(@nonce, false)
       env = rack_env("/", @params)
-      strategy = Strategies::Device.new(env)
+      strategy = Strategies::DeviceID.new(env)
       strategy.authenticate!
       strategy.result.should == :failure
     end    

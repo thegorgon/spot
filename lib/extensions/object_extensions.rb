@@ -25,6 +25,27 @@ module ObjectExtensions
       define_method "#{method}" do
         [send("first_#{method}"), send("last_#{method}")].full_compact.join(" ")
       end
+      
+      define_method "#{method}s" do
+        [first_name, last_name]
+      end
+
+      define_method "nick#{method}" do
+        if @nickname.blank?
+          if first_name.present? && last_name.present?
+            @nickname = [first_name, last_name.to_s.first].compact.join(" ")
+            @nickname << "."
+          elsif first_name.present? || last_name.present?
+            @nickname = [first_name, last_name].compact.join
+          elsif email.present?
+            @nickname = email.split('@').first
+          else
+            @nickname = "noname"
+          end
+          @nickname.downcase!
+        end
+        @nickname
+      end      
     end  
   end
 end

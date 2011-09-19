@@ -119,6 +119,9 @@ h1 {
 .fullscreen {
   @include fullscreen;
 }
+.smallcaps {
+  font-variant: small-caps;
+}
 hr.light {
   border-top: 1px solid #ddd;
   height: 0;

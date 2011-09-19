@@ -1,0 +1,82 @@
+.sweepstake.clearfix
+  .apply{:class => conditionally("applied", !@entry.new_record?)}
+    .logo=image_tag "logos/onthehouse160x80.png", :size => "160x80"
+    %h1.tf=@sweepstake.place.name
+    .enter
+      enter to win a
+      %h2.tf=@sweepstake.short_summary
+    -if @sweepstake.active?
+      =spot_form_for @entry, :as => :entry, :url => enter_sweepstake_path(@sweepstake), :display => "light tf clearfix", :ul_id => "entry_form", :html => {:method => :post} do |f|
+        =f.hidden_field :referred_by_id, :value => @referrer.try(:id)
+        =f.name_fields :required => true, :value => invite_request.try(:names)
+        =f.email_field :email, :required => true, :placeholder => "enter your email"
+        =f.city_select :city_id, invite_request.try(:city_id), :label => ""
+        %li.buttons
+          =button_tag :class => "btnorg300x41 tf", :loading => true do
+            enter now
+        %li.errors=@entry.errors[:base].join(", ")
+      #entry_description
+        -if @entry
+          =render :partial => "entry"
+      .smallprint
+        Enter and receive exclusive offers from Spot. 
+        Unsubscribe anytime.
+        =link_to "Read official rules.", rules_sweepstake_path(@sweepstake), :target => "_new"
+    -elsif @sweepstake.pending?
+      .pending.tf
+        ="Submissions will be accepted starting #{@sweepstake.starts_on.strftime("%B %d, %Y")} at&nbsp;1:00&nbsp;a.m.&nbsp;Pacific&nbsp;Time.".html_safe
+    -elsif @sweepstake.closed?
+      .closed.tf
+        %p
+          Submissions are currently closed for this 
+          =img_link_to "logos/spotwhite120x90.png", root_url, :size => "40x30", :alt => "spot", :class => "logolink"
+          %span.smallcaps On The House 
+          Sweepstake.
+        %p
+          Follow 
+          =link_to "@spotteam on Twitter", "http://www.twitter.com/spotteam" 
+          to Stay Up to Date with our Latest Promotions.
+      
+  .meta
+    .image=image_tag @sweepstake.place.image.url(:i640x400), :size => "416x260", :alt => @sweepstake.place.name
+    .description= @sweepstake.description.html_safe
+  .footer
+    %hr.clear
+    %h3.tf
+      =img_link_to "logos/spotwhite120x90.png", root_url, :size => "40x30", :alt => "spot", :class => "logolink"
+      %span.smallcaps On The House 
+      is brought to you by
+      
+    %h2.tf
+      =img_link_to "logos/spotwhite120x90.png", root_url, :size => "80x60", :alt => "spot", :class => "logolink"
+      A Private Membership Club for Discerning Diners    
+    %nav
+      =link_to "home", root_path
+      \|
+      =link_to "about", about_path
+      \|
+      =link_to "membership", membership_about_path, :class => "btnmemabout"
+      \|
+      =link_to "blog", blog_index_path
+          
+#aboutmembership.hidden{"data-title" => "About Spot Membership"}=render :partial => "shared/membership/about"
+
+%script#entered_dialog{:type => "x-jquery-tmpl"}
+  #entered.dialog{"data-title" => "Congratulations!"}
+    %h1.tf Your Entry has Been Submitted!
+    .chances
+      %h2.tf Improve Your Chances
+      %p Get an additional entry for every friend you invite.
+      .buttons              
+        -title = "#{@sweepstake.name} - Win an unforgettable #{@sweepstake.short_summary}"
+        -url = sweepstake_url(@sweepstake, :ref => '${referral_code}')                
+        .addthis_toolbox.addthis_default_style.addthis_32x32_style{"addthis:url" => url, "addthis:title" => title}
+          %a.addthis_button_facebook
+          %a.addthis_button_twitter
+          %a.addthis_button_email
+          %a.addthis_button_compact
+      =text_field_tag("url", url, "data-mode" => "select", :class => "text light")
+
+=content_for :scripts do
+  %script{:type => "text/javascript", :src => "http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e73dd12698069a2"}
+

@@ -13,3 +13,44 @@
     }
   }
 }
+
+.admin_acquisition_sweepstakes {
+  h1.sweepstake_title {
+    margin: 20px 0;
+  }
+  .preview {
+    width: 320px;
+    margin-right: 40px;
+    h2 {
+      font-size: 22px;
+      text-align: center;
+      margin: 20px 0;
+    }
+    h1 {
+      margin: 20px 0;
+      font-size: 30px;
+      text-align: center;
+    }
+    img {
+      border: 1px solid #333;
+    }
+    .description {
+      text-align: justify;
+      font-size: 14px;
+      font-weight: 0;
+      p {
+        margin: 20px 0;
+      }
+    }
+  }
+  ul.form {
+    form {
+      li.labelled, .li.labelled, li.buttons {
+        width: 425px;
+        .label {
+          width: 110px;
+        }
+      }
+    }    
+  }
+}

@@ -1,0 +1,88 @@
+=content_for :toptitle do
+  ="Spot Members \"#{@sweepstake.name}\" Sweepstakes Official Rules"
+
+.prose
+  %p
+    By submitting an entry to the Spot Members "French Laundry Giveaway" Sweepstakes (the "Sweepstakes"), you acknowledge that you have read and agree to be bound by these Official Rules and the decisions of Spot Members, and that you satisfy all eligibility requirements.
+
+  %ol
+    %li
+      %p
+        NO PURCHASE OR PAYMENT OF ANY KIND IS NECESSARY TO ENTER OR WIN THIS SWEEPSTAKES. A PURCHASE WILL NOT AFFECT OR IMPROVE THE CHANCES OF WINNING. This sweepstakes (the "Sweepstakes") is subject to all applicable laws and regulations. Void where prohibited or restricted by law.
+    %li
+      %p
+        Sponsor: The Sweepstakes is provided by Spot Members Inc. ("Spot Members") 2601 Mission Street #403, San Francisco, CA, 94110 (the "Sponsor"). The SpotMembers.com web site ("Site") is provided by Spot Members.
+
+    %li
+      %p
+        Eligibility: Sweepstakes is open only to legal residents of the United States of America, void where prohibited. Entrants must be 21 years of age or older as of the date of entry. Sweepstakes is not open to employees, officers, directors, agents or representatives of Sponsor or of Sponsor's parents, affiliates, successors and/or assigns, Sponsor's advertising, promotion and fulfillment agencies, legal advisors, and the immediate family members (mother, father, brother, sister, daughter, son or spouse, regardless of where they live) and persons living in the same household (whether or not related) of any of the foregoing (collectively, "Sweepstakes Entities").
+
+    %li
+      %p
+        Sweepstakes Period: The Sweepstakes begins on 
+        ="#{@sweepstake.starts_on.strftime("%B %d, %Y")}"
+        at 1:00 a.m. Pacific Time ("PT") and ends 
+        ="#{@sweepstake.ends_on.strftime("%B %d, %Y")}"
+        at 11:59 p.m.
+        Pacific Time. Sponsor's computer shall be the official timekeeper.
+
+    %li
+      %p
+        Entry Method: To enter, visit 
+        =link_to "www.SpotMembers.com", root_url
+        during the Sweepstakes Period and complete an online entry form. Online entries must be received by 11:59 p.m. PT on 
+        ="#{@sweepstake.ends_on.strftime("%B %d, %Y")}." 
+        An additional entry per person will be added for each entrant that the person refers. Use of multiple email addresses by the same individual to enter is prohibited and such multiple online entries shall be voided. All entries carry an equal chance of winning. Sponsor is not responsible for lost, late, incomplete, misdirected, delayed, or undelivered entries, including without limitation entries not timely received due to telephone failures, Internet failures and disruptions, and ISP problems. Incomplete information may result in disqualification of entry. By providing your e-mail address, you grant Spot Members, the right to send you commercial messages.
+
+    %li
+      %p
+        Drawing: Winners will be selected by random drawing conducted by a third party on or about 
+        ="#{@sweepstake.winners_announced_at.strftime("%B %d, %Y")}, "
+        and winners will be notified by e-mail and/or by telephone. Odds of winning depend on the total number of eligible entries received. All decisions of Spot Members are final and binding on all entrants.
+
+    %li
+      %p
+        Prizes: One (1) grand prize winner will be awarded the grand prize with an approximate retail value of 
+        =number_to_currency(@sweepstake.prize_value)
+        The grand prize is 
+        ="#{@sweepstake.grand_prize}." 
+        There will be no first prize. There will be no other prizes. The total approximate retail value of all prizes for this Sweepstakes is 
+        ="#{number_to_currency(@sweepstake.prize_value)}."
+        Prizes are non-refundable and non-transferable, cannot be combined with any other special offer or promotion and must be accepted as awarded. Prizes may not be exchanged for cash value or substituted, except that Sponsor reserves the right in their sole discretion to substitute with either the cash value of the prize, or a prize or prizes of equal or greater value. Sponsor is not responsible for replacing a gift card or gift certificate prize if lost, stolen, mutilated, or is otherwise rendered unusable due to any act or omission of prize winner. Applicable federal, state or local taxes and any other costs or expenses associated with the prizes are the sole responsibility of the winners. If an eligible minor is selected as a winner, the prize will be awarded in the name of the minor's parent or legal guardian. All prizes will be awarded and delivered to the confirmed winners.
+
+    %li
+      %p
+        All entries become the property of Spot Members, and will not be acknowledged or returned. By participating, each entrant agrees to comply with these official rules and agrees that Sponsor is not responsible for any incorrect or inaccurate information, whether caused by any of the equipment or programming associated with or utilized in the Sweepstakes or by any technical or human error that may occur in the processing of submissions in the Sweepstakes.
+
+      %p
+        IN NO EVENT WILL THE SPONSOR OR ANY SWEEPSTAKES ENTITIES BE RESPONSIBLE OR LIABLE FOR ANY DAMAGES OR LOSSES OF ANY KIND, INCLUDING DIRECT, INDIRECT, INCIDENTAL, CONSEQUENTIAL OR PUNITIVE DAMAGES ARISING OUT OF ENTRANT'S PARTICIPATION IN THE SWEEPSTAKES OR ANY PRIZE WON OR ENTRANT'S ACCESS TO OR USE OF ANY OF SPONSOR'S WEBSITE, OR THE ACCESSING, DOWNLOADING AND/OR PRINTING OF ANY MATERIAL AVAILABLE ON SAID SITES. WITHOUT LIMITING THE FOREGOING, EVERYTHING ON SPONSOR'S WEB SITE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT. SOME JURISDICTIONS MAY NOT ALLOW THE LIMITATION OR EXCLUSION OF LIABILITY FOR INCIDENTAL OR CONSEQUENTIAL DAMAGES OR EXCLUSIONS OF IMPLIED WARRANTIES SO SOME OF THE ABOVE LIMITATIONS OR EXCLUSIONS MAY NOT APPLY.
+
+    %li
+      %p
+        Winners of all sweepstakes will be contacted at the email address used to enter the sweepstakes, and the person receiving and replying to the winner announcement email will be considered the winner unless they specify another person within the reply email as the winner. Spot Members will mail the sweepstakes prize to the address supplied by the recipient of the winner announcement email. If any potential winner selected cannot be contacted or does not respond within seven (7) calendar days of attempted notification, or any prize or "winner announcement email" is returned as undeliverable, such potential winner shall forfeit any and all rights to a prize and, at Sponsors' sole discretion, an alternate winner may be randomly selected. The winner will be required to complete, sign and return an affidavit of eligibility and/or a liability/publicity release, which must be returned within seven (7) calendar days from the date of notification. The winner's prize will be forfeited and will be awarded to an alternate winner upon the occurrence of any of the following: (i) the failure of winner to return any required documents by the deadline specified by Sponsor; (ii) the return of a prize, prize notification or winner announcement email to Sponsor as non-deliverable; or (iii) the determination by Sponsor, made in their sole discretion, that winner is ineligible or otherwise not in compliance with these official rules. By accepting a prize in this Sweepstakes, each winner, where permitted by law, grants to Sponsor the right to use and publish his/her name, address, portrait, picture, voice, image, likeness and comments for advertising, trade and promotional purposes without notification, review or approval, and without additional consideration, worldwide and on the Internet.
+
+      %p
+        BY ACCEPTING A PRIZE, THE WINNER (OR IF WINNER IS A MINOR, WINNER'S PARENT OR LEGAL GUARDIAN) RELEASES AND AGREES TO INDEMNIFY AND HOLD HARMLESS SPONSOR AND ALL SWEEPSTAKES ENTITIES FROM ANY AND ALL LIABILITY AND CLAIMS FOR ANY INJURY, LOSS OR DAMAGE OF ANY KIND TO PERSONS, INCLUDING DEATH, AND PROPERTY, ARISING FROM OR IN CONNECTION WITH ACCEPTANCE, POSSESSION, USE OR MISUSE OF THE PRIZE, PARTICIPATION IN THIS SWEEPSTAKES OR ANY SWEEPSTAKES-RELATED ACTIVITY.
+
+    %li
+      %p
+        If, for any reason, the Sweepstakes is not capable of running as planned because of circumstances including, but not limited to, unauthorized intervention, fraud, technical failures, or any other causes, which in Sponsor's sole judgment corrupts or affects the administration, security, fairness, integrity or proper conduct of this Sweepstakes, Sponsor reserves the right, in its sole discretion and determination of fairness, to cancel, terminate, modify or suspend the Sweepstakes and to select the winners from entries received prior to such action. Sponsor may disqualify any entrant suspected of tampering with the entry process, operation of the Sweepstakes, the operation of the website, or violates these official rules. Use of bots or other automated process to enter is prohibited and may result in disqualification at the sole discretion of the Sponsors. Sponsors are not responsible for errors in the administration or fulfillment of these sweepstakes, including without limitation mechanical, human, printing, distribution, or production errors, and may modify or cancel a sweepstakes based upon such an error at their sole discretion, and without liability.
+
+    %li
+      %p
+        By registering to enter the Sweepstakes, each entrant acknowledges he/she has read, understands and will abide by these official rules. All issues and questions concerning the construction, validity, interpretation and enforceability of these official rules, or the rights and obligations of entrants and/or Sponsor in connection with the Sweepstakes, shall be governed by and construed in accordance with, the laws of the State of California.
+
+    %li
+      %p
+        For the names of the winners, send a self-addressed stamped envelope for receipt by 
+        ="#{@sweepstake.winners_announced_at.strftime("%B %d, %Y")}, "
+        to: Spot Members 
+        ="\"#{@sweepstake.name}\"" 
+        Sweepstakes, 2601 Mission Street #403, San Francisco, CA 94110.
+
+    %li
+      %p
+        The personal information collected from each entrant in the course of the Sweepstakes will be used by Spot Members for the purposes of administration of the Sweepstakes and as otherwise permitted in accordance with Spot Members’ Privacy Policy. Please see Spot Members's Terms of Service for more information. Spot Members Inc. reserves the right to alter any rules of any sweepstakes at anytime. If you have any questions or complaints about a Spot Members sweepstakes, please contact contact@spotmembers.com.
+
+  %p.center
+    Void outside the United States, and wherever prohibited or restricted by law.

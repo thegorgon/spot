@@ -1,0 +1,16 @@
+.manager
+  %h1.sweepstake_title.title.clearfix
+    =link_to "Sweepstake", admin_acquisition_sweepstakes_path
+    =" : \"#{@sweepstake.name}\""
+  .clearfix
+    .left.preview
+      =image_tag @sweepstake.place.image.url(:i640x400), :size => "320x200", :alt => @sweepstake.place.name
+      %h2.tf=@sweepstake.place.name
+      %h1.tf=@sweepstake.short_summary
+      .description=@sweepstake.description.html_safe
+  
+    .formcontainer.left
+      =render :partial => "form", :locals => {:sweepstake => @sweepstake}
+
+=content_for :scripts do
+  =javascript_include_tag 'vendor/tiny_mce/jquery.tinymce.js'

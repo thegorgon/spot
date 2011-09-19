@@ -656,6 +656,11 @@ ul.form.search {
         background: transparent url(/images/assets/general/search13x14.png) no-repeat left center;
       }
     }
+    &.loading {
+      li.search_icon {
+        background: transparent url(/images/assets/loading/org3blck16x11.gif) no-repeat left center;
+      }
+    }
     li.search {
       background: #444;
       input {
@@ -671,13 +676,18 @@ ul.form.search {
   }
   &.light {
     border: 1px solid #fff;
-    li.search_icon {
-      background: transparent url(/images/assets/general/search_light13x14.png) no-repeat left center;
-    }
     &.focus {
       .search_icon {
         background: transparent url(/images/assets/general/search13x14.png) no-repeat left center;
       }
+    }
+    &.loading {
+      li.search_icon {
+        background: transparent url(/images/assets/loading/org3blck16x11.gif) no-repeat left center;
+      }
+    }
+    li.search_icon {
+      background: transparent url(/images/assets/general/search_light13x14.png) no-repeat left center;
     }
     li.search {
       background: #AAA;

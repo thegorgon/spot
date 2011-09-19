@@ -165,7 +165,7 @@
       $.validations.validity(this, floatVal <= $(this).maxValue() && floatVal >= $(this).minValue(), msg);
     }
   });
-    
+  
   // Register Server Validation
   $.validations.register({
     name: 'server',

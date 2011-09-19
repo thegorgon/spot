@@ -10,6 +10,8 @@ class Site::BaseController < ApplicationController
   
   def invite_request
     @invite_request ||= InviteRequest.find_by_id(session[:invite_request_id]) if session[:invite_request_id]
+    session[:invite_request_id] = @invite_request.try(:id)
+    @invite_request
   end
   helper_method :invite_request
   

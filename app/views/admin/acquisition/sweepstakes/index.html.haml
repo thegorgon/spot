@@ -1,0 +1,49 @@
+.manager
+  .top.clearfix
+    .pagination
+      -unless @sweepstakes.last_page?
+        .next=link_to "Next &rarr;".html_safe, admin_acquisition_sweepstakes_path(filters.merge(:page => @sweepstakes.current_page + 1))
+      -unless @sweepstakes.first_page?
+        .previous=link_to "&larr; Previous".html_safe, admin_acquisition_sweepstakes_path(filters.merge(:page => @sweepstakes.current_page - 1))
+    %h1.title="#{pluralize(@sweepstakes.total_count, "Sweepstake")}"
+
+  %table.data
+    %thead
+      %tr
+        %th Id
+        %th Place
+        %th Summary
+        %th Run Dates
+        %th Entries
+        %th Submissions
+        %th Status
+        %th Actions
+    %tbody
+      -@sweepstakes.to_a.each do |swpstk|
+        %tr.center.sweepstake{:id => dom_id(swpstk), :class => cycle("even", "odd")}
+          -place = swpstk.place
+          %td= swpstk.id
+          %td= link_to swpstk.place.name, admin_place_path(swpstk.place)
+          %td= swpstk.short_summary
+          %td= "#{swpstk.starts_on.strftime('%B %d, %Y')} - #{swpstk.ends_on.strftime('%B %d, %Y')}"
+          %td= swpstk.entries_count
+          %td= swpstk.entries.sum(:submissions)
+          %td= swpstk.status
+          %td
+            =link_to "Delete", admin_acquisition_sweepstake_path(swpstk), "data-method" => "delete", "data-confirm" => "Are you sure?"
+            \|
+            =link_to "Edit", edit_admin_acquisition_sweepstake_path(swpstk)
+            \|
+            =link_to "Preview", sweepstake_path(swpstk)
+  .pagination.bottom
+    -unless @sweepstakes.last_page?
+      .next=link_to "Next &rarr;".html_safe, admin_acquisition_sweepstakes_path(params.slice('filter').merge(:page => @sweepstakes.current_page + 1))
+    -unless @sweepstakes.first_page?
+      .previous=link_to "&larr; Previous".html_safe, admin_acquisition_sweepstakes_path(params.slice('filter').merge(:page => @sweepstakes.current_page - 1))
+
+  .form.new.clearfix
+    %h2 New Sweepstake
+    =render :partial => "form", :locals => {:sweepstake => @new_sweepstake}
+
+=content_for :scripts do
+  =javascript_include_tag 'vendor/tiny_mce/jquery.tinymce.js'

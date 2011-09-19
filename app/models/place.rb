@@ -51,16 +51,12 @@ class Place < ActiveRecord::Base
   
   def self.filter(params={})
     finder = self
-    if params[:query]
-      finder = finder.search(params[:query], :star => true, :match_mode => :any, :page => params[:page], :per_page => params[:per_page])
-    else
-      finder = finder.where("image_file_name IS NULL") if params[:filter].to_i & 2 > 0 
-      finder = finder.where("wishlist_count > 0").order("wishlist_count DESC") if params[:filter].to_i & 1 > 0
-      finder = finder.where("image_processing") if params[:filter].to_i & 4 > 0
-      finder = finder.order("id DESC")
-      finder = finder.canonical
-      finder = finder.page(params[:page]).per(params[:per_page])
-    end
+    finder = finder.where("image_file_name IS NULL") if params[:filter].to_i & 2 > 0 
+    finder = finder.where("wishlist_count > 0").order("wishlist_count DESC") if params[:filter].to_i & 1 > 0
+    finder = finder.where("image_processing") if params[:filter].to_i & 4 > 0
+    finder = finder.order("id DESC")
+    finder = finder.canonical
+    finder = finder.page(params[:page]).per(params[:per_page])
     finder
   end
   
