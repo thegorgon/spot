@@ -15,9 +15,14 @@
     font-size: 16px;
     line-height: 1.5em;
     margin: 30px 0;
-    a.logo {
+    a.logolink {
       position: relative;
       top: 12px;
+      display: inline-block;
+      margin-top: -12px;
+    }
+    p {
+      margin: 20px 0;
     }
   }
   .chances {
@@ -154,18 +159,22 @@
         margin: 0 auto;
       }
       h3 {
-        margin: 0 0 0;
-        a.logo {
+        margin: 10px 0 0;
+        a.logolink {
           position: relative;
           top: 12px;
+          display: inline-block;
+          margin-top: -12px;
         }
       }
       h2 {
-        margin: -20px 0 20px 0;
+        margin: 10px 0;
         font-size: 22px;
-        a.logo {
+        a.logolink {
           position: relative;
           top: 24px;
+          display: inline-block;
+          margin-top: -24px;
         }
       }
     }

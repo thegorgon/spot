@@ -27,10 +27,15 @@
         ="Submissions will be accepted starting #{@sweepstake.starts_on.strftime("%B %d, %Y")} at&nbsp;1:00&nbsp;a.m.&nbsp;Pacific&nbsp;Time.".html_safe
     -elsif @sweepstake.closed?
       .closed.tf
-        Submissions are currently closed for this 
-        =img_link_to "logos/spotwhite120x90.png", root_url, :size => "40x30", :alt => "spot", :class => "logo"
-        %span.smallcaps On The House 
-        Sweepstakes.
+        %p
+          Submissions are currently closed for this 
+          =img_link_to "logos/spotwhite120x90.png", root_url, :size => "40x30", :alt => "spot", :class => "logolink"
+          %span.smallcaps On The House 
+          Sweepstake.
+        %p
+          Follow 
+          =link_to "@spotteam on Twitter", "http://www.twitter.com/spotteam" 
+          to Stay Up to Date with our Latest Promotions.
       
   .meta
     .image=image_tag @sweepstake.place.image.url(:i640x400), :size => "416x260", :alt => @sweepstake.place.name
@@ -38,12 +43,12 @@
   .footer
     %hr.clear
     %h3.tf
-      =img_link_to "logos/spotwhite120x90.png", root_url, :size => "40x30", :alt => "spot", :class => "logo"
+      =img_link_to "logos/spotwhite120x90.png", root_url, :size => "40x30", :alt => "spot", :class => "logolink"
       %span.smallcaps On The House 
       is brought to you by
       
     %h2.tf
-      =img_link_to "logos/spotwhite120x90.png", root_url, :size => "80x60", :alt => "spot", :class => "logo"
+      =img_link_to "logos/spotwhite120x90.png", root_url, :size => "80x60", :alt => "spot", :class => "logolink"
       A Private Membership Club for Discerning Diners    
     %nav
       =link_to "home", root_path
