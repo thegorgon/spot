@@ -48,11 +48,11 @@ class Sweepstake < ActiveRecord::Base
   end
   
   def starts_at
-    Sweepstake.time_zone.parse(starts_on.strftime("%Y-%m-%d 00:00:00"))
+    Sweepstake.time_zone.parse(starts_on.strftime("%Y-%m-%d 01:00:00"))
   end
   
   def ends_at
-    Sweepstake.time_zone.parse(ends_on.strftime("%Y-%m-%d 01:00:00"))
+    Sweepstake.time_zone.parse(ends_on.strftime("%Y-%m-%d 11:59:59"))
   end
   
   def pending?
