@@ -40,7 +40,7 @@ class InviteRequest < ActiveRecord::Base
     @experiences[city.id]
   end
   
-  def self.blitz!
+  def self.send_blitzes
     need_blitzing.find_each do |request|
       BlitzMailer.email(request, :invite_code => random_code.code, :experiences => blitz_experiences(request.city)).deliver!
     end
