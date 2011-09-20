@@ -59,7 +59,13 @@ class InviteRequest < ActiveRecord::Base
   end
   
   def self.accounting!(membership)
-    where(:email => membership.user.email).update_all(:membership_id => membership.id)
+    sql = send(:sanitize_sql_array, ["INSERT INTO invite_requests 
+                                        (email, first_name, last_name, city_id, membership_id, invite_sent_at) 
+                                          VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE 
+                                        first_name = ?, last_name = ?, city_id = ?, membership_id = ?, invite_sent_at = ?", 
+                                        membership.user.email, membership.user.first_name, membership.user.last_name, membership.city_id, membership.id, Time.now, 
+                                                               membership.user.first_name, membership.user.last_name, membership.city_id, membership.id, Time.now])
+    connection.execute(sql)
   end
   
   def self.autosend
