@@ -9,7 +9,7 @@ class InviteRequest < ActiveRecord::Base
   
   scope :unsent_invites, where(:invite_sent_at => nil)
   scope :sent_invites, where("invite_sent_at IS NOT NULL")
-  scope :city_available, joins(:city).where("cities.subscriptions_available > cities.subscription_count")
+  scope :city_available, select("invite_requests.*").joins(:city).where("cities.subscriptions_available > cities.subscription_count")
   scope :ready_for_sending, lambda { city_available.where(["invite_requests.invite_sent_at IS NULL AND invite_requests.created_at < ?", Time.now - 1.hours]) }
   scope :need_blitzing, lambda { includes(:city).city_available.where(["invite_requests.invite_sent_at < ? AND blitz_count < ? AND (last_blitz_at IS NULL OR last_blitz_at < ?)", Time.now - 1.day, MAX_BLITZ, Time.now - 1.day]) }
   
@@ -70,12 +70,12 @@ class InviteRequest < ActiveRecord::Base
   end
   
   def self.autosend
-    count = 0
-    InviteRequest.ready_for_sending.find_each do |request|
-      count += 1
-      request.send_invite!
+    n = 0
+    InviteRequest.ready_for_sending.find_each do |r|
+      n = n + 1
+      r.send_invite!
     end
-    NotifyMailer.msg("We just sent out #{@count} automatically requested invitations.").deliver!
+    NotifyMailer.msg("We just sent out #{n} automatically requested invitations.").deliver!
   end
 
   def city_name
@@ -92,6 +92,7 @@ class InviteRequest < ActiveRecord::Base
   
   def send_invite!
     TransactionMailer.invitation(self).deliver!
+    puts "WHAT AM I? : #{self}"
     mark_sent!
   end
   
