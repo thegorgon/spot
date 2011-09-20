@@ -89,7 +89,15 @@ module EmailHelper
     image_tag(attachments[src].url, options)
   end
   
+  def img_link_to(src, url, options={})
+    style = options[:style] || ""
+    options[:style] = "border:0;#{style}"
+    link_to image_tag(src, options.slice(:size, :width, :height, :border, :alt)), url, options.except(:size, :width, :height, :border, :alt)
+  end
+  
   def attach_link_to(src, url, options={})
+    style = options[:style] || ""
+    options[:style] = "border:0;#{style}"
     link_to attached_img(src, options.slice(:size, :width, :height, :border, :alt)), url, options.except(:size, :width, :height, :border, :alt)
   end
 end
