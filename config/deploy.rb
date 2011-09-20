@@ -63,10 +63,22 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "sudo bluepill restart unicorn"
   end
-  task :cleanup, :roles => :app do
+  task :cleanup, :roles => [:app, :bg], :except => { :no_release => true } do
     deploy.sphinx.stop
     deploy.workers.stop
-    run "if [ `readlink #{current_path}` != #{current_release} ]; then rm -rf #{current_release}; fi"
+
+    count = fetch(:keep_releases, 5).to_i
+    if count >= releases.length
+      logger.important "no old releases to clean up"
+    else
+      logger.info "keeping #{count} of #{releases.length} deployed releases"
+
+      directories = (releases - releases.last(count)).map { |release|
+        File.join(releases_path, release) }.join(" ")
+
+      try_sudo "rm -rf #{directories}"
+    end
+
     deploy.sphinx.start
     deploy.workers.start
   end
