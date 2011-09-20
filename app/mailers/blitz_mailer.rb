@@ -5,6 +5,7 @@ class BlitzMailer < ApplicationMailer
     @day = options[:day] || request.blitz_count + 1
     options[:invite] = "INVITE3FREE" if @day == 10
     @portal_url = portal_url(:mc => options[:invite] || request.invite.code, :cid => request.city.id, :ir => request.id)
+    @city = request.city
     @email = request.email
     @reason = "#{schedule[:subject][@day - 1]}"
     
@@ -16,7 +17,7 @@ class BlitzMailer < ApplicationMailer
     end
     add_attachment "daynumber.png", ["email", "blitz", "day#{@day}.png"]
 
-    @experiences = options[:experiences] || InviteRequest.blitz_experiences(request.city)
+    @experiences = options[:experiences] || InviteRequest.blitz_experiences(@city)
 
     mail(:template_name => "email#{@day}", :subject => "Spot : #{@reason}")
   end
