@@ -1,3 +1,20 @@
+=content_for :header do
+  =img_link_to "logos/spotwhite120x90.png", root_path(:stay => 1), :size => "40x30", :class => "left"
+  %nav.right.clearfix
+    -if current_member? && current_user.invitation_code.invites_remaining?
+      %a{'data-popover' => '#invite_popover', 'data-popover-title' => 'Invite', 'data-popover-orient' => 'vertical'} 
+        invite
+      #invite_popover=render :partial => "shared/membership/invite"
+      &middot;
+    -if current_user
+      =link_to current_user.nickname, account_path, :class => "accountlnk"
+      %span.account="#{link_to "not you?", logout_path}".html_safe
+    -else show_login?
+      %span.account.accountlnk
+        %a{'data-popover' => '#login_popover', 'data-popover-title' => 'Sign In', 'data-popover-orient' => 'vertical'} 
+          sign in
+      =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
+
 .sweepstake.clearfix
   .apply{:class => conditionally("applied", !@entry.new_record?)}
     .logo=image_tag "logos/onthehouse160x80.png", :size => "160x80"
@@ -40,25 +57,33 @@
   .meta
     .image=image_tag @sweepstake.place.image.url(:i640x400), :size => "416x260", :alt => @sweepstake.place.name
     .description= @sweepstake.description.html_safe
-  .footer
-    %hr.clear
-    %h3.tf
-      =img_link_to "logos/spotwhite120x90.png", root_url, :size => "40x30", :alt => "spot", :class => "logolink"
-      %span.smallcaps On The House 
-      is brought to you by
-      
-    %h2.tf
-      =img_link_to "logos/spotwhite120x90.png", root_url, :size => "80x60", :alt => "spot", :class => "logolink"
-      A Private Membership Club for Discerning Diners    
-    %nav
-      =link_to "home", root_path
-      \|
-      =link_to "about", about_path
-      \|
-      =link_to "membership", membership_about_path, :class => "btnmemabout"
-      \|
-      =link_to "blog", blog_index_path
-          
+
+=content_for :footer do
+  %hr.clear
+  %h3.tf
+    this promotion is brought to you by
+  
+  %h2.tf
+    =img_link_to "logos/spotwhite120x90.png", root_url, :size => "80x60", :alt => "spot", :class => "logolink"
+    A Private Membership Club for Discerning Diners    
+  %nav
+    =link_to "home", root_path
+    \|
+    =link_to "about", about_path
+    \|
+    =link_to "membership", membership_about_path, :class => "btnmemabout"
+    \|
+    =link_to "blog", blog_index_path
+  %address
+    2601 Mission St.
+    San Francisco, CA 94110
+    &middot;
+    =mail_to "The Spot Team <contact@spotmembers.com>", "Contact Us"
+    &middot;
+    =link_to "Privacy Policy", privacy_path
+    &middot;
+    =link_to "Terms of Service", tos_path
+    
 #aboutmembership.hidden{"data-title" => "About Spot Membership"}=render :partial => "shared/membership/about"
 
 %script#entered_dialog{:type => "x-jquery-tmpl"}

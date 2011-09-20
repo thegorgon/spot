@@ -1,11 +1,11 @@
-="We're moving as fast as we can, but we're not quite ready to make it to #{@city_name}."
+We're moving as fast as we can, but we're not quite ready to make it to <%= @city_name %>
   
 We do appreciate your patience! As soon as we arrive, we'd like to offer you your 3 months of free membership. That's $30.
 
 Just use this code when you sign up. It'll be our little secret.
 
-=@promo_code
+<%= @promo_code %>
 
 Feels good, doesn't it? 
     
-=render :partial => "shared/mailers/signature"
+<%= render :partial => "shared/mailers/signature" %>

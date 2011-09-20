@@ -1,0 +1,16 @@
+Just dropping a note to confirm your registration for <%= @event.name %> at <%= @event.place.name %> on <%= @event.date.strftime('%B %d, %Y')} %>.
+
+Here's your code so you don't forget. Just present this when you show up : 
+
+<%= @code.code %>
+
+We understand that sometimes things come up. If you don't think you'll be able to make it, please give us 24 hours notice so another member can take advantage of this experience. You can view your registration or cancel at any time by copying and pasting this link into your browser : 
+
+<%= registration_url(@code) %>
+
+If you need us, night or day, contact us with any questions – we’re here to help!
+
+Mail : contact@spotmembers.com
+Phone: <%= PHONE_NUMBER %>
+
+<%= render :partial => "shared/mailers/signature" %>

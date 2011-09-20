@@ -17,12 +17,16 @@ module ActiveRecordExtensions
       @_commits = HashWithIndifferentAccess.new
     end
     
+    def commits
+      @_commits || {}
+    end
+    
     def attribute_commited?(a)
-      @_commits.has_key?(a)
+      commits.has_key?(a)
     end
     
     def attribute_before_commit(a)
-      attribute_commited?(a) ? @_commits[a].first : nil
+      attribute_commited?(a) ? commits[a].first : nil
     end
     
     def new_commit?

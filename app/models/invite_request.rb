@@ -85,6 +85,10 @@ class InviteRequest < ActiveRecord::Base
   
   def send_invite!
     TransactionMailer.invitation(self).deliver!
+    mark_sent!
+  end
+  
+  def mark_sent!
     update_attribute(:invite_sent_at, Time.now)
   end
   

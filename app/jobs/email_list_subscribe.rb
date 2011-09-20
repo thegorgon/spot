@@ -6,12 +6,15 @@ module Jobs
       client = Hominid::API.new(MAILCHIMP['api_key'])
       email = EmailSubscriptions.find(id)
       merge = {}
+      subscriptions = email.subscriptions.map { |sxn| sxn.humanize.titlecase }
+      subscriptions << "Membership" if email.user.try(:member?)
+      
       { "FNAME" => email.first_name,
         "LNAME" => email.last_name, 
         "CITYSLUG" => email.city.try(:slug),
         "OTHERCITY" => email.other_city,
         "SOURCE" => email.source,
-        "GROUPINGS" => [ {'name' => "Subscriptions", 'groups' => email.subscriptions.map { |sxn| sxn.humanize.titlecase }.join(',')},
+        "GROUPINGS" => [ {'name' => "Subscriptions", 'groups' => subscriptions.join(',')},
                          {'name' => 'Cities', 'groups' => email.city.try(:name).to_s.titlecase }
                        ] 
       }.each do |key, value|

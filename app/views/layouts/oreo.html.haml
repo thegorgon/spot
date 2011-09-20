@@ -31,7 +31,7 @@
         %h1.tf.left=yield :toptitle
       .main
         =content_for?(:oreo) ? yield(:oreo) : yield
-    .footer
+    %address
       =image_tag "logos/spotwhite120x90.png", :size => "40x30", :class => "logo"
       &middot;
       2601 Mission St.

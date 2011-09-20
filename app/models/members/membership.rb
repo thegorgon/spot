@@ -8,6 +8,7 @@ class Membership < ActiveRecord::Base
   attr_writer :tr_result
   
   after_create :convert_application
+  after_create :resubscribe_email
   
   has_acquisition_source :count => Proc.new { |obj| obj.acquisition_source.try(:member!, obj) }
     
@@ -25,6 +26,7 @@ class Membership < ActiveRecord::Base
     if payment_method.kind_of?(Subscription)
       payment_method.cancel!
       update_attribute(:expires_at, payment_method.expires_at)
+      resubscribe_email
     end
   end
   
@@ -38,4 +40,8 @@ class Membership < ActiveRecord::Base
     InviteRequest.accounting!(self)
     user.membership_application.converted!
   end  
+  
+  def resubscribe_email
+    user.email_subscriptions.subscription_change!
+  end
 end

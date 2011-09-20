@@ -1,8 +1,9 @@
 Hello,
 
--if @signup.interest == "business"
+<% if @signup.interest == "business" %>
   Thank you for your interest! We're hard at work building something revolutionary to help out business owners like you.
 
   We'll let you know as soon as it's ready.
+<% end %>
 
-  =render :partial => "shared/mailers/signature"
+<%= render :partial => "shared/mailers/signature" %>

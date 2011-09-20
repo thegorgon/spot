@@ -13,6 +13,7 @@ class SweepstakeEntry < ActiveRecord::Base
   before_validation :set_referral_code
   before_validation :set_min_submissions
   after_create :credit_referrer, :if => :referred?
+  after_create :send_thank_you
   
   delegate :email, :city_id, :first_name, :last_name, :to => :invite_request
   
@@ -46,6 +47,11 @@ class SweepstakeEntry < ActiveRecord::Base
     elsif sweepstake.closed?
       errors.add(:base, "Sorry, submissions are closed.")
     end
+  end
+  
+  def send_thank_you
+    invite_request.mark_sent!
+    TransactionMailer.sweepstake_entry_thanks(self).deliver!
   end
   
   def credit_referrer

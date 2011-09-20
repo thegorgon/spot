@@ -136,6 +136,10 @@ class EmailSubscriptions < ActiveRecord::Base
     save if changed?
   end
 
+  def subscription_change!
+    enqueue_list_subscription
+  end
+
   private
 
   def enqueue_list_unsubscription
