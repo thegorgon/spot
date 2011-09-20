@@ -4,8 +4,9 @@
     -codes = current_user.codes.where(:event_id => events.values.map { |e| e.id }).all.hash_by { |c| c.date }
   -else
     -codes = {}
-  -startdate = Date.today.sunday
-  -startdate = startdate > Date.today ? Date.today.sunday - 1.week : Date.today.sunday
+  -start = promotion.events.upcoming.first.try(:date) || Date.today
+  -startdate = start.sunday
+  -startdate = startdate > start ? start.sunday - 1.week : start.sunday
   -enddate = ([startdate + 2.weeks, promotion.events.upcoming.last.try(:date) || Time.now].max).saturday
   -(startdate..enddate).each_with_index do |date, i|
     -week = (i/7).floor
@@ -13,7 +14,7 @@
     -event = events[date]
     -code = codes[date]
     .date{:class => "#{conditionally("visible", week < 2)} wday#{date.wday} wk#{week} #{conditionally("lastwk", lastweek)}"}
-      .dow.tf=date.strftime('%a').upcase
+      .dow.tf=date.strftime('%a %b').upcase
       .doy.tf=date.day.ordinalize
       -if event && code
         .event
