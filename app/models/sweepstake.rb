@@ -32,31 +32,47 @@ class Sweepstake < ActiveRecord::Base
     finder.page(params[:page]).per(params[:per_page])
   end
   
+  def self.time_zone
+    ActiveSupport::TimeZone.zones_map['Pacific Time (US & Canada)']
+  end
+  
+  def self.now
+    Time.now.in_time_zone(self.class.time_zone)
+  end
+  
   def place_name
     place.try(:name)
   end
-
+  
   def place_name=(value)
   end
   
+  def starts_at
+    Sweepstake.time_zone.parse(starts_on.strftime("%Y-%m-%d 00:00:00"))
+  end
+  
+  def ends_at
+    Sweepstake.time_zone.parse(ends_on.strftime("%Y-%m-%d 01:00:00"))
+  end
+  
   def pending?
-    starts_on.to_time.utc > Time.now.utc
+    starts_at > Time.now
   end
   
   def active?
-    starts_on.to_time.utc < Time.now.utc && ends_on.to_time.utc > Time.now.utc
-   end
+    starts_at < Time.now && ends_at > Time.now
+  end
   
   def closed?
-    (ends_on.to_time + 1.hour).utc < Time.now.utc && winning_entry_id.nil?
+    ends_at < Time.now && winning_entry_id.nil?
   end
   
   def complete?
-    ends_on.to_time.utc < Time.now.utc && winning_entry
+    ends_at < Time.now && winning_entry
   end
   
   def winners_announced_at
-    ends_on + 1.day
+    ends_at + 1.day
   end
   
   def status
