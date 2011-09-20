@@ -121,7 +121,7 @@ class Sweepstake < ActiveRecord::Base
   private
   
   def valid_start_and_end_dates
-    errors.add(:starts_on, "must be in the future") if starts_on <= Time.now 
-    errors.add(:ends_on, "must be after start date") if ends_on <= starts_on
+    errors.add(:starts_on, "must be in the future") if starts_at < Time.now 
+    errors.add(:ends_on, "must be after start date") if ends_at < starts_at
   end
 end
