@@ -1310,6 +1310,10 @@ ul.pillbox {
 }
 .about_membership {
   padding: 20px;
+  .sharing {
+    width: 380px;
+    margin: 5px auto;
+  }
   .button {
     margin: 20px auto 0;
   }
