@@ -1,6 +1,6 @@
 Congratulations, you are now entered to win a <%= @sweepstake.short_summary %> at <%= @sweepstake.place_name %>
   
-We'll be announcing the winners shortly, but in the meantime, we'd also like to extend to you an official invitation to join Spot, a private membership club for <%= @city.name.titlecase %> diners.
+We'll be announcing the winners shortly, but in the meantime, we'd also like to extend to you an official invitation to join Spot, a private membership club for <%= @city.try(:name).try(:titlecase) || "Discerning" %> diners.
 
 This is your chance to join a select group of discerning tastemakers in your city. Claim your invitation using the code 
 

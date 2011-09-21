@@ -4,7 +4,7 @@
 %p
   We'll be announcing the winners shortly, but in the meantime,
   we'd also like to extend to you an official invitation to join Spot, 
-  ="a private membership club for #{@city.name.titlecase} diners."
+  ="a private membership club for #{@city.try(:name).try(:titlecase) || "Discerning"} diners."
 
 %p
   This is your chance to join a select group of discerning tastemakers in your city. 

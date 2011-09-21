@@ -92,7 +92,6 @@ class InviteRequest < ActiveRecord::Base
   
   def send_invite!
     TransactionMailer.invitation(self).deliver!
-    puts "WHAT AM I? : #{self}"
     mark_sent!
   end
   
