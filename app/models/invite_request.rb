@@ -79,7 +79,7 @@ class InviteRequest < ActiveRecord::Base
   end
 
   def city_name
-    if city_id > 0 && city
+    if city_id.to_i > 0 && city
       city.name
     else
       requested_city_name
