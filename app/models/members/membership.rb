@@ -34,6 +34,14 @@ class Membership < ActiveRecord::Base
     expires_at <= Time.now
   end
   
+  def as_json(*args)
+    {
+      :_type => self.class.to_s,
+      :starts_at => starts_at,
+      :expires_at => expires_at
+    }
+  end
+  
   private
     
   def convert_application

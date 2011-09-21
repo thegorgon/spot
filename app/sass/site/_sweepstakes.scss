@@ -1,4 +1,17 @@
 #site_sweepstakes_show {
+  #invite_popover {
+    padding: 20px;
+    height: 85px;
+    width: 300px;
+    input {
+      width: 200px;
+    }
+    .member_invite {
+      margin: 0;
+      padding: 0;
+      width: 300px;
+    }
+  }
   #entered {
     padding: 20px;
     text-align: center;

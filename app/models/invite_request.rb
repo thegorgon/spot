@@ -75,7 +75,7 @@ class InviteRequest < ActiveRecord::Base
       n = n + 1
       r.send_invite!
     end
-    NotifyMailer.msg("We just sent out #{n} automatically requested invitations.").deliver!
+    NotifyMailer.msg("We just sent out #{n} automatically requested invitations.").deliver! if n > 0
   end
 
   def city_name
