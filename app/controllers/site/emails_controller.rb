@@ -41,6 +41,11 @@ class Site::EmailsController < Site::BaseController
       redirect_to root_path
     end
   end
+  
+  def mailchimp
+    EmailSubscription.mailchimp_hook(params)    
+    head :ok
+  end
     
   def availability
     exists = PasswordAccount.where(:login => params[:value]).exists?

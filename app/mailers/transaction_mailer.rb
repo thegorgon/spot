@@ -13,7 +13,7 @@ class TransactionMailer < ApplicationMailer
     @email = request.email
     @city = request.city
     @title = "Lucky You. You're Invited."
-    @invite = request.invite
+    @invite = InviteRequest.random_code
     @invite_url = portal_url(:mc => @invite.code, :cid => @city.id, :ir => request.id)
     attachments.inline["invitation.png"] = File.read(Rails.root.join('public', 'images', 'email', 'invitation', 'youreinvited367x345.png'))
     mail
@@ -64,7 +64,7 @@ class TransactionMailer < ApplicationMailer
     @sweepstake = entry.sweepstake
     @request = entry.invite_request
     @email = @request.email
-    @invite = @request.invite
+    @invite = InviteRequest.random_code
     @city = @request.city
     @title = "Congratulations! You've been entered."
     @invite_url = portal_url(:mc => @invite.code, :cid => @request.city_id, :ir => @request.id)

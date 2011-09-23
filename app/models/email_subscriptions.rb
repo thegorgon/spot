@@ -1,5 +1,5 @@
 class EmailSubscriptions < ActiveRecord::Base
-  SUBSCRIPTION_FLAGS = ["deal_emails"]
+  SUBSCRIPTION_FLAGS = ["deal_emails", "newsletter_emails"]
   MAX_UNSUBSCRIPTIONS = 2**31 - 1
   DEFAULT_SOURCE = "website"
   SECRET = "h0rs3s ar3 t3rr1bl3 p30pl3"
@@ -19,6 +19,45 @@ class EmailSubscriptions < ActiveRecord::Base
                                     :method_prefix => "unsubscribed_",
                                     :inverse_method_prefix => "send_"
   
+
+  def self.mailchimp_hook(params)
+    NotifyMailer.data_msg("Mailchimp Hook", params)
+    
+    if params[:type] == "unsubscribe"
+      # Unsubscribe this email from all emails
+      if email = where(:email => params[:data][:email]).first
+        email.unsubscribe_all = true
+        email.save
+      end
+    elsif params[:type] == "cleaned" 
+      # Delete this email address
+      where(:email => params[:data][:email]).delete_all
+    else
+      # Update this email address as appropriate
+      changes = {}
+      email = params[:data][:email]
+      
+      if params[:type] == "upemail"
+        email = params[:data][:old_email]
+        changes[:email] = params[:data][:new_email]
+      elsif params[:type] == "subscribe"
+        changes[:email] = email
+      end
+      
+      if merges = params[:data][:merges]
+        city = City.find_by_slug(merges[:CITYSLUG]) if merges[:CITYSLUG].present?
+        changes.merge!({
+          :first_name => merges[:FNAME], 
+          :last_name => merges[:LNAME], 
+          :other_city => merges[:OTHERCITY], 
+          :city => city
+        })
+      end
+      changes[:unsubscription_flags] = 0 if params[:type] == 'subscribe'
+      change(email, changes)
+    end
+    true
+  end
 
   def self.export(file)
     require 'csv'
@@ -79,10 +118,8 @@ class EmailSubscriptions < ActiveRecord::Base
   end
 
   def unsubscribe_all=(value)
-    if value && value.respond_to?(:to_i) && value.to_i > 0
+    if value && (!value.respond_to?(:to_i) || value.to_i > 0)
       self.unsubscription_flags = MAX_UNSUBSCRIPTIONS
-    else
-      self.unsubscription_flags = 0
     end
   end
   

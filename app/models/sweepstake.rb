@@ -47,6 +47,18 @@ class Sweepstake < ActiveRecord::Base
   def place_name=(value)
   end
   
+  def submission_count
+    @submission_count ||= entries.sum(:submissions)
+  end
+  
+  def viral_entry_count
+    @viral_entry_count ||= entries.where("referred_by_id IS NOT NULL").count
+  end
+  
+  def organic_entry_count
+    @organic_entry_count ||= entries.where(:referred_by_id => nil).count
+  end
+    
   def starts_at
     Sweepstake.time_zone.parse(starts_on.strftime("%Y-%m-%d 01:00:00"))
   end

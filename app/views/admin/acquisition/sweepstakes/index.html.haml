@@ -16,6 +16,7 @@
         %th Run Dates
         %th Entries
         %th Submissions
+        %th Viral Multiplier
         %th Status
         %th Actions
     %tbody
@@ -27,7 +28,8 @@
           %td= swpstk.short_summary
           %td= "#{swpstk.starts_on.strftime('%B %d, %Y')} - #{swpstk.ends_on.strftime('%B %d, %Y')}"
           %td= swpstk.entries_count
-          %td= swpstk.entries.sum(:submissions)
+          %td= swpstk.submission_count
+          %td= swpstk.viral_entry_count/swpstk.organic_entry_count
           %td= swpstk.status
           %td
             =link_to "Delete", admin_acquisition_sweepstake_path(swpstk), "data-method" => "delete", "data-confirm" => "Are you sure?"

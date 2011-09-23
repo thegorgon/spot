@@ -11,7 +11,12 @@ class InviteRequest < ActiveRecord::Base
   scope :sent_invites, where("invite_sent_at IS NOT NULL")
   scope :city_available, select("invite_requests.*").joins(:city).where("cities.subscriptions_available > cities.subscription_count")
   scope :ready_for_sending, lambda { city_available.where(["invite_requests.invite_sent_at IS NULL AND invite_requests.created_at < ?", Time.now - 1.hours]) }
-  scope :need_blitzing, lambda { includes(:city).city_available.where(["invite_requests.invite_sent_at < ? AND membership_id IS NULL AND blitz_count < ? AND (last_blitz_at IS NULL OR last_blitz_at < ?)", Time.now - 1.day, MAX_BLITZ, Time.now - 1.day]) }
+  scope :need_blitzing, lambda { 
+    select("invite_requests.*").includes(:city).city_available.where(
+      ["invite_requests.invite_sent_at < ? AND membership_id IS NULL AND blitz_count < ? AND (last_blitz_at IS NULL OR last_blitz_at < ?)", 
+              Time.now - 1.day, MAX_BLITZ, Time.now - 3.days]
+    ).joins("INNER JOIN email_subscriptions ON email_subscriptions.email = invite_requests.email").where(EmailSubscriptions.without_setting_sql("newsletter_emails")) 
+  }
   
   name_attribute :name
   
@@ -100,7 +105,7 @@ class InviteRequest < ActiveRecord::Base
   end
   
   def invite
-    self.class.random_code
+    self.class.random_code if invite_sent?
   end
   
   private
