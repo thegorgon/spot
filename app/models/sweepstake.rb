@@ -60,7 +60,7 @@ class Sweepstake < ActiveRecord::Base
   end
   
   def viral_factor
-    organic_entry_count.to_i > 0 ? viral_entry_count/swpstk.organic_entry_count : 0
+    organic_entry_count.to_i > 0 ? viral_entry_count/organic_entry_count.to_f : 0
   end
     
   def starts_at

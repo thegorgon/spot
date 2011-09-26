@@ -29,7 +29,7 @@
           %td= "#{swpstk.starts_on.strftime('%B %d, %Y')} - #{swpstk.ends_on.strftime('%B %d, %Y')}"
           %td= swpstk.entries_count
           %td= swpstk.submission_count
-          %td= swpstk.viral_factor
+          %td= number_with_precision(swpstk.viral_factor, :precision => 2)
           %td= swpstk.status
           %td
             =link_to "Delete", admin_acquisition_sweepstake_path(swpstk), "data-method" => "delete", "data-confirm" => "Are you sure?"
