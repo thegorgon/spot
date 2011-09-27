@@ -15,6 +15,10 @@
       %li.clearfix
         .label Next bill date : 
         .value=payment.next_billing_date.strftime("%B %d, %Y")
+    -if payment.respond_to?(:next_bill_amount) && payment.next_bill_amount
+      %li.clearfix
+        .label Next billing amount : 
+        .value=number_to_currency(payment.next_bill_amount)
     -if payment.respond_to?(:cancelled_at) && payment.cancelled_at
       %li.clearfix
         .label Cancelled on :

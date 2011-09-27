@@ -4,8 +4,11 @@ class InviteRequest < ActiveRecord::Base
   belongs_to :city
   belongs_to :membership
   validates :email, :presence => true, :format => EMAIL_REGEX, :uniqueness => true
+  after_validation :autoinvite
   after_save :ensure_email_subscription
   after_create :send_coming_soon
+  
+  attr_accessor :invite_code
   
   scope :unsent_invites, where(:invite_sent_at => nil)
   scope :sent_invites, where("invite_sent_at IS NOT NULL")
@@ -109,6 +112,12 @@ class InviteRequest < ActiveRecord::Base
   end
   
   private
+  
+  def autoinvite
+    if invite_code && InvitationCode.find_by_code(invite_code)
+      mark_sent!
+    end
+  end
   
   def send_coming_soon
     if city_name.present? && (city.nil? || !city.subscriptions_available?)

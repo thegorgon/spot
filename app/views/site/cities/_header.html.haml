@@ -13,3 +13,14 @@
   %ul.pillbox.right
     -@views.each_with_index do |view, i|
       %li.pill{:class => first_or_last(@views, i)}=link_to_with_current view, send("#{view}_city_path", @city), :current => @view == view
+      
+=content_for :bottom do
+  -if !current_member? && invite_request.present? && !session[:seen_city_intro]
+    -session[:seen_city_intro] = true
+    #city_intro.clearfix.hidden{"data-title" => "Spot #{@city.name.titlecase}"}
+      %h1.tf="Welcome to Spot for #{@city.name.titlecase}"
+      %h2.tf="For just $#{MONTHLY_PRICE} a month, our members get access to VIP treatment at top restaurants all over town."
+      .body.clearfix
+        =link_to "become a member", new_application_path, :class => "becomemem btnorg250x32"
+        %p.explore=link_to "Explore Benefits", city_path(@city), :class => "closer"
+        %p.learn=link_to "Learn More", membership_about_path

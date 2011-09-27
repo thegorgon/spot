@@ -13,13 +13,11 @@ class Site::CitiesController < Site::BaseController
 
   def calendar
     @view = "calendar"
-    @launch_apply = invite_request.try(:invite_sent?)
     render :action => "calendar"
   end
   
   def experiences
     @view = "experiences"
-    @launch_apply = invite_request.try(:invite_sent?)
     render :action => "experiences"
   end
   
@@ -33,6 +31,7 @@ class Site::CitiesController < Site::BaseController
   def require_city
     @city = City.find_by_slug(params[:id])
     @views = ["calendar", "experiences"]
+    @launch_explain = invite_request.try(:invite_sent?)
     raise ActiveRecord::RecordNotFound unless @city
     session[:city_id] = @city.id
     @page = CityPage.new(@city)

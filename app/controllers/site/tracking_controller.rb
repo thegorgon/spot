@@ -14,6 +14,7 @@ class Site::TrackingController < Site::BaseController
     session[:promo_code] = nil
     session[:acquisition_source_id] = nil
     session[:original_acquisition_source_id] = nil
+    session[:seen_city_intro] = nil
     set_invite_request nil
     redirect_to root_path
   end
