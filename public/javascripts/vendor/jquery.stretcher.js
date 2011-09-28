@@ -43,7 +43,7 @@
       selector = selector || '.stretcher';
       $(selector).stretcher();      
       $(selector).load(function() { $(this).stretcher(); });
-      $(window).unbind('resize.stretcher').bind('resize.stretcher', function(e) {
+      $(window).unbind('.stretcher').bind('resize.stretcher, orientationchange.stretcher', function(e) {
         $(selector).stretcher();
       });
     }
