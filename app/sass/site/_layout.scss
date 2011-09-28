@@ -244,9 +244,20 @@ html {
       }
       .actions {
         width: 300px;
-        height: 41px;
+        height: 60px;
         position: relative;
         margin: 15px auto 0;
+        .freetrial {
+          color: #999;
+          clear: both;
+          position: absolute;
+          bottom: 0;
+          font-size: 12px;
+          text-align: center;
+          left: 0;
+          right: 0;
+          font-weight: bold;
+        }
         .readmore {
           padding: 25px 0 0 0;
           width: 75px;

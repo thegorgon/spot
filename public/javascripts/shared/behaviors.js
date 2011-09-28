@@ -179,7 +179,7 @@
           e.preventDefault();
           target.hasClass(klass) ? target.removeClass(klass) : target.addClass(klass);
         });
-      })
+      });
     },
     tabBar: function() {
       var bar = $(this),
@@ -228,7 +228,7 @@
     },
     confirmSubmission: function() {
       $(this).unbind('submit.confirm').bind('submit.confirm', function(e) {
-        if ($(this).data('confirmed') || $(this).attr('data-confirm').toString().length == 0 || confirm($(this).attr('data-confirm'))) {
+        if ($(this).data('confirmed') || $(this).attr('data-confirm').toString().length === 0 || confirm($(this).attr('data-confirm'))) {
           $(this).data('confirmed', true);
           return true;
         } else {
@@ -268,10 +268,12 @@
       fetch('a[data-confirm][data-method]:not(.ajax)').actionLink();
       fetch('.fbconnect').fbconnect();
       fetch('input, textarea').focus(function(e) {
-        $(this).parents('.accept_focus').addClass('focus');
+        var self = $(this);
+        setTimeout(function() { self.parents('.accept_focus').addClass('focus'); }, 0);
       });
       fetch('form input, form textarea').blur(function(e) {
-        $(this).parents('.accept_focus').removeClass('focus');
+        var self = $(this);
+        setTimeout(function() { self.parents('.accept_focus').removeClass('focus'); }, 0);
       });
       fetch('.radio_fade').radioFade();
       fetch('.hoverable').hoverable();
@@ -309,7 +311,7 @@
         $(this).addClass('editing').parents('ul.form').addClass('editing');
       });
       $.stretcher.init();
-      fetch(".chzn-select").chosen()
+      fetch(".chzn-select").chosen();
     }
   });
 }(Spot));

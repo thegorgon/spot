@@ -297,7 +297,6 @@
       var validity = true;
       $(this).filter('form').each(function(i) {
         $.validations.run(this, options);
-
         validity = validity && $(this).find('input, textarea, select').filter('[aria-invalid=true]').length === 0;
       });
       return validity;

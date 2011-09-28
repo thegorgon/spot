@@ -127,6 +127,7 @@
       display: none;
     }
     .form {
+      float: left;
       padding: 5px 0 0;
     }
     .survey {
@@ -138,8 +139,8 @@
     .label {
       width: 65px;
     }
-    .name li.first_name {
-      left: 74px;
+    .name .fields {
+      margin-left: 74px;
     }
     .survey, .buttons {
       margin-left: 75px;
@@ -149,6 +150,11 @@
     }
     button {
       @include btnorg300x41;
+    }
+    .descriptions {
+      float: right;
+      width: 280px;
+      padding-right: 20px;
     }
   }
   .invitecode {
@@ -190,10 +196,6 @@
       font-size: 15px;
       text-align: center;
     }
-  }
-  .descriptions {
-    width: 280px;
-    padding-right: 20px;
   }
 }
 #claimdialog {

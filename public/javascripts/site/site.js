@@ -10,10 +10,7 @@
             top = offset.top - explain.outerHeight();
           explain.css({left: left, top: top});          
           
-        },
-        lock = $('#applicationform').find('#application_lock'),
-        invitationCode = $('#applicationform').find('#application_invitation_code'),
-        unlock = $('#applicationform').find('.unlock');
+        };
       // Initialize Apply Form Lock
       go.Lock.init({ 
           lock: $('#applicationform').find('#application_lock'),
@@ -88,7 +85,7 @@
       scenes = top.find('.scene');
       
       initMap = function(fn) {
-        $('html, body').animate({scrollTop: 0}, 100);
+        $('html, body').animate({scrollTop: 0}, 1000);
         if (Modernizr.csstransitions) { top.addClass('scene2'); }
         else { 
           top.addClass('jsanimation');
@@ -119,7 +116,7 @@
       
       $('#email_form').unbind('submit.continue').bind('submit.continue', function(e) {
         e.preventDefault();
-        if ($(this).validate()) {
+        if ($(this).find('form').validate()) {
           var rForm = $('#invite_request_form');
           rForm.find('#invite_request_email').val($(this).find('#email_email').val());
           go.Events.analytics('Acquisition', 'Email Entered');

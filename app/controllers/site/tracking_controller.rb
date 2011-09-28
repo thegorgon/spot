@@ -38,6 +38,8 @@ class Site::TrackingController < Site::BaseController
       source.clicked!(current_user)
       record_acquisition_event("click")
     end
+    invite_request.mark_sent! if invite_request && session[:invite_code]
+    
     @city = City.find_by_id(params[:cid]) if params[:cid]
     destination   =  CGI.unescape(params[:dest]) if params[:dest]
     destination ||= city_path(@city) if @city

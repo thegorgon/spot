@@ -15,7 +15,6 @@ class User < ActiveRecord::Base
   has_many :codes, :foreign_key => :owner_id, :class_name => "PromotionCode"
   has_many :notes, :class_name => "PlaceNote", :dependent => :delete_all
   has_many :actions, :class_name => "ActivityItem", :foreign_key => "actor_id"
-  has_one :membership_application, :dependent => :destroy
   has_one :business_account, :dependent => :destroy
   has_one :facebook_account, :dependent => :destroy
   has_one :password_account, :dependent => :destroy
@@ -74,6 +73,15 @@ class User < ActiveRecord::Base
     else
       email
     end
+  end
+  
+  def invite_request
+    @invite_request ||= InviteRequest.with_attributes(attributes.slice("email", "first_name", "last_name", "city_id").symbolize_keys!)
+  end
+  
+  def invite_request!
+    invite_request.save if invite_request.changed?
+    invite_request
   end
   
   def invitation_code
@@ -215,6 +223,8 @@ class User < ActiveRecord::Base
         :city_id => city_id,
         :source => email_source,
       })
+      invite_request!
+      invite_request.mark_sent! if devices.count > 0
     end
   end
     

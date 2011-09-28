@@ -4,14 +4,13 @@ class Site::AccountsController < Site::BaseController
   layout "oreo"
 
   def new
-    @nonce = Nonce.new(:session => session)
   end
     
   def create
     @account = PasswordAccount.register(params[:password_account])
-    @nonce = Nonce.new(:session => session)
     if @account.save
       warden.set_user @account.user
+      @account.user.invite_request.mark_sent! if session[:invite_code]
       record_acquisition_event("signup")
       redirect_back_or_default root_path
     else

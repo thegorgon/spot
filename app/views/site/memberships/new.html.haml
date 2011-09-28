@@ -25,10 +25,14 @@
       -else
         a free Spot Membership trial period.
       
-      =link_to "Apply!", '#', :class => 'apply btnorg77x32 right', :id => "apply_code_btn", 'data-value' => @promo_code.code
-      =link_to "Applying...", '#', :class => 'applying btnorg115x32 right', 'data-value' => @promo_code.code
+      =link_to "Apply!", '#', :class => 'apply', :id => "apply_code_btn", 'data-value' => @promo_code.code
+      =link_to "Applying...", '#', :class => 'applying', 'data-value' => @promo_code.code
 -else
-  %hr
+  .promo_congrats.default
+    %h2.tf 
+      Congratulations - You've unlocked 
+      %strong one free month 
+      of Spot Membership! Grab it now, before it's gone!      
 
 =spot_form_for @payment, :as => :customer, :url => Braintree::TransparentRedirect.url, :display => "cc light clearfix inlinelabels", :html => {:autocomplete => "off", :class => "new_membership"} do |f|
   .spinner

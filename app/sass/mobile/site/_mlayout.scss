@@ -4,7 +4,24 @@
     z-index:1000;
   }
   #bg {
+    z-index: 1;
+    position: absolute;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
     background: #000000 url(/images/backgrounds/paisley_dark_centerfade.jpg) no-repeat fixed center center;
+    #bgfade {
+      z-index: 5;
+      position: absolute;
+      position: fixed;
+      bottom: 0;
+      left: 0px;
+      right: 0px;
+      top: 0px;
+      background: transparent url(/images/backgrounds/fadeout1x227.png) repeat-x left bottom;
+    }
   }
   footer {
     display: none;
@@ -220,6 +237,12 @@ html {
       .actions {
         margin: 10px auto;
         width: 220px;
+        .freetrial {
+          padding: 0 0 5px 0;
+          text-align: center;
+          font-weight: bold;
+          color: #999;
+        }
         .readmore {
           padding: 5px 0;
           float: right;

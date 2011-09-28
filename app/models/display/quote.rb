@@ -20,7 +20,7 @@ class Quote < Struct.new(:text, :byline)
        ["Once, during Prohibition, I was forced to live for days on nothing but food and water.", "W.C. Fields"],
        ["Food is our common ground, a universal experience.", "James Beard"],
        ["I cook with wine, sometimes I even add it to the food.", "W.C. Fields"],
-       ["The food here is terrible, and the portions are too small." "Woody Allen"],
+       ["The food here is terrible, and the portions are too small.", "Woody Allen"],
        ["I never worry about diets. The only carrots that interest me are the number you get in a diamond.", "Mae West"],
        ["One cannot think well, love well, sleep well, if one has not dined well.", "Virginia Woolf"],
        ["Can't Talk ... Eating", "Homer Simpson"],

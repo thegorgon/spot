@@ -1,6 +1,6 @@
 -referrer ||= invite_request.try(:invite)
--unlocked = referrer
--invited = referrer && (@city.nil? || @city.subscriptions_available?)
+-unlocked = referrer.present?
+-invited = referrer && (current_city.nil? || current_city.subscriptions_available?)
 -if invited
   %h1.tf
     You're invited.
@@ -11,8 +11,10 @@
   .text.tf
     To ensure an unforgettable experience, membership is limited to 10,000 restaurant devotees per city.
 
-=spot_form_for :application, :url => application_path, :display => "light inlinelabels#{conditionally(" unlocked", unlocked)}#{conditionally(" applying", @city.try(:at_capacity?))}", :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
-  =f.hidden_field :invitation_code, :value => referrer.try(:code)
+-@account ||= current_user.try(:password_account) || PasswordAccount.new(:user => current_user)
+
+=spot_form_for @account, :url => application_path, :display => "light inlinelabels#{conditionally(" unlocked", unlocked)}#{conditionally(" applying", current_city.try(:at_capacity?))}", :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
+  =hidden_field_tag :invite_code, referrer.try(:code)
   #invitecodesection.invitecode.step
     -if @invalid
       %h1.tf.empty Sorry, there are no more invitations left on that code
@@ -28,18 +30,18 @@
     .vouched
         
   .application.step
-    -if @city.try(:at_capacity?)
+    -if current_city.try(:at_capacity?)
       %h2.tf.capacity We're at capacity. Apply to be notified when space opens up.
     .col.form
+      =f.name_fields :required => true, :label => "name : ", :value => current_user.try(:names)
+      -if logged_in?
+        =f.email_field :login, :placeholder => "email address", :required => true, :label => "email : ", :value => current_user.try(:email)
+      -else
+        =f.email_field :login, :placeholder => "email address", :required => true, :label => "email : ", "data-validate-url" => availability_email_path, "data-invalid-msg" => "looks like you've already registered", :value => invite_request.try(:email)
+      =f.password_field :password, :placeholder => "password", :required => true, :minlength => 4, :maxlength => 25, :label => "password : "
       =f.fields_for :user_attributes do |uf|
-        =uf.name_fields :required => true, :label => "name : ", :value => current_user.try(:names)
-        -if logged_in?
-          =uf.email_field :email, :placeholder => "email address", :required => true, :label => "email : ", :value => current_user.try(:email)
-        -else
-          =uf.email_field :email, :placeholder => "email address", :required => true, :label => "email : ", "data-validate-url" => availability_email_path, "data-invalid-msg" => "looks like you've already registered", :value => invite_request.try(:email)
-          =uf.password_field 'password', :placeholder => "password", :label => "password : ", :required => true, :minlength => 4, :maxlength => 25
-      =f.city_select 'city_id', current_user.try(:city_id) || @city.try(:id), :html => { :required => true }
-        
+        =uf.city_select 'city_id', current_city.try(:id), :html => { :required => true, :min => 0 }
+              
       %li.buttons.clearfix
         =button_tag :class => "tf" do
           submit

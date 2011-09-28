@@ -12,6 +12,10 @@ class InvitationCode < ActiveRecord::Base
   def self.valid_code(code)
     invites_remaining.find_by_code(code)
   end
+  
+  def promo_code
+    PromoCode.valid_code(code)
+  end
     
   def invites_remaining
     invitation_count < 0 ? -1 : invitation_count - claimed_count

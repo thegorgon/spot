@@ -1,16 +1,17 @@
 =render :partial => "header", :locals => {:title => "Membership Experiences Calendar"}  
 
 #calendar.calendar.clearfix.rows
-  .month_placeholder
-    .month_title
-      .month.tf=@page.calendar.keys.first.strftime('%B %Y')
+  -unless mobile_request?
+    .month_placeholder
+      .month_title
+        .month.tf=@page.calendar.keys.first.strftime('%B %Y')
   .dates.clearfix
     -@page.calendar.keys.each_with_index do |date, i|
       -events = @page.calendar[date]
       .date{:class => "col#{i.modulo(5) + 1} #{conditionally("today", date == Date.today)} #{conditionally("empty", events.empty?)}", "data-date" => date.strftime('%m/%d/%Y')}
         .day.tf
           =date.day
-          %span.dow=date.strftime('%a').upcase
+          %span.dow=date.strftime(mobile_request?? '%a %b' : '%a').upcase
         .events
           -if events.empty?
             no events today

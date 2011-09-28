@@ -24,14 +24,11 @@ class Subscription < ActiveRecord::Base
     if params[:user] && params[:plan] && params[:payment]
       btparams = {
         :plan_id => params[:plan],
-        :payment_method_token => params[:payment].token
-      }
-      btparams.merge!({ 
-        :trial_duration => promo_code.duration,
+        :payment_method_token => params[:payment].token,
+        :trial_duration => promo_code.try(:duration).to_i > 0 ? promo_code.duration : 1,
         :trial_period => true,
         :trial_duration_unit => "month"
-      }) if promo_code.try(:duration).to_i > 0
-      
+      }
       braintree = Braintree::Subscription.create(btparams)
       if braintree.success?
         subscription = synced_with(braintree.subscription)
@@ -64,6 +61,10 @@ class Subscription < ActiveRecord::Base
     self.billing_day_of_month = bt.billing_day_of_month
     self.billing_period = bt.plan_id.split('_').last.to_i
     self.billing_starts_at = Date.parse(bt.first_billing_date)
+  end
+  
+  def first_billing_date
+    @first_billing_date ||= Date.parse(remote_object.first_billing_date)
   end
   
   def next_billing_date

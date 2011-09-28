@@ -11,11 +11,13 @@ class PasswordAccount < ActiveRecord::Base
   validate :can_change_password, :if => :password_changed?
   before_save :update_encryption
   before_validation :update_user
+  accepts_nested_attributes_for :user
   name_attribute :name
-  
+
   def self.authenticate(params)
     account = PasswordAccount.find_by_login(params[:login])
     if account && account.valid_password?(params[:password])
+      account.update_attributes(params[:user_attributes]) if params[:user_attributes]
       account
     else
       nil
@@ -61,7 +63,7 @@ class PasswordAccount < ActiveRecord::Base
   def override_current_password!
     @current_password_check_override = true
   end
-  
+    
   private
   
   def update_encryption

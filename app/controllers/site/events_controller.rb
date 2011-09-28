@@ -5,7 +5,6 @@ class Site::EventsController < Site::BaseController
   
   def show
     @date = Date.parse(params[:date]) rescue nil
-    @city = City.find_by_id(session[:city_id]) if session[:city_id]
     @event = @promotion.events.on_date(@date).first if @date
     @event ||= @promotion.events.upcoming.first
   end

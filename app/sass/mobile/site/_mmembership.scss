@@ -81,6 +81,49 @@
       text-decoration: none;
     }
   }
+  .promo_congrats {
+    background: #efe;
+    width: 280px;
+    padding: 5px;
+    color: #393;
+    margin: 10px auto 5px;
+    border: 1px solid #393;
+    text-align: center;
+    h2 {
+      font-size: 14px;
+    }
+    .apply, .applying {
+      @include btnorg115x32;
+      margin: 10px auto 5px;
+    }
+    .applying {
+      display: none;
+    }    
+    &.loading {
+      .apply {
+        display: none;
+      }
+      .applying {
+        display: block;
+      }
+    }
+  }
+  .errors {
+    color: #993333;
+    background: #EDD;
+    padding: 5px;
+    text-align: left;
+    width: 280px;
+    margin: 0 auto 10px;
+    border: 1px solid #933;
+    ul {
+      list-style: outside disc;
+      margin: 5px 0 5px 15px;
+      li {
+        padding: 2px 0;
+      }
+    }
+  }
   .ccfields {
     margin: 0 auto;
     width: 280px;

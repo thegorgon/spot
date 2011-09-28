@@ -1,7 +1,6 @@
 class City < ActiveRecord::Base
   DEFAULT_RADIUS = 160
   has_many :memberships
-  has_many :membership_applications
   
   before_validation :set_fully_qualified_name
   scope :subscriptions_available, where("subscriptions_available > 0")

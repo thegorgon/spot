@@ -33,17 +33,6 @@
       We're very sorry that you decided to cancel your membership. 
       If you'd like to continue receiving Spot Membership experiences, please
     %p="#{link_to "renew membership", new_membership_path, :class => "btnorg300x41 tf"}".html_safe
-  -elsif current_user.membership_application 
-    Spot Events are only available to Spot Members.
-    -if current_user.membership_application.approved?
-      %p Congratulations! Your application has been approved.
-      %p="#{link_to "complete application", new_membership_path, :class => "btnorg300x41 tf"}".html_safe
-    -else
-      %p
-        We've received your application and it is currently under review. 
-        We'll be in touch shortly, but if you're eager, you can
-        =link_to "check the status", application_path 
-        at any time.          
   -else
     .applyline
       Events are only open to Spot Members :

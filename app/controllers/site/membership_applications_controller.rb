@@ -1,62 +1,50 @@
 class Site::MembershipApplicationsController < Site::BaseController  
-  before_filter :require_application, :only => [:show]
+  before_filter :require_invite_code, :only => [:create]
   layout 'oreo'
   
   def create
-    # TODO This action is very large
-    user_attributes = params[:application].delete(:user_attributes)
-    @user = current_user || User.register(user_attributes)
-    @application = @user.membership_application
-    @application ||= MembershipApplication.new
-    @application.attributes = params[:application]
-    @application.user = @user
-    @user.city = @application.city
-    if @user.save
-      warden.set_user @user
-      if @application.save
-        session[:invite_code] = nil # Clear session invite code
-        session[:promo_code] = @application.promo_code if @application.promo_code
-        if @application.approved? && @application.city.subscriptions_available?
-          set_invite_request nil
-          record_acquisition_event("applied")
-          redirect_to new_membership_path
-        elsif !@application.approved?
-          set_invite_request nil
-          redirect_to application_path
-        else
-          set_invite_request @application.invite_request
-          redirect_to city_path(@application.city)
-        end
-      else 
-        render :action => :new
+    @account = PasswordAccount.register(params[:password_account])
+    if @account.save
+      warden.set_user @account.user
+      record_acquisition_event("signup")
+      @invite_code.claimed!
+      session[:invite_code] = @invite_code
+      session[:promo_code] = @invite_code.promo_code.code if @invite_code.promo_code
+      if current_city.subscriptions_available?
+        set_invite_request nil
+        record_acquisition_event("applied")
+        redirect_to new_membership_path
+      else
+        set_invite_request current_user.invite_request!
+        redirect_to city_path(current_user.city)
       end
     else
       render :action => :new
     end
   end
 
-  def show
-    @city = @application.city
-  end
-  
   def new
-    if params[:r] || session[:invite_code]
-      @referrer = InvitationCode.valid_code(params[:r] || session[:invite_code])
-      @invalid = InvitationCode.expended.find_by_code(params[:r] || session[:invite_code])
+    session[:invite_code] = param_code.code if params[:r] && param_code = InvitationCode.valid_code(params[:r])
+    @referrer = InvitationCode.valid_code(session[:invite_code])
+    @invalid = InvitationCode.expended.find_by_code(session[:invite_code]) if @referrer.nil?
+    @referrer ||= invite_request.invite if invite_request.try(:invite_sent?)
+    if (@referrer && current_user)
+      @referrer.try(:claimed!)
+      session[:promo_code] = @referrer.promo_code.code if @referrer.promo_code
+      redirect_to new_membership_path
+    else
+      render :action => "new"
     end
-    @city = @referrer.user.city if @referrer && @referrer.user
-    @city ||= invite_request.try(:city)
-    @city ||= City.subscriptions_available.first
-    render :action => "new"
   end
   
   private
   
-  def require_application
-    @application = current_user.try(:membership_application)
-    unless @application
-      flash[:notice] = "Please complete your application first."
-      redirect_to new_application_path
+  def require_invite_code
+    code = params[:invite_code] || session[:invite_code]
+    @invite_code = InvitationCode.valid_code(code)
+    unless @invite_code
+      flash[:error] = "Spot is currently available by invitation only. You may <a href=\"#{root_path}\">request an invitation.</a>"
+      redirect_to new_application_path 
     end
   end
   

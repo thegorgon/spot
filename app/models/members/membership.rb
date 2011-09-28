@@ -46,7 +46,6 @@ class Membership < ActiveRecord::Base
     
   def convert_application
     InviteRequest.accounting!(self)
-    user.membership_application.converted!
   end  
   
   def resubscribe_email

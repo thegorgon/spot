@@ -7,8 +7,8 @@
     =render :partial => "/shared/membership/overlay", :locals => {:describe => true}
 
 =content_for :toptitle do
-  -if @city
-    =link_to @city.name.titlecase, city_path(@city)
+  -if current_city
+    =link_to current_city.name.titlecase, city_path(current_city)
     &middot;
   -unless mobile_request?
     =@place.name
@@ -50,7 +50,7 @@
   -if @promotion.designed_by_spot?
     .designed_by_spot Designed By Spot
 
--if current_member? || current_user.try(:membership_application)
+-if current_member?
   %hr
 -else
   =render :partial => "/shared/membership/overlay", :locals => {:title => "Exclusively available to Spot Members."}
@@ -79,9 +79,9 @@
   =render :partial => "/site/shared/explanations/fineprint"
   =render :partial => "/site/shared/explanations/guarantee", :locals => {:cssclass => "last"}
 
--if @city && mobile_request?
+-if current_city && mobile_request?
   .back
-    =link_to "More #{@city.name.titlecase} Experiences", city_path(@city)
+    =link_to "More #{current_city.name.titlecase} Experiences", city_path(current_city)
 
 -if current_member? && @event && !mobile_request?
   #claimdialog.clearfix.hidden{"data-title" => "Register for #{@event.name}"}

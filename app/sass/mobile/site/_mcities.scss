@@ -151,18 +151,18 @@
           text-transform: capitalize;
         }
         #othercityfields {
-          padding: 0 0 20px;
           li.text {
             margin: 0;
           }
         }
         li.note {
-          margin: 7px 0 0;
+          margin: 5px 0 0;
         }
         li.text {
           width: 280px;
         }
         li.buttons {
+          margin: 10px 0 20px 0;
           button {
             @include btnorg280x32;
           }

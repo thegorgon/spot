@@ -6,12 +6,23 @@ class Site::BaseController < ApplicationController
     
   protected 
   
+  #Stashing city
+  def current_city
+    unless @city
+      city_id = current_user.try(:city_id)  || invite_request.try(:city_id) || session[:city_id] 
+      @city = City.find_by_id(city_id)
+    end
+    @city
+  end
+  helper_method :current_city
+  
   # Stashing Session Data
   def set_invite_request(request)
     session[:invite_request_id] = request.try(:id)
   end
   
   def invite_request
+    @invite_request ||= current_user.try(:invite_request!)
     @invite_request ||= InviteRequest.find_by_id(session[:invite_request_id]) if session[:invite_request_id]
     session[:invite_request_id] = @invite_request.try(:id)
     @invite_request

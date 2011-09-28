@@ -32,7 +32,7 @@ Spot::Application.routes.draw do
       get "experiences", :on => :member
       get "redirect", :on => :collection
     end
-    resource :application, :only => [:create, :show, :new], :controller => "membership_applications"
+    resource :application, :only => [:create, :new], :controller => "membership_applications"
     resources :registrations, :only => [:new, :show, :create, :destroy]
     resources :places, :only => [:show] do
       resources :events, :only => [:show]

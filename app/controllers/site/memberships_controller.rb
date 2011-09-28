@@ -1,6 +1,6 @@
 class Site::MembershipsController < Site::BaseController
   before_filter :require_user
-  before_filter :require_approved_application
+  before_filter :require_invitation
   before_filter :require_no_membership, :except => [:destroy, :thanks]
   before_filter :require_membership, :only => [:destroy, :thanks]
   layout 'oreo'
@@ -47,14 +47,14 @@ class Site::MembershipsController < Site::BaseController
   end
   
   private
-    
-  def require_approved_application
-    @application = current_user.membership_application
-    unless @application.try(:approved?)
-      flash[:error] = @application ? 
-            "Sorry, your application is still being reviewed." : 
-            "Please submit an application first."
-      redirect_to @application ? application_path : new_application_path
+  
+  def require_invitation
+    unless invite_request.try(:invite_sent?)
+      msg = "Spot is currently available by invitation only. "
+      msg << (invite_request.present?? "We're currently processing your invitation" : "You may <a href=\"#{root_path}\">request an invitation.</a>")
+      flash[:error] = msg
+      redirect_to invite_request.city.present?? city_path(invite_request.city) : new_city_path
     end
   end
+  
 end

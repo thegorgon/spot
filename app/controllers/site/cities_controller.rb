@@ -30,6 +30,7 @@ class Site::CitiesController < Site::BaseController
   
   def require_city
     @city = City.find_by_slug(params[:id])
+    @city ||= invite_request.try(:city)
     @views = ["calendar", "experiences"]
     @launch_explain = invite_request.try(:invite_sent?)
     raise ActiveRecord::RecordNotFound unless @city

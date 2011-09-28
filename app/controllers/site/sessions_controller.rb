@@ -8,6 +8,7 @@ class Site::SessionsController < Site::BaseController
   def create
     authenticate
     if logged_in?
+      current_user.invite_request.mark_sent! if session[:invite_code]
       redirect_back_or_default params[:return_to] || root_path
     else
       flash[:error] = "We couldn't log you in. Please try again."
