@@ -1,5 +1,44 @@
 .site_cities {
   background: #000;
+  #city_intro {
+    padding: 15px;
+    text-align: center;
+    h1 {
+      margin: 0 0 10px 0;
+    }
+    .body {
+      width: 250px;
+      margin: 0 auto 10px;
+      a.becomemem {
+        margin: 10px auto;
+      }
+      .explore, .learn {
+        margin: 0;
+        padding: 2px 3px;
+        border: 1px solid #aaa;
+        @include border_radius(3px);
+        background: #ddd;
+        width: 112px;
+        text-align: center;
+        a {
+          text-decoration: none;
+        }
+        &:hover {
+          border: 1px solid #ff8419;
+          background: lighten(#ff8419, 10);
+          a {
+            color: #fff;
+          }
+        }
+      }
+      .explore {
+        float: left;
+      }
+      .learn {
+        float: right;
+      }
+    }
+  }
   .calendar {
     margin: 10px 0;
     position: relative;

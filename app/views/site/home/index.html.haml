@@ -40,7 +40,7 @@
         %strong unforgettable experiences 
         at the 
         %em best restaurants in town.
-      .entrance.half{:class => session_invite ? "invitation" : "request"}
+      .entrance.half{:class => "request"}
         -if current_user && city = current_user.city
           %h2.center.tf="Welcome Back #{current_user.first_name}"
           =link_to "Explore #{city.name.titlecase}", city_path(city), :class => "btnorg250x32 action"
@@ -49,7 +49,7 @@
           =link_to "Select Your City", account_path, :class => "btnorg175x32 action", :id => "select_city_link"
         -else
           -if session_invite
-            %h2.tf.registration You're Invited
+            %h2.tf.registration Congratulations, You're Invited
           -else
             %h2.tf.registration Available By Invitation Only
             %ul.tabs.clearfix.registration
@@ -109,6 +109,7 @@
     =hidden_field_tag :cid, '', :id => "invitation_city_id"
     
   =form_for invite_request || InviteRequest.new, :as => :request, :html => {:id => "invite_request_form"} do |f|
+    =f.hidden_field :invite_code, :value => session_invite.try(:code)
     =f.hidden_field :email, :id => "invite_request_email"
     =f.hidden_field :city_id, :id => "invite_request_city_id"
   

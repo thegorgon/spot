@@ -44,17 +44,6 @@
             go.Events.analytics('Acquisition', 'Membership Dialog Launch');
           }
         });
-        $('#applydialog').modal({
-          trigger: '.btnmembership', 
-          width: 800,
-          open: function() {
-            go.Events.pageView('/application/new');
-            go.Events.analytics('Acquisition', 'Apply Dialog Launch');
-          }
-        });
-        if ($('#applydialog').hasClass('autoopen')) {
-          $('#applydialog').dialog("open");
-        }      
       }
     },
     site_blog: function() {
@@ -235,6 +224,17 @@
       go.PaymentForm.init({form: $('form.new_membership')});      
     },
     site_cities: function() {
+      if ($('#city_intro').length > 0) {
+        $('#city_intro').modal({
+          autoOpen: true,
+          width: 500
+        });
+        $('#city_intro').find('.closer').unbind('click').click(function(e) {
+          e.preventDefault();
+          $('#city_intro').dialog("close");
+        });
+      }
+      
       $('form#city_preview').find('#email_subscription_city_id').unbind('change.showother').bind('change.showother', function(e) {
         if ($(this).val().toString() == "-1") {
           $('#othercityfields').hide().removeClass('hidden').slideDown();

@@ -15,7 +15,7 @@ class Subscription < ActiveRecord::Base
     end
   end
   
-  PLANS = {:venti => Plan.new(80, "annually", "full_12"), :grande => Plan.new(10, "monthly", "full_1")}
+  PLANS = {:venti => Plan.new(ANNUAL_PRICE, "annually", ANNUAL_PLAN), :grande => Plan.new(MONTHLY_PRICE, "monthly", MONTHLY_PLAN)}
   
   scope :active, lambda { where(["expires_at > ?", Time.now]) }
   
@@ -50,6 +50,10 @@ class Subscription < ActiveRecord::Base
   
   def self.synced_with(bt)
     new { |object| object.sync_with(bt) }
+  end
+  
+  def remote_object
+    @remote_object ||= Braintree::Subscription.find(braintree_id)
   end
     
   def sync_with(bt)

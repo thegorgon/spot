@@ -49,7 +49,7 @@ Spot::Application.routes.draw do
     resource :widget, :only => [:show]
     resource :email, :only => [:show, :update] do
       delete "unsubscribe"
-      post "mailchimp", :to => :mailchip
+      match "mailchimp", :to => :mailchimp
       get "availability"
       get "existence"
     end

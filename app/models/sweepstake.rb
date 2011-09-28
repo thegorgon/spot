@@ -56,7 +56,11 @@ class Sweepstake < ActiveRecord::Base
   end
   
   def organic_entry_count
-    @organic_entry_count ||= entries.where(:referred_by_id => nil).count
+    @organic_entry_count ||= entries.where("referred_by_id IS NULL").count
+  end
+  
+  def viral_factor
+    organic_entry_count.to_i > 0 ? viral_entry_count/organic_entry_count.to_f : 0
   end
     
   def starts_at

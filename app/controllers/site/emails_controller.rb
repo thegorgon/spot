@@ -43,7 +43,7 @@ class Site::EmailsController < Site::BaseController
   end
   
   def mailchimp
-    EmailSubscription.mailchimp_hook(params)    
+    EmailSubscriptions.mailchimp_hook(params) if params[:type] && params[:data]  
     head :ok
   end
     

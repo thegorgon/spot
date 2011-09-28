@@ -22,7 +22,6 @@ class EmailSubscriptions < ActiveRecord::Base
 
   def self.mailchimp_hook(params)
     NotifyMailer.data_msg("Mailchimp Hook", params)
-    
     if params[:type] == "unsubscribe"
       # Unsubscribe this email from all emails
       if email = where(:email => params[:data][:email]).first
@@ -36,14 +35,14 @@ class EmailSubscriptions < ActiveRecord::Base
       # Update this email address as appropriate
       changes = {}
       email = params[:data][:email]
-      
+    
       if params[:type] == "upemail"
         email = params[:data][:old_email]
         changes[:email] = params[:data][:new_email]
       elsif params[:type] == "subscribe"
         changes[:email] = email
       end
-      
+    
       if merges = params[:data][:merges]
         city = City.find_by_slug(merges[:CITYSLUG]) if merges[:CITYSLUG].present?
         changes.merge!({
