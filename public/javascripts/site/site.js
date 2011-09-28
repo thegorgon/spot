@@ -71,35 +71,52 @@
       });
     },
     site_home_index: function() {
-      var slideshow = $("#slidedeck").slideshow({
-          title: '#slidetitle',
-          start: Math.floor(Math.random()* $("#slidedeck").find('.slide').length),
-          slides: [
-            {slide: '/images/assets/slideshow/slide1.jpg', size: '2292x1524', title: 'Sommelier Wine Pairing at Credo', gravity: '0.5x0.5'},
-            {slide: '/images/assets/slideshow/slide2.jpg', size: '2292x1524', title: 'Complimentary Beer with Dinner at Schmidt\'s', gravity: '1.0x1.0'},
-            {slide: '/images/assets/slideshow/slide3.jpg', size: '2292x1524', title: 'Six Course Tasting Menu & VIP Kitchen Tour at Spruce', gravity: '0.5x0.5'},
-            {slide: '/images/assets/slideshow/slide4.jpg', size: '2292x1524', title: "Chef's Evening at Epic Roasthouse", gravity: '1.0x1.0'},
-            {slide: '/images/assets/slideshow/slide5.jpg', size: '2292x1524', title: "Free Bonus Cupcake at Mission Mini's", gravity: '0.5x0.5'}
-          ]
-        }),
-        top = $('#toplayer'), 
-        scenes = top.find('.scene'),
-        initMap = function(fn) {
-          if (Modernizr.csstransitions) { top.addClass('scene2'); }
-          else { 
-            top.addClass('jsanimation');
-            scenes.eq(0).animate({left: '-100%'}, 1000);
-            scenes.eq(1).animate({left: '0%'}, 750);
-          }
-          slideshow.stop();
-          if (fn) {
-            $('.city').unbind('click.submit').bind('click.submit', function(e) {
-              e.preventDefault();
-              fn.call(this);
-            });
-          }
-        }, tabs = $('.entrance').find('.tab');
-      if (!$.mobile()) { slideshow.start(); }
+      var slides, slideshow, top, scenes, initMap, tabs;
+      
+      slides = [
+        {slide: '/images/assets/slideshow/slide1.jpg', size: '2292x1524', title: 'Sommelier Wine Pairing at Credo', gravity: '0.5x0.5'},
+        {slide: '/images/assets/slideshow/slide2.jpg', size: '2292x1524', title: 'Complimentary Beer with Dinner at Schmidt\'s', gravity: '1.0x1.0'},
+        {slide: '/images/assets/slideshow/slide3.jpg', size: '2292x1524', title: 'Six Course Tasting Menu & VIP Kitchen Tour at Spruce', gravity: '0.5x0.5'},
+        {slide: '/images/assets/slideshow/slide4.jpg', size: '2292x1524', title: "Chef's Evening at Epic Roasthouse", gravity: '1.0x1.0'},
+        {slide: '/images/assets/slideshow/slide5.jpg', size: '2292x1524', title: "Free Bonus Cupcake at Mission Mini's", gravity: '0.5x0.5'}
+      ];
+      
+      if ($.mobile) {
+        $.each(slides, function(i) {
+          this.slide = this.slide.replace(/\.jpg/i, '_mobile.jpg');
+        });
+      }
+      
+      slideshow = $("#slidedeck").slideshow({
+        title: '#slidetitle',
+        start: Math.floor(Math.random()* slides.length),
+        slides: slides
+      });
+      
+      top = $('#toplayer');
+      
+      
+      scenes = top.find('.scene');
+      
+      initMap = function(fn) {
+        $('html, body').animate({scrollTop: 0}, 100);
+        if (Modernizr.csstransitions) { top.addClass('scene2'); }
+        else { 
+          top.addClass('jsanimation');
+          scenes.eq(0).animate({left: '-100%'}, 1000);
+          scenes.eq(1).animate({left: '0%'}, 750);
+        }
+        slideshow.stop();
+        if (fn) {
+          $('.city').unbind('click.submit').bind('click.submit', function(e) {
+            e.preventDefault();
+            fn.call(this);
+          });
+        }
+      };
+      
+      tabs = $('.entrance').find('.tab');
+            
       tabs.unbind('click.tabs').bind('click.tabs', function(e) {
         var rel = $(this).attr('rel') ? $(this).attr('rel') : this;
         e.preventDefault();
@@ -110,6 +127,7 @@
         $(rel).addClass('active');
         $('.entrance').addClass($(this).attr('data-class'));
       });
+      
       $('#email_form').unbind('submit.continue').bind('submit.continue', function(e) {
         e.preventDefault();
         if ($(this).validate()) {
@@ -136,6 +154,7 @@
             });
           }
       });
+      
       $('#select_city_link').unbind('click').bind('click', function(e) {
         e.preventDefault();
         var accountForm = $('#account_update_form');
@@ -150,19 +169,32 @@
       go.AppPreview.init();
     },
     site_events_show: function() {
-      var bind = function() {
-        $('.btnclaim').unbind('click.modal').bind('click.modal', function(e) {
-          e.preventDefault();
-          $('#code_event_id').val($(this).attr('data-eid'));        
-          $('#claimdialog').dialog("open");
+      if ($('#claimdialog').length > 0) {
+        var bind = function() {
+          $('.btnclaim').unbind('click.modal').bind('click.modal', function(e) {
+            e.preventDefault();
+            $('#code_event_id').val($(this).attr('data-eid'));        
+            $('#claimdialog').dialog("open");
+            $('#claimdialog').find('.cancel').unbind('click').click(function(e) {
+              $('#claimdialog').dialog("close");
+              $('#code_event_id').val("");
+            });
+          });
+        };
+        $('#claimdialog').modal({
+          width: 620, 
+          close: function() {
+            $('#claimdialog').removeClass('loading').removeClass('claimed');
+          }
         });
-      };
-      $('#claimdialog').modal({
-        width: 620, 
-        close: function() {
-          $('#claimdialog').removeClass('loading').removeClass('claimed');
-        }
-      });
+        go.ClaimForm.init({
+          form: '#claimform', 
+          dialog: '#claimdialog', 
+          calendar: '#calendar', 
+          complete: bind
+        });
+        bind();
+      }
       try {
         var canvas = $('canvas#timewedge'),
           context = canvas[0].getContext('2d'),
@@ -171,7 +203,7 @@
           height = canvas.attr('height') * 1.0,
           width = canvas.attr('width') * 1.0,
           center = [Math.floor(0.5 * width) + 0.5, Math.floor(0.5 * height) + 0.5],
-          radius = 73;
+          radius = width * 0.5;
         context.beginPath();
         context.moveTo(center[0], center[1]);
         context.strokeStyle = 'rgba(0,0,0,0.2);';
@@ -188,28 +220,13 @@
           context.stroke();
         }
       } catch(e) {
-      }
-      $('#claimform').ajaxForm({
-        start: function(){
-          $('#claimdialog').addClass('loading');
-        },
-        success: function(data) {
-          $('#claimdialog').removeClass('loading').addClass('claimed');
-          if (data.error) {
-            $('#claimdialog').find('.code').html($("<div class='error'></div>").html(data.error));
-          } else {
-            $('#claimdialog').find('.code').html(data.code);
-            go.Behaviors.train($('#claimdialog').find('.code'));
-            $('#calendar').html(data.calendar);
-            bind();
-          }
-        },
-        error: function() {
-          $('#claimdialog').find('.code').html($("<div class='error'></div>").html("Sorry, something went wrong, please refresh this page and try again."));
-          $('#claimdialog').removeClass('loading').addClass('claimed');          
-        }
+      }      
+    },
+    site_registrations_new: function() {
+      go.ClaimForm.init({
+        form: '#claimform', 
+        dialog: '#claimdialog'
       });
-      bind();
     },
     site_memberships_new: function() {
       go.PaymentForm.init({form: $('form.new_membership')});
@@ -299,12 +316,12 @@
             });
             addthis.toolbox('.addthis_toolbox');
           } else {
-            $(this).find('.errors').text(data.errors.join(', '))
+            $(this).find('.errors').text(data.errors.join(', '));
           }
         },
         error: function() {
           $(this).removeClass('loading');
-          $(this).find('.errors').text("Something went wrong. Please try again.")
+          $(this).find('.errors').text("Something went wrong. Please try again.");
         }
       });
     }

@@ -1,0 +1,51 @@
+.site_home {
+  .cookie {
+    .main {
+      h1, h2, p {
+        padding: 0 10px;
+      }      
+    }
+  }
+}
+
+#site_home_about {
+  .pictures {
+    margin: 10px 0;
+    .profile {
+      display: block;
+      float: left;
+      margin: 0 0 0 8px;    
+      width: 50px;
+    }
+  }
+  .more {
+    text-align: center;
+    ul.links {
+      li {
+        padding: 5px 0;
+      }
+    }
+  }
+}
+
+#site_home_press {
+  #logos {
+    .preview {
+      float: left;
+      height: 74px;
+      width: 100px;
+    }
+    .download {
+      float: left;
+      padding: 23px 0 0 10px;
+    }
+  }
+  .apps {
+    h1 {
+      margin: 0 0 10px 0;
+    }
+    a {
+      padding: 0 10px;
+    }
+  }
+}

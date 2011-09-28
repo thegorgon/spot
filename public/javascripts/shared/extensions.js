@@ -8,7 +8,7 @@ Array.prototype.min = function( ){
 (function($) {
   $.extend($, {
     mobile: function() {
-      return navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/android/i) || navigator.userAgent.match(/ipod/i);
+      return navigator.userAgent.match(/Mobile\/.+Safari/i) || navigator.userAgent.match(/android/i);
     },
     capitalize: function(string) {
       return string.replace(/^(.)|\s(.)/g, function($1){ return $1.toUpperCase( ); });

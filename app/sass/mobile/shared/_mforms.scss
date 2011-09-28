@@ -1,0 +1,49 @@
+ul.form {
+  li.text, li.note, li.buttons, li.select {
+    width: 280px;
+  }
+  li.text, li.buttons, li.select {
+    select {
+      width: 280px;
+    }
+  }
+  input.text, textarea, .placeholder {
+    width: 262px;
+  }
+  li.buttons {
+    button {
+      float: none;
+      margin: 0 auto;
+    }
+  }
+  .name {
+    width: 280px;
+    .fields {
+      width: 280px;
+      height: 30px;
+    }
+    li.first_name, li.last_name {
+      width: 141px;
+      input, .placeholder {
+        width: 122px;
+      }
+    }
+  }
+  .hint {
+    width: 200px;
+  }
+}
+ul.inlinelabels {
+  li.text.labelled, li.labelled, .li.labelled, .name {
+    height: 60px;
+    margin: 0;
+    .validity {
+      bottom: 0;
+      top: auto;
+    }
+    .label, .input_container {
+      float: none;
+      text-align: left;
+    }
+  }
+}

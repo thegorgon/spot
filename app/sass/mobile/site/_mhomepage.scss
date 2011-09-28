@@ -1,0 +1,360 @@
+#site_home_index {
+  font-size: 12px;
+  #bd {
+    padding: 0;
+    overflow: hidden;
+  }
+  #bg {
+    bottom: 90px;
+  }
+  footer {
+    display: block;
+    padding: 5px 0;
+    min-height: 90px;
+    z-index: 100;
+    border-top: 1px solid #333;
+    text-shadow: rgba(0,0,0,0.5) 0 2px 0;
+    background: #000 repeat top center;
+    .icons {
+      margin: 10px auto;
+      text-align: center;
+    }
+    .regular {
+      padding: 0;
+      margin: 10px auto;
+      text-align: center;
+      a {
+        color: #f7f7f7;
+        text-decoration: none;
+        font-size: 14px;
+        padding: 0 10px 0;
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+    .mobiletoggle {
+      text-align: center;
+      padding: 5px;
+      a {
+        text-decoration: none;
+        color: #f7f7f7;        
+      }
+    }
+  } 
+  #toplayer {
+    overflow: hidden;
+    position: relative;
+    z-index: 100;
+    min-height: 440px;
+    .scene {
+      position: absolute;
+      width: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      .content {
+        width: 250px;
+        padding: 10px;
+        margin: 20px auto;
+        @include border_radius(5px);
+        background: #000 no-repeat center center;
+        h1 {
+          text-shadow: rgba(0,0,0,0.75) 0px 1px 0px;
+          text-align: center;
+          color: #fff;
+          margin: 0 auto;
+          font-size: 16px;
+        }
+        h2 {
+          font-size: 16px;
+        }
+      }
+    }
+    .intro {
+      left: 0;
+      .content {
+        padding: 10px;
+        text-shadow: #000 0px 1px;
+        .tabs {
+          margin: 10px 0 15px 0;
+          font-size: 12px;
+          border-bottom: 1px solid #666;
+          .tab {
+            padding: 5px 5px 5px 25px;
+            cursor: pointer;
+            border-top: 1px solid #666;
+            cursor: pointer;
+            &.last {
+              margin-right: 0;
+            }
+            &:hover, &.hover {
+              color: #fff;
+            }
+            &:active, &.active {
+              color: #fff;
+              background: url(/images/icons/gryrttri7x11.png) no-repeat 5px center;
+            }
+          }
+        }
+        .half {
+          color: #bbb;
+          strong {
+            color: #ff8419;
+            font-weight: bold;
+          }
+          em {
+            color: #f7f7f7;
+            font-style: normal;
+            font-weight: bold;
+          }
+          &.describe {
+            font-size: 16px;
+            border-bottom: 1px solid #ddd;
+            padding: 0 0 20px 0;
+            p {
+              line-height: 26px;
+            }
+          }
+          &.entrance {
+            font-size: 14px;
+            padding: 20px 0 0 0;
+            &.request {
+              #email_form {
+                display: block;
+              }
+            }
+            &.invitation {
+              #invite_form {
+                display: block;
+              }
+            }
+            &.member {
+              .registration {
+                display: none;
+              }
+              #member_form {
+                display: block;
+              }
+            }
+            #member_form {
+              display: none;
+            }
+            #invite_form {
+              display: none;
+              position: relative;
+              margin: 5px auto;
+              form {
+                width: 230px;
+              }
+              .lock {
+                float: left;
+                width: 22px;
+                height: 37px;
+                position: relative;
+                margin: 4px 15px 0 0;
+                .bolt {        
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  height: 18px;
+                  width: 23px;
+                  background: #333;
+                }
+                .shackle {
+                  @include transition("top 0.25s");
+                  position: absolute;
+                  top: 5px;
+                  height: 19px;
+                  width: 19px;
+                  background: transparent url(/images/assets/general/shackle18x19.png) no-repeat center center;
+                  left: 2px;
+                }
+              }
+              .input_container, li {
+                width: 150px;
+                @include transition("width 0.5s");
+              }
+              input {
+                font-family: monospace;
+                @include transition("width 0.5s");
+                text-transform: uppercase;
+                width: 132px;
+                float: left;
+              }
+              a.unlock {
+                @include transition("right 0.5s");
+                position: absolute;
+                width: 77px;
+                line-height: 28px;
+                height: 28px;
+                top: 11px;
+                right: 85px;
+                color: #fff !important;
+                &:active, &.active {
+                  color: #f7f7f7 !important;
+                }
+              }
+              &.unlockable {
+                .unlock {
+                  right: 10px;
+                }
+                .input_container, li {
+                  width: 100px;
+                }
+                input {
+                  width: 82px;
+                }
+              }
+              &.unlocking {
+                .shackle {
+                  top: 0px;
+                }
+              }
+            }
+            #email_form {
+              display: none;
+              text-align: left;
+              button {
+                margin: 9px auto;
+                @include btnorg220x32;
+                position: relative;
+                z-index: 100;
+              }
+            }
+            .action {
+              margin: 10px auto 0;
+              text-align: center;
+            }
+            form {
+              width: 220px;
+              margin: 5px auto 0;
+              input {
+                width: 202px;
+              }
+              li {
+                width: 220px;
+                margin: 10px auto;
+              }
+            }
+            .memberswitch {
+              text-align: center;
+              margin: 10px auto 0;
+              a {
+                text-decoration: none;
+                color: #808080 !important;
+              }
+            }
+          }
+        }
+      }
+    }
+    .map {
+      left: 100%;
+      .vcc, .vc { 
+        display: block; 
+        margin: 0; 
+        padding: 0;
+      }
+      .content {
+        .city {
+          display: block;
+          text-align: center;
+          padding: 10px 0;
+          font-size: 14px;
+          color: #333;
+          text-decoration: none;
+          background: #f0f0f0;
+          border-bottom: 1px solid #333;
+          &.first {
+            margin: 20px 0 0;
+            @include top_border_radius(5px);
+          }
+          &.last {
+            margin: 0 0 20px;
+            @include bottom_border_radius(5px);
+            border-bottom: none;
+          }
+          &:hover, &:active {
+            background: #ff8419;
+            color: #fff;
+          }
+          &.active {
+            background: #eeb96d;
+            &:hover {
+              background: #ff8419;
+            }
+          }
+        }
+        .cantfind {
+          @include border_radius(5px);
+          margin: 20px 0 10px;
+        }
+      }
+    }
+  }
+    
+  #slidedeck {
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+    display: none;
+    .slide {
+      overflow: hidden;
+      top: 0px;
+      left: 0px;
+      z-index: 10;
+      position: absolute;
+      display: none;
+      opacity: 1;
+      .image {
+        position: absolute;
+        z-index: 1;
+        img {
+          outline: none;
+          border: none;
+          -ms-interpolation-mode: bicubic;
+        }
+      }
+    }
+  }
+}
+
+.csstransitions #site_home_index {
+  #slidetitle {
+    bottom: 10px;
+    @include transition('bottom 1s');
+    &.visible {
+      bottom: 100px;            
+    }
+  }
+  #slidedeck {
+    .slide {
+      opacity: 0;
+      @include transition('opacity 2s');
+      display: block;
+      &.current {
+        opacity: 1;
+      }
+    }
+  }
+  #toplayer {
+    .scene {
+      @include transition('left 2s');      
+    }
+    &.scene2 {
+      .intro {
+        left: -100%;
+      }
+      .map {
+        left: 0%;
+      }
+    }
+  }
+}

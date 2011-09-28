@@ -35,6 +35,11 @@ ul.form {
   .name {
     height: 30px;
     width: 300px;
+    .fields {
+      position: relative;
+      height: 30px;
+      width: 300px;
+    }
     li.first_name, li.last_name {
       margin: 0;
       position: absolute;

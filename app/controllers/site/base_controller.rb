@@ -2,8 +2,11 @@ class Site::BaseController < ApplicationController
   layout 'site'
   helper 'site'
   
-  protected
+  before_filter :redirect_to_mobile_if_applicable
+    
+  protected 
   
+  # Stashing Session Data
   def set_invite_request(request)
     session[:invite_request_id] = request.try(:id)
   end
@@ -15,6 +18,17 @@ class Site::BaseController < ApplicationController
   end
   helper_method :invite_request
   
+  def session_invite
+    @session_invite ||= (session[:invite_code] && InvitationCode.find_by_code(session[:invite_code]))
+  end
+  helper_method :session_invite
+  
+  def session_promo
+    @session_promo ||= (session[:promo_code] && PromoCode.find_by_code(session[:promo_code]))
+  end
+  helper_method :session_promo
+  
+  # Authentication
   def require_no_user
     authenticate
     if logged_in?
@@ -46,15 +60,5 @@ class Site::BaseController < ApplicationController
       flash[:error] = "You're already a member, so you don't really need to go there."
       redirect_to account_path
     end
-  end
-  
-  def session_invite
-    @session_invite ||= (session[:invite_code] && InvitationCode.find_by_code(session[:invite_code]))
-  end
-  helper_method :session_invite
-  
-  def session_promo
-    @session_promo ||= (session[:promo_code] && PromoCode.find_by_code(session[:promo_code]))
-  end
-  helper_method :session_promo
+  end  
 end

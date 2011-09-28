@@ -1,6 +1,6 @@
--referrer ||= nil        
+-referrer ||= invite_request.try(:invite)
 -unlocked = referrer
--invited = referrer && (@city.nil? || @city.subscriptions_available?) 
+-invited = referrer && (@city.nil? || @city.subscriptions_available?)
 -if invited
   %h1.tf
     You're invited.
@@ -30,11 +30,7 @@
   .application.step
     -if @city.try(:at_capacity?)
       %h2.tf.capacity We're at capacity. Apply to be notified when space opens up.
-    .col.descriptions.right 
-      =render :partial => "/site/shared/explanations/pricing", :locals => {:cssclass => "first"}
-      =render :partial => "/site/shared/explanations/five_reasons", :locals => {:cssclass => "last"}
-
-    .col.form.left
+    .col.form
       =f.fields_for :user_attributes do |uf|
         =uf.name_fields :required => true, :label => "name : ", :value => current_user.try(:names)
         -if logged_in?
@@ -45,5 +41,9 @@
       =f.city_select 'city_id', current_user.try(:city_id) || @city.try(:id), :html => { :required => true }
         
       %li.buttons.clearfix
-        =button_tag :class => "btnorg300x41 tf" do
+        =button_tag :class => "tf" do
           submit
+    .col.descriptions 
+      =render :partial => "/site/shared/explanations/pricing", :locals => {:cssclass => "first"}
+      =render :partial => "/site/shared/explanations/five_reasons", :locals => {:cssclass => "last"}
+

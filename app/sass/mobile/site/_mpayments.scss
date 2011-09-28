@@ -1,0 +1,294 @@
+.paymentoptions {
+  width: 280px;
+  margin: 0px auto;
+  padding: 10px 0;
+  border-bottom: 1px solid #DDD;
+  h2 {
+    margin: 0 0 10px 0;
+    font-size: 15px;
+  }
+  #promocodefields {
+    margin: 10px 0 0;
+    .label {
+      float: left;
+    }
+    li.text {
+      height: 30px;
+      margin: 0 auto;
+      .input_container {
+        width: 100px;
+        float: left;
+        margin-left: 10px;
+      }
+      input, .placeholder {
+        width: 116px;
+      }
+    }
+  }
+  .paymentoption {
+    width: 115px;
+    height: 130px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #999;
+    cursor: pointer;
+    &.first {
+      float: left;
+    }
+    &.last {
+      float: right;
+    }
+    .benefits {
+      text-align: center;
+      font-size: 12px;
+      .benefit {
+        line-height: 20px;
+      }
+    }
+    &.active, &.active:hover {
+      background: lighten(#ff8419, 35);
+      .checkbox, .checkbox:hover {
+        background-position: 0 -66px;
+      }
+    }
+    &:hover {
+      .checkbox, .checkbox:hover {
+        background-position: 0 -33px;
+      }      
+    }
+    .checkbox {
+      cursor: pointer;
+      @include btnorg77x32;
+      margin: 5px auto 0;
+      background-position: 0 0;
+      &:hover {
+        background-position: 0 -33px;
+      };
+    }
+    .mval {
+      margin: 0 auto;
+      text-align: center;
+      width: 60px;
+      font-size: 45px;
+      position: relative;
+      padding: 0 28px 0 10px;
+      text-shadow: 0px 1px 0px rgba(255,255,255,0.75);
+      .period {
+        position: absolute;
+        bottom: 10px;
+        right: 0;
+        font-size: 14px;
+      }
+      .currency {
+        position: absolute;
+        top: 5px;
+        @include transform("rotate(7deg)");
+        left: 0;
+        font-size: 18px;
+      }
+    }
+    &.grande {
+      .mval {
+        width: 55px;
+        padding-right: 44px;
+      }
+    }
+    
+  }
+  .explain {
+    clear: both;
+    padding: 10px 0 0;
+    text-align: center;
+    font-size: 0.8em;
+    color: #999;
+  }
+}
+
+.creditcard {
+  text-align: left;
+  position: relative;
+  font-family: monospace;
+  text-shadow: rgba(0,0,0,0.5) 0px 1px 1px;
+  width: 280px;
+  height: 170px;
+  font-size: 14px;
+  cursor: pointer;
+  .content {
+    padding: 5px 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+  }
+  .bg {
+    position: absolute;
+    z-index: 1;
+    background: #fff;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 1px solid #999;
+    @include border_radius(10px);
+    @include box_shadow(rgba(0,0,0,0.25) 0px 0px 2px);
+  }
+  .clicktoedit {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+  }
+  &.editable.present {
+    .editmode {
+      display: none;
+    }
+    .clicktoedit {
+      display: block;
+    }
+    &:hover, &.editing {
+      .logo {
+        background-image: url('/images/icons/pencil20x20.png');
+      }
+    }
+    &.editing {
+      .editmode {
+        display: block;
+      }
+      .clicktoedit {
+        display: none;
+      }
+      .displaymode {
+        display: none;
+      }
+    }
+  }
+  ul.form.cc & {
+    .editmode {
+      .username {
+        margin: 8px 0;
+        height: 35px;
+        li {
+          width: 246px;
+        }
+        input {
+          width: 200px;
+          text-transform: uppercase;
+        }
+      }
+      .numcontainer {
+        width: 184px;
+        float: left;
+        margin: 0 0 10px 0;
+      }
+      .ccnumber {
+        width: 166px;
+      }
+      li {
+        margin: 0;
+        width: 286px;
+      }
+      .cvvcontainer {
+        width: 71px;
+        float: right;
+        margin: 0 0 10px;
+        input, .placeholder {
+          width: 53px;
+          text-align: left;
+        }
+      }
+      .expiration {
+        width: 250px;
+        margin: 6px 0 0;
+        label {
+          margin-right: 3px;
+          float: left;
+          height: 22px;
+          line-height: 19px;
+        }
+        select {
+          position: static;
+          float: left;
+          height: 20px;
+          line-height: 20px;
+          &.month {
+            width: 60px;          
+            margin-right: 3px;
+          }
+          &.year {
+            width: 75px;
+          }
+        }
+      }
+      input {
+        padding: 10px 8px 6px;
+        font-family: monospace;
+        height: 14px;
+        line-height: 14px;
+        @include border_radius(0px);
+        border: 1px solid #999;
+        @include box_shadow(rgba(0,0,0,0.75) 0px 0px 0px inset);
+      }
+      .invalid input {
+        border: 1px solid #933;
+      }
+      .placeholder {
+        height: 20px;
+        line-height: 25px;
+      }
+    }
+  }
+  .displaymode {
+    .username {
+      margin: 15px 0 0;
+    }
+    .ccnumber {
+      font-size: 20px;
+      margin: 23px 0;
+    }
+  }
+  .logo {
+    background: transparent url(/images/logos/sgray22x22.png) no-repeat center center;    
+    position: absolute;
+    top: 17px;
+    right: 15px;
+    width: 22px;
+    height: 22px;
+  }
+  .expiration {
+    float: left;
+  }
+  .security {
+    background: transparent url(/images/icons/lockgry14x21.png) no-repeat top left;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 14px;
+    height: 21px;
+  }
+  .types {
+    height: 25px;
+    background: transparent url(/images/assets/creditcards/gryaccepted171x25.png) no-repeat top left;
+    width: 171px;
+    margin: 0;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    &.selected {
+      background-image: url(/images/assets/creditcards/accepted171x25.png);
+      width: 40px;
+    }
+    &.visa {
+      background-position: 0 0;
+    }
+    &.mastercard {
+      background-position: -45px 0;
+    }
+    &.amex {
+      background-position: -90px 0;
+    }
+    &.discover {
+      background-position: -135px 0;
+    }
+  }
+}

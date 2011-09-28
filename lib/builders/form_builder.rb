@@ -73,8 +73,10 @@ module Spot
       @template.content_tag(:div, :class => container_class_for(:name, "name li", options)) do
         label_for(:first_name, options.delete(:label)) +
         hint(options.delete(:hint)) +
-        text_field(:first_name, options.merge(:container_class => "first_name", :placeholder => "first name", :value => value.first)) + 
-        text_field(:last_name, options.merge(:container_class => "last_name", :placeholder => "last name", :value => value.last))
+        @template.content_tag(:div, :class => "fields") do
+          text_field(:first_name, options.merge(:container_class => "first_name", :placeholder => "first name", :value => value.first)) + 
+          text_field(:last_name, options.merge(:container_class => "last_name", :placeholder => "last name", :value => value.last))
+        end
       end
     end
     

@@ -1,0 +1,27 @@
+.error_page {
+  color: #f7f7f7;
+  .error {
+    width: 320px;
+    margin: 20px auto;
+    text-align: center;
+    padding-bottom: 25px;
+    h1 {
+      font-size: 20px;
+      margin: 0 0 10px 0;
+    }
+    h2 {
+      font-size: 16px;
+    }
+    .home_link {
+      margin: 10px 0 0;
+      a {
+        font-size: 16px;
+        color: #f7f7f7;
+        font-weight: bold;
+        &:hover, &.hover {
+          color: #fff;
+        }
+      }      
+    }
+  }
+}

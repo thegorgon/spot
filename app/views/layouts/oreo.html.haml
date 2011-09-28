@@ -1,26 +1,31 @@
 -module_names << " oreo"
 
 =content_for :header do
-  =img_link_to "logos/spotwhite120x90.png", root_path(:stay => 1), :size => "40x30", :class => "left"
-  %nav.right.clearfix
-    =link_to "home", root_path
-    =link_to "membership", membership_about_path, :class => "btnmemabout"
-    =link_to "about", about_path
-    =link_to "blog", blog_index_path
-    &middot;
-    -if current_member? && current_user.invitation_code.invites_remaining?
-      %a{'data-popover' => '#invite_popover', 'data-popover-title' => 'Invite', 'data-popover-orient' => 'vertical'} 
-        invite
-      #invite_popover=render :partial => "shared/membership/invite"
+  =img_link_to "logos/spotwhite120x90.png", root_path(:stay => 1), :size => "40x30", :class => "logo"
+  -unless mobile_request?
+    %nav.clearfix
+      =link_to "home", root_path
       &middot;
-    -if current_user
-      =link_to current_user.nickname, account_path, :class => "accountlnk"
-      %span.account="#{link_to "not you?", logout_path}".html_safe
-    -else show_login?
-      %span.account.accountlnk
-        %a{'data-popover' => '#login_popover', 'data-popover-title' => 'Sign In', 'data-popover-orient' => 'vertical'} 
-          sign in
-      =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
+      =link_to "membership", membership_about_path, :class => "btnmemabout"
+      &middot;
+      =link_to "about", about_path
+      &middot;
+      =link_to "blog", blog_index_path
+      &middot;
+      -if current_member? && current_user.invitation_code.invites_remaining?
+        %a{'data-popover' => '#invite_popover', 'data-popover-title' => 'Invite', 'data-popover-orient' => 'vertical'} 
+          invite
+        #invite_popover=render :partial => "shared/membership/invite"
+        &middot;
+      -if current_user
+        =link_to current_user.nickname, account_path, :class => "accountlnk"
+        &middot;
+        %span.account="#{link_to "logout", logout_path}".html_safe
+      -else show_login?
+        %span.account.accountlnk
+          %a{'data-popover' => '#login_popover', 'data-popover-title' => 'Sign In', 'data-popover-orient' => 'vertical'} 
+            sign in
+        =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
         
   
 =content_for :content do
@@ -31,25 +36,29 @@
         %h1.tf.left=yield :toptitle
       .main
         =content_for?(:oreo) ? yield(:oreo) : yield
-    %address
-      =image_tag "logos/spotwhite120x90.png", :size => "40x30", :class => "logo"
-      &middot;
-      2601 Mission St.
-      San Francisco, CA 94110
-      &middot;
-      =mail_to "The Spot Team <contact@spotmembers.com>", "Contact Us"
-      &middot;
-      =link_to "Privacy Policy", privacy_path
-      &middot;
-      =link_to "Terms of Service", tos_path
-      
+    .after
+      %address
+        =image_tag "logos/spotwhite120x90.png", :size => "32x24", :class => "logo"
+        &middot;
+        2601 Mission St.
+        San Francisco, CA 94110
+      %nav
+        =mail_to "The Spot Team <contact@spotmembers.com>", "Contact Us"
+        &middot;
+        =link_to "Privacy Policy", privacy_path
+        &middot;
+        =link_to "Terms of Service", tos_path
+ 
+      -if mobile_request?
+        %nav.mobiletoggle=link_to "View Full Site", url_for(:full_site => 1)
+      -elsif mobile_browser?
+        %nav.mobiletoggle=link_to "View Our Mobile Site", url_for(:mobile_site => 1)
+
   =yield :outside
 
 =content_for :bottom do
-  -unless current_member?
-    #applydialog.applydialog.clearfix.hidden{"data-title" => "Become a Founding Spot Member", :class => conditionally("autoopen", @launch_apply)}
-      =render :partial => "/shared/membership/apply", :locals => {:referrer => session_invite}
-  #aboutmembership.hidden{"data-title" => "About Spot Membership"}=render :partial => "shared/membership/about"
+  -unless mobile_request?
+    #aboutmembership.hidden{"data-title" => "About Spot Membership"}=render :partial => "shared/membership/about"
   
   #explain_designed_by_spot.hidden
     .explain_designed_by_spot

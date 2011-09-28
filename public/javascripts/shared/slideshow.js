@@ -69,33 +69,40 @@
       };
     $('.slide img', element).unbind("contextmenu.cancel").bind("contextmenu.cancel", function() { return false; });
     $('.slide img', element).unbind("mousedown.cancel").bind("mousedown.cancel", function() { return false; });
-    element.hide();
-    build();
-    $(window).load(function() {
-      setTimeout(function() {
-        var current = slides.eq(currentIdx);
-        slides.css({zIndex: 10});
-        
-        if (options.useCss && Modernizr.csstransitions) {
-          element.css('-webkit-transform', 'translateZ(0)');
-          title.text(current.attr('title')).addClass('visible');
-          current.addClass('current');
-          current.css({zIndex: 20});
-        } else {
-          title.text(current.attr('title'));
-          current.css({zIndex: 20}).show();          
-        }
-        element.show();
-        $(window).resize();
-      }, 100);
-    });
+    if (slideTpl.length > 0) {
+      element.hide();
+      build();
+      $(window).load(function() {
+        setTimeout(function() {
+          var current = slides.eq(currentIdx);
+          slides.css({zIndex: 10});
+
+          if (options.useCss && Modernizr.csstransitions) {
+            element.css('-webkit-transform', 'translateZ(0)');
+            title.text(current.attr('title')).addClass('visible');
+            current.addClass('current');
+            current.css({zIndex: 20});
+          } else {
+            title.text(current.attr('title'));
+            current.css({zIndex: 20}).show();          
+          }
+          element.show();
+          $(window).resize();
+        }, 100);
+      });
+      return {
+        nextSlide: nextSlide,
+        lastSlide: lastSlide,
+        jumpTo: jumpTo,
+        start: start,
+        stop: stop
+      };
+    } else {
+      return {
+        start: function() {},
+        stop: function() {}
+      }
+    }
     
-    return {
-      nextSlide: nextSlide,
-      lastSlide: lastSlide,
-      jumpTo: jumpTo,
-      start: start,
-      stop: stop
-    };
   };
 }(jQuery));

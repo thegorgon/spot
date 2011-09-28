@@ -5,6 +5,7 @@ class Site::HomeController < Site::BaseController
     if current_user.try(:city) && !params[:stay]
       redirect_to city_path(current_user.city)
     else
+      @cities = City.visible      
       render :layout => "site"
     end
   end

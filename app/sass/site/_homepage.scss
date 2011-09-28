@@ -235,6 +235,8 @@
               }
               text-align: left;
               button {
+                float: right;
+                @include btnorg115x32;
                 position: relative;
                 z-index: 100;
                 margin: 9px 0;

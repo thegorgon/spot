@@ -1,0 +1,183 @@
+.applydialog {
+  font-size: 12px;
+  padding: 75px 10px 20px;
+  position: relative;
+  margin: 0 auto;
+  width: 280px;
+  ul.form {
+    position: relative;
+    height: 380px;
+    @include transition("height 0.5s");
+    .step {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      @include transition("opacity 0.5s");
+    }
+    .invitecode {      
+      z-index: 2;
+    }
+    &.unlockable {
+      .inputs {
+        width: 245px;
+      }
+    }
+    &.unlocking, &.unlocked {
+      .lock {
+        .shackle {
+          top: 0;
+        }
+      }
+      .haveaninvite {
+        display: none;
+      }
+    }
+    &.unlocked {
+      height: 650px;
+      .application {
+        opacity: 1;
+        z-index: 10;
+      }
+      .invitecode {      
+        opacity: 0;
+      }
+    }
+  }
+  .explanation {
+    margin: 0 0 20px 0;
+    &.last {
+      margin-bottom: 0px;
+    }
+  }
+  h1 {
+    margin: 0 0 5px 0;
+    img {
+      margin-bottom: -19px;
+    }
+  }
+  .about {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    background: #000 url(/images/assets/general/cityscape300x80.png) no-repeat center center;
+    border-bottom: 1px solid #fff;
+    height: 80px;
+    .text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-size: 14px;
+      color: #fff;
+      padding: 10px;
+    }
+  }
+  .inputs {
+    width: 150px;
+    margin: 0 auto;
+    position: relative;
+    height: 30px;
+    @include transition("width 1s");        
+    li.text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: 150px;
+      input, .placeholder {
+        text-align: center;
+        width: 132px;
+      }
+    }
+    a.unlock {
+      z-index: 1;
+      position: absolute;
+      top: 1px;
+      right: 0;
+      font-weight: bold;
+    }
+  }
+  .switchmode {
+    color: #AAA;
+    text-decoration: none;
+    display: block;
+    position: absolute;
+    bottom: -15px;
+    left: 200px;
+    right: 200px;
+    text-align: center;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .application {
+    opacity: 0;
+    .label {
+      color: #444;
+      float: none;
+      text-transform: capitalize;
+    }
+    .form {
+      padding: 5px 0 0;
+    }
+    .survey {
+      display: none;
+    }
+    .question {
+      font-weight: bold;
+    }
+    li.buttons {
+      button {
+        @include btnorg280x32;
+      }
+    }
+  }
+  .invitecode {
+    padding: 60px 0 0;
+    height: 260px;
+    .vouched {
+      text-align: center;
+      padding: 10px 0;
+      color: #999;
+    }
+    li {
+      margin: 0 auto;
+    }
+    .lock {
+      width: 45px;
+      height: 80px;
+      position: relative;
+      margin: 0 auto;
+      .bolt {        
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 40px;
+        width: 45px;
+        background: #ddd;
+      }
+      .shackle {
+        @include transition("top 0.25s");
+        position: absolute;
+        top: 10px;
+        height: 41px;
+        width: 39px;
+        background: transparent url(/images/assets/general/shackle39x41.png) no-repeat center center;
+        left: 3px;
+      }
+    }
+    .question {
+      padding: 10px 0;
+      font-size: 15px;
+      text-align: center;
+    }
+  }
+  .descriptions {
+    margin: 10px 0 0;
+    width: 280px;
+  }
+}

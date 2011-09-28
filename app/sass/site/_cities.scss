@@ -96,6 +96,9 @@
   }
   .main {
     .title {
+      h1 {
+        float: left;
+      }
       .pillbox {
         float: right;
         font-weight: bold;
@@ -171,57 +174,6 @@
         .label {
           width: 60px;
         }
-      }
-    }
-  }
-  .featsection {
-    position: relative;
-    margin: 20px auto 0;
-    .evtdis {
-      .image {
-        width: 835px;
-        height: 392px;
-        overflow: hidden;
-        position: relative;
-        .text {
-          font-size: 20px;
-        }
-        img {
-          top: -67px;
-          width: 855px;
-          height: 535px;
-        }
-      }
-    }
-    &.size3 {
-      .feat1, .feat2 {
-        margin: 0;
-        position: absolute;
-        right: 0;
-        width: 300px;
-        height: 196px;
-        .description {
-          display: none;
-        }
-        .image {
-          width: 300px;
-          height: 196px;
-          .text {
-            font-size: 12px;
-          }
-          img {
-            top: -2px;
-            left: -10px;
-            width: 320px;
-            height: 200px;
-          }
-        }
-      }
-      .feat1 {
-        top: 0;
-      }
-      .feat2 {
-        top: 196px;
       }
     }
   }

@@ -1,0 +1,181 @@
+.site_accounts {
+  .toptitle {
+    h1 {
+      padding: 0 0 0 35px;
+      background: transparent url(/images/icons/personwht25x23.png) no-repeat center left;
+    }
+  }
+  .main {
+    .errorbox {
+      padding: 20px 0 0 14px;
+      width: 310px;
+      .errors {
+        color: #993333;
+        background: #EDD;
+        padding: 10px;
+        text-align: left;
+        margin: 0;
+        border: 1px solid #933;        
+        ul {
+          list-style: outside disc;
+          margin: 10px 20px;
+          li {
+            padding: 5px 0;
+          }
+        }
+        h2 {
+          margin: 0;
+          padding: 0;
+        }
+      }
+    }
+    p {
+      margin: 10px 0;
+    }
+    .lcol {
+      label {
+        text-transform: capitalize;
+        color: #333;
+      }
+    }
+    .rcol {
+      margin: 20px 0 0 0;
+    }
+    .logout {
+      @include btngrypill;
+      width: 280px;
+      margin: 0 auto;
+      height: 30px;
+      line-height: 30px;
+      font-weight: bold;
+    }
+    .membership {
+      margin: 10px 0;
+      li {
+        padding: 5px 0;
+      }
+      .label {
+        float: left;
+        font-weight: bold;
+        text-align: right;
+        width: 140px;
+        margin-right: 10px; 
+        font-size: 12px;      
+      }
+      .value {
+        font-size: 12px;      
+        line-height: 20px;
+        &.cc {
+          padding-top: 10px;
+        }
+      }
+      .cc {
+        li {
+          padding: 0;
+        }
+      }
+      .cancel {
+        text-align: center;
+        margin-top: -15px;
+      }
+      .ccsave {
+        @include btnorg280x32;
+      }
+    }
+    ul.form {
+      width: 280px;
+      margin: 0 10px 10px;
+      li.button {
+        width: 280px;
+        button {
+          width: 280px;
+        }
+      }
+      &.cc {
+        li.button {
+          padding: 0px 20px;
+          height: 0;
+          overflow: hidden;
+          @include transition("height 0.25s");
+        }
+        &.editing {
+          li.button {
+            height: 42px;
+          }
+        }
+      }
+    }
+    .codes {
+      border: 1px solid #ddd;
+      @include border_radius(10px);
+      background: #fff;
+      width: 280px;
+      margin: 0 auto;
+      table {
+        font-size: 12px;
+        width: 100%;
+      }
+      tr {
+        line-height: 1.5em;
+        border: none;
+        border-bottom: 1px solid #ddd;
+        &.last {
+          border-bottom: none;          
+        }
+        &.empty {
+          a {
+            color: #666;
+            &:hover {
+              color: #ff8419;
+            }
+          }
+        }
+      }
+      a {
+        text-decoration: none;
+        font-weight: bold;
+        &.cancel {
+          font-size: 11px;
+          font-weight: normal;
+          color: #999;
+        }
+      }
+      td.code {
+        position: relative;
+        width: 80px;
+        text-align: center;
+        border-right: 1px solid #ddd;
+      }
+      td {
+        vertical-align: middle;
+        padding: 7px;
+      }
+      code {
+        font-size: 25px;
+      }
+    }
+    h2 {
+      font-size: 18px;
+      padding: 0 0 0 35px;
+      background: transparent no-repeat left center;
+      margin: 20px 0 10px 10px;
+    }
+    .aboutme {
+      margin: 10px 0 0 10px;
+      background-image: url(/images/icons/contactblk26x17.png);
+      background-position: 0px 1px;
+    }
+    .changepassword {
+      margin: 20px 0 0 10px;
+      background-image: url(/images/icons/keyblk15x20.png);
+      background-position: 10px 0;
+    }
+    .mymembership {
+      background-image: url(/images/icons/diamondblk22x17.png);
+    }
+    .myevents {
+      background-image: url(/images/icons/calendarblk18x20.png);
+      background-position: 0px 1px;
+    }    
+  }
+}

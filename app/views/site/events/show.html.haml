@@ -10,12 +10,18 @@
   -if @city
     =link_to @city.name.titlecase, city_path(@city)
     &middot;
-  =@place.name
-  &middot;
+  -unless mobile_request?
+    =@place.name
+    &middot;
   =@promotion.name
     
 .evtdis
-  .image=image_tag @place.image.url(:i640x400), :size => "856x535"
+  .image
+    -if mobile_request?
+      =image_tag @place.image.url(:i234x168), :size => "300x215"
+    -else
+      =image_tag @place.image.url(:i640x400), :size => "856x535"
+
 .details.clearfix
   .event
     %h1.name.tf=@promotion.name
@@ -23,21 +29,23 @@
     -if @promotion.short_summary.present?
       .short_summary.tf=@promotion.short_summary.html_safe
     .description=@promotion.description.html_safe
-  .place
+  .place.normal
     .info.address.clearfix
       %h1.tf=@place.name
-      -@place.address_lines.each_with_index do |line, i|
-        -if line.present?
-          .line.clearfix
-            .left=line
-            -if @place.address_lines.length - 1 == i
-              .left.mapit="( #{link_to "map it", gmap_url(@place)} )".html_safe
+      %address
+        -@place.address_lines.each_with_index do |line, i|
+          -if line.present?
+            .line.clearfix
+              .left=line
+              -if @place.address_lines.length - 1 == i
+                .left.mapit="( #{link_to "map it", gmap_url(@place)} )".html_safe
     .info.phone=phone_link(@place.phone_number)
     -if @place.external_place(:google)
       =link_to "more info from google", external_place_url(@place.external_place(:google)), :class => "info google"
     -if @place.external_place(:yelp)
       =link_to "reviews on yelp", external_place_url(@place.external_place(:yelp)), :class => "info yelp"
-    .info
+    .tf.clearfix.share
+      .title Share : 
       =sharing(request.url, "#{@promotion.name} at #{@place.name}? Sounds good to me.")
   -if @promotion.designed_by_spot?
     .designed_by_spot Designed By Spot
@@ -50,24 +58,31 @@
 .availability.clearfix
   -unless current_member?
     .shield
-    
-  .dates
-    .title.tf
-      Reserve this experience. Click an available date : 
-    #calendar=render :partial => "calendar", :locals => {:promotion => @promotion}
   .hours
     .clock
       .hands
-        %canvas{:id => "timewedge", :height => "150", :width => "150", "data-start-hour" => @promotion.start_time, "data-end-hour" => @promotion.end_time}
-          =image_tag "icons/clockhandsgry150x150.png", :size => "150x150"
-      .ring=image_tag "icons/clockringgry150x150.png", :size => "150x150"
+        %canvas{:id => "timewedge", :height => mobile_request?? 30 : 150, :width => mobile_request?? 30 : 150, "data-start-hour" => @promotion.start_time, "data-end-hour" => @promotion.end_time}
+          =img_with_mobile "icons/clockhandsgry.png", :size => "150x150", :msize => "30x30"
+      .ring=img_with_mobile "icons/clockringgry.png", :size => "150x150", :msize => "30x30"
     .timeframe.tf=@promotion.timeframe
+        
+  .dates
+    .title.tf
+      -if mobile_request?
+        Tap a date to reserve :
+      -else
+        Reserve this experience. Click an available date : 
+    #calendar=render :partial => "calendar", :locals => {:promotion => @promotion}
 
 .explanations.clear.clearfix
   =render :partial => "/site/shared/explanations/howitworks"
   =render :partial => "/site/shared/explanations/fineprint"
   =render :partial => "/site/shared/explanations/guarantee", :locals => {:cssclass => "last"}
-  
--if current_member? && @event
+
+-if @city && mobile_request?
+  .back
+    =link_to "More #{@city.name.titlecase} Experiences", city_path(@city)
+
+-if current_member? && @event && !mobile_request?
   #claimdialog.clearfix.hidden{"data-title" => "Register for #{@event.name}"}
     =render :partial => "claim", :locals => {:event => @event}

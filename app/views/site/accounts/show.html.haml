@@ -2,12 +2,12 @@
   =current_user.nickname
 
 .relative.clearfix
-  .left.lcol
+  .lcol
     %h2.aboutme.tf.top About Me
     =spot_form_for current_user, :as => :account, :url => account_path, :display => "light inlinelabels insetvalidity clearfix" do |f|
-      =f.name_fields :label => "name : ", :value => current_user.names
-      =f.text_field :email, :placeholder => "email", :label => "email : "
-      =f.city_select 'city_id', current_user.city_id, :prepend_values => [["Other", ""]]
+      =f.name_fields :label => "name : ", :value => current_user.names, :required => true
+      =f.email_field :email, :placeholder => "email", :label => "email : ", :required => true
+      =f.city_select 'city_id', current_user.city_id, :prepend_values => [["Other", ""]], :required => true
       %li.button
         =button_tag :class => "btngrypill300x30 right" do
           Save Changes
@@ -20,6 +20,10 @@
           =button_tag :class => "btngrypill300x30 right" do
             Change Password
   .separator
-  .right.rcol
+  .rcol
     =render :partial => "events"
     =render :partial => "membership"
+
+-if mobile_request?
+  =link_to "Logout", logout_path, :class => "logout"
+    

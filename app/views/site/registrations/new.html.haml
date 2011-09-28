@@ -1,0 +1,5 @@
+=content_for :toptitle do
+  ="Register for #{@event.name}"
+  
+#claimdialog.clearfix
+  =render :partial => "/site/events/claim", :locals => {:event => @event}

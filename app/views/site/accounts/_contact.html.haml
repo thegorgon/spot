@@ -1,7 +1,10 @@
 .settings
   %li.checkbox.setting
-    =form.label :send_deal_emails, "Receive Weekly Deal Emails?"
+    =form.label :send_deal_emails, "Receive Special Deal Emails?"
     =form.check_box :send_deal_emails, :class => 'setting_check'
+  %li.checkbox.setting
+    =form.label :send_newsletter_emails, "Receive Regular Newsletter Emails?"
+    =form.check_box :send_newsletter_emails, :class => 'setting_check'
   %li.checkbox.setting.last
     =form.label :unsubscribe_all, "Never Hear From Us Again?"
     =form.check_box :unsubscribe_all, 'data-master-control' => '.setting_check'

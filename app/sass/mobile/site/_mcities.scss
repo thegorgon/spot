@@ -1,0 +1,202 @@
+.site_cities {
+  background: #000;
+  .calendar {
+    margin: 10px 0;
+    position: relative;
+    .month_placeholder {
+      height: 40px;
+      width: 300px;
+    }
+    .month_title {
+      .month {
+        text-align: center;
+        color: #999;
+        border: 1px solid #ddd;
+        border-right: 0;
+        border-left: 0;
+        text-shadow:  rgba(255,255,255,0.75) 0px 1px 0px;
+        background: #f7f7f7;
+        padding: 5px 0;
+        font-size: 20px;
+      }
+      hr, .month {
+        width: 300px;
+        margin: 0 auto;
+      }
+    }
+    .date {
+      width: 236px;
+      margin: 5px auto;
+      padding: 10px 0;
+      .imageshield {
+        margin: 0 auto 10px auto;
+        width: 234px;
+        height: 70px;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #aaa;
+        img {
+          width: 234px;
+          height: 168px;
+          top: -39px;
+          left: 0;
+          position: absolute;
+        }
+      }
+      &.today {
+        .day {
+          padding-left: 25px;
+          background: transparent url(/images/icons/grystar20x20.png) no-repeat left center;
+        }
+      }
+    }
+    .day {
+      text-shadow:  rgba(255,255,255,0.75) 0px 1px 0px;
+      font-size: 30px;
+      color: #999;
+      border-bottom: 1px solid #ddd;
+      .dow {
+        font-size: 12px;
+      }
+    }
+    .events {
+      padding: 10px 0 0;
+      border-top: 1px solid #fff;
+      font-size: 11px;
+      .remaining {
+        text-align: center;  
+      }
+      .event {
+        display: block;
+        padding: 0 0 10px;
+        text-decoration: none;
+        .place {
+          text-decoration: underline;
+        }
+        .timeframe {
+          padding: 0 0 2px 0;
+          font-weight: bold;
+          color: #999;
+        }
+      }
+    }
+  }
+  .main {
+    .title {
+      h1 {
+        text-align: center;
+      }
+      .pillbox {
+        width: 251px;
+        float: none;
+        margin: 10px auto;
+        font-weight: bold;
+        font-size: 12px;
+      }
+    }
+  }
+  .coming_soon {
+    p {
+      margin: 10px 0;
+    }
+    &.requested {
+      #city_preview {
+        display: none;
+      }
+      .thankyou {
+        display: block;
+        position: relative;
+        a {
+          position: static;
+          float: none;
+          line-height: 18px;
+          color: #AAA;
+          font-size: 12px;
+          padding: 0 5px;
+        }
+      }
+    }
+    &.updating {
+      #city_preview {
+        display: block;
+      }
+      .thankyou {
+        display: none;
+      }
+    }
+    .image {
+      margin: 10px 0;
+      position: relative;
+      .speechbubble {
+        font-size: 13px;
+        top: -35px;
+        left: 135px;
+      }
+    }
+    .image img {
+      border: 1px solid #ddd;
+    }
+    .form {
+      width: 400px;
+      h2 {
+        margin: 30px 0 20px;
+      }
+      form, ul.form {
+        #othercityfields {
+          padding: 0 0 20px;
+          li.text {
+            margin: 0;
+          }
+          li.note {
+            margin: 7px 0 0;
+          }
+        }
+        li.text {
+          width: 380px;
+        }
+        li.note {
+          padding-left: 80px;
+        }
+        li.buttons {
+          padding-left: 80px;
+        }
+        .label {
+          width: 60px;
+        }
+      }
+    }
+  }
+  .evtdis {
+    margin: 0 auto 10px;
+    width: 280px;
+    display: block;
+    .image {
+      height: 175px;
+      width: 280px;
+      position: relative;
+    }
+    .short_summary {
+      width: 262px;
+      font-size: 14px;
+      min-height: 18px;
+    }
+    .name {
+      font-size: 14px;
+    }
+  }
+  .updates {
+    .content {
+      color: #666;
+      h2 {
+        margin: 0 0 10px 0;
+      }
+      width: 250px;
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+    }
+  }
+  .upcoming {
+    margin: 20px auto 0;
+  }
+}

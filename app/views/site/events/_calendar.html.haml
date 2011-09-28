@@ -1,35 +1,42 @@
 .calendar.clearfix
-  -events = promotion.events.upcoming.hash_by { |e| e.date }          
-  -if logged_in?
-    -codes = current_user.codes.where(:event_id => events.values.map { |e| e.id }).all.hash_by { |c| c.date }
+  -if promotion.events.upcoming.length == 0
+    %h2.tf 
+      There are no upcoming dates scheduled for this experience. 
+    -if @city
+      =link_to "Explore Other Experiences", city_path(@city)
   -else
-    -codes = {}
-  -start = promotion.events.upcoming.first.try(:date) || Date.today
-  -startdate = start.sunday
-  -startdate = startdate > start ? start.sunday - 1.week : start.sunday
-  -enddate = ([startdate + 2.weeks, promotion.events.upcoming.last.try(:date) || Time.now].max).saturday
-  -(startdate..enddate).each_with_index do |date, i|
-    -week = (i/7).floor
-    -lastweek = enddate.to_time - date.to_time < 1.week
-    -event = events[date]
-    -code = codes[date]
-    .date{:class => "#{conditionally("visible", week < 2)} wday#{date.wday} wk#{week} #{conditionally("lastwk", lastweek)}"}
-      .dow.tf=date.strftime('%a %b').upcase
-      .doy.tf=date.day.ordinalize
-      -if event && code
-        .event
-          %code=code.code
-      -elsif event
-        .event
-          -if event.available?
-            %a{:href => "#", :class => current_member?? "btnclaim" : "", "data-eid" => event.id}
-              .text="#{event.remaining_count} left"
-              -if current_member?
-                .register register
-          -else
-            .soldout
-              none left
-      
+    -events = promotion.events.upcoming.hash_by { |e| e.date }          
+    -if logged_in?
+      -codes = current_user.codes.where(:event_id => events.values.map { |e| e.id }).all.hash_by { |c| c.date }
+    -else
+      -codes = {}
+    -start = promotion.events.upcoming.first.try(:date) || Date.today
+    -startdate = start.sunday
+    -startdate = startdate > start ? start.sunday - 1.week : start.sunday
+    -enddate = ([startdate + 2.weeks, promotion.events.upcoming.last.try(:date) || Time.now].max).saturday
+    -(startdate..enddate).each_with_index do |date, i|
+      -week = (i/7).floor
+      -lastweek = enddate.to_time - date.to_time < 1.week
+      -event = events[date]
+      -code = codes[date]
+      -if event || !mobile_request?
+        .date{:class => "#{conditionally("visible", week < 2)} wday#{date.wday} wk#{week} #{conditionally("lastwk", lastweek)}"}
+          .dow.tf=date.strftime('%a %b').upcase
+          .doy.tf=date.day.ordinalize
+          -if event && code
+            .event
+              %code=code.code
+          -elsif event
+            .event
+              -if event.available?
+                %a{:href => new_registration_path(:eid => event.id), :class => current_member?? "btnclaim" : "", "data-eid" => event.id}
+                  .text="#{event.remaining_count} left"
+                  -if current_member?
+                    .register register
+              -else
+                .soldout
+                  none left
+          
 .subtitles.clearfix
   .left
     -if enddate > startdate + 2.weeks

@@ -1,0 +1,144 @@
+.site_registrations {
+  #claimdialog {
+    width: 280px;
+    margin: 0px auto;
+    text-align: center;
+    font-size: 12px;
+    .container {
+      height: 500px;
+      position: relative;
+    }
+    .section {
+      background: #f0f0f0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      position: absolute;
+      width: 280px;
+      @include transition("opacity 0.5s, z-index 1s");
+    }
+    .areyousure {
+      padding: 0;
+      z-index: 4;
+      .summary {
+        margin: 10px 0;
+        p {
+          margin: 2px 0;
+        }
+      }
+      button {
+        @include btnorg200x41;
+        margin: 10px auto;
+      }
+      h2 {
+        margin: 10px auto;
+      }
+      .cancel {
+        color: #666;
+        font-size: 10px;
+      }
+    }
+    .processing {
+      z-index: 3;
+      background: #f0f0f0 url("/images/assets/loading/blkgears30x40.gif") no-repeat center center;
+    }
+    .code {
+      z-index: 2;
+      .error {
+        @include titlefont;
+        color: #633;
+        text-shadow: rgba(255,255,255,0.75) 0px 1px;
+        font-size: 20px;
+        padding: 25px 0;
+      }
+      .col.nextsteps {
+        text-align: left;
+        width: 280px;
+        hr {
+          margin: 5px 0;
+          @extend hr.light;
+        }
+        .exploremore {
+          @include btnorg280x32;
+          margin: 10px auto;
+        }
+      }
+      .nowwhat {
+        padding-left: 35px;
+        background: transparent url("/images/icons/questioncir22x22.png") no-repeat left center;
+      }
+      .col.yourcode {
+        margin: 8px auto;
+        width: 280px;
+        text-align: center;
+        code {
+          font-size: 50px;
+          display: block;
+          margin: 10px 0;
+          padding: 5px 10px 7px 10px;
+          @include border_radius(5px);
+          background: #fff;
+          border: 2px dashed #999;
+        }
+        .cancel {
+          text-decoration: none;
+          color: #999;
+          font-size: 11px;
+        }
+      }
+      code {
+        font-family: monospace;
+        display: inline;
+      }
+      ul {
+        li {
+          padding: 5px 0;
+          &.telleveryone {
+            line-height: 30px;
+          }
+        }
+        margin: 10px 0;
+      }
+      .howitworks {
+        float: none;
+        margin: 15px auto 0;
+        text-align: center;
+      }
+      .sharing {
+        margin: 0;
+        float: right;
+      }
+    }
+    &.loading {
+      .areyousure {
+        z-index: 1;
+        opacity: 0;
+      }
+    }
+    &.claimed {
+      .areyousure {
+        z-index: 1;
+        opacity: 0;
+      }
+      .processing {
+        z-index: 1;
+        opacity: 0;
+      }
+    }
+    h1 {
+      font-size: 25px;
+    }
+    h2 {
+      margin: 10px 0 0;
+      font-size: 18px;
+    }
+    p {
+      margin: 15px 0;
+    }
+
+    button {
+      margin: 15px auto 25px;
+    }
+  }
+}

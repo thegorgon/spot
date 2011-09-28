@@ -5,7 +5,15 @@
         %img{:src => "${slide}", :size => "${size}"}
 
 =content_for :footer do
+  %nav.icons.clearfix
+    -if mobile_request?
+      =img_link_to "assets/general/appstore140x40.png", getspot_path, :size => "140x40", :class => "getspot"
+    -else
+      =img_link_to "assets/general/appstore140x40.png", getspot_path, :size => "140x40", :class => "getspot"
+      =img_link_to "assets/general/bizlink160x40.png", biz_root_path, :size => "160x40", :class => "bizlink"
   %nav.regular.clearfix
+    -if mobile_browser? && !mobile_request?
+      =link_to "mobile site", url_for(:mobile_site => 1)
     =link_to "press", press_path
     =link_to "twitter", "http://www.twitter.com/spotteam", :target => "_new"
     =link_to "blog", blog_index_path
@@ -14,14 +22,13 @@
       =link_to current_user.nickname.downcase, account_path
     -else
       =link_to "sign in", new_session_path
-  %nav.icons.clearfix
-    =img_link_to "assets/general/appstore140x40.png", getspot_path, :size => "140x40", :class => "getspot"
-    =img_link_to "assets/general/bizlink160x40.png", biz_root_path, :size => "160x40", :class => "bizlink"
+  -if mobile_request?
+    %nav.mobiletoggle=link_to "full site", url_for(:full_site => 1)
 
-      
 
-#spotlogo.flips
-#slidetitle.tf
+-if !mobile_request?
+  #spotlogo.flips
+  #slidetitle.tf
   
 #toplayer.tf
   .intro.scene
@@ -50,11 +57,11 @@
                 Request an invitation
               %li.tab.last.tf#invitation_tab{"data-class" => "invitation", :class => conditionally("active", session_invite)} 
                 I have an invitation code
-          
+              
           =spot_form_for :email, :url => '#', :display => "faded clearfix", :ul_id => "email_form" do |f|
-            =button_tag :class => "btnorg115x32 right tf" do
-              =session_invite ? "continue" : "request"
             =f.email_field :email, :placeholder => "enter your email", :value => invite_request.try(:email), :container_class => "left", :required => true
+            =button_tag :class => "tf" do
+              =session_invite ? "continue" : "request"
           
           =spot_form_for :invitation, :url => '#', :display => "faded clearfix #{conditionally('unlockable', session_invite)}", :ul_id => "invite_form" do |f|
             .clearfix
@@ -85,15 +92,17 @@
       .vc
         .content
           %h1 Where?
-          -City.visible.each do |city|
-            %a.city{:href => city_path(city), :id => city.slug, :class => conditionally("active", city.subscription_available?), 'data-id' => city.id}
+          -@cities.each_with_index do |city, i|
+            %a.city{:href => city_path(city), :id => city.slug, :class => "#{first_or_last(@cities, i)} #{conditionally("active", city.subscription_available?)}", 'data-id' => city.id}
               =city.name.titlecase
-          .cantfind
-            Don't see your city on the map? 
-            =link_to "Tell us where you live", new_city_path
-            and we'll come to you next.
-            
-            
+          -if mobile_request?
+            %a.city.cantfind{:href => new_city_path} Other
+          -else
+            .cantfind
+              Don't see your city on the map? 
+              =link_to "Tell us where you live", new_city_path
+              and we'll come to you next.
+
 .hidden
   =form_tag portal_url, :method => :get, :id => "invitation_submit_form" do
     =hidden_field_tag :mc, '', :id => "invitation_code_value", :value => session_invite.try(:code)

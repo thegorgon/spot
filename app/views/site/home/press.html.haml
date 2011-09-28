@@ -19,42 +19,50 @@
     %h1.tf Logos
     #logos.clearfix
       .preview.preload
-        =image_tag "logos/spotblk225x180.png", :width => "150"
+        -if mobile_request?
+          =image_tag "logos/spotblk100x74.png", :size => "100x74"
+        -else
+          =image_tag "logos/spotblk150x111.png", :size => "150x111"        
       .download
         =link_to "Download our logo pack", "http://spot-production.s3.amazonaws.com/downloads/logo_pack.zip"
     %hr
-    %h1.tf Screenshots
-    #screenshots.clearfix
-      .screenshot.first=link_to_image "assets/screenshots/wishlist.png", :size => "150x225", :class => "preload"
-      .screenshot=link_to_image "assets/screenshots/search.png", :size => "150x225", :class => "preload"
-      .screenshot=link_to_image "assets/screenshots/place.png", :size => "150x225", :class => "preload"
-      .screenshot.last=link_to_image "assets/screenshots/activity.png", :size => "150x225", :class => "preload"
-    %hr
-    %h1.tf The Spot App in Action
-    #preview.clearfix
-      #phone.iphone.size274x535
-        .glare
-        .content
-          .status=Time.now.strftime("%l:%M %p")
-          .screen
-            =image_tag "assets/previews/empty.png", :size => "241x360"
-          .screen
-            =image_tag "assets/previews/search_0.png", :size => "241x360"
-          .screen
-            =image_tag "assets/previews/search_1.png", :size => "241x360"
-          .screen
-            =image_tag "assets/previews/search_2.png", :size => "241x360"
-          .screen
-            =image_tag "assets/previews/search_3.png", :size => "241x360"
-          .screen
-            =image_tag "assets/previews/search_4.png", :size => "241x360"
-          .screen
-            =image_tag "assets/previews/search_5.png", :size => "241x360"
-          .screen
-            =image_tag "assets/previews/search.png", :size => "241x360"
-          .screen
-            =image_tag "assets/previews/place.png", :size => "241x360"
-          .screen
-            =image_tag "assets/previews/wishlist.png", :size => "241x360"
-      .description.tf
-        See Spot Run :)
+    -if mobile_request?
+      .apps
+        %h1.tf Mobile Apps
+        =img_link_to "assets/general/blkappstore140x40.png", getspot_path, :size => "140x40", :class => "getspot"
+    -else
+      %h1.tf Screenshots
+      #screenshots.clearfix
+        .screenshot.first=link_to_image "assets/screenshots/wishlist.png", :size => "150x225", :class => "preload"
+        .screenshot=link_to_image "assets/screenshots/search.png", :size => "150x225", :class => "preload"
+        .screenshot=link_to_image "assets/screenshots/place.png", :size => "150x225", :class => "preload"
+        .screenshot.last=link_to_image "assets/screenshots/activity.png", :size => "150x225", :class => "preload"
+      %hr
+      %h1.tf The Spot App in Action
+      #preview.clearfix
+        #phone.iphone.size274x535
+          .glare
+          .content
+            .status=Time.now.strftime("%l:%M %p")
+            .screen
+              =image_tag "assets/previews/empty.png", :size => "241x360"
+            .screen
+              =image_tag "assets/previews/search_0.png", :size => "241x360"
+            .screen
+              =image_tag "assets/previews/search_1.png", :size => "241x360"
+            .screen
+              =image_tag "assets/previews/search_2.png", :size => "241x360"
+            .screen
+              =image_tag "assets/previews/search_3.png", :size => "241x360"
+            .screen
+              =image_tag "assets/previews/search_4.png", :size => "241x360"
+            .screen
+              =image_tag "assets/previews/search_5.png", :size => "241x360"
+            .screen
+              =image_tag "assets/previews/search.png", :size => "241x360"
+            .screen
+              =image_tag "assets/previews/place.png", :size => "241x360"
+            .screen
+              =image_tag "assets/previews/wishlist.png", :size => "241x360"
+        .description.tf
+          See Spot Run :)

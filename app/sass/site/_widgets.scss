@@ -1,0 +1,27 @@
+.speechbubble {
+  text-align: center;
+  position: absolute;
+  width: 200px;
+  height: 40px;
+  font-size: 14px;
+  padding: 15px 15px 43px;
+  background: transparent url(/images/paintings/speechbubble230x98.png) no-repeat center center;
+  @include titlefont;
+  line-height: 20px;
+  &.right {
+    background: transparent url(/images/paintings/speechbubbleright242x71.png) no-repeat center center;
+    padding: 27px 20px 27px 51px;
+    width: 171px;
+    height: 38px;
+    float: none;
+  }
+  &.down {
+    background: transparent url(/images/paintings/speechbubbledown230x98.png) no-repeat center center;
+    padding: 41px 15px 15px 15px;
+    width: 200px;
+    height: 42px;
+  }
+  &.upright {
+    background: transparent url(/images/paintings/speechbubbleupright230x98.png) no-repeat center center;
+  }
+}

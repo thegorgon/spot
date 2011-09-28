@@ -9,12 +9,14 @@
         Member since :
       .value
         =membership.starts_at.strftime("%B %d, %Y")
-        -if payment.respond_to?(:cancelled?) && !payment.cancelled?
-          ="( #{link_to "cancel", membership_path, "data-method" => "DELETE", "data-confirm" => "Are you sure you want to cancel your Spot Membership?"} )".html_safe
     -if payment.respond_to?(:next_billing_date) && payment.next_billing_date
       %li.clearfix
         .label Next bill date : 
         .value=payment.next_billing_date.strftime("%B %d, %Y")
+    -if payment.respond_to?(:next_bill_amount) && payment.next_bill_amount
+      %li.clearfix
+        .label Next bill amount : 
+        .value=number_to_currency(payment.next_bill_amount)
     -if payment.respond_to?(:cancelled_at) && payment.cancelled_at
       %li.clearfix
         .label Cancelled on :
@@ -37,7 +39,10 @@
         
             =render :partial => "/shared/payments/creditcard", :locals => {:form => f, :creditcard => @card}
             %li.button
-              =button_tag :class => "btnorg300x41 tf" do
+              =button_tag :class => "ccsave tf" do
                 save changes
         -elsif payment.kind_of?(PromoCode) && payment.name.present?
           .value=payment.name
+    -if payment.respond_to?(:cancelled?) && !payment.cancelled?
+      %li.cancel=link_to "Cancel Membership", membership_path, "data-method" => "DELETE", "data-confirm" => "Are you sure you want to cancel your Spot Membership?"
+      

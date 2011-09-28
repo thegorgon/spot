@@ -133,7 +133,9 @@ pre {
   white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
   word-wrap: break-word; /* IE */
 }
- 
+
+address { font-style: normal; }
+
 textarea { overflow: auto; } /* thnx ivannikolic! www.sitepoint.com/blogs/2010/08/20/ie-remove-textarea-scrollbars/ */
 
 .ie6 legend, .ie7 legend { margin-left: -7px; } /* thnx ivannikolic! */

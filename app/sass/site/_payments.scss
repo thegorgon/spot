@@ -1,0 +1,327 @@
+.paymentoptions {
+  position: relative;
+  width: 365px;
+  h2 {
+    margin: 0 0 15px 0;
+  }
+  .launchpricing {
+    background: transparent url(/images/assets/general/launchpricing56x56.png) no-repeat center center;
+    position: absolute;
+    top: -23px;
+    height: 56px;
+    width: 56px;
+    right: -23px;
+  }
+  .explain {
+    text-align: center;
+    color: #999;
+    padding: 10px 0 0;
+    font-size: 12px;
+  }
+  &.invalid {
+    h2 {
+      color: #cc3333;
+    }
+    .checkbox {
+      .box {
+        border: 1px solid #cc3333;
+      }
+    }
+  }
+  &.selectable {
+    .paymentoption {
+      cursor: pointer;
+      &.hover, &:hover {
+        background: #ededed;
+        .check {
+          display: block;
+          background-image: url(/images/icons/checkgry20x20.png);
+        }
+        &.active {
+          .check {
+            background-image: url(/images/icons/check20x20.png);          
+          }
+        }
+      }
+      &.active, &:active {
+        .check {
+          display: block;
+        }
+      }
+    }
+  }
+  .paymentoption {
+    height: 50px;
+    width: 350px;
+    padding: 17px 7px;
+    background: #fff;
+    position: relative;
+    border: 1px solid #ddd;
+    border-bottom: 0;
+    &.last {
+      border-bottom: 1px solid #ddd;
+    }
+    &.grande {
+      .benefits {
+        margin-left: 30px;
+      }
+      .mval {
+        width: 55px;
+        padding-right: 44px;
+      }
+    }
+    .checkbox {
+      position: absolute;
+      right: 5px;
+      top: 0;
+      width: 30px;
+      bottom: 0;
+      .btntxt {
+        display: none;
+      }
+      .box {
+        height: 15px;
+        width: 15px;
+        top: 34px;
+        left: 5px;
+        position: absolute;
+        border: 1px solid #000;
+      }
+      .check {
+        display: none;
+        background: transparent url(/images/icons/check20x20.png) no-repeat center center;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        top: 28px;
+        left: 7px;
+      }
+    }
+    .benefits {
+      float: left;
+      margin-left: 40px;
+      font-size: 15px;
+      line-height: 28px;
+    }
+    .mval {
+      margin-left: 15px;
+      float: left;
+      text-align: center;
+      width: 60px;
+      font-size: 45px;
+      position: relative;
+      padding: 0 28px 0 10px;
+      text-shadow: 0px 1px 0px rgba(255,255,255,0.75);
+      .period {
+        position: absolute;
+        bottom: 10px;
+        right: 0;
+        font-size: 14px;
+      }
+      .currency {
+        position: absolute;
+        top: 5px;
+        @include transform("rotate(7deg)");
+        left: 0;
+        font-size: 18px;
+      }
+    }    
+  }
+}
+.creditcard {
+  text-align: left;
+  position: relative;
+  font-family: monospace;
+  text-shadow: rgba(0,0,0,0.5) 0px 1px 1px;
+  width: 340px;
+  height: 204px;
+  font-size: 14px;
+  cursor: pointer;
+  .content {
+    padding: 24px 27px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+  }
+  .bg {
+    position: absolute;
+    z-index: 1;
+    .ie7 &, .ie & {
+      background: transparent url(/images/backgrounds/card340x204.png) no-repeat 0 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    background: #fff;
+    top: 14px;
+    left: 14px;
+    bottom: 14px;
+    right: 14px;
+    border: 1px solid #999;
+    @include border_radius(10px);
+    @include box_shadow(rgba(0,0,0,0.25) 0px 0px 2px);
+  }
+  .clicktoedit {
+    position: absolute;
+    bottom: 24px;
+    left: 27px;
+  }
+  &.editable.present {
+    .editmode {
+      display: none;
+    }
+    .clicktoedit {
+      display: none;
+    }
+    &:hover {
+      .clicktoedit {
+        display: block;
+      }
+    }
+    &:hover, &.editing {
+      .logo {
+        background-image: url('/images/icons/pencil20x20.png');
+      }
+    }
+    &.editing {
+      .editmode {
+        display: block;
+      }
+      .clicktoedit {
+        display: none;
+      }
+      .displaymode {
+        display: none;
+      }
+    }
+  }
+  ul.form.cc & {
+    .editmode {
+      .username {
+        margin: 8px 0;
+        li {
+          width: 246px;
+        }
+        input {
+          width: 230px;
+          text-transform: uppercase;
+        }
+      }
+      .numcontainer {
+        margin: 0 0 10px 0;
+      }
+      .ccnumber {
+        width: 270px;
+      }
+      li {
+        margin: 0;
+        width: 286px;
+      }
+      .cvvcontainer {
+        width: 76px;
+        float: right;
+        margin: 0 0 10px;
+        input {
+          width: 60px;
+          text-align: left;
+        }
+      }
+      .expiration {
+        width: 203px;
+        margin: 6px 0 0;
+        label {
+          margin-right: 5px;
+          float: left;
+          height: 22px;
+          line-height: 19px;
+        }
+        select {
+          position: static;
+          float: left;
+          height: 20px;
+          line-height: 20px;
+          &.month {
+            width: 50px;          
+            margin-right: 5px;
+          }
+          &.year {
+            width: 65px;
+          }
+        }
+      }
+      input {
+        padding: 10px 8px 6px;
+        font-family: monospace;
+        height: 14px;
+        line-height: 14px;
+        @include border_radius(0px);
+        border: 1px solid #999;
+        @include box_shadow(rgba(0,0,0,0.75) 0px 0px 0px inset);
+      }
+      .invalid input {
+        border: 1px solid #933;
+      }
+      .placeholder {
+        height: 20px;
+        line-height: 25px;
+      }
+    }
+  }
+  .displaymode {
+    .username {
+      margin: 15px 0 0;
+    }
+    .ccnumber {
+      font-size: 20px;
+      margin: 23px 0;
+    }
+  }
+  .logo {
+    background: transparent url(/images/logos/sgray22x22.png) no-repeat center center;    
+    position: absolute;
+    top: 36px;
+    right: 31px;
+    width: 22px;
+    height: 22px;
+  }
+  .expiration {
+    float: left;
+  }
+  .security {
+    background: transparent url(/images/icons/lockgry14x21.png) no-repeat top left;
+    position: absolute;
+    bottom: 24px;
+    left: 27px;
+    width: 14px;
+    height: 21px;
+  }
+  .types {
+    height: 25px;
+    background: transparent url(/images/assets/creditcards/gryaccepted171x25.png) no-repeat top left;
+    width: 171px;
+    margin: 0;
+    position: absolute;
+    bottom: 24px;
+    right: 27px;
+    &.selected {
+      background-image: url(/images/assets/creditcards/accepted171x25.png);
+      width: 40px;
+    }
+    &.visa {
+      background-position: 0 0;
+    }
+    &.mastercard {
+      background-position: -45px 0;
+    }
+    &.amex {
+      background-position: -90px 0;
+    }
+    &.discover {
+      background-position: -135px 0;
+    }
+  }
+}

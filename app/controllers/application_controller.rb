@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   
   private
   
+  # Traffic Management
   def traffic_source
     href = request.referer
     source = :direct
@@ -27,11 +28,6 @@ class ApplicationController < ActionController::Base
   end
   helper_method :traffic_source
   
-  def stash_thread_parameters
-    Thread.current[:controller] = self
-    Thread.current[:acquisition_source_id] = session[:acquisition_source_id]
-  end
-  
   def reject_certain_agents
     [/^Sogou Pic Spider/, /^PlacePop/].each do |agent|
       if request.env['HTTP_USER_AGENT'] =~ agent
@@ -39,7 +35,13 @@ class ApplicationController < ActionController::Base
         return false
       end
     end
-  end  
+  end
+  
+  # Utility Methods
+  def stash_thread_parameters
+    Thread.current[:controller] = self
+    Thread.current[:acquisition_source_id] = session[:acquisition_source_id]
+  end
   
   def default_render(*args)
     respond_to do |format|
@@ -59,13 +61,24 @@ class ApplicationController < ActionController::Base
       format.html { super(*args) }
       format.js { js_redirect_to(*args)}
     end
-  end  
+  end
+  
+  def js_redirect_to(*args)
+    render :json => {:redirect_to => url_for(*args)}
+  end
 
   def nonce
     @nonce ||= Nonce.new(:session => session)
   end
   helper_method :nonce
 
+  # Mobile Request Methods http://erniemiller.org/2011/01/05/mobile-devices-and-rails-maintaining-your-sanity/
+  before_filter :set_mobile_preferences
+
+  def self.mobile_responder(options={})
+    before_filter :set_mobile_format_if_mobile, options
+  end
+  
   def mobile_browser?
     iphone_browser? || android_browser?
   end
@@ -81,6 +94,40 @@ class ApplicationController < ActionController::Base
   end
   helper_method :android_browser?
 
+  def set_mobile_preferences
+    if params[:mobile_site]
+      cookies.delete(:prefer_full_site)
+    elsif params[:full_site]
+      cookies.permanent[:prefer_full_site] = 1
+      redirect_to_full_site if mobile_request?
+    end
+  end
+ 
+  def set_mobile_format_if_mobile
+    if mobile_request? && !request.xhr?
+      request.format = session[:mobile_view] == false ? :html : :mobile
+      session[:mobile_view] = true if session[:mobile_view].nil?
+    end
+  end
+ 
+  def redirect_to_full_site
+    redirect_to request.protocol + request.host_with_port.gsub(/^m\./, 'www.') +
+                request.request_uri and return
+  end
+ 
+  def redirect_to_mobile_if_applicable
+    unless mobile_request? || cookies[:prefer_full_site] || !mobile_browser?
+      redirect_to request.protocol + "m." + request.host_with_port.gsub(/^www\./, '') +
+                  request.request_uri and return
+    end
+  end
+ 
+  def mobile_request?
+    request.subdomains.first == 'm'
+  end
+  helper_method :mobile_request?
+
+  # Error Handling
   def log_error(exception)
     message = "\n#{exception.class} (#{exception.message}):\n"
     message << exception.annoted_source_code.to_s if exception.respond_to?(:annoted_source_code)
@@ -107,6 +154,11 @@ class ApplicationController < ActionController::Base
     @page_namespace = "site_errors_show"
   end
   
+  def log_session(prepend="")
+    Rails.logger.info("#{prepend}spot: session = #{session.inspect} and cookies = #{request.cookies.inspect}")
+  end
+  
+  # Authentication Handling
   def require_admin
     authenticate
     unless current_user && current_user.admin?
@@ -129,6 +181,16 @@ class ApplicationController < ActionController::Base
   end
   helper_method :logged_in?
   
+  def store_location
+    session[:return_to] = request.fullpath
+  end
+  
+  def redirect_back_or_default(default)
+    redirect_to(session[:return_to] || default)
+    session[:return_to] = nil
+  end
+  
+  # Geo Targeting
   def geo_ip
     @geo_ip ||= GeoIP.new('db/GeoIP.dat')
   end
@@ -151,6 +213,31 @@ class ApplicationController < ActionController::Base
   end
   helper_method :country_code
   
+  def request_language
+    request.user_preferred_languages.first.split(/[-_\s]/, 2).first rescue "en"
+  end
+  
+  def ip_location
+    country_code if country_code.present? && country_code != "--"
+  end
+  helper_method :ip_location
+  
+  def request_location
+    locale_location = request.user_preferred_languages.first.split(/[-_\s]/, 2)[1] rescue nil
+    params[:loc] || locale_location || ip_location
+  end
+  helper_method :request_location
+      
+  def localize
+    I18n.locale = current_user.try(:locale) || request.compatible_language_from(I18n.available_locales) || I18n.default_locale
+    if logged_in?
+      attributes = {}
+      attributes[:locale] = I18n.locale if current_user.locale.nil?
+      attributes[:location] = request_location if current_user.location != request_location
+      current_user.update_attributes(attributes) if logged_in? && attributes.present?
+    end
+  end
+  
   # Return the rendered page namespace, derived from the Controller name and rendered template. This identifier
   # can be used as a CSS class/id name and JavaScript variable name.  
   def page_namespace
@@ -168,48 +255,7 @@ class ApplicationController < ActionController::Base
   end
   helper_method :module_names
     
-  def js_redirect_to(*args)
-    render :json => {:redirect_to => url_for(*args)}
-  end
-  
-  def store_location
-    session[:return_to] = request.fullpath
-  end
-  
-  def redirect_back_or_default(default)
-    redirect_to(session[:return_to] || default)
-    session[:return_to] = nil
-  end
-  
-  def request_language
-    request.user_preferred_languages.first.split(/[-_\s]/, 2).first rescue "en"
-  end
-  
-  def ip_location
-    country_code if country_code.present? && country_code != "--"
-  end
-  helper_method :ip_location
-  
-  def request_location
-    locale_location = request.user_preferred_languages.first.split(/[-_\s]/, 2)[1] rescue nil
-    params[:loc] || locale_location || ip_location
-  end
-  helper_method :request_location
-  
-  def log_session(prepend="")
-    Rails.logger.info("#{prepend}spot: session = #{session.inspect} and cookies = #{request.cookies.inspect}")
-  end
-      
-  def localize
-    I18n.locale = current_user.try(:locale) || request.compatible_language_from(I18n.available_locales) || I18n.default_locale
-    if logged_in?
-      attributes = {}
-      attributes[:locale] = I18n.locale if current_user.locale.nil?
-      attributes[:location] = request_location if current_user.location != request_location
-      current_user.update_attributes(attributes) if logged_in? && attributes.present?
-    end
-  end
-        
+  # Event Recording
   def record_acquisition_event(event, value=nil)
     event = AcquisitionEvent.lookup(event) if event.kind_of?(String)
     email = current_user.try(:email_subscriptions)

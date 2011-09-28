@@ -4,7 +4,7 @@
   -(@page.upcoming).each do |template|
     %a.evtdis.template{:class => cycle("even", "odd"), :href => place_event_path(template.place, template)}
       .image
-        =image_tag template.place.image.url(:i640x400), :size => "400x250"
+        =image_tag template.place.image.url(:i640x400), :size => (mobile_request?? "280x175" : "400x250")
         .text
           .name.tf="#{template.place.name} : #{template.name}"
           .disclosure
@@ -13,7 +13,7 @@
       
   .evtdis.updates.template{:class => cycle("even", "odd")}
     .image
-      =image_tag "backgrounds/newupdates400x250.png", :size => "400x250"
+      =img_with_mobile "backgrounds/newupdates.png", :size => "400x250", :msize => "280x175"
       .text
         .name.tf="And Many More..."
       .content

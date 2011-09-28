@@ -1,7 +1,19 @@
 class Site::RegistrationsController < Site::BaseController
   layout "oreo"
+  before_filter :require_membership
   before_filter :require_user
   before_filter :require_ownership_of_code, :only => [:show, :destroy]
+  
+  def new
+    @event = PromotionEvent.find(params[:eid])
+    @code = current_user.codes.for_event(@event).first
+    if @code
+      redirect_to registration_path(@code)
+    else
+      @promotion = @event.template
+      @place = @event.place
+    end
+  end
   
   def create
     @registration = Registration.new(params[:registration])

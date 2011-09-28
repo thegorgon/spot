@@ -1,3 +1,46 @@
+.about_membership {
+  padding: 20px;
+  .sharing {
+    width: 380px;
+    margin: 5px auto;
+  }
+  .button {
+    @include btnorg300x41;
+    margin: 20px auto 0;
+  }
+  h1 {
+    margin: 0 0 10px 0;
+  }
+  .about {
+    font-size: 16px;
+  }
+  .pricing {
+    width: 390px;
+    float: right;
+  }
+  .reasons {
+    float: left;
+    width: 365px;
+  }
+  ul {
+    margin: 0 20px 0;
+    list-style: outside disc;
+    li {
+      h2 {
+        padding: 0 0 5px 0;
+      }
+      padding: 5px 0;
+    }
+  }
+  .main {
+    h1 {
+      margin: 0 0 20px 0;
+    }    
+  }
+  .member_invite {
+    margin: 0 auto;
+  }
+}
 .site_membership_applications {
   font-size: 14px;
   .hd {
@@ -60,6 +103,9 @@
 }
 
 #site_memberships_thanks {
+  .btnbrowse {
+    @include btnorg300x41;
+  }
   .bucket {
     float: none;
     padding: 0;
@@ -110,6 +156,9 @@
   }
 }
 .site_memberships {
+  button {
+    @include btnorg300x41;
+  }
   .seals {
     line-height: 31px;
     text-align: center;

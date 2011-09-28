@@ -1,4 +1,7 @@
-!!! 5
+-if mobile_request?
+  !!! Mobile
+-else
+  !!! 5
 -ie_html :class => 'no-js', :lang => 'en' do
   %head
     %meta{'charset' => 'utf-8'}
@@ -9,6 +12,8 @@
     = auto_discovery_link_tag(:rss, blog_index_url(:xml))
     = favicon_link_tag("/favicon.ico")
     = open_graph_tags
+    -if mobile_request?
+      = iphone_meta_tags
     = csrf_meta_tag 
     = js_trigger_tag
     = include_javascripts :head

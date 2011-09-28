@@ -1,0 +1,98 @@
+.site_blog {
+  .more {
+    text-align: center;
+  }
+  #pagination {
+    margin: 0 10px 20px;
+    a {
+      color: #666;
+      &:hover {
+        color: #ff8419;
+      }
+      text-decoration: none;
+    }
+  }
+  .post {
+    font-size: 12px;
+    padding: 10px;
+    word-wrap: break-word;
+    img {
+      width: 280px !important;
+      margin: 10px auto;
+      display: block;
+    }    
+    .comment_count {
+      width: 27px;
+      line-height: 20px;
+      height: 24px;
+      font-size: 12px;
+      font-weight: bold;
+      display: block;
+      color: #333;
+      float: left;
+      text-align: center;
+      background: transparent url(/images/icons/commentswhover27x24.png) no-repeat 0 0;
+      text-decoration: none;
+      margin: 0 auto;
+      &:hover {
+        background-position: 0 -24px;
+        color: #fff;
+      }
+    }
+    .face {
+      float:left;
+      padding: 1px 0px 0px 0px;
+    }
+    .twits {
+      float:left;
+      padding: 1px 0px 1px 5px;
+    }
+    .gplus {
+      float:left;
+      padding: 1px 0 0 5px;
+    }
+    .byline {
+      margin: 5px 0;
+      font-size: 1.2em;
+      color: #999;
+    }
+    hr {
+      margin: 20px 0 40px;
+    }
+    &.last {
+      margin: 0 auto;
+    }
+    a {
+      color: #666;
+      &:hover {
+        color: #FF8419;        
+      }
+    }
+  }
+  .photo {
+    text-align: left;
+    .caption {
+      margin: 1em 0 0.5em;
+    }
+    .byline {
+      margin: 0 0 1em;
+    }
+  }
+  .regular {
+    h1 {
+      text-align: left;
+      a {
+        color: #000;
+        text-decoration: none;
+        &:hover {
+          color: #ff8419;
+        }
+      }
+    }
+    p {
+      padding: 2px 0;
+      display: block;
+      clear: both;
+    }
+  }
+}

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110914230828) do
+ActiveRecord::Schema.define(:version => 20110924212203) do
 
   create_table "acquisition_campaigns", :force => true do |t|
     t.string   "name"
@@ -571,9 +571,9 @@ ActiveRecord::Schema.define(:version => 20110914230828) do
     t.integer  "invite_request_id",                :null => false
     t.integer  "submissions",       :default => 1, :null => false
     t.string   "referral_code",                    :null => false
-    t.string   "referred_by_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "referred_by_id"
   end
 
   add_index "sweepstake_entries", ["referral_code"], :name => "index_sweepstake_entries_on_referral_code", :unique => true
@@ -622,6 +622,7 @@ ActiveRecord::Schema.define(:version => 20110914230828) do
     t.string   "customer_id"
     t.integer  "city_id"
     t.integer  "acquisition_source_id"
+    t.integer  "wishlist_count",        :default => 0,     :null => false
   end
 
   add_index "users", ["city_id"], :name => "index_users_on_city_id"

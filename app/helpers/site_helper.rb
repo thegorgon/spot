@@ -5,7 +5,8 @@ module SiteHelper
       :preload => [ ],
       :member => current_member?,
       :host => HOSTS[Rails.env],
-      :api_host => API_HOSTS[Rails.env]
+      :api_host => API_HOSTS[Rails.env],
+      :mobile => mobile_request?
     }.to_json
   end
   
@@ -18,9 +19,14 @@ module SiteHelper
   
   def profile(name, email_or_url, title, options={})
     names = name.split(' ')
-    content = image_tag("assets/drawings/#{names.first.downcase}.png", :height => "150", :class => "knmiv")
-    content << content_tag(:div, name.html_safe, :class => "name tf")
-    content << content_tag(:div, title.html_safe, :class => "title")
+    if mobile_request?
+      content = image_tag("assets/drawings/#{names.first.downcase}_thumb.png", :height => "50", :width => "50", :class => "knmiv")
+    else
+      content = image_tag("assets/drawings/#{names.first.downcase}.png", :height => "150", :width => "150", :class => "knmiv")
+      content << content_tag(:div, name.html_safe, :class => "name tf")
+      content << content_tag(:div, title.html_safe, :class => "title")
+    end
+    
     ((options[:class] ||= "") << " profile preload ").strip!
     if email_or_url.index('@')
       options[:encode] = "hex"

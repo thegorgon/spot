@@ -1,0 +1,307 @@
+.site {
+  background: #000;
+  #flashes {
+    z-index:1000;
+  }
+  #bg {
+    background: #000000 url(/images/backgrounds/paisley_dark_centerfade.jpg) no-repeat fixed center center;
+    #bgfade {
+      z-index: 5;
+      position: absolute;
+      bottom: 0;
+      left: 0px;
+      right: 0px;
+      top: 0px;
+      background: transparent url(/images/backgrounds/fadeout1x227.png) repeat-x left bottom;
+    }
+  }
+  #bd {
+    padding-bottom: 150px;
+  }
+  footer {
+    display: none;
+  }
+}
+html {
+  .oreo {
+    #bg {
+      @include opacity(0.5);
+    }
+    #invite_popover {
+      padding: 20px;
+      height: 85px;
+      width: 300px;
+      input {
+        width: 200px;
+      }
+      .member_invite {
+        margin: 0;
+        padding: 0;
+        width: 300px;
+      }
+    }
+    .member_invite {
+      width: 315px;
+      h2 { 
+        margin: 0 0 10px 0;
+      }
+      .sharing {
+        margin: 10px 0 0 0;
+      }
+      input.text {
+        width: 200px;
+        font-size: 12px;
+      }
+    }
+    .titlebar {
+      line-height: 41px;
+    }
+    .cookie {
+      color: #000;
+      width: 300px;
+      font-size: 14px;
+      margin: 0 auto;
+      padding-top: 20px;    
+    }
+    header {
+      padding: 5px;
+      background: #000;
+      text-align: center;
+      .logo {
+        margin: 0 auto;
+      }
+      nav {
+        margin: 0 auto 5px;
+        color: #f7f7f7;        
+        a {
+          color: #f7f7f7;        
+          padding: 0 2px;
+          text-decoration: none;
+          font-size: 12px;
+          &:hover {
+            color: #ff8419;
+          }
+        }
+      }
+    }
+    hr {
+      margin: 10px 0;
+      @extend hr.light;
+    }
+    h1 {
+      font-size: 16px;
+    }
+    h2 {
+      font-size: 14px;
+    }
+    h1.tf, h2.tf {
+      text-shadow: #fff 0px 1px 0px;
+    }
+    p {
+      margin: 1em 0;
+    }
+    em {
+      font-style: normal;
+      color: #ff8419;
+      font-weight: bold;
+    }
+    strong {
+      font-weight: bold;
+    }
+    .overlay {
+      text-align: left;
+      padding: 15px 20px;
+      border: 1px solid #ff8419;
+      z-index: 100;
+      margin: 5px 0 10px;
+      background: #f7f7f7;
+      position: relative;
+      .becomemember {
+        @include btnorg220x32;
+      }
+      h1.membership {
+        margin: 0 auto;
+        text-align: center;
+      }
+      .inlinebtn {
+        float: none;
+        clear: both;
+        margin: 5px auto;
+        text-align: center;
+        @include btnorg220x32;
+      }
+      &.member {
+        padding: 0;
+        background: transparent;
+        border: none;
+        .quote {
+          position: relative;
+          padding: 5px 20px;
+          overflow: hidden;
+          .bg {
+            background: #000;
+            @include fullscreen();
+            @include opacity(0.3);
+          }
+          .content {
+            position: relative;
+            z-index: 2;
+            padding: 10px;
+            .text {
+              font-size: 12px;
+              margin: 0 7px;
+              color: #fff;
+              text-shadow: none;
+            }
+            .byline {
+              font-size: 10px;
+              color: #fff;
+              float: right;
+              position: static;
+              margin-right: 10px;
+              margin-top: 5px;
+            }
+          }
+        }
+        .welcome {
+          border-top: 1px solid #808080;
+          padding: 10px;
+          text-align: right;
+          color: #fff;
+          font-size: 14px;
+          position: relative;
+          h3 {
+            color: #fff;
+          }
+          .content {
+            position: relative;
+            z-index: 2;
+          }
+          .bg {
+            background: #000;
+            @include fullscreen();
+            @include opacity(0.6);
+          }
+        }
+      }
+      .lquo {
+        position: absolute;
+        top: -14px;
+        left: -25px;
+        width: 35px;
+        height: 32px;
+        background: transparent url(/images/assets/general/quotes35x65.png) no-repeat 0 0;
+      }
+      .rquo {
+        position: absolute;
+        bottom: -20px;
+        right: -25px;
+        width: 35px;
+        height: 32px;
+        background: transparent url(/images/assets/general/quotes35x65.png) no-repeat 0 -33px;
+      }
+      h1.tagline {
+        font-size: 18px;
+        text-align: center;
+      }
+      .readmore {
+        font-weight: normal;
+        font-weight: normal;
+        font-size: 12px;
+        a {
+          text-decoration: none;
+          color: #999;
+          &:hover {
+            color: #ff8419;
+          }
+        }
+      }
+      .request_received {
+        clear: both;
+        margin-top: 5px;
+        padding-top: 10px;
+        border-top: 1px solid #ddd;
+        h1 {
+          font-size: 22px;
+        }
+        .readmore {
+          position: absolute;
+          right: 25px;
+          bottom: 15px;
+        }
+      }
+      .actions {
+        margin: 10px auto;
+        width: 220px;
+        .readmore {
+          padding: 5px 0;
+          float: right;
+        }
+        .pricing {
+          font-size: 12px;
+          padding: 5px 0;
+          float: left;
+          font-weight: normal;
+          color: #999;
+          strong {
+            display: block;
+          }
+        }
+      }
+    }
+    .filling {
+      @include box_shadow(rgba(0,0,0,0.75) 0px 1px 5px);
+      .toptitle {
+        padding: 0 10px;
+        @include rgbabg(255,255,255,0.75, 'backgrounds/threefourwht1x1.png');
+        color: #333;
+        line-height: 30px;
+        height: 33px;
+        h1 {
+          width: 280px;
+          @include ellipsis;
+          text-shadow: none;
+          font-size: 16px;
+        }
+        a {
+          color: #333;
+          &:hover {
+            color: #ff8419;
+          }
+        }
+      }
+      .main {
+        position: relative;
+        background: #f0f0f0;
+        padding: 10px 0;
+        margin: -5px 0 5px;
+      }    
+    }
+    .after {
+      font-size: 0.8em;
+      color: #f7f7f7;
+      text-align: center;
+      margin: 0 auto 0;
+      text-shadow: #000 0px 0px 5px;
+      address {
+        margin: -2px 0 0 0;
+        display: block;
+        overflow: visible;
+      }
+      nav {
+        display: block;
+        margin: 8px 0 0 0;
+      }
+      a {
+        color: #f7f7f7;
+        &:hover {
+          color: #ff8419;
+        }
+      }
+      .logo {
+        position: relative;
+        top: 10px;
+      }
+    }
+  } 
+}

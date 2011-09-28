@@ -1,0 +1,75 @@
+#authenticate {
+  width: 280px;
+  margin: 0 auto;
+  height: 290px;
+  form {
+    width: 280px;
+  }
+  li.buttons {
+    button {
+      float: right;
+    }
+  }
+  li.section {
+    h3 {
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 30px;
+      padding-left: 32px;
+    }
+    &.fb {
+      h3 {
+        background: transparent url(/images/assets/general/fbfbw24x24.png) no-repeat left center;
+      }
+      button {
+        float: right;
+      }
+      .logo {
+        float: left;
+        margin: 4px 7px 0 0;
+      }
+    }
+    &.email {
+      height: 175px;
+      h3 {
+        background: transparent url(/images/icons/mailblk24x16.png) no-repeat left center;
+      }
+    }
+  }
+  .form_container {
+    position: relative;
+    height: 180px;
+    font-size: 14px;
+    form {
+      position: absolute;
+      top: 0px;
+      display: none;
+      &.selected {
+        display: block;
+      }
+    }
+  }
+  .radio_fade {
+    margin: 7px 0 0px 0;
+    font-size: 14px;
+    float: right;
+    .label {
+      cursor: pointer;
+      float: left;
+    }
+    .choice {
+      float: left;
+      width: 65px;
+    }
+  }
+  ul {
+    li.connect {
+      margin: 1em 0;
+    }
+  }
+}
+
+#password_reset {
+  width: 280px;
+  margin: 0 auto;
+}

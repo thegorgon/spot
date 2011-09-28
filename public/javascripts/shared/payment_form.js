@@ -104,6 +104,7 @@
       if (data) {
         var html = $('#promodescribe').tmpl(data.code);
         if (data.code && data.code.available) {
+          input.blur();
           input.parents('li:first').removeClass('loading').removeClass('invalid').addClass('valid');
           if (data.code.acts_as_payment) {
             html.hide().insertAfter(form).slideDown();

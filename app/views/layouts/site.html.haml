@@ -1,10 +1,11 @@
 =content_for :head do
-  = include_stylesheets :site, :media => 'all'
+  = include_stylesheets mobile_request?? :site_mobile : :site, :media => 'all'
   
 =content_for :bg do
   = yield :bgimage
   -if content_for?(:bgimage)
     #bgfade
       
-      
+
+
 = render :file => 'layouts/application'

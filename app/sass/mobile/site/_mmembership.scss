@@ -1,0 +1,155 @@
+.about_membership {
+  padding: 5px;
+  ul {
+    margin: 0 10px;
+    li {
+      font-size: 12px;
+      margin: 8px 0;
+      h2 {
+        margin: 0 0 3px;
+      }
+    }
+  }
+  h2 {
+    font-size: 16px;
+  }
+  h1 {
+    font-size: 18px;
+    margin: 0 0 0 10px;
+  }
+  .reasons {
+    border-bottom: 1px solid #ddd;
+    padding: 0 0 5px 0;
+    h2 {
+      text-align: underline;
+    }
+  }
+  .pricing {
+    padding: 10px 0 0 0;
+    border-top: 1px solid #fff;
+  }
+  .button {
+    @include btnorg280x41;
+    margin: 10px auto;
+  }
+  .paymentoptions {
+    border: none;
+    .paymentoption {
+      height: 100px;
+    }
+  }
+}
+#site_memberships_thanks {
+  text-align: center;
+  .main {
+    padding-bottom: 0px;
+  }
+  .btnbrowse {
+    @include btnorg280x32;
+    margin: 10px auto;
+  }
+  .columbus {
+    position: relative;
+    margin: 20px 0 0 0;
+    height: 225px;
+    .speechbubble {
+      position: absolute;
+      top: 15px;
+      left: 95px;
+    }
+  }
+}
+.site_memberships {
+  .titles {
+    h1 {
+      font-size: 18px;
+      text-align: center;
+    }
+  }
+  h2.tf {
+    font-size: 16px;
+  }
+  .creditcard {
+    margin: 5px 0;
+  }
+  .seals {
+    position: relative;
+    top: 55px;
+    width: 265px;
+    margin: 0 auto;
+    a {
+      text-decoration: none;
+    }
+  }
+  .ccfields {
+    margin: 0 auto;
+    width: 280px;
+    padding: 20px 0 0;
+    border-top: 1px solid white;
+  }
+  ul.form {
+    li.buttons {
+      margin: 10px auto;
+      &.finish {
+        position: relative;
+        top: -35px;
+      }
+      button {
+        @include btnorg280x32;
+      }
+    }
+    &.appliedpromocode {
+      #promocodefields {
+        height: 0;
+        margin: 0;
+        padding: 0;
+      }
+    }
+    &.promocodepayment {
+      form.new_membership {
+        height: 0;
+      }
+    }
+  }
+  .promocode {
+    padding: 10px 0 0;
+    form {
+      width: 280px;
+      margin: 20px auto 0;
+      button {
+        @include btnorg280x32;
+      }
+    }
+  }
+  .promodescribe {
+    width: 270px;
+    margin: 0 auto;
+    padding: 5px;
+    border: 1px solid #393;
+    background: #efe;
+    position: relative;
+    font-size: 12px;
+    .close {
+      top: 5px;
+      right: 5px;
+      position: absolute;
+      cursor: pointer;
+      @include bgbutton('bnwcloserlt15x45', 15px, 15px);
+    }
+    &.aspayment {
+      text-align: center;
+      margin: 0 auto;
+    }
+    .name {
+      font-size: 14px;
+      height: auto;
+      margin: 0 0 5px 0;
+      width: auto;
+      color: #393;
+      font-weight: bold;
+    }
+  }
+  .explanations {
+    margin: 10px;
+  }
+}

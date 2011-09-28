@@ -26,6 +26,7 @@
         position: position,
         autoOpen: false
       }, options);
+      options.width = Math.min(options.width, $(window).width());
       options.close = function(event, ui) {
         $(window).unbind("resize.dialog");
         $(window).unbind("scroll.dialog");
@@ -55,7 +56,7 @@
     var self = this;
     $.modal.init(self, options);
     
-    if (options.trigger) {
+    if (options.trigger && self.length > 0) {
       $(options.trigger).unbind('click.modal-trigger').bind('click.modal-trigger', function(e) {
         e.preventDefault();
         self.data('open-target', this);

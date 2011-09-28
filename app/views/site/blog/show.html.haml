@@ -19,35 +19,38 @@
           .caption=@post.caption.html_safe
       
         .clearfix
-          .left
-            .twits.left
-              %a{:href => "http://twitter.com/share", :class => "twitter-share-button", "data-url" => post_url(@post), "data-text" => post_tweet(@post), "data-count" => "horizontal"} Tweet
-            .gplus.left
-              %g:plusone{:size => "medium", :href => post_url(@post)}
+          .sharinglinks
+            .twits
+              %a{:href => "http://twitter.com/share", :class => "twitter-share-button", "data-url" => post_url(@post), "data-text" => post_tweet(@post), "data-count" => mobile_request?? "none" : "horizontal"} Tweet
+            .gplus
+              %g:plusone{:size => "medium", :annotation => mobile_request?? "none" : "button", :href => post_url(@post)}
 
-            .face.left
+            .face
               %fb:like{:href => post_url(@post), :send => "true", :layout => "button_count", :show_faces => "false", :font => "lucida grande"}
   
         %hr
-        %fb:comments{:href => post_url(@post), :num_posts => "10", :width => "600"}
+        %fb:comments{:href => post_url(@post), :num_posts => "10", :width => mobile_request?? 280 : 600}
   -else
     %h1.tf We had difficulty finding that. Please try again.
-  #rightrailcontainer.right
-    #rightrail
-      .about.section.first
-        .image=image_tag "logos/appicon57x57.png", :size => "57x57"
-        Spot is a private membership club for people who love to dine out. Spot Members receive exclusive access to VIP privileges, unique promotions and unforgettable experiences at the best restaurants in town. Want in? 
-        =link_to "Join Spot Now", root_url, :class => "tf btnorg175x32"
-    .section
-      -if @post.kind_of?(Wrapr::Tumblr::Regular)
-        .byline="Posted #{byline(@post)}"
-      -elsif @post.kind_of?(Wrapr::Tumblr::Photo)
-        .byline="Uploaded #{byline(@post)}"
-    .section.clearfix
-      %h3.tf Filed Under
-      %ul
-        -@post.tags.each do |tag|
-          %li.tag=link_to tag.titlecase, blog_index_path(:tag => tag)
-    %hr
-    .section.tf
-      =link_to "More Entries".html_safe, blog_index_path, :class => "dotted"
+  -if mobile_request?
+    .more.tf=link_to "More Entries".html_safe, blog_index_path
+  -else
+    #rightrailcontainer.right
+      #rightrail
+        .about.section.first
+          .image=image_tag "logos/appicon57x57.png", :size => "57x57"
+          Spot is a private membership club for people who love to dine out. Spot Members receive exclusive access to VIP privileges, unique promotions and unforgettable experiences at the best restaurants in town. Want in? 
+          =link_to "Join Spot Now", root_url, :class => "tf btnorg175x32"
+      .section
+        -if @post.kind_of?(Wrapr::Tumblr::Regular)
+          .byline="Posted #{byline(@post)}"
+        -elsif @post.kind_of?(Wrapr::Tumblr::Photo)
+          .byline="Uploaded #{byline(@post)}"
+      .section.clearfix
+        %h3.tf Filed Under
+        %ul
+          -@post.tags.each do |tag|
+            %li.tag=link_to tag.titlecase, blog_index_path(:tag => tag)
+      %hr
+      .section.tf
+        =link_to "More Entries".html_safe, blog_index_path, :class => "dotted"

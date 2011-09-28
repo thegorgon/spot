@@ -1,6 +1,6 @@
 class Site::CitiesController < Site::BaseController
-  before_filter :require_city, :except => [:new, :redirect]
   layout 'oreo'
+  before_filter :require_city, :except => [:new, :redirect]
   
   def show
     @city.subscription_available? || @city.has_events? ? calendar : new

@@ -21,7 +21,7 @@
               -template = event.template
               -place = event.place
               %a.event{:href => place_event_path(place, template)}
-                .timeframe="#{template.timeframe.titlecase} : "
+                .timeframe="#{template.timeframe_array.join(' - ')} : "
                 .name
                   %span.place="#{place.name}"
                   =":"

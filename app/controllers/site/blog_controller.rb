@@ -2,6 +2,7 @@ class Site::BlogController < Site::BaseController
   layout 'site/blog'
   
   def index
+    #TODO Figure out +1 Snippets
     @posts = BlogPost.filter(params)
     @page_keywords = BlogPost::TOPICS
     @page_title = "The Spotlight - Covering first-rate food and drink in San Francisco and beyond."

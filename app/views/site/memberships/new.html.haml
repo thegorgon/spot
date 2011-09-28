@@ -33,7 +33,7 @@
 =spot_form_for @payment, :as => :customer, :url => Braintree::TransparentRedirect.url, :display => "cc light clearfix inlinelabels", :html => {:autocomplete => "off", :class => "new_membership"} do |f|
   .spinner
   =hidden_field_tag :tr_data, ERB::Util.html_escape(@payment.tr_data(:redirect_url => endpoint_membership_url))
-  .paymentoptions.selectable
+  .paymentoptions.selectable.clearfix
     %h2.tf 1. Select membership type
     .launchpricing
     =f.fields_for :custom_fields do |cf|
@@ -52,7 +52,8 @@
           -else
             .benefit Renews Monthly
             .benefit Cancel Anytime
-        .checkbox
+        .checkbox.tf
+          .btntxt select
           .box
           .check              
     .explain
@@ -72,8 +73,8 @@
       %span.seal.godaddy{:id => "siteseal"}
         %script{:type => "text/javascript", :src => "https://seal.godaddy.com/getSeal?sealID=FGmzAUxury3XWFvKZkrnhfdw2COyMYjkMpFfst7VdykpmJiH29rQ"}
   
-  %li.buttons
-    =button_tag :class => "btnorg300x41 tf" do
+  %li.buttons.finish
+    =button_tag :class => "finish tf" do
       finish & pay
         
         
@@ -92,6 +93,6 @@
     =form_for :membership, :url => membership_path do |f|
       =f.hidden_field :payment_method_type, :value => "PromoCode"
       =f.hidden_field :payment_method_id, :value => "${id}"
-      =button_tag :class => "center btnorg300x41 tf" do 
+      =button_tag :class => "center tf" do 
         you're  in
     {{/if}}

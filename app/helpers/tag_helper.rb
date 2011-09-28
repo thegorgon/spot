@@ -84,6 +84,37 @@ module TagHelper
     link_to image_tag(src, options.slice(:size, :width, :height, :border, :alt)), url, options.except(:size, :width, :height, :border, :alt)
   end
   
+  def mobile_image_tag(src, options={})
+    if mobile_request?
+      extension = File.extname(src)
+      src = src.gsub(".#{extension}", "_mobile.#{extension}")
+    end
+    image_tag(src, options)
+  end
+  
+  def mobile_img_link_to(src, url, options={})
+    link_to mobile_image_tag(src, options.slice(:size, :width, :height, :border, :alt)), url, options.except(:size, :width, :height, :border, :alt)
+  end
+  
+  def link_to_mobile_image(url, options={})
+    options[:target] = "_new"
+    link_to mobile_image_tag(url, options.slice(:size, :width, :height)), image_path(url), options.slice(:class, :target, :id)
+  end
+  
+  def img_with_mobile(src, options={})
+    extname = File.extname(src)
+    plainsrc = src.gsub("#{extname}", "")
+    size = options.delete(:size)
+    msize = options.delete(:msize)
+    if mobile_request?
+      options[:size] = msize
+      image_tag "#{plainsrc}#{msize}#{extname}", options
+    else
+      options[:size] = size
+      image_tag "#{plainsrc}#{size}#{extname}", options
+    end
+  end
+  
   def open_graph_tags
     tags = []
     if place_page?

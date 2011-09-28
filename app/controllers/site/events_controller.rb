@@ -9,7 +9,7 @@ class Site::EventsController < Site::BaseController
     @event = @promotion.events.on_date(@date).first if @date
     @event ||= @promotion.events.upcoming.first
   end
-    
+      
   private
   
   def require_promotion

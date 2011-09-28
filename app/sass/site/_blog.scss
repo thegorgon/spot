@@ -135,34 +135,40 @@
     }
   }
   .post {
-    .comment_count {
-      padding: 3px 5px;
-      font-size: 12px;
+    .sharinglinks {
       float: left;
+    }
+    .comment_count {
+      width: 27px;
+      line-height: 20px;
+      height: 24px;
+      font-size: 12px;
+      font-weight: bold;
       display: block;
-      color: #666;
+      color: #333;
+      float: left;
+      text-align: center;
+      background: transparent url(/images/icons/commentswhover27x24.png) no-repeat 0 0;
       text-decoration: none;
-      background: #ddd;
-      @include border_radius(3px);
-      border: 1px solid #999;
+      margin: 0 auto;
       &:hover {
-        background: #ff8419;
+        background-position: 0 -24px;
         color: #fff;
-      }
-      .count {
-        font-weight: bold;
       }
     }
     img {
       max-width: 500px !important;
     }
     .face {
+      float: left;
       padding: 1px 0px 0px 0px;
     }
     .twits {
+      float: left;
       padding: 1px 0px 1px 10px;
     }
     .gplus {
+      float: left;
       padding: 1px 10px 0 0;
     }
     .byline {
@@ -204,7 +210,7 @@
       }
     }
     p {
-      padding: 0.5em 0;
+      padding: 5px 0;
       display: block;
       clear: both;
     }

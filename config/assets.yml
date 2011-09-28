@@ -13,8 +13,8 @@ javascripts:
     - public/javascripts/vendor/jquery.validate.js
     - public/javascripts/vendor/jquery.chosen.js
     - public/javascripts/vendor/jquery.stretcher.js
-  scripts:
     - public/javascripts/shared/date_extensions.js
+  scripts:
     - public/javascripts/shared/extensions.js
     - public/javascripts/shared/spot.js
     - public/javascripts/shared/behaviors.js
@@ -32,6 +32,7 @@ javascripts:
     - public/javascripts/shared/image_selector.js
     - public/javascripts/shared/slideshow.js
     - public/javascripts/shared/payment_form.js
+    - public/javascripts/shared/claim_form.js
     - public/javascripts/shared/views.js
     - public/javascripts/site/site.js
     - public/javascripts/admin/admin.js
@@ -41,6 +42,8 @@ javascripts:
 stylesheets:
   site:
     - public/stylesheets/site.css
+  site_mobile:
+    - public/stylesheets/mobile/site.css
   admin:
     - public/stylesheets/admin.css
   biz:

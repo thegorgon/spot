@@ -1,6 +1,6 @@
 .about_membership
   .clearfix
-    .left.reasons
+    .reasons
       %h1.tf 5 Reasons to Join Spot Today
 
       %ul
@@ -20,7 +20,7 @@
           %h2.tf The Spot Guarantee :
           ="Not happy? Get your money back, no questions asked."
   
-    .right.pricing
+    .pricing
       %h1.tf Spot Pricing
       .paymentoptions
         -Subscription::PLANS.keys.each_with_index do |name, i|
@@ -48,4 +48,4 @@
       =render :partial => "shared/membership/invite"
   
   -elsif ! current_member?
-    =link_to "become a member", new_application_path, :class => 'btnmembership btnorg300x41 tf button'
+    =link_to "become a member", new_application_path, :class => 'btnmembership tf button'

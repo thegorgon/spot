@@ -8,33 +8,43 @@
   .stretcher{'data-gravity' => "1.0x1.0"}
     =image_tag "stretcher/cities/sf4.jpg", :size => "2292x1524"
 
-.titlebar.clearfix
-  %h1.left.tf Start enjoying your membership
-  .right
-    =link_to "Browse Experiences", city_path(city), :class => 'tf btnorg300x41'
-%hr
-.bucket.first.clearfix
-  .image.worthy.left
-    =image_tag "paintings/louisxiv400x300.png", :size => "400x300"
-    .speechbubble.down.tf
-      It's good to be the king.
-  .text.right
-    %h2.clearfix
-      .left.tf Invite the worthy...
-      .invites="#{current_user.invitation_code.invites_remaining} invites remaining"
-    %p Spot is currently available by invitation only. As a Spot Member, you have 10 invitations to send to worthy friends and family.
-    %p Use the following link to share an invitation :
-    -url = portal_url(:mc => current_user.invitation_code.code)
-    =sharing(url, "I've got 10 Spot invites to share. Foodies in SF, check it out now.", :link => true)
-%hr
-.bucket.last.clearfix
-  .image.columbus.right
-    =image_tag "paintings/columbus400x300.png", :size => "400x300"
+-if mobile_request?
+  %h1.tf Congratulations and Welcome to Spot.
+  =link_to "Browse Experiences", city_path(city), :class => 'tf btnbrowse'
+    
+  .image.columbus
+    =img_with_mobile "paintings/columbus.png", :size => "400x300", :msize => "300x225"
     .speechbubble.tf
       We've arrived!
       Now, what you got to eat in this town?
-  .text.left
-    %h2.tf Explore your membership...
-    %p
-      Now that you've subscribed, you have full access to all of the Spot Member Experiences. Browse experiences to start enjoying your membership.
-    =link_to "Browse", city_path(city), :class => "tf btnorg77x32 button"
+-else
+  .titlebar.clearfix
+    %h1.left.tf Start enjoying your membership
+    .right
+      =link_to "Browse Experiences", city_path(city), :class => 'tf btnbrowse'
+  %hr
+  .bucket.first.clearfix
+    .image.worthy.left
+      =img_with_mobile "paintings/louisxiv.png", :size => "400x300", :msize => "300x225"
+      .speechbubble.down.tf
+        It's good to be the king.
+    .text.right
+      %h2.clearfix
+        .left.tf Invite the worthy...
+        .invites="#{current_user.invitation_code.invites_remaining} invites remaining"
+      %p Spot is currently available by invitation only. As a Spot Member, you have 10 invitations to send to worthy friends and family.
+      %p Use the following link to share an invitation :
+      -url = portal_url(:mc => current_user.invitation_code.code)
+      =sharing(url, "I've got 10 Spot invites to share. Foodies in SF, check it out now.", :link => true)
+  %hr
+  .bucket.last.clearfix
+    .image.columbus.right
+      =img_with_mobile "paintings/columbus.png", :size => "400x300", :msize => "300x225"
+      .speechbubble.tf
+        We've arrived!
+        Now, what you got to eat in this town?
+    .text.left
+      %h2.tf Explore your membership...
+      %p
+        Now that you've subscribed, you have full access to all of the Spot Member Experiences. Browse experiences to start enjoying your membership.
+      =link_to "Browse", city_path(city), :class => "tf btnorg77x32 button"
