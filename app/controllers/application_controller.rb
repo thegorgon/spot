@@ -85,7 +85,7 @@ class ApplicationController < ActionController::Base
   helper_method :mobile_browser?
 
   def iphone_browser?
-    request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][/(Mobile\/.+Safari)/]
+    !!(request.user_agent.to_s.downcase =~ /iphone|ipod/)
   end
   helper_method :iphone_browser?
 
