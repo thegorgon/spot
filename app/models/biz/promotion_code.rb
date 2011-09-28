@@ -87,7 +87,8 @@ class PromotionCode < ActiveRecord::Base
   def as_json(*args)
     {
       :_type => self.class.to_s,
-      :event => event.as_json,
+      :id => id,
+      :event => event,
       :code => code,
       :issued_at => issued_at
     }

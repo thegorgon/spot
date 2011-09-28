@@ -187,8 +187,8 @@ class User < ActiveRecord::Base
     }
     if options[:current_viewer]
       hash.merge!(
-        :membership => active_membership.as_json,
-        :codes => codes.upcoming.all.as_json,
+        :membership => active_membership,
+        :codes => codes.upcoming.all,
         :code_slots => code_slots,
         :wishlist_count => wishlist_count,
         :city_id => city_id,

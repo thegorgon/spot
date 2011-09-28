@@ -40,7 +40,7 @@ class Registration
   def to_param
     code.to_param
   end
-  
+    
   private
   
   def user_can_register
