@@ -49,7 +49,7 @@
           =link_to "Select Your City", account_path, :class => "btnorg175x32 action", :id => "select_city_link"
         -else
           -if session_invite
-            %h2.tf.registration Congratulations, You're Invited
+            %h2.tf.registration.invited Congratulations, You're Invited
           -else
             %h2.tf.registration Available By Invitation Only
             %ul.tabs.clearfix.registration
