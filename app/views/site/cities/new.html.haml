@@ -6,11 +6,7 @@
     
 .coming_soon.clearfix{:class => conditionally("requested", invite_request)}
   %h1.tf We're on our way...
-  .image.right
-    .speechbubble.upright.tf
-      Go on ahead guys. I'll catch up as soon as I find my other glove.
-    =image_tag "paintings/napoleon400x400.png", :size => "400x400"
-  .form.left
+  .form
     %p
       You know how sometimes, anticipation is better than getting there?
     %p
@@ -34,3 +30,8 @@
       %li.buttons
         =button_tag :class => "btnorg300x41 tf" do
           submit
+  .image
+    .speechbubble.upright.tf
+      Go on ahead guys. I'll catch up as soon as I find my other glove.
+    =img_with_mobile "paintings/napoleon.png", :size => "400x400", :msize => "300x300"
+  

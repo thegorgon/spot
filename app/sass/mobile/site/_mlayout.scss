@@ -5,18 +5,6 @@
   }
   #bg {
     background: #000000 url(/images/backgrounds/paisley_dark_centerfade.jpg) no-repeat fixed center center;
-    #bgfade {
-      z-index: 5;
-      position: absolute;
-      bottom: 0;
-      left: 0px;
-      right: 0px;
-      top: 0px;
-      background: transparent url(/images/backgrounds/fadeout1x227.png) repeat-x left bottom;
-    }
-  }
-  #bd {
-    padding-bottom: 150px;
   }
   footer {
     display: none;
@@ -225,9 +213,8 @@ html {
           font-size: 22px;
         }
         .readmore {
-          position: absolute;
-          right: 25px;
-          bottom: 15px;
+          margin: 5px 0 0;
+          text-align: center;
         }
       }
       .actions {

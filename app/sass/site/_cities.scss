@@ -175,6 +175,7 @@
       }
     }
     .image {
+      float: right;
       margin: 10px 0;
       position: relative;
       .speechbubble {
@@ -187,6 +188,7 @@
       border: 1px solid #ddd;
     }
     .form {
+      float: left;
       width: 400px;
       h2 {
         margin: 30px 0 20px;
@@ -209,6 +211,9 @@
         }
         li.buttons {
           padding-left: 80px;
+          button {
+            @include btnorg300x41;
+          }
         }
         .label {
           width: 60px;

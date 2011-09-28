@@ -139,6 +139,11 @@
             }
             #member_form {
               display: none;
+              li.buttons {
+                button {
+                  float: right;
+                }
+              }
             }
             #invite_form {
               display: none;

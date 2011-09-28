@@ -96,6 +96,10 @@
     }
   }
   .coming_soon {
+    h1 {
+      width: 280px;
+      margin: 0 auto;
+    }
     p {
       margin: 10px 0;
     }
@@ -125,43 +129,43 @@
       }
     }
     .image {
-      margin: 10px 0;
+      margin: 0;
+      padding: 20px 0 0;
+      height: 300px;
+      width: 300px;
       position: relative;
       .speechbubble {
-        font-size: 13px;
-        top: -35px;
+        font-size: 10px;
+        top: -15px;
         left: 135px;
       }
     }
-    .image img {
-      border: 1px solid #ddd;
-    }
     .form {
-      width: 400px;
+      width: 280px;
+      margin: 0 auto;
       h2 {
         margin: 30px 0 20px;
       }
       form, ul.form {
+        label {
+          text-transform: capitalize;
+        }
         #othercityfields {
           padding: 0 0 20px;
           li.text {
             margin: 0;
           }
-          li.note {
-            margin: 7px 0 0;
-          }
-        }
-        li.text {
-          width: 380px;
         }
         li.note {
-          padding-left: 80px;
+          margin: 7px 0 0;
+        }
+        li.text {
+          width: 280px;
         }
         li.buttons {
-          padding-left: 80px;
-        }
-        .label {
-          width: 60px;
+          button {
+            @include btnorg280x32;
+          }
         }
       }
     }
@@ -198,5 +202,14 @@
   }
   .upcoming {
     margin: 20px auto 0;
+  }
+}
+#site_cities_new {
+  .cookie {
+    .filling {
+      .main {
+        padding: 10px 0 0;
+      }
+    }
   }
 }

@@ -30,8 +30,7 @@ module Spot
       append_values = options.delete(:append_values)
       html_options = {
         :class => "chzn-select", 
-        :title => "Select your city",
-        :min => 0
+        :title => "Select your city"
       }.merge!(options.delete(:html) || {})
       options = {
         :validity => false, 

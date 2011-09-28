@@ -235,7 +235,7 @@
         });
       }
       
-      $('form#city_preview').find('#email_subscription_city_id').unbind('change.showother').bind('change.showother', function(e) {
+      $('form#city_preview').find('#request_city_id').unbind('change.showother').bind('change.showother', function(e) {
         if ($(this).val().toString() == "-1") {
           $('#othercityfields').hide().removeClass('hidden').slideDown();
         } else {
