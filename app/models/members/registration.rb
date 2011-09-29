@@ -37,6 +37,10 @@ class Registration
     end
   end
   
+  def save!
+    raise ActiveRecord::RecordInvalid unless save
+  end
+  
   def to_param
     code.to_param
   end
