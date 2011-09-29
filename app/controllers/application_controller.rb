@@ -110,15 +110,21 @@ class ApplicationController < ActionController::Base
     end
   end
  
+  def full_siteify(path)
+    request.protocol + request.host_with_port.gsub(/^m\./, 'www.') + path
+  end
+
+  def mobile_siteify(path)
+    request.protocol + "m." + request.host_with_port.gsub(/^www\./, '') + path                
+  end
+ 
   def redirect_to_full_site
-    redirect_to request.protocol + request.host_with_port.gsub(/^m\./, 'www.') +
-                request.fullpath and return
+    redirect_to full_siteify(request.fullpath) and return
   end
  
   def redirect_to_mobile_if_applicable
     unless mobile_request? || cookies[:prefer_full_site] || !mobile_browser?
-      redirect_to request.protocol + "m." + request.host_with_port.gsub(/^www\./, '') +
-                  request.fullpath and return
+      redirect_to mobile_siteify(request.fullpath) and return
     end
   end
  

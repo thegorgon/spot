@@ -1,32 +1,27 @@
 -module_names << " oreo"
 
 =content_for :header do
-  =img_link_to "logos/spotwhite120x90.png", root_path(:stay => 1), :size => "40x30", :class => "logo"
-  -unless mobile_request?
-    %nav.clearfix
-      =link_to "home", root_path
-      &middot;
-      =link_to "membership", membership_about_path, :class => "btnmemabout"
-      &middot;
-      =link_to "about", about_path
-      &middot;
-      =link_to "blog", blog_index_path
-      &middot;
-      -if current_member? && current_user.invitation_code.invites_remaining?
-        %a{'data-popover' => '#invite_popover', 'data-popover-title' => 'Invite', 'data-popover-orient' => 'vertical'} 
-          invite
-        #invite_popover=render :partial => "shared/membership/invite"
-        &middot;
-      -if current_user
-        =link_to current_user.nickname, account_path, :class => "accountlnk"
-        &middot;
-        %span.account="#{link_to "logout", logout_path}".html_safe
-      -else show_login?
-        %span.account.accountlnk
-          %a{'data-popover' => '#login_popover', 'data-popover-title' => 'Sign In', 'data-popover-orient' => 'vertical'} 
-            sign in
-        =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
-        
+  .content
+    =img_link_to "logos/spotwhite120x90.png", root_path(:stay => 1), :size => "40x30", :class => "logo"
+    -if mobile_request?
+      =link_to "more", '#', 'data-popover' => '#sitenav', 'data-popover-orient' => 'vertical', "data-popover-pos" => "left,bottom", :class => "morenav"
+  %nav#sitenav.clearfix
+    =link_to "home", root_path, :class => "first"
+    =link_to "membership", membership_about_path, :class => "btnmemabout"
+    =link_to "about", about_path
+    =link_to "blog", blog_index_path
+    -if current_member? && current_user.invitation_code.invites_remaining?
+      =link_to "invite", account_path, 'data-popover' => '#invite_popover', 'data-popover-title' => 'Invite', 'data-popover-orient' => 'vertical'
+      #invite_popover=render :partial => "shared/membership/invite"
+    -if current_user
+      =link_to current_user.nickname, account_path, :class => "accountlnk"
+      =link_to "logout", logout_path, :class => 'last'
+    -elsif show_login? && mobile_request?
+      =link_to "sign in", new_session_path, :class => 'last'
+    -elsif show_login?
+      =link_to "sign in", new_session_path, 'data-popover' => '#login_popover', 'data-popover-title' => 'Sign In', 'data-popover-orient' => 'vertical', 'class' => 'last'
+      =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
+      
   
 =content_for :content do
   .cookie

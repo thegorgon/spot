@@ -8,6 +8,16 @@
   }
 }
 
+#site_home_about_membership {
+  .cookie {
+    .main {
+      h1, h2, p {
+        padding: 0;
+      }      
+    }
+  }
+}
+
 #site_home_about {
   .pictures {
     margin: 10px 0;

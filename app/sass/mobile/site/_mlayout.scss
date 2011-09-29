@@ -39,6 +39,24 @@ html, body {
   }
 }
 html {
+  nav#sitenav {
+    display: none;
+    width: 150px;
+    a {
+      display: block;
+      color: #333;
+      background: #fff;
+      padding: 5px 10px;
+      border-bottom: 1px solid #ddd;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 14px;
+      &:active {
+        color: #fff;
+        background: #ff8419;
+      }
+    }
+  }
   .oreo {
     #bg {
       @include opacity(0.5);
@@ -80,24 +98,23 @@ html {
       padding-top: 20px;    
     }
     header {
-      padding: 5px;
       background: #000;
+      position: relative;
       text-align: center;
+      .content {
+        width: 320px;
+        position: relative;
+        margin: 0 auto;
+        padding: 5px;      
+      }
       .logo {
         margin: 0 auto;
       }
-      nav {
-        margin: 0 auto 5px;
-        color: #f7f7f7;        
-        a {
-          color: #f7f7f7;        
-          padding: 0 2px;
-          text-decoration: none;
-          font-size: 12px;
-          &:hover {
-            color: #ff8419;
-          }
-        }
+      .morenav {
+        @include blackimg77x32;
+        position: absolute;
+        right: 15px;
+        top: 5px;
       }
     }
     hr {

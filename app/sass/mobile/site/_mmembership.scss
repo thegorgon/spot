@@ -17,11 +17,18 @@
     font-size: 18px;
     margin: 0 0 0 10px;
   }
+  .describe {
+    padding: 0 5px 10px;
+    border-bottom: 1px solid #DDD;
+    font-size: 16px;
+    text-align: center;
+  }
   .reasons {
+    border-top: 1px solid #fff;
     border-bottom: 1px solid #ddd;
-    padding: 0 0 5px 0;
+    padding: 10px 0 5px 0;
     h2 {
-      text-align: underline;
+      padding: 0;
     }
   }
   .pricing {

@@ -1,5 +1,16 @@
 .about_membership
   .clearfix
+    -if mobile_request?
+      .describe.tf
+        ="For just $#{MONTHLY_PRICE} a month, our members get access to special perks at top restaurants all over town."
+        -if current_member? && current_user.invitation_code.invites_remaining?
+          .centered.center
+            %h1.tf Invite Your Friends
+            =render :partial => "shared/membership/invite"
+
+        -elsif ! current_member?
+          =link_to "become a member", new_application_path, :class => 'btnmembership tf button'
+    
     .reasons
       %h1.tf 5 Reasons to Join Spot Today
 

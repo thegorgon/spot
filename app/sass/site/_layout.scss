@@ -74,12 +74,16 @@ html {
         float: right;
         margin-right: 10px;
         line-height: 30px;
-        color: #f7f7f7;        
+        color: #f7f7f7;
         a {
           color: #f7f7f7;        
           padding: 0 5px;
           text-decoration: none;
           font-size: 15px;
+          border-right: 1px solid #333;
+          &.last {
+            border-right: 0;
+          }
           &:hover {
             color: #ff8419;
           }
