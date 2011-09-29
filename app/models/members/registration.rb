@@ -38,7 +38,7 @@ class Registration
   end
   
   def save!
-    raise ActiveRecord::RecordInvalid(self) unless save
+    raise ActiveRecord::RecordInvalid.new(self) unless save
   end
   
   def to_param

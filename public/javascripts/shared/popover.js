@@ -273,7 +273,7 @@
             if (popoverable.removeClass) { popoverable.removeClass('hidden'); }
             popover = $.popover.init(title, popoverable);
             trigger.attr('data-popover-id', popover.attr('id'));
-            trigger.unbind('click').bind('click', function(e) {
+            trigger.unbind('click, touchstart').bind('click, touchstart', function(e) {
               e.preventDefault();
               e.stopPropagation();
               if ($.popover.visible(trigger, popover)) {
@@ -295,9 +295,9 @@
         $(window).unbind('resize.popover').bind('resize.popover', function() { $.popover.position(trigger, popover); });
         $(window).unbind('scroll.popover').bind('scroll.popover', function() { $.popover.position(trigger, popover); });
         setTimeout(function() { // Otherwise this event might count
-          $('body').unbind('.hidepopover').bind('click.hidepopover, tap.hidepopover', function(e) {
+          $('body').unbind('.hidepopover').bind('click.hidepopover, touchstart.hidepopover', function(e) {
             if ($(e.target).is(':not(.popover, .popover *)')) { $.popover.hide(); }
-          });          
+          });
         }, 1);
         popover.find('a:not(.inpopover)').unbind('click.popover').bind('click.popover', function(e) { $.popover.hide(trigger, popover); });
         popover.find('form.page').unbind('submit.popover').bind('submit.popover', function(e) { $.popover.hide(trigger, popover); });

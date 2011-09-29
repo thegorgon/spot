@@ -220,7 +220,7 @@
     site_memberships_endpoint: function() {
       go.PaymentForm.init({form: $('form.new_membership')});      
     },
-    site_cities: function() {
+    site_cities: function() {      
       if ($('#city_intro').length > 0) {
         $('#city_intro').modal({
           autoOpen: true,
