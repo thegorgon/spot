@@ -43,9 +43,9 @@ class User < ActiveRecord::Base
     end
   end
     
-  def self.register(params)
-    account = FacebookAccount.authenticate(params)
-    account ||= PasswordAccount.register(params)
+  def self.register(params, user=nil)
+    account = FacebookAccount.authenticate(params, user)
+    account ||= PasswordAccount.register(params, user)
     user = account.try(:user)
     if user
       user.city_id = params[:city_id]
@@ -102,9 +102,11 @@ class User < ActiveRecord::Base
     WishlistItem.where(:id => new_keys.collect { |key| new_items[key].id }).update_all(:user_id => id) if new_keys.length > 0
     # Delete duplicates
     WishlistItem.where(:id => intersecting_keys.collect { |key| new_items[key].id }).delete_all if intersecting_keys.length > 0
-    Device.where(:user_id => new_user.id).update_all(:user_id => id)
-    PasswordAccount.where(:user_id => new_user.id).update_all(:user_id => id)
-    FacebookAccount.where(:user_id => new_user.id).update_all(:user_id => id)
+    ActivityItem.where(:actor_id => new_user.id).update_all(:user_id => id)
+    PromotionCode.where(:owner_id => new_user.id).update_all(:owner_id => id)
+    [Device, PlaceNote, PasswordAccount, FacebookAccount, Subscription, CreditCard, Membership].each do |klass|
+      model.where(:user_id => new_user.id).update_all(:user_id => id)
+    end
     new_user.destroy
     self
   end
@@ -127,6 +129,10 @@ class User < ActiveRecord::Base
   
   def code_slots
     3
+  end
+  
+  def has_account?
+    password_account.present? || facebook_account.present?
   end
   
   def member?
@@ -183,7 +189,9 @@ class User < ActiveRecord::Base
       :id => id,
       :first_name => first_name,
       :last_name => last_name,
-      :name => name
+      :name => name,
+      :created_at => created_at,
+      :updated_at => updated_at
     }
     if options[:current_viewer]
       hash.merge!(
@@ -224,7 +232,6 @@ class User < ActiveRecord::Base
         :source => email_source,
       })
       invite_request!
-      invite_request.mark_sent! if devices.count > 0
     end
   end
     
