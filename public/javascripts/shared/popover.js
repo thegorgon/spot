@@ -258,6 +258,9 @@
         raw.hide().css({left: 0});
         return raw;
       },
+      visible: function(trigger, popover) {
+        $(trigger).hasClass("active");
+      },
       bind: function(container) {
         $('[data-popover]').each(function(e) {
           var trigger = $(this),
@@ -270,10 +273,14 @@
             if (popoverable.removeClass) { popoverable.removeClass('hidden'); }
             popover = $.popover.init(title, popoverable);
             trigger.attr('data-popover-id', popover.attr('id'));
-            trigger.bind('click', function(e) {
+            trigger.unbind('click').bind('click', function(e) {
               e.preventDefault();
               e.stopPropagation();
-              $.popover.reveal(trigger, popover);
+              if ($.popover.visible(trigger, popover)) {
+                $.popover.hide(trigger, popover);
+              } else {
+                $.popover.reveal(trigger, popover);
+              }
             });
           }
         });
@@ -288,7 +295,7 @@
         $(window).unbind('resize.popover').bind('resize.popover', function() { $.popover.position(trigger, popover); });
         $(window).unbind('scroll.popover').bind('scroll.popover', function() { $.popover.position(trigger, popover); });
         setTimeout(function() { // Otherwise this event might count
-          $('body').unbind('click.hidepopover').bind('click.hidepopover', function(e) {
+          $('body').unbind('.hidepopover').bind('click.hidepopover, tap.hidepopover', function(e) {
             if ($(e.target).is(':not(.popover, .popover *)')) { $.popover.hide(); }
           });          
         }, 1);

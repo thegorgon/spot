@@ -46,7 +46,7 @@ html {
       display: block;
       color: #333;
       background: #fff;
-      padding: 5px 10px;
+      padding: 10px;
       border-bottom: 1px solid #ddd;
       font-weight: bold;
       text-decoration: none;
@@ -99,19 +99,19 @@ html {
     }
     header {
       background: #000;
-      position: relative;
-      text-align: center;
       .content {
         width: 320px;
-        position: relative;
         margin: 0 auto;
-        padding: 5px;      
+        position: relative;
+        height: 30px;
       }
       .logo {
-        margin: 0 auto;
+        position: absolute;
+        top: 5px;
+        left: 15px;
       }
       .morenav {
-        @include blackimg77x32;
+        @include btnbnw77x28;
         position: absolute;
         right: 15px;
         top: 5px;

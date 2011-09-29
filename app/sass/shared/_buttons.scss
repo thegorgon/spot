@@ -34,6 +34,21 @@
     background: transparent url(/images/assets/loading/whtorg3blck16x11.gif) no-repeat center center;
   }
 }
+@mixin blackbtn {
+  color: #fff !important;
+  text-decoration: none;
+  &:hover, &.hover {
+    color: #fff !important;
+  }
+  &:active, &.active {
+    color: #f7f7f7 !important;
+  }
+  .loading {
+    width: 100%;
+    height: 100%;
+    background: transparent url(/images/assets/loading/whtblk3blck16x11.gif) no-repeat center center;
+  }
+}
 .twit-share-btn {
   text-decoration: none;
   @include bgbutton('tweetiebw30x30', 30px, 30px)
@@ -224,6 +239,24 @@ button.link {
   @include btnorg115x32;
 }
 
+@mixin btnblack77x28 {
+  @include bgbutton('black77x28', 77px, 29px);
+  @include blackbtn;
+  font-size: 14px;
+  line-height: 30px;
+}
+.btnblack77x28, a.btnblack77x28 {
+  @include btnblack77x28;
+}
+@mixin btnbnw77x28 {
+  @include bgbutton('bnw77x28', 77px, 29px);
+  @include blackbtn;
+  font-size: 14px;
+  line-height: 30px;
+}
+.btnbnw77x28, a.btnbnw77x28 {
+  @include btnblack77x28;
+}
 @mixin btnorgpill {
   display: block;
   @include border_radius(5px);

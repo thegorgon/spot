@@ -25,7 +25,7 @@
       =yield :bg
     #page
       = flashes
-      %header= yield :header
+      %header.clearfix= yield :header
       #bd= content_for?(:content) ? yield(:content) : yield
       %footer= yield :footer
     #fb-root
