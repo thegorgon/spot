@@ -1,13 +1,14 @@
 namespace :db do
+  HOSTS       = { "production" => "masterdb.ec2" }
+  TUNNELS     = { "production" => "spot1.ec2", "staging" => "spotstaging.ec2" }
+  PRESETS     = { "places"     => "cities places google_places gowalla_places facebook_places foursquare_places yelp_places",
+                  "members"    => "invitation_codes promotion_codes membership_applications users facebook_accounts password_accounts memberships subscriptions credit_cards",
+                  "app"        => "wishlist_items users facebook_accounts password_accounts devices place_notes activity_items",
+                  "promotions" => "businesses business_accounts promotion_templates promotion_events promotion_codes",
+                  "accounts"   => "devices place_notes password_accounts facebook_accounts subscriptions credit_cards memberships activity_items promotion_codes wishlist_items users invitation_codes email_subscriptions" }
+
   task(:sync => :environment) do
     # Constants
-    HOSTS       = { "production" => "masterdb.ec2" }
-    TUNNELS     = { "production" => "spot1.ec2", "staging" => "spotstaging.ec2" }
-    PRESETS     = { "places"     => "cities places google_places gowalla_places facebook_places foursquare_places yelp_places",
-                    "members"    => "invitation_codes promotion_codes membership_applications users facebook_accounts password_accounts memberships subscriptions credit_cards",
-                    "app"        => "wishlist_items users facebook_accounts password_accounts devices place_notes activity_items",
-                    "promotions" => "businesses business_accounts promotion_templates promotion_events promotion_codes",
-                    "accounts"   => "devices place_notes password_accounts facebook_accounts subscriptions credit_cards memberships activity_items promotion_codes wishlist_items users invitation_codes email_subscriptions" }
     # Configuration Variables
     @port       = "7768"
     @remote_env ||= (ENV['REMOTE'] || "production")
@@ -42,6 +43,18 @@ namespace :db do
     `rm spotdbsync.sql`
     puts 'removing remote dump file'
     `ssh #{tunnel} -p #{@port} "rm ~/spotdbsync.sql"`
+  end
+  
+  task(:clear => :environment) do
+    @tables = PRESETS[ENV['PRESET']] if ENV['PRESET']
+    @tables ||= (ENV['TABLES'] || PRESETS.values.join(' ').split(' ').uniq.join(' '))
+    @tables ||= ""
+    puts "About to truncate : #{@tables}"
+    @tables.split(' ').each do |table| 
+      cmd = "TRUNCATE #{table};"
+      puts "Executing '#{cmd}'"
+      ActiveRecord::Base.connection.execute(cmd)
+    end
   end
   
   task(:reset => :environment) do

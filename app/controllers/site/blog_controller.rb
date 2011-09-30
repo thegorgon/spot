@@ -5,7 +5,6 @@ class Site::BlogController < Site::BaseController
     #TODO Figure out +1 Snippets
     @posts = BlogPost.filter(params)
     @page_keywords = BlogPost::TOPICS
-    @page_title = "The Spotlight - Covering first-rate food and drink in San Francisco and beyond."
     respond_to do |wants|
       wants.xml { render :layout => false }
       wants.html
@@ -15,7 +14,6 @@ class Site::BlogController < Site::BaseController
   def show
     @post = BlogPost.fetch(params[:id])
     @page_keywords = @post.tags
-    @page_title = "#{@post.title} - The Spot Blog"
   end
   
   def refresh

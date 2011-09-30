@@ -1,3 +1,6 @@
+-set_page_title "#{@sweepstake.name} - #{@sweepstake.short_summary} at #{@sweepstake.place.name}"
+-set_spot_app_title @sweepstake.name
+
 =content_for :header do
   =img_link_to "logos/spotwhite120x90.png", root_path(:stay => 1), :size => "40x30", :class => "left"
   %nav.right.clearfix

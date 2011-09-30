@@ -6,7 +6,6 @@ class Site::SweepstakesController < Site::BaseController
     @entry = @sweepstake.entries.find_or_initialize_by_invite_request_id(invite_request.try(:id))
     @entry.invite_request ||= InviteRequest.new
     @place = @sweepstake.place
-    @page_title = "#{@sweepstake.name} - Spot"
     @page_description = "Enter to win a #{@sweepstake.short_summary} at #{@sweepstake.place_name}"
     @page_keywords = [@sweepstake.place_name, "sweepstake", "on the house", "free", @sweepstake.short_summary]
     @referrer = SweepstakeEntry.find_by_referral_code(params[:ref]) if params[:ref]

@@ -14,10 +14,13 @@
     = open_graph_tags
     -if mobile_request?
       = iphone_meta_tags
-    = csrf_meta_tag 
+    = csrf_meta_tag
+    -if in_mobile_app? && @spot_app_title.present? 
+      =meta_name("x-spot-app-title", @spot_app_title)       
+    = yield :meta
     = js_trigger_tag
     = include_javascripts :head
-    = yield :head
+    = yield :stylesheets
     -if Rails.env.production?
       = google_analytics_tag(:account_id => 'UA-21193799-1')
   %body{:id => page_namespace, :class => "#{module_names} #{controller_name}#{conditionally(" in_mobile_app", in_mobile_app?)}"}

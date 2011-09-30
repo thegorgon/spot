@@ -1,3 +1,7 @@
+-set_page_title "#{@post.title} - The Spot Blog"
+-set_spot_app_title "The Spotlight"
+
+
 =content_for :toptitle do
   =link_to "The Spotlight", blog_index_path
   -if @post.respond_to?(:title) 
