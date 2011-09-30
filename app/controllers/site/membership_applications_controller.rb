@@ -1,5 +1,5 @@
 class Site::MembershipApplicationsController < Site::BaseController  
-  before_filter :require_no_user
+  before_filter :require_no_user, :only => [:create]
   before_filter :require_invite_code, :only => [:create]
   layout 'oreo'
   
@@ -36,7 +36,7 @@ class Site::MembershipApplicationsController < Site::BaseController
   end
   
   private
-  
+    
   def require_invite_code
     set_session_invite(params[:invite_code]) if params[:invite_code]
     unless session_invite
