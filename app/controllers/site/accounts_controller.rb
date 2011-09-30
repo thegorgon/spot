@@ -1,5 +1,5 @@
 class Site::AccountsController < Site::BaseController
-  before_filter :require_no_user, :only => [:new]
+  before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => [:show, :destroy, :update]
   layout "oreo"
 
@@ -7,12 +7,17 @@ class Site::AccountsController < Site::BaseController
   end
     
   def create
+    authenticate
     @account = PasswordAccount.register(params[:password_account], current_user)
     if @account.save
       warden.set_user @account.user
       @account.user.invite_request.mark_sent! if session_invite
       record_acquisition_event("signup")
-      redirect_back_or_default root_path
+      if in_mobile_app?
+        redirect_to to_mobile_app_path
+      else
+        redirect_back_or_default root_path
+      end
     else
       flash.now[:error] = "Something's not right. Can you double check the fields in red?"
       render :action => :new

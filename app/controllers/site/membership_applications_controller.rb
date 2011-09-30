@@ -1,4 +1,5 @@
 class Site::MembershipApplicationsController < Site::BaseController  
+  before_filter :require_no_user
   before_filter :require_invite_code, :only => [:create]
   layout 'oreo'
   

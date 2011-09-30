@@ -8,7 +8,7 @@
       &middot;
     -if current_user
       =link_to current_user.nickname, account_path, :class => "accountlnk"
-      %span.account="#{link_to "not you?", logout_path}".html_safe
+      %span.account="#{link_to "logout", logout_path}".html_safe
     -else show_login?
       %span.account.accountlnk
         %a{'data-popover' => '#login_popover', 'data-popover-title' => 'Sign In', 'data-popover-orient' => 'vertical'} 

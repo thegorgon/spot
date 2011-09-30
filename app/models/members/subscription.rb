@@ -4,6 +4,7 @@ class Subscription < ActiveRecord::Base
   belongs_to :credit_card
   validates :user, :presence => true
   validates :credit_card, :presence => true
+  before_destroy :cancel!
   
   class Plan < Struct.new(:launch_cost, :period, :plan_id)
     def abbrev_period

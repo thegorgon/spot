@@ -1,5 +1,6 @@
 class Site::SessionsController < Site::BaseController
   skip_before_filter :require_user, :except => [:destroy]
+  before_filter :require_no_user, :only => [:new, :create]
   layout "oreo"
   
   def new

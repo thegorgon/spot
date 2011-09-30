@@ -1,26 +1,27 @@
 -module_names << " oreo"
 
-=content_for :header do
-  .content
-    =img_link_to "logos/spotwhite120x90.png", root_path(:stay => 1), :size => "40x30", :class => "logo"
-    -if mobile_request?
-      =link_to "menu", '#', 'data-popover' => '#sitenav', 'data-popover-orient' => 'vertical', "data-popover-pos" => "left,bottom", :class => "morenav tf"
-    %nav#sitenav.clearfix
-      =link_to "home", root_path, :class => "first"
-      =link_to "membership", membership_about_path, :class => "btnmemabout"
-      =link_to "about", about_path
-      =link_to "blog", blog_index_path
-      -if current_member? && current_user.invitation_code.invites_remaining? && !mobile_request?
-        =link_to "invite", account_path, 'data-popover' => '#invite_popover', 'data-popover-title' => 'Invite', 'data-popover-orient' => 'vertical'
-        #invite_popover=render :partial => "shared/membership/invite"
-      -if current_user
-        =link_to current_user.nickname, account_path, :class => "accountlnk"
-        =link_to "logout", logout_path, :class => 'last'
-      -elsif show_login? && mobile_request?
-        =link_to "sign in", new_session_path, :class => 'last'
-      -elsif show_login?
-        =link_to "sign in", new_session_path, 'data-popover' => '#login_popover', 'data-popover-title' => 'Sign In', 'data-popover-orient' => 'vertical', 'class' => 'last'
-        =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
+-unless in_mobile_app?
+  =content_for :header do
+    .content
+      =img_link_to "logos/spotwhite120x90.png", root_path(:stay => 1), :size => "40x30", :class => "logo"
+      -if mobile_request?
+        =link_to "menu", '#', 'data-popover' => '#sitenav', 'data-popover-orient' => 'vertical', "data-popover-pos" => "left,bottom", :class => "morenav tf"
+      %nav#sitenav.clearfix
+        =link_to "home", root_path, :class => "first"
+        =link_to "membership", membership_about_path, :class => "btnmemabout"
+        =link_to "about", about_path
+        =link_to "blog", blog_index_path
+        -if current_member? && current_user.invitation_code.invites_remaining? && !mobile_request?
+          =link_to "invite", account_path, 'data-popover' => '#invite_popover', 'data-popover-title' => 'Invite', 'data-popover-orient' => 'vertical'
+          #invite_popover=render :partial => "shared/membership/invite"
+        -if current_user
+          =link_to current_user.nickname, account_path, :class => "accountlnk"
+          =link_to "logout", logout_path, :class => 'last'
+        -elsif show_login? && mobile_request?
+          =link_to "sign in", new_session_path, :class => 'last'
+        -elsif show_login?
+          =link_to "sign in", new_session_path, 'data-popover' => '#login_popover', 'data-popover-title' => 'Sign In', 'data-popover-orient' => 'vertical', 'class' => 'last'
+          =render :partial => "/shared/accounts/loginpopover", :locals => {:return_to => request.path}
     
   
 =content_for :content do
@@ -31,23 +32,24 @@
         %h1.tf.left=yield :toptitle
       .main
         =content_for?(:oreo) ? yield(:oreo) : yield
-    .after
-      %address
-        =image_tag "logos/spotwhite120x90.png", :size => "32x24", :class => "logo"
-        &middot;
-        2601 Mission St.
-        San Francisco, CA 94110
-      %nav
-        =mail_to "The Spot Team <contact@spotmembers.com>", "Contact Us"
-        &middot;
-        =link_to "Privacy Policy", privacy_path
-        &middot;
-        =link_to "Terms of Service", tos_path
+    -unless in_mobile_app?
+      .after
+        %address
+          =image_tag "logos/spotwhite120x90.png", :size => "32x24", :class => "logo"
+          &middot;
+          2601 Mission St.
+          San Francisco, CA 94110
+        %nav
+          =mail_to "The Spot Team <contact@spotmembers.com>", "Contact Us"
+          &middot;
+          =link_to "Privacy Policy", privacy_path
+          &middot;
+          =link_to "Terms of Service", tos_path
  
-      -if mobile_request? && ! in_mobile_app?
-        %nav.mobiletoggle=link_to "View Full Site", url_for(:full_site => 1)
-      -elsif mobile_browser?
-        %nav.mobiletoggle=link_to "View Our Mobile Site", url_for(:mobile_site => 1)
+        -if mobile_request? && ! in_mobile_app?
+          %nav.mobiletoggle=link_to "View Full Site", url_for(:full_site => 1)
+        -elsif mobile_browser?
+          %nav.mobiletoggle=link_to "View Our Mobile Site", url_for(:mobile_site => 1)
 
   =yield :outside
 

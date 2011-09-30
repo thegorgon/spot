@@ -6,7 +6,8 @@ namespace :db do
     PRESETS     = { "places"     => "cities places google_places gowalla_places facebook_places foursquare_places yelp_places",
                     "members"    => "invitation_codes promotion_codes membership_applications users facebook_accounts password_accounts memberships subscriptions credit_cards",
                     "app"        => "wishlist_items users facebook_accounts password_accounts devices place_notes activity_items",
-                    "promotions" => "businesses business_accounts promotion_templates promotion_events promotion_codes" }
+                    "promotions" => "businesses business_accounts promotion_templates promotion_events promotion_codes",
+                    "accounts"   => "devices place_notes password_accounts facebook_accounts subscriptions credit_cards memberships activity_items promotion_codes wishlist_items users invitation_codes email_subscriptions" }
     # Configuration Variables
     @port       = "7768"
     @remote_env ||= (ENV['REMOTE'] || "production")

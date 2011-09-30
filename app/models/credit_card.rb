@@ -9,6 +9,7 @@ class CreditCard < ActiveRecord::Base
   validates :expiration_month, :presence => true, :numericality => {:minimum => 1, :maximum => 12}
   validates :expiration_year, :presence => true, :numericality => {:minimum => 2000, :maximum => 3000}
   validate :valid_tr_update
+  before_destroy :delete_remote
   
   def self.synced_with(cc)
     record = find_or_initialize_by_token(cc.token)
@@ -66,6 +67,10 @@ class CreditCard < ActiveRecord::Base
     end
   end
   
+  def delete_remote
+    Braintree::CreditCard.delete(token)
+  end
+    
   private
   
   def valid_tr_update

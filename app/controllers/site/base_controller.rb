@@ -76,9 +76,9 @@ class Site::BaseController < ApplicationController
   # Authentication
   def require_no_user
     authenticate
-    if logged_in?
+    if logged_in? && current_user.has_account?
       store_location
-      flash[:error] = "Sorry, that's for new users only."
+      flash[:error] = "Sorry, that's for new users only. You need to <a href=\"#{logout_path}\">logout</a> first."
       redirect_to account_path 
     end
   end  

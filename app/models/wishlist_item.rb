@@ -92,7 +92,7 @@ class WishlistItem < ActiveRecord::Base
     params.merge! extra
     ActivityItem.create! params
   end
-
+  
   def update_item_wishlist_count
     item_type.constantize.increment_counter(:wishlist_count, item_id)
     User.increment_counter(:wishlist_count, user_id)

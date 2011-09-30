@@ -44,7 +44,7 @@
     .logout {
       @include btngrypill;
       width: 280px;
-      margin: 0 auto;
+      margin: 20px auto 10px;
       height: 30px;
       line-height: 30px;
       font-weight: bold;
@@ -106,8 +106,11 @@
       }
     }
     .events {
+      width: 280px;
+      margin: 0 auto;
       .btnmem {
-        @include btnorg300x41;
+        @include btnorg280x32;
+        margin: 10px auto;
       }
     }
     .codes {

@@ -17,7 +17,8 @@ class PasswordAccount < ActiveRecord::Base
   def self.authenticate(params)
     account = PasswordAccount.find_by_login(params[:login])
     if account && account.valid_password?(params[:password])
-      account.update_attributes(params[:user_attributes]) if params[:user_attributes]
+      account.user_attributes = params[:user_attributes] if params[:user_attributes]
+      account.save
       account
     else
       nil

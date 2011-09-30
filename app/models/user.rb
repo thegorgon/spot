@@ -94,19 +94,23 @@ class User < ActiveRecord::Base
   end
   
   def merge_with!(new_user)
-    new_items = new_user.wishlist_items.hash_by { |item| "#{item.item_type} #{item.item_id}" }
-    current_items = wishlist_items.hash_by { |item| "#{item.item_type} #{item.item_id}" }
-    intersecting_keys = new_items.keys & current_items.keys
-    new_keys = new_items.keys - current_items.keys
-    # Update new keys to point to this user
-    WishlistItem.where(:id => new_keys.collect { |key| new_items[key].id }).update_all(:user_id => id) if new_keys.length > 0
-    # Delete duplicates
-    WishlistItem.where(:id => intersecting_keys.collect { |key| new_items[key].id }).delete_all if intersecting_keys.length > 0
-    ActivityItem.where(:actor_id => new_user.id).update_all(:actor_id => id)
-    PromotionCode.where(:owner_id => new_user.id).update_all(:owner_id => id)
-    [Device, PlaceNote, PasswordAccount, FacebookAccount, Subscription, CreditCard, Membership].each do |klass|
+    # Move over all records
+    [WishlistItem, Device, PlaceNote, PasswordAccount, FacebookAccount, Subscription, CreditCard, Membership].each do |klass|
       klass.where(:user_id => new_user.id).update_all(:user_id => id)
     end
+    ActivityItem.where(:actor_id => new_user.id).update_all(:actor_id => id)
+    PromotionCode.where(:owner_id => new_user.id).update_all(:owner_id => id)
+    # Hash wishlist by item
+    wishlist = wishlist_items.all.group_by { |wi| "#{wi.item_type} #{wi.item_id}" }
+    ids_to_delete = []
+    wishlist.each do |key, array|
+      # By item take any wishlist actions that are older than the most recent and mark them deleted
+      wishlist[key].sort! { |x1, x2| x2.created_at <=> x1.created_at }
+      ids_to_delete += wishlist[key].slice(1, wishlist[key].length)
+    end
+    WishlistItem.where(:id => ids_to_delete).map { |wi| wi.destroy }
+    # This way, any older actions will be considered deleted and the newest action will prevail.
+    update_attributes!(:wishlist_count => wishlist_items.active.count, :login_count => login_count + new_user.login_count)
     new_user.destroy
     self
   end
@@ -212,6 +216,8 @@ class User < ActiveRecord::Base
   
   def cleanup
     codes.update_all(:owner_id => nil)
+    invitation_code.try(:destroy)
+    invite_request.try(:destroy)
     email_subscriptions.try(:destroy)
   end
   
