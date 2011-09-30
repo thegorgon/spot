@@ -35,15 +35,11 @@
         display: none;
       }
       li {
+        @include btnblack77x29;
+        @include titlefont;
         list-style: none;
         float: left;
-        @extend .blackimg_77x32;
         margin-right: 15px;
-        &.active {
-          color: #ddd;
-          text-shadow: #333 0px -1px 0px;
-          background: transparent url(/images/buttons/black_button_77x32_active.png) no-repeat center center;
-        }
         a {
           display: block;
           width: 100%;

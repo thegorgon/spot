@@ -21,6 +21,7 @@
   color: #fff !important;
   text-shadow: rgba(0,0,0,0.5) 0px 1px 0px;
   text-decoration: none;
+  cursor: pointer;
   &:hover, &.hover {
     color: #fff !important;
   }
@@ -37,6 +38,7 @@
 @mixin blackbtn {
   color: #fff !important;
   text-decoration: none;
+  cursor: pointer;
   &:hover, &.hover {
     color: #fff !important;
   }
@@ -239,28 +241,28 @@ button.link {
   @include btnorg115x32;
 }
 
-@mixin btnblack77x28 {
-  @include bgbutton('black77x28', 77px, 29px);
+@mixin btnblack54x29 {
+  @include bgbutton('black54x29', 77px, 30px);
   @include blackbtn;
   font-size: 14px;
   line-height: 30px;
 }
-.btnblack77x28, a.btnblack77x28 {
-  @include btnblack77x28;
+.btnblack54x29, a.btnblack54x29 {
+  @include btnblack54x29;
 }
-@mixin btnbnw77x28 {
-  @include bgbutton('bnw77x28', 77px, 29px);
+@mixin btnblack77x29 {
+  @include bgbutton('black77x29', 77px, 29px);
   @include blackbtn;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 30px;
 }
-.btnbnw77x28, a.btnbnw77x28 {
-  @include btnblack77x28;
+.btnblack77x29, a.btnblack77x29 {
+  @include btnblack77x29;
 }
 @mixin btnblacknav54x29 {
   @include bgbutton('blacknav54x29', 54px, 29px);
   @include blackbtn;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 30px;  
 }
 .btnblacknav54x29, a.btnblacknav54x29 {
@@ -337,7 +339,6 @@ button.link {
   }
   &:active, &.active {
     background: #666666;
-    -pie-background: #666666;
     color: #fff !important;
     text-shadow: 0px 1px 0px #000;
   }
@@ -374,7 +375,6 @@ button.link {
   }
   &:active, &.active {
     background: #993333;
-    -pie-background: #993333;
     @include box_shadow(#000 0px 1px 5px inset);        
     color: #fff !important;
     text-shadow: 0px -1px 0px #000;
@@ -478,42 +478,6 @@ button.withx {
     color: #999;
   }
 }
-@mixin blackimg77x32 {
-  .btntxt {
-    margin-top: -3px;
-  }
-  display: block;
-  border: none;
-  background: transparent url(/images/buttons/black_button_77x32.png) no-repeat center center;
-  float: left;
-  text-align: center;
-  cursor: pointer;
-  font-size: 12px;
-  height: 32px;
-  width: 77px;
-  text-decoration: none;
-  color: #fff;
-  font-weight: bold;
-  line-height: 32px;
-  text-shadow: #000 0px 1px 0px;
-  &:hover, &.hover {
-    color: #BBB;
-    background: transparent url(/images/buttons/black_button_77x32_hover.png) no-repeat center center;
-    text-shadow: #000 0px -1px 0px;
-  }
-  &:active, &.active {
-    text-shadow: #000 0px -1px 0px;
-    background: transparent url(/images/buttons/black_button_77x32_active.png) no-repeat center center;
-  }
-  &.active {
-    text-shadow: #000 0px -1px 0px;
-    background: transparent url(/images/buttons/black_button_77x32_active.png) no-repeat center center;
-  }
-}
-.blackimg_77x32 {
-  @include blackimg77x32;
-}
-
 .hlfrndblk_80x30 {
   font-size: 16px;
   height: 30px;
