@@ -139,6 +139,10 @@ class User < ActiveRecord::Base
     password_account.present? || facebook_account.present?
   end
   
+  def ready_for_membership?
+    has_account? && email.present? && first_name.present? && last_name.present? && city.present?
+  end
+  
   def member?
     active_membership
   end
@@ -226,6 +230,7 @@ class User < ActiveRecord::Base
       password_account.email = email
       password_account.first_name = first_name
       password_account.last_name = last_name
+      password_account.user_synced!
       password_account.save if password_account.changed?
     end
     if email.present?

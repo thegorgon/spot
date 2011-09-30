@@ -104,9 +104,9 @@
               and we'll come to you next.
 
 .hidden
-  =form_tag portal_url, :method => :get, :id => "invitation_submit_form" do
+  =form_tag redirect_cities_path, :method => :get, :id => "invitation_submit_form" do
     =hidden_field_tag :mc, '', :id => "invitation_code_value", :value => session_invite.try(:code)
-    =hidden_field_tag :cid, '', :id => "invitation_city_id"
+    =hidden_field_tag :id, '', :id => "invitation_city_id"
     
   =form_for invite_request || InviteRequest.new, :as => :request, :html => {:id => "invite_request_form"} do |f|
     =f.hidden_field :invite_code, :value => session_invite.try(:code)

@@ -1,7 +1,4 @@
--unlocked = session_invite.present?
--invited = session_invite && (current_city.nil? || current_city.subscriptions_available?)
-
--if invited
+-if session_invite && (current_city.nil? || current_city.subscriptions_available?)
   %h1.tf
     You're invited.
     Welcome to 
@@ -13,7 +10,11 @@
 
 -@account ||= current_user.try(:password_account) || PasswordAccount.new(:user => current_user)
 
-=spot_form_for @account, :url => application_path, :display => "light inlinelabels#{conditionally(" unlocked", unlocked)}#{conditionally(" applying", current_city.try(:at_capacity?))}", :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
+-display = "light inlinelabels"
+-display << " unlocked" if session_invite
+-display << " applying" if current_city.try(:at_capacity?)
+
+=spot_form_for @account, :url => application_path, :display => display, :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
   =hidden_field_tag :invite_code, session_invite.try(:code)
   -if params[:plan]
     =hidden_field_tag :plan, params[:plan]
@@ -31,23 +32,27 @@
       =link_to "Unlock", "#", :class => "btnorg77x28 unlock"
     .vouched
         
-  .application.step
-    -if current_city.try(:at_capacity?)
-      %h2.tf.capacity We're at capacity. Apply to be notified when space opens up.
-    .col.form
-      =f.name_fields :required => true, :label => "name : ", :value => current_user.try(:names)
-      -if logged_in?
-        =f.email_field :login, :placeholder => "email address", :required => true, :label => "email : ", :value => current_user.try(:email)
-      -else
-        =f.email_field :login, :placeholder => "email address", :required => true, :label => "email : ", "data-validate-url" => availability_email_path, "data-invalid-msg" => "looks like you've already registered", :value => invite_request.try(:email)
-      =f.password_field :password, :placeholder => "password", :required => true, :minlength => 4, :maxlength => 25, :label => "password : "
-      =f.fields_for :user_attributes do |uf|
-        =uf.city_select 'city_id', current_city.try(:id), :html => { :required => true, :min => 0 }
+  -unless current_user.try(:ready_for_membership?)
+    .application.step
+      -if current_city.try(:at_capacity?)
+        %h2.tf.capacity We're at capacity. Apply to be notified when space opens up.
+      .col.form
+        =f.name_fields :required => true, :label => "name : ", :value => current_user.try(:names)
+        -if logged_in? && current_user.has_account?
+          =f.email_field :login, :placeholder => "email address", :required => true, :label => "email : ", :value => current_user.try(:email)
+        -else
+          =f.email_field :login, :placeholder => "email address", :required => true, :label => "email : ", "data-validate-url" => availability_email_path, "data-invalid-msg" => "looks like you've already registered", :value => invite_request.try(:email)
+          =f.password_field :password, :placeholder => "password", :required => true, :minlength => 4, :maxlength => 25, :label => "password : "
+        =f.fields_for :user_attributes do |uf|
+          =uf.city_select 'city_id', current_city.try(:id), :html => { :required => true, :min => 0 }
               
-      %li.buttons.clearfix
-        =button_tag :class => "tf" do
-          submit
-    .col.descriptions 
-      =render :partial => "/site/shared/explanations/pricing", :locals => {:cssclass => "first"}
-      =render :partial => "/site/shared/explanations/five_reasons", :locals => {:cssclass => "last"}
+        %li.buttons.clearfix
+          =button_tag :class => "tf" do
+            submit
 
+      .col.descriptions 
+        =render :partial => "/site/shared/explanations/pricing", :locals => {:cssclass => "first"}
+        =render :partial => "/site/shared/explanations/five_reasons", :locals => {:cssclass => "last"}
+
+%form{:action => new_membership_path, :method => "get", :class => "hidden", :id => "registered_user_invite_form"}
+  =hidden_field_tag :mc, session_invite, :id => "registered_user_invite_code"

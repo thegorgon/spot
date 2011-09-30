@@ -3,7 +3,8 @@ class Site::BaseController < ApplicationController
   helper 'site'
   
   before_filter :redirect_to_mobile_if_applicable
-    
+  before_filter :stash_session_params
+  
   protected 
   
   #Mobile App Transfers
@@ -29,7 +30,31 @@ class Site::BaseController < ApplicationController
   end
   helper_method :current_city
   
+  def update_users_city_to_current
+    current_user.update_attribute(:city_id, current_city.id) if current_user && current_city && current_user.city_id != current_city.id
+  end
+  
   # Stashing Session Data
+  def stash_session_params
+    if params[:mc]
+      set_session_invite params[:mc]
+      set_session_promo params[:mc]
+    end
+    
+    if params[:ir] && ir = InviteRequest.find_by_id(params[:ir])
+      set_invite_request(ir)
+    end
+    
+    if params[:asrc].present?
+      source = AcquisitionSource.find_by_id(params[:asrc])
+      source_id = source.try(:id)
+      session[:original_acquisition_source_id] ||= source_id # or equal, only set if not yet set
+      session[:acquisition_source_id] = source_id # resets, always store
+      source.clicked!(current_user)
+      record_acquisition_event("click")
+    end
+  end
+  
   def set_invite_request(request)
     session[:invite_request_id] = request.try(:id)
   end

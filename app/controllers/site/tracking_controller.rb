@@ -20,22 +20,7 @@ class Site::TrackingController < Site::BaseController
   end
   
   def portal
-    set_session_invite params[:mc]
-    set_session_promo params[:mc]
-    
-    if params[:ir] && ir = InviteRequest.find_by_id(params[:ir])
-      set_invite_request(ir)
-    end
-    
-    if params[:asrc].present?
-      source = AcquisitionSource.find_by_id(params[:asrc])
-      source_id = source.try(:id)
-      session[:original_acquisition_source_id] ||= source_id # or equal, only set if not yet set
-      session[:acquisition_source_id] = source_id # resets, always store
-      source.clicked!(current_user)
-      record_acquisition_event("click")
-    end
-    invite_request.mark_sent! if invite_request && session[:invite_code]
+    invite_request.mark_sent! if invite_request && session_invite
     
     @city = City.find_by_id(params[:cid]) if params[:cid]
     destination   =  CGI.unescape(params[:dest]) if params[:dest]

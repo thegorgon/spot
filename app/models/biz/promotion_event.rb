@@ -84,7 +84,7 @@ class PromotionEvent < ActiveRecord::Base
     options = args.extract_options!
     if options[:api]
       {
-        :_type => self.class.to_s,
+        :_type => "PromotionEvent",
         :id => id,
         :place => place.as_json(:skip_thumbnail => true),
         :image_url_640x400 => place.image.url(:i640x400),

@@ -12,14 +12,6 @@
           
         };
       // Initialize Apply Form Lock
-      go.Lock.init({ 
-          lock: $('#applicationform').find('#application_lock'),
-          invitationCode: $('#applicationform').find('#invite_code'),
-          unlock: $('#applicationform').find('.unlock'),
-          onUnlock: function(code) {
-            $(this).removeClass('unlocking').addClass('unlocked');
-          }
-      });
       $('.designed_by_spot').unbind('mouseenter.show-explain').bind('mouseenter.show-explain', function(e) {
         var self = $(this);
         self.data('popover-timeout', setTimeout(function() { showDesignedBySpot(self); }, 500));
@@ -212,6 +204,24 @@
       go.ClaimForm.init({
         form: '#claimform', 
         dialog: '#claimdialog'
+      });
+    },
+    site_membership_applications: function() {
+      go.Lock.init({ 
+          lock: $('#applicationform').find('#application_lock'),
+          invitationCode: $('#applicationform').find('#invite_code'),
+          unlock: $('#applicationform').find('.unlock'),
+          onUnlock: function(code) {
+            $.logger.debug(this);
+            $.logger.debug($(this).find('.application'));
+            if ($(this).find('.application').length > 0) {
+              $(this).removeClass('unlocking').addClass('unlocked');              
+            } else {
+              var form = $('#registered_user_invite_form');
+              form.find('#registered_user_invite_code').val(code);
+              form.submit();
+            }
+          }
       });
     },
     site_memberships_new: function() {

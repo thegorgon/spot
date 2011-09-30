@@ -13,9 +13,6 @@ class Site::MobileAppController < Site::BaseController
     set_session_invite InvitationCode.device_code.try(:code)
     set_session_promo PromoCode.device_code.try(:code)
 
-    warden.set_user User.select("users.*").
-                      joins("INNER JOIN devices ON devices.user_id = users.id LEFT JOIN password_accounts ON password_accounts.user_id = users.id").
-                      where("password_accounts.id IS NULL").first
     if params[:dest] == "about"
       redirect_to mobile_siteify(membership_about_path)
     elsif params[:dest] == "login"

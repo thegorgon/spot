@@ -1,9 +1,10 @@
 class Site::MembershipsController < Site::BaseController
+  layout 'oreo'
   before_filter :require_user
-  before_filter :require_invitation
+  before_filter :update_users_city_to_current, :only => [:new]
+  before_filter :require_user_preparations, :only => [:new, :create]
   before_filter :require_no_membership, :except => [:destroy, :thanks]
   before_filter :require_membership, :only => [:destroy, :thanks]
-  layout 'oreo'
   
   def new
     @payment ||= PaymentForm.new(:user => current_user, :plan => params[:plan] || Subscription::PLANS.keys.first)
@@ -48,12 +49,15 @@ class Site::MembershipsController < Site::BaseController
   
   private
   
-  def require_invitation
-    unless session_invite
+  def require_user_preparations
+    if session_invite.nil?
       msg = "Spot is currently available by invitation only. "
       msg << (invite_request.present?? "We're currently processing your invitation" : "You may <a href=\"#{root_path}\">request an invitation.</a>")
-      flash[:error] = msg
+      flash[:notice] = msg
       redirect_to current_city ? city_path(current_city) : new_city_path
+    elsif !current_user.try(:ready_for_membership?)
+      flash[:notice] = "First we need to know a little bit more about you."
+      redirect_to new_application_path      
     end
   end
   

@@ -79,6 +79,10 @@ class PasswordAccount < ActiveRecord::Base
   def override_current_password!
     @current_password_check_override = true
   end
+  
+  def user_synced!
+    @user_synced = true
+  end
     
   private
   
@@ -95,11 +99,14 @@ class PasswordAccount < ActiveRecord::Base
   end
   
   def update_user
-    self.user ||= User.find_by_email(login)
-    self.user ||= User.new
-    self.user.email = login if login.present? && user.email.blank?
-    self.user.first_name = first_name if first_name.present? && user.first_name.blank?
-    self.user.last_name = last_name if last_name.present? && user.last_name.blank?
-    errors.add(:base, "User is invalid") if user.changed? && !user.save
+    unless @user_synced    
+      self.user ||= User.find_by_email(login)
+      self.user ||= User.new
+      user.email = login if login.present? && user.email.blank?
+      user.first_name = first_name if first_name.present? && user.first_name.blank?
+      user.last_name = last_name if last_name.present? && user.last_name.blank?
+      user.save if user.changed?
+    end
+    @user_synced = false
   end
 end
