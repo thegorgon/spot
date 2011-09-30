@@ -4,6 +4,9 @@
   %li.section.clearfix.fb
     =form_for :credentials, :url => session_path, :html => { :id => "fbconnect_form" } do |f|
       =f.hidden_field :key, :value => nonce.digested
+      -if @logged_in_user
+        -@logged_in_user.devices.to_a.each do |device|
+          =hidden_field_tag "credentials[devices][][id]", device.udid
       =f.fields_for :facebook do |g|
         =g.hidden_field :access_token, :rel => "access_token"
         =g.hidden_field :facebook_id, :rel => "uid"
@@ -26,6 +29,9 @@
     .form_container
       =spot_form_for :credentials, :url => session_path, :html => { :class => conditionally('selected', mode == :login), :id => "login_form" } do |f|
         =f.hidden_field :key, :value => nonce.digested
+        -if @logged_in_user
+          -@logged_in_user.devices.to_a.each do |device|
+            =hidden_field_tag "credentials[devices][][id]", device.udid
         =f.fields_for :password do |p|
           =p.email_field :login, :placeholder => "email", "data-validate-url" => existence_email_path, :required => true
           =p.password_field :password, :placeholder => "password", :required => true

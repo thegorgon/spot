@@ -102,10 +102,10 @@ class User < ActiveRecord::Base
     WishlistItem.where(:id => new_keys.collect { |key| new_items[key].id }).update_all(:user_id => id) if new_keys.length > 0
     # Delete duplicates
     WishlistItem.where(:id => intersecting_keys.collect { |key| new_items[key].id }).delete_all if intersecting_keys.length > 0
-    ActivityItem.where(:actor_id => new_user.id).update_all(:user_id => id)
+    ActivityItem.where(:actor_id => new_user.id).update_all(:actor_id => id)
     PromotionCode.where(:owner_id => new_user.id).update_all(:owner_id => id)
     [Device, PlaceNote, PasswordAccount, FacebookAccount, Subscription, CreditCard, Membership].each do |klass|
-      model.where(:user_id => new_user.id).update_all(:user_id => id)
+      klass.where(:user_id => new_user.id).update_all(:user_id => id)
     end
     new_user.destroy
     self
@@ -212,7 +212,7 @@ class User < ActiveRecord::Base
   
   def cleanup
     codes.update_all(:owner_id => nil)
-    email_subscriptions.destroy
+    email_subscriptions.try(:destroy)
   end
   
   def save_associations

@@ -12,6 +12,10 @@ class PromoCode < ActiveRecord::Base
     available.find_by_code(code)
   end
   
+  def self.device_code
+    nil
+  end
+  
   def used!
     self.class.increment_counter(:use_count, id)
     reload

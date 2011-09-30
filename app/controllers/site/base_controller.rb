@@ -6,10 +6,23 @@ class Site::BaseController < ApplicationController
     
   protected 
   
+  #Mobile App Transfers
+  def in_mobile_app!
+    session[:in_mobile_app] = 1
+  end
+  
+  def left_mobile_app!
+    session[:in_mobile_app] = nil
+  end
+  
+  def in_mobile_app?
+    session[:in_mobile_app]
+  end
+  
   #Stashing city
   def current_city
     unless @city
-      city_id = current_user.try(:city_id)  || invite_request.try(:city_id) || session[:city_id] 
+      city_id = current_user.try(:city_id) || invite_request.try(:city_id) || session[:city_id] 
       @city = City.find_by_id(city_id)
     end
     @city
@@ -29,15 +42,36 @@ class Site::BaseController < ApplicationController
   end
   helper_method :invite_request
   
+  def set_session_invite(code)
+    @session_invite = InvitationCode.valid_code(code)
+    session[:invite_code] = @session_invite.try(:code)
+    session[:invalid_invite] = true if code && @session_invite.nil?
+    set_session_promo(code) if @session_invite
+    @session_invite
+  end
+  
+  def set_session_promo(code)
+    @session_promo = PromoCode.valid_code(code)
+    session[:promo_code] = @session_promo.try(:code)
+    @session_promo
+  end
+  
   def session_invite
-    @session_invite ||= (session[:invite_code] && InvitationCode.find_by_code(session[:invite_code]))
+    @session_invite ||= (session[:invite_code] && InvitationCode.valid_code(session[:invite_code]))
+    @session_invite ||= invite_request.invite if invite_request.try(:invite_sent?)
+    @session_invite
   end
   helper_method :session_invite
-  
+    
   def session_promo
-    @session_promo ||= (session[:promo_code] && PromoCode.find_by_code(session[:promo_code]))
+    @session_promo ||= (session[:promo_code] && PromoCode.valid_code(session[:promo_code]))
   end
   helper_method :session_promo
+  
+  def invalid_invite?
+    session[:invalid_invite]
+  end
+  helper_method :invalid_invite?
   
   # Authentication
   def require_no_user

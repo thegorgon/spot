@@ -10,8 +10,8 @@ class Site::TrackingController < Site::BaseController
   end
   
   def clear
-    session[:invite_code] = nil
-    session[:promo_code] = nil
+    set_session_invite nil
+    set_session_promo nil
     session[:acquisition_source_id] = nil
     session[:original_acquisition_source_id] = nil
     session[:seen_city_intro] = nil
@@ -20,11 +20,8 @@ class Site::TrackingController < Site::BaseController
   end
   
   def portal
-    session[:invite_code] = session[:promo_code] = nil
-    if params[:mc] && mc = MembershipCode.find_by_code(params[:mc])
-      session[:invite_code] = mc.invite.try(:code)
-      session[:promo_code] = mc.promo.try(:code)
-    end
+    set_session_invite params[:mc]
+    set_session_promo params[:mc]
     
     if params[:ir] && ir = InviteRequest.find_by_id(params[:ir])
       set_invite_request(ir)
@@ -45,5 +42,5 @@ class Site::TrackingController < Site::BaseController
     destination ||= city_path(@city) if @city
     destination ||= root_path
     redirect_to destination
-  end
+  end  
 end

@@ -17,12 +17,16 @@ class Device < ActiveRecord::Base
   end
   
   def self.user_associate(user, credentials)
-    device_credentials = credentials[:device] if credentials
-    if device_credentials && device_credentials[:id]
-      device = Device.find_or_initialize_by_udid(device_credentials[:id])
+    if credentials
+      device_credentials = credentials[:devices]
+      device_credentials ||= [credentials[:device]] if credentials[:device]
+    end
+    
+    device_credentials.to_a.each do |device|
+      device = Device.find_or_initialize_by_udid(device[:id]) if device[:id].present?
       device.bind_to!(user) if device
     end
-    device
+    true
   end
 
   def bind_to!(new_user)

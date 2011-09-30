@@ -5,11 +5,19 @@ class FacebookAccount < ActiveRecord::Base
   validates :email, :format => EMAIL_REGEX
   after_validation :update_user
     
-  def self.authenticate(params)
+  def self.authenticate(params, user=nil)
     if params && params[:facebook_id] && params[:access_token]
       account = find_or_initialize_by_facebook_id(params[:facebook_id])
       account.access_token = params[:access_token]
-      account.sync! ? account : nil
+      if account.sync!
+        if user && account.user && !account.user.new_record? && account.user != user
+          account.user.merge_with!(user)
+        elsif user
+          account.user = user
+        end
+      else
+        nil
+      end
     end
   end
   

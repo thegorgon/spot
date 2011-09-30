@@ -1,7 +1,7 @@
 .about_membership {
   padding: 5px;
   ul {
-    margin: 0 10px;
+    margin: 0 5px;
     li {
       font-size: 12px;
       margin: 8px 0;
@@ -15,7 +15,9 @@
   }
   h1 {
     font-size: 18px;
-    margin: 0 0 0 10px;
+    width: 280px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .describe {
     padding: 0 5px 10px;
@@ -47,8 +49,8 @@
   }
 }
 #site_memberships_thanks {
-  text-align: center;
   .main {
+    text-align: center;
     padding-bottom: 0px;
   }
   .btnbrowse {

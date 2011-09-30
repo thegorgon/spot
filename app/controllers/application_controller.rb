@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :stash_thread_parameters
   before_filter :localize
+  before_filter :log_session
   before_filter :reject_certain_agents
   helper :application, :place
   
@@ -12,6 +13,20 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   
   private
+  
+  #Mobile App Transfers
+  def in_mobile_app!
+    session[:in_mobile_app] = true
+  end
+  
+  def left_mobile_app!
+    session[:in_mobile_app] = false
+  end
+  
+  def in_mobile_app?
+    session[:in_mobile_app]
+  end
+  helper_method :in_mobile_app?
   
   # Traffic Management
   def traffic_source
@@ -115,7 +130,7 @@ class ApplicationController < ActionController::Base
   end
 
   def mobile_siteify(path)
-    request.protocol + "m." + request.host_with_port.gsub(/^www\./, '') + path                
+    request.protocol + "m." + request.host_with_port.gsub(/^www\./, '').gsub(/^m\./, '') + path                
   end
  
   def redirect_to_full_site
@@ -177,9 +192,11 @@ class ApplicationController < ActionController::Base
   def with_flash_maintenance
     old_flash = flash
     return_to = session[:return_to]
+    was_in_mobile_app = in_mobile_app?
     yield
     flash = old_flash
     session[:return_to] = return_to
+    in_mobile_app! if was_in_mobile_app
   end
   
   def logged_in?

@@ -32,8 +32,8 @@
     %p
       We're very sorry that you decided to cancel your membership. 
       If you'd like to continue receiving Spot Membership experiences, please
-    %p="#{link_to "renew membership", new_membership_path, :class => "btnorg300x41 tf"}".html_safe
+    %p="#{link_to "renew membership", new_membership_path, :class => "btnmem tf"}".html_safe
   -else
     .applyline
       Events are only open to Spot Members :
-      =link_to "become a member", new_application_path, :class => "btnmembership btnorg300x41 tf"
+      =link_to "become a member", new_application_path, :class => "btnmembership btnmem tf"

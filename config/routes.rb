@@ -60,9 +60,15 @@ Spot::Application.routes.draw do
       get "privacy", :action => "privacy"
       get "tos", :action => "tos"
       get "press", :action => "press"
-      get "getspot", :action => "getspot"
       get "membership/about", :action => "about_membership", :as => "membership_about"
     end
+    
+    controller "mobile_app" do
+      get "getspot", :action => "download"
+      get "mobile/entrance", :action => "entrance", :as => "from_mobile_app"
+      get "mobile/exit", :action => "exit", :as => "to_mobile_app"
+    end
+    
     controller "tracking" do
       get "/tracking/clear", :action => "clear", :as => "clear_tracking"
       get "/in", :action => "portal", :as => "portal"

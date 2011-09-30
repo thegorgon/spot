@@ -43,6 +43,7 @@ html {
     display: none;
     width: 150px;
     a {
+      text-align: left;
       display: block;
       color: #333;
       background: #fff;
@@ -56,26 +57,45 @@ html {
         background: #ff8419;
       }
     }
-  }
+  }  
   .oreo {
+    &.in_mobile_app {
+      header {
+        .content {
+          text-align: center;
+          height: 40px;
+        }
+        .logo {
+          padding: 8px 0 0;
+          display: block;
+          position: static;
+        }
+        .morenav {
+          display: none;
+        }
+      }
+    }
+    
     #bg {
       @include opacity(0.5);
     }
     #invite_popover {
       padding: 20px;
       height: 85px;
-      width: 300px;
+      width: 200px;
       input {
-        width: 200px;
+        width: 100px;
       }
       .member_invite {
         margin: 0;
         padding: 0;
-        width: 300px;
+        width: 200px;
       }
     }
     .member_invite {
-      width: 315px;
+      font-size: 12px;
+      width: 280px;
+      margin: 0 auto;
       h2 { 
         margin: 0 0 10px 0;
       }
@@ -83,7 +103,7 @@ html {
         margin: 10px 0 0 0;
       }
       input.text {
-        width: 200px;
+        width: 180px;
         font-size: 12px;
       }
     }
@@ -114,7 +134,7 @@ html {
         @include btnbnw77x28;
         position: absolute;
         right: 15px;
-        top: 5px;
+        top: 6px;
       }
     }
     hr {

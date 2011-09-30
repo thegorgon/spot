@@ -36,8 +36,23 @@ class PasswordAccount < ActiveRecord::Base
     digest
   end
   
-  def self.register(params)
-    authenticate(params) || create(params)
+  def self.register(params, user=nil)
+    account = authenticate(params)
+    if account && user && account.user && !account.user.new_record? && account.user != user
+      account.user.merge_with!(user)
+    elsif account && user
+      account.user = user
+      account.save
+    elsif user
+      user.attributes = params.delete(:user_attributes)
+      user.save if user.changed?
+      account = new(params)
+      account.user = user
+      account.save
+    else
+      account = create(params)
+    end
+    account
   end
   
   def email=(value)
@@ -81,9 +96,9 @@ class PasswordAccount < ActiveRecord::Base
   def update_user
     self.user ||= User.find_by_email(login)
     self.user ||= User.new
-    user.email = login if login.present? && user.email.blank?
-    user.first_name = first_name if first_name.present? && user.first_name.blank?
-    user.last_name = last_name if last_name.present? && user.last_name.blank?
+    self.user.email = login if login.present? && user.email.blank?
+    self.user.first_name = first_name if first_name.present? && user.first_name.blank?
+    self.user.last_name = last_name if last_name.present? && user.last_name.blank?
     errors.add(:base, "User is invalid") if user.changed? && !user.save
   end
 end

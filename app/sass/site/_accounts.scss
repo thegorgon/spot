@@ -131,6 +131,11 @@
         }
       }
     }
+    .events {
+      .btnmem {
+        @include btnorg300x41;
+      }
+    }
     .codes {
       border: 1px solid #ddd;
       @include border_radius(10px);

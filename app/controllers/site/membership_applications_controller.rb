@@ -3,13 +3,11 @@ class Site::MembershipApplicationsController < Site::BaseController
   layout 'oreo'
   
   def create
-    @account = PasswordAccount.register(params[:password_account])
+    @account = PasswordAccount.register(params[:password_account], current_user)
     if @account.save
       warden.set_user @account.user
       record_acquisition_event("signup")
-      @invite_code.claimed!
-      session[:invite_code] = @invite_code
-      session[:promo_code] = @invite_code.promo_code.code if @invite_code.promo_code
+      session_invite.claimed!
       if current_city.subscriptions_available?
         set_invite_request nil
         record_acquisition_event("applied")
@@ -24,13 +22,10 @@ class Site::MembershipApplicationsController < Site::BaseController
   end
 
   def new
-    session[:invite_code] = param_code.code if params[:r] && param_code = InvitationCode.valid_code(params[:r])
-    @referrer = InvitationCode.valid_code(session[:invite_code])
-    @invalid = InvitationCode.expended.find_by_code(session[:invite_code]) if @referrer.nil?
-    @referrer ||= invite_request.invite if invite_request.try(:invite_sent?)
-    if (@referrer && current_user)
-      @referrer.try(:claimed!)
-      session[:promo_code] = @referrer.promo_code.code if @referrer.promo_code
+    set_session_invite(params[:r]) if params[:r]
+    if (session_invite && current_user.try(:has_account?))
+      session_invite.claimed!
+      session[:promo_code] = session_invite.promo_code.code if session_invite.promo_code
       redirect_to new_membership_path
     else
       render :action => "new"
@@ -40,9 +35,8 @@ class Site::MembershipApplicationsController < Site::BaseController
   private
   
   def require_invite_code
-    code = params[:invite_code] || session[:invite_code]
-    @invite_code = InvitationCode.valid_code(code)
-    unless @invite_code
+    set_session_invite(params[:invite_code]) if params[:invite_code]
+    unless session_invite
       flash[:error] = "Spot is currently available by invitation only. You may <a href=\"#{root_path}\">request an invitation.</a>"
       redirect_to new_application_path 
     end

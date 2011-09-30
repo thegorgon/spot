@@ -273,7 +273,7 @@
             if (popoverable.removeClass) { popoverable.removeClass('hidden'); }
             popover = $.popover.init(title, popoverable);
             trigger.attr('data-popover-id', popover.attr('id'));
-            trigger.unbind('click, touchstart').bind('click, touchstart', function(e) {
+            trigger.unbind('.popovershow').bind('click.popovershow touchstart.popovershow', function(e) {
               e.preventDefault();
               e.stopPropagation();
               if ($.popover.visible(trigger, popover)) {
@@ -295,7 +295,7 @@
         $(window).unbind('resize.popover').bind('resize.popover', function() { $.popover.position(trigger, popover); });
         $(window).unbind('scroll.popover').bind('scroll.popover', function() { $.popover.position(trigger, popover); });
         setTimeout(function() { // Otherwise this event might count
-          $('body').unbind('.hidepopover').bind('click.hidepopover, touchstart.hidepopover', function(e) {
+          $('body').unbind('.hidepopover').bind('click.hidepopover touchstart.hidepopover', function(e) {
             if ($(e.target).is(':not(.popover, .popover *)')) { $.popover.hide(); }
           });
         }, 1);

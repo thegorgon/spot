@@ -7,10 +7,10 @@ class Site::AccountsController < Site::BaseController
   end
     
   def create
-    @account = PasswordAccount.register(params[:password_account])
+    @account = PasswordAccount.register(params[:password_account], current_user)
     if @account.save
       warden.set_user @account.user
-      @account.user.invite_request.mark_sent! if session[:invite_code]
+      @account.user.invite_request.mark_sent! if session_invite
       record_acquisition_event("signup")
       redirect_back_or_default root_path
     else

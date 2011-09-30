@@ -13,6 +13,10 @@ class InvitationCode < ActiveRecord::Base
     invites_remaining.find_by_code(code)
   end
   
+  def self.device_code
+    find_or_create_by_code("DEVICE33")
+  end
+  
   def promo_code
     PromoCode.valid_code(code)
   end

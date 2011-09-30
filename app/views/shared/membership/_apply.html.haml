@@ -1,6 +1,6 @@
--referrer ||= invite_request.try(:invite)
--unlocked = referrer.present?
--invited = referrer && (current_city.nil? || current_city.subscriptions_available?)
+-unlocked = session_invite.present?
+-invited = session_invite && (current_city.nil? || current_city.subscriptions_available?)
+
 -if invited
   %h1.tf
     You're invited.
@@ -14,9 +14,9 @@
 -@account ||= current_user.try(:password_account) || PasswordAccount.new(:user => current_user)
 
 =spot_form_for @account, :url => application_path, :display => "light inlinelabels#{conditionally(" unlocked", unlocked)}#{conditionally(" applying", current_city.try(:at_capacity?))}", :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
-  =hidden_field_tag :invite_code, referrer.try(:code)
+  =hidden_field_tag :invite_code, session_invite.try(:code)
   #invitecodesection.invitecode.step
-    -if @invalid
+    -if invalid_invite?
       %h1.tf.empty Sorry, there are no more invitations left on that code
     .lock
       .shackle
@@ -24,7 +24,7 @@
     %li.question.tf=f.label :lock, "Spot Membership is currently available by invitation only"
     .inputs
       =f.li_wrap "lock", "tet_field" do
-        =text_field_tag :lock, referrer.try(:code), :placeholder => "invitation code", :formnovalidate => true, :class => "text code", :autocomplete => "off", :id => "application_lock"
+        =text_field_tag :lock, session_invite.try(:code), :placeholder => "invitation code", :formnovalidate => true, :class => "text code", :autocomplete => "off", :id => "application_lock"
         
       =link_to "Unlock", "#", :class => "btnorg77x28 unlock"
     .vouched

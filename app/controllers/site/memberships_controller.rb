@@ -49,11 +49,11 @@ class Site::MembershipsController < Site::BaseController
   private
   
   def require_invitation
-    unless invite_request.try(:invite_sent?)
+    unless session_invite
       msg = "Spot is currently available by invitation only. "
       msg << (invite_request.present?? "We're currently processing your invitation" : "You may <a href=\"#{root_path}\">request an invitation.</a>")
       flash[:error] = msg
-      redirect_to invite_request.city.present?? city_path(invite_request.city) : new_city_path
+      redirect_to current_city ? city_path(current_city) : new_city_path
     end
   end
   

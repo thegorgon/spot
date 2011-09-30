@@ -14,7 +14,7 @@
       // Initialize Apply Form Lock
       go.Lock.init({ 
           lock: $('#applicationform').find('#application_lock'),
-          invitationCode: $('#applicationform').find('#application_invitation_code'),
+          invitationCode: $('#applicationform').find('#invite_code'),
           unlock: $('#applicationform').find('.unlock'),
           onUnlock: function(code) {
             $(this).removeClass('unlocking').addClass('unlocked');
@@ -130,7 +130,7 @@
       // Initialize Invitation Lock
       go.Lock.init({ 
           lock: $('#invitation_code'),
-          invitationCode: $('#invitation_code_value'),
+          invitationCode: $('#invite_code'),
           unlock: $('#invite_form').find('.unlock'),
           onUnlock: function(code) {
             initMap(function() {

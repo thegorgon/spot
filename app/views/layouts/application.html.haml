@@ -20,7 +20,7 @@
     = yield :head
     -if Rails.env.production?
       = google_analytics_tag(:account_id => 'UA-21193799-1')
-  %body{:id => page_namespace, :class => "#{module_names} #{controller_name}"}
+  %body{:id => page_namespace, :class => "#{module_names} #{controller_name}#{conditionally(" in_mobile_app", in_mobile_app?)}"}
     #bg.preload_bg
       =yield :bg
     #page
