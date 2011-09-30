@@ -5,7 +5,7 @@
     .content
       =img_link_to "logos/spotwhite120x90.png", root_path(:stay => 1), :size => "40x30", :class => "logo"
       -if mobile_request?
-        =link_to "menu", '#', 'data-popover' => '#sitenav', 'data-popover-orient' => 'vertical', "data-popover-pos" => "left,bottom", :class => "morenav tf"
+        =link_to "&nbsp;".html_safe, '#', 'data-popover' => '#sitenav', 'data-popover-orient' => 'vertical', "data-popover-pos" => "left,bottom", :class => "morenav tf"
       %nav#sitenav.clearfix
         =link_to "home", root_path, :class => "first"
         =link_to "membership", membership_about_path, :class => "btnmemabout"

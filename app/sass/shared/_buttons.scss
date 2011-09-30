@@ -257,6 +257,15 @@ button.link {
 .btnbnw77x28, a.btnbnw77x28 {
   @include btnblack77x28;
 }
+@mixin btnblacknav33x29 {
+  @include bgbutton('blacknav33x29', 33px, 29px);
+  @include blackbtn;
+  font-size: 14px;
+  line-height: 30px;  
+}
+.btnblacknav33x29, a.btnblacknav33x29 {
+  @include btnblacknav33x29;
+}
 @mixin btnorgpill {
   display: block;
   @include border_radius(5px);
