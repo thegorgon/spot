@@ -67,7 +67,7 @@
         {slide: '/images/assets/slideshow/slide5.jpg', size: '2292x1524', title: "Free Bonus Cupcake at Mission Mini's", gravity: '0.5x0.5'}
       ];
       
-      if ($.mobile) {
+      if (go.env('mobile')) {
         $.each(slides, function(i) {
           this.slide = this.slide.replace(/\.jpg/i, '_mobile.jpg');
         });
