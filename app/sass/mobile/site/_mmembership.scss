@@ -36,6 +36,9 @@
   .pricing {
     padding: 10px 0 0 0;
     border-top: 1px solid #fff;
+    a {
+      text-decoration: none;
+    }
   }
   .button {
     @include btnorg280x41;

@@ -32,7 +32,7 @@
         -Subscription::PLANS.keys.each_with_index do |name, i|
           -plan = Subscription::PLANS[name]
           .launchpricing
-          .paymentoption{:class => "#{name} #{first_or_last(Subscription::PLANS.keys, i)}"}
+          %a.paymentoption{:class => "#{name} #{first_or_last(Subscription::PLANS.keys, i)}", :href => new_application_path(:plan => name)}
             .mval.tf 
               %span.currency $
               =plan.launch_cost

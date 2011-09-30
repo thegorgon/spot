@@ -15,6 +15,8 @@
 
 =spot_form_for @account, :url => application_path, :display => "light inlinelabels#{conditionally(" unlocked", unlocked)}#{conditionally(" applying", current_city.try(:at_capacity?))}", :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
   =hidden_field_tag :invite_code, session_invite.try(:code)
+  -if params[:plan]
+    =hidden_field_tag :plan, params[:plan]
   #invitecodesection.invitecode.step
     -if invalid_invite?
       %h1.tf.empty Sorry, there are no more invitations left on that code

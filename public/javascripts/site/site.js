@@ -130,7 +130,7 @@
       // Initialize Invitation Lock
       go.Lock.init({ 
           lock: $('#invitation_code'),
-          invitationCode: $('#invite_code'),
+          invitationCode: $('#invitation_code_value'),
           unlock: $('#invite_form').find('.unlock'),
           onUnlock: function(code) {
             initMap(function() {

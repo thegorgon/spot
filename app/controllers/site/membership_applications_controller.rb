@@ -12,7 +12,9 @@ class Site::MembershipApplicationsController < Site::BaseController
       if current_city.subscriptions_available?
         set_invite_request nil
         record_acquisition_event("applied")
-        redirect_to new_membership_path
+        redirect_params = {}
+        redirect_params[:plan] = params[:plan] if params[:plan]
+        redirect_to new_membership_path(redirect_params)
       else
         set_invite_request current_user.invite_request!
         redirect_to city_path(current_user.city)

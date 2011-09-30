@@ -43,6 +43,7 @@ class Site::BaseController < ApplicationController
   helper_method :invite_request
   
   def set_session_invite(code)
+    session[:invalid_invite] = false
     @session_invite = InvitationCode.valid_code(code)
     session[:invite_code] = @session_invite.try(:code)
     session[:invalid_invite] = true if code && @session_invite.nil?
@@ -69,7 +70,7 @@ class Site::BaseController < ApplicationController
   helper_method :session_promo
   
   def invalid_invite?
-    session[:invalid_invite]
+    session_invite.nil? && session[:invalid_invite]
   end
   helper_method :invalid_invite?
   
