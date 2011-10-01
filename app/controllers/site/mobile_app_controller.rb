@@ -17,6 +17,8 @@ class Site::MobileAppController < Site::BaseController
       redirect_to mobile_siteify(membership_about_path)
     elsif params[:dest] == "login"
       redirect_to mobile_siteify(new_session_path)
+    elsif params[:dest] == "membership"
+      redirect_to mobile_siteify(account_path)
     else
       redirect_to mobile_siteify(new_application_path)
     end
