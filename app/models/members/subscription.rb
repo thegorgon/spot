@@ -94,5 +94,17 @@ class Subscription < ActiveRecord::Base
       update_attribute(:cancelled_at, Time.now)
     end
   end
+  
+  def as_json(*args)
+    {
+      :_type => self.class.to_s,
+      :cancelled_at => cancelled_at,
+      :next_billing_date => next_billing_date,
+      :next_bill_amount => next_bill_amount,
+      :first_billing_date => first_billing_date,
+      :billing_day_of_month => billing_day_of_month,
+      :credit_card => credit_card
+    }
+  end
     
 end

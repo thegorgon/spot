@@ -35,6 +35,7 @@ class PromoCode < ActiveRecord::Base
   
   def as_json(*args)
     { 
+      :_type => self.class.to_s,
       :id => id,
       :name => name,
       :description => description,

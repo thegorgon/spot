@@ -71,6 +71,18 @@ class CreditCard < ActiveRecord::Base
     Braintree::CreditCard.delete(token)
   end
     
+  def as_json(*args)
+    {
+      :_type => self.class.to_s,
+      :cardholder_name => cardholder_name,
+      :card_type => card_type,
+      :last_4 => last_4,
+      :expiration_month => expiration_month,
+      :expiration_year => expiration_year,
+      :obfuscated_number => obfuscated_number
+    }
+  end
+  
   private
   
   def valid_tr_update

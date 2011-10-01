@@ -210,6 +210,7 @@ class User < ActiveRecord::Base
         :city_id => city_id,
         :other_city => email_subscriptions.try(:other_city),
         :email => email,
+        :has_website_account => has_account?,
         :requested_notifications => requested_notifications
       )
     end

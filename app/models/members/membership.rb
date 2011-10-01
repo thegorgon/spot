@@ -38,7 +38,8 @@ class Membership < ActiveRecord::Base
     {
       :_type => self.class.to_s,
       :starts_at => starts_at,
-      :expires_at => expires_at
+      :expires_at => expires_at,
+      :payment_method => payment_method
     }
   end
   
