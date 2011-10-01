@@ -75,7 +75,7 @@ namespace :db do
     niels = PasswordAccount.create(:first_name => "Niels", :last_name => "Gabel", :login => "ngabel@oogalabs.com", :password => "ngabel")
     julia = PasswordAccount.create(:first_name => "Julia", :last_name => "Graham", :login => "jgraham@oogalabs.com", :password => "jgraham")
     User.where(:id => [niels.user_id, julia.user_id]).update_all(:city_id => sf.id)
-    payform = PaymentForm.new(:user => julia.user, :params => {:payment_method_id => pc2.id, :payment_method_type => "PromoCode"})    
+    payform = PaymentForm.new(:user => julia.user.reload, :params => {:payment_method_id => pc2.id, :payment_method_type => "PromoCode"})    
     payform.save
   end
   
