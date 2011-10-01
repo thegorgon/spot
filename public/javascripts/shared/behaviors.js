@@ -311,7 +311,7 @@
         $(this).addClass('editing').parents('ul.form').addClass('editing');
       });
       $.stretcher.init();
-      fetch(".chzn-select").chosen();
+      if (!go.env('mobile')) { fetch(".chzn-select").chosen(); }
     }
   });
 }(Spot));
