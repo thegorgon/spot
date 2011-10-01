@@ -212,8 +212,6 @@
           invitationCode: $('#applicationform').find('#invite_code'),
           unlock: $('#applicationform').find('.unlock'),
           onUnlock: function(code) {
-            $.logger.debug(this);
-            $.logger.debug($(this).find('.application'));
             if ($(this).find('.application').length > 0) {
               $(this).removeClass('unlocking').addClass('unlocked');              
             } else {

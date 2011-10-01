@@ -5,7 +5,7 @@ namespace :db do
                   "members"    => "invitation_codes promotion_codes membership_applications users facebook_accounts password_accounts memberships subscriptions credit_cards",
                   "app"        => "wishlist_items users facebook_accounts password_accounts devices place_notes activity_items",
                   "promotions" => "businesses business_accounts promotion_templates promotion_events promotion_codes",
-                  "accounts"   => "devices place_notes password_accounts facebook_accounts subscriptions credit_cards memberships activity_items wishlist_items users invitation_codes email_subscriptions" }
+                  "accounts"   => "devices place_notes password_accounts facebook_accounts subscriptions credit_cards memberships activity_items wishlist_items users invitation_codes promo_codes email_subscriptions" }
 
   task(:sync => :environment) do
     # Constants
@@ -60,6 +60,30 @@ namespace :db do
     if @preset == "accounts"
       PromotionCode.issued.map { |pc| pc.unissue! }
     end
+  end
+  
+  task(:test_account_data => :environment) do
+    raise Exception.new("UM...NO!") if Rails.env.production?
+    InviteRequest::CODES.each { |code| InvitationCode.find_or_create_by_code(code) }
+    pc1 = PromoCode.create(:code => "PAYPROMO", :duration => 6, :acts_as_payment => true, :name => "test", :description => "6 month act as payment")
+    pc2 = PromoCode.create(:code => "PROMO", :duration => 3, :acts_as_payment => false, :name => "test", :description => "3 month doesnt as payment")
+    Device.create(:udid => "74b0a4f90ca69c7038a9f445d1b1913a49a5253a", :app_version => "93", :os_id => "iOS 4.3.5", :platform => "iPhone") #(iphone bitch)
+    Device.create(:udid => "c06b167458298cdb1171247db5bd619b6322d289", :app_version => "93", :os_id => "iOS 5.0", :platform => "iPhone") #(niels)
+    Device.create(:udid => "34183501-EA62-5937-B5EC-5C65B43F9809", :app_version => "93", :os_id => "iOS 4.3.2", :platform => "iPhone") #(iphone bitch)
+    sf = City.find_by_slug("sf")
+    jesse = PasswordAccount.create(:first_name => "Jesse", :last_name => "Reiss", :login => "jessereiss@gmail.com", :password => "jreiss")
+    niels = PasswordAccount.create(:first_name => "Niels", :last_name => "Gabel", :login => "ngabel@oogalabs.com", :password => "ngabel")
+    julia = PasswordAccount.create(:first_name => "Julia", :last_name => "Graham", :login => "jgraham@oogalabs.com", :password => "jgraham")
+    User.where(:id => [niels.user_id, julia.user_id]).update_all(:city_id => sf.id)
+    payform = PaymentForm.new(:user => julia.user, :params => {:payment_method_id => pc2.id, :payment_method_type => "PromoCode"})    
+    payform.save
+  end
+  
+  task(:account_testable => :environment) do
+    raise Exception.new("UM...NO!") if Rails.env.production?
+    ENV["PRESET"] = "accounts"
+    Rake::Task["db:clear"].invoke
+    Rake::Task["db:test_account_data"].invoke
   end
   
   task(:reset => :environment) do

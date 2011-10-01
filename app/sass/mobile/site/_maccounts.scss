@@ -42,7 +42,7 @@
       margin: 20px 0 0 0;
     }
     .logout {
-      @include btngrypill;
+      @include mbtngrypill;
       width: 280px;
       margin: 20px auto 10px;
       height: 30px;
@@ -79,7 +79,7 @@
         margin-top: -15px;
       }
       .ccsave {
-        @include btnorg280x32;
+        @include mbtnorg280x32;
       }
     }
     ul.form {
@@ -109,7 +109,7 @@
       width: 280px;
       margin: 0 auto;
       .btnmem {
-        @include btnorg280x32;
+        @include mbtnorg280x32;
         margin: 10px auto;
       }
     }

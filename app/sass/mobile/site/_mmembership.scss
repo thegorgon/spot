@@ -41,7 +41,7 @@
     }
   }
   .button {
-    @include btnorg280x41;
+    @include mbtnorg280x41;
     margin: 10px auto;
   }
   .paymentoptions {
@@ -57,7 +57,7 @@
     padding-bottom: 0px;
   }
   .btnbrowse {
-    @include btnorg280x32;
+    @include mbtnorg280x32;
     margin: 10px auto;
   }
   .columbus {
@@ -105,7 +105,7 @@
       font-size: 14px;
     }
     .apply, .applying {
-      @include btnorg115x32;
+      @include mbtnorg115x32;
       margin: 10px auto 5px;
     }
     .applying {
@@ -150,7 +150,7 @@
         top: -35px;
       }
       button {
-        @include btnorg280x32;
+        @include mbtnorg280x32;
       }
     }
     &.appliedpromocode {
@@ -172,7 +172,7 @@
       width: 280px;
       margin: 20px auto 0;
       button {
-        @include btnorg280x32;
+        @include mbtnorg280x32;
       }
     }
   }

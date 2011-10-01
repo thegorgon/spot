@@ -99,7 +99,7 @@ class PasswordAccount < ActiveRecord::Base
   end
   
   def update_user
-    unless @user_synced    
+    unless @user_synced
       self.user ||= User.find_by_email(login)
       self.user ||= User.new
       user.email = login if login.present? && user.email.blank?
@@ -108,5 +108,6 @@ class PasswordAccount < ActiveRecord::Base
       user.save if user.changed?
     end
     @user_synced = false
+    true
   end
 end

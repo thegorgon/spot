@@ -28,7 +28,7 @@
         }
       }
       button {
-        @include btnorg200x41;
+        @include mbtnorg200x41;
         margin: 10px auto;
       }
       h2 {
@@ -60,7 +60,7 @@
           @extend hr.light;
         }
         .exploremore {
-          @include btnorg280x32;
+          @include mbtnorg280x32;
           margin: 10px auto;
         }
       }
