@@ -5,7 +5,7 @@ namespace :db do
                   "members"    => "invitation_codes promotion_codes membership_applications users facebook_accounts password_accounts memberships subscriptions credit_cards",
                   "app"        => "wishlist_items users facebook_accounts password_accounts devices place_notes activity_items",
                   "promotions" => "businesses business_accounts promotion_templates promotion_events promotion_codes",
-                  "accounts"   => "devices place_notes password_accounts facebook_accounts subscriptions credit_cards memberships activity_items promotion_codes wishlist_items users invitation_codes email_subscriptions" }
+                  "accounts"   => "devices place_notes password_accounts facebook_accounts subscriptions credit_cards memberships activity_items wishlist_items users invitation_codes email_subscriptions" }
 
   task(:sync => :environment) do
     # Constants
@@ -46,7 +46,9 @@ namespace :db do
   end
   
   task(:clear => :environment) do
-    @tables = PRESETS[ENV['PRESET']] if ENV['PRESET']
+    raise Exception.new("UM...NO!") if Rails.env.production?
+    @preset = ENV['PRESET']
+    @tables = PRESETS[@preset] if @preset
     @tables ||= (ENV['TABLES'] || PRESETS.values.join(' ').split(' ').uniq.join(' '))
     @tables ||= ""
     puts "About to truncate : #{@tables}"
@@ -55,21 +57,22 @@ namespace :db do
       puts "Executing '#{cmd}'"
       ActiveRecord::Base.connection.execute(cmd)
     end
+    if @preset == "accounts"
+      PromotionCode.issued.map { |pc| pc.unissue! }
+    end
   end
   
   task(:reset => :environment) do
-    unless Rails.env.production?
-      Rake::Task["db:drop"].invoke
-      Rake::Task["db:create"].invoke
-      Rake::Task["db:migrate"].invoke
-    end
+    raise Exception.new("UM...NO!") if Rails.env.production?
+    Rake::Task["db:drop"].invoke
+    Rake::Task["db:create"].invoke
+    Rake::Task["db:migrate"].invoke
   end
   
   task(:prime => :environment) do
-    unless Rails.env.production?
-      Rake::Task["db:reset"].invoke
-      ENV['PRESET'] = 'places'
-      Rake::Task["db:sync"].invoke
-    end
+    raise Exception.new("UM...NO!") if Rails.env.production?
+    Rake::Task["db:reset"].invoke
+    ENV['PRESET'] = 'places'
+    Rake::Task["db:sync"].invoke
   end
 end
