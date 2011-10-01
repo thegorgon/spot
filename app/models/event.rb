@@ -15,6 +15,7 @@ class Event
   CONTINUE_SCREEN_VIEW      = 14
   GO_TO_WISHLIST_SELECT     = 15
   GO_TO_ACTIVITY_SELECT     = 16
+  GO_TO_EXPERIENCES_SELECT  = 17
   
   uniq_constants!
   
