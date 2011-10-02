@@ -155,9 +155,9 @@
         options = $('.paymentoptions'),
         selectOption = function(option) {
           if (option.length > 0) {
-            options.find('.paymentoption').removeClass('active');
+            options.find('.paymentoption').removeClass('selected');
             options.addClass('selected');
-            option.addClass('active');
+            option.addClass('selected');
             planId.val(option.attr('data-value'));
             planId.change();
           }
@@ -175,8 +175,8 @@
       form.find('.paymentoption').click(function(e) {
         e.preventDefault();
         var self = $(this);
-        if (self.hasClass('active')) {
-          self.removeClass('active');
+        if (self.hasClass('selected')) {
+          self.removeClass('selected');
           options.removeClass('selected');
           planId.val('');
           planId.change();
@@ -185,7 +185,7 @@
         }
       });
       
-      selectOption(form.find('.paymentoption.active'));
+      selectOption(form.find('.paymentoption.selected'));
       
       form.find('#customer_custom_fields_subscription_plan_id').addValidation({
         name: 'ccinlist',

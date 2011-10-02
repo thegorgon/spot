@@ -41,7 +41,7 @@
           &:hover {
             background-color: #ededed;
           }
-          &:active, &:focus {
+          &:active, &.active, &:focus, &.focus {
             padding: 4px;
             background-position: 154px center;
             background-color: #fff;

@@ -46,11 +46,11 @@ Array.prototype.min = function( ){
       delete options.name;
       for (key in options) {
         if (options.hasOwnProperty(key)) {
-          value = options[key]
+          value = options[key];
           if (value === true || !value) {
             value = value ? "yes" : "no";
           }
-          query.push(key + "=" + value)
+          query.push(key + "=" + value);
         }
       }
       query.push("left=" + left); 
@@ -118,6 +118,23 @@ Array.prototype.min = function( ){
         offset = $this.offset(),
         parent = $this.offsetParent();
       $this.css({width: $this.innerWidth(), height: $this.innerHeight(), position: 'absolute', top: offset.top, left: offset.left});
+    },
+    preBind: function(binding, handler) {
+      var self = this,
+        parts = binding.split('.'),
+        type = parts[0],
+        namespace = parts[1],
+        events = $.extend(true, {}, $(this).data("events"));
+        
+      $(this).unbind(type);
+      $(this).bind(binding, handler);
+
+      if (events && events[type]) {
+        $.each(events[type], function(i) {
+          var binding = this.namespace ? this.type + "." + this.namespace : this.type;          
+          $(self).bind(binding, this.handler);
+        });
+      }
     },
     setClass: function(klass, others) {
       var $this = $(this);

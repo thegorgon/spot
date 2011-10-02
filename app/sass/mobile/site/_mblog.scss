@@ -6,9 +6,6 @@
     margin: 0 10px 20px;
     a {
       color: #666;
-      &:hover {
-        color: #ff8419;
-      }
       text-decoration: none;
     }
   }
@@ -34,7 +31,7 @@
       background: transparent url(/images/icons/commentswhover27x24.png) no-repeat 0 0;
       text-decoration: none;
       margin: 0 auto;
-      &:hover {
+      &.active {
         background-position: 0 -24px;
         color: #fff;
       }
@@ -64,9 +61,6 @@
     }
     a {
       color: #666;
-      &:hover {
-        color: #FF8419;        
-      }
     }
   }
   .photo {
@@ -84,9 +78,6 @@
       a {
         color: #000;
         text-decoration: none;
-        &:hover {
-          color: #ff8419;
-        }
       }
     }
     p {

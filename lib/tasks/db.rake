@@ -79,7 +79,7 @@ namespace :db do
     payform.save
   end
   
-  task(:account_testable => :environment) do
+  task(:account_seed => :environment) do
     raise Exception.new("UM...NO!") if Rails.env.production?
     ENV["PRESET"] = "accounts"
     Rake::Task["db:clear"].invoke

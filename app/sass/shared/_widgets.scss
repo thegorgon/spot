@@ -20,7 +20,7 @@
   }
   a {
     color: #ff8419;
-    &:hover, &.hover {
+    #{$hover} {
       color: #ccc;
     }
   }
@@ -40,11 +40,11 @@ ul.pillbox {
       a {
         background: #FFB473;
         @include gradient_top_down(#eeb96d, #ff8419);
-        &:hover, &.hover {
+        #{$hover} {
           background: #ff8419;
           @include gradient_top_down(#f4b368, #ff8419);
         }
-        &:active, &.active {
+        #{$active} {
           background: #ff8419;
           text-shadow: none;
         }
@@ -80,11 +80,11 @@ ul.pillbox {
       text-decoration: none;
       text-shadow: 0px 1px 0px #fff;
       @include gradient_top_down(#f2f2f2, #A2A2A2);
-      &:hover, &.hover {
+      #{$hover} {
         color: #000;
         @include gradient_top_down(#f2f2f2, #808080);
       }
-      &:active, &.active {
+      #{$active} {
         background: #666666;
         @include box_shadow(#000 0px 1px 5px inset);        
         color: #fff;
@@ -107,7 +107,7 @@ ul.pillbox {
       display: block;
       padding: 10px;
       border-bottom: 1px solid #666;
-      &.ui-state-hover, &:hover, &.hover {
+      &.ui-state-hover, #{$hover} {
         background: #ff8419;
         color: #fff;
       } 
@@ -140,7 +140,7 @@ ul.pillbox {
       margin: 0;
       text-decoration: none;
     }
-    &:hover, &.hover {    
+    #{$hover} {    
       background: #ff8419 url(/images/assets/general/whttrirt11x15.png) no-repeat 95% center;
       .name, .location {
         color: #fff;
@@ -158,7 +158,7 @@ ul.pillbox {
     }
     &.current, &.active {
       background: #fff url(/images/icons/check20x20.png) no-repeat 95% center;
-      &:hover, &.hover {
+      #{$hover} {
         background: #fff url(/images/icons/check20x20.png) no-repeat 95% center;
         .name {
           color: #333;
@@ -248,10 +248,10 @@ ul.pillbox {
     position: absolute;
     top: 10px;
     right: 10px;
-    &:hover, &.hover {
+    #{$hover} {
       background-position: 0px -15px;
     }
-    &:active, &.active {
+    #{$active} {
       background-position: 0px -30px;
     }
   }
@@ -468,7 +468,7 @@ ul.pillbox {
   width: 22px;
   height: 22px;
   background: transparent url(/images/logos/swhitewhover22x22.png) no-repeat 0 0;
-  &:hover, &.hover {
+  #{$hover} {
     background-position: 0 -22px;
   }
 }
@@ -489,11 +489,6 @@ ul.pillbox {
     z-index: 10;
     display: none;
     @include transition(height 0.25s);
-  }
-  &:hover {
-    .disclosure {
-      display: block;
-    }
   }
   .image {
     top: 0;

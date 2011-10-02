@@ -177,6 +177,10 @@ class User < ActiveRecord::Base
   def requested_notifications=(value)
     if email.present?
       email_subscriptions.subscriptions = value
+      email_subscriptions.save
+    else
+      # Maybe email will be set later, stash it for on save
+      @requested_notifications = value
     end
   end
   
@@ -241,8 +245,10 @@ class User < ActiveRecord::Base
         :last_name => last_name,
         :other_city => other_city,
         :city_id => city_id,
-        :source => email_source,
+        :source => email_source
       })
+      # If requested notifications was set, but email wasn't now we can sync them.
+      @email_subscriptions.subscriptions = @requested_notifications if @requested_notifications
       invite_request!
     end
   end

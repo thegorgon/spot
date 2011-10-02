@@ -93,7 +93,7 @@
         .content
           %h1 Where?
           -@cities.each_with_index do |city, i|
-            %a.city{:href => city_path(city), :id => city.slug, :class => "#{first_or_last(@cities, i)} #{conditionally("active", city.subscription_available?)}", 'data-id' => city.id}
+            %a.city{:href => city_path(city), :id => city.slug, :class => "#{first_or_last(@cities, i)} #{conditionally("subscribable", city.subscription_available?)}", 'data-id' => city.id}
               =city.name.titlecase
           -if mobile_request?
             %a.city.cantfind{:href => new_city_path} Other

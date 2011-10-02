@@ -192,7 +192,8 @@ ul.form {
 
 /* ALL STYLED FORMS */
 .faded, .light, .inpopover {
-  .placeholder {
+  #{$placeholder} {
+    text-transform: none;
     @include transition(all 0.25s);
     position: absolute;
     top: 0px;
@@ -355,7 +356,8 @@ ul.form {
     @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px inset);
     @include transition(all 0.25s);
   }
-  .placeholder {
+  #{$placeholder} {
+    text-transform: none;
     color: #aaa;
     text-shadow: #333 0px 0px 3px;
     @include transition(all 0.25s);
@@ -398,8 +400,10 @@ ul.form {
   }  
   a {
     color: #aaa !important;
-    &:hover, &.hover {
-      color: #f7f7f7;
+    @if not $mobile {
+      &:hover, &.hover {
+        color: #f7f7f7;
+      }      
     }
   }
 }
@@ -450,12 +454,14 @@ input.text.light {
       font-weight: normal;
       color: #999;
       text-decoration: underline;
-      &:hover {
-        color: #666;        
-      }      
+      @if not $mobile {
+        &:hover {
+          color: #666;
+        }
+      }
     }
   }
-  .placeholder {
+  #{$placeholder} {
     color: #999;
     text-shadow: none;
   }
@@ -503,8 +509,10 @@ input.text.light {
   }
   a {
     color: #333;
-    &:hover, &.hover {
-      color: #AAA;
+    @if not $mobile {
+      &:hover, &.hover {
+        color: #AAA;
+      }      
     }
   }
 }
@@ -562,7 +570,7 @@ ul.form.oneline {
 /* FORMS IN POPOVERS */
 ul.form.inpopover {
   padding: 2px 0;
-  .placeholder {
+  #{$placeholder} {
     color: #999;
   }
   li {

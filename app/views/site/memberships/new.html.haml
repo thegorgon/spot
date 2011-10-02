@@ -47,7 +47,7 @@
       =cf.hidden_field :subscription_plan_id, :value => ""
     -Subscription::PLANS.keys.each_with_index do |name, i|
       -plan = Subscription::PLANS[name]
-      .paymentoption{"data-value" => plan.plan_id, :class => "#{name} #{conditionally("active", @payment.plan.to_s == name.to_s)} #{first_or_last(Subscription::PLANS.keys, i)}"}
+      .paymentoption{"data-value" => plan.plan_id, :class => "#{name} #{conditionally("selected", @payment.plan.to_s == name.to_s)} #{first_or_last(Subscription::PLANS.keys, i)}"}
         .mval.tf 
           %span.currency $
           =plan.launch_cost

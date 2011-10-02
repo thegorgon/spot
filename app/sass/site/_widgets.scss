@@ -25,3 +25,10 @@
     background: transparent url(/images/paintings/speechbubbleupright230x98.png) no-repeat center center;
   }
 }
+.evtdis {
+  &:hover {
+    .disclosure {
+      display: block;
+    }
+  }
+}

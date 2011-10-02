@@ -238,6 +238,66 @@
           return false;
         }
       });
+    }, 
+    activeClass: function() {
+      $(this).unbind('.active-class').bind('mousedown.active-class', function() {
+        $(this).addClass('active');
+      }).bind('mouseup.active-class', function() {
+        $(this).removeClass('active');        
+      }).bind('mouseleave.active-class', function() {
+        $(this).removeClass('active');
+        $(this).removeClass('hover');
+      }).bind('mouseenter.active-class', function() {
+        $(this).addClass('hover');
+      });
+    },
+    touchOptimize: function() {
+      var cssclass = "active",
+        radius = 20,
+        onTouchMove = function(e) {
+          var touch = e.originalEvent.touches[0],
+            x = touch.pageX, 
+            y = touch.pageY,
+            offset = $(this).offset(),
+            left = offset.left - radius,
+            top = offset.top - radius,
+            bottom = top + $(this).outerHeight() + radius,
+            right = left + $(this).outerWidth() + radius;
+        
+          if (x > left && x < right && y > top && y < bottom) {
+            e.preventDefault();
+            $(this).addClass(cssclass);
+          } else {
+            $(this).removeClass(cssclass);
+          }
+        }, onTouchStart = function(e) {
+          $(this).addClass(cssclass);
+          $(this).bind('touchmove.touchemulate', onTouchMove);
+          $(this).bind('touchend.touchemulate', onTouchEnd);
+        }, onTouchEnd = function(e) {
+          var events;
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).unbind('touchmove.touchemulate');
+          $(this).unbind('touchend.touchemulate');
+          if ($(this).hasClass(cssclass)) {
+            $(this).removeClass(cssclass);
+            $(this).unbind('click.cancel').trigger('click');
+          } else {
+            $(this).preBind('click.cancel', function(e) { 
+              e.preventDefault(); 
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              return false;
+            });
+          }
+          return false
+        };
+      
+      $(this).unbind('.touchemulate').
+        bind('touchstart.touchemulate', onTouchStart).
+        bind('touchend.touchemulate', onTouchEnd).
+        bind('touchmove.touchemulate', onTouchMove);
     }  
   });
 }(jQuery));
@@ -246,6 +306,17 @@
   $.provide(go, "Behaviors", {
     train: function(container) {
       var fetch = function(sel) { return $(sel, container); };
+      if (!go.env('mobile')) { 
+        fetch(".chzn-select").chosen(); 
+      }
+      if (!Modernizr.input.placeholder) {
+        fetch('[placeholder]').placeholder();
+      }
+      if (Modernizr.touch) {
+        fetch('a, button').touchOptimize();
+      } else {
+        fetch('a, button').activeClass();
+      }
       go.Navigator.link(fetch("a.page"));
       go.Navigator.form(fetch("form.page"));
       $.popover.bind(container);
@@ -260,7 +331,6 @@
         $(this).addClass('active');
       });
       fetch('[data-toggle-class]').toggleClass();
-      fetch('[placeholder]').placeholder();
       fetch('[data-mode=select]').selectOnly();
       fetch('.file_field input').fileField();
       fetch('form[data-confirm]:not(.ajax)').confirmSubmission();
@@ -311,7 +381,6 @@
         $(this).addClass('editing').parents('ul.form').addClass('editing');
       });
       $.stretcher.init();
-      if (!go.env('mobile')) { fetch(".chzn-select").chosen(); }
     }
   });
 }(Spot));

@@ -25,7 +25,7 @@
         text-decoration: none;
         font-size: 14px;
         padding: 0 10px 0;
-        &:hover {
+        &.active {
           color: #fff;
         }
       }
@@ -88,10 +88,7 @@
             &.last {
               margin-right: 0;
             }
-            &:hover, &.hover {
-              color: #fff;
-            }
-            &:active, &.active {
+            &.active {
               color: #fff;
               background: url(/images/icons/gryrttri7x11.png) no-repeat 5px center;
             }
@@ -181,11 +178,11 @@
                 @include transition("width 0.5s");
               }
               input {
-                font-family: monospace;
                 @include transition("width 0.5s");
-                text-transform: uppercase;
                 width: 132px;
                 float: left;
+                font-family: monospace;
+                text-transform: uppercase;
               }
               a.unlock {
                 @include transition("right 0.5s");
@@ -196,7 +193,7 @@
                 top: 11px;
                 right: 85px;
                 color: #fff !important;
-                &:active, &.active {
+                &.active {
                   color: #f7f7f7 !important;
                 }
               }
@@ -222,7 +219,7 @@
               text-align: left;
               button {
                 margin: 9px auto;
-                @include mbtnorg220x32;
+                @include btnorg220x32;
                 position: relative;
                 z-index: 100;
               }
@@ -280,15 +277,12 @@
             @include bottom_border_radius(5px);
             border-bottom: none;
           }
-          &:hover, &:active {
+          &.subscribable {
             background: #ff8419;
             color: #fff;
           }
           &.active {
             background: #eeb96d;
-            &:hover {
-              background: #ff8419;
-            }
           }
         }
         .cantfind {

@@ -9,7 +9,7 @@
   .back {
     text-align: center;
     a {
-      @include mbtngrypill;
+      @include btngrypill;
       width: 280px;
       height: 30px;
       margin: 20px auto;
@@ -21,6 +21,7 @@
     margin: 5px 0 10px;
     color: #999;
     clear: left;
+    -webkit-user-select: text;
   }
   .main {
     .overlay {
@@ -203,7 +204,7 @@
       color: #808080;          
       a {
         color: #808080;          
-        &:active {
+        &:active, &.active {
           color: #ff8419;
         }
       }

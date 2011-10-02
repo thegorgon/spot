@@ -53,7 +53,7 @@ html {
       font-weight: bold;
       text-decoration: none;
       font-size: 14px;
-      &:active {
+      &.active {
         color: #fff;
         background: #ff8419;
       }
@@ -115,7 +115,7 @@ html {
         left: 15px;
       }
       .morenav {
-        @include mbtnblacknav54x29;
+        @include btnblacknav54x29;
         position: absolute;
         right: 15px;
         top: 6px;
@@ -154,7 +154,7 @@ html {
       background: #f7f7f7;
       position: relative;
       .becomemember {
-        @include mbtnorg220x32;
+        @include btnorg220x32;
       }
       h1.membership {
         margin: 0 auto;
@@ -165,7 +165,7 @@ html {
         clear: both;
         margin: 5px auto;
         text-align: center;
-        @include mbtnorg220x32;
+        @include btnorg220x32;
       }
       &.member {
         padding: 0;
@@ -248,9 +248,6 @@ html {
         a {
           text-decoration: none;
           color: #999;
-          &:hover {
-            color: #ff8419;
-          }
         }
       }
       .request_received {
@@ -307,9 +304,6 @@ html {
         }
         a {
           color: #333;
-          &:hover {
-            color: #ff8419;
-          }
         }
       }
       .main {
@@ -336,9 +330,6 @@ html {
       }
       a {
         color: #f7f7f7;
-        &:hover {
-          color: #ff8419;
-        }
       }
       .logo {
         position: relative;

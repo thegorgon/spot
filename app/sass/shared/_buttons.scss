@@ -1,10 +1,4 @@
 @mixin bgbutton($bg, $width, $height) {
-  @include mbgbutton($bg, $width, $height);
-  &:hover, &.hover {
-    background-position: 0px -1 * $height;
-  }
-}
-@mixin mbgbutton($bg, $width, $height) {
   background: transparent url("/images/buttons/" + $bg + ".png") no-repeat 0 0;  
   line-height: $height;
   height: $height;
@@ -12,24 +6,27 @@
   display: block;
   border: none;
   text-align: center;
-  &:active, &.active {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  #{$hover} {
+    background-position: 0px -1 * $height;
+  }    
+  #{$active} {
     background-position: 0px -2 * $height;
   }
   &[type] {
     padding: 5px 5px; /* Firefox */
     line-height: 17px; /* Safari */
-  }  
+  }
 }
-
 @mixin orgbtn {
   color: #fff !important;
   text-shadow: rgba(0,0,0,0.5) 0px 1px 0px;
   text-decoration: none;
   cursor: pointer;
-  &:hover, &.hover {
+  #{$hover} {
     color: #fff !important;
   }
-  &:active, &.active {
+  #{$active} {
     text-shadow: rgba(0,0,0,0.5) 0px -1px 0px;
     color: #f7f7f7 !important;
   }
@@ -43,10 +40,10 @@
   color: #fff !important;
   text-decoration: none;
   cursor: pointer;
-  &:hover, &.hover {
+  #{$hover} {
     color: #fff !important;
   }
-  &:active, &.active {
+  #{$active} {
     color: #f7f7f7 !important;
   }
   .loading {
@@ -73,12 +70,14 @@ button, .button {
   padding: 5px 0px 6px 0px; /* Links */
   width: auto;
   overflow: visible;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
   @extend .no_select;
   .loading {
     display: none;
   }
 }
 .button {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
   padding: 0;
 }
 button[type]{
@@ -111,11 +110,11 @@ form.loading {
     line-height: 12px;
     height: 14px;   
   }
-  &:hover, &.hover {
+  #{$hover} {
     color: #BBB;
     @include gradient_top_down(#333, #000, 50%);
   }
-  &:active, &.active {
+  #{$active} {
     @include gradient_top_down(#000, #333, 100%);
     color: #999;
   }
@@ -126,9 +125,10 @@ form.loading {
   background: transparent;
   text-decoration: underline;
   color: #333;
-  &:hover, &.hover {
+  -webkit-tap-highlight-color: #ff8419;
+  #{$hover} {
    color: #ff8419; 
-  }  
+  }
 }
 button.link {
   @include btnlink;
@@ -139,23 +139,11 @@ button.link {
   height: 41px;
   font-size: 25px;
 }
-@mixin mbtnorg300x41 {
-  @include mbgbutton('org300x41', 300px, 43px);
-  @include orgbtn;
-  height: 41px;
-  font-size: 25px;
-}
 .btnorg300x41, a.btnorg300x41 {
   @include btnorg300x41;
 }
 @mixin btnorg200x41 {
   @include bgbutton('org200x41', 200px, 43px);
-  @include orgbtn;
-  height: 41px;
-  font-size: 25px;
-}
-@mixin mbtnorg200x41 {
-  @include mbgbutton('org200x41', 200px, 43px);
   @include orgbtn;
   height: 41px;
   font-size: 25px;
@@ -170,23 +158,11 @@ button.link {
   height: 41px;
   font-size: 25px;
 }
-@mixin mbtnorg170x41 {
-  @include mbgbutton('org170x41', 170px, 43px);
-  @include orgbtn;
-  line-height: 38px;
-  height: 41px;
-  font-size: 25px;
-}
 .btnorg170x41, a.btnorg170x41 {
   @include btnorg170x41;
 }
 @mixin btnorg175x32 {
   @include bgbutton('org175x32', 175px, 33px);
-  @include orgbtn;
-  font-size: 18px;
-}
-@mixin mbtnorg175x32 {
-  @include mbgbutton('org175x32', 175px, 33px);
   @include orgbtn;
   font-size: 18px;
 }
@@ -198,21 +174,11 @@ button.link {
   @include orgbtn;
   font-size: 18px;
 }
-@mixin mbtnorg200x32 {
-  @include mbgbutton('org200x32', 200px, 33px);
-  @include orgbtn;
-  font-size: 18px;
-}
 .btnorg200x32, a.btnorg200x32 {
   @include btnorg200x32;
 }
 @mixin btnorg220x32 {
   @include bgbutton('org220x32', 220px, 33px);
-  @include orgbtn;
-  font-size: 18px;
-}
-@mixin mbtnorg220x32 {
-  @include mbgbutton('org220x32', 220px, 33px);
   @include orgbtn;
   font-size: 18px;
 }
@@ -224,11 +190,6 @@ button.link {
   @include orgbtn;
   font-size: 18px;
 }
-@mixin mbtnorg250x32 {
-  @include mbgbutton('org250x32', 250px, 33px);
-  @include orgbtn;
-  font-size: 18px;
-}
 .btnorg250x32, a.btnorg250x32 {
   @include btnorg250x32;
 }
@@ -237,22 +198,12 @@ button.link {
   @include orgbtn;
   font-size: 18px;
 }
-@mixin mbtnorg280x32 {
-  @include mbgbutton('org280x32', 280px, 33px);
-  @include orgbtn;
-  font-size: 18px;
-}
 .btnorg280x32, a.btnorg280x32 {
   @include btnorg280x32;
 }
+
 @mixin btnorg280x41 {
   @include bgbutton('org280x41', 280px, 43px);
-  @include orgbtn;
-  height: 41px;
-  font-size: 25px;
-}
-@mixin mbtnorg280x41 {
-  @include mbgbutton('org280x41', 280px, 43px);
   @include orgbtn;
   height: 41px;
   font-size: 25px;
@@ -260,13 +211,9 @@ button.link {
 .btnorg280x41, a.btnorg280x41 {
   @include btnorg280x41;
 }
+
 @mixin btnorg77x32 {
   @include bgbutton('org77x32', 77px, 33px);
-  @include orgbtn;
-  font-size: 18px;
-}
-@mixin mbtnorg77x32 {
-  @include mbgbutton('org77x32', 77px, 33px);
   @include orgbtn;
   font-size: 18px;
 }
@@ -278,21 +225,11 @@ button.link {
   @include orgbtn;
   font-size: 16;
 }
-@mixin mbtnorg77x28 {
-  @include mbgbutton('org77x28', 77px, 29px);
-  @include orgbtn;
-  font-size: 16;
-}
 .btnorg77x28, a.btnorg77x28 {
   @include btnorg77x28;
 }
 @mixin btnorg100x32 {
   @include bgbutton('org100x32', 100px, 33px);
-  @include orgbtn;
-  font-size: 18px;
-}
-@mixin mbtnorg100x32 {
-  @include mbgbutton('org100x32', 100px, 33px);
   @include orgbtn;
   font-size: 18px;
 }
@@ -304,22 +241,12 @@ button.link {
   @include orgbtn;
   font-size: 18px;
 }
-@mixin mbtnorg115x32 {
-  @include mbgbutton('org115x32', 115px, 33px);
-  @include orgbtn;
-  font-size: 18px;
-}
 .btnorg115x32, a.btnorg115x32 {
   @include btnorg115x32;
 }
+
 @mixin btnblack54x29 {
   @include bgbutton('black54x29', 77px, 30px);
-  @include blackbtn;
-  font-size: 14px;
-  line-height: 30px;
-}
-@mixin mbtnblack54x29 {
-  @include mbgbutton('black54x29', 77px, 30px);
   @include blackbtn;
   font-size: 14px;
   line-height: 30px;
@@ -333,12 +260,6 @@ button.link {
   font-size: 13px;
   line-height: 30px;
 }
-@mixin mbtnblack77x29 {
-  @include mbgbutton('black77x29', 77px, 29px);
-  @include blackbtn;
-  font-size: 13px;
-  line-height: 30px;
-}
 .btnblack77x29, a.btnblack77x29 {
   @include btnblack77x29;
 }
@@ -348,16 +269,10 @@ button.link {
   font-size: 13px;
   line-height: 30px;  
 }
-@mixin mbtnblacknav54x29 {
-  @include mbgbutton('blacknav54x29', 54px, 29px);
-  @include blackbtn;
-  font-size: 13px;
-  line-height: 30px;  
-}
 .btnblacknav54x29, a.btnblacknav54x29 {
   @include btnblacknav54x29;
 }
-@mixin mbtnorgpill {
+@mixin btnorgpill {
   display: block;
   @include border_radius(5px);
   background: #FFB473;
@@ -368,25 +283,23 @@ button.link {
   color: #333 !important;
   text-align: center;
   text-decoration: none;
-  &:active, &.active {
+  #{$hover} {
+    color: #000 !important;
+    background: #ff8419;
+    @include gradient_top_down(#f4b368, #ff8419);
+  }
+  #{$active} {
     background: #ff8419;
     @include box_shadow(#000 0px 1px 5px inset);        
     color: #fff !important;
     text-shadow: none;
   }  
 }
-@mixin btnorgpill {
-  @include mbtnorgpill;
-  &:hover, &.hover {
-    color: #000 !important;
-    background: #ff8419;
-    @include gradient_top_down(#f4b368, #ff8419);
-  }
-}
 .btnorgpill, a.btnorgpill, button.btnorgpill {
   @include btnorgpill;
 }
-@mixin mbtngrypill {
+
+@mixin btngrypill {
   display: block;
   @include border_radius(5px);
   background: #f2f2f2;
@@ -397,20 +310,18 @@ button.link {
   color: #333;
   text-align: center;
   text-decoration: none;
-  &:active, &.active {
-    background: #666666;
-    @include box_shadow(#000 0px 1px 5px inset);        
-    color: #fff !important;
-    text-shadow: 0px -1px 0px #000;
-  }  
-}
-@mixin btngrypill {
-  @include mbtngrypill;
-  &:hover, &.hover {
+  #{$hover} {
     color: #000 !important;
     background: #ffffff;
     @include gradient_top_down(#f2f2f2, #808080);
   }
+  #{$active} {
+    background: #666666;
+    -pie-background: #666666;
+    @include box_shadow(#000 0px 1px 5px inset);        
+    color: #fff !important;
+    text-shadow: 0px -1px 0px #000;
+  }  
 }
 .btngrypill, a.btngrypill, button.btngrypill {
   @include btngrypill;
@@ -426,11 +337,11 @@ button.link {
   color: #333;
   text-align: center;
   text-decoration: none;
-  &:hover, &.hover {
+  #{$hover} {
     color: #000 !important;
     background: #ffffff;
   }
-  &:active, &.active {
+  #{$active} {
     background: #666666;
     color: #fff !important;
     text-shadow: 0px 1px 0px #000;
@@ -466,7 +377,7 @@ button.link {
     color: #fff !important;
     @include gradient_top_down(#cd7777, #C72112);
   }
-  &:active, &.active {
+  #{$active} {
     background: #993333;
     @include box_shadow(#000 0px 1px 5px inset);        
     color: #fff !important;
@@ -506,11 +417,11 @@ button.withx {
   @include gradient_top_down(#F3F3F4, #E7E8E9, 100%);
   border: 1px solid #d5d5d6;
   @include border_radius(7px);
-  &:hover, &.hover {
+  #{$hover} {
     @include gradient_top_down(#F3F3F4, #E7E8E9, 50%);
     text-shadow: 0px 1px #fff;
   }
-  &:active, &.active {
+  #{$active} {
     @include gradient_top_down(#E7E8E9, #f7f7f7, 100%);
     text-shadow: 0px -1px #fff;
   }
@@ -533,11 +444,11 @@ button.withx {
   @include gradient_top_down(#F3F3F4, #E7E8E9, 100%);
   border: 1px solid #d5d5d6;
   @include border_radius(7px);
-  &:hover, &.hover {
+  #{$hover} {
     @include gradient_top_down(#F3F3F4, #E7E8E9, 50%);
     text-shadow: 0px 1px #fff;
   }
-  &:active, &.active {
+  #{$active} {
     @include gradient_top_down(#E7E8E9, #f7f7f7, 100%);
     text-shadow: 0px -1px #fff;
   }
@@ -562,11 +473,11 @@ button.withx {
     line-height: 15px;
     height: 30px;   
   }
-  &:hover, &.hover {
+  #{$hover} {
     color: #BBB;
     @include gradient_top_down(#333, #000, 50%);
   }
-  &:active, &.active {
+  #{$active} {
     @include gradient_top_down(#000, #333, 100%);
     color: #999;
   }
@@ -587,11 +498,11 @@ button.withx {
     line-height: 15px;
     height: 30px;   
   }
-  &:hover, &.hover {
+  #{$hover} {
     color: #BBB;
     @include gradient_top_down(#333, #000, 50%);
   }
-  &:active, &.active {
+  #{$active} {
     @include gradient_top_down(#000, #333, 100%);
     color: #999;
   }

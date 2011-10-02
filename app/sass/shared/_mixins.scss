@@ -168,3 +168,16 @@
   font-family: museo-sans, "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
   font-weight: 500;
 }
+
+/* Variables */
+
+$placeholder: ".placeholder, input::-webkit-input-placeholder, input:-moz-placeholder";
+$hover: '&:hover, &.hover';
+$active: '&:active, &.active';
+
+@if $mobile {
+  $hover: '&.hover';
+}
+@if $mobile {
+  $active: '&.active';
+}

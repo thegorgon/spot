@@ -110,9 +110,6 @@
     left: 200px;
     right: 200px;
     text-align: center;
-    &:hover {
-      text-decoration: underline;
-    }
   }
   .application {
     opacity: 0;
@@ -132,7 +129,7 @@
     }
     li.buttons {
       button {
-        @include mbtnorg280x32;
+        @include btnorg280x32;
       }
     }
   }

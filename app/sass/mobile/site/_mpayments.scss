@@ -45,23 +45,23 @@
         line-height: 20px;
       }
     }
-    &.active, &.active:hover {
+    &.selected {
       background: lighten(#ff8419, 35);
-      .checkbox, .checkbox:hover {
+      .checkbox {
         background-position: 0 -66px;
       }
     }
-    &:hover {
-      .checkbox, .checkbox:hover {
+    &.active {
+      .checkbox {
         background-position: 0 -33px;
       }      
     }
     .checkbox {
       cursor: pointer;
-      @include mbtnorg77x32;
+      @include btnorg77x32;
       margin: 5px auto 0;
       background-position: 0 0;
-      &:hover {
+      &.active {
         background-position: 0 -33px;
       };
     }
@@ -146,7 +146,7 @@
     .clicktoedit {
       display: block;
     }
-    &:hover, &.editing {
+    &.editing {
       .logo {
         background-image: url('/images/icons/pencil20x20.png');
       }
@@ -173,7 +173,6 @@
         }
         input {
           width: 200px;
-          text-transform: uppercase;
         }
       }
       .numcontainer {

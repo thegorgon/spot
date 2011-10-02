@@ -37,13 +37,13 @@
           display: block;
           background-image: url(/images/icons/checkgry20x20.png);
         }
-        &.active {
+        &.selected, &:active, &.active {
           .check {
             background-image: url(/images/icons/check20x20.png);          
           }
         }
       }
-      &.active, &:active {
+      &.selected, &.active, &:active {
         .check {
           display: block;
         }
