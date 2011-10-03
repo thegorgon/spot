@@ -248,10 +248,6 @@
       }).bind('mouseup.active-class', function() {
         $(this).removeClass('active');        
         $(this).unbind('mouseleave.remove-active');
-      }).unbind('.hover-class').bind('mouseleave.hover-class', function() {
-        $(this).removeClass('hover');
-      }).bind('mouseenter.hover-class', function() {
-        $(this).addClass('hover');
       });
     },
     touchOptimize: function() {
@@ -279,21 +275,17 @@
           $(this).bind('touchmove.touchemulate', onTouchMove);
           $(this).bind('touchend.touchemulate', onTouchEnd);
         }, onTouchEnd = function(e) {
-          var events;
-          e.preventDefault();
           $(this).unbind('touchmove.touchemulate');
           $(this).unbind('touchend.touchemulate');
           if ($(this).hasClass(cssclass)) {
             $(this).removeClass(cssclass);
-            $(this).trigger('click');
+            $(this).trigger(jQuery.Event('click', {target: this, pageX: e.pageX, pageY: e.pageY}));
           }
           return false
         };
       
       $(this).unbind('.touchemulate').
-        bind('touchstart.touchemulate', onTouchStart).
-        bind('touchend.touchemulate', onTouchEnd).
-        bind('touchmove.touchemulate', onTouchMove);
+        bind('touchstart.touchemulate', onTouchStart);
     }  
   });
 }(jQuery));
@@ -309,7 +301,7 @@
         fetch('[placeholder]').placeholder();
       }
       if (Modernizr.touch) {
-        fetch('a, button').touchOptimize();
+        fetch('button').touchOptimize();
       } else {
         fetch('a, button').activeClass();
       }

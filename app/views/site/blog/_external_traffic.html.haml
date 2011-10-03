@@ -24,4 +24,4 @@
   -if !current_member?
     .clearfix.receipt
       %h2.left.tf We've received your request. Your invitation should arrive shortly.
-      =link_to "Explore Your City", invite_request.try(:city) ? city_path(invite_request.city) : new_city_path, :class => "btnorg200x32 tf right", :id => "explore_city_link"
+      =button_to "Explore Your City", invite_request.try(:city) ? city_path(invite_request.city) : new_city_path, :class => "btnorg200x32 tf right", :id => "explore_city_link"

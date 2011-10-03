@@ -7,19 +7,6 @@ class Site::BaseController < ApplicationController
   
   protected 
   
-  #Mobile App Transfers
-  def in_mobile_app!
-    session[:in_mobile_app] = 1
-  end
-  
-  def left_mobile_app!
-    session[:in_mobile_app] = nil
-  end
-  
-  def in_mobile_app?
-    session[:in_mobile_app]
-  end
-  
   #Stashing city
   def current_city
     unless @city

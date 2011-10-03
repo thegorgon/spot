@@ -14,6 +14,14 @@ module TagHelper
     button.html_safe
   end
   
+  def button_to(text, url, options={})
+    content_tag(:form, :action => url, :method => "GET", :class => "btnwrap") do
+      button_tag(options) do
+        text
+      end 
+    end
+  end
+  
   def external_js_include(file)
     content_tag(:script, "", :src => file, :type => "text/javascript")
   end

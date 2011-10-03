@@ -43,10 +43,10 @@
       .entrance.half{:class => "request"}
         -if current_user && city = current_user.city
           %h2.center.tf="Welcome Back #{current_user.first_name}"
-          =link_to "Explore #{city.name.titlecase}", city_path(city), :class => "btnorg250x32 action"
+          =button_to "Explore #{city.name.titlecase}", city_path(city), :class => "btnorg250x32 action"
         -elsif current_user
           %h2.center.tf="Welcome Back #{current_user.first_name}"
-          =link_to "Select Your City", account_path, :class => "btnorg175x32 action", :id => "select_city_link"
+          =button_to "Select Your City", account_path, :class => "btnorg175x32 action", :id => "select_city_link"
         -else
           -if session_invite
             %h2.tf.registration.invited Congratulations, You're Invited
@@ -68,7 +68,8 @@
               .lock.left
                 .shackle
                 .bolt
-              =link_to "Unlock", '#', :class => "btnorg77x28 unlock tf"
+              =button_tag :class => "btnorg77x28 unlock tf" do
+                Unlock
               =f.text_field :code, :placeholder => "invitation code", :container_class => "left", :required => true, :value => session_invite.try(:code)
           
           =spot_form_for :credentials, :url => session_path, :ul_id => "member_form", :display => "faded clearfix" do |f|
@@ -82,7 +83,7 @@
                 login
               =link_to "forgot password?", new_password_reset_path
             .memberswitch
-              =link_to "I need to join", '#', :class => "tab", "data-class" => session_invite ? "invitation" : "request", :rel => "#request_tab"
+              =link_to "I need to join", '#', :class => "tab", "data-class" => "request", :rel => "#request_tab"
           
           .memberswitch.registration
             =link_to "I'm already a member", new_session_path, :class => "tab", "data-class" => "member", :id => "member_tab"

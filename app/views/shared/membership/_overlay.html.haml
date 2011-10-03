@@ -44,7 +44,7 @@
         .clear.actions
           .freetrial
             ="Try it Free for #{pluralize(session_promo.try(:duration) || 1, "Month")}"
-          =link_to "become a member", new_application_path, :class => "becomemember btnmembership tf centered"
+          =button_to "become a member", new_application_path, :class => "becomemember btnmembership tf centered"
           .readmore
             =link_to "Read more&hellip;".html_safe, membership_about_path, :class => "btnmemabout"
           .pricing
@@ -53,4 +53,4 @@
       .title.clearfix
         %h1.tf.membership
           =title
-        =link_to "join now", new_application_path, :class => "inlinebtn btnmembership tf right"
+        =button_to "join now", new_application_path, :class => "inlinebtn btnmembership tf right"

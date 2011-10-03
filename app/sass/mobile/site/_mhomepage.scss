@@ -184,11 +184,10 @@
                 font-family: monospace;
                 text-transform: uppercase;
               }
-              a.unlock {
+              .unlock {
                 @include transition("right 0.5s");
                 position: absolute;
                 width: 77px;
-                line-height: 28px;
                 height: 28px;
                 top: 11px;
                 right: 85px;

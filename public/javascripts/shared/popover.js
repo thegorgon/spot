@@ -275,17 +275,26 @@
         $(window).unbind('scroll.popover').bind('scroll.popover', function() { $.popover.position(trigger, popover); });
         setTimeout(function() { // Otherwise this event might count
           var hide = function(e) {
+            $('body').unbind('.hide-popover');
             if ($(e.target).is(':not(.popover, .popover *)')) { 
               $.popover.hide(trigger, popover); 
-              $('body').unbind('.hide-popover');
-            }
+            } 
+            return true;
           };
           $('body').unbind('.hide-popover').
             bind('click.hide-popover', hide).
             bind('touchstart.hide-popover', hide);
         }, 1);
-        popover.find('a').unbind('click.popover').bind('click.popover', function(e) { $.popover.hide(trigger, popover); });
-        popover.find('form.page').unbind('submit.popover').bind('submit.popover', function(e) { $.popover.hide(trigger, popover); });
+        popover.find('a').unbind('click.popover').bind('click.popover', function(e) { 
+          $.popover.hide(trigger, popover);
+          popover.find('a').unbind('click.popover');
+          return true; 
+        });
+        popover.find('form.page').unbind('submit.popover').bind('submit.popover', function(e) { 
+          $.popover.hide(trigger, popover);
+          popover.find('form.page').unbind('click.popover');
+          return true; 
+        });
       },
       hide: function(trigger, popover, options) {
         trigger = trigger || $('[data-popover]');
