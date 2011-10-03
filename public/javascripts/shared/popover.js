@@ -274,9 +274,15 @@
         $(window).unbind('resize.popover').bind('resize.popover', function() { $.popover.position(trigger, popover); });
         $(window).unbind('scroll.popover').bind('scroll.popover', function() { $.popover.position(trigger, popover); });
         setTimeout(function() { // Otherwise this event might count
-          $('body').click(function(e) {
-            if ($(e.target).is(':not(.popover, .popover *)')) { $.popover.hide(trigger, popover); }
-          });          
+          var hide = function(e) {
+            if ($(e.target).is(':not(.popover, .popover *)')) { 
+              $.popover.hide(trigger, popover); 
+              $('body').unbind('.hide-popover');
+            }
+          };
+          $('body').unbind('.hide-popover').
+            bind('click.hide-popover', hide).
+            bind('touchstart.hide-popover', hide);
         }, 1);
         popover.find('a').unbind('click.popover').bind('click.popover', function(e) { $.popover.hide(trigger, popover); });
         popover.find('form.page').unbind('submit.popover').bind('submit.popover', function(e) { $.popover.hide(trigger, popover); });

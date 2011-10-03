@@ -274,15 +274,18 @@
             $(this).removeClass(cssclass);
           }
         }, onTouchStart = function(e) {
+          e.preventDefault();
           $(this).addClass(cssclass);
           $(this).bind('touchmove.touchemulate', onTouchMove);
           $(this).bind('touchend.touchemulate', onTouchEnd);
         }, onTouchEnd = function(e) {
           var events;
           e.preventDefault();
-          e.stopPropagation();
           $(this).unbind('touchmove.touchemulate');
           $(this).unbind('touchend.touchemulate');
+          if ($(this).hasClass(cssclass)) {
+            $(this).trigger('click');
+          }
           $(this).removeClass(cssclass);
           return false
         };
