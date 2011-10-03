@@ -284,9 +284,9 @@
           $(this).unbind('touchmove.touchemulate');
           $(this).unbind('touchend.touchemulate');
           if ($(this).hasClass(cssclass)) {
+            $(this).removeClass(cssclass);
             $(this).trigger('click');
           }
-          $(this).removeClass(cssclass);
           return false
         };
       
