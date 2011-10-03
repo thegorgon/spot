@@ -102,6 +102,7 @@
           $(this).removeClass('active');
           $('.entrance').removeClass($(this).attr('data-class'));
         });
+        $('.entrance').removeClass('request');
         $(rel).addClass('active');
         $('.entrance').addClass($(this).attr('data-class'));
       });
