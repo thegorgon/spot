@@ -44,7 +44,7 @@ ul.pillbox {
           background: #ff8419;
           @include gradient_top_down(#f4b368, #ff8419);
         }
-        #{$active} {
+        #{$active}, &.current {
           background: #ff8419;
           text-shadow: none;
         }

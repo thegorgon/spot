@@ -242,12 +242,15 @@
     activeClass: function() {
       $(this).unbind('.active-class').bind('mousedown.active-class', function() {
         $(this).addClass('active');
+        $(this).bind('mouseleave.remove-active', function(e) {
+          $(this).removeClass('active');
+        });
       }).bind('mouseup.active-class', function() {
         $(this).removeClass('active');        
-      }).bind('mouseleave.active-class', function() {
-        $(this).removeClass('active');
+        $(this).unbind('mouseleave.remove-active');
+      }).unbind('.hover-class').bind('mouseleave.hover-class', function() {
         $(this).removeClass('hover');
-      }).bind('mouseenter.active-class', function() {
+      }).bind('mouseenter.hover-class', function() {
         $(this).addClass('hover');
       });
     },
@@ -280,17 +283,7 @@
           e.stopPropagation();
           $(this).unbind('touchmove.touchemulate');
           $(this).unbind('touchend.touchemulate');
-          if ($(this).hasClass(cssclass)) {
-            $(this).removeClass(cssclass);
-            $(this).unbind('click.cancel').trigger('click');
-          } else {
-            $(this).preBind('click.cancel', function(e) { 
-              e.preventDefault(); 
-              e.stopPropagation();
-              e.stopImmediatePropagation();
-              return false;
-            });
-          }
+          $(this).removeClass(cssclass);
           return false
         };
       

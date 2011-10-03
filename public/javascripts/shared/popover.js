@@ -35,22 +35,15 @@
             </div>",
       beforeShow: function() {}
     },
-    positionArrow = function(popover, orientation, vertical, horizontal) {
-      if (orientation && orientation.charAt(0) == 'v') {
-        positionArrowHorizontally(popover, vertical, horizontal);
-      } else {
-        positionArrowVertically(popover, vertical, horizontal);
-      }
-    },
     removeArrows = function(popover) {
       popover.find('.hd .arr, .ft .arr').css({width: '0px'});
       popover.find('.bgl .arr, .bgr .arr').css({height: '0px'});
       
       $.each(['top', 'bottom'], function() {
-        positionArrow(popover, 'v', this, 'center');
+        positionArrowHorizontally(popover, this, 'center');
       });
       $.each(['left', 'right'], function() {
-        positionArrow(popover, 'h', 'center', this);
+        positionArrowVertically(popover, 'center', this);
       });
     },
     positionArrowHorizontally = function(popover, vertical, horizontal) {
@@ -77,9 +70,7 @@
       rPad.width(rpadWidth);
       arrow.css({left: lpadWidth + lWidth, right: rpadWidth + rWidth});
     },
-    positionHorizontally = function(trigger, popover) {
-      popover.css({left: 1000}).show();
-      
+    positionVertically = function(trigger, popover) {
       var offset = trigger.offset(),
         popHeight = popover.outerHeight(),
         popWidth = popover.outerWidth(),
@@ -91,7 +82,6 @@
         windowRight = windowLeft + $(window).width() - $.popover.settings().padding,
         positions = trigger.attr('data-popover-pos'), 
         vertical, horizontal, lWidth, arrow;
-
       if (positions) {
         positions = positions.split(',');
         horizontal = $.trim(positions[0]);
@@ -137,7 +127,7 @@
         offset.left = offset.left + trigWidth * 0.5 - popWidth * 0.5;
       }
 
-      positionArrow(popover, 'v', vertical, horizontal);
+      positionArrowHorizontally(popover, vertical, horizontal);
 
       popover.css(offset);
     },
@@ -168,9 +158,7 @@
       bPad.height(bpadHeight);
       arrow.css({top: tpadHeight, bottom: bpadHeight});
     },
-    positionVertically = function(trigger, popover) {
-      popover.css({left: 1000}).show();
-      
+    positionHorizontally = function(trigger, popover) {
       var offset = trigger.offset(),
         popHeight = popover.outerHeight(),
         popWidth = popover.outerWidth(),
@@ -222,14 +210,13 @@
       }
       
       if (vertical == 'bottom') { // Put popover below trigger
-        offset.top = offset.top - popover.find('.hd').height() + (trigHeight - arrow.height()) * 0.5;
+        offset.top = offset.top - popover.find('.hd').height() - 0.5 * arrow.height();
       } else if (vertical == 'top') { // Put popover above trigger
         offset.top = offset.top - popHeight + ftHeight + arrow.height() * 0.5 + trigHeight * 0.5;
       } else if (vertical == 'center') { // Put popover in the middle of trigger
-        offset.top = offset.top - 0.5 * (popHeight - popover.find('.hd').height());
+        offset.top = offset.top - popover.find('.hd').height() - 0.5 * popover.find('.bgl').outerHeight();
       }
-
-      positionArrow(popover, 'h', vertical, horizontal);
+      positionArrowVertically(popover, vertical, horizontal);
       popover.css(offset);
     };
   $.extend($, {
@@ -258,9 +245,6 @@
         raw.hide().css({left: 0});
         return raw;
       },
-      visible: function(trigger, popover) {
-        $(trigger).hasClass("active");
-      },
       bind: function(container) {
         $('[data-popover]').each(function(e) {
           var trigger = $(this),
@@ -273,14 +257,10 @@
             if (popoverable.removeClass) { popoverable.removeClass('hidden'); }
             popover = $.popover.init(title, popoverable);
             trigger.attr('data-popover-id', popover.attr('id'));
-            trigger.unbind('.popovershow').bind('click.popovershow touchstart.popovershow', function(e) {
+            trigger.bind('click', function(e) {
               e.preventDefault();
               e.stopPropagation();
-              if ($.popover.visible(trigger, popover)) {
-                $.popover.hide(trigger, popover);
-              } else {
-                $.popover.reveal(trigger, popover);
-              }
+              $.popover.reveal(trigger, popover);
             });
           }
         });
@@ -288,18 +268,17 @@
       reveal: function(trigger, popover, options) {
         $.popover.hide();
         $.popover.settings().beforeShow.call(popover);
+        popover.show();
         $.popover.position(trigger, popover, options);
-        if ($.support.opacity) { popover.fadeIn(250); }
-        else { popover.show(); }
         trigger.addClass('active');
         $(window).unbind('resize.popover').bind('resize.popover', function() { $.popover.position(trigger, popover); });
         $(window).unbind('scroll.popover').bind('scroll.popover', function() { $.popover.position(trigger, popover); });
         setTimeout(function() { // Otherwise this event might count
-          $('body').unbind('.hidepopover').bind('click.hidepopover touchstart.hidepopover', function(e) {
-            if ($(e.target).is(':not(.popover, .popover *)')) { $.popover.hide(); }
-          });
+          $('body').click(function(e) {
+            if ($(e.target).is(':not(.popover, .popover *)')) { $.popover.hide(trigger, popover); }
+          });          
         }, 1);
-        popover.find('a:not(.inpopover)').unbind('click.popover').bind('click.popover', function(e) { $.popover.hide(trigger, popover); });
+        popover.find('a').unbind('click.popover').bind('click.popover', function(e) { $.popover.hide(trigger, popover); });
         popover.find('form.page').unbind('submit.popover').bind('submit.popover', function(e) { $.popover.hide(trigger, popover); });
       },
       hide: function(trigger, popover, options) {
@@ -307,17 +286,14 @@
         popover = popover || $('.popover:not(.permanent)');
         trigger.removeClass('active');
         options = options || {};
-        $('body').unbind('click.hidepopover');
         $(window).unbind('resize.popover').unbind('scroll.popover');
         if (!$.isFunction(options.complete)) { options.complete = function() {}; }
         if ($.support.opacity) {
           popover.fadeOut(250, function() {
-            $(window).trigger('popoverhide');
             options.complete.call(popover);
           });
         } else {
           popover.hide();
-          $(window).trigger('popoverhide');
           options.complete.call(popover);
         }
       },
@@ -346,12 +322,12 @@
         }
       },
       position: function(trigger, popover, options) {
-        options = options || {}
+        options = options || {};
         var orientation = options.orient || trigger.attr('data-popover-orient');
         if (orientation && orientation.charAt(0) == 'v') {
-          positionHorizontally(trigger, popover);
-        } else {
           positionVertically(trigger, popover);
+        } else {
+          positionHorizontally(trigger, popover);
         }
       }
     }

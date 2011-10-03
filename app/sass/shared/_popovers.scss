@@ -31,11 +31,11 @@
       }
       .lft {
         height: 75px;
-        background: transparent url(/images/assets/popover/titled_hdl40x75.png) no-repeat top left;
+        background: transparent url(/images/assets/popover/grysprite.png) no-repeat 13px 9px;
       }
       .rt {
         height: 75px;
-        background: transparent url(/images/assets/popover/titled_hdr40x75.png) no-repeat top right;
+        background: transparent url(/images/assets/popover/grysprite.png) no-repeat 0px -73px;
       }
       .pad {
         height: 75px;
@@ -43,7 +43,7 @@
       }
       .arr {
         height: 75px;
-        background: transparent url(/images/assets/popover/titled_hdarr40x75.png) repeat-x top center;
+        background: transparent url(/images/assets/popover/grysprite.png) no-repeat 0px -421px;
       }
     }
     .bd {
@@ -204,7 +204,7 @@
       top: 0px;
       left: 0px;
       height: 60px;
-      background: transparent url(/images/assets/popover/hdl40x60.png) repeat-x top center;
+      background: transparent url(/images/assets/popover/grysprite.png) no-repeat 13px -155px;
     }
     .pad {
       position: absolute;
@@ -228,7 +228,7 @@
       top: 0px;
       left: 0px; // Needs to be cornerWidth + lftCntr width
       height: 40px;
-      background: transparent url(/images/assets/popover/hdarr40x40.png) repeat-x top center;
+      background: transparent url(/images/assets/popover/grysprite.png) no-repeat 0px -510px;
     }
     .rt {
       width: 40px;
@@ -236,7 +236,7 @@
       top: 0px;
       right: 0px;
       height: 60px;
-      background: transparent url(/images/assets/popover/hdr40x60.png) repeat-x top center;
+      background: transparent url(/images/assets/popover/grysprite.png) no-repeat 0px -223px;
     }
   }
   .bd {
@@ -268,7 +268,7 @@
         right: 0px;
         height: 0px;
         max-height: 40px;
-        background: transparent url(/images/assets/popover/lftarr40x40.png) repeat-y top center;
+        background: transparent url(/images/assets/popover/grysprite.png) no-repeat 2px -303px;
       }
       .bpad {
         position: absolute;
@@ -300,7 +300,7 @@
         right: 0px;
         height: 0px;
         max-height: 40px;
-        background: transparent url(/images/assets/popover/rtarr40x40.png) repeat-y top center;
+        background: transparent url(/images/assets/popover/grysprite.png) no-repeat 5px -360px;
       }
       .bpad {
         position: absolute;
@@ -335,7 +335,7 @@
       top: 0px;
       left: 0px;
       height: 40px;
-      background: transparent url(/images/assets/popover/ftl40x40.png) repeat-x top center;
+      background: transparent url(/images/assets/popover/grysprite.png) no-repeat 12px -617px;
     }
     .pad {
       position: absolute;
@@ -359,7 +359,7 @@
       top: 0px;
       left: 0px;
       height: 40px;
-      background: transparent url(/images/assets/popover/ftarr40x40.png) repeat-x top center;
+      background: transparent url(/images/assets/popover/grysprite.png) no-repeat 0px -562px;
     }
     .rt {
       width: 40px;
@@ -367,7 +367,7 @@
       top: 0px;
       right: 0px;
       height: 60px;
-      background: transparent url(/images/assets/popover/ftr40x40.png) repeat-x top center;
+      background: transparent url(/images/assets/popover/grysprite.png) no-repeat 0px -663px;
     }
   }
 }
