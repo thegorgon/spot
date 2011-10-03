@@ -28,5 +28,5 @@
     =render :partial => "membership"
 
 -if mobile_request?
-  =link_to "Logout", logout_path, :class => "logout"
+  =button_to "Logout", session_path, :class => "logout"
     

@@ -15,7 +15,8 @@ module TagHelper
   end
   
   def button_to(text, url, options={})
-    content_tag(:form, :action => url, :method => "GET", :class => "btnwrap") do
+    method = options.delete(:method) || "GET"
+    content_tag(:form, :action => url, :method => method, :class => "btnwrap") do
       button_tag(options) do
         text
       end 
