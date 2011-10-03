@@ -6,6 +6,7 @@ module Spot
         display = options.delete(:display)
         ul_id = options.delete(:ul_id)
         (options[:html] ||= {})['data-validate'] ||= "validate" unless options.delete(:validate) == false
+        options[:html][:autocapitalize] ||= :off
         content_tag(:ul, form_for(record, options, &proc).html_safe, :class => "form #{display} accept_focus", :id => ul_id)
       end
     end
@@ -73,8 +74,8 @@ module Spot
         label_for(:first_name, options.delete(:label)) +
         hint(options.delete(:hint)) +
         @template.content_tag(:div, :class => "fields") do
-          text_field(:first_name, options.merge(:container_class => "first_name", :placeholder => "first name", :value => value.first)) + 
-          text_field(:last_name, options.merge(:container_class => "last_name", :placeholder => "last name", :value => value.last))
+          text_field(:first_name, options.merge(:container_class => "first_name", :placeholder => "first name", :value => value.first, :autocapitalize => :on)) + 
+          text_field(:last_name, options.merge(:container_class => "last_name", :placeholder => "last name", :value => value.last, :autocapitalize => :on))
         end
       end
     end

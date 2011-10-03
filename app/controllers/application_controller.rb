@@ -144,7 +144,7 @@ class ApplicationController < ActionController::Base
   end
  
   def mobile_request?
-    request.subdomains.first == 'm'
+    Rails.env.development? || request.subdomains.first == 'm'
   end
   helper_method :mobile_request?
 
