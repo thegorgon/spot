@@ -10,7 +10,10 @@
     %meta{'http-equiv' => "X-UA-Compatible", :content => "IE=edge,chrome=1"}
     = seo_tags
     = auto_discovery_link_tag(:rss, blog_index_url(:xml))
-    = favicon_link_tag("/favicon.ico")
+    = favicon_link_tag
+    = favicon_link_tag("/images/logos/appicon57x57.png", :media => "screen and (resolution: 163dpi)", :rel => "apple-touch-icon-precomposed", :type => "image/png")
+    = favicon_link_tag("/images/logos/appicon114x114.png", :media => "screen and (resolution: 326dpi)", :rel => "apple-touch-icon-precomposed", :type => "image/png")
+    = favicon_link_tag("/images/logos/appicon57x57.png", :rel => "shortcut icon", :type => "image/png")
     = open_graph_tags
     -if mobile_request?
       = iphone_meta_tags
