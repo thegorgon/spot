@@ -342,6 +342,7 @@ button.link {
 }
 @mixin btnorgpill {
   display: block;
+  padding: 0;
   @include border_radius(5px);
   background: #FFB473;
   @include gradient_top_down(#eeb96d, #ff8419); 
@@ -369,6 +370,7 @@ button.link {
 
 @mixin btngrypill {
   display: block;
+  padding: 0;
   @include border_radius(5px);
   background: #ddd;
   @include gradient_top_down(#f2f2f2, #A2A2A2); 
@@ -434,6 +436,7 @@ button.link {
 
 .btnredpill {
   display: block;
+  padding: 0;
   @include border_radius(5px);
   @include gradient_top_down(#cd7777, #c84336); 
   color: #fff;
