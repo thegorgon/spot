@@ -9,7 +9,7 @@ PHONE_NUMBER = "1-888-817-5410"
 HOSTS = {
   "production" => "www.spotmembers.com",
   "staging" => "staging.spotmembers.com",
-  "development" => "www.rails.local:3000"
+  "development" => "www.rails.loc:3000"
 }
 API_HOSTS = {
   "production" => "api.spotmembers.com",

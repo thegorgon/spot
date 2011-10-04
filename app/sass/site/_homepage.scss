@@ -404,14 +404,13 @@
     }
   }
   #toplayer {
-    .scene {
-      @include transition('left 2s');      
-    }
     &.scene2 {
       .intro {
+        @include transition('left 2s');
         left: -100%;
       }
       .map {
+        @include transition('left 2s');
         left: 0%;
       }
     }

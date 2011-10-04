@@ -6,7 +6,7 @@ class Site::HomeController < Site::BaseController
       redirect_to city_path(current_user.city)
     else
       @cities = City.visible      
-      render :layout => "site"
+      render :layout => "site.html"
     end
   end
   
