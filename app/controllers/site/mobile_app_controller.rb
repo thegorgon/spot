@@ -26,7 +26,6 @@ class Site::MobileAppController < Site::BaseController
   
   def exit
     left_mobile_app!
-    
-    redirect_to "spot-app://finished"
+    redirect_to "spot-app://#{CGI.unescape(params[:dest] || "finished")}" 
   end
 end
