@@ -13,7 +13,7 @@
 
 -if mobile_request?
   %h1.tf Congratulations and Welcome to Spot.
-  =button_to "Browse Experiences", in_mobile_app?? to_mobile_app_path(:dest => "experiences?city_id=#{city.id}") : city_path(city), :class => 'tf btnbrowse'
+  =button_to "Browse Experiences", in_mobile_app?? to_mobile_app_path(:dest => "/experiences?city_id=#{city.id}") : city_path(city), :class => 'tf btnbrowse'
     
   .image.columbus
     =img_with_mobile "paintings/columbus.png", :size => "400x300", :msize => "300x225"
