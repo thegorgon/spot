@@ -302,7 +302,7 @@ button.link {
 @mixin btngrypill {
   display: block;
   @include border_radius(5px);
-  background: #f2f2f2;
+  background: #ddd;
   @include gradient_top_down(#f2f2f2, #A2A2A2); 
   text-decoration: none;
   border: 1px solid #808080;
