@@ -15,6 +15,7 @@
       %li.pill{:class => first_or_last(@views, i)}=link_to_with_current view, send("#{view}_city_path", @city), :current => @view == view
       
 =content_for :bottom do
+  -session[:seen_city_intro] = false
   -if !mobile_request? && !current_member? && (invite_request.try(:invite_sent?) || session_invite) && !session[:seen_city_intro]
     -session[:seen_city_intro] = true
     #city_intro.clearfix.hidden{"data-title" => "Spot #{@city.name.titlecase}"}
@@ -28,6 +29,6 @@
         %p Grab it now, before it's gone!        
 
       .body.clearfix
-        =button_to "become a member", new_application_path, :class => "becomemem btnorg250x32"
+        =button_to "become a member", new_application_path, :class => "becomemem tf"
         %p.explore=link_to "Explore Benefits", city_path(@city), :class => "closer"
         %p.learn=link_to "Learn More", membership_about_path

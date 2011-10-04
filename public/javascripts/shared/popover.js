@@ -275,8 +275,8 @@
         $(window).unbind('scroll.popover').bind('scroll.popover', function() { $.popover.position(trigger, popover); });
         setTimeout(function() { // Otherwise this event might count
           var hide = function(e) {
-            $('body').unbind('.hide-popover');
             if ($(e.target).is(':not(.popover, .popover *)')) { 
+              $('body').unbind('.hide-popover');
               $.popover.hide(trigger, popover); 
             } 
             return true;

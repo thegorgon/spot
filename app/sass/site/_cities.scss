@@ -16,7 +16,8 @@
     .body {
       width: 250px;
       margin: 0 auto 10px;
-      a.becomemem {
+      .becomemem {
+        @include btnorg250x32;
         margin: 10px auto;
       }
       .explore, .learn {
