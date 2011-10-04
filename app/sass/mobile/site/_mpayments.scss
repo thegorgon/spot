@@ -59,7 +59,10 @@
     }
     .checkbox {
       cursor: pointer;
-      @include btnorg77x32;
+      @include bgbutton('org77x32', 77px, 33px);
+      height: 32px;
+      @include orgbtntxt;
+      font-size: 16px;
       margin: 5px auto 0;
       background-position: 0 0;
       &.active {

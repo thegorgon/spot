@@ -79,9 +79,7 @@
     }
   }
 }
-
-@mixin orgbtn($size, $height, $width) {
-  @include threeslicebtn('org' + $size,  $width, $height);
+@mixin orgbtntxt {
   color: #fff !important;
   text-shadow: rgba(0,0,0,0.5) 0px 1px 0px;
   text-decoration: none;
@@ -92,7 +90,12 @@
   #{$active} {
     text-shadow: rgba(0,0,0,0.5) 0px -1px 0px;
     color: #f7f7f7 !important;
-  }
+  }  
+}
+
+@mixin orgbtn($size, $height, $width) {
+  @include threeslicebtn('org' + $size,  $width, $height);
+  @include orgbtntxt;
   .loading {
     position: absolute;
     top: 0;
