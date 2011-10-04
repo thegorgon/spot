@@ -114,8 +114,7 @@ class Site::BaseController < ApplicationController
   
   def require_no_membership
     if current_member?
-      flash[:error] = "You're already a member, so you don't really need to go there."
-      redirect_to account_path
+      redirect_to thanks_membership_path
     end
   end  
 end

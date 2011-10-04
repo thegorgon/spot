@@ -138,6 +138,7 @@
               display: none;
               li.buttons {
                 button {
+                  @include orgbtn32(80px);
                   float: right;
                 }
               }

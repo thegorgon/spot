@@ -56,6 +56,11 @@
     text-align: center;
     padding-bottom: 0px;
   }
+  h1 {
+    width: 280px;
+    margin: 0 auto;
+    font-size: 15px;
+  }
   .btnbrowse {
     @include btnorg280x32;
     margin: 10px auto;

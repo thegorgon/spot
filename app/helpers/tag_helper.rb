@@ -26,10 +26,11 @@ module TagHelper
   
   def button_to(text, url, options={})
     method = options.delete(:method) || "GET"
+    params = options.delete(:params)
     content_tag(:form, :action => url, :method => method, :class => "btnwrap") do
-      button_tag(options) do
-        text
-      end 
+      hidden_fields = params.collect { |key, value| hidden_field_tag key, value }.join()
+      button = button_tag(options) { text }
+      (hidden_fields + button).html_safe
     end
   end
   
