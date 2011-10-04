@@ -105,16 +105,23 @@ class Site::BaseController < ApplicationController
     end
   end  
   
+  def current_member?
+    if @current_member.nil?
+      @current_member = !!current_user.try(:member?)
+    end
+    @current_member
+  end
+  helper_method :current_member?
+  
   def require_membership
-    unless current_user.try(:active_membership)
+    unless current_member?
       flash[:error] = "Sorry, that's for members only."
-      application = current_user.membership_application
-      redirect_to application ? application_path : new_application_path
+      redirect_to current_user.try(:ready_for_membership?) ? new_membership_path : new_application_path
     end
   end
   
   def require_no_membership
-    if current_user.try(:active_membership)
+    if current_member?
       flash[:error] = "You're already a member, so you don't really need to go there."
       redirect_to account_path
     end

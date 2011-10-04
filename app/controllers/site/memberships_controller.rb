@@ -3,8 +3,8 @@ class Site::MembershipsController < Site::BaseController
   before_filter :require_user
   before_filter :update_users_city_to_current, :only => [:new]
   before_filter :require_user_preparations, :only => [:new, :create]
-  before_filter :require_no_membership, :except => [:destroy, :thanks]
-  before_filter :require_membership, :only => [:destroy, :thanks]
+  before_filter :require_no_membership, :except => [:destroy, :show, :thanks]
+  before_filter :require_membership, :only => [:destroy, :show, :thanks]
   
   def new
     @payment ||= PaymentForm.new(:user => current_user, :plan => params[:plan] || Subscription::PLANS.keys.first)

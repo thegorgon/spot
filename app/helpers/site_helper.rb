@@ -9,14 +9,7 @@ module SiteHelper
       :mobile => mobile_request?
     }.to_json
   end
-  
-  def current_member?
-    if @current_member.nil?
-      @current_member = !!current_user.try(:member?)
-    end
-    @current_member
-  end
-  
+    
   def profile(name, email_or_url, title, options={})
     names = name.split(' ')
     if mobile_request?
