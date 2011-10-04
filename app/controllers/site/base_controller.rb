@@ -104,15 +104,7 @@ class Site::BaseController < ApplicationController
       redirect_to new_session_path 
     end
   end  
-  
-  def current_member?
-    if @current_member.nil?
-      @current_member = !!current_user.try(:member?)
-    end
-    @current_member
-  end
-  helper_method :current_member?
-  
+    
   def require_membership
     unless current_member?
       flash[:error] = "Sorry, that's for members only."

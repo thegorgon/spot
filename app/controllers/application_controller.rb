@@ -28,6 +28,14 @@ class ApplicationController < ActionController::Base
   end
   helper_method :in_mobile_app?
   
+  def current_member?
+    if @current_member.nil?
+      @current_member = !!current_user.try(:member?)
+    end
+    @current_member
+  end
+  helper_method :current_member?
+  
   # Traffic Management
   def traffic_source
     href = request.referer
