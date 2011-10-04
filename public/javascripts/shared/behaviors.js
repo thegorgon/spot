@@ -250,27 +250,46 @@
         $(this).unbind('mouseleave.remove-active');
       });
     },
+    transformOnFocus: function() {
+      $(this).filter('input').each(function(i) {
+        var transform = function(elem) {
+          $(elem).css('text-transform', $(elem).attr('data-transform'));
+        };
+        $(this).unbind('.transform-on-focus').bind('focus.transform-on-focus', function(e) {
+          transform(this);
+        }).bind('blur.transform-on-focus', function(e) {
+          if ($(this).val() === '') {
+            $(this).css('text-transform', 'none');
+          }
+        });
+        if ($(this).val() !== '') {
+          transform(this);
+        }
+      })
+    },
     touchOptimize: function() {
       var cssclass = "active",
         radius = 20,
         onTouchMove = function(e) {
           var touch = e.originalEvent.touches[0],
-            x = touch.pageX, 
-            y = touch.pageY,
-            offset = $(this).offset(),
-            left = offset.left - radius,
-            top = offset.top - radius,
-            bottom = top + $(this).outerHeight() + radius,
-            right = left + $(this).outerWidth() + radius;
-        
-          if (x > left && x < right && y > top && y < bottom) {
+            x = touch.clientX, 
+            y = touch.clientY,
+            original = $(this).data('touch-start') || {};
+          original.x = original.x || x;
+          original.y = original.y || y;
+
+          if (Math.abs(x - original.x) <= radius && Math.abs(y - original.y) <= radius) {
             e.preventDefault();
             $(this).addClass(cssclass);
           } else {
             $(this).removeClass(cssclass);
           }
         }, onTouchStart = function(e) {
-          e.preventDefault();
+          var touch = e.originalEvent.touches[0];
+          if ($(this).is('button')) {
+            e.preventDefault();            
+          }
+          $(this).data('touch-start', {x: touch.clientX, y: touch.clientY})
           $(this).addClass(cssclass);
           $(this).bind('touchmove.touchemulate', onTouchMove);
           $(this).bind('touchend.touchemulate', onTouchEnd);
@@ -279,13 +298,14 @@
           $(this).unbind('touchend.touchemulate');
           if ($(this).hasClass(cssclass)) {
             $(this).removeClass(cssclass);
-            $(this).trigger(jQuery.Event('click', {target: this, pageX: e.pageX, pageY: e.pageY}));
+            if ($(this).is('button')) {
+              $(this).trigger(jQuery.Event('click', {target: this, pageX: e.pageX, pageY: e.pageY}));
+            }
           }
-          return false
         };
       
-      $(this).unbind('.touchemulate').
-        bind('touchstart.touchemulate', onTouchStart);
+      $(this).die('.touchemulate').
+        live('touchstart.touchemulate', onTouchStart);
     }  
   });
 }(jQuery));
@@ -301,7 +321,7 @@
         fetch('[placeholder]').placeholder();
       }
       if (Modernizr.touch) {
-        fetch('button').touchOptimize();
+        fetch('a, button').touchOptimize();
       } else {
         fetch('a, button').activeClass();
       }
@@ -338,6 +358,7 @@
       fetch('li.invalid input, input.invalid').focus(function(e) {
         $(this).parent('li').add(this).removeClass('invalid');
       });
+      fetch('input[data-transform]').transformOnFocus();
       fetch('[data-master-control]').masterControl();
       fetch('.rowlink').rowLink();
       fetch('.tabbar').tabBar();

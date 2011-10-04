@@ -49,3 +49,10 @@
     }
   }
 }
+.evtdis {
+  &.active {
+    .disclosure {
+      display: block;
+    }
+  }
+}

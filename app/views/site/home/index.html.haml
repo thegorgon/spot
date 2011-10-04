@@ -2,7 +2,7 @@
   %ul#slidedeck
     %script#slidetpl{:type => "x-jquery-tmpl"}
       %li.slide.stretcher{"data-gravity" => "${gravity}", "title" => "${title}"}
-        %img{:src => "${slide}", :size => "${size}"}
+        %img{:src => "${slide}"}
 
 =content_for :footer do
   %nav.icons.clearfix
@@ -70,7 +70,7 @@
                 .bolt
               =button_tag :class => "btnorg77x28 unlock tf" do
                 Unlock
-              =f.text_field :code, :placeholder => "invitation code", :container_class => "left", :required => true, :value => session_invite.try(:code)
+              =f.text_field :code, :placeholder => "invitation code", :container_class => "left", :required => true, :value => session_invite.try(:code), 'data-transform' => 'uppercase'
           
           =spot_form_for :credentials, :url => session_path, :ul_id => "member_form", :display => "faded clearfix" do |f|
             %h2.tf Member Login

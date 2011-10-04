@@ -77,19 +77,26 @@
       scenes = top.find('.scene');
       
       initMap = function(fn) {
-        $('html, body').animate({scrollTop: 0}, 1000);
-        if (Modernizr.csstransitions) { top.addClass('scene2'); }
-        else { 
-          top.addClass('jsanimation');
-          scenes.eq(0).animate({left: '-100%'}, 1000);
-          scenes.eq(1).animate({left: '0%'}, 750);
-        }
-        slideshow.stop();
-        if (fn) {
-          $('.city').unbind('click.submit').bind('click.submit', function(e) {
-            e.preventDefault();
-            fn.call(this);
-          });
+        $('input').blur();
+        var init = function() {
+          if (Modernizr.csstransitions) { top.addClass('scene2'); }
+          else { 
+            top.addClass('jsanimation');
+            scenes.eq(0).animate({left: '-100%'}, 1000);
+            scenes.eq(1).animate({left: '0%'}, 750);
+          }
+          slideshow.stop();
+          if (fn) {
+            $('.city').unbind('click.submit').bind('click.submit', function(e) {
+              e.preventDefault();
+              fn.call(this);
+            });
+          }
+        };
+        if ($(window).scrollTop() > 0) {
+          $('html, body').animate({scrollTop: 0}, 500, init);
+        } else {
+          init();
         }
       };
       

@@ -189,9 +189,7 @@
                 @include transition("width 0.5s");
               }
               input {
-                font-family: monospace;
                 @include transition("width 0.5s");
-                text-transform: uppercase;
                 width: 230px;
                 float: left;
               }

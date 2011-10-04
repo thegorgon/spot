@@ -3,7 +3,7 @@
 
 =content_for :bgimage do
   .stretcher{'data-gravity' => "1.0x1.0"}
-    =image_tag "stretcher/cities/sf3.jpg", :size => "2292x1524"
+    =image_tag "stretcher/cities/sf3.jpg"
 
 =content_for :toptitle do
   Become a Founding Spot Member
@@ -68,7 +68,7 @@
 
     #promocodefields.note
       =f.fields_for :custom_fields do |cf|
-        =cf.text_field :promo_code, :placeholder => "promo code", :formnovalidate => true, :label => "Apply Promo Code : ", :class => "code"
+        =cf.text_field :promo_code, :placeholder => "promo code", :formnovalidate => true, :label => "Apply Promo Code : ", :class => "code", "data-transform" => "uppercase"
   
   .ccfields
     %h2.tf 2. Enter your credit card information

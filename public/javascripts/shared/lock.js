@@ -33,7 +33,7 @@
             invitationCode.val(lock.val());
             form.addClass('unlockable');
             self.blur();
-            li.removeClass('loading').removeClass('invalid').addClass('valid');
+            li.removeClass('loading').removeClass('invalid').removeClass('valid');
           } else {
             form.find('.vouched').slideUp();
             lock.removeAttr('disabled');

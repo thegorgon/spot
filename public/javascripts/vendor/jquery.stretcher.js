@@ -25,6 +25,7 @@
         off.left = Math.round(gravityLeft * (cW - dims.w));
         resize.css({width: dims.w, height: dims.h, top: off.top, left: off.left});
       }
+      return this;
     },
     stretcher: function(options) {
       options = options || {};
@@ -34,7 +35,7 @@
       $(this).width(width).height(height).each(function(i) {
         var self = $(this);
         options.gravity = options.gravity || self.attr('data-gravity');
-        self.find('img').sizeToFit(self, options);
+        self.find('img').sizeToFit(self, options).show().css('opacity', 1.0);
       });
     }
   });

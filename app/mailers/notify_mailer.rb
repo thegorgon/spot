@@ -5,12 +5,12 @@ class NotifyMailer < ApplicationMailer
          
   def msg(msg, to=nil)
     @msg = msg
-    mail(:to => to || "jesse@spotmembers.com", :subject => "New Message from Spot")
+    mail(:to => to || "jesse@spotmembers.com", :subject => "New Message from Spot - #{Rails.env}")
   end
   
   def data_msg(title, data)
     @data = data
-    mail(:subject => "New Data Message from Spot")
+    mail(:subject => "New Data Message from Spot - #{Rails.env}")
   end
   
   private

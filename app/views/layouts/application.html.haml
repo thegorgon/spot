@@ -21,7 +21,6 @@
     -if in_mobile_app? && @spot_app_title.present? 
       =meta_name("x-spot-app-title", @spot_app_title)       
     = yield :meta
-    = js_trigger_tag
     = include_javascripts :head
     = yield :stylesheets
     -if Rails.env.production?

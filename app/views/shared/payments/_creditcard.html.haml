@@ -14,7 +14,7 @@
     -if form
       .editmode
         .security
-        .username=form.text_field :cardholder_name, :value => creditcard.cardholder_name, :required => true
+        .username=form.text_field :cardholder_name, :value => creditcard.cardholder_name, :required => true, 'data-transform' => 'uppercase'
         =form.text_field :number, :placeholder => "number", :class => "ccnumber", :required => true, 'data-subtype' => 'creditcard', :container_class => "numcontainer"
         =form.text_field :cvv, :placeholder => "CVV", :class => "cvv", :container_class => "cvvcontainer", :required => true, 'data-subtype' => 'cvv'
         %li.select.expiration.left

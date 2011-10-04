@@ -27,6 +27,6 @@
     =render :partial => "events"
     =render :partial => "membership"
 
--if mobile_request?
-  =button_to "Logout", session_path, :class => "logout"
+  -if mobile_request? && !in_mobile_app?
+    =button_to "Logout", session_path, :class => "logout"
     

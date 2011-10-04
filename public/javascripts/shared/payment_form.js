@@ -99,6 +99,7 @@
       input.val(''); 
       input.data('lastsent', '');
       input.blur();
+      input.parents('li:first').removeClass('valid').removeClass('invalid').removeClass('loading');
     },
     setPromoCode = function(input, data) {
       if (data) {

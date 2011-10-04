@@ -11,7 +11,13 @@ html {
     }
   }
 }
-
+.stretcher {
+  img {
+    display: none;
+    opacity: 0;
+    @include transition(opacity 0.25s);
+  }
+}
 .vcc {
   display: table;
   width: 100%;

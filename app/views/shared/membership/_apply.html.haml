@@ -27,7 +27,7 @@
     %li.question.tf=f.label :lock, "Spot Membership is currently available by invitation only"
     .inputs
       =f.li_wrap "lock", "tet_field" do
-        =text_field_tag :lock, session_invite.try(:code), :placeholder => "invitation code", :formnovalidate => true, :class => "text code", :autocomplete => "off", :id => "application_lock"
+        =text_field_tag :lock, session_invite.try(:code), :placeholder => "invitation code", :formnovalidate => true, :class => "text code", :autocomplete => "off", :id => "application_lock", 'data-transform' => 'uppercase'
         
       =button_tag :class => "btnorg77x28 unlock" do
         Unlock

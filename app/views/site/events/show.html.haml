@@ -1,6 +1,6 @@
 =content_for :bgimage do
   .stretcher{'data-gravity' => "0.5x0.5"}
-    =image_tag "stretcher/event/photo#{@promotion.id.modulo(4) + 1}.jpg", :size => "2292x1524"
+    =image_tag "stretcher/event/photo#{@promotion.id.modulo(4) + 1}.jpg"
 
 =content_for :above do
   -unless current_member?

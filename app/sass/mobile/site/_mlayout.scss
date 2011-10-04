@@ -1,4 +1,5 @@
 html, body {
+  -webkit-user-select: none;
   #bd {
     top: 0;
     left: 0;
@@ -95,6 +96,7 @@ html {
       line-height: 41px;
     }
     .cookie {
+      overflow: hidden;
       color: #000;
       width: 300px;
       font-size: 14px;
@@ -307,6 +309,7 @@ html {
         }
       }
       .main {
+        -webkit-user-select: text;
         position: relative;
         background: #f0f0f0;
         padding: 10px 0;

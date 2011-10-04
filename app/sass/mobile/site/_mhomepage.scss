@@ -181,8 +181,6 @@
                 @include transition("width 0.5s");
                 width: 132px;
                 float: left;
-                font-family: monospace;
-                text-transform: uppercase;
               }
               .unlock {
                 @include transition("right 0.5s");
