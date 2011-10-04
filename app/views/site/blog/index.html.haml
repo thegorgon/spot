@@ -48,45 +48,44 @@
         -unless @posts.last_page?
           .next.right
             =link_to "Older Items >", blog_index_path(params.slice("q", "tag", "per_page").merge("page" => @posts.next_page))
-          
-    -unless mobile_request?
-      #rightrailcontainer.right
-        #rightrail
-          .about.section.first
-            .image=image_tag "logos/appicon57x57.png", :size => "57x57"
-            Spot is a private membership club for people who love to dine out. Spot Members receive exclusive access to VIP privileges, unique promotions and unforgettable experiences at the best restaurants in town. Want in? 
-            =button_to "Join Spot Now", root_url, :class => "tf btnorg175x32"
-      
-          .tags.section
-            %h3.tf Topics
-            %ul.clearfix
-              -BlogPost::TOPICS.each do |tag|
-                %li.tag="#{link_to tag, blog_index_path(:tag => tag)},".html_safe
-              %li.tag=link_to "All", blog_index_path
-          .search.section
-            %h3.tf Search
-            %ul.form.search.light.accept_focus
-              =form_tag blog_index_path, :method => :get, :autocomplete => "off" do
-                -if params[:tag]
-                  =hidden_field_tag :tag, params[:tag]
-                %label{:for => "search_query_text"}
-                  %li.search_icon
-                  %li.search.accept_focus=text_field_tag :q, "", :id => "search_query_text"
-          .all_entries.section
-            =link_to "All Entries", blog_index_path
-          .engage.section
-            %h3.tf Engage!
-            %ul
-              %li
-                %a{:href => "http://twitter.com/spotteam", :class => "twitter-follow-button", "data-show-count" => "false"} Follow @spotteam
-              %li.facebook
-                %fb:like{:href => "http://www.facebook.com/JoinSpot", :send => "true", :layout => "button_count", :show_faces => "false", :font => "lucida grande"}
-              %li
-                =link_to "Subscribe", blog_index_url(:xml), :class => "rss tf"
-          %hr
-          .section.contact
-            %p Want to share your wishlist? Got a guest post you'd love to write? 
-            %p 
-              We're looking for food bloggers and restaurant mavens to feature - 
-              =mail_to "jgraham@spotmembers.com", "send us an email"
-              to learn more.
+  -unless mobile_request?
+    #rightrailcontainer.right
+      #rightrail
+        .about.section.first
+          .image=image_tag "logos/appicon57x57.png", :size => "57x57"
+          Spot is a private membership club for people who love to dine out. Spot Members receive exclusive access to VIP privileges, unique promotions and unforgettable experiences at the best restaurants in town. Want in? 
+          =button_to "Join Spot Now", root_url, :class => "tf btnorg175x32"
+
+        .tags.section
+          %h3.tf Topics
+          %ul.clearfix
+            -BlogPost::TOPICS.each do |tag|
+              %li.tag="#{link_to tag, blog_index_path(:tag => tag)},".html_safe
+            %li.tag=link_to "All", blog_index_path
+        .search.section
+          %h3.tf Search
+          %ul.form.search.light.accept_focus
+            =form_tag blog_index_path, :method => :get, :autocomplete => "off" do
+              -if params[:tag]
+                =hidden_field_tag :tag, params[:tag]
+              %label{:for => "search_query_text"}
+                %li.search_icon
+                %li.search.accept_focus=text_field_tag :q, "", :id => "search_query_text"
+        .all_entries.section
+          =link_to "All Entries", blog_index_path
+        .engage.section
+          %h3.tf Engage!
+          %ul
+            %li
+              %a{:href => "http://twitter.com/spotteam", :class => "twitter-follow-button", "data-show-count" => "false"} Follow @spotteam
+            %li.facebook
+              %fb:like{:href => "http://www.facebook.com/JoinSpot", :send => "true", :layout => "button_count", :show_faces => "false", :font => "lucida grande"}
+            %li
+              =link_to "Subscribe", blog_index_url(:xml), :class => "rss tf"
+        %hr
+        .section.contact
+          %p Want to share your wishlist? Got a guest post you'd love to write? 
+          %p 
+            We're looking for food bloggers and restaurant mavens to feature - 
+            =mail_to "jgraham@spotmembers.com", "send us an email"
+            to learn more.
