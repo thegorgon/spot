@@ -28,9 +28,9 @@ module TagHelper
     method = options.delete(:method) || "GET"
     params = options.delete(:params)
     content_tag(:form, :action => url, :method => method, :class => "btnwrap") do
-      hidden_fields = params.collect { |key, value| hidden_field_tag key, value }.join()
+      hidden_fields = params.collect { |key, value| hidden_field_tag key, value }.join() if params
       button = button_tag(options) { text }
-      (hidden_fields + button).html_safe
+      (hidden_fields.to_s + button).html_safe
     end
   end
   
