@@ -25,8 +25,11 @@ test:
 staging:
   <<: *common
   port: 9313
+  config_file: "/etc/searchd/searchd.conf"
   searchd_log_file: "/u/app/current/log/searchd.log"
   query_log_file: "/u/app/current/log/query.log"
   pid_file: "/u/app/shared/pids/searchd.pid"
   bin_path: "/usr/local/bin"
   version: "0.9.9"
+  searchd_file_path: "/u/app/shared/db/sphinx"
+  
