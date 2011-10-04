@@ -46,6 +46,7 @@ class PromotionCode < ActiveRecord::Base
   def issue_to!(user)
     self.class.transaction do
       update_attributes!(:owner_id => user.id, :issued_at => Time.now)
+      user.touch(:updated_at)
       event.try(:sold!)
     end
   end
@@ -53,6 +54,7 @@ class PromotionCode < ActiveRecord::Base
   def unissue!
     if issued?
       self.class.transaction do
+        owner.touch(:updated_at)
         update_attributes!(:owner_id => nil, :issued_at => nil)
         event.try(:unsold!)
       end
