@@ -18,22 +18,13 @@
     -if describe
       .content.clearfix
         %h1.tagline.tf 
-          A Private Membership Club for 
-          =@city ? @city.name.titlecase : "Discerning"
-          Diners
-        -if mobile_request?
-        -else
-          .left.column
-            %p 
-              %span.tf Membership.
-              A members-only club, limited to 10,000 tastemakers. 
-              Restaurants offer VIP status and access to special experiences to connect with our influential members.
-      
-          .right.column
-            %p 
-              %span.tf Experiences.
-              Secret menus, chefs' tables, kitchen tours, special wine pairings, private tastings, members-only pricing, free corkage, and more&hellip;membership entitles you to unlimited access to all of these.
-      
+          For just 
+          ="$#{MONTHLY_PRICE} a month,"
+          Spot Members get access to 
+          special perks 
+          at top restaurants 
+          all over town.
+          
       -if invite_request && !invite_request.invite_sent?
         .clear.request_received
           %h1.tf.center
@@ -42,13 +33,9 @@
             =link_to "Read more&hellip;".html_safe, membership_about_path, :class => "btnmemabout"
       -else
         .clear.actions
-          .freetrial
-            ="Try it Free for #{pluralize(session_promo.try(:duration) || 1, "Month")}"
-          =button_to "become a member", new_application_path, :class => "becomemember btnmembership tf centered"
+          =button_to "try it free", new_application_path, :class => "becomemember btnmembership tf centered"
           .readmore
             =link_to "Read more&hellip;".html_safe, membership_about_path, :class => "btnmemabout"
-          .pricing
-            %strong="$#{MONTHLY_PRICE} per month"
     -else
       .title.clearfix
         %h1.tf.membership

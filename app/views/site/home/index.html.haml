@@ -34,12 +34,12 @@
   .intro.scene
     .content.clearfix
       .describe.half
-        Spot Members receive
-        %em exclusive access 
-        to VIP privileges, unique promotions, and 
-        %strong unforgettable experiences 
-        at the 
-        %em best restaurants in town.
+        For just 
+        =content_tag(:em, "$#{MONTHLY_PRICE} a month") + ","
+        Spot Members get access to 
+        %strong special perks 
+        at top restaurants 
+        all over town.
       .entrance.half{:class => "request"}
         -if current_user && city = current_user.city
           %h2.center.tf="Welcome Back #{current_user.first_name}"

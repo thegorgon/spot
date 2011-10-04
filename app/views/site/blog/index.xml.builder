@@ -5,7 +5,7 @@ xml.rss :version => "2.0" do
     xml.description "Covering first-rate food and drink in San Francisco and beyond"
     xml.link blog_index_url
 
-     @posts.each do |post|
+     @posts.to_a.each do |post|
       xml.item do
         if post.kind_of?(Wrapr::Tumblr::Regular)
           xml.title post.title.html_safe
