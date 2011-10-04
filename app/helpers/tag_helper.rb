@@ -14,7 +14,7 @@ module TagHelper
     button << "<div class=\"rgt\"></div>"
     button << "<div class=\"btntxt\">" 
     button << capture(&block) if block
-    button << "</div></button>"
+    button << "</div></#{tag}>"
     button.html_safe
   end
   
@@ -27,10 +27,15 @@ module TagHelper
   def button_to(text, url, options={})
     method = options.delete(:method) || "GET"
     params = options.delete(:params)
-    content_tag(:form, :action => url, :method => method, :class => "btnwrap") do
-      hidden_fields = params.collect { |key, value| hidden_field_tag key, value }.join() if params
-      button = button_tag(options) { text }
-      (hidden_fields.to_s + button).html_safe
+    if method != "GET" || mobile_request?
+      content_tag(:form, :action => url, :method => method, :class => "btnwrap") do
+        hidden_fields = params.collect { |key, value| hidden_field_tag key, value }.join() if params
+        button = button_tag(options) { text }
+        (hidden_fields.to_s + button).html_safe
+      end
+    else
+      url = url + "?#{params.to_query}" if params
+      link_button_to text, url, options
     end
   end
   
