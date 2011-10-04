@@ -1,10 +1,11 @@
 class BlitzMailer < ApplicationMailer
+  ASRCID = 53
   layout 'blitz'
   
   def email(request, options={})
     @day = options[:day] || request.blitz_count + 1
     options[:invite] = "INVITE3FREE" if @day == 10
-    @portal_url = portal_url(:mc => options[:invite] || InviteRequest.random_code.code, :cid => request.city.id, :ir => request.id)
+    @portal_url = new_application_url(:mc => options[:invite] || InviteRequest.random_code.code, :asrc => ASRCID, :ir => request.id)
     @city = request.city
     @email = request.email
     @reason = "#{schedule[:subject][@day - 1]}"

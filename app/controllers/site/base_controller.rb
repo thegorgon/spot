@@ -37,7 +37,7 @@ class Site::BaseController < ApplicationController
       source_id = source.try(:id)
       session[:original_acquisition_source_id] ||= source_id # or equal, only set if not yet set
       session[:acquisition_source_id] = source_id # resets, always store
-      source.clicked!(current_user)
+      source.clicked!(current_user) if source
       record_acquisition_event("click")
     end
   end
