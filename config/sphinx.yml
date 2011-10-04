@@ -17,6 +17,7 @@ production:
   address: "sphinx1.ec2"
   bin_path: "/usr/local/sphinx/bin"
   version: "0.9.9"
+  searchd_file_path: "/u/app/shared/db/sphinx"
 
 test:
   <<: *common

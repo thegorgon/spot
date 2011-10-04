@@ -97,7 +97,7 @@ namespace :deploy do
     end
     desc "Symlink db from shared"
     task :symlink, :roles => :bg do
-      run "rm -fr #{release_path}/db/sphinx && ln -nfs #{shared_path}/sphinx #{release_path}/db/sphinx"
+      # run "rm -fr #{release_path}/db/sphinx && ln -nfs #{shared_path}/sphinx #{release_path}/db/sphinx"
     end
     desc "Stop sphinx"
     task :stop, :roles => :bg do
