@@ -1,5 +1,5 @@
 namespace :db do
-  HOSTS       = { "production" => "masterdb.ec2" }
+  DBHOSTS       = { "production" => "masterdb.ec2" }
   TUNNELS     = { "production" => "spot1.ec2", "staging" => "spotstaging.ec2" }
   PRESETS     = { "places"     => "cities places google_places gowalla_places facebook_places foursquare_places yelp_places",
                   "members"    => "invitation_codes promotion_codes membership_applications users facebook_accounts password_accounts memberships subscriptions credit_cards",
@@ -19,7 +19,7 @@ namespace :db do
     remote_db   = db_config[@remote_env]
     local_db    = db_config[Rails.env]
     tunnel      = TUNNELS[@remote_env]
-    host        = HOSTS[@remote_env]
+    host        = DBHOSTS[@remote_env]
     # Tell the User What You're Doing
     puts "connecting to #{tunnel} and generating dump from #{host} of tables : #{@tables}"
     # Generate The Dump
