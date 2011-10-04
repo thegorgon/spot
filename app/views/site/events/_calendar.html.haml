@@ -39,6 +39,6 @@
           
 .subtitles.clearfix
   .left
-    -if enddate > startdate + 2.weeks
+    -if promotion.events.upcoming.length > 0 && (enddate > startdate + 2.weeks)
       =link_to "more", "#", :rel => ".availability", "data-toggle-class" => "showall", :class => "show"
       =link_to "fewer", "#", :rel => ".availability", "data-toggle-class" => "showall", :class => "hide"
