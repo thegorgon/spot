@@ -51,6 +51,7 @@
     }
   }
   .paymentoption {
+    display: block;
     height: 50px;
     width: 350px;
     padding: 17px 7px;
@@ -63,13 +64,11 @@
     }
     &.grande {
       .benefits {
-        margin-left: 30px;
+        margin-left: 52px;
       }
       .mval {
-        .mval {
-          width: 30px;
-          padding-right: 46px;
-        }
+        width: 30px;
+        padding-right: 46px;
       }
     }
     .checkbox {

@@ -1,17 +1,27 @@
 module TagHelper
   def button_tag(options={}, &block)
-    options[:type] ||= 'submit'
+    tag = options.delete(:tag) || "button"
+    options[:type] ||= 'submit' if tag == "button"
     show_loading = !!options.delete(:loading)
-    button = "<button"
+    button = "<#{tag}"
     options.each do |k, v|
       button << " #{k}=\"#{v}\""
     end
     button << ">"
     button << "<div class=\"loading\"></div>" if show_loading
+    button << "<div class=\"lft\"></div>"
+    button << "<div class=\"mid\"></div>"
+    button << "<div class=\"rgt\"></div>"
     button << "<div class=\"btntxt\">" 
     button << capture(&block) if block
     button << "</div></button>"
     button.html_safe
+  end
+  
+  def link_button_to(text, url, options={})
+    button_tag(options.merge!(:href => url, :tag => "a")) do
+      text
+    end
   end
   
   def button_to(text, url, options={})

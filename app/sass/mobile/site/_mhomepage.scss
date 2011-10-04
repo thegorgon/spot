@@ -185,6 +185,7 @@
               .unlock {
                 @include transition("right 0.5s");
                 position: absolute;
+                z-index: 1;
                 width: 77px;
                 height: 28px;
                 top: 11px;

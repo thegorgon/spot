@@ -18,7 +18,69 @@
     line-height: 17px; /* Safari */
   }
 }
-@mixin orgbtn {
+@mixin threeslicebtn($bg, $width, $height) {
+  background: transparent;
+  line-height: $height;
+  height: $height;
+  width: $width;
+  display: block;
+  border: 0; 
+	padding: 0;
+  text-align: center;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  position: relative;
+  .btntxt {
+    position: relative;
+    z-index: 2;
+    line-height: $height;
+  }
+  .lft {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 15px;
+    background: transparent url("/images/buttons/" + $bg + "caps.png") no-repeat 0 0;
+  }
+  .rgt {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 15px;
+    background: transparent url("/images/buttons/" + $bg + "caps.png") no-repeat -15px 0;
+  }
+  .mid {
+    position: absolute;
+    right: 15px;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    background: transparent url("/images/buttons/" + $bg + "mid.png") repeat-x 0 0;
+  }
+  #{$hover} {
+    .rgt {
+      background-position: -15px -1 * $height - 1px;
+    } 
+    .mid, .lft {
+      background-position: 0px -1 * $height - 1px;
+    }
+  }    
+  #{$active} {
+    .rgt {
+      background-position: -15px -2 * $height - 2px;
+    } 
+    .mid, .lft {
+      background-position: 0px -2 * $height - 2px;
+    }
+  }
+}
+
+@mixin orgbtn($size, $height, $width) {
+  @include threeslicebtn('org' + $size,  $width, $height);
   color: #fff !important;
   text-shadow: rgba(0,0,0,0.5) 0px 1px 0px;
   text-decoration: none;
@@ -31,11 +93,31 @@
     color: #f7f7f7 !important;
   }
   .loading {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
     background: transparent url(/images/assets/loading/whtorg3blck16x11.gif) no-repeat center center;
   }
 }
+@mixin orgbtn41($width) {
+  @include orgbtn(41, 41px, $width);
+  font-size: 25px;
+  line-height: 28px;
+}
+@mixin orgbtn32($width) {
+  @include orgbtn(32, 32px, $width);
+  font-size: 18px;
+  line-height: 25px;
+}
+@mixin orgbtn28($width) {
+  @include orgbtn(28, 28px, $width);
+  font-size: 16px;
+  line-height: 21px;
+}
+
 @mixin blackbtn {
   color: #fff !important;
   text-decoration: none;
@@ -62,6 +144,8 @@
 }
 
 button, .button {
+  white-space: nowrap;	
+  overflow: visible; /* removes extra side padding in IE */
   outline: none;
   display: block;
   text-decoration: none;
@@ -72,17 +156,29 @@ button, .button {
   overflow: visible;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   @extend .no_select;
+  div {
+    padding: 0;
+    border: 0;
+    margin: 0;
+  }
   .loading {
     display: none;
   }
+  &::-moz-focus-inner {
+    padding: 0;
+    border: none;  /* overrides extra padding in Firefox */
+  }
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  /* Safari and Google Chrome only - fix margins */
+  button {
+    .btntxt {
+      margin-top: -1px;
+    }
+  }
 }
 .button {
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
   padding: 0;
-}
-button[type]{
-  padding: 5px 5px; /* Firefox */
-  line-height: 17px; /* Safari */
 }
 form.loading {
   button {
@@ -134,112 +230,80 @@ button.link {
   @include btnlink;
 }
 @mixin btnorg300x41 {
-  @include bgbutton('org300x41', 300px, 43px);
-  @include orgbtn;
-  height: 41px;
-  font-size: 25px;
+  @include orgbtn41(300px);
 }
 .btnorg300x41, a.btnorg300x41 {
   @include btnorg300x41;
 }
 @mixin btnorg200x41 {
-  @include bgbutton('org200x41', 200px, 43px);
-  @include orgbtn;
-  height: 41px;
-  font-size: 25px;
+  @include orgbtn41(200px);
 }
 .btnorg200x41, a.btnorg200x41 {
   @include btnorg200x41;
 }
 @mixin btnorg170x41 {
-  @include bgbutton('org170x41', 170px, 43px);
-  @include orgbtn;
-  line-height: 38px;
-  height: 41px;
-  font-size: 25px;
+  @include orgbtn41(170px);
 }
 .btnorg170x41, a.btnorg170x41 {
   @include btnorg170x41;
 }
 @mixin btnorg175x32 {
-  @include bgbutton('org175x32', 175px, 33px);
-  @include orgbtn;
-  font-size: 18px;
+  @include orgbtn32(175px);
 }
 .btnorg175x32, a.btnorg175x32 {
   @include btnorg175x32;
 }
 @mixin btnorg200x32 {
-  @include bgbutton('org200x32', 200px, 33px);
-  @include orgbtn;
-  font-size: 18px;
+  @include orgbtn32(200px);
 }
 .btnorg200x32, a.btnorg200x32 {
   @include btnorg200x32;
 }
 @mixin btnorg220x32 {
-  @include bgbutton('org220x32', 220px, 33px);
-  @include orgbtn;
-  font-size: 18px;
+  @include orgbtn32(220px);
 }
 .btnorg220x32, a.btnorg220x32 {
   @include btnorg220x32;
 }
 @mixin btnorg250x32 {
-  @include bgbutton('org250x32', 250px, 33px);
-  @include orgbtn;
-  font-size: 18px;
+  @include orgbtn32(250px);
 }
 .btnorg250x32, a.btnorg250x32 {
   @include btnorg250x32;
 }
 @mixin btnorg280x32 {
-  @include bgbutton('org280x32', 280px, 33px);
-  @include orgbtn;
-  font-size: 18px;
+  @include orgbtn32(280px);
 }
 .btnorg280x32, a.btnorg280x32 {
   @include btnorg280x32;
 }
-
 @mixin btnorg280x41 {
-  @include bgbutton('org280x41', 280px, 43px);
-  @include orgbtn;
-  height: 41px;
-  font-size: 25px;
+  @include orgbtn41(280px);
 }
 .btnorg280x41, a.btnorg280x41 {
   @include btnorg280x41;
 }
 
 @mixin btnorg77x32 {
-  @include bgbutton('org77x32', 77px, 33px);
-  @include orgbtn;
-  font-size: 18px;
+  @include orgbtn32(77px);
 }
 .btnorg77x32, a.btnorg77x32 {
   @include btnorg77x32;
 }
 @mixin btnorg77x28 {
-  @include bgbutton('org77x28', 77px, 29px);
-  @include orgbtn;
-  font-size: 16;
+  @include orgbtn28(77px);
 }
 .btnorg77x28, a.btnorg77x28 {
   @include btnorg77x28;
 }
 @mixin btnorg100x32 {
-  @include bgbutton('org100x32', 100px, 33px);
-  @include orgbtn;
-  font-size: 18px;
+  @include orgbtn32(100px);
 }
 .btnorg100x32, a.btnorg100x32 {
   @include btnorg100x32;
 }
 @mixin btnorg115x32 {
-  @include bgbutton('org115x32', 115px, 33px);
-  @include orgbtn;
-  font-size: 18px;
+  @include orgbtn32(115px);
 }
 .btnorg115x32, a.btnorg115x32 {
   @include btnorg115x32;

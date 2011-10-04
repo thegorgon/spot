@@ -2,8 +2,7 @@
   .clearfix.titlebar
     %h1.tagline.tf.left
       Have Who You Want When You Want at Your Spot
-    %a.btnorg100x32.tf.right{:href => new_biz_account_path}
-      Sign Up
+    =link_button_to("Sign Up", new_biz_account_path, :class => "btnorg100x32 tf right")
   .advertisement.clearfix
     .preview.left=img_link_to "assets/biz/preview689x537.png", new_biz_account_path, :size => "689x537", :alt => "Real-Time Promotions for Businesses"
     .points.right

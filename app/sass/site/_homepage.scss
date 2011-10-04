@@ -11,6 +11,7 @@
     min-width: 920px;
     padding-top: 5px;
     position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
@@ -196,6 +197,7 @@
               .unlock {
                 @include transition("right 0.5s");
                 position: absolute;
+                z-index: 1;
                 width: 77px;
                 height: 28px;
                 top: 10px;
@@ -330,6 +332,7 @@
   #spotlogo {
     z-index: 10;
     position: absolute;
+    position: fixed;
     top: 30px;
     left: 40px;
     height: 90px;
@@ -339,6 +342,7 @@
   
   #slidetitle {
     position: absolute;
+    position: fixed;
     z-index: 10;
     left: 40px;
     right: 40px;
