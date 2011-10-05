@@ -63,7 +63,7 @@
         text-align: center;
       }
     }
-    li.text.labelled, .li.labelled {
+    li.text.labelled, .li.labelled, li.error_messages {
       padding-left: 70px;
       .label {
         position: absolute;
@@ -113,6 +113,12 @@
       &.cc {
         width: 340px;
         margin: 0;
+        li.error_messages {
+          margin: 0 auto;
+          .message {
+            margin: 0 auto;
+          }
+        }
         li.button {
           width: 300px;
           padding: 0px 20px;

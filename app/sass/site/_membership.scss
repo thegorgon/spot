@@ -237,6 +237,12 @@
       margin: 0 auto;
       padding: 20px 0;
     }
+    li.error_messages {
+      clear: both;
+      padding: 10px 0 0;
+      margin: 0 auto;
+      width: auto;
+    }
     &.appliedpromocode {
       #promocodefields {
         height: 0;

@@ -77,7 +77,8 @@
             =f.hidden_field :key, :value => nonce.digested
             =f.fields_for :password do |p|
               =p.email_field :login, :placeholder => "email", "data-validate-url" => existence_email_path, :required => true
-              =p.password_field :password, :placeholder => "password", :required => true
+              =p.password_field :password, :placeholder => "password", :required => true, :minlength => 4, :maxlength => 25
+            =f.error_messages
             %li.buttons.clearfix
               =button_tag :class => "tf btnorg100x32" do
                 login

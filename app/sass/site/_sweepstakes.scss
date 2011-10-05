@@ -143,6 +143,11 @@
             color: #444;
           }
         }
+        li.error_messages {
+          .message {
+            color: #d33;
+          }
+        }
       }
       .meta {
         float: right;

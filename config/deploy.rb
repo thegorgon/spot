@@ -64,7 +64,6 @@ namespace :deploy do
     run "sudo bluepill restart unicorn"
   end
   task :cleanup, :roles => [:app, :bg], :except => { :no_release => true } do
-    deploy.sphinx.stop
     deploy.workers.stop
 
     count = fetch(:keep_releases, 5).to_i
@@ -79,7 +78,6 @@ namespace :deploy do
       try_sudo "rm -rf #{directories}"
     end
 
-    deploy.sphinx.start
     deploy.workers.start
   end
   

@@ -3,7 +3,8 @@ class InviteRequest < ActiveRecord::Base
   MAX_BLITZ = 10
   belongs_to :city
   belongs_to :membership
-  validates :email, :presence => true, :format => EMAIL_REGEX, :uniqueness => true
+  validates :email, :presence => true, :format => EMAIL_REGEX
+  before_validation :handle_duplicate_email
   after_validation :autoinvite
   after_save :ensure_email_subscription
   after_create :send_coming_soon
@@ -112,6 +113,15 @@ class InviteRequest < ActiveRecord::Base
   end
   
   private
+  
+  def handle_duplicate_email
+    if existing = self.class.where(:email => email).where("id <> ?", id).first
+      existing.attributes = attributes.slice("city_id", "requested_city_name", "first_name", "last_name")
+      existing.save
+      self.id = existing.id
+      reload
+    end
+  end
   
   def autoinvite
     if invite_code && InvitationCode.find_by_code(invite_code)

@@ -6,6 +6,7 @@ class Site::InviteRequestsController < Site::BaseController
       flash[:error] = "Sorry, that didn't seem to work."
     end
     @request.reload
+    set_invite_request @request
     redirect_to @request.city ? city_path(@request.city) : new_city_path
   end
   

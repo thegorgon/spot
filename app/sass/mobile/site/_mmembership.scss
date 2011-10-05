@@ -90,8 +90,6 @@
     margin: 5px 0;
   }
   .seals {
-    position: relative;
-    top: 55px;
     width: 265px;
     margin: 0 auto;
     a {
@@ -150,13 +148,15 @@
   ul.form {
     li.buttons {
       margin: 10px auto;
-      &.finish {
-        position: relative;
-        top: -35px;
-      }
       button {
         @include btnorg280x32;
       }
+    }
+    li.error_messages {
+      clear: both;
+      padding: 10px 0 0;
+      margin: 0 auto;
+      max-width: 280px;
     }
     &.appliedpromocode {
       #promocodefields {

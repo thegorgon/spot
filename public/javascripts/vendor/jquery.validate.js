@@ -11,16 +11,30 @@
     
   $.validations = (function() {
     var invalid = function(input, message) {
-        var event = $.Event('validity', {valid: false, message: message, target: input});
-        $(input).parents('li:first').removeClass('valid').removeClass('loading').addClass('invalid');
-        $(input).parents('li:first').find('.validity, label').jstooltip(message, 'error');
-        $(input).trigger(event)
+        var event = $.Event('validity', {valid: false, message: message, target: input}),
+          $input = $(input),
+          form = $input.parents('form'),
+          wrap = $input.parents('li:first');
+          
+        wrap.removeClass('valid').removeClass('loading').addClass('invalid');
+        form.removeClass('valid').addClass('invalid').find(".error_messages .message").html(message);
+        $input.data('invalid-msg', message);
+        $input.trigger(event)
       },
       valid = function(input) {
-        var event = $.Event('validity', {valid: true, target: input});
-        $(input).parents('li:first').removeClass('loading').removeClass('invalid').addClass('valid');
-        $(input).parents('li:first').find('.validity, label').removejstooltip();
-        $(input).trigger(event)
+        var event = $.Event('validity', {valid: true, target: input}), 
+          $input = $(input),
+          form = $input.parents('form'), 
+          wrap = $input.parents("li:first"),
+          invalidInputs = form.find('input, select, textarea').filter('[aria-invalid=true]');
+
+        wrap.removeClass('loading').removeClass('invalid').addClass('valid');
+        if (invalidInputs.length === 0) {
+          form.removeClass('invalid').addClass('valid').find(".error_messages .message").html("");          
+        } else {
+          form.find('.error_messages .message').html(invalidInputs.first().data('invalid-msg'));
+        }
+        $input.trigger(event)
       },
       validity = function(input, val, message) {
         if ($(input).valid() || val || $(input).parents('li:first').is('.loading')) {
@@ -42,7 +56,7 @@
       },
       loading: function(input) {
         $(input).parents('li:first').removeClass('valid').removeClass('invalid').addClass('loading');
-        $(input).parents('li:first').find('.validity').jstooltip('checking', 'notice');
+        $(input).parents('form').removeClass('valid').removeClass('invalid');
         $(input).valid(false);
       },
       describe: function() {
@@ -116,12 +130,14 @@
     name: 'required',
     selector: '[required]',
     test: function() {
-      var select;
+      var select,
+        msg = [$(this).attrName(), " is required"].join(' ');
+      
       if ($(this).is('input, textarea')) {
-        $.validations.validity(this, $.trim($(this).val()).length > 0, "required");        
+        $.validations.validity(this, $.trim($(this).val()).length > 0, msg);        
       } else if ($(this).is('select')) {
         select = $(this)[0];
-         $.validations.validity(this, $.trim(select.options[select.selectedIndex].value), "required");
+         $.validations.validity(this, $.trim(select.options[select.selectedIndex].value), msg);
       }
     }
   });
@@ -140,7 +156,8 @@
     name: 'pattern',
     selector: '[pattern]',
     test: function() {
-      $.validations.validity(this, $(this).val().length == 0 || $(this).pattern().test($(this).val()), "that doesn't look right");
+      var msg = [$(this).attrName(), "doesn't look right"].join(' ');
+      $.validations.validity(this, $(this).val().length == 0 || $(this).pattern().test($(this).val()), msg);
     }
   });
 
@@ -149,8 +166,15 @@
     name: 'length',
     selector: '[minlength], [maxlength]',
     test: function() {
-      var length = $.trim($(this).val()).length,
-        msg = [$(this).minLength(), "to", $(this).maxLength(), "characters please"].join(' ');
+      var length = $.trim($(this).val()).length, msg;
+      if ($(this).minLength() - 0 > 0 && $(this).maxLength() - 0 > 0) {        
+        msg = [$(this).attrName(), "should be between", $(this).minLength(), "and", $(this).maxLength(), "characters long"].join(' ');
+      } else if ($(this).minLength() - 0 > 0) {
+        msg = [$(this).attrName(), "should be at least", $(this).minLength(), "characters long"].join(' ');
+
+      } else if ($(this).maxLength() - 0 > 0) {
+        msg = [$(this).attrName(), "cant be longer than", $(this).maxLength(), "characters long"].join(' ');
+      }
       $.validations.validity(this, length <= $(this).maxLength() && length >= $(this).minLength(), msg);
     }
   });
@@ -197,6 +221,9 @@
         $(this).find('li').removeClass('valid').removeClass('loading').removeClass('invalid');
       });
       return $(this);
+    },
+    attrName: function() {
+      return $(this).attr('aria-label') || $(this).attr('placeholder') || $(this).attr('data-attr-name');
     },
     valid: function(val) {
       if (val !== undefined && val !== null) {

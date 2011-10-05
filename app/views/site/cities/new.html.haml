@@ -27,6 +27,7 @@
       #othercityfields{:class => conditionally("hidden", @city.present?)}
         =f.text_field :requested_city_name, :label => "where? ", :placeholder => "your city", :id => "preview_city"
         %li.note we don't have an extensive list. help us grow it?
+      =f.error_messages
       %li.buttons
         =button_tag :class => "btnorg300x41 tf" do
           submit

@@ -29,6 +29,14 @@ module ActiveRecordExtensions
       attribute_commited?(a) ? commits[a].first : nil
     end
     
+    def changed_attribute_values
+      hash = {}
+      changes.each do |key, value|
+        hash[key] = value.last
+      end
+      hash
+    end
+    
     def new_commit?
       !!@_new_commit
     end

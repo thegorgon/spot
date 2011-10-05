@@ -42,6 +42,7 @@
             =hidden_field_tag :tr_data, ERB::Util.html_escape(trdata)
         
             =render :partial => "/shared/payments/creditcard", :locals => {:form => f, :creditcard => @card}
+            =f.error_messages
             %li.button
               =button_tag :class => "ccsave tf" do
                 save changes

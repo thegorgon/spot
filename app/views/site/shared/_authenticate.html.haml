@@ -35,6 +35,7 @@
         =f.fields_for :password do |p|
           =p.email_field :login, :placeholder => "email", "data-validate-url" => existence_email_path, :required => true
           =p.password_field :password, :placeholder => "password", :required => true
+        =f.error_messages
         %li.buttons.clearfix
           =button_tag :class => "tf btnorg100x32" do
             login
@@ -49,6 +50,7 @@
         =f.password_field :password, :placeholder => "password", :required => true, :hint => "4 to 25 characters please", :minlength => 4, :maxlength => 25
         =f.fields_for :user_attributes do |uf|
           =uf.city_select 'city_id', current_city.try(:id), :html => { :required => true }, :label => nil
+        =f.error_messages
         %li.buttons.clearfix
           =button_tag :class => "tf btnorg100x32" do
             register

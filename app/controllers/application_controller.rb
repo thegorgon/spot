@@ -152,7 +152,7 @@ class ApplicationController < ActionController::Base
   end
  
   def mobile_request?
-    request.subdomains.first == 'm'
+    request.subdomains.first == 'm' || (Rails.env.development? && iphone_browser?)
   end
   helper_method :mobile_request?
 
