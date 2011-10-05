@@ -15,8 +15,8 @@
       .editmode
         .security
         .username=form.text_field :cardholder_name, :value => creditcard.cardholder_name, :required => true, 'data-transform' => 'uppercase'
-        =form.text_field :number, :placeholder => "number", :class => "ccnumber", :required => true, 'data-subtype' => 'creditcard', :container_class => "numcontainer"
-        =form.text_field :cvv, :placeholder => "CVV", :class => "cvv", :container_class => "cvvcontainer", :required => true, 'data-subtype' => 'cvv'
+        =form.text_field :number, :placeholder => "card number", :class => "ccnumber", :required => true, 'data-subtype' => 'creditcard', :container_class => "numcontainer"
+        =form.text_field :cvv, :placeholder => "CVV", :class => "cvv", :container_class => "cvvcontainer", 'data-subtype' => 'cvv', 'aria-label' => "CVV Code"
         %li.select.expiration.left
           =form.label :expiration_month, "expires :", :simple => true
           =form.select :expiration_month, (1..12).map { |n| ["%02d" % n, n] }, {:simple => true, :selected => creditcard.expiration_month}, "data-subtype" => "ccexpiration", "data-part" => "month", :class => "month"

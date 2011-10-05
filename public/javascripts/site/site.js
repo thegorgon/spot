@@ -329,12 +329,14 @@
             });
             addthis.toolbox('.addthis_toolbox');
           } else {
-            $(this).find('.errors').text(data.errors.join(', '));
+            $(this).find('.error_messages .message').html(data.errors.join(', '));
+            $(this).addClass("invalid");
           }
         },
         error: function() {
           $(this).removeClass('loading');
-          $(this).find('.errors').text("Something went wrong. Please try again.");
+          $(this).find('.error_messages .message').text("Something went wrong. Please try again.");
+          $(this).addClass("invalid");
         }
       });
     }

@@ -29,7 +29,7 @@
         digit = parseInt(value.charAt(i), 10);
         sum += (flip = flip ^ true) ? Math.floor((digit * 2)/10) + Math.floor(digit * 2 % 10) : digit;
       }
-      $.validations.validity(this, sum % 10 === 0, "take a second look?");
+      $.validations.validity(this, sum % 10 === 0, "can you take a second look at your credit card number?");
     }
   });
 
@@ -49,11 +49,11 @@
         type = $(this).parents('form').find('[data-subtype=creditcard]').ccType(),
         validity = (!type && length == 3 || length == 4) || ((type == 'amex' && length == 4) || (length == 3 && type != 'amex')), msg;
         if (type == 'amex') {
-          msg = 'should be a 4-digit code printed on the front side of the card';
+          msg = 'CVV code should be a 4-digit code printed on the front side of the card';
         } else if (type === undefined) {
-          msg = 'should be a 3 or 4-digit code printed on the card';
+          msg = 'CVV code should be a 3 or 4-digit code printed on the card';
         } else {
-          msg = 'should be a 3 digit code printed on the back of the card';
+          msg = 'CVV code should be a 3 digit code printed on the back of the card';
         }
       $.validations.validity(this, validity, msg);
     }
@@ -72,10 +72,11 @@
         monthField = $(this).siblings('[data-part=month][data-subtype=ccexpiration]');
         yearField = $(this)        
       }
-      year = parseInt(yearField.val(), 10);
-      month = parseInt(monthField.val(), 10);
+      year = yearField.val() - 0;
+      month = monthField.val() - 0;
       validity = year > Date.now().getFullYear() || (year == Date.now().getFullYear() && month > Date.now().getMonth() + 1);
       $.validations.validity(monthField, validity, "is your card expired?")
+      $.validations.validity(yearField, validity, "is your card expired?")
     }
   });
   

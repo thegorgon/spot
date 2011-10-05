@@ -6,10 +6,23 @@ ul.form {
   display: block;
   input.text, textarea, .placeholder {
     padding: 4px 8px;
-    height: 20px;
     font-size: 14px;
     line-height: 20px;
     width: 282px;
+  }
+  .error_messages {
+    width: 300px;
+    color: #933;
+    display: none;
+    height: 0;
+    font-size: 12px;
+  }
+  form.invalid .error_messages {
+    display: table;
+    .message {
+      display: table-cell;
+      vertical-align: middle;
+    }
   }
   textarea {
     height: 100px;
@@ -188,10 +201,24 @@ ul.form {
       }
     }
   }
+  .invalid {
+    li.buttons {
+      margin-top: 10px;
+    }
+  }
 }
 
 /* ALL STYLED FORMS */
 .faded, .light, .inpopover {
+  .error_messages {
+    .message {
+      color: #d33;
+      height: 20px;
+      padding-left: 40px;
+      text-align: left;
+      background: transparent url(/images/icons/alertred24x20.png) no-repeat left center;        
+    }
+  }
   .placeholder {
     text-transform: none;
     @include transition(all 0.25s);
@@ -579,6 +606,27 @@ ul.form.oneline {
 /* FORMS IN POPOVERS */
 ul.form.inpopover {
   padding: 2px 0;
+  .error_messages {
+    display: block;
+    height: 30px;
+    border-bottom: none;
+    margin: 5px 10px;
+    width: auto;
+  }
+  form {
+    .error_messages {
+      .message {
+        background: transparent;
+      }
+    }
+    &.invalid {
+      .error_messages {
+        .message {
+          background: transparent url(/images/icons/alertred24x20.png) no-repeat left center;        
+        }
+      }      
+    }
+  }
   .placeholder {
     color: #999;
   }

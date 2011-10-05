@@ -2,18 +2,30 @@ module Spot
   class FormBuilder < ActionView::Helpers::FormBuilder
     module HelperMethods
       def spot_form_for(record, options={}, &proc)
+        object = nil
+        if record.kind_of?(Array)
+          object = record.last if record.last.respond_to?(:errors)
+        elsif record.respond_to?(:errors)
+          object = record
+        end
+        
         options[:builder] ||= Spot::FormBuilder
         display = options.delete(:display)
         ul_id = options.delete(:ul_id)
         (options[:html] ||= {})['data-validate'] ||= "validate" unless options.delete(:validate) == false
         options[:html][:autocapitalize] ||= :off
-        content_tag(:ul, form_for(record, options, &proc).html_safe, :class => "form #{display} accept_focus", :id => ul_id)
+        (options[:html][:class] ||= "")
+        options[:html][:class] << " invalid" if object && !object.errors.empty?
+        options[:html][:class].strip
+        content_tag(:ul, :class => "form #{display} accept_focus", :id => ul_id) do
+          form_for(record, options, &proc).html_safe
+        end
       end
     end
     
     (field_helpers - %w(label check_box radio_button fields_for hidden_field file_field select)).each do |selector|
       define_method selector do |method, options={}|
-        sanitize_options!(selector, options)
+        sanitize_options!(selector, method, options)
         
         if options.delete(:simple)
           super(method, options)
@@ -25,13 +37,22 @@ module Spot
       end
     end
     
+    def error_messages
+      @template.content_tag(:li, :class => "error_messages") do
+        @template.content_tag(:div, :class => "message") do
+          @object ? @object.errors.full_messages.first.to_s : ""
+        end
+      end
+    end
+    
     def city_select(method, value, options={})
       subscribeable = options.delete(:subscribeable)
       prepend_values = options.delete(:prepend_values)
       append_values = options.delete(:append_values)
       html_options = {
         :class => "chzn-select", 
-        :title => "Select your city"
+        :title => "Select your city",
+        "aria-label" => "city",
       }.merge!(options.delete(:html) || {})
       options = {
         :validity => false, 
@@ -49,7 +70,7 @@ module Spot
     end
     
     def file_field(method, options={})
-      sanitize_options!("file_field", options)
+      sanitize_options!("file_field", method, options)
       button_class = options.delete(:button_class) || ""
       (button_class << " browse_button").strip!
       browse = options.delete(:browse) || "Choose File"
@@ -68,7 +89,7 @@ module Spot
     end
         
     def name_fields(options={})
-      sanitize_options!("text_field", options)
+      sanitize_options!("text_field", :name, options)
       value = options[:value] || []
       @template.content_tag(:div, :class => container_class_for(:name, "name li", options)) do
         label_for(:first_name, options.delete(:label)) +
@@ -81,7 +102,7 @@ module Spot
     end
     
     def select(method, choices, options = {}, html_options = {})
-      sanitize_options!("select_field", options)
+      sanitize_options!("select_field", method, options)
             
       if options.delete(:simple)
         super(method, choices, options, html_options)
@@ -109,8 +130,9 @@ module Spot
     
     private
 
-    def sanitize_options!(tag, options)
+    def sanitize_options!(tag, method, options)
       ((options[:class] ||= "") << " #{type_class(tag)}").strip!
+      options["aria-label"] ||= options[:placeholder] || method.to_s.humanize.downcase
     end
     
     def container_id_for(method)
@@ -150,8 +172,6 @@ module Spot
     
     def validity_for(method)
       html_options = {:class => "validity"}
-      error = error_messages_on(method)
-      html_options["data-jstooltip"] = error if error.present?
       validity = @template.content_tag(:div, '&nbsp;'.html_safe, html_options)
     end
     

@@ -9,6 +9,7 @@ class SweepstakeEntry < ActiveRecord::Base
   validates :referral_code, :presence => true, :uniqueness => { :scope => :sweepstake_id }
   
   validate :in_valid_date_range
+  validate :city_selected
   
   before_validation :set_referral_code
   before_validation :set_min_submissions
@@ -46,6 +47,12 @@ class SweepstakeEntry < ActiveRecord::Base
       errors.add(:base, "Submissions will open #{sweepstake.starts_on.strftime("%B %d, %Y")} at 1:00 a.m. Pacific Time.")
     elsif sweepstake.closed?
       errors.add(:base, "Sorry, submissions are closed.")
+    end
+  end
+  
+  def city_selected
+    if invite_request.city.nil?
+      errors.add(:base, "Please select a city.")
     end
   end
   

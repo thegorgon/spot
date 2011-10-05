@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   has_one :password_account, :dependent => :destroy
   belongs_to :city
   
-  validates :email, :format => EMAIL_REGEX, :uniqueness => { :message => "has already registered." }, :if => :email?
+  validates :email, :format => EMAIL_REGEX, :uniqueness => { :message => "has already been used to register." }, :if => :email?
   has_acquisition_source :count => :signup
   name_attribute :name
   attr_accessor :email_source

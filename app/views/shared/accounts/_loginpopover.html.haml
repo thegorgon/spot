@@ -5,7 +5,7 @@
       =f.fields_for :facebook do |g|
         =g.hidden_field :access_token, :rel => "access_token"
         =g.hidden_field :facebook_id, :rel => "uid"
-      =button_tag :class => "fbconnect blackimg_77x32" do
+      =button_tag :class => "fbconnect btnblack77x29" do
         connect
     %h3
       Facebook :
@@ -17,8 +17,10 @@
       =f.hidden_field :key, :value => nonce.digested
       =f.fields_for :password do |p|
         =p.email_field :login, :placeholder => "email", "data-validate-url" => existence_email_path, :required => true
-        =p.password_field :password, :placeholder => "password", :required => true
+        =p.password_field :password, :placeholder => "password", :required => true, :minlength => 4, :maxlength => 25
       %li.buttons.clearfix
-        =button_tag :class => "blackimg_77x32" do
+        =button_tag :class => "btnblack77x29" do
           login
         =link_to "forgot password?", new_password_reset_path, :class => "forgot"
+      =f.error_messages
+      

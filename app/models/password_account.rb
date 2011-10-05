@@ -7,7 +7,7 @@ class PasswordAccount < ActiveRecord::Base
   validates :last_name, :presence => true
   validates :password, :presence => true, :if => :password_required?
   validates :password, :length => {:within => (4..25)}, :if => :password_changed?
-  validates :login, :presence => true, :format => EMAIL_REGEX, :uniqueness => true
+  validates :login, :presence => true, :format => EMAIL_REGEX, :uniqueness => {:message => "has already been used to register."}
   validate :can_change_password, :if => :password_changed?
   before_save :update_encryption
   before_validation :update_user

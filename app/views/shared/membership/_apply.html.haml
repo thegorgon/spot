@@ -38,7 +38,7 @@
       -if current_city.try(:at_capacity?)
         %h2.tf.capacity We're at capacity. Apply to be notified when space opens up.
       .col.form
-        =f.name_fields :required => true, :label => "name : ", :value => current_user.try(:names)
+        =f.name_fields :required => true, :label => "name : ", :value => @account.try(:user).try(:names) || current_user.try(:names)
         -if logged_in? && current_user.has_account?
           =f.email_field :login, :placeholder => "email address", :required => true, :label => "email : ", :value => current_user.try(:email)
         -else
@@ -46,7 +46,7 @@
           =f.password_field :password, :placeholder => "password", :required => true, :minlength => 4, :maxlength => 25, :label => "password : "
         =f.fields_for :user_attributes do |uf|
           =uf.city_select 'city_id', current_city.try(:id), :html => { :required => true, :min => 0 }
-              
+        =f.error_messages
         %li.buttons.clearfix
           =button_tag :class => "tf" do
             submit

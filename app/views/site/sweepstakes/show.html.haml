@@ -30,11 +30,11 @@
         =f.hidden_field :referred_by_id, :value => @referrer.try(:id)
         =f.name_fields :required => true, :value => invite_request.try(:names)
         =f.email_field :email, :required => true, :placeholder => "enter your email"
-        =f.city_select :city_id, invite_request.try(:city_id), :label => ""
+        =f.city_select :city_id, invite_request.try(:city_id), :label => "", :html => { :required => true }
+        =f.error_messages
         %li.buttons
           =button_tag :class => "btnorg300x41 tf", :loading => true do
             enter now
-        %li.errors=@entry.errors[:base].join(", ")
       #entry_description
         -if @entry
           =render :partial => "entry"
