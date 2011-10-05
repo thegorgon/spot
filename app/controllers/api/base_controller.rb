@@ -50,7 +50,7 @@ class Api::BaseController < ApplicationController
   end
   
   def basic_exception(status, exception=nil, headers={})
-    headers = {:exception_body => exception.try(:message), :exception_type => exception.class.to_s}.merge!(headers)
+    headers = {:x_exception_body => exception.try(:message), :x_exception_type => exception.class.to_s}.merge!(headers)
     Rails.logger.info("spot: rendering error : #{status}, #{headers.inspect}")
     head(status, headers)
   end
@@ -70,7 +70,7 @@ class Api::BaseController < ApplicationController
   
   def invalid_record_error(exception=nil)
     error_messages = exception.record.errors.full_messages.to_json rescue nil    
-    basic_exception(403, exception, :user_friendly_errors_json => error_messages)
+    basic_exception(403, exception, :x_user_friendly_errors_json => error_messages)
   end
   
   def duplicate_record_error(exception=nil)
