@@ -23,6 +23,7 @@
     }
     &.unlockable {
       .inputs {
+        @include transition("width 1s");        
         width: 245px;
       }
     }
@@ -88,7 +89,6 @@
     margin: 0 auto;
     position: relative;
     height: 30px;
-    @include transition("width 1s");        
     li.text {
       position: absolute;
       top: 0;
@@ -206,6 +206,13 @@
     height: 305px;
     position: relative;
   }
+  .summary {
+    font-size: 16px;
+    a {
+      color: #ff8419;
+      text-decoration: none;
+    }
+  }
   .section {
     background: #fff;
     top: 0;
@@ -306,8 +313,13 @@
       text-align: center;
     }
     .sharing {
+      float: left;
+      width: 300px;
+      .label {
+        float: left;
+        margin-right: 10px;
+      }
       margin: 0;
-      float: right;
     }
   }
   &.loading {

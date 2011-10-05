@@ -3,7 +3,20 @@
     %h1.tf
       Your Code Is : 
     %code.title=@registration.code.code
-  =link_to "cancel?", registration_path(@registration.code), "data-method" => "DELETE", "data-confirm" => "Are you sure you want to cancel?", :class => "cancel"
+    =link_to "cancel?", registration_path(@registration.code), "data-method" => "DELETE", "data-confirm" => "Are you sure you want to cancel?", :class => "cancel"
+  %h2.summary.tf
+    =link_to @registration.event.short_summary, place_event_path(@registration.place, @registration.event)
+    at 
+    =link_to @registration.place.name, place_path(@registration.place)
+    =@registration.event.date.strftime('%A, %m/%d/%Y,')
+    -if @registration.promotion.all_day?
+      any time
+    -else
+      =Time.twelve_hour(@registration.promotion.start_time)
+      to
+      =Time.twelve_hour(@registration.promotion.end_time)
+
+  
 .col.nextsteps
   %h2.tf What's Next?
   %hr
@@ -11,7 +24,7 @@
     %li
       ="Call #{@registration.place.name} to make a reservation"
       -if @registration.place.phone_number.present?
-        ="at #{phone_link(@registration.place.phone_number.gsub(' ', '&nbsp;'))}".html_safe
+        ="at #{phone_link(@registration.place.phone_number.gsub(' ', '&nbsp;')).html_safe}".html_safe
     %li 
       ="Come to #{@registration.place.name} on #{@registration.event.date.strftime('%A, %B %d, %Y')}"
       -if @registration.promotion.all_day?
@@ -24,15 +37,14 @@
     %li
       Present your 4 digit code : 
       %code=@registration.code.code
-    %li="Enjoy your experience."
+    %li="Enjoy #{@registration.event.short_summary}."
     %li.spacing
     %li And don't worry, we just sent you an email with all these details, so no need to pull out the pen and paper.
     %hr
-    %li.telleveryone
-      Tell your friends : 
+    %li.telleveryone.clearfix
       -url = place_event_url(@registration.place, @registration.promotion)
       -msg = "I just registered for #{@registration.promotion.name} at #{@registration.place.name}. Wanna come?"
-      =sharing(url, msg)
+      =sharing(url, msg, :label => "Tell your friends : ")
       
-    =link_to "Explore More Experiences", city_path(current_user.city), :class => "exploremore tf" 
+    =link_button_to "Explore More Experiences", city_path(current_user.city), :class => "exploremore tf" 
     

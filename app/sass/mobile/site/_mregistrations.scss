@@ -4,6 +4,14 @@
     margin: 0px auto;
     text-align: center;
     font-size: 12px;
+    .summary {
+      font-size: 16px;
+      text-align: center;
+      a {
+        color: #ff8419;
+        text-decoration: none;
+      }
+    }
     .container {
       height: 500px;
       position: relative;
@@ -106,8 +114,13 @@
         text-align: center;
       }
       .sharing {
+        float: left;
+        width: 280px;
+        .label {
+          float: left;
+          margin-right: 10px;
+        }
         margin: 0;
-        float: right;
       }
     }
     &.loading {

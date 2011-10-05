@@ -47,6 +47,7 @@ module TagHelper
     options = {:fb => true, :twitter => true, :link => false}.merge!(options)
     content_tag(:div, :class => "clearfix sharing") do
       sharing = ""
+      sharing << content_tag(:div, options[:label], :class => "label") if options[:label]
       sharing << text_field_tag("url", url, "data-mode" => "select", :class => "text light") if options[:link]
       sharing << fb_share_link(url, message) if options[:fb]
       sharing << twitter_share_link(url, message) if options[:twitter]
