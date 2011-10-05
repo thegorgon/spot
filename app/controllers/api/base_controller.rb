@@ -69,7 +69,8 @@ class Api::BaseController < ApplicationController
   end
   
   def invalid_record_error(exception=nil)
-    basic_exception(403, exception)
+    error_messages = exception.record.errors.full_messages.to_json rescue nil    
+    basic_exception(403, exception, :user_friendly_errors_json => error_messages)
   end
   
   def duplicate_record_error(exception=nil)

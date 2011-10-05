@@ -6,15 +6,15 @@ class Registration
   
   after_save :deliver_registration_email
   after_save :count_acquisition
-  validates :event, :presence => true
-  validates :user, :presence => true
+  validate :valid_event
+  validate :membership
   validate :user_can_register
-  validate :user_hasnt_register
   validate :code_available
+  validate :user_hasnt_register
   
   def initialize(params={})
-    self.event = PromotionEvent.find(params[:event_id]) if params[:event_id]
-    self.code = @event.available_codes.first if event
+    self.event = PromotionEvent.find_by_id(params[:event_id]) if params[:event_id]
+    self.code = event.available_codes.first if event
     self.user = User.find(params[:user_id]) if params[:user_id]
   end
   
@@ -41,28 +41,43 @@ class Registration
     raise ActiveRecord::RecordInvalid.new(self) unless save
   end
   
+  def code
+    @code ||= event.available_codes.first
+  end
+  
   def to_param
     code.to_param
   end
     
   private
   
+  def valid_event
+    errors.add(:base, "Sorry, we couldn't find that perk.") unless event
+  end
+  
+  def membership
+    errors.add(:base, "Please become a member to reserve perks.") unless user.try(:member?)
+  end
+  
   def user_can_register
     if user && !user.can_register?
-      errors.add(:base, "Sorry, you've already registered for the maximum number of events.")
+      errors.add(:base, "Sorry, you can only reserve #{user.code_slots} perks at a time.")
     end
   end
   
   def user_hasnt_register
-    if user && user.codes.for_event(event.id).exists?
-      errors.add(:base, "Sorry, you can only register for an event once.")
+    if user && event && existing = user.codes.for_event(event.id).first
+      errors.clear
+      errors.add(:base, "Oh, looks like you already reserved that perk. Here's your code : #{existing.code}.")
     end
   end  
   
   def code_available
-    code ||= @event.available_codes.first
-    if code.nil? 
-      errors.add(:base, "Sorry, this event is now fully booked. Please try another date.")
+    if event 
+      code ||= event.available_codes.first
+      if code.nil?
+        errors.add(:base, "Sorry, there are no more codes available for this perk. Please try another date.")
+      end
     end
   end
   
