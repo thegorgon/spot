@@ -203,7 +203,7 @@
   text-align: center;
   padding: 20px 30px;
   .container {
-    height: 305px;
+    height: 350px;
     position: relative;
   }
   .summary {
@@ -224,7 +224,7 @@
     @include transition("opacity 0.5s, z-index 1s");
   }
   .areyousure {
-    padding: 0;
+    padding: 35px 0 0 0;
     z-index: 4;
     .summary {
       margin: 10px 0;

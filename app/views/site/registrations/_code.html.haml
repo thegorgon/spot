@@ -46,5 +46,6 @@
       -msg = "I just registered for #{@registration.promotion.name} at #{@registration.place.name}. Wanna come?"
       =sharing(url, msg, :label => "Tell your friends : ")
       
-    =link_button_to "Explore More Experiences", city_path(current_user.city), :class => "exploremore tf" 
+    -if mobile_request?
+      =link_button_to "Explore More Experiences", city_path(current_user.city), :class => "exploremore tf" 
     
