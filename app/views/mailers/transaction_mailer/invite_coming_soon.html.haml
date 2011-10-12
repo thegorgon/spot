@@ -3,11 +3,19 @@
   ="#{@city_name}."
   
 %p
-  We do appreciate your patience! As soon as we arrive, we'd like to offer you your first 3 months free. That's $30.
+  We do appreciate your patience! As soon as we arrive, we'd like to offer you your first 3 months free. That's
+  ="$#{3 * Subscription.monthly.price}."
   
 %p
   Just use this code when you sign up. It'll be our little secret.
-  %code{:style => "display:block;font-family:monospace;font-size:25px;display:block;text-align:center;"}=@promo_code
+  =table_tag do
+    %tr
+      %td{:height => 20}
+    %tr
+      =table_cell(:style => "font-family:monospace;font-size:25px;text-align:center;padding:10px;border:2px dashed #ddd;") do
+        =@promo_code
+    %tr
+      %td{:height => 20}
 %p
   Feels good, doesn't it?  
     

@@ -2,7 +2,7 @@
   .clearfix
     -if mobile_request?
       .describe.tf
-        ="For just $#{MONTHLY_PRICE} a month, our members get access to special perks at top restaurants all over town."
+        ="For just $#{Subscription.monthly.price} a month, our members get access to special perks at top restaurants all over town."
         -if ! current_member?
           =button_to "become a member", new_application_path, :class => 'btnmembership tf button'
     
@@ -35,7 +35,7 @@
           %a.paymentoption{:class => "#{name} #{first_or_last(Subscription::PLANS.keys, i)}", :href => new_application_path(:plan => name)}
             .mval.tf 
               %span.currency $
-              =plan.launch_cost
+              =plan.price
               .period="/#{plan.period_name}"
               
             .benefits

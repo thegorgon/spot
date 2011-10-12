@@ -49,43 +49,26 @@
       });
     },
     site_home_index: function() {
-      var slides, slideshow, top, scenes, initMap, tabs;
-      
-      slides = [
-        {slide: '/images/assets/slideshow/slide1.jpg', size: '2292x1524', title: 'Sommelier Wine Pairing at Credo', gravity: '0.5x0.5'},
-        {slide: '/images/assets/slideshow/slide2.jpg', size: '2292x1524', title: 'Complimentary Beer with Dinner at Schmidt\'s', gravity: '1.0x1.0'},
-        {slide: '/images/assets/slideshow/slide3.jpg', size: '2292x1524', title: 'Six Course Tasting Menu & VIP Kitchen Tour at Spruce', gravity: '0.5x0.5'},
-        {slide: '/images/assets/slideshow/slide4.jpg', size: '2292x1524', title: "Chef's Evening at Epic Roasthouse", gravity: '1.0x1.0'},
-        {slide: '/images/assets/slideshow/slide5.jpg', size: '2292x1524', title: "Free Bonus Cupcake at Mission Mini's", gravity: '0.5x0.5'}
-      ];
-      
-      if (go.env('mobile')) {
-        $.each(slides, function(i) {
-          this.slide = this.slide.replace(/\.jpg/i, '_mobile.jpg');
-        });
-      }
-      
-      slideshow = $("#slidedeck").slideshow({
-        title: '#slidetitle',
-        start: Math.floor(Math.random()* slides.length),
-        slides: slides
-      });
+      var top, scenes, initMap, tabs, setScene;
       
       top = $('#toplayer');
-      
-      
       scenes = top.find('.scene');
+      
+      setScene = function(number) {
+        if (Modernizr.csstransitions) { top.addClass('scene' + number); }
+        else {
+          top.addClass('jsanimation');
+          scenes.each(function(i) {
+            var pct = (-200 * (number - i - 1)) + '%';
+            $(this).animate({left: pct}, 1000);
+          })
+        }
+      }
       
       initMap = function(fn) {
         $('input').blur();
         var init = function() {
-          if (Modernizr.csstransitions) { top.addClass('scene2'); }
-          else { 
-            top.addClass('jsanimation');
-            scenes.eq(0).animate({left: '-100%'}, 1000);
-            scenes.eq(1).animate({left: '0%'}, 750);
-          }
-          slideshow.stop();
+          setScene(2);
           if (fn) {
             $('.city').unbind('click.submit').bind('click.submit', function(e) {
               e.preventDefault();
@@ -121,26 +104,12 @@
           rForm.find('#invite_request_email').val($(this).find('#email_email').val());
           go.Events.analytics('Acquisition', 'Email Entered');
           initMap(function() {
-            rForm.find('#invite_request_city_id').val($(this).attr('data-id'));
-            go.Events.analytics('Acquisition', 'City Selected');
+            var cityId = $(this).attr('data-id');
+            rForm.find('#invite_request_city_id').val(cityId);
             rForm.submit();
-          });          
+          });
         }
       });
-      // Initialize Invitation Lock
-      go.Lock.init({ 
-          lock: $('#invitation_code'),
-          invitationCode: $('#invitation_code_value'),
-          unlock: $('#invite_form').find('.unlock'),
-          onUnlock: function(code) {
-            initMap(function() {
-              var form = $('#invitation_submit_form');
-              $('#invitation_city_id').val($(this).attr('data-id'));
-              form.submit();
-            });
-          }
-      });
-      
       $('#select_city_link').unbind('click').bind('click', function(e) {
         e.preventDefault();
         var accountForm = $('#account_update_form');

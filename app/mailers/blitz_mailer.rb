@@ -5,7 +5,10 @@ class BlitzMailer < ApplicationMailer
   def email(request, options={})
     @day = options[:day] || request.blitz_count + 1
     options[:invite] = "INVITE3FREE" if @day == 10
-    @portal_url = new_application_url(:mc => options[:invite] || InviteRequest.random_code.code, :asrc => ASRCID, :ir => request.id)
+    @request = request
+    @code = options[:invite] || InviteRequest.random_code.code
+    @tracking = {:mc => @code, :asrc => ASRCID, :ir => request.id}
+    @portal_url = new_application_url(@tracking)
     @city = request.city
     @email = request.email
     @reason = "#{schedule[:subject][@day - 1]}"

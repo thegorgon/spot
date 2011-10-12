@@ -1,11 +1,11 @@
 %p
-  Consider this your official invitation to join Spot, 
-  ="a private membership club for #{@city.name.titlecase} diners."
+  Consider this your official invitation to join Spot. A membership 
 %p
   This is your chance to join a select group of discerning tastemakers in your city. 
-  Claim your invitation using the code 
-  =mlink_to @invite.code, @invite_url
+  =mlink_to "Claim your invitation now", @invite_url 
+  to start enjoying 
   or by clicking the invitation below.
+
 %table{:width => "367", :style => "margin: 0 auto;"}
   %tr
     %td{:width => "367"}=link_to image_tag(attachments["invitation.png"].url, :size => "367x345", :alt => ""), @invite_url

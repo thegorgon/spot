@@ -22,7 +22,3 @@ FBAPP = {
   :host => HOSTS[Rails.env]
 }
 MAILCHIMP = YAML.load_file(File.join(Rails.root, 'config', 'apis', 'mailchimp.yml'))
-ANNUAL_PRICE = 35
-ANNUAL_PLAN = "ea_12"
-MONTHLY_PRICE = 5
-MONTHLY_PLAN = "ea_1"

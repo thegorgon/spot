@@ -6,45 +6,6 @@
   width: 280px;
   ul.form {
     position: relative;
-    height: 380px;
-    @include transition("height 0.5s");
-    .step {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 1;
-      @include transition("opacity 0.5s");
-    }
-    .invitecode {      
-      z-index: 2;
-    }
-    &.unlockable {
-      .inputs {
-        width: 245px;
-      }
-    }
-    &.unlocking, &.unlocked {
-      .lock {
-        .shackle {
-          top: 0;
-        }
-      }
-      .haveaninvite {
-        display: none;
-      }
-    }
-    &.unlocked {
-      height: 650px;
-      .application {
-        opacity: 1;
-        z-index: 10;
-      }
-      .invitecode {      
-        opacity: 0;
-      }
-    }
   }
   .explanation {
     margin: 0 0 20px 0;
@@ -93,13 +54,6 @@
         width: 132px;
       }
     }
-    .unlock {
-      z-index: 1;
-      position: absolute;
-      top: 1px;
-      right: 0;
-      font-weight: bold;
-    }
   }
   .switchmode {
     color: #AAA;
@@ -112,7 +66,6 @@
     text-align: center;
   }
   .application {
-    opacity: 0;
     .label {
       color: #444;
       float: none;
@@ -131,46 +84,6 @@
       button {
         @include btnorg280x32;
       }
-    }
-  }
-  .invitecode {
-    padding: 60px 0 0;
-    height: 260px;
-    .vouched {
-      text-align: center;
-      padding: 10px 0;
-      color: #999;
-    }
-    li {
-      margin: 0 auto;
-    }
-    .lock {
-      width: 45px;
-      height: 80px;
-      position: relative;
-      margin: 0 auto;
-      .bolt {        
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        height: 40px;
-        width: 45px;
-        background: #ddd;
-      }
-      .shackle {
-        @include transition("top 0.25s");
-        position: absolute;
-        top: 10px;
-        height: 41px;
-        width: 39px;
-        background: transparent url(/images/assets/general/shackle39x41.png) no-repeat center center;
-        left: 3px;
-      }
-    }
-    .question {
-      padding: 10px 0;
-      font-size: 15px;
-      text-align: center;
     }
   }
   .descriptions {

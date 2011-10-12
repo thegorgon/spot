@@ -206,15 +206,14 @@ html {
         padding-left: 45px;
         background: transparent url(/images/icons/diamondgry33x26.png) no-repeat left center;
       }
-      .column {
-        width: 380px;
-        font-size: 14px;
-        span.tf {
-          font-size: 18px;
-        }
-      }
       h1.tagline {
-        font-size: 35px;
+        font-size: 30px;
+        text-align: center;
+      }
+      .describe {
+        margin: 10px 0;
+        font-size: 18px;
+        text-align: center;
       }
       .title {
         height: 41px;
@@ -248,41 +247,7 @@ html {
       }
       .actions {
         width: 300px;
-        height: 60px;
-        position: relative;
         margin: 15px auto 0;
-        .freetrial {
-          color: #999;
-          clear: both;
-          position: absolute;
-          bottom: 0;
-          font-size: 12px;
-          text-align: center;
-          left: 0;
-          right: 0;
-          font-weight: bold;
-        }
-        .readmore {
-          padding: 25px 0 0 0;
-          width: 75px;
-          position: absolute;
-          right: -100px;
-          top: 5px;
-        }
-        .pricing {
-          font-weight: normal;
-          position: absolute; 
-          top: 5px;
-          left: -105px;
-          width: 70px;
-          color: #999;
-          font-size: 12px;
-          text-align: right;
-          padding: 5px 10px;
-          strong {
-            display: block;
-          }
-        }
       }
     }
     .filling {

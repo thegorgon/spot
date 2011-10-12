@@ -30,7 +30,7 @@ Spot::Application.routes.draw do
     resource :password_reset, :only => [:new, :create, :edit, :update]
     resources :cities, :only => [:show, :new] do
       get "calendar", :on => :member
-      get "experiences", :on => :member
+      get "perks", :on => :member
       get "redirect", :on => :collection
     end
     resource :application, :only => [:create, :new, :update], :controller => "membership_applications"

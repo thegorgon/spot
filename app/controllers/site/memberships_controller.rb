@@ -50,12 +50,7 @@ class Site::MembershipsController < Site::BaseController
   private
   
   def require_user_preparations
-    if session_invite.nil?
-      msg = "Spot is currently available by invitation only. "
-      msg << (invite_request.present?? "We're currently processing your invitation" : "You may <a href=\"#{root_path}\">request an invitation.</a>")
-      flash[:notice] = msg
-      redirect_to current_city ? city_path(current_city) : new_city_path
-    elsif !current_user.try(:ready_for_membership?)
+    unless current_user.try(:ready_for_membership?)
       flash[:notice] = "First we need to know a little bit more about you."
       redirect_to new_application_path      
     end

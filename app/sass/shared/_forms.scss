@@ -7,7 +7,8 @@ ul.form {
   input.text, textarea, .placeholder {
     padding: 4px 8px;
     font-size: 14px;
-    line-height: 20px;
+    height: 20px;
+    line-height: 22px;
     width: 282px;
   }
   .error_messages {
@@ -311,7 +312,7 @@ ul.form {
       display: none;
     }
     width: 30px;
-    right: 0px;
+    right: 5px;
     height: 30px;
     position: absolute;
     top: 0px;
@@ -369,7 +370,7 @@ ul.form {
 .faded {
   li.focus {
     input.text, textarea {
-      background: #f7f7f7;
+      background-color: #f7f7f7;
       @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px inset);
       color: #333;
       text-shadow: none;
@@ -379,7 +380,7 @@ ul.form {
     border: 1px solid #666;
     text-shadow: #333 0px 0px 3px;
     color: #aaa;
-    background: #333;
+    background-color: #333;
     @include box_shadow(rgba(0,0,0,0.5) 0px 1px 5px inset);
     @include transition(all 0.25s);
   }

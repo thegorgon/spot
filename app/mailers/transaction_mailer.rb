@@ -14,7 +14,7 @@ class TransactionMailer < ApplicationMailer
     @city = request.city
     @title = "Lucky You. You're Invited."
     @invite = InviteRequest.random_code
-    @invite_url = portal_url(:mc => @invite.code, :cid => @city.id, :ir => request.id)
+    @invite_url = city_url(@city, :mc => @invite.code, :ir => request.id)
     attachments.inline["invitation.png"] = File.read(Rails.root.join('public', 'images', 'email', 'invitation', 'youreinvited367x345.png'))
     mail
   end

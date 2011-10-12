@@ -279,7 +279,6 @@
           original.y = original.y || y;
 
           if (Math.abs(x - original.x) <= radius && Math.abs(y - original.y) <= radius) {
-            e.preventDefault();
             $(this).addClass(cssclass);
           } else {
             $(this).removeClass(cssclass);

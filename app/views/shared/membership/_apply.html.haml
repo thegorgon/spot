@@ -1,40 +1,18 @@
--if session_invite && (current_city.nil? || current_city.subscriptions_available?)
-  %h1.tf
-    You're invited.
-    Welcome to 
-    ="#{image_tag "logos/spotblk225x180.png", :size => "63x50"}.".html_safe
-
 .about
   .text.tf
-    To ensure an unforgettable experience, membership is limited to 10,000 restaurant devotees per city.
+    We limit membership to 10,000 per city to make sure all our members get access to the perks they deserve.
 
 -@account ||= current_user.try(:password_account) || PasswordAccount.new(:user => current_user)
 
 -display = "light inlinelabels"
--display << " unlocked" if session_invite
 -display << " applying" if current_city.try(:at_capacity?)
 
 =spot_form_for @account, :url => application_path, :display => display, :ul_id => "appformcontainer", :html => {:id => "applicationform"} do |f|
   =hidden_field_tag :invite_code, session_invite.try(:code)
   -if params[:plan]
     =hidden_field_tag :plan, params[:plan]
-  #invitecodesection.invitecode.step
-    -if invalid_invite?
-      %h1.tf.empty Sorry, there are no more invitations left on that code
-    .lock
-      .shackle
-      .bolt
-    %li.question.tf=f.label :lock, "Spot Membership is currently available by invitation only"
-    .inputs
-      =f.li_wrap "lock", "tet_field" do
-        =text_field_tag :lock, session_invite.try(:code), :placeholder => "invitation code", :formnovalidate => true, :class => "text code", :autocomplete => "off", :id => "application_lock", 'data-transform' => 'uppercase'
-        
-      =button_tag :class => "btnorg77x28 unlock" do
-        Unlock
-    .vouched
-        
   -unless current_user.try(:ready_for_membership?)
-    .application.step
+    .application.clearfix.step
       -if current_city.try(:at_capacity?)
         %h2.tf.capacity We're at capacity. Apply to be notified when space opens up.
       .col.form
@@ -51,9 +29,6 @@
           =button_tag :class => "tf" do
             submit
 
-      .col.descriptions 
+      .col.descriptions
         =render :partial => "/site/shared/explanations/pricing", :locals => {:cssclass => "first"}
         =render :partial => "/site/shared/explanations/five_reasons", :locals => {:cssclass => "last"}
-
-%form{:action => new_membership_path, :method => "get", :class => "hidden", :id => "registered_user_invite_form"}
-  =hidden_field_tag :mc, session_invite, :id => "registered_user_invite_code"

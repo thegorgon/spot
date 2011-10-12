@@ -1,8 +1,5 @@
 #site_home_index {
   padding: 0;
-  #bd {
-    overflow:hidden;
-  }
   #bg {
     bottom: 70px;
   }
@@ -54,21 +51,15 @@
     }
   } 
   #toplayer {
+    @include fullscreen();
     overflow: hidden;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    overflow-x: hidden;
+    overflow-y: visible;
     z-index: 100;
-    min-height: 525px;
     .scene {
-      position: absolute;
-      width: 100%;
-      top: 0;
-      right: 0;
-      bottom: 0;
+      @include fullscreen();
       .content {
+        margin: 100px auto;
         padding: 10px;
         @include border_radius(5px);
         background: #000 no-repeat center center;
@@ -84,32 +75,9 @@
     .intro {
       left: 0;
       .content {
-        position: absolute;
-        top: 15%;
-        right: 10%;
         width: 350px;
         padding: 20px;
         text-shadow: #000 0px 1px;
-        .tabs {
-          margin-top: 15px;
-          .tab {
-            display: inline-block;
-            float: left;
-            margin-right: 35px;
-            padding-bottom: 2px;
-            cursor: pointer;
-            &.last {
-              margin-right: 0;
-            }
-            &:hover, &.hover {
-              color: #fff;
-            }
-            &:active, &.active {
-              color: #fff;
-              border-bottom: 1px solid #fff;
-            }
-          }
-        }
         .half {
           color: #bbb;
           strong {
@@ -122,7 +90,7 @@
             font-weight: bold;
           }
           &.describe {
-            font-size: 21px;
+            font-size: 30px;
             border-bottom: 1px solid #ddd;
             padding: 0 0 20px 0;
             p {
@@ -132,6 +100,9 @@
           &.entrance {
             font-size: 14px;
             padding: 20px 0 0 0;
+            .action {
+              @include btnorg250x32;
+            }
             &.request {
               #email_form {
                 display: block;
@@ -267,9 +238,9 @@
     }
     .map {
       left: 100%;
+      overflow: visible;
       .content {
         position: relative;
-        margin: 0 auto;
         height: 500px;
         width: 800px;
         background-image: url(/images/assets/maps/usa645x415.png);
@@ -287,11 +258,11 @@
         }
         .city {
           position: absolute;
-          height: 25px;
-          padding: 0 20px;
+          height: 22px;
+          padding: 0 10px;
           @include border_radius(5px);
-          font-size: 18px;
-          line-height: 25px;
+          font-size: 16px;
+          line-height: 22px;
           display: block;
           background: #AAA;
           text-decoration: none;
@@ -305,25 +276,73 @@
             background: #ff8419;
           }
         }
+        #boston {
+          top: 145px;
+          left: 690px;
+        }
+        #dfw {
+          top: 340px;
+          left: 350px;
+        }
+        #sd {
+          top: 305px;
+          left: 70px;
+        }
+        #seattle {
+          top: 55px;
+          left: 100px;
+        }
+        #ptown {
+          top: 105px;
+          left: 95px;
+        }
+        #denver {
+          top: 230px;
+          left: 265px;
+        }
+        #phoenix {
+          top: 285px;
+          left: 185px;
+        }
+        #philly {
+          top: 205px;
+          left: 550px;
+        }
+        #htown {
+          top: 390px;
+          left: 380px;
+        }
         #sf {
           top: 200px;
           left: 40px;
         }
         #la {
-          top: 270px;
-          left: 60px;
+          top: 260px;
+          left: 50px;
         }
         #nyc {
-          top: 175px;
-          right: 45px;
+          top: 180px;
+          right: 65px;
         }
         #chicago {
           top: 185px;
-          right: 255px;
+          right: 281px;
         }
         #nola {
-          bottom: 120px;
+          bottom: 135px;
           right: 230px;
+        }
+        #miami {
+          top: 415px;
+          left: 615px;
+        }
+        #atlanta {
+          top: 315px;
+          left: 540px;
+        }
+        #dc {
+          top: 235px;
+          left: 570px;
         }
       }
     }
@@ -339,79 +358,59 @@
     background: transparent url(/images/logos/spotwhite120x90.png) no-repeat left center;
     width: 120px;
   }
-  
-  #slidetitle {
-    position: absolute;
-    position: fixed;
-    z-index: 10;
-    left: 40px;
-    right: 40px;
-    height: 20px;
-    bottom: 100px;
-    color: #fff;
-    font-size: 20px;
-    text-shadow: rgba(0,0,0,0.75) 0px 2px 0px;
-    background: transparent no-repeat left center;
-  }
-  #slidedeck {
-    position: absolute;
-    overflow: hidden;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-    padding: 0;
-    margin: 0;
-    display: none;
-    .slide {
-      overflow: hidden;
-      top: 0px;
-      left: 0px;
-      z-index: 10;
-      position: absolute;
-      display: none;
-      opacity: 1;
-      .image {
-        position: absolute;
-        z-index: 1;
-        img {
-          outline: none;
-          border: none;
-          -ms-interpolation-mode: bicubic;
-        }
-      }
-    }
-  }
 }
 
 .csstransitions #site_home_index {
-  #slidetitle {
-    bottom: 10px;
-    @include transition('bottom 1s');
-    &.visible {
-      bottom: 100px;            
-    }
-  }
-  #slidedeck {
-    .slide {
-      opacity: 0;
-      @include transition('opacity 2s');
-      display: block;
-      &.current {
-        opacity: 1;
-      }
-    }
-  }
   #toplayer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    .scene {
+      position: relative;
+      float: left;
+      width: 100%;
+      height: 0;
+    }
+    .intro {
+      height: 100%;
+    }
     &.scene2 {
-      .intro {
+      .scene {
         @include transition('left 2s');
+      }
+      .intro {
         left: -100%;
+        height: 0;
       }
       .map {
-        @include transition('left 2s');
         left: 0%;
+        height: 100%;
+      }
+    }
+    &.scene3 {
+      .scene {
+        @include transition('left 2s');
+      }
+      .intro {
+        height: 0;
+        left: -300%;
+      }
+      .map {
+        height: 0;
+        left: -100%;
+      }
+    }
+    &.scene4 {
+      .scene {
+        @include transition('left 2s');
+      }
+      .intro {
+        height: 0;
+        left: -300%;
+      }
+      .map {
+        height: 0;
+        left: -200%;
       }
     }
   }

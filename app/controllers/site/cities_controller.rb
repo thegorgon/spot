@@ -16,9 +16,9 @@ class Site::CitiesController < Site::BaseController
     render :action => "calendar"
   end
   
-  def experiences
-    @view = "experiences"
-    render :action => "experiences"
+  def perks
+    @view = "perks"
+    render :action => "perks"
   end
   
   def redirect
@@ -31,7 +31,7 @@ class Site::CitiesController < Site::BaseController
   def require_city
     @city = City.find_by_slug(params[:id])
     @city ||= invite_request.try(:city)
-    @views = ["calendar", "experiences"]
+    @views = ["calendar", "perks"]
     @launch_explain = invite_request.try(:invite_sent?)
     raise ActiveRecord::RecordNotFound unless @city
     session[:city_id] = @city.id

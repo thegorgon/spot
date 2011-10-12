@@ -77,6 +77,7 @@ class User < ActiveRecord::Base
   
   def invite_request
     @invite_request ||= InviteRequest.with_attributes(attributes.slice("email", "first_name", "last_name", "city_id").symbolize_keys!)
+    @invite_request
   end
   
   def invite_request!

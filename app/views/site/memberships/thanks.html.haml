@@ -14,9 +14,9 @@
 -if mobile_request?
   %h1.tf Congratulations and Welcome to Spot.
   -if in_mobile_app?
-    =button_to "Browse Experiences", to_mobile_app_path, :params => {:dest => "/experiences?city_id=#{city.id}"}, :class => 'tf btnbrowse'
+    =button_to "Browse Perks", to_mobile_app_path, :params => {:dest => "/experiences?city_id=#{city.id}"}, :class => 'tf btnbrowse'
   -else
-    =button_to "Browse Experiences", city_path(city), :class => 'tf btnbrowse'
+    =button_to "Browse Perks", city_path(city), :class => 'tf btnbrowse'
     
   .image.columbus
     =img_with_mobile "paintings/columbus.png", :size => "400x300", :msize => "300x225"
@@ -27,7 +27,7 @@
   .titlebar.clearfix
     %h1.left.tf Start enjoying your membership
     .right
-      =button_to "Browse Experiences", city_path(city), :class => 'tf btnbrowse'
+      =button_to "Browse Perks", city_path(city), :class => 'tf btnbrowse'
   %hr
   .bucket.first.clearfix
     .image.worthy.left
@@ -37,8 +37,7 @@
     .text.right
       %h2.clearfix
         .left.tf Invite the worthy...
-        .invites="#{current_user.invitation_code.invites_remaining} invites remaining"
-      %p Spot is currently available by invitation only. As a Spot Member, you have 10 invitations to send to worthy friends and family.
+      %p Going out alone is
       %p Use the following link to share an invitation :
       -url = portal_url(:mc => current_user.invitation_code.code)
       =sharing(url, "I've got 10 Spot invites to share. Foodies in SF, check it out now.", :link => true)

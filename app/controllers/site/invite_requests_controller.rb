@@ -2,11 +2,13 @@ class Site::InviteRequestsController < Site::BaseController
   def update
     @request = InviteRequest.find(params[:id])
     @request.attributes = params[:request]
-    unless @request.save
+    
+    if @request.save
+      @request.reload
+      set_invite_request @request
+    else
       flash[:error] = "Sorry, that didn't seem to work."
     end
-    @request.reload
-    set_invite_request @request
     redirect_to @request.city ? city_path(@request.city) : new_city_path
   end
   

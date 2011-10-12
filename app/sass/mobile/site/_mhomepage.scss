@@ -7,6 +7,7 @@
   footer {
     display: block;
     padding: 5px 0;
+    margin-top: 100px;
     min-height: 90px;
     z-index: 100;
     border-top: 1px solid #333;
@@ -43,13 +44,10 @@
     overflow: hidden;
     position: relative;
     z-index: 100;
-    min-height: 440px;
     .scene {
-      position: absolute;
+      float: left;
+      position: relative;
       width: 100%;
-      top: 0;
-      right: 0;
-      bottom: 0;
       .content {
         width: 250px;
         padding: 10px;
@@ -76,24 +74,6 @@
       .content {
         padding: 10px;
         text-shadow: #000 0px 1px;
-        .tabs {
-          margin: 10px 0 15px 0;
-          font-size: 12px;
-          border-bottom: 1px solid #666;
-          .tab {
-            padding: 5px 5px 5px 25px;
-            cursor: pointer;
-            border-top: 1px solid #666;
-            cursor: pointer;
-            &.last {
-              margin-right: 0;
-            }
-            &.active {
-              color: #fff;
-              background: url(/images/icons/gryrttri7x11.png) no-repeat 5px center;
-            }
-          }
-        }
         .half {
           color: #bbb;
           strong {
@@ -116,6 +96,9 @@
           &.entrance {
             font-size: 14px;
             padding: 20px 0 0 0;
+            .action {
+              @include btnorg200x32;
+            }
             &.request {
               #email_form {
                 display: block;
@@ -251,6 +234,7 @@
       }
     }
     .map {
+      height: 0px;
       left: 100%;
       .vcc, .vc { 
         display: block; 
@@ -343,14 +327,17 @@
     }
   }
   #toplayer {
-    .scene {
-      @include transition('left 2s');      
-    }
     &.scene2 {
+      @include transition('height 2s');      
       .intro {
+        @include transition('left 2s');      
+        height: 0;
+        overflow: visible;
         left: -100%;
       }
       .map {
+        @include transition('left 2s');      
+        height: auto;
         left: 0%;
       }
     }

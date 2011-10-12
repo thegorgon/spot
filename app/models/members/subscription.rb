@@ -6,7 +6,7 @@ class Subscription < ActiveRecord::Base
   validates :credit_card, :presence => true
   before_destroy :cancel!
   
-  class Plan < Struct.new(:launch_cost, :period, :plan_id)
+  class Plan < Struct.new(:price, :period, :plan_id)
     def abbrev_period
       period == "monthly" ? "mo" : "yr"
     end
@@ -15,10 +15,18 @@ class Subscription < ActiveRecord::Base
       period == "monthly" ? "month" : "year"
     end
   end
-  
-  PLANS = {:venti => Plan.new(ANNUAL_PRICE, "annually", ANNUAL_PLAN), :grande => Plan.new(MONTHLY_PRICE, "monthly", MONTHLY_PLAN)}
+    
+  PLANS = {:venti => Plan.new(35, "annually", "ea_12"), :grande => Plan.new(5, "monthly", "ea_1")}
   
   scope :active, lambda { where(["expires_at > ?", Time.now]) }
+  
+  def self.monthly
+    PLANS[:grande]
+  end
+  
+  def self.annual
+    PLANS[:venti]
+  end  
   
   def self.subscribe(params)
     promo_code = PromoCode.available.find_by_code(params[:promo_code]) if params[:promo_code]

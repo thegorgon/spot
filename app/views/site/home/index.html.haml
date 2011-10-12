@@ -1,8 +1,6 @@
 =content_for :bgimage do
-  %ul#slidedeck
-    %script#slidetpl{:type => "x-jquery-tmpl"}
-      %li.slide.stretcher{"data-gravity" => "${gravity}", "title" => "${title}"}
-        %img{:src => "${slide}"}
+  .stretcher{'data-gravity' => "0.5x0.5"}
+    =image_tag "stretcher/cities/sf#{rand(4) + 1}.jpg"
 
 =content_for :footer do
   %nav.icons.clearfix
@@ -30,48 +28,35 @@
   #spotlogo.flips
   #slidetitle.tf
   
-#toplayer.tf
+#toplayer.clearfix.tf
   .intro.scene
     .content.clearfix
       .describe.half
-        Spot Members receive
-        %em exclusive access 
-        to VIP privileges, unique promotions, and 
-        %strong unforgettable experiences 
-        at the 
-        %em best restaurants in town.
+        For just
+        ="#{content_tag(:em, "$#{Subscription.monthly.price} a month")},".html_safe
+        Spot Members get
+        %strong hundreds in savings
+        at quality
+        ="#{content_tag(:em, "local businesses")}.".html_safe
+        
       .entrance.half{:class => "request"}
         -if current_user && city = current_user.city
           %h2.center.tf="Welcome Back #{current_user.first_name}"
-          =button_to "Explore #{city.name.titlecase}", city_path(city), :class => "btnorg250x32 action"
+          =button_to "Explore Your City", city_path(city), :class => "tf action"
         -elsif current_user
           %h2.center.tf="Welcome Back #{current_user.first_name}"
-          =button_to "Select Your City", account_path, :class => "btnorg175x32 action", :id => "select_city_link"
+          =button_to "Select Your City", account_path, :class => "tf action", :id => "select_city_link"
         -else
           -if session_invite
             %h2.tf.registration.invited Congratulations, You're Invited
           -else
-            %h2.tf.registration Available By Invitation Only
-            %ul.tabs.clearfix.registration
-              %li.tab.first.tf#request_tab{"data-class" => "request", :class => conditionally("active", session_invite.nil?)} 
-                Request an invitation
-              %li.tab.last.tf#invitation_tab{"data-class" => "invitation", :class => conditionally("active", session_invite)} 
-                I have an invitation code
-              
+            %h2.tf.registration Let's Get Started
+                          
           =spot_form_for :email, :url => '#', :display => "faded clearfix", :ul_id => "email_form" do |f|
             =f.email_field :email, :placeholder => "enter your email", :value => invite_request.try(:email), :container_class => "left", :required => true
             =button_tag :class => "tf" do
-              =session_invite ? "continue" : "request"
-          
-          =spot_form_for :invitation, :url => '#', :display => "faded clearfix #{conditionally('unlockable', session_invite)}", :ul_id => "invite_form" do |f|
-            .clearfix
-              .lock.left
-                .shackle
-                .bolt
-              =button_tag :class => "btnorg77x28 unlock tf" do
-                Unlock
-              =f.text_field :code, :placeholder => "invitation code", :container_class => "left", :required => true, :value => session_invite.try(:code), 'data-transform' => 'uppercase'
-          
+              continue
+                    
           =spot_form_for :credentials, :url => session_path, :ul_id => "member_form", :display => "faded clearfix" do |f|
             %h2.tf Member Login
             =f.hidden_field :key, :value => nonce.digested
@@ -90,26 +75,20 @@
             =link_to "I'm already a member", new_session_path, :class => "tab", "data-class" => "member", :id => "member_tab"
           
   .map.scene
-    .vcc
-      .vc
-        .content
-          %h1 Where?
-          -@cities.each_with_index do |city, i|
-            %a.city{:href => city_path(city), :id => city.slug, :class => "#{first_or_last(@cities, i)} #{conditionally("subscribable", city.subscription_available?)}", 'data-id' => city.id}
-              =city.name.titlecase
-          -if mobile_request?
-            %a.city.cantfind{:href => new_city_path} Other
-          -else
-            .cantfind
-              Don't see your city on the map? 
-              =link_to "Tell us where you live", new_city_path
-              and we'll come to you next.
-
-.hidden
-  =form_tag redirect_cities_path, :method => :get, :id => "invitation_submit_form" do
-    =hidden_field_tag :mc, '', :id => "invitation_code_value", :value => session_invite.try(:code)
-    =hidden_field_tag :id, '', :id => "invitation_city_id"
-    
+    .content
+      %h1.tf Where Are You?
+      -@cities.each_with_index do |city, i|
+        %a.city{:href => city_path(city), :id => city.slug, :class => "#{first_or_last(@cities, i)} #{conditionally("subscribable", city.subscription_available?)}", 'data-id' => city.id}
+          =city.name.titlecase
+      -if mobile_request?
+        %a.city.cantfind{:href => new_city_path} Other
+      -else
+        .cantfind
+          Don't see your city on the map? 
+          =link_to "Tell us where you live", new_city_path
+          and we'll come to you next.
+          
+.hidden    
   =form_for invite_request || InviteRequest.new, :as => :request, :html => {:id => "invite_request_form"} do |f|
     =f.hidden_field :invite_code, :value => session_invite.try(:code)
     =f.hidden_field :email, :id => "invite_request_email"

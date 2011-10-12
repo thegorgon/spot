@@ -2,7 +2,6 @@ class Site::MembershipApplicationsController < Site::BaseController
   layout 'oreo'
   before_filter :require_no_user, :only => [:create]
   before_filter :require_user, :only => [:update]
-  before_filter :require_invite_code, :only => [:create, :update]
   before_filter :update_users_city_to_current, :only => [:new]
   
   def create
@@ -57,13 +56,5 @@ class Site::MembershipApplicationsController < Site::BaseController
       redirect_to city_path(current_user.city)
     end
   end
-  
-  def require_invite_code
-    set_session_invite(params[:invite_code]) if params[:invite_code]
-    unless session_invite
-      flash[:error] = "Spot is currently available by invitation only. You may <a href=\"#{root_path}\">request an invitation.</a>"
-      redirect_to new_application_path 
-    end
-  end
-  
+    
 end

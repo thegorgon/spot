@@ -80,12 +80,7 @@ class Site::BaseController < ApplicationController
     @session_promo ||= (session[:promo_code] && PromoCode.valid_code(session[:promo_code]))
   end
   helper_method :session_promo
-  
-  def invalid_invite?
-    session_invite.nil? && session[:invalid_invite]
-  end
-  helper_method :invalid_invite?
-  
+    
   # Authentication
   def require_no_user
     authenticate

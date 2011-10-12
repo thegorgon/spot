@@ -19,15 +19,15 @@
     -session[:seen_city_intro] = true
     #city_intro.clearfix.hidden{"data-title" => "Spot #{@city.name.titlecase}"}
       %h1.tf="Welcome to Spot for #{@city.name.titlecase}"
-      %h2.tf="For just $#{MONTHLY_PRICE} a month, our members get access to special perks at top restaurants all over town."
+      %h2.tf="$#{Subscription.monthly.price} a month. Hundreds in savings."
       .trial_period
         %p 
           Congratulations - You've unlocked 
-          %strong="#{pluralize(session_promo.try(:duration) || 1, "free month")}."        
-          of Spot Membership!
+          %strong="#{pluralize(session_promo.try(:duration) || 1, "free month")}"
+          of Spot Membership.
         %p Grab it now, before it's gone!        
 
       .body.clearfix
         =button_to "become a member", new_application_path, :class => "becomemem tf"
-        %p.explore=link_to "Explore Benefits", city_path(@city), :class => "closer"
+        %p.explore=link_to "Explore The Perks", city_path(@city), :class => "closer"
         %p.learn=link_to "Learn More", membership_about_path

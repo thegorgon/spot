@@ -1,4 +1,4 @@
--set_page_title "Become a Founding Spot Member"
+-set_page_title "You're One Step Away..."
 -set_spot_app_title "Payment"
 
 =content_for :bgimage do
@@ -6,7 +6,7 @@
     =image_tag "stretcher/cities/sf3.jpg"
 
 =content_for :toptitle do
-  Become a Founding Spot Member
+  You're One Step Away...
   
 .titles
   -if @payment.errors[:base].present?
@@ -17,7 +17,7 @@
           %li=error
         
   %h1.tf
-    Access all the Spot Experiences, anytime, anywhere.
+    You’re one step away from unlimited perks at top local spots.
 
 -if @promo_code  
   .promo_congrats
@@ -36,7 +36,8 @@
       Congratulations - You've unlocked 
       %strong one free month 
       of Spot Membership! Grab it now, before it's gone!      
-
+    Join Spot today and your first month is free. You can easily cancel your membership at any time.
+    
 =spot_form_for @payment, :as => :customer, :url => Braintree::TransparentRedirect.url, :display => "cc light clearfix inlinelabels", :html => {:autocomplete => "off", :class => "new_membership"} do |f|
   .spinner
   =hidden_field_tag :tr_data, ERB::Util.html_escape(@payment.tr_data(:redirect_url => endpoint_membership_url))
@@ -50,7 +51,7 @@
       .paymentoption{"data-value" => plan.plan_id, :class => "#{name} #{conditionally("selected", @payment.plan.to_s == name.to_s)} #{first_or_last(Subscription::PLANS.keys, i)}"}
         .mval.tf 
           %span.currency $
-          =plan.launch_cost
+          =plan.price
           .period="/#{plan.period_name}"
         .benefits
           -if plan.period == "annually"

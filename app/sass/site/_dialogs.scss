@@ -6,63 +6,13 @@
   width: 740px;
   ul.form {
     position: relative;
-    height: 325px;
-    height: 380px;
-    @include transition("height 0.5s");
-    .step {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 1;
-      @include transition("opacity 0.5s");
-    }
-    .invitecode {      
-      z-index: 2;
-    }
-    &.unlockable {
-      .inputs {
-        @include transition("width 1s");        
-        width: 245px;
-      }
-    }
-    &.unlocking, &.unlocked {
-      .lock {
-        .shackle {
-          top: 0;
-        }
-      }
-      .haveaninvite {
-        display: none;
-      }
-    }
-    &.unlocked {
-      .application {
-        opacity: 1;
-        z-index: 10;
-        .ie7 &, .ie8 & {
-          display: block;
-        }
-      }
-      .invitecode {      
-        opacity: 0;
-        .ie7 &, .ie8 & {
-          display: none;
-        }
-      }
-    }
+    width: 740px;
+    margin: 0 auto;
   }
   .explanation {
     margin: 0 0 20px 0;
     &.last {
       margin-bottom: 0px;
-    }
-  }
-  h1 {
-    margin: 0 0 20px 0;
-    img {
-      margin-bottom: -19px;
     }
   }
   .about {
@@ -122,16 +72,9 @@
     }
   }
   .application {
-    opacity: 0;
-    .ie7 &, .ie8 & {
-      display: none;
-    }
     .form {
       float: left;
       padding: 5px 0 0;
-    }
-    .survey {
-      display: none;
     }
     li.labelled, .li.labelled {
       width: 375px;
@@ -155,46 +98,6 @@
       float: right;
       width: 280px;
       padding-right: 20px;
-    }
-  }
-  .invitecode {
-    padding: 60px 0 0;
-    height: 260px;
-    .vouched {
-      text-align: center;
-      padding: 10px 0;
-      color: #999;
-    }
-    li {
-      margin: 0 auto;
-    }
-    .lock {
-      width: 45px;
-      height: 80px;
-      position: relative;
-      margin: 0 auto;
-      .bolt {        
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        height: 40px;
-        width: 45px;
-        background: #ddd;
-      }
-      .shackle {
-        @include transition("top 0.25s");
-        position: absolute;
-        top: 10px;
-        height: 41px;
-        width: 39px;
-        background: transparent url(/images/assets/general/shackle39x41.png) no-repeat center center;
-        left: 3px;
-      }
-    }
-    .question {
-      padding: 10px 0;
-      font-size: 15px;
-      text-align: center;
     }
   }
 }
