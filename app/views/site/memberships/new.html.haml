@@ -28,8 +28,8 @@
       -else
         a free Spot Membership trial period.
       
-      =link_to "Apply!", '#', :class => 'apply', :id => "apply_code_btn", 'data-value' => @promo_code.code
-      =link_to "Applying...", '#', :class => 'applying', 'data-value' => @promo_code.code
+      =button_to "Apply!", '#', :class => 'apply', :id => "apply_code_btn", 'data-value' => @promo_code.code
+      =button_to "Applying...", '#', :class => 'applying', 'data-value' => @promo_code.code
 -else
   .promo_congrats.default
     %h2.tf 

@@ -47,10 +47,7 @@
           %h2.center.tf="Welcome Back #{current_user.first_name}"
           =button_to "Select Your City", account_path, :class => "tf action", :id => "select_city_link"
         -else
-          -if session_invite
-            %h2.tf.registration.invited Congratulations, You're Invited
-          -else
-            %h2.tf.registration Let's Get Started
+          %h2.tf.registration Let's Get Started
                           
           =spot_form_for :email, :url => '#', :display => "faded clearfix", :ul_id => "email_form" do |f|
             =f.email_field :email, :placeholder => "enter your email", :value => invite_request.try(:email), :container_class => "left", :required => true
