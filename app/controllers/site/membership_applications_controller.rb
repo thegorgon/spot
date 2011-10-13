@@ -10,7 +10,7 @@ class Site::MembershipApplicationsController < Site::BaseController
       warden.set_user @account.user
       move_forward!
     else
-      flash[:error] = "Sorry, there were errors with your submission"
+      flash.now[:error] = "Sorry, there were errors with your submission"
       render :action => :new
     end
   end
@@ -24,7 +24,7 @@ class Site::MembershipApplicationsController < Site::BaseController
     if current_user.save
       move_forward!
     else
-      flash[:error] = "Sorry, there were errors with your submission"
+      flash.now[:error] = "Sorry, there were errors with your submission"
       render :action => :new
     end
   end

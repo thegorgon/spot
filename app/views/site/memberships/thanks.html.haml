@@ -30,14 +30,14 @@
       =button_to "Browse Perks", city_path(city), :class => 'tf btnbrowse'
   %hr
   .bucket.first.clearfix
-    .image.worthy.left
-      =img_with_mobile "paintings/louisxiv.png", :size => "400x300", :msize => "300x225"
-      .speechbubble.down.tf
-        It's good to be the king.
+    .image.gossip.left
+      =image_tag "paintings/gossip400x300.png", :size => "400x300"
+      .speechbubble
+        I just became a Spot member. Anyone up for a Cosmo?
     .text.right
       %h2.clearfix
-        .left.tf Invite the worthy...
-      %p Going out alone is
+        .left.tf We Love Gossips...
+      %p Tell everyone you know about Spot. Then you can enjoy membership perks together.
       %p Use the following link to share an invitation :
       -url = portal_url(:mc => current_user.invitation_code.code)
       =sharing(url, "I've got 10 Spot invites to share. Foodies in SF, check it out now.", :link => true)
