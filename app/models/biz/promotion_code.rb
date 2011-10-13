@@ -54,7 +54,7 @@ class PromotionCode < ActiveRecord::Base
   def unissue!
     if issued?
       self.class.transaction do
-        owner.touch(:updated_at)
+        owner.touch(:updated_at) if owner
         update_attributes!(:owner_id => nil, :issued_at => nil)
         event.try(:unsold!)
       end
