@@ -8,9 +8,6 @@
     &middot;
     =@post.title.html_safe
 
--if traffic_source != :direct
-  =render :partial => "external_traffic"
-
 .clearfix
   -if @post
     #posts
@@ -42,8 +39,7 @@
     #rightrailcontainer.right
       #rightrail
         .about.section.first
-          .image=image_tag "logos/appicon57x57.png", :size => "57x57"
-          Spot is a private membership club for people who love to dine out. Spot Members receive exclusive access to VIP privileges, unique promotions and unforgettable experiences at the best restaurants in town. Want in? 
+          =pitch_line
           =button_to "Join Spot Now", root_url, :class => "tf btnorg175x32"
       .section
         -if @post.kind_of?(Wrapr::Tumblr::Regular)

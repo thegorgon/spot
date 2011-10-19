@@ -1,4 +1,16 @@
 module ApplicationHelper
+  def pitch_line(options={})
+    if options[:html]
+      "For just #{content_tag(:em, "$#{Subscription.monthly.price} a month")}, Spot Members get #{content_tag(:strong, "hundreds in savings")} at great #{content_tag(:em, "local businesses")}.".html_safe
+    else
+      "For just $#{Subscription.monthly.price} a month, Spot Members get hundreds in savings at great local businesses."
+    end
+  end
+ 
+  def short_description
+    "Deals and Discounts at Local Restaurants, Shops, and Bars"
+  end
+
   def place_page?
     @place && !@place.new_record?
   end

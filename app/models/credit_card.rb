@@ -17,6 +17,18 @@ class CreditCard < ActiveRecord::Base
     record
   end
   
+  def remote_object
+    @remote_object ||= Braintree::CreditCard.find(token)
+  end
+  
+  def transactions
+    @transactions ||= Braintree::Transaction.search do |search| 
+      search.credit_card_cardholder_name.is cardholder_name
+      search.credit_card_expiration_date.is "#{expiration_month}/#{expiration_year}"
+      search.credit_card_number.ends_with last_4 
+    end
+  end
+  
   def sync_with(cc)
     self.token = cc.token
     self.cardholder_name = cc.cardholder_name

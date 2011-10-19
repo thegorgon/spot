@@ -11,22 +11,24 @@ module MetaHelper
     if @override_title
       @override_title
     elsif @page_title
-      "#{@page_title} - Spot"
+      "#{@page_title} - Spot - #{short_description}"
     elsif place_page?
       terms = [@place.name, @place.city, "Spot"]
       if @promotion
         terms.unshift(@promotion.name)
+      else
+        terms.push(describe)
       end
       terms.full_compact.join(" - ")
     elsif city_page?
-      "#{@city.name.titlecase} - Spot - Membership Experiences"
+      "#{@city.name.titlecase} - Spot - #{short_description}"
     else
-      "Spot - Membership Experiences"
+      "Spot - #{short_description}"
     end
   end
     
   def page_keywords
-    keywords = ["spot", "iphone", "app", "application", "place", "wishlist", "experiences"]
+    keywords = ["spot", "local", "restaurant", "shopping", "discount", "membership", "savings", "deals", "perks", "mobile", "coupons"]
     if place_page?
       keywords += [@place.name.downcase, @place.city.downcase]
     elsif city_page?
@@ -42,14 +44,12 @@ module MetaHelper
       @page_description
     elsif place_page?
       if @promotion
-        "Exclusively for Spot Members. #{@promotion.name} at #{@place.name} : #{@promotion.description}"
+        "#{@promotion.name} at #{@place.name} : #{@promotion.short_summary}. Join Spot for access."
       else
-        "#{@place.name} at #{@place.address} - Spot"
+        "#{@place.name} at #{@place.address} - Spot #{short_description}"
       end
     else
-      "Spot Members get exclusive access 
-       to VIP privileges, unique promotions, and 
-       unforgettable experiences at the best restaurants in town."      
+      pitch_line
     end
   end
   
@@ -64,7 +64,7 @@ module MetaHelper
     tags << meta_property("og:title", page_title)
     tags << meta_property("og:description", page_description)
     tags << meta_property("og:url", "#{request.url}")
-    tags << meta_property("og:site_name", "Spot - Membership Experiences")
+    tags << meta_property("og:site_name", "Spot - #{short_description}")
     tags << meta_property("fb:admins", "100000043724571")
     tags << meta_property("fb:app_id", Wrapr::FbGraph.config.client_id)
     tags.join("\n").html_safe

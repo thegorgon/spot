@@ -32,13 +32,7 @@
   .intro.scene
     .content.clearfix
       .describe.half
-        For just
-        ="#{content_tag(:em, "$#{Subscription.monthly.price} a month")},".html_safe
-        Spot Members get
-        %strong hundreds in savings
-        at quality
-        ="#{content_tag(:em, "local businesses")}.".html_safe
-        
+        =pitch_line(:html => true)
       .entrance.half{:class => "request"}
         -if current_user && city = current_user.city
           %h2.center.tf="Welcome Back #{current_user.first_name}"

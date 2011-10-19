@@ -1,4 +1,4 @@
--set_page_title "The Spotlight - Covering first-rate food and drink in San Francisco and beyond."
+-set_page_title "The Spotlight - Cool local discoveries in San Francisco and beyond"
 -set_spot_app_title "The Spotlight"
 
 
@@ -6,11 +6,8 @@
   =link_to "The Spotlight", blog_index_path
   -if !mobile_request?
     &middot;
-    Covering first-rate food and drink in San Francisco and beyond.
+    Cool local discoveries in San Francisco and beyond.
 
--unless mobile_request? || traffic_source == :direct
-  =render :partial => "external_traffic"
-  
 #blog.clearfix
   #posts
     -if @posts.nil? || @posts.length == 0
@@ -51,9 +48,8 @@
   -unless mobile_request?
     #rightrailcontainer.right
       #rightrail
-        .about.section.first
-          .image=image_tag "logos/appicon57x57.png", :size => "57x57"
-          Spot is a private membership club for people who love to dine out. Spot Members receive exclusive access to VIP privileges, unique promotions and unforgettable experiences at the best restaurants in town. Want in? 
+        .about.tf.section.first
+          =pitch_line
           =button_to "Join Spot Now", root_url, :class => "tf btnorg175x32"
 
         .tags.section

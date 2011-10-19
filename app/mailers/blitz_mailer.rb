@@ -30,31 +30,22 @@ class BlitzMailer < ApplicationMailer
   
   def set_inline_attachments
     add_attachment "footer.png", ["email", "blitz", "footer.png"]
-    
-    # add_attachment "topleft.png", ["email", "shadows", "topleft15x14.png"]
-    # add_attachment "top.png", ["email", "shadows", "top100x14.png"]
-    # add_attachment "topright.png", ["email", "shadows", "topright15x14.png"]
-    # add_attachment "right.png", ["email", "shadows", "right15x100.png"]
-    # add_attachment "bottomright.png", ["email", "shadows", "bottomright15x16.png"]
-    # add_attachment "bottom.png", ["email", "shadows", "bottom100x16.png"]
-    # add_attachment "bottomleft.png", ["email", "shadows", "bottomleft15x16.png"]
-    # add_attachment "left.png", ["email", "shadows", "left15x100.png"]    
   end
 
   def schedule
     {
       :quotes => [2,5,7,10],
       :subject => [
-        "Experiences You Can't Find Anywhere Else.",
-        "One Membership, Unlimited Access.",
-        "Spot Works Great On Your iPhone",
-        "Benefit From Our Relationships",
-        "Places You Love Will Love You Back",
-        "Fall In Love With Local Hidden Gems",
-        "Spot Supports Local Businesses",
-        "We Keep It Fresh",
-        "Bigger Isn't Always Better",
-        "Membership Pays For Itself"
+        "Perks You Can't Find Anywhere Else.",
+        "One Membership, Unlimited Perks.",
+        "Spot Works Great On Your iPhone.",
+        "Know People. Get Perks.",
+        "Places You Love Will Love You Back.",
+        "Fall In Love With #{@city.name.titlecase} Hidden Gems.",
+        "Spot Supports Local Businesses.",
+        "Local Perks - Served Fresh.",
+        "Bigger Isn't Always Better.",
+        "Membership Pays For Itself."
       ]
     }
   end

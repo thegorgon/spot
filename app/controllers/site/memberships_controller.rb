@@ -15,7 +15,7 @@ class Site::MembershipsController < Site::BaseController
   def create
     @payment = PaymentForm.new(:user => current_user, :params => params[:membership])    
     if @payment.try(:save)
-      record_acquisition_event("membership")
+      track_signup!
       respond_to do |format|
         format.html { redirect_to thanks_membership_path }
       end
@@ -29,6 +29,7 @@ class Site::MembershipsController < Site::BaseController
     @result = Braintree::TransparentRedirect.confirm(request.query_string) rescue nil
     @payment = PaymentForm.new(:user => current_user, :tr_result => @result)
     if @payment.try(:save)
+      track_signup!
       respond_to do |format|
         format.html { redirect_to thanks_membership_path }
       end
@@ -56,4 +57,9 @@ class Site::MembershipsController < Site::BaseController
     end
   end
   
+  def track_signup!
+    record_acquisition_event("membership")
+    session_invite.try(:signup!)
+    set_session_invite nil
+  end
 end
