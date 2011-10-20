@@ -7,7 +7,7 @@
     -if current_member? && current_user.invitation_code.invites_remaining?
       %a{'data-popover' => '#invite_popover', 'data-popover-title' => 'Invite', 'data-popover-orient' => 'vertical'} 
         invite
-      #invite_popover=render :partial => "shared/membership/invite"
+      #invite_popover=render :partial => "shared/membership/referrals"
       &middot;
     -if current_user
       =link_to current_user.nickname, account_path, :class => "accountlnk"

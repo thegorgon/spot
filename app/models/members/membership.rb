@@ -1,4 +1,5 @@
 class Membership < ActiveRecord::Base
+  FREE_MEMBERSHIP_MAP = {1 => 1, 5 => 12, 10 => 1200}
   belongs_to :user
   belongs_to :city, :counter_cache => "subscription_count"
   belongs_to :payment_method, :polymorphic => true
@@ -32,6 +33,24 @@ class Membership < ActiveRecord::Base
   
   def expired?
     expires_at <= Time.now
+  end
+  
+  def referred!
+    if payment_method.respond_to?(:grant_free_months) && payment_method.respond_to?(:cancelled?) && !payment_method.cancelled?
+      free_months = FREE_MEMBERSHIP_MAP[referral_count].to_i
+      payment_method.grant_free_months(free_months) if free_months > 0
+    elsif expires_at.present?
+      self.expires_at += 1.month
+    end
+    save!
+  end
+  
+  def referral_count
+    referral_code.signup_count
+  end
+
+  def referral_code
+    user.invitation_code
   end
   
   def as_json(*args)

@@ -61,6 +61,27 @@ class Subscription < ActiveRecord::Base
   def remote_object
     @remote_object ||= Braintree::Subscription.find(braintree_id)
   end
+  
+  def transactions
+    credit_card.transactions
+  end
+  
+  def grant_free_months(n)
+    Braintree::Subscription.cancel(braintree_id)
+    newparams = {
+      :plan_id => plan_id,
+      :payment_method_token => credit_card.token,
+      :first_billing_date => next_billing_date + n.months
+    }
+    braintree = Braintree::Subscription.create(newparams)
+    if braintree.success?
+      sync_with(braintree.subscription)
+      save
+    else
+      Rails.logger.error(braintree.errors)
+      false
+    end
+  end
     
   def sync_with(bt)
     self.braintree_id = bt.id
@@ -70,10 +91,6 @@ class Subscription < ActiveRecord::Base
     self.billing_day_of_month = bt.billing_day_of_month
     self.billing_period = bt.plan_id.split('_').last.to_i
     self.billing_starts_at = Date.parse(bt.first_billing_date)
-  end
-  
-  def first_billing_date
-    @first_billing_date ||= Date.parse(remote_object.first_billing_date)
   end
   
   def next_billing_date

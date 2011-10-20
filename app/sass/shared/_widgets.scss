@@ -25,7 +25,81 @@
     }
   }
 }
-
+.addthis_sharing {
+  margin: 0;
+  .buttons {
+    width: 150px;
+    margin: 20px auto 10px;
+  }
+  .url {
+    margin: 1px auto;
+    width: 225px;
+    input.text {
+      font-size: 11px;
+      width: 207px;
+    }    
+  }
+}
+ul.referral_rewards {
+  width: 270px;
+  margin: 0 auto;
+  .requires {
+    width: 70px;
+    float: left;
+    clear: left;
+    text-align: right;
+  }
+  .equals {
+    text-align: center;
+    width: 25px;
+    float: left;
+  }
+  .reward {
+    text-align: left;
+    float: left;
+    width: 175px;
+  }
+}
+.referral_bar {
+  margin: 20px auto 0;
+  width: 300px;
+  .bar_container {
+    width: 300px;
+    margin: 10 auto;
+    position: relative;
+    height: 31px;
+    background: transparent url(/images/assets/general/referralmeterbg300x31.png) no-repeat left top;
+  }
+  .bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background: transparent url(/images/assets/general/referralmeterfg300x31.png) no-repeat left top;
+    width: 0px;
+    .count {
+      float: right;
+      margin-right: 5px;
+      line-height: 20px;
+      font-size: 11px;
+      text-align: right;
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+  &.large {
+    width: 390px;
+    .bar_container {
+      width: 390px;
+      height: 31px;
+      background-image: url(/images/assets/general/referralmeterbg390x31.png);
+    }
+    .bar {
+      background-image: url(/images/assets/general/referralmeterfg390x31.png);
+    }
+  }
+  
+}
 ul.pillbox {
   @include border_radius(5px);
   overflow: hidden;

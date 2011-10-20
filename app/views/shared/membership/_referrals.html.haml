@@ -1,0 +1,48 @@
+-city = current_user.active_membership.city
+-referral_count = current_user.active_membership.referral_count
+-size ||= "small"
+
+%h2.tf.refer.clearfix
+  Refer friends and save...
+%p Every friend who signs up means more free membership for you. 
+%ul.referral_rewards
+  %li.clearfix
+    .requires
+      1 friend 
+    .equals
+      \=
+    .reward
+      1 free month
+  %li.clearfix 
+    .requires
+      5 friends
+    .equals
+      \=
+    .reward
+      1 free year
+  %li.clearfix
+    .requires
+      10 friend 
+    .equals
+      \=
+    .reward
+      Free membership for LIFE!
+.referral_count.referral_bar{:class => size}
+  .bar_container
+    .bar{:style => "width:#{[referral_count * 9, 100].min}%;"}
+      -if referral_count > 0
+        .count=referral_count
+.addthis_sharing.clearfix
+  .buttons              
+    -title = "Save money around town, checkout Spot in #{city.name}"
+    -url = portal_url(:mc => current_user.invitation_code.code)
+    .addthis_toolbox.addthis_default_style.addthis_32x32_style{"addthis:url" => url, "addthis:title" => title}
+      %a.addthis_button_facebook
+      %a.addthis_button_twitter
+      %a.addthis_button_email
+      %a.addthis_button_compact
+  .url
+    =text_field_tag("url", url, "data-mode" => "select", :class => "text light")
+
+  =content_for :scripts do
+    %script{:type => "text/javascript", :src => "https://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e73dd12698069a2"}

@@ -1,4 +1,4 @@
--set_page_title "Welcome to Spot"
+-set_page_title "Welcome"
 -set_spot_app_title "Welcome"
 
 -city = current_user.active_membership.city
@@ -35,12 +35,7 @@
       .speechbubble
         I just became a Spot member. Anyone up for a Cosmo?
     .text.right
-      %h2.clearfix
-        .left.tf We Love Gossips...
-      %p Tell everyone you know about Spot. Then you can enjoy membership perks together.
-      %p Use the following link to share an invitation :
-      -url = portal_url(:mc => current_user.invitation_code.code)
-      =sharing(url, "I've got 10 Spot invites to share. Foodies in SF, check it out now.", :link => true)
+      =render :partial => "shared/membership/referrals", :locals => {:size => "large"}
   %hr
   .bucket.last.clearfix
     .image.columbus.right
@@ -51,5 +46,5 @@
     .text.left
       %h2.tf Explore your membership...
       %p
-        Now that you've subscribed, you have full access to all of the Spot Member Experiences. Browse experiences to start enjoying your membership.
-      =button_to "Browse", city_path(city), :class => "tf btnorg280x32 button"
+        ="Now that you've subscribed, you have full access to all of the Spot Member Perks. Browse the #{city.name.titlecase} member calendar to start enjoying your membership."
+      =button_to "#{city.name.titlecase} Calendar", city_path(city), :class => "tf btnorg280x32 button"

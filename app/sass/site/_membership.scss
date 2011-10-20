@@ -112,7 +112,17 @@
   .bucket {
     float: none;
     padding: 0;
-    .text {
+    .addthis_sharing {
+      margin: 20px 0;
+      .buttons {
+        margin: 0;
+        float: right;
+      }
+      .url {
+        float: left;
+      }
+    }
+    div.text {
       width: 390px
     }
     .button {
@@ -141,20 +151,11 @@
       font-weight: normal;
     }
   }
-  #invite_popover {
-    .sharing {
-      input.text {
-        width: 200px;
-      }
-    }
-  }
-  .sharing {
-    input.text {
-      width: 280px;
-    }
-  }
   p {
     margin: 10px 0;
+  }
+  .referral_count {
+    margin: 15px 0 0;
   }
 }
 .site_memberships {

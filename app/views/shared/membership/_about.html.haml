@@ -47,11 +47,5 @@
                 .benefit Cancel Anytime
         .explain
           Join now and your membership fees will never increase.
-  -if current_member? && current_user.invitation_code.invites_remaining?
-    %hr
-    .centered.center
-      %h1.tf Invite Your Friends
-      =render :partial => "shared/membership/invite"
-  
-  -elsif ! current_member?
+  -if ! current_member?
     =button_to "become a member", new_application_path, :class => 'btnmembership tf button'

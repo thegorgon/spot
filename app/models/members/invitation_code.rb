@@ -37,33 +37,21 @@ class InvitationCode < ActiveRecord::Base
   
   def signup!
     self.class.increment_counter :signup_count, id
+    if user && user.active_membership
+      user.active_membership.referred!
+    end
   end
   
   def available?
     invitation_count < 0 || invitation_count - claimed_count > 0
   end
   
-  def voucher
-    user.try(:first_name) || "Someone"
-  end
-  
   def as_json(*args)
     { 
       :id => id,
-      :voucher => voucher,
       :user => user.as_json(*args),
       :available => available?
     }
-  end
-
-  def percentage_full
-    if invites_remaining > 0 
-      (100 * invites_remaining/invitation_count.to_f).round
-    elsif invites_remaining == 0
-      invites_remaining
-    else
-      100
-    end
   end
   
   def set_invitation_count

@@ -8,12 +8,13 @@
         =link_to "&nbsp;".html_safe, '#', 'data-popover' => '#sitenav', 'data-popover-orient' => 'vertical', "data-popover-pos" => "left,bottom", :class => "morenav tf"
       %nav#sitenav.clearfix
         =link_to "home", root_path, :class => "first"
-        =link_to "membership", membership_about_path, :class => "btnmemabout"
+        -unless current_member?
+          =link_to "membership", membership_about_path, :class => "btnmemabout"
         =link_to "about", about_path
         =link_to "blog", blog_index_path
-        -if current_member? && current_user.invitation_code.invites_remaining? && !mobile_request?
-          =link_to "invite", account_path, 'data-popover' => '#invite_popover', 'data-popover-title' => 'Invite', 'data-popover-orient' => 'vertical'
-          #invite_popover=render :partial => "shared/membership/invite"
+        -if current_member? && !mobile_request?
+          =link_to "invite", account_path, 'data-popover' => '#invite_popover', 'data-popover-orient' => 'vertical'
+          #invite_popover=render :partial => "shared/membership/referrals"
         -if current_user
           =link_to current_user.nickname, account_path, :class => "accountlnk"
           =link_to "logout", logout_path, :class => 'last'

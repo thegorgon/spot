@@ -9,10 +9,6 @@
         Member since :
       .value
         =membership.starts_at.strftime("%B %d, %Y")
-    -if payment.respond_to?(:first_billing_date) && payment.first_billing_date
-      %li.clearfix
-        .label First bill date : 
-        .value=payment.first_billing_date.strftime("%B %d, %Y")
     -if payment.respond_to?(:next_billing_date) && payment.next_billing_date
       %li.clearfix
         .label Next bill date : 

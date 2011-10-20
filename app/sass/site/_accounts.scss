@@ -97,6 +97,7 @@
       float: left;
       position: relative;
       z-index: 2;
+      width: 370px;
     }
     .rcol {
       float: right;
@@ -189,7 +190,20 @@
         font-size: 25px;
       }
     }
-    
+    .addthis_sharing {
+      margin: 20px 0 0 0;
+      .buttons {
+        float: right;
+        margin: 0;
+      }
+      .url {
+        float: left;
+        width: 213px;
+        input {
+          width: 195px;
+        }
+      }
+    }
     h2 {
       padding: 0 0 0 35px;
       background: transparent no-repeat left center;
@@ -197,6 +211,10 @@
       &.top {
         margin-top: 0;
       }
+    }
+    .refer {
+      background-image: url(/images/icons/contactblk26x17.png);
+      background-position: 0px 1px;      
     }
     .aboutme {
       background-image: url(/images/icons/contactblk26x17.png);

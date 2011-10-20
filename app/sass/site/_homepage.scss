@@ -387,31 +387,5 @@
         height: 100%;
       }
     }
-    &.scene3 {
-      .scene {
-        @include transition('left 2s');
-      }
-      .intro {
-        height: 0;
-        left: -300%;
-      }
-      .map {
-        height: 0;
-        left: -100%;
-      }
-    }
-    &.scene4 {
-      .scene {
-        @include transition('left 2s');
-      }
-      .intro {
-        height: 0;
-        left: -300%;
-      }
-      .map {
-        height: 0;
-        left: -200%;
-      }
-    }
   }
 }

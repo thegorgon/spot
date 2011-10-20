@@ -29,29 +29,8 @@ html {
     }
     #invite_popover {
       padding: 20px;
-      height: 85px;
+      height: 260px;
       width: 300px;
-      input {
-        width: 200px;
-      }
-      .member_invite {
-        margin: 0;
-        padding: 0;
-        width: 300px;
-      }
-    }
-    .member_invite {
-      width: 315px;
-      h2 { 
-        margin: 0 0 10px 0;
-      }
-      .sharing {
-        margin: 10px 0 0 0;
-      }
-      input.text {
-        width: 200px;
-        font-size: 12px;
-      }
     }
     .titlebar {
       line-height: 41px;
