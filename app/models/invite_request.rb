@@ -5,7 +5,7 @@ class InviteRequest < ActiveRecord::Base
   belongs_to :membership
   validates :email, :presence => true, :format => EMAIL_REGEX
   before_validation :handle_duplicate_email
-  after_save :autoinvite
+  after_save :mark_sent!
   after_save :ensure_email_subscription
   after_create :send_coming_soon
   
@@ -100,7 +100,7 @@ class InviteRequest < ActiveRecord::Base
   end
   
   def send_invite!
-    # TransactionMailer.invitation(self).deliver!
+    TransactionMailer.invitation(self).deliver!
     mark_sent! unless invite_sent?
   end
   
@@ -122,13 +122,7 @@ class InviteRequest < ActiveRecord::Base
       reload
     end
   end
-  
-  def autoinvite
-    if city.try(:subscriptions_available?)
-      send_invite!
-    end
-  end
-  
+    
   def send_coming_soon
     if city_name.present? && (city.nil? || !city.subscriptions_available?)
       TransactionMailer.invite_coming_soon(self).deliver!
