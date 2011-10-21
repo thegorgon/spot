@@ -126,7 +126,6 @@ class Subscription < ActiveRecord::Base
       :cancelled_at => cancelled_at,
       :next_billing_date => next_billing_date,
       :next_bill_amount => next_bill_amount,
-      :first_billing_date => first_billing_date,
       :billing_day_of_month => billing_day_of_month,
       :credit_card => credit_card
     }
