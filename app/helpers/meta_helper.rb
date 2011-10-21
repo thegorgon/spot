@@ -17,7 +17,7 @@ module MetaHelper
       if @promotion
         terms.unshift(@promotion.name)
       else
-        terms.push(describe)
+        terms.push(short_description)
       end
       terms.full_compact.join(" - ")
     elsif city_page?
