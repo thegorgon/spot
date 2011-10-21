@@ -50,7 +50,7 @@
             height = 0,
             contents = results.find('.results');
           results.setClass(null, ['loading', 'empty', 'error']);
-          contents.html('')
+          contents.html('');
           bd.css({position: "absolute", left: "-1000px"}).appendTo(contents).show();
           height = bd.outerHeight();
           contents.css({height: results.height()});
