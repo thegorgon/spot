@@ -285,15 +285,19 @@
             bind('click.hide-popover', hide).
             bind('touchstart.hide-popover', hide);
         }, 1);
-        popover.find('a').unbind('click.popover').bind('click.popover', function(e) { 
-          $.popover.hide(trigger, popover);
-          popover.find('a').unbind('click.popover');
-          return true; 
+        popover.find('a').unbind('.popover').bind('click.popover', function(e) { 
+          if (!$(this).is('.inpopover')) {
+            $.popover.hide(trigger, popover);
+            popover.find('a').unbind('.popover');
+            return true;
+          }
         });
-        popover.find('form.page').unbind('submit.popover').bind('submit.popover', function(e) { 
-          $.popover.hide(trigger, popover);
-          popover.find('form.page').unbind('click.popover');
-          return true; 
+        popover.find('form').unbind('.popover').bind('submit.popover', function(e) { 
+          if (!$(this).is('.inpopover')) {
+            $.popover.hide(trigger, popover);
+            popover.find('form').unbind('.popover');
+            return true; 
+          }
         });
       },
       hide: function(trigger, popover, options) {

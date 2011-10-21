@@ -1,6 +1,10 @@
 (function(go) {
   $.provide(go, 'Views', {
     biz_businesses_new: function() {
+      var results = $('#search_results'),
+        errorMsg = results.find('.error_msg'),
+        loadingMsg = results.find('.loading_msg');
+        
       $('#search_location').autogeocode({
         ll: $("#search_ll"),
         select: function() {
@@ -24,13 +28,13 @@
         $(this).validate();
       }).ajaxForm({
         start: function() {
-          var results = $('#search_results'),
-            loadingMsg = results.find('.loading_msg'),
-            query = $(this).find('input#search_query').val().replace(' ', '&nbsp;'),
-            location = $(this).find('input#search_location').val().replace(' ', '&nbsp;'),
-            errorMsg = results.find('.error_msg'), msg;
-          $(this).find('input').blur();
-          if ($(this).validate()) {
+          var $form = $(this), 
+            query = $form.find('input#search_query').val().replace(' ', '&nbsp;'),
+            location = $form.find('input#search_location').val().replace(' ', '&nbsp;'),
+            msg;
+            
+          $form.find('input').blur();
+          if ($form.validate()) {
             results.setClass('loading', ['empty', 'error']);
             msg = "Searching for '" + query + "'";
             if (location && location.length > 0) { msg += " near " + location; }
@@ -43,7 +47,6 @@
           }
         }, success: function(data) {
           var bd = $(data.html),
-            results = $('#search_results'),
             height = 0,
             contents = results.find('.results');
           results.setClass(null, ['loading', 'empty', 'error']);
