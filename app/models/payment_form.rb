@@ -80,17 +80,11 @@ class PaymentForm
   end
   
   def add_our_errors(klass, prefix, errorlist)
-    if Rails.env.development?
-      errorlist.each do |error|
-        errors.add(:base, "#{prefix}: #{error}")
-      end
-    else
-      if errors[:base].blank?
-        errors.add(:base, "We messed up. We've been notified and will try to get the problem fixed as soon as possible.")
-        HoptoadNotifier.notify( :error_class => klass, 
-                                :error_message => "#{prefix} Errors", 
-                                :parameters => { :errorlist => errorlist, :prefix => prefix })
-      end
+    if errors[:base].blank?
+      errors.add(:base, "We messed up. We've been notified and will try to get the problem fixed as soon as possible.")
+      HoptoadNotifier.notify( :error_class => klass, 
+                              :error_message => "#{prefix} Errors", 
+                              :parameters => { :errorlist => errorlist, :prefix => prefix })
     end
   end
   

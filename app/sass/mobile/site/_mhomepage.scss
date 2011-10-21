@@ -1,13 +1,13 @@
 #site_home_index {
   font-size: 12px;
   #bd {
+    min-height: 100%;
     padding: 0;
     overflow: hidden;
   }
   footer {
     display: block;
     padding: 5px 0;
-    margin-top: 100px;
     min-height: 90px;
     z-index: 100;
     border-top: 1px solid #333;
@@ -75,6 +75,7 @@
       .content {
         padding: 10px;
         text-shadow: #000 0px 1px;
+        margin-bottom: 100px;
         .half {
           color: #bbb;
           strong {
@@ -97,6 +98,9 @@
           &.entrance {
             font-size: 14px;
             padding: 20px 0 0 0;
+            h1 {
+              font-size: 20px;
+            }
             .action {
               @include btnorg200x32;
             }
@@ -310,23 +314,6 @@
 }
 
 .csstransitions #site_home_index {
-  #slidetitle {
-    bottom: 10px;
-    @include transition('bottom 1s');
-    &.visible {
-      bottom: 100px;            
-    }
-  }
-  #slidedeck {
-    .slide {
-      opacity: 0;
-      @include transition('opacity 2s');
-      display: block;
-      &.current {
-        opacity: 1;
-      }
-    }
-  }
   #toplayer {
     &.scene2 {
       @include transition('height 2s');      

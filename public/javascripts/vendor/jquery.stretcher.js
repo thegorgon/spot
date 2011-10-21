@@ -32,6 +32,9 @@
       var resizeTo = $(options.container || window),
         width = resizeTo.width(),
         height = resizeTo.height();
+      if ($.mobile() && !options.container) {
+        height = Math.max(height, screen.height);
+      }
       $(this).width(width).height(height).each(function(i) {
         var self = $(this);
         options.gravity = options.gravity || self.attr('data-gravity');
