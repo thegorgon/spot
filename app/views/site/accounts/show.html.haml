@@ -24,7 +24,7 @@
         %li.button
           =button_tag :class => "btngrypill300x30 right" do
             Change Password
-    -if !mobile_request?
+    -if !mobile_request? && current_user.active_membership
       =render :partial => "shared/membership/referrals"
   .separator
   .rcol
