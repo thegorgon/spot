@@ -31,7 +31,7 @@ class Business < ActiveRecord::Base
   end
   
   def name
-    place.name
+    place.try(:name) || "biz"
   end
   
   def to_param
