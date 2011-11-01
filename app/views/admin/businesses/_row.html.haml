@@ -1,8 +1,8 @@
--account = business.business_account || BusinessAccount.new(:email => "unknown@unknown.com", :name => "unknown", :title => "unknown")
-
+-account = business.business_account || BusinessAccount.first
+-place = business.place || Place.first
 %tr.center.business{:id => dom_id(business)}
   %td= business.id
-  %td= link_to business.place.try(:name) || "unknown", edit_admin_place_path(business.place)
+  %td= link_to place.name || "unknown", edit_admin_place_path(place)
   %td= "#{mail_to account.email_with_name, account.name} (#{account.title.titlecase})".html_safe
   %td= account.phone
   %td=link_to yes_no(business.verified?).titlecase, toggle_admin_business_path(business), "data-method" => "put", :class => "rowlink ajax"
