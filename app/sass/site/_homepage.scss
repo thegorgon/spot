@@ -53,8 +53,6 @@
   #toplayer {
     @include fullscreen();
     overflow: hidden;
-    overflow-x: hidden;
-    overflow-y: visible;
     z-index: 100;
     .scene {
       @include fullscreen();
