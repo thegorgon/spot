@@ -226,6 +226,7 @@
         .controls {
           display: none;
           button {
+            height: 30px;
             width: 85px;
           }
         }
@@ -502,6 +503,7 @@
     width: 300px;
     .eventlist {
       button {
+        height: 30px;
         width: 145px;
       }
       .removed {

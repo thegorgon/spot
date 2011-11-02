@@ -1,5 +1,5 @@
--place = promotion.place
--account = promotion.business.business_account
+-place = promotion.place || Place.first
+-account = promotion.business.business_account || BusinessAccount.first
 .promotion.clearfix
   %h1="#{promotion.id}. #{link_to(place.name, edit_admin_place_path(place))} - #{promotion.name}".html_safe
   .summary
