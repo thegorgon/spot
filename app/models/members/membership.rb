@@ -22,7 +22,7 @@ class Membership < ActiveRecord::Base
   end
   
   def cancel!
-    acquisition_source.try(:unsubscribed!, self)
+    acquisition_source.try(:unsubscribed!)
     
     if payment_method.kind_of?(Subscription)
       payment_method.cancel!
