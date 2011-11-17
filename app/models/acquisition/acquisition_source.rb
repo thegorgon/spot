@@ -43,7 +43,7 @@ class AcquisitionSource < ActiveRecord::Base
 
   def unsubscribed!
     count!(:unsubscriptions)
-    AcquisitionCohort.unsubscrbed!(acquisition_campaign, self)
+    AcquisitionCohort.unsubscribed!(acquisition_campaign, self)
   end
 
   def total_clicks
