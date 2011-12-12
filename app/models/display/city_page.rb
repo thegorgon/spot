@@ -29,11 +29,20 @@ class CityPage
     @images
   end
   
+  def has_events?
+    @city.upcoming_events.count > 0
+  end
+  
   def calendar
     unless @calendar
       events = @city.upcoming_events.group_by { |e| e.date }
-      mindate = [Date.today, events.keys.min].min
-      maxdate = [Date.today.end_of_month, events.keys.max].max
+      if events.keys.count > 0
+        mindate = [Date.today, events.keys.min].min
+        maxdate = [Date.today.end_of_month, events.keys.max].max
+      else
+        mindate = Date.today
+        maxdate = Date.today + 1.month
+      end
       lastdate = mindate - 4.weeks
       @calendar = {}
       @images = {}
